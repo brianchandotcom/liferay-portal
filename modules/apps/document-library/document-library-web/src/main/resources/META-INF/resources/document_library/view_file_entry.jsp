@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div class="<%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %>">
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 	<aui:form action="<%= editFileEntry %>" method="post" name="fm">

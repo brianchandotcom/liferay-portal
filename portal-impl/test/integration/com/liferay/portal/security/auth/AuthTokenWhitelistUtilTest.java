@@ -158,20 +158,20 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	@Test
-	public void testIsCSRFOrigintWhitelistedFromBundle() {
+	public void testIsOriginCSRFWhitelistedFromBundle() {
 		Assert.assertTrue(
-			AuthTokenWhitelistUtil.isCSRFOrigintWhitelisted(
+			AuthTokenWhitelistUtil.isOriginCSRFWhitelisted(
 				0,
 				TestAuthTokenIgnoreOrigins.TEST_AUTH_TOKEN_IGNORE_ORIGINS_URL));
 	}
 
 	@Test
-	public void testIsCSRFOrigintWhitelistedFromPortalProperties() {
+	public void testIsOriginCSRFWhitelistedFromPortalProperties() {
 		String[] origins = PropsValues.AUTH_TOKEN_IGNORE_ORIGINS;
 
 		for (String origin : origins) {
 			Assert.assertTrue(
-				AuthTokenWhitelistUtil.isCSRFOrigintWhitelisted(0, origin));
+				AuthTokenWhitelistUtil.isOriginCSRFWhitelisted(0, origin));
 		}
 	}
 

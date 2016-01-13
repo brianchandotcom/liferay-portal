@@ -156,9 +156,7 @@ public class SessionAuthToken implements AuthToken {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (AuthTokenWhitelistUtil.isCSRFOrigintWhitelisted(
-				companyId, origin)) {
-
+		if (AuthTokenWhitelistUtil.isOriginCSRFWhitelisted(companyId, origin)) {
 			return;
 		}
 

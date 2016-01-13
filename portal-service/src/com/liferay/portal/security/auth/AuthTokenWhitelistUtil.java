@@ -113,7 +113,18 @@ public class AuthTokenWhitelistUtil {
 		return portletInvocationWhitelistActions;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isOriginCSRFWhitelisted(long, String)}
+	 */
+	@Deprecated
 	public static boolean isCSRFOrigintWhitelisted(
+		long companyId, String origin) {
+
+		return isOriginCSRFWhitelisted(companyId, origin);
+	}
+
+	public static boolean isOriginCSRFWhitelisted(
 		long companyId, String origin) {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);

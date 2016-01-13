@@ -206,58 +206,6 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					url="<%= portletDisplay.getURLConfiguration() %>"
 				/>
 			</c:if>
-
-			<c:if test="<%= journalContentDisplayContext.isShowAddArticleIcon() %>">
-				<liferay-ui:icon-menu
-					cssClass="lfr-icon-action lfr-icon-action-add"
-					direction="down"
-					extended="<%= false %>"
-					icon="plus"
-					markupView="lexicon"
-					message="add"
-					showArrow="<%= false %>"
-					showWhenSingleIcon="<%= true %>"
-				>
-
-					<%
-					PortletURL addArticleURL = assetRendererFactory.getURLAdd(liferayPortletRequest, liferayPortletResponse, 0);
-
-					addArticleURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-					addArticleURL.setParameter("redirect", redirectURL.toString());
-					addArticleURL.setParameter("showHeader", Boolean.FALSE.toString());
-					addArticleURL.setParameter("portletResource", portletDisplay.getId());
-					addArticleURL.setParameter("referringPlid", String.valueOf(plid));
-					addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
-
-					addArticleURL.setWindowState(LiferayWindowState.POP_UP);
-
-					List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(company.getCompanyId(), PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), PortalUtil.getClassNameId(JournalArticle.class), WorkflowConstants.STATUS_APPROVED);
-
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					for (DDMStructure ddmStructure : ddmStructures) {
-						addArticleURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
-
-						data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-						data.put("title", HtmlUtil.escape(LanguageUtil.format(request, "new-x", ddmStructure.getName(locale))));
-					%>
-
-						<liferay-ui:icon
-							cssClass="lfr-icon-action lfr-icon-action-add"
-							data="<%= data %>"
-							label="<%= true %>"
-							message="<%= ddmStructure.getName(locale) %>"
-							method="get"
-							url="<%= addArticleURL.toString() %>"
-							useDialog="<%= true %>"
-						/>
-
-					<%
-					}
-					%>
-
-				</liferay-ui:icon-menu>
-			</c:if>
 		</div>
 	</div>
 </c:if>

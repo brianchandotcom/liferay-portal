@@ -15,12 +15,9 @@
 package com.liferay.portal.kernel.struts;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
-
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,23 +25,21 @@ import java.util.Map;
 public class LastPath implements Serializable {
 
 	public LastPath(String contextPath, String path) {
-		this(contextPath, path, Collections.<String, String[]>emptyMap());
+		this(contextPath, path, StringPool.BLANK);
 	}
 
-	public LastPath(
-		String contextPath, String path, Map<String, String[]> parameterMap) {
-
+	public LastPath(String contextPath, String path, String parameters) {
 		_contextPath = contextPath;
 		_path = path;
-		_parameterMap = new LinkedHashMap<>(parameterMap);
+		_parameters = parameters;
 	}
 
 	public String getContextPath() {
 		return _contextPath;
 	}
 
-	public Map<String, String[]> getParameterMap() {
-		return _parameterMap;
+	public String getParameters() {
+		return _parameters;
 	}
 
 	public String getPath() {
@@ -65,7 +60,7 @@ public class LastPath implements Serializable {
 	}
 
 	private final String _contextPath;
-	private final Map<String, String[]> _parameterMap;
+	private final String _parameters;
 	private final String _path;
 
 }

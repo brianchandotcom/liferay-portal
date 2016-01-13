@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -132,7 +133,8 @@ public class FriendlyURLServlet extends HttpServlet {
 				else {
 					lastPath = new LastPath(
 						_friendlyURLPathPrefix, pathInfo,
-						request.getParameterMap());
+						HttpUtil.parameterMapToString(
+							request.getParameterMap()));
 				}
 
 				request.setAttribute(WebKeys.LAST_PATH, lastPath);

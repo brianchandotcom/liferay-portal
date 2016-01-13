@@ -16,23 +16,14 @@ package com.liferay.document.library.web.display.context.logic;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.trash.util.TrashUtil;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera
- * @author Roberto Díaz
  */
 public class FileEntryDisplayContextHelper {
 
@@ -195,14 +186,6 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
-	public boolean isFileEntryTrashable() throws PortalException {
-		if (isDLFileEntry() && _isTrashEnabled()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isLockedByMe() {
 		if (hasLock()) {
 			return true;
@@ -213,23 +196,6 @@ public class FileEntryDisplayContextHelper {
 
 	public boolean isMoveActionAvailable() throws PortalException {
 		return isUpdatable();
-	}
-
-	public boolean isOpenInMsOfficeActionAvailable(
-			FileVersion fileVersion, HttpServletRequest request)
-		throws PortalException {
-
-		FileVersionDisplayContextHelper fileVersionDisplayContextHelper =
-			new FileVersionDisplayContextHelper(fileVersion);
-
-		if (hasViewPermission() &&
-			fileVersionDisplayContextHelper.isMsOffice() &&
-			_isWebDAVEnabled(request) && _isIEOnWin32(request)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isPermissionsButtonVisible() throws PortalException {
@@ -252,31 +218,6 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
-	private boolean _isIEOnWin32(HttpServletRequest request) {
-		if (_ieOnWin32 == null) {
-			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(request);
-		}
-
-		return _ieOnWin32;
-	}
-
-	private boolean _isTrashEnabled() throws PortalException {
-		if (_trashEnabled == null) {
-			_trashEnabled = TrashUtil.isTrashEnabled(_fileEntry.getGroupId());
-		}
-
-		return _trashEnabled;
-	}
-
-	private boolean _isWebDAVEnabled(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.isWebDAVEnabled();
-	}
-
 	private void _setValuesForNullFileEntry() {
 		_checkedOut = false;
 		_dlFileEntry = true;
@@ -287,7 +228,6 @@ public class FileEntryDisplayContextHelper {
 		_hasUpdatePermission = true;
 		_hasViewPermission = false;
 		_supportsLocking = false;
-		_trashEnabled = false;
 	}
 
 	private Boolean _checkedOut;
@@ -299,9 +239,7 @@ public class FileEntryDisplayContextHelper {
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
 	private Boolean _hasViewPermission;
-	private Boolean _ieOnWin32;
 	private final PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
-	private Boolean _trashEnabled;
 
 }

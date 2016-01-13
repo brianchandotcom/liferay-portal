@@ -131,6 +131,10 @@ public class PortletKeys {
 	public static final String NESTED_PORTLETS =
 		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
 
+	public static final String PASSWORD_POLICIES_ADMIN =
+		"com_liferay_password_policies_admin_web_portlet_" +
+			"PasswordPoliciesAdminPortlet";
+
 	public static final String PLUGINS_ADMIN =
 		"com_liferay_plugins_admin_web_portlet_PluginsAdminPortlet";
 

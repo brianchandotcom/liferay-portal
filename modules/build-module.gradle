@@ -1,3 +1,2 @@
-apply plugin: "com.liferay.change.log.builder"
 apply plugin: "com.liferay.defaults.plugin"
 apply plugin: "com.liferay.plugin"

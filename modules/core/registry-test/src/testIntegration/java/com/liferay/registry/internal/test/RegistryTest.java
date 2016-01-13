@@ -995,11 +995,9 @@ public class RegistryTest {
 			Assert.assertEquals(
 				expectedAddingInvocationCount,
 				mockServiceTrackerCustomizer.getAddingInvocationCount());
-
 			Assert.assertEquals(
 				expectedModifiedInvocationCount,
 				mockServiceTrackerCustomizer.getModifiedInvocationCount());
-
 			Assert.assertEquals(
 				expectedRemovedInvocationCount,
 				mockServiceTrackerCustomizer.getRemovedInvocationCount());

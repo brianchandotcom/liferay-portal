@@ -242,10 +242,33 @@ if (portletTitleBasedNavigation) {
 
 		<liferay-ui:asset-tags-error />
 
-		<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
-
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
+				<c:if test="<%= curParentMessage != null %>">
+					<div class="reply-to-message">
+						<span class="control-label">
+							<liferay-ui:message key="replying-to" />:
+						</span>
+
+						<%
+						message = curParentMessage;
+						MBCategory category = null;
+
+						request.setAttribute("edit_message.jsp-category", category);
+						request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
+						request.setAttribute("edit_message.jsp-message", message);
+						request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
+						request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
+						request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
+						request.setAttribute("edit_message.jsp-thread", thread);
+						%>
+
+						<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
+					</div>
+				</c:if>
+
+				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+
 				<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="subject" value="<%= subject %>" />
 
 				<aui:field-wrapper label="body">
@@ -508,27 +531,6 @@ if (portletTitleBasedNavigation) {
 
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
-
-		<c:if test="<%= curParentMessage != null %>">
-			<br /><br />
-
-			<liferay-ui:message key="replying-to" />:
-
-			<%
-			message = curParentMessage;
-			MBCategory category = null;
-
-			request.setAttribute("edit_message.jsp-category", category);
-			request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
-			request.setAttribute("edit_message.jsp-message", message);
-			request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
-			request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
-			request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
-			request.setAttribute("edit_message.jsp-thread", thread);
-			%>
-
-			<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
-		</c:if>
 	</aui:form>
 </div>
 

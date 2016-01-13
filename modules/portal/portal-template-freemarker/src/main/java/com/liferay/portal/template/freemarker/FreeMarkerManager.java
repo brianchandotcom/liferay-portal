@@ -47,7 +47,6 @@ import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.Configuration;
-import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -147,7 +146,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		contextObjects.put(
 			applicationName,
 			new HttpRequestHashModel(
-				request, response, ObjectWrapper.DEFAULT_WRAPPER));
+				request, response, _configuration.getObjectWrapper()));
 	}
 
 	@Override
@@ -312,7 +311,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		return new ServletContextHashModel(
-			genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
+			genericServlet, _configuration.getObjectWrapper());
 	}
 
 	protected ServletContext getServletContextWrapper(

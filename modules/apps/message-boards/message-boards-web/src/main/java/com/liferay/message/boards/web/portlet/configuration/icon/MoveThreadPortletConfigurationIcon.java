@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -49,9 +48,9 @@ public class MoveThreadPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/message_boards/move_thread");

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -56,9 +57,9 @@ public class DeleteThreadPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		try {
-			PortletURL deleteURL = PortletURLFactoryUtil.create(
+			PortletURL deleteURL = PortalUtil.getControlPanelPortletURL(
 				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+				PortletRequest.ACTION_PHASE);
 
 			deleteURL.setParameter(
 				ActionRequest.ACTION_NAME, "/message_boards/delete_thread");

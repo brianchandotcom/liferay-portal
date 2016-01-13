@@ -366,30 +366,6 @@ public class UserNotificationEventLocalServiceImpl
 		return userNotificationEventPersistence.findByUserId(userId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public List<UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived) {
-
-		return getArchivedUserNotificationEvents(userId, archived);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
-	 *             boolean, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived, int start, int end) {
-
-		return getArchivedUserNotificationEvents(userId, archived, start, end);
-	}
-
 	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(
 		long userId, int deliveryType) {
@@ -417,16 +393,6 @@ public class UserNotificationEventLocalServiceImpl
 	@Override
 	public int getUserNotificationEventsCount(long userId) {
 		return userNotificationEventPersistence.countByUserId(userId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0 {@link
-	 *             #getArchivedUserNotificationEventsCount(long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public int getUserNotificationEventsCount(long userId, boolean archived) {
-		return getArchivedUserNotificationEventsCount(userId, archived);
 	}
 
 	@Override

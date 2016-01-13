@@ -227,6 +227,18 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		indexWriter.deleteEntityDocuments(searchContext, className);
 	}
 
+	public int getReindexTaskCount(long groupId, boolean completed)
+		throws SearchException {
+
+		return _backgroundTaskManager.getBackgroundTasksCount(
+			groupId,
+			new String[] {
+				ReindexPortalBackgroundTaskExecutor.class.getName(),
+				ReindexSingleIndexerBackgroundTaskExecutor.class.getName()
+			},
+			completed);
+	}
+
 	@Override
 	public void indexKeyword(
 			long companyId, String querySuggestion, float weight,
@@ -624,7 +636,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexWriterHelperImpl.class);
 
-	private volatile BackgroundTaskManager _backgroundTaskManager;
+	private BackgroundTaskManager _backgroundTaskManager;
 	private volatile boolean _commitImmediately;
 	private volatile boolean _indexReadOnly;
 	private SearchEngineHelper _searchEngineHelper;

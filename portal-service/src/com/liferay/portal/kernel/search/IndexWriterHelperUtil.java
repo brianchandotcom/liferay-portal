@@ -83,6 +83,12 @@ public class IndexWriterHelperUtil {
 			searchEngineId, companyId, className, commitImmediately);
 	}
 
+	public static int getReindexTaskCount(long groupId, boolean completed)
+		throws SearchException {
+
+		return _indexWriterHelper.getReindexTaskCount(groupId, completed);
+	}
+
 	public static void indexKeyword(
 			long companyId, String querySuggestion, float weight,
 			String keywordType, Locale locale)

@@ -17,13 +17,11 @@ package com.liferay.control.menu.web;
 import com.liferay.control.menu.BaseControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.search.internal.background.task.ReindexPortalBackgroundTaskExecutor;
-import com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor;
 
 import java.util.Locale;
 import java.util.Map;
@@ -79,13 +77,8 @@ public class IndexingControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
-		int count = _backgroundTaskManager.getBackgroundTasksCount(
-			CompanyConstants.SYSTEM,
-			new String[] {
-				ReindexPortalBackgroundTaskExecutor.class.getName(),
-				ReindexSingleIndexerBackgroundTaskExecutor.class.getName()
-			},
-			false);
+		int count = _indexWriterHelper.getReindexTaskCount(
+			CompanyConstants.SYSTEM, false);
 
 		if (count == 0) {
 			return false;
@@ -95,12 +88,10 @@ public class IndexingControlMenuEntry
 	}
 
 	@Reference(unbind = "-")
-	public void setBackgroundTaskManager(
-		BackgroundTaskManager backgroundTaskManager) {
-
-		_backgroundTaskManager = backgroundTaskManager;
+	public void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
+		_indexWriterHelper = indexWriterHelper;
 	}
 
-	private BackgroundTaskManager _backgroundTaskManager;
+	private IndexWriterHelper _indexWriterHelper;
 
 }

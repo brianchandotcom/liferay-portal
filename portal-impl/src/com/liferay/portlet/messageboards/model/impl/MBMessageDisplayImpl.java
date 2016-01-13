@@ -35,6 +35,44 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	public MBMessageDisplayImpl(
 		MBMessage message, MBMessage parentMessage, MBCategory category,
 		MBThread thread, MBThread previousThread, MBThread nextThread,
+		int status, MBMessageLocalService messageLocalService,
+		Comparator<MBMessage> comparator) {
+
+		_message = message;
+		_parentMessage = parentMessage;
+		_category = category;
+		_thread = thread;
+
+		_treeWalker = new MBTreeWalkerImpl(
+			message.getThreadId(), status, messageLocalService, comparator);
+
+		_previousThread = previousThread;
+		_nextThread = nextThread;
+		_threadView = MBThreadConstants.THREAD_VIEW_TREE;
+
+		int dicussionMessagesCount = 0;
+
+		if (message.isDiscussion() &&
+			(PropsValues.DISCUSSION_MAX_COMMENTS > 0)) {
+
+			dicussionMessagesCount =
+				messageLocalService.getDiscussionMessagesCount(
+					message.getClassName(), message.getClassPK(),
+					WorkflowConstants.STATUS_APPROVED);
+		}
+
+		_discussionMessagesCount = dicussionMessagesCount;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #MBMessageDisplayImpl(
+	 *             MBMessage, MBMessage, MBCategory, MBThread, MBThread,
+	 *             MBThread, int, MBMessageLocalService, Comparator)}
+	 */
+	@Deprecated
+	public MBMessageDisplayImpl(
+		MBMessage message, MBMessage parentMessage, MBCategory category,
+		MBThread thread, MBThread previousThread, MBThread nextThread,
 		int status, String threadView,
 		MBMessageLocalService messageLocalService,
 		Comparator<MBMessage> comparator) {
@@ -100,6 +138,10 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		return _thread;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getThreadView() {
 		return _threadView;

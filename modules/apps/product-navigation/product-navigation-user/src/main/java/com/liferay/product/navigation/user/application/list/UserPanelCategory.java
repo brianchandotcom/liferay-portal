@@ -49,11 +49,6 @@ public class UserPanelCategory extends BaseJSPPanelCategory {
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-user";
-	}
-
-	@Override
 	public String getJspPath() {
 		return "/user_body.jsp";
 	}

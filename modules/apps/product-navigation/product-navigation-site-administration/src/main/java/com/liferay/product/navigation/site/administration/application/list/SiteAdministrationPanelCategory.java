@@ -50,11 +50,6 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-compass";
-	}
-
-	@Override
 	public String getJspPath() {
 		return "/sites/site_administration_body.jsp";
 	}

@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Component;
 public class UsersPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-group";
-	}
-
-	@Override
 	public String getKey() {
 		return PanelCategoryKeys.SITE_ADMINISTRATION_USERS;
 	}

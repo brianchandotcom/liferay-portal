@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY);
+InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(LayoutAdminWebKeys.CONTROL_MENU_ENTRY);
 
 Map<String, Object> data = new HashMap<>();
 

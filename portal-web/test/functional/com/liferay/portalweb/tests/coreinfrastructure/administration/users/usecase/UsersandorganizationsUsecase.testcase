@@ -1282,7 +1282,7 @@
 			<var name="url" value="http://localhost:8080/web/united-states" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewNoPG">
+		<execute macro="MessageboardsThread#viewDoNotHaveRequiredPermissionsPG">
 			<var name="threadSubject" value="United States Message Subject" />
 		</execute>
 
@@ -1297,7 +1297,7 @@
 			<var name="url" value="http://localhost:8080/web/canada" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewNoPG">
+		<execute macro="MessageboardsThread#viewDoNotHaveRequiredPermissionsPG">
 			<var name="threadSubject" value="Canada Message Subject" />
 		</execute>
 	</command>

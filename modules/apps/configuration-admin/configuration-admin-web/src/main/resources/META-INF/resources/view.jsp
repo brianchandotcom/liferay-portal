@@ -139,7 +139,7 @@ if (Validator.isNotNull(keywords)) {
 				name=""
 			>
 				<liferay-ui:icon-menu
-					direction="down"
+					direction="right"
 					markupView="lexicon"
 					showWhenSingleIcon="<%= true %>"
 				>

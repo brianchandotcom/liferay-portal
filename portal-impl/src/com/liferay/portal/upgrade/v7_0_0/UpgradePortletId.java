@@ -26,7 +26,9 @@ public class UpgradePortletId
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			new String[] {"147", PortletKeys.ASSET_CATEGORIES_ADMIN},
-			new String[] {"99", PortletKeys.ASSET_TAGS_ADMIN}
+			new String[] {"99", PortletKeys.ASSET_TAGS_ADMIN},
+			new String[] {"134", PortletKeys.SITE_ADMIN},
+			new String[] {"165", PortletKeys.SITE_SETTINGS}
 		};
 	}
 }

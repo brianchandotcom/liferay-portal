@@ -193,6 +193,12 @@ public class JavadocManagerImpl implements JavadocManager {
 				continue;
 			}
 
+			String className = clazz.getName();
+
+			if (className.endsWith("LocalServiceImpl")) {
+				continue;
+			}
+
 			JavadocClass javadocClass = parseJavadocClass(
 				servletContextName, javadocElement, clazz);
 

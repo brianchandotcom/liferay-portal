@@ -64,6 +64,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
+import org.gradle.api.tasks.bundling.Compression;
 import org.gradle.api.tasks.bundling.Tar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
@@ -101,9 +102,15 @@ public class WorkspacePlugin implements Plugin<Project> {
 		addRepositoryBundle(project, workspaceExtension);
 
 		Tar distBundleTarTask = addTaskDistBundle(
-			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, bundleConfiguration);
+			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, bundleConfiguration,
+			workspaceExtension);
+
+		distBundleTarTask.setCompression(Compression.GZIP);
+		distBundleTarTask.setExtension("tar.gz");
+
 		Zip distBundleZipTask = addTaskDistBundle(
-			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, bundleConfiguration);
+			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, bundleConfiguration,
+			workspaceExtension);
 
 		AbstractArchiveTask[] distBundleTasks = {
 			distBundleTarTask, distBundleZipTask
@@ -235,7 +242,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	protected <T extends AbstractArchiveTask> T addTaskDistBundle(
 		final Project project, String taskName, Class<T> clazz,
-		final Configuration bundleConfiguration) {
+		final Configuration bundleConfiguration,
+		WorkspaceExtension workspaceExtension) {
 
 		T task = GradleUtil.addTask(project, taskName, clazz);
 
@@ -265,6 +273,10 @@ public class WorkspacePlugin implements Plugin<Project> {
 				}
 
 			});
+
+		task.from(
+			project.file("configs/common"),
+			project.file("configs/" + workspaceExtension.getEnvironment()));
 
 		task.setBaseName(project.getName());
 		task.setDescription("Assembles the bundle and zips it up.");

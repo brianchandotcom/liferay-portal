@@ -72,26 +72,6 @@ public interface CalEventLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addEvent(long, String,
-	String, String, int, int, int, int, int, int, int, boolean,
-	boolean, String, boolean, TZSRecurrence, int, int, int,
-	ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.calendar.model.CalEvent addEvent(long userId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String location, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int durationHour,
-		int durationMinute, boolean allDay, boolean timeZoneSensitive,
-		java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
-		int firstReminder, int secondReminder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
 	public void addEventResources(
 		com.liferay.portlet.calendar.model.CalEvent event,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -429,27 +409,6 @@ public interface CalEventLocalService extends BaseLocalService,
 		int startDateHour, int startDateMinute, int durationHour,
 		int durationMinute, boolean allDay, boolean timeZoneSensitive,
 		java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
-		int firstReminder, int secondReminder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #updateEvent(long, long,
-	String, String, String, int, int, int, int, int, int, int,
-	boolean, boolean, String, boolean, TZSRecurrence, int, int,
-	int, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
-		long userId, long eventId, java.lang.String title,
-		java.lang.String description, java.lang.String location,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int durationHour, int durationMinute,
-		boolean allDay, boolean timeZoneSensitive, java.lang.String type,
-		boolean repeating,
 		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
 		int firstReminder, int secondReminder,
 		com.liferay.portal.service.ServiceContext serviceContext)

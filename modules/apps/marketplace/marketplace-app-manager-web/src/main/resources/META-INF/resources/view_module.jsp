@@ -136,6 +136,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 
 	<liferay-ui:search-container
 		emptyResultsMessage="<%= emptyResultsMessage %>"
+		iteratorURL="<%= portletURL %>"
 	>
 		<liferay-ui:search-container-results>
 

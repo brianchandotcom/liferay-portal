@@ -257,6 +257,7 @@ AUI.add(
 						instance.translationManager.after('defaultLocaleChange', instance._onDefaultLocaleChange, instance);
 						instance.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
 
+						instance.on('drag:drag', A.DD.DDM.syncActiveShims, A.DD.DDM, true);
 						instance.on('model:change', instance._onPropertyModelChange);
 					},
 
@@ -582,6 +583,30 @@ AUI.add(
 						LiferayFormBuilder.UNIQUE_FIELD_NAMES_MAP.clear();
 
 						return LiferayFormBuilder.superclass._setFields.apply(instance, arguments);
+					},
+
+					_setFieldsSortableListConfig: function() {
+						var instance = this;
+
+						var config = LiferayFormBuilder.superclass._setFieldsSortableListConfig.apply(instance, arguments);
+
+						config.dd.plugins = [
+							{
+								cfg: {
+									constrain: '#main-content'
+								},
+								fn: A.Plugin.DDConstrained
+							},
+							{
+								cfg: {
+									horizontal: false,
+									node: '#main-content'
+								},
+								fn: A.Plugin.DDNodeScroll
+							}
+						];
+
+						return config;
 					},
 
 					_setInvalidDDHandles: function(field, type) {

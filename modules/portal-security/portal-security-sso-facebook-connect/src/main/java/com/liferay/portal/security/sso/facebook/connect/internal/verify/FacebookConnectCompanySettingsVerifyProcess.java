@@ -88,9 +88,9 @@ public class FacebookConnectCompanySettingsVerifyProcess
 			FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
 			upgradeOAuthRedirectURI(
 				_prefsProps.getString(
-						companyId,
-						LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
-						StringPool.BLANK)));
+					companyId,
+					LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
+					StringPool.BLANK)));
 		dictionary.put(
 			FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL,
 			_prefsProps.getString(
@@ -134,8 +134,9 @@ public class FacebookConnectCompanySettingsVerifyProcess
 	}
 
 	private String upgradeOAuthRedirectURI(String redirectURIFromLiferay62) {
-		if (Validator.isNull(redirectURIFromLiferay62))
+		if (Validator.isNull(redirectURIFromLiferay62)) {
 			return redirectURIFromLiferay62;
+		}
 
 		return redirectURIFromLiferay62.replaceFirst(
 			"/c/login/facebook_connect_oauth",

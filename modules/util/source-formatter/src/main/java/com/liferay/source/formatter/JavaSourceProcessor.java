@@ -1010,9 +1010,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (portalSource) {
 			fileNames = getPortalJavaFiles();
 
-			_checkModulesServiceUtil = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.modules.service.util"));
 			_checkUnprocessedExceptions = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.unprocessed.exceptions"));
@@ -3708,7 +3705,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
-	private boolean _checkModulesServiceUtil;
 	private boolean _checkTabs;
 	private List<String> _checkTabsExclusionFiles;
 	private boolean _checkUnprocessedExceptions;

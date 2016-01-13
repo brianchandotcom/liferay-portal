@@ -122,7 +122,7 @@ AUI.add(
 								title: Liferay.Language.get('publish')
 							},
 							function(dialogWindow) {
-								var publishNode = instance.one('#' + instance.ns('publishModal'));
+								var publishNode = instance.byId(instance.ns('publishModal'));
 
 								if (publishNode) {
 									publishNode.show();

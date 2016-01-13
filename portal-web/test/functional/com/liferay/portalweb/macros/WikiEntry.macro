@@ -60,6 +60,6 @@
 	</command>
 
 	<command name="viewPageContentBody">
-		<execute function="AssertTextEquals" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
+		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 	</command>
 </definition>

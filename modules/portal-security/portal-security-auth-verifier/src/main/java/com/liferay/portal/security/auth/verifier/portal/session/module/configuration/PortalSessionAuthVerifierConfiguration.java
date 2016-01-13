@@ -16,7 +16,7 @@ package com.liferay.portal.security.auth.verifier.portal.session.module.configur
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVerifierConfiguration;
 
 /**

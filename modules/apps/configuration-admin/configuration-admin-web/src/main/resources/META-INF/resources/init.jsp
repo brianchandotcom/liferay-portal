@@ -26,14 +26,14 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.configuration.admin.ConfigurationAdmin" %><%@
-page import="com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys" %><%@
+<%@ page import="com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys" %><%@
 page import="com.liferay.configuration.admin.web.model.ConfigurationModel" %><%@
 page import="com.liferay.configuration.admin.web.util.ConfigurationModelIterator" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.metatype.annotations.ConfigurationAdmin" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %>
 
 <%@ page import="java.util.List" %>

@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 
 /**

@@ -16,8 +16,8 @@ package com.liferay.portal.ldap.authenticator.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.ldap.configuration.CompanyScopedConfiguration;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 
 /**
  * @author Michael C. Han

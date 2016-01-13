@@ -16,7 +16,7 @@ package com.liferay.site.navigation.site.map.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 
 /**
  * @author Juergen Kappler

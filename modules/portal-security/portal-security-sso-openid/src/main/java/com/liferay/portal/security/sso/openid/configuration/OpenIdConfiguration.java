@@ -16,7 +16,7 @@ package com.liferay.portal.security.sso.openid.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 
 /**
  * Defines the configuration property keys and sensible default values.

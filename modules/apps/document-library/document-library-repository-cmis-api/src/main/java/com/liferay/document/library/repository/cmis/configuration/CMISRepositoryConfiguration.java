@@ -16,7 +16,7 @@ package com.liferay.document.library.repository.cmis.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 
 /**
  * @author Adolfo Pérez

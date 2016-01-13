@@ -16,8 +16,8 @@ package com.liferay.journal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 
 /**
  * @author Juergen Kappler

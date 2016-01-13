@@ -16,7 +16,7 @@ package com.liferay.portal.security.auto.login.request.parameter.module.configur
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 
 /**
  * @author Tomas Polesovsky

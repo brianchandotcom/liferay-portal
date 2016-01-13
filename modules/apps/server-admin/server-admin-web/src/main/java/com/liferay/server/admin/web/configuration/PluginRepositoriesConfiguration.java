@@ -16,8 +16,8 @@ package com.liferay.server.admin.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
 
 /**
  * @author Michael C. Han

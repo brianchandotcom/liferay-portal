@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.internal.validator.parser.LDAPFilterLexer;
 import com.liferay.portal.ldap.internal.validator.parser.LDAPFilterParser;
-import com.liferay.portal.security.ldap.LDAPFilterValidator;
+import com.liferay.portal.kernel.security.ldap.LDAPFilterValidator;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;

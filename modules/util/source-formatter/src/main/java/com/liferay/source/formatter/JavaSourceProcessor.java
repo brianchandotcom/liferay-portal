@@ -1010,9 +1010,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (portalSource) {
 			fileNames = getPortalJavaFiles();
 
-			_checkModulesServiceUtil = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.modules.service.util"));
 			_checkUnprocessedExceptions = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.unprocessed.exceptions"));
@@ -2397,14 +2394,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (serviceUtilClassPackagePath.startsWith(
 						moduleServicePackagePath)) {
 
-					if (_checkModulesServiceUtil) {
-						processErrorMessage(
-							fileName,
-							"LPS-59076: Convert OSGi Component to Spring " +
-								"bean: " + fileName);
-					}
-
-					break;
+					continue;
 				}
 			}
 
@@ -2476,38 +2466,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					match, "private volatile ", "private ");
 
 				return StringUtil.replace(content, match, replacement);
-			}
-
-			if (!_checkModulesServiceUtil) {
-				continue;
-			}
-
-			if (moduleServicePackagePath == null) {
-				moduleServicePackagePath = getModuleServicePackagePath(
-					fileName);
-			}
-
-			if (Validator.isNotNull(moduleServicePackagePath)) {
-				sb = new StringBundler(5);
-
-				sb.append("\nimport ");
-				sb.append(moduleServicePackagePath);
-				sb.append(".*\\.");
-				sb.append(typeName);
-				sb.append(StringPool.SEMICOLON);
-
-				Pattern importPattern = Pattern.compile(sb.toString());
-
-				Matcher importMatcher = importPattern.matcher(content);
-
-				if (importMatcher.find()) {
-					processErrorMessage(
-						fileName,
-						"LPS-59076: Convert OSGi Component to Spring bean: " +
-							fileName);
-
-					break;
-				}
 			}
 		}
 
@@ -3747,7 +3705,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
-	private boolean _checkModulesServiceUtil;
 	private boolean _checkTabs;
 	private List<String> _checkTabsExclusionFiles;
 	private boolean _checkUnprocessedExceptions;

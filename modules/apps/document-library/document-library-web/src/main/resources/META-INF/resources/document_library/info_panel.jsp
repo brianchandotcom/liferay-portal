@@ -135,6 +135,26 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 
 					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="crop-image" />" class="img-rounded" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
 
+					<aui:button href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>" value="download" />
+
+					<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
+
+					<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
+
+							<%
+							String webDavHelpMessage = null;
+
+							if (BrowserSnifferUtil.isWindows(request)) {
+								webDavHelpMessage = LanguageUtil.format(request, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
+							}
+							else {
+								webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
+							}
+							%>
+
+						<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry) %>" />
+					</c:if>
+
 					<h5><strong><liferay-ui:message key="created" /></strong></h5>
 
 					<p>

@@ -18,8 +18,33 @@
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/{topLink}</pattern>
+		<pattern>/banned-users</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_banned_users</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/message-boards-home</pattern>
 		<implicit-parameter name="mvcRenderCommandName">/message_boards/view</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/my-posts</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_my_posts</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/my-subscriptions</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_my_subscriptions</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/recent-posts</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_recent_posts</implicit-parameter>
+		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/statistics</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_statistics</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
@@ -47,8 +72,28 @@
 		<implicit-parameter name="mvcRenderCommandName">/message_boards/search</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/{topLink}/{p_p_state}</pattern>
+		<pattern>/banned-users/{p_p_state}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_banned_users</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/message-boards-home/{p_p_state}</pattern>
 		<implicit-parameter name="mvcRenderCommandName">/message_boards/view</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/my-posts/{p_p_state}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_my_posts</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/my-subscriptions/{p_p_state}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_my_subscriptions</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/recent-posts/{p_p_state}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_recent_posts</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/statistics/{p_p_state}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_statistics</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/category/{mbCategoryId:\d+}/{p_p_state}</pattern>

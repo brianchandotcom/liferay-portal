@@ -24,7 +24,6 @@ long categoryId = MBUtil.getCategoryId(request, category);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-portletURL.setParameter("topLink", "message-boards-home");
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 request.setAttribute("view.jsp-categoryId", categoryId);
@@ -50,7 +49,6 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-		navigationURL.setParameter("top-link", "message-boards-home");
 		navigationURL.setParameter("tag", StringPool.BLANK);
 		%>
 

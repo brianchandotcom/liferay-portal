@@ -23,11 +23,11 @@ boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing", !stag
 
 portletDisplay.setShowBackIcon(true);
 
-PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(request, StagingProcessesPortletKeys.STAGING_PROCESSES, PortletRequest.RENDER_PHASE);
+PortletURL stagingProcessesURL = PortalUtil.getControlPanelPortletURL(request, StagingProcessesPortletKeys.STAGING_PROCESSES, PortletRequest.RENDER_PHASE);
 
-redirectURL.setParameter("mvcPath", "/view.jsp");
+stagingProcessesURL.setParameter("mvcPath", "/view.jsp");
 
-portletDisplay.setURLBack(redirectURL.toString());
+portletDisplay.setURLBack(stagingProcessesURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 %>

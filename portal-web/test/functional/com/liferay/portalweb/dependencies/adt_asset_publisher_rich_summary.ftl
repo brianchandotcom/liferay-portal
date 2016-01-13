@@ -36,8 +36,6 @@
 
 		<h3 class="asset-title">
 			<a href="${viewURL}">
-				<i class="${assetRenderer.getIconCssClass()}"></i>
-
 				${entryTitle}
 			</a>
 		</h3>

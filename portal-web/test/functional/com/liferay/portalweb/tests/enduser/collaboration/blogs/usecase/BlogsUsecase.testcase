@@ -1757,6 +1757,8 @@
 			</execute>
 		</for>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#searchCP">
 			<var name="orgName" value="Organization3 Name" />
 			<var name="searchTerm" value="Organization3 Name" />
@@ -1771,6 +1773,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#viewParentOrganizationCP">
 			<var name="orgName" value="Organization1 Name" />
 			<var name="parentOrgExist" value="true" />
@@ -1781,6 +1785,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#viewParentOrganizationCP">
 			<var name="orgName" value="Organization2 Name" />

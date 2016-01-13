@@ -18,7 +18,6 @@ import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.portal.exception.PasswordExpiredException;
 import com.liferay.portal.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.ldap.LDAPFilterException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthException;
@@ -390,8 +389,7 @@ public class LDAPAuth implements Authenticator {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof LDAPFilterException ||
-				e instanceof PasswordExpiredException ||
+			if (e instanceof PasswordExpiredException ||
 				e instanceof UserLockoutException) {
 
 				throw e;

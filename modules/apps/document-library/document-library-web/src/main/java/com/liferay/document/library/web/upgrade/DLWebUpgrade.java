@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.upgrade;
 
 import com.liferay.document.library.web.upgrade.v1_0_0.UpgradeAdminPortlets;
-import com.liferay.document.library.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.document.library.web.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -39,7 +38,7 @@ public class DLWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.document.library.web", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradeAdminPortlets(),
+			new UpgradeAdminPortlets(),
 			new UpgradePortletSettings(_settingsFactory));
 	}
 

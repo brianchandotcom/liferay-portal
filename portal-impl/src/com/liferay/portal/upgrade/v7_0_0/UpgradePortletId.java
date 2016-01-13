@@ -40,7 +40,11 @@ public class UpgradePortletId
 			new String[] {"33", PortletKeys.BLOGS},
 			new String[] {"115", PortletKeys.BLOGS_AGGREGATOR},
 			new String[] {"161", PortletKeys.BLOGS_ADMIN},
-			new String[] {"139", PortletKeys.EXPANDO}
+			new String[] {"139", PortletKeys.EXPANDO},
+			new String[] {"20", PortletKeys.DOCUMENT_LIBRARY},
+			new String[] {"199", PortletKeys.DOCUMENT_LIBRARY_ADMIN},
+			new String[] {"110", PortletKeys.DOCUMENT_LIBRARY},
+			new String[] {"31", PortletKeys.MEDIA_GALLERY_DISPLAY}
 		};
 	}
 

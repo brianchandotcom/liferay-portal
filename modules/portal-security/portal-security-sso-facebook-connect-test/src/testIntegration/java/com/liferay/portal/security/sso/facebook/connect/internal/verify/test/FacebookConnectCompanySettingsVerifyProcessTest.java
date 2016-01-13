@@ -80,7 +80,7 @@ public class FacebookConnectCompanySettingsVerifyProcessTest
 				FacebookConnectConfigurationKeys.OAUTH_AUTH_URL,
 				StringPool.BLANK));
 		Assert.assertEquals(
-			"test_oauth_redirect_url",
+			"http://localhost:8080/c/portal/facebook_connect_oauth",
 			settings.getValue(
 				FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
 				StringPool.BLANK));
@@ -119,7 +119,7 @@ public class FacebookConnectCompanySettingsVerifyProcessTest
 			"test_oauth_auth_url");
 		properties.put(
 			LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
-			"test_oauth_redirect_url");
+			"http://localhost:8080/c/login/facebook_connect_oauth");
 		properties.put(
 			LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
 			"test_oauth_token_url");

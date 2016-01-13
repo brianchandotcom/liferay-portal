@@ -56,7 +56,6 @@ if (threadId > 0) {
 }
 
 String body = BeanParamUtil.getString(message, request, "body");
-boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean quote = ParamUtil.getBoolean(request, "quote");
 boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 
@@ -131,50 +130,6 @@ if (portletTitleBasedNavigation) {
 		/>
 	</c:if>
 
-	<c:if test="<%= preview %>">
-		<liferay-ui:message key="preview" />:
-
-		<%
-		MBMessage previewMessage = message;
-
-		if (message == null) {
-			previewMessage = new MBMessageImpl();
-
-			previewMessage.setMessageId(messageId);
-			previewMessage.setCompanyId(user.getCompanyId());
-			previewMessage.setUserId(user.getUserId());
-			previewMessage.setUserName(user.getFullName());
-			previewMessage.setCreateDate(new Date());
-			previewMessage.setModifiedDate(new Date());
-			previewMessage.setThreadId(threadId);
-			previewMessage.setFormat(messageFormat);
-			previewMessage.setAnonymous(ParamUtil.getBoolean(request, "anonymous"));
-		}
-
-		previewMessage.setSubject(subject);
-		previewMessage.setBody(body);
-
-		MBCategory category = null;
-
-		request.setAttribute("edit_message.jsp-assetTagNames", ParamUtil.getString(request, "assetTagNames"));
-		request.setAttribute("edit_message.jsp-category", category);
-		request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);
-		request.setAttribute("edit_message.jsp-message", previewMessage);
-		request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
-		request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
-		request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
-		request.setAttribute("edit_message.jsp-thread", thread);
-		%>
-
-		<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
-
-		<%
-		request.removeAttribute("edit_message.jsp-assetTagNames");
-		%>
-
-		<br />
-	</c:if>
-
 	<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 	</portlet:actionURL>
@@ -186,7 +141,6 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
 		<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
 		<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />
-		<aui:input name="preview" type="hidden" />
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 		<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
@@ -527,8 +481,6 @@ if (portletTitleBasedNavigation) {
 				<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveMessage(true);" %>' value="<%= saveButtonLabel %>" />
 			</c:if>
 
-			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "previewMessage();" %>' value="preview" />
-
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
@@ -539,21 +491,6 @@ if (portletTitleBasedNavigation) {
 		return AUI.$(document.<portlet:namespace />fm).fm('subject').val() + ' ' + <portlet:namespace />getHTML();
 	}
 
-	function <portlet:namespace />previewMessage() {
-		<c:if test="<%= (message != null) && !message.isDraft() %>">
-			if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-is-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
-				return false;
-			}
-		</c:if>
-
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('body').val(<portlet:namespace />getHTML());
-		form.fm('preview').val('true');
-
-		<portlet:namespace />saveMessage(true);
-	}
-
 	function <portlet:namespace />saveMessage(draft) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -561,7 +498,6 @@ if (portletTitleBasedNavigation) {
 		form.fm('body').val(<portlet:namespace />getHTML());
 
 		if (!draft) {
-			form.fm('preview').val(<%= preview %>);
 			form.fm('workflowAction').val(<%= WorkflowConstants.ACTION_PUBLISH %>);
 		}
 

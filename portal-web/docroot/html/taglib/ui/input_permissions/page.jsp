@@ -249,8 +249,8 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 				var viewableBy = $('#<%= uniqueNamespace %>inputPermissionsViewRole').val();
 
-				var checkGuestViewPermissions = false;
 				var checkGroupViewPermissions = false;
+				var checkGuestViewPermissions = false;
 
 				if (viewableBy == '<%= RoleConstants.GUEST %>') {
 					checkGuestViewPermissions = true;

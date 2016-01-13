@@ -463,6 +463,16 @@
 		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_VIEW_WEEK_LAST_HOUR" value1="${lastHour}" />
 	</command>
 
+	<command name="viewLocalizedEvent">
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="${viewTypeLocalized}" />
+		</execute>
+
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+	</command>
+
 	<command name="viewMonth">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />

@@ -53,6 +53,6 @@ public class BackgroundTaskStatusMessageSenderImpl
 		_messageBus = messageBus;
 	}
 
-	private volatile MessageBus _messageBus;
+	private MessageBus _messageBus;
 
 }

@@ -64,7 +64,7 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 	}
 
 	public void validate(String filter) throws LDAPFilterException {
-		if (!isValidFilter(filter)) {
+		if (!isValid(filter)) {
 			throw new LDAPFilterException("Invalid filter " + filter);
 		}
 	}
@@ -72,7 +72,7 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 	public void validate(String filter, String filterPropertyName)
 		throws LDAPFilterException {
 
-		f (!isValidFilter(filter)) {
+		if (!isValid(filter)) {
 			throw new LDAPFilterException(
 				"Invalid filter " + filter + " defined by " +
 					filterPropertyName);

@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>EDIT_PAGE</td>
-	<td>//div[@class='list-group-item']//a[contains(@title,'Edit ${key_page}')]</td>
+	<td>//a[contains(@class,'tree-edit') and contains(@onmouseover,'${key_page}')]</td>
 	<td></td>
 </tr>
 <tr>

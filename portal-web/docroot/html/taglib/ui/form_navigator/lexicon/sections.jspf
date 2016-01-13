@@ -70,6 +70,22 @@
 		<!-- End fragment <%= sectionId %> -->
 
 	<%
+		String errorSection = (String)request.getAttribute("errorSection");
+
+		if (curFormNavigatorEntry.getKey().equals(errorSection)) {
+		%>
+
+			<aui:script>
+				var sectionContent = $('#<%= errorSection %>Content');
+
+				if (!sectionContent.hasClass('in')) {
+					sectionContent.collapse('show');
+				}
+			</aui:script>
+
+		<%
+			request.setAttribute("errorSection", null);
+		}
 	}
 	%>
 

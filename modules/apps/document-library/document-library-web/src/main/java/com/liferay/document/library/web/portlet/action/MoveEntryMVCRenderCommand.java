@@ -77,7 +77,7 @@ public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 				renderRequest);
 
 			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES, fileShortcuts);
+				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS, fileShortcuts);
 
 			List<Folder> folders = ActionUtil.getFolders(renderRequest);
 

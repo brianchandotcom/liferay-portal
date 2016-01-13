@@ -68,7 +68,7 @@ public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
 
 			FileVersion fileVersion = ActionUtil.getFileVersion(
-				fileEntry, renderRequest);
+				renderRequest, fileEntry);
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);

@@ -55,7 +55,7 @@ public class DownloadFileEntryPortletConfigurationIcon
 
 		try {
 			FileVersion fileVersion = ActionUtil.getFileVersion(
-				_fileEntry, portletRequest);
+				portletRequest, _fileEntry);
 
 			url = DLUtil.getDownloadURL(
 				_fileEntry, fileVersion, themeDisplay, StringPool.BLANK);

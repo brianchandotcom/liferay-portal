@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div class="<%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> sidenav-container sidenav-right">
+<div class="<%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 	<aui:form action="<%= editFileEntry %>" method="post" name="fm">
@@ -673,6 +673,18 @@ if (portletTitleBasedNavigation) {
 		'click',
 		function(event) {
 			<portlet:namespace />updateRowsChecked($(event.currentTarget));
+		}
+	);
+</aui:script>
+
+<aui:script>
+	$('#<portlet:namespace />infoPanelId').sideNavigation(
+		{
+			gutter: 15,
+			position: 'right',
+			type: 'relative',
+			typeMobile: 'fixed',
+			width: 320
 		}
 	);
 </aui:script>

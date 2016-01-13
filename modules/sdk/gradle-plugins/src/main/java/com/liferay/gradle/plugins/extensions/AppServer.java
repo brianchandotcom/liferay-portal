@@ -39,6 +39,9 @@ public class AppServer {
 		this.project = project;
 	}
 
+	public void addAppServerDependencies(LiferayExtension liferayExtension) {
+	}
+
 	public File getBinDir() {
 		return GradleUtil.toFile(project, _binDir);
 	}

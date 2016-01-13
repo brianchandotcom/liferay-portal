@@ -109,47 +109,36 @@ if (layout != null) {
 				<ul class="dropdown-menu">
 					<li>
 						<a href="#" id="viewPageStagingOptions">
-							<liferay-ui:message key="staging-options" />
+							<liferay-ui:message key="view-page-staging-options" />
 						</a>
 					</li>
 
-					<c:choose>
-						<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
-							<c:if test="<%= stagingGroup != null %>">
+					<c:if test="<%= !group.isStagingGroup() && !group.isStagedRemotely() && (stagingGroup != null) %>">
+						<li>
+							<a href="<%= stagingFriendlyURL %>">
+								<liferay-ui:message key="go-to-staging" />
+							</a>
+						</li>
+					</c:if>
+
+					<c:if test="<%= group.isStagingGroup() %>">
+						<c:choose>
+							<c:when test="<%= group.isStagedRemotely() %>">
 								<li>
-									<a>
-										<liferay-ui:message key="staging" />
+									<a href="<%= remoteURL %>">
+										<liferay-ui:message key="go-to-remote-live" />
 									</a>
 								</li>
-							</c:if>
-						</c:when>
-						<c:otherwise>
-							<li>
-								<a href="<%= stagingFriendlyURL %>">
-									<liferay-ui:message key="staging" />
-								</a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-
-					<c:choose>
-						<c:when test="<%= group.isStagedRemotely() %>">
-							<li>
-								<a href="<%= remoteURL %>">
-									<liferay-ui:message key="remote-live" />
-								</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<c:if test="<%= group.isStagingGroup() && Validator.isNotNull(liveFriendlyURL) %>">
+							</c:when>
+							<c:when test="<%= group.isStagingGroup() && Validator.isNotNull(liveFriendlyURL) %>">
 								<li>
 									<a href="<%= liveFriendlyURL %>">
-										<liferay-ui:message key="live" />
+										<liferay-ui:message key="go-to-live" />
 									</a>
 								</li>
-							</c:if>
-						</c:otherwise>
-					</c:choose>
+							</c:when>
+						</c:choose>
+					</c:if>
 				</ul>
 			</li>
 

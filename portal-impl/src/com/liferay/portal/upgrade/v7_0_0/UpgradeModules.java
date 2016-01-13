@@ -231,10 +231,9 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.social.requests.web",
 		"com.liferay.social.user.statistics.web", "com.liferay.staging.bar.web",
 		"com.liferay.translator.web", "com.liferay.trash.web",
-		"com.liferay.unit.converter.web", "com.liferay.user.groups.admin.web",
-		"com.liferay.users.admin.web", "com.liferay.web.proxy.web",
-		"com.liferay.wiki.service", "com.liferay.wiki.web",
-		"com.liferay.xsl.content.web"
+		"com.liferay.unit.converter.web", "com.liferay.users.admin.web",
+		"com.liferay.web.proxy.web", "com.liferay.wiki.service",
+		"com.liferay.wiki.web", "com.liferay.xsl.content.web"
 	};
 	private static final String[][] _convertedLegacyModules = {
 		{

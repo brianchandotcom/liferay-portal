@@ -17,9 +17,13 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+Folder folder = (Folder)request.getAttribute("info_panel.jsp-folder");
 
-Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+if (folder != null) {
+	folderId = folder.getFolderId();
+}
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 %>

@@ -570,8 +570,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
@@ -590,8 +590,8 @@
 			<var name="publishTemplateName" value="Publish Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
@@ -603,8 +603,8 @@
 			<var name="publishTemplateName" value="Publish Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
@@ -617,8 +617,8 @@
 			<var name="publishTemplateName" value="Publish Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -637,8 +637,8 @@
 			<var name="assetRestoreType" value="${assetRestoreType}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
@@ -705,10 +705,11 @@
 			<var name="portletName" value="${portletName} Custom" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="${pageName}" />
-			<var name="site" value="${siteName}" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -2673,12 +2674,11 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPublicPages" />
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
 
@@ -2696,13 +2696,7 @@
 
 		<execute macro="Page#viewCustomLogoPG" />
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -3167,8 +3161,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -3190,13 +3184,11 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#viewPublishContentCountViaPortletStagingCP">
 			<var name="contentCount" value="1" />
@@ -3204,9 +3196,11 @@
 			<var name="stagingDateRange" value="From Last Publish Date" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -3214,9 +3208,11 @@
 
 		<execute macro="Staging#publishToLiveNowViaPortletCP" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />

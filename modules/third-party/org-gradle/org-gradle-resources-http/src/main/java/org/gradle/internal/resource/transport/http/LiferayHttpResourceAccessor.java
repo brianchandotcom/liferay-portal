@@ -149,12 +149,33 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 		String module = tokens[tokens.length - 3];
 		String version = tokens[tokens.length - 2];
 
-		File artifactDir = new File(
+		File moduleDir = new File(
 			_getGradleUserHome(),
-			_FILES_CACHE_DIR_NAME + "/" + group + "/" + module + "/" + version);
+			_FILES_CACHE_DIR_NAME + "/" + group + "/" + module);
+
+		File artifactDir = new File(moduleDir, version);
 
 		if (!artifactDir.exists()) {
-			return null;
+			if (!StringUtils.endsWithIgnoreCase(version, "-SNAPSHOT") ||
+				!StringUtils.startsWithIgnoreCase(fileName, module + "-")) {
+
+				return null;
+			}
+
+			// If the name of the artifact directory in the Gradle cache is a
+			// unique snapshot version (e.g., 3.10.200-20150904.172142-1), the
+			// version token of the requested URI is just the snapshot version
+			// (e.g., 3.10.200-SNAPSHOT).
+
+			int pos = fileName.lastIndexOf('.');
+
+			version = fileName.substring(module.length() + 1, pos);
+
+			artifactDir = new File(moduleDir, version);
+
+			if (!artifactDir.exists()) {
+				return null;
+			}
 		}
 
 		File cachedFile = _fetchCachedFile(artifactDir, fileName);

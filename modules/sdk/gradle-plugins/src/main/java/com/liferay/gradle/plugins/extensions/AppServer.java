@@ -36,6 +36,7 @@ public class AppServer {
 
 	public AppServer(String name, Project project) {
 		_name = name;
+
 		this.project = project;
 	}
 

@@ -57,6 +57,9 @@ public interface IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException;
 
+	public int getReindexTaskCount(long groupId, boolean completed)
+		throws SearchException;
+
 	public void indexKeyword(
 			long companyId, String querySuggestion, float weight,
 			String keywordType, Locale locale)

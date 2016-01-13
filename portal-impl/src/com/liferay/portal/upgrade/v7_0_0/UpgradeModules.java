@@ -197,7 +197,7 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.document.library.web",
 		"com.liferay.dynamic.data.lists.service",
 		"com.liferay.dynamic.data.lists.web",
-		"com.liferay.dynamic.data.mapping.service", "com.liferay.expando.web",
+		"com.liferay.dynamic.data.mapping.service",
 		"com.liferay.exportimport.web", "com.liferay.flags.web",
 		"com.liferay.hello.velocity.web", "com.liferay.iframe.web",
 		"com.liferay.invitation.web", "com.liferay.item.selector.web",

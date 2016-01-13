@@ -63,12 +63,10 @@ public class DefaultIGViewFileVersionDisplayContext
 			_igRequestHelper);
 
 		if (fileShortcut == null) {
-			_uiItemsBuilder = new UIItemsBuilder(
-				request, response, fileVersion);
+			_uiItemsBuilder = new UIItemsBuilder(request, fileVersion);
 		}
 		else {
-			_uiItemsBuilder = new UIItemsBuilder(
-				request, response, fileShortcut);
+			_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
 		}
 	}
 

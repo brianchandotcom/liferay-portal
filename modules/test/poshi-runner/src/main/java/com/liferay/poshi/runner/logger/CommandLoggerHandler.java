@@ -18,6 +18,7 @@ import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
+import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
 import com.liferay.poshi.runner.selenium.WebDriverHelper;
 import com.liferay.poshi.runner.selenium.WebDriverUtil;
@@ -42,14 +43,20 @@ public final class CommandLoggerHandler {
 			return;
 		}
 
-		_commandElement = null;
+		try {
+			_commandElement = null;
 
-		_failLineGroupLoggerElement(_lineGroupLoggerElement);
+			_failLineGroupLoggerElement(_lineGroupLoggerElement);
 
-		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
-			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+			LoggerElement xmlLoggerElement =
+				XMLLoggerHandler.getXMLLoggerElement(
+					PoshiRunnerStackTraceUtil.getSimpleStackTrace());
 
-		_updateStatus(xmlLoggerElement, "fail");
+			_updateStatus(xmlLoggerElement, "fail");
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
+		}
 	}
 
 	public static String getCommandLogText() {
@@ -69,16 +76,23 @@ public final class CommandLoggerHandler {
 	}
 
 	public static void logMessage(Element element) throws Exception {
-		_lineGroupLoggerElement = _getMessageGroupLoggerElement(element);
+		try {
+			_lineGroupLoggerElement = _getMessageGroupLoggerElement(element);
 
-		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
+			_commandLogLoggerElement.addChildLoggerElement(
+				_lineGroupLoggerElement);
 
-		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
-			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+			LoggerElement xmlLoggerElement =
+				XMLLoggerHandler.getXMLLoggerElement(
+					PoshiRunnerStackTraceUtil.getSimpleStackTrace());
 
-		_linkLoggerElements(xmlLoggerElement);
+			_linkLoggerElements(xmlLoggerElement);
 
-		_updateStatus(xmlLoggerElement, "pass");
+			_updateStatus(xmlLoggerElement, "pass");
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
+		}
 	}
 
 	public static void logSeleniumCommand(
@@ -109,20 +123,27 @@ public final class CommandLoggerHandler {
 			return;
 		}
 
-		_takeScreenshot("before", _errorLinkId);
+		try {
+			_takeScreenshot("before", _errorLinkId);
 
-		_commandElement = element;
+			_commandElement = element;
 
-		_lineGroupLoggerElement = _getLineGroupLoggerElement(element);
+			_lineGroupLoggerElement = _getLineGroupLoggerElement(element);
 
-		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
+			_commandLogLoggerElement.addChildLoggerElement(
+				_lineGroupLoggerElement);
 
-		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
-			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+			LoggerElement xmlLoggerElement =
+				XMLLoggerHandler.getXMLLoggerElement(
+					PoshiRunnerStackTraceUtil.getSimpleStackTrace());
 
-		_linkLoggerElements(xmlLoggerElement);
+			_linkLoggerElements(xmlLoggerElement);
 
-		_updateStatus(xmlLoggerElement, "pending");
+			_updateStatus(xmlLoggerElement, "pending");
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
+		}
 	}
 
 	public static void startRunning() {
@@ -143,14 +164,20 @@ public final class CommandLoggerHandler {
 			return;
 		}
 
-		_commandElement = null;
+		try {
+			_commandElement = null;
 
-		_warningLineGroupLoggerElement(_lineGroupLoggerElement);
+			_warningLineGroupLoggerElement(_lineGroupLoggerElement);
 
-		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
-			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+			LoggerElement xmlLoggerElement =
+				XMLLoggerHandler.getXMLLoggerElement(
+					PoshiRunnerStackTraceUtil.getSimpleStackTrace());
 
-		_updateStatus(xmlLoggerElement, "warning");
+			_updateStatus(xmlLoggerElement, "warning");
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
+		}
 	}
 
 	private static void _failLineGroupLoggerElement(

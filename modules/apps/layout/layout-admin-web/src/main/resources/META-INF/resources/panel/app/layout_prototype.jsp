@@ -23,6 +23,7 @@ PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutA
 
 editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
+editLayoutURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
 editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 Map<String, Object> data = new HashMap<String, Object>();

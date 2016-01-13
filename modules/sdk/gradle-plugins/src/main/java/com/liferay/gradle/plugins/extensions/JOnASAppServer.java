@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.extensions;
 
-import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
@@ -32,11 +31,11 @@ public class JOnASAppServer extends AppServer {
 	}
 
 	@Override
-	public void addAppServerDependencies(LiferayExtension liferayExtension) {
-		File dir = new File(liferayExtension.getAppServerDir(), "lib/endorsed");
+	public void addAdditionalDependencies(String configurationName) {
+		File dir = new File(getDir(), "lib/endorsed");
 
 		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME,
+			project, configurationName,
 			FileUtil.getJarsFileTree(project, dir));
 	}
 

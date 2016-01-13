@@ -91,7 +91,7 @@ public class JspCDefaultsPlugin
 
 		AppServer appServer = liferayExtension.getAppServer();
 
-		appServer.addAppServerDependencies(liferayExtension);
+		appServer.addAdditionalDependencies(JspCPlugin.CONFIGURATION_NAME);
 	}
 
 	@Override

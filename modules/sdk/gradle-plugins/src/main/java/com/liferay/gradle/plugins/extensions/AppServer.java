@@ -40,7 +40,7 @@ public class AppServer {
 		this.project = project;
 	}
 
-	public void addAppServerDependencies(LiferayExtension liferayExtension) {
+	public void addAdditionalDependencies(String configurationName) {
 	}
 
 	public File getBinDir() {

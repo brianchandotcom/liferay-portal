@@ -234,7 +234,8 @@ public class JavadocManagerImpl implements JavadocManager {
 	protected JavadocClass parseJavadocClass(
 		String servletContextName, Element javadocElement, Class<?> clazz) {
 
-		JavadocClass javadocClass = new JavadocClass(clazz);
+		JavadocClass javadocClass = new JavadocClass(
+			servletContextName, javadocElement.elementText("comment"), clazz);
 
 		List<Element> authorElements = javadocElement.elements("author");
 
@@ -247,12 +248,6 @@ public class JavadocManagerImpl implements JavadocManager {
 		}
 
 		javadocClass.setAuthors(authors);
-
-		String comment = javadocElement.elementText("comment");
-
-		javadocClass.setComment(comment);
-
-		javadocClass.setServletContextName(servletContextName);
 
 		return javadocClass;
 	}
@@ -298,7 +293,7 @@ public class JavadocManagerImpl implements JavadocManager {
 		}
 
 		JavadocMethodImpl javadocMethodImpl = new JavadocMethodImpl(
-			method, comment);
+			servletContextName, comment, method);
 
 		javadocMethodImpl.setParameterComments(parameterComments);
 
@@ -309,8 +304,6 @@ public class JavadocManagerImpl implements JavadocManager {
 
 			javadocMethodImpl.setReturnComment(returnComment);
 		}
-
-		javadocMethodImpl.setServletContextName(servletContextName);
 
 		List<Element> throwsElements = methodElement.elements("throws");
 

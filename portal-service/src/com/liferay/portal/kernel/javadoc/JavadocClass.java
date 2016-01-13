@@ -19,7 +19,11 @@ package com.liferay.portal.kernel.javadoc;
  */
 public class JavadocClass extends BaseJavadoc {
 
-	public JavadocClass(Class<?> clazz) {
+	public JavadocClass(
+		String servletContextName, String comment, Class<?> clazz) {
+
+		super(servletContextName, comment);
+
 		_clazz = clazz;
 	}
 

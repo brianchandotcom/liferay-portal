@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 public class EmptyJavadocMethod extends JavadocMethod {
 
 	public EmptyJavadocMethod(String servletContextName, Method method) {
-		setServletContextName(servletContextName);
+		super(servletContextName, null);
 
 		_method = method;
 	}

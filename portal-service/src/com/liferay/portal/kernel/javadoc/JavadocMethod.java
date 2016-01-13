@@ -21,6 +21,10 @@ import java.lang.reflect.Method;
  */
 public abstract class JavadocMethod extends BaseJavadoc {
 
+	public JavadocMethod(String servletContextName, String comment) {
+		super(servletContextName, comment);
+	}
+
 	public abstract Method getMethod();
 
 	public abstract String getParameterComment(int index);

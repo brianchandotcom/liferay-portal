@@ -21,10 +21,12 @@ import java.lang.reflect.Method;
  */
 public class JavadocMethodImpl extends JavadocMethod {
 
-	public JavadocMethodImpl(Method method, String comment) {
-		_method = method;
+	public JavadocMethodImpl(
+		String servletContextName, String comment, Method method) {
 
-		setComment(comment);
+		super(servletContextName, comment);
+
+		_method = method;
 	}
 
 	@Override

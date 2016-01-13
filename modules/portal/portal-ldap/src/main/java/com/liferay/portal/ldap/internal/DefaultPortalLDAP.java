@@ -537,8 +537,9 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			if (ldapContext == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to retrieve ldapContext with ldapServerId: " +
-						ldapServerId + ", companyId: " + companyId);
+						"No LDAP server configuration available with " +
+							"ldapServerId: " + ldapServerId + ", companyId: " +
+							companyId);
 				}
 
 				return null;
@@ -625,8 +626,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to retrieve user in ldapServerId: " + ldapServerId +
-					", companyId: " + companyId + ", screenName: " +
-					screenName);
+					", companyId: " + companyId + ", loginMapping: " +
+					loginMapping + ", login: " + login);
 			}
 
 			return null;

@@ -1869,8 +1869,6 @@ public interface PropsKeys {
 
 	public static final String SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA = "search.container.show.pagination.top.delta";
 
-	public static final String SEARCH_USE_DEEP_SEARCH = "search.use.deep.search";
-
 	public static final String SERVLET_SERVICE_EVENTS_POST = "servlet.service.events.post";
 
 	public static final String SERVLET_SERVICE_EVENTS_PRE = "servlet.service.events.pre";

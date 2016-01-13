@@ -38,7 +38,7 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 	%>
 
 	<c:if test="<%= depth == 0 %>">
-		<div class="message-container">
+		<div class="card-tab-group message-container">
 	</c:if>
 
 	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
@@ -77,7 +77,7 @@ for (int i = range[0]; i < range[1]; i++) {
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 %>
 
-	<div class="message-container">
+	<div class="card-tab message-container">
 		<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
 	</div>
 

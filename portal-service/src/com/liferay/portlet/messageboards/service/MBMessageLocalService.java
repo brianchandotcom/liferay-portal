@@ -451,9 +451,31 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
+		int status, boolean includePrevAndNext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
+		int status, boolean includePrevAndNext,
+		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	long, MBMessage, int, boolean)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
 		int status, java.lang.String threadView, boolean includePrevAndNext)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	long, MBMessage, int, boolean, Comparator)} (
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
@@ -461,6 +483,16 @@ public interface MBMessageLocalService extends BaseLocalService,
 		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long userId, long messageId, int status, boolean includePrevAndNext)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	long, long, int, boolean)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
 		long userId, long messageId, int status, java.lang.String threadView,

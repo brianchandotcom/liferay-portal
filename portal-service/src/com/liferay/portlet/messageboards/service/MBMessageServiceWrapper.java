@@ -239,6 +239,19 @@ public class MBMessageServiceWrapper implements MBMessageService,
 
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long messageId, int status, boolean includePrevAndNext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.getMessageDisplay(messageId, status,
+			includePrevAndNext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	long, int, boolean)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
 		long messageId, int status, java.lang.String threadView,
 		boolean includePrevAndNext)
 		throws com.liferay.portal.kernel.exception.PortalException {

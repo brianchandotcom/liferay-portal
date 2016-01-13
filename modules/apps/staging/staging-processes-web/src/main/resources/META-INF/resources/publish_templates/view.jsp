@@ -17,14 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing", !stagingGroup.isStagedRemotely());
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+
+PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(request, StagingProcessesPortletKeys.STAGING_PROCESSES, PortletRequest.RENDER_PHASE);
+
+redirectURL.setParameter("mvcPath", "/view.jsp");
+
+portletDisplay.setURLBack(redirectURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 %>

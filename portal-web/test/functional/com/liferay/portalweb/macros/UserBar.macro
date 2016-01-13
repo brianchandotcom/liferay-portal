@@ -1,6 +1,6 @@
 <definition>
 	<command name="gotoDashboard">
-		<description message="Navigate to Dashboard." />
+		<description message="Navigate to My Dashboard." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -58,7 +58,7 @@
 	</command>
 
 	<command name="gotoProfile">
-		<description message="Navigate to Profile." />
+		<description message="Navigate to My Profile." />
 
 		<execute macro="Navigator#openURL" />
 

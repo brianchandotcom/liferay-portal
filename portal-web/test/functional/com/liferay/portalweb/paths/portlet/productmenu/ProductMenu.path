@@ -94,6 +94,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_PUBLIC_PAGE_ICON</td>
+	<td>//*[@data-qa-id='editPublicPages']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_PRIVATE_PAGE_ICON</td>
+	<td>//*[@data-qa-id='editPrivatePages']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_PAGE</td>
 	<td>//a[contains(@class,'tree-edit') and contains(@onmouseover,'${key_page}')]</td>
 	<td></td>

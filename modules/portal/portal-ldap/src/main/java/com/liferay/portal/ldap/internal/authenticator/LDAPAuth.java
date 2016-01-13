@@ -300,88 +300,84 @@ public class LDAPAuth implements Authenticator {
 
 			enu = ldapContext.search(baseDN, filter, searchControls);
 
-			if (enu.hasMoreElements()) {
+			if (!enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Search filter returned at least one result");
-				}
-
-				SearchResult result = enu.nextElement();
-
-				String fullUserDN = _portalLDAP.getNameInNamespace(
-					ldapServerId, companyId, result);
-
-				Attributes attributes = _portalLDAP.getUserAttributes(
-					ldapServerId, companyId, ldapContext, fullUserDN);
-
-				// Get user or create from LDAP
-
-				User user = _ldapUserImporter.importUser(
-					ldapServerId, companyId, ldapContext, attributes, password);
-
-				// Authenticate
-
-				LDAPAuthResult ldapAuthResult = authenticate(
-					ldapContext, companyId, attributes, fullUserDN, password);
-
-				// Process LDAP failure codes
-
-				String errorMessage = ldapAuthResult.getErrorMessage();
-
-				if (errorMessage != null) {
-					SystemLDAPConfiguration systemLDAPConfiguration =
-						_systemLDAPConfigurationProvider.getConfiguration(
-							companyId);
-
-					for (String errorUserLockout :
-							systemLDAPConfiguration.
-								errorUserLockoutKeywords()) {
-
-						if (errorMessage.contains(errorUserLockout)) {
-							throw new UserLockoutException.LDAPLockout(
-								fullUserDN, errorMessage);
-						}
-					}
-
-					for (String errorPasswordExpiredKeyword :
-							systemLDAPConfiguration.
-								errorPasswordExpiredKeywords()) {
-
-						if (errorMessage.contains(
-								errorPasswordExpiredKeyword)) {
-
-							throw new PasswordExpiredException();
-						}
-					}
-				}
-
-				if (!ldapAuthResult.isAuthenticated()) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"LDAP authentication failed for :" + fullUserDN +
-								" on LDAP server: " + ldapServerId +
-								", companyId: " + companyId +
-								", ldapContext: " + ldapContext +
-								", reason: " + errorMessage);
-					}
-
-					return FAILURE;
-				}
-
-				// Process LDAP success codes
-
-				String resultCode = ldapAuthResult.getResponseControl();
-
-				if (resultCode.equals(LDAPAuth.RESULT_PASSWORD_RESET)) {
-					_userLocalService.updatePasswordReset(
-						user.getUserId(), true);
-				}
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Search filter did not return any results");
+					_log.debug("No results from search filter:" + filter);
 				}
 
 				return DNE;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Results found by Search filter: " + filter);
+			}
+
+			SearchResult result = enu.nextElement();
+
+			String fullUserDN = _portalLDAP.getNameInNamespace(
+				ldapServerId, companyId, result);
+
+			Attributes attributes = _portalLDAP.getUserAttributes(
+				ldapServerId, companyId, ldapContext, fullUserDN);
+
+			// Get user or create from LDAP
+
+			User user = _ldapUserImporter.importUser(
+				ldapServerId, companyId, ldapContext, attributes, password);
+
+			// Authenticate
+
+			LDAPAuthResult ldapAuthResult = authenticate(
+				ldapContext, companyId, attributes, fullUserDN, password);
+
+			// Process LDAP failure codes
+
+			String errorMessage = ldapAuthResult.getErrorMessage();
+
+			if (errorMessage != null) {
+				SystemLDAPConfiguration systemLDAPConfiguration =
+					_systemLDAPConfigurationProvider.getConfiguration(
+						companyId);
+
+				for (String errorUserLockout :
+						systemLDAPConfiguration.
+							errorUserLockoutKeywords()) {
+
+					if (errorMessage.contains(errorUserLockout)) {
+						throw new UserLockoutException.LDAPLockout(
+							fullUserDN, errorMessage);
+					}
+				}
+
+				for (String errorPasswordExpiredKeyword :
+						systemLDAPConfiguration.
+							errorPasswordExpiredKeywords()) {
+
+					if (errorMessage.contains(errorPasswordExpiredKeyword)) {
+						throw new PasswordExpiredException();
+					}
+				}
+			}
+
+			if (!ldapAuthResult.isAuthenticated()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"LDAP authentication failed for :" + fullUserDN +
+							" on LDAP server: " + ldapServerId +
+							", companyId: " + companyId +
+							", ldapContext: " + ldapContext +
+							", reason: " + errorMessage);
+				}
+
+				return FAILURE;
+			}
+
+			// Process LDAP success codes
+
+			String resultCode = ldapAuthResult.getResponseControl();
+
+			if (resultCode.equals(LDAPAuth.RESULT_PASSWORD_RESET)) {
+				_userLocalService.updatePasswordReset(user.getUserId(), true);
 			}
 		}
 		catch (Exception e) {
@@ -401,9 +397,7 @@ public class LDAPAuth implements Authenticator {
 				enu.close();
 			}
 
-			if (ldapContext != null) {
-				ldapContext.close();
-			}
+			ldapContext.close();
 		}
 
 		return SUCCESS;

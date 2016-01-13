@@ -326,7 +326,8 @@ public class LDAPAuth implements Authenticator {
 							companyId);
 
 					for (String errorUserLockout :
-							systemLDAPConfiguration.errorUserLockouts()) {
+							systemLDAPConfiguration.
+								errorUserLockoutKeywords()) {
 
 						if (errorMessage.contains(errorUserLockout)) {
 							throw new UserLockoutException.LDAPLockout(
@@ -334,10 +335,13 @@ public class LDAPAuth implements Authenticator {
 						}
 					}
 
-					for (String errorPasswordExpired :
-							systemLDAPConfiguration.errorPasswordExpireds()) {
+					for (String errorPasswordExpiredKeyword :
+							systemLDAPConfiguration.
+								errorPasswordExpiredKeywords()) {
 
-						if (errorMessage.contains(errorPasswordExpired)) {
+						if (errorMessage.contains(
+								errorPasswordExpiredKeyword)) {
+
 							throw new PasswordExpiredException();
 						}
 					}

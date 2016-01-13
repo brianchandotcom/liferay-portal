@@ -49,11 +49,6 @@ public class JavadocMethodImpl extends JavadocMethod {
 	}
 
 	@Override
-	public String[] getParameterComments() {
-		return _parameterComments;
-	}
-
-	@Override
 	public String getReturnComment() {
 		return _returnComment;
 	}
@@ -65,11 +60,6 @@ public class JavadocMethodImpl extends JavadocMethod {
 		}
 
 		return _throwsComments[index];
-	}
-
-	@Override
-	public String[] getThrowsComments() {
-		return _throwsComments;
 	}
 
 	private final Method _method;

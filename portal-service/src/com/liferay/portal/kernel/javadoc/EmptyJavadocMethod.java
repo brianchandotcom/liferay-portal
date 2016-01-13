@@ -38,11 +38,6 @@ public class EmptyJavadocMethod extends JavadocMethod {
 	}
 
 	@Override
-	public String[] getParameterComments() {
-		return new String[0];
-	}
-
-	@Override
 	public String getReturnComment() {
 		return null;
 	}
@@ -50,11 +45,6 @@ public class EmptyJavadocMethod extends JavadocMethod {
 	@Override
 	public String getThrowsComment(int index) {
 		return null;
-	}
-
-	@Override
-	public String[] getThrowsComments() {
-		return new String[0];
 	}
 
 	private final Method _method;

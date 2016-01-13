@@ -29,12 +29,8 @@ public abstract class JavadocMethod extends BaseJavadoc {
 
 	public abstract String getParameterComment(int index);
 
-	public abstract String[] getParameterComments();
-
 	public abstract String getReturnComment();
 
 	public abstract String getThrowsComment(int index);
-
-	public abstract String[] getThrowsComments();
 
 }

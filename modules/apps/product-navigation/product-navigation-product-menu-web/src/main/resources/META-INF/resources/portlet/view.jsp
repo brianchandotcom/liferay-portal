@@ -51,6 +51,8 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 
 							container.setContent(response);
 							container.addClass('content-loaded');
+
+							Liferay.fire('ProductMenu:contentLoaded');
 						}
 					}
 				}
@@ -101,7 +103,19 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 			else {
 				sidenavToggle.sideNavigation('show');
 
-				userCollapse.collapse('show');
+				if (productMenuSidebar.hasClass('content-loaded')) {
+					userCollapse.collapse('show');
+				}
+				else {
+					Liferay.on(
+						'ProductMenu:contentLoaded',
+						function(event) {
+							userCollapse = $('#<portlet:namespace /><%= AUIUtil.normalizeId(PanelCategoryKeys.USER) %>Collapse');
+
+							userCollapse.collapse('show');
+						}
+					);
+				}
 			}
 		}
 	);

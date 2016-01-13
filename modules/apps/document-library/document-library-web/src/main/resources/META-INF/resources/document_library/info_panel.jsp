@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"), ParamUtil.getLong(request, "repositoryId"));
 
 List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
 List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);

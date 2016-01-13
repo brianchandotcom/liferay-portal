@@ -116,6 +116,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	<div class="closed <%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<portlet:resourceURL id="/document_library/info_panel" var="sidebarPanelURL">
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 		</portlet:resourceURL>
 
 		<liferay-frontend:sidebar-panel

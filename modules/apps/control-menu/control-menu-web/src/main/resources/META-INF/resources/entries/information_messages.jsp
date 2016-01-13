@@ -18,17 +18,9 @@
 
 <%
 InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY);
-%>
 
-<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="/add_panel.jsp" />
-	<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
-</portlet:renderURL>
+Map<String, Object> data = new HashMap<>();
 
-<%
-Map<String, Object> data = new HashMap<String, Object>();
-
-data.put("panelURL", addURL);
 data.put("qa-id", "info");
 %>
 

@@ -124,7 +124,7 @@ if (portletTitleBasedNavigation) {
 		<div class="sidebar sidebar-default sidenav-menu">
 			<liferay-ui:tabs names="details,custom-fields,document-type,metadata,versions" refresh="<%= false %>" type="dropdown">
 				<liferay-ui:section>
-					<div class="asset-details-content">
+					<div class="sidebar-body">
 						<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 							<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
 								<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
@@ -144,9 +144,11 @@ if (portletTitleBasedNavigation) {
 						</div>
 
 						<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
-							<blockquote class="lfr-asset-description">
-								<%= HtmlUtil.escape(fileVersion.getDescription()) %>
-							</blockquote>
+							<h5><strong><liferay-ui:message key="description" /></strong></h5>
+
+							<p>
+								<%= fileEntry.getDescription() %>
+							</p>
 						</c:if>
 
 						<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">

@@ -75,7 +75,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
+			<h5><strong><liferay-ui:message key="num-of-items" /></strong></h5>
 
 			<%
 			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -90,7 +90,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 			</p>
 
 			<c:if test="<%= folder != null %>">
-				<h5><liferay-ui:message key="created" /></h5>
+				<h5><strong><liferay-ui:message key="created" /></strong></h5>
 
 				<p>
 					<%= HtmlUtil.escape(folder.getUserName()) %>

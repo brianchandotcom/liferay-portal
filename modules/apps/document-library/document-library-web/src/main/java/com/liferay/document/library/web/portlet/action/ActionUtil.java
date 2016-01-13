@@ -175,7 +175,7 @@ public class ActionUtil {
 	}
 
 	public static FileVersion getFileVersion(
-			FileEntry fileEntry, HttpServletRequest request)
+			HttpServletRequest request, FileEntry fileEntry)
 		throws Exception {
 
 		if (fileEntry == null) {
@@ -201,13 +201,13 @@ public class ActionUtil {
 	}
 
 	public static FileVersion getFileVersion(
-			FileEntry fileEntry, PortletRequest portletRequest)
+			PortletRequest portletRequest, FileEntry fileEntry)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		return getFileVersion(fileEntry, request);
+		return getFileVersion(request, fileEntry);
 	}
 
 	public static Folder getFolder(HttpServletRequest request)

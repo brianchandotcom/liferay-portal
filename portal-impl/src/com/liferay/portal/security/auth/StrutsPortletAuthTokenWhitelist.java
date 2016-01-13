@@ -55,6 +55,7 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
 	}
 
+	@Override
 	public void destroy() {
 		super.destroy();
 
@@ -76,7 +77,6 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	public boolean isPortletCSRFWhitelisted(
 		HttpServletRequest request, Portlet portlet) {
 
-		long companyId = portlet.getCompanyId();
 		String portletId = portlet.getPortletId();
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
@@ -90,7 +90,8 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			Set<String> whitelistActions = getPortletCSRFWhitelistActions();
 
 			if (whitelistActions.contains(strutsAction) &&
-				isValidStrutsAction(companyId, rootPortletId, strutsAction)) {
+				isValidStrutsAction(
+					portlet.getCompanyId(), rootPortletId, strutsAction)) {
 
 				return true;
 			}
@@ -103,7 +104,6 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	public boolean isPortletInvocationWhitelisted(
 		HttpServletRequest request, Portlet portlet) {
 
-		long companyId = portlet.getCompanyId();
 		String portletId = portlet.getPortletId();
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
@@ -120,7 +120,8 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 				getPortletInvocationWhitelistActions();
 
 			if (whitelistActions.contains(strutsAction) &&
-				isValidStrutsAction(companyId, portletId, strutsAction)) {
+				isValidStrutsAction(
+					portlet.getCompanyId(), portletId, strutsAction)) {
 
 				return true;
 			}

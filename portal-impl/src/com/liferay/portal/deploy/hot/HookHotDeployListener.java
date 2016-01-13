@@ -2096,7 +2096,7 @@ public class HookHotDeployListener
 			String servletContextName, Properties portalProperties)
 		throws Exception {
 
-		String[] tokenWhitelistNames = new String[] {
+		String[] tokenWhitelistNames = {
 			AUTH_TOKEN_IGNORE_ACTIONS, AUTH_TOKEN_IGNORE_ORIGINS,
 			AUTH_TOKEN_IGNORE_PORTLETS,
 			PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,

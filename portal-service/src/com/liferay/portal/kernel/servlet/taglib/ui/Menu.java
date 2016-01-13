@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergio González
@@ -25,6 +27,14 @@ public class Menu extends BaseUIItem {
 
 	public String getCssClass() {
 		return _cssClass;
+	}
+
+	public Map<String, Object> getData() {
+		if (_data == null) {
+			_data = new HashMap<>();
+		}
+
+		return _data;
 	}
 
 	public String getDirection() {
@@ -79,6 +89,10 @@ public class Menu extends BaseUIItem {
 		_cssClass = cssClass;
 	}
 
+	public void setData(Map<String, Object> data) {
+		_data = data;
+	}
+
 	public void setDirection(String direction) {
 		_direction = direction;
 	}
@@ -128,6 +142,7 @@ public class Menu extends BaseUIItem {
 	}
 
 	private String _cssClass = StringPool.BLANK;
+	private Map<String, Object> _data;
 	private String _direction = "left";
 	private boolean _extended = true;
 	private String _icon = StringPool.BLANK;

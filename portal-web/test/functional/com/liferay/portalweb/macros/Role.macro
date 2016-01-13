@@ -130,7 +130,7 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_TITLE" value1="${roleName}" />
+		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_TITLE_LINK" value1="${roleName}" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 

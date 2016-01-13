@@ -43,8 +43,7 @@ public class ResourceBundleTracker implements Closeable {
 			ResourceBundle.class,
 			"(&(javax.portlet.name=" + portletId + ")(language.id=*))",
 			ServiceReferenceMapperFactory.<String, Object>create("language.id"),
-			new ResourceBundleTrackerServiceTrackerMapListener(
-				_resourceBundles));
+			new ResourceBundleTrackerServiceTrackerMapListener());
 	}
 
 	@Override
@@ -105,15 +104,9 @@ public class ResourceBundleTracker implements Closeable {
 	private final ServiceTrackerMap<String, List<ResourceBundle>>
 		_serviceTrackerMap;
 
-	private static class ResourceBundleTrackerServiceTrackerMapListener
+	private class ResourceBundleTrackerServiceTrackerMapListener
 		implements ServiceTrackerMapListener
 			<String, ResourceBundle, List<ResourceBundle>> {
-
-		public ResourceBundleTrackerServiceTrackerMapListener(
-			Map<String, ResourceBundle> resourceBundles) {
-
-			_resourceBundles = resourceBundles;
-		}
 
 		@Override
 		public void keyEmitted(
@@ -158,8 +151,6 @@ public class ResourceBundleTracker implements Closeable {
 				}
 			}
 		}
-
-		private final Map<String, ResourceBundle> _resourceBundles;
 
 	}
 

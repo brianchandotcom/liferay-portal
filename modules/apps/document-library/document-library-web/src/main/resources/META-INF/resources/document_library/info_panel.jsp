@@ -118,27 +118,51 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 			</div>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
+			<liferay-ui:section>
+				<div class="sidebar-body">
 
-		<div class="sidebar-body">
-			<h5><strong><liferay-ui:message key="created" /></strong></h5>
+					<%
+					FileVersion fileVersion = null;
 
-			<p>
-				<%= HtmlUtil.escape(fileEntry.getUserName()) %>
-			</p>
+					if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+						fileVersion = fileEntry.getLatestFileVersion();
+					}
+					else {
+						fileVersion = fileEntry.getFileVersion();
+					}
+					%>
 
-			<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
-				<h5><strong><liferay-ui:message key="description" /></strong></h5>
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="crop-image" />" class="img-rounded" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
 
-				<p>
-					<%= fileEntry.getDescription() %>
-				</p>
-			</c:if>
-		</div>
+					<h5><strong><liferay-ui:message key="created" /></strong></h5>
+
+					<p>
+						<%= HtmlUtil.escape(fileEntry.getUserName()) %>
+					</p>
+
+					<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
+						<h5><strong><liferay-ui:message key="description" /></strong></h5>
+
+						<p>
+							<%= fileEntry.getDescription() %>
+						</p>
+					</c:if>
+
+					<h5><strong><liferay-ui:message key="size" /></strong></h5>
+
+					<p>
+						<%= HtmlUtil.escape(TextFormatter.formatStorageSize(fileEntry.getSize(), locale)) %>
+					</p>
+
+					<h5><strong><liferay-ui:message key="version" /></strong></h5>
+
+					<p>
+						<%= HtmlUtil.escape(fileVersion.getVersion()) %>
+					</p>
+				</div>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">

@@ -144,7 +144,7 @@ create table AssetEntry (
 	publishDate DATE null,
 	expirationDate DATE null,
 	mimeType VARCHAR(75) null,
-	title STRING null,
+	title TEXT null,
 	description TEXT null,
 	summary TEXT null,
 	url STRING null,

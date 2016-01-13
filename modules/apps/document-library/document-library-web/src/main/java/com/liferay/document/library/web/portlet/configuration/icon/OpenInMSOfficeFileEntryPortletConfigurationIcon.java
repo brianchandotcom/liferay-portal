@@ -88,7 +88,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 					themeDisplay.getPermissionChecker(), _fileEntry);
 
 			FileVersion fileVersion = ActionUtil.getFileVersion(
-				_fileEntry, request);
+				request, _fileEntry);
 
 			return
 				fileEntryDisplayContextHelper.isOpenInMsOfficeActionAvailable(

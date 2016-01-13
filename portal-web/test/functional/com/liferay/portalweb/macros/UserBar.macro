@@ -1,6 +1,6 @@
 <definition>
 	<command name="gotoDashboard">
-		<description message="Navigate to Dashboard." />
+		<description message="Navigate to My Dashboard." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -12,12 +12,12 @@
 					<then>
 						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-						<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="Dashboard" />
+						<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="My Dashboard" />
 					</then>
 				</if>
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="Dashboard" />
+				<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="My Dashboard" />
 			</else>
 		</if>
 	</command>
@@ -58,7 +58,7 @@
 	</command>
 
 	<command name="gotoProfile">
-		<description message="Navigate to Profile." />
+		<description message="Navigate to My Profile." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -70,12 +70,12 @@
 					<then>
 						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-						<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="Profile" />
+						<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="My Profile" />
 					</then>
 				</if>
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="Profile" />
+				<execute function="AssertClick" locator1="UserBar#USER_PROFILE" value1="My Profile" />
 			</else>
 		</if>
 	</command>
@@ -104,7 +104,7 @@
 
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
-		<execute function="AssertTextNotPresent" locator1="UserBar#USER_PROFILE" value1="Profile" />
-		<execute function="AssertTextNotPresent" locator1="UserBar#USER_DASHBOARD" value1="Dashboard" />
+		<execute function="AssertTextNotPresent" locator1="UserBar#USER_PROFILE" value1="My Profile" />
+		<execute function="AssertTextNotPresent" locator1="UserBar#USER_DASHBOARD" value1="My Dashboard" />
 	</command>
 </definition>

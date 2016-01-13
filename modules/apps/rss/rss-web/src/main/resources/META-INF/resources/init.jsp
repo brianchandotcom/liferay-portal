@@ -30,7 +30,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration" %><%@
-page import="com.liferay.rss.web.configuration.RSSWebConfiguration" %><%@
+page import="com.liferay.rss.web.configuration.RSSWebCacheConfiguration" %><%@
 page import="com.liferay.rss.web.display.context.RSSDisplayContext" %><%@
 page import="com.liferay.rss.web.util.RSSFeed" %><%@
 page import="com.liferay.rss.web.util.RSSFeedEntry" %>
@@ -53,9 +53,9 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <%
-RSSWebConfiguration rssWebConfiguration = (RSSWebConfiguration)request.getAttribute(RSSWebConfiguration.class.getName());
+RSSWebCacheConfiguration rssWebCacheConfiguration = (RSSWebCacheConfiguration)request.getAttribute(RSSWebCacheConfiguration.class.getName());
 
-RSSDisplayContext rssDisplayContext = new RSSDisplayContext(request, rssWebConfiguration);
+RSSDisplayContext rssDisplayContext = new RSSDisplayContext(request, rssWebCacheConfiguration);
 
 RSSPortletInstanceConfiguration rssPortletInstanceConfiguration = rssDisplayContext.getRSSPortletInstanceConfiguration();
 

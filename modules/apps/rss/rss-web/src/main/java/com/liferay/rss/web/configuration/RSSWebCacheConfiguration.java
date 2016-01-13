@@ -23,10 +23,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.rss.web.configuration.RSSWebConfiguration",
-	localization = "content/Language", name = "%rss.web.configuration.name"
+	id = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
+	localization = "content/Language", name = "%rss.web.cache.configuration.name"
 )
-public interface RSSWebConfiguration {
+public interface RSSWebCacheConfiguration {
 
 	@Meta.AD(deflt = "20", required = false)
 	public int feedTime();

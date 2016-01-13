@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthTokenWhitelistUtil {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced with no direct replacement
+	 * @deprecated As of 7.0.0 with no direct replacement
 	 */
 	@Deprecated
 	public static AuthTokenWhitelist getAuthTokenWhitelist() {
@@ -45,6 +45,10 @@ public class AuthTokenWhitelistUtil {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> getPortletCSRFWhitelist() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
@@ -58,6 +62,10 @@ public class AuthTokenWhitelistUtil {
 		return portletCSRFWhitelist;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> getPortletCSRFWhitelistActions() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
@@ -71,6 +79,10 @@ public class AuthTokenWhitelistUtil {
 		return portletCSRFWhitelistActions;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> getPortletInvocationWhitelist() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
@@ -84,6 +96,10 @@ public class AuthTokenWhitelistUtil {
 		return portletInvocationWhitelist;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> getPortletInvocationWhitelistActions() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
@@ -227,6 +243,10 @@ public class AuthTokenWhitelistUtil {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> resetOriginCSRFWhitelist() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
@@ -240,6 +260,10 @@ public class AuthTokenWhitelistUtil {
 		return originCSRFWhitelist;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> resetPortletCSRFWhitelist() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
@@ -253,6 +277,10 @@ public class AuthTokenWhitelistUtil {
 		return portletCSRFWhitelist;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> resetPortletInvocationWhitelist() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
@@ -266,6 +294,10 @@ public class AuthTokenWhitelistUtil {
 		return portletInvocationWhitelist;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public static Set<String> resetPortletInvocationWhitelistActions() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 

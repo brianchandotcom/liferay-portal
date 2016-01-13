@@ -27,14 +27,34 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AuthTokenWhitelist {
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> getOriginCSRFWhitelist();
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> getPortletCSRFWhitelist();
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> getPortletCSRFWhitelistActions();
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> getPortletInvocationWhitelist();
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> getPortletInvocationWhitelistActions();
 
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin);
@@ -69,12 +89,28 @@ public interface AuthTokenWhitelist {
 
 	public boolean isValidSharedSecret(String sharedSecret);
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> resetOriginCSRFWhitelist();
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> resetPortletCSRFWhitelist();
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> resetPortletInvocationWhitelist();
 
+	/**
+	 * @deprecated As of 7.0.0 with no direct replacement
+	 */
+	@Deprecated
 	public Set<String> resetPortletInvocationWhitelistActions();
 
 }

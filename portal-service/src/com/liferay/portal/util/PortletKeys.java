@@ -91,6 +91,12 @@ public class PortletKeys {
 
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
 
+	public static final String MESSAGE_BOARDS =
+		"com_liferay_message_boards_web_portlet_MBPortlet";
+
+	public static final String MESSAGE_BOARDS_ADMIN =
+		"com_liferay_message_boards_web_portlet_MBAdminPortlet";
+
 	public static final String MONITORING_INVOKER =
 		"com_liferay_monitoring_web_portlet_" +
 			"MonitoringInvokerPortletFactoryImpl";

@@ -34,7 +34,9 @@ public class UpgradePortletId
 				"1_WAR_soannouncementsportlet", PortletKeys.ANNOUNCEMENTS
 			},
 			new String[] {"83", PortletKeys.ALERTS},
-			new String[] {"84", PortletKeys.ANNOUNCEMENTS}
+			new String[] {"84", PortletKeys.ANNOUNCEMENTS},
+			new String[] {"19", PortletKeys.MESSAGE_BOARDS},
+			new String[] {"162", PortletKeys.MESSAGE_BOARDS_ADMIN}
 		};
 	}
 

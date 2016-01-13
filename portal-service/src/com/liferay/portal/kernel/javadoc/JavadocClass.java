@@ -20,11 +20,13 @@ package com.liferay.portal.kernel.javadoc;
 public class JavadocClass extends BaseJavadoc {
 
 	public JavadocClass(
-		String servletContextName, String comment, Class<?> clazz) {
+		String servletContextName, String comment, Class<?> clazz,
+		String[] authors) {
 
 		super(servletContextName, comment);
 
 		_clazz = clazz;
+		_authors = authors;
 	}
 
 	public String[] getAuthors() {
@@ -35,15 +37,7 @@ public class JavadocClass extends BaseJavadoc {
 		return _clazz;
 	}
 
-	public void setAuthors(String[] authors) {
-		_authors = authors;
-	}
-
-	public void setClazz(Class<?> clazz) {
-		_clazz = clazz;
-	}
-
-	private String[] _authors;
-	private Class<?> _clazz;
+	private final String[] _authors;
+	private final Class<?> _clazz;
 
 }

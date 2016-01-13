@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -68,24 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class BookmarksPortletToolbarContributor
-	implements PortletToolbarContributor {
-
-	@Override
-	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
-		List<Menu> menus = new ArrayList<>();
-
-		Menu menu = new Menu();
-
-		menu.setDirection("down");
-		menu.setExtended(false);
-		menu.setIcon("../aui/plus-sign-2");
-		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
-		menu.setShowArrow(false);
-
-		menus.add(menu);
-
-		return menus;
-	}
+	extends BasePortletToolbarContributor {
 
 	protected void addPortletTitleAddBookmarkMenuItem(
 			List<MenuItem> menuItems, BookmarksFolder folder,
@@ -179,6 +162,7 @@ public class BookmarksPortletToolbarContributor
 		return true;
 	}
 
+	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest) {
 

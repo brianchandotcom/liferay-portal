@@ -390,8 +390,7 @@ public class LDAPAuth implements Authenticator {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof LDAPFilterException ||
-				e instanceof PasswordExpiredException ||
+			if (e instanceof PasswordExpiredException ||
 				e instanceof UserLockoutException) {
 
 				throw e;

@@ -89,8 +89,8 @@ public class NestedPortletsDisplayContext {
 
 	protected List<String> getUnsupportedLayoutTemplateIds() {
 		return ListUtil.fromArray(
-				_nestedPortletsPortletInstanceConfiguration.
-					layoutTemplatesUnsupported());
+			_nestedPortletsPortletInstanceConfiguration.
+				layoutTemplatesUnsupported());
 	}
 
 	private String _layoutTemplateId;

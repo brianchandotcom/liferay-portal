@@ -71,10 +71,8 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	@Override
 	public boolean isOriginCSRFWhitelisted(long companyId, String origin) {
-		Set<String> whitelist = getOriginCSRFWhitelist();
-
-		for (String whitelistedOrigins : whitelist) {
-			if (origin.startsWith(whitelistedOrigins)) {
+		for (String whitelistedOrigin : _originCSRFWhitelist) {
+			if (origin.startsWith(whitelistedOrigin)) {
 				return true;
 			}
 		}
@@ -86,60 +84,32 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 	public boolean isPortletCSRFWhitelisted(
 		HttpServletRequest request, Portlet portlet) {
 
-		String rootPortletId = portlet.getRootPortletId();
-
-		Set<String> whitelist = getPortletCSRFWhitelist();
-
-		if (whitelist.contains(rootPortletId)) {
-			return true;
-		}
-
-		return false;
+		return _portletCSRFWhitelist.contains(portlet.getRootPortletId());
 	}
 
 	@Override
 	public boolean isPortletInvocationWhitelisted(
 		HttpServletRequest request, Portlet portlet) {
 
-		Set<String> whitelist = getPortletInvocationWhitelist();
-
-		if (whitelist.contains(portlet.getPortletId())) {
-			return true;
-		}
-
-		return false;
+		return _portletInvocationWhitelist.contains(portlet.getPortletId());
 	}
 
 	@Override
 	public boolean isPortletURLCSRFWhitelisted(
 		LiferayPortletURL liferayPortletURL) {
 
-		String portletId = liferayPortletURL.getPortletId();
+		String rootPortletId = PortletConstants.getRootPortletId(
+			liferayPortletURL.getPortletId());
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		Set<String> whitelist = getPortletCSRFWhitelist();
-
-		if (whitelist.contains(rootPortletId)) {
-			return true;
-		}
-
-		return false;
+		return _portletCSRFWhitelist.contains(rootPortletId);
 	}
 
 	@Override
 	public boolean isPortletURLPortletInvocationWhitelisted(
 		LiferayPortletURL liferayPortletURL) {
 
-		String portletId = liferayPortletURL.getPortletId();
-
-		Set<String> whitelist = getPortletInvocationWhitelist();
-
-		if (whitelist.contains(portletId)) {
-			return true;
-		}
-
-		return false;
+		return _portletInvocationWhitelist.contains(
+			liferayPortletURL.getPortletId());
 	}
 
 	@Override

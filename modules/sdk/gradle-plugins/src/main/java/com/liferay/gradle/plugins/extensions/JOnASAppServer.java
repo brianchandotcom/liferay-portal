@@ -14,31 +14,15 @@
 
 package com.liferay.gradle.plugins.extensions;
 
-import org.gradle.api.NamedDomainObjectFactory;
 import org.gradle.api.Project;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Manuel de la Peña
  */
-class AppServerFactory implements NamedDomainObjectFactory<AppServer> {
+public class JOnASAppServer extends AppServer {
 
-	public AppServerFactory(Project project) {
-		_project = project;
+	public JOnASAppServer(Project project) {
+		super("jonas", project);
 	}
-
-	@Override
-	public AppServer create(String name) {
-		if (name.equals("tomcat")) {
-			return new TomcatAppServer(_project);
-		}
-		else if (name.equals("jonas")) {
-			return new JOnASAppServer(_project);
-		}
-		else {
-			return new AppServer(name, _project);
-		}
-	}
-
-	private final Project _project;
 
 }

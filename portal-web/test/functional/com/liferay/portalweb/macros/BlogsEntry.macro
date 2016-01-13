@@ -775,7 +775,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="ReportContent#SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
 
-		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="gotoDraftEditPG">
@@ -958,12 +958,12 @@
 	</command>
 
 	<command name="removeViewPermissionsPG">
+		<var name="key_assetHeader" value="${entryTitle}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
-		<var name="key_rowEntry" value="${entryTitle}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 

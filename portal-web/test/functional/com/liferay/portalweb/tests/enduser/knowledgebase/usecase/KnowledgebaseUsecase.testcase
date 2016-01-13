@@ -235,7 +235,7 @@
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
 			<var name="columnNumberFrom" value="1" />
 			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Knowledge Base Display" />
+			<var name="portletName" value="Knowledge Base Article" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -253,7 +253,7 @@
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
 			<var name="columnNumberFrom" value="1" />
 			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Knowledge Base Display" />
+			<var name="portletName" value="Knowledge Base Search" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -271,7 +271,7 @@
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
 			<var name="columnNumberFrom" value="1" />
 			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Knowledge Base Display" />
+			<var name="portletName" value="Knowledge Base Section" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -877,7 +877,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
+		<execute macro="DMDocument#viewDefaultCP" />
 
 		<execute macro="Navigator#openURL" />
 

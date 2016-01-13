@@ -71,8 +71,16 @@
 		}
 	}
 
-	.thread-container > .message-container {
-		padding-left: 0;
+	.thread-container {
+		.panel-heading {
+			span.h5 {
+				margin-right: 12px;
+			}
+		}
+
+		& > .message-container {
+			padding-left: 0;
+		}
 	}
 
 	.message-container {

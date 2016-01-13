@@ -42,6 +42,9 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Manuel de la Peña
  */
@@ -63,8 +66,8 @@ public abstract class BaseDBProvider
 		try {
 			exportProcess.export(exportContext);
 		}
-		catch (IOException e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			_logger.error("Unexpected error during the export process", ioe);
 		}
 	}
 
@@ -196,8 +199,12 @@ public abstract class BaseDBProvider
 				tableNames.add(rs.getString(getTableNameFieldName()));
 			}
 		}
-		catch (SQLException e) {
-			e.printStackTrace();
+		catch (SQLException sqle) {
+			if (_logger.isErrorEnabled()) {
+				_logger.error(
+					"Error retrieving the table names of the schema using " +
+						"the query " + sql, sqle);
+			}
 		}
 		finally {
 			_dbManager.cleanUp(con, ps, rs);
@@ -250,12 +257,18 @@ public abstract class BaseDBProvider
 			}
 		}
 		catch (IOException | SQLException e) {
-			e.printStackTrace();
+			if (_logger.isErrorEnabled()) {
+				_logger.error(
+					"Error exporting the rows for table " + tableName, e);
+			}
 		}
 		finally {
 			_dbManager.cleanUp(con, ps, rs);
 		}
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		BaseDBProvider.class);
 
 	private final DataSource _dataSource;
 	private final DBManager _dbManager = new DBManager();

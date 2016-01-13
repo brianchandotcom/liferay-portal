@@ -529,6 +529,10 @@ $horizontal-spacing: 35px;
 		.liferay-ddm-form-field-text textarea {
 			resize: none;
 		}
+
+		.toggle-switch-text {
+			word-break: break-word;
+		}
 	}
 
 	.form-builder-tabview,

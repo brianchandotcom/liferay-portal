@@ -17,6 +17,7 @@ package com.liferay.nested.portlets.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
+import com.liferay.nested.portlets.web.constants.NestedPortletsWebKeys;
 import com.liferay.nested.portlets.web.display.context.NestedPortletsDisplayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -164,10 +165,10 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		renderRequest.setAttribute(
-			NestedPortletsConfiguration.TEMPLATE_ID + portletDisplay.getId(),
+				NestedPortletsWebKeys.TEMPLATE_ID + portletDisplay.getId(),
 			templateId);
 		renderRequest.setAttribute(
-			NestedPortletsConfiguration.TEMPLATE_CONTENT +
+				NestedPortletsWebKeys.TEMPLATE_CONTENT +
 				portletDisplay.getId(),
 			templateContent);
 

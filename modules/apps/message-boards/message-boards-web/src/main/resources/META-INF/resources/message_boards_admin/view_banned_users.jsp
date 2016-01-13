@@ -17,8 +17,53 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
+PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+%>
+
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		PortletURL navigationURL = renderResponse.createRenderURL();
+
+		navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+		navigationURL.setParameter("top-link", "message-boards-home");
+		navigationURL.setParameter("tag", StringPool.BLANK);
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="message-boards-home"
+			selected="<%= false %>"
+		/>
+
+		<%
+		navigationURL.setParameter("topLink", "statistics");
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="statistics"
+			selected="<%= false %>"
+		/>
+
+		<%
+		PortletURL bannedUsersURL = renderResponse.createRenderURL();
+
+		bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+		%>
+
+		<aui:nav-item
+			href="<%= bannedUsersURL.toString() %>"
+			label="banned-users"
+			selected="<%= true %>"
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
+<%
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -29,8 +74,6 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
-
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 %>
 
 <liferay-frontend:management-bar
@@ -41,8 +84,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	<%
 	PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-	displayStyleURL.setParameter("topLink", "banned-users");
+	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
 	%>
 
 	<liferay-frontend:management-bar-buttons>
@@ -125,8 +167,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 </div>
 
 <%
-PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format("banned-users", TextFormatter.O)), portletURL.toString());
 %>
 
 <aui:script>

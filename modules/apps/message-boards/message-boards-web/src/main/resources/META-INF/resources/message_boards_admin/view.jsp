@@ -18,6 +18,7 @@
 
 <%
 String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
@@ -73,13 +74,15 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		/>
 
 		<%
-		navigationURL.setParameter("topLink", "banned-users");
+		PortletURL bannedUsersURL = renderResponse.createRenderURL();
+
+		bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
 		%>
 
 		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
+			href="<%= bannedUsersURL.toString() %>"
 			label="banned-users"
-			selected='<%= topLink.equals("banned-users") %>'
+			selected='<%= mvcRenderCommandName.equals("/message_boards/view_banned_users") %>'
 		/>
 	</aui:nav>
 
@@ -107,8 +110,5 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 	</c:when>
 	<c:when test='<%= topLink.equals("statistics") %>'>
 		<liferay-util:include page="/message_boards_admin/statistics.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= topLink.equals("banned-users") %>'>
-		<liferay-util:include page="/message_boards_admin/banned_users.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

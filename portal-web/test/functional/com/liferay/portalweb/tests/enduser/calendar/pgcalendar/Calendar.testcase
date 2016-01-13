@@ -2854,6 +2854,10 @@
 
 		<execute macro="CalendarNavigator#gotoNextDay" />
 
+		<execute function="Refresh" />
+
+		<execute macro="CalendarNavigator#gotoNextDay" />
+
 		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="Original Event Title" />
 		</execute>
@@ -2905,6 +2909,10 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoNextDay" />
+
+		<execute function="Refresh" />
 
 		<execute macro="CalendarNavigator#gotoNextDay" />
 

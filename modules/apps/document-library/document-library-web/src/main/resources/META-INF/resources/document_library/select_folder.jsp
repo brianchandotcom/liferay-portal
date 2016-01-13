@@ -120,9 +120,10 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 				name="folder"
 			>
 				<liferay-ui:icon
-					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+					icon="<%= assetRenderer.getIconCssClass() %>"
 					label="<%= true %>"
 					localizeMessage="<%= false %>"
+					markupView="lexicon"
 					message="<%= HtmlUtil.escape(curFolder.getName()) %>"
 					url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
 				/>

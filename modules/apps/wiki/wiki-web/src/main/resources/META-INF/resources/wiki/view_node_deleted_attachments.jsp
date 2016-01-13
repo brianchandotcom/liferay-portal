@@ -92,8 +92,9 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 			%>
 
 			<liferay-ui:icon
-				iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+				icon="<%= assetRenderer.getIconCssClass() %>"
 				label="<%= true %>"
+				markupView="lexicon"
 				message="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
 			/>
 		</liferay-ui:search-container-column-text>

@@ -85,8 +85,9 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 				name="resource"
 			>
 				<liferay-ui:icon
-					iconCssClass="<%= customAttributesDisplay.getIconCssClass() %>"
+					icon="<%= customAttributesDisplay.getIconCssClass() %>"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="<%= ResourceActionsUtil.getModelResource(locale, customAttributesDisplay.getClassName()) %>"
 				/>
 			</liferay-ui:search-container-column-text>

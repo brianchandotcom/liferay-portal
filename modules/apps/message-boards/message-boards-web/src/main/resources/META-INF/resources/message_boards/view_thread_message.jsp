@@ -419,8 +419,9 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								%>
 
 								<liferay-ui:icon
-									iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+									icon="<%= assetRenderer.getIconCssClass() %>"
 									label="<%= true %>"
+									markupView="lexicon"
 									message="<%= sb.toString() %>"
 									url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
 								/>

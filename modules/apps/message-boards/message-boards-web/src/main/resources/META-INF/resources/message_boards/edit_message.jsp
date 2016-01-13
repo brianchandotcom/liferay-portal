@@ -277,8 +277,9 @@ if (portletTitleBasedNavigation) {
 										%>
 
 										<liferay-ui:icon
-											iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+											icon="<%= assetRenderer.getIconCssClass() %>"
 											label="<%= true %>"
+											markupView="lexicon"
 											message="<%= fileEntry.getTitle() %>"
 										/>
 									</span>

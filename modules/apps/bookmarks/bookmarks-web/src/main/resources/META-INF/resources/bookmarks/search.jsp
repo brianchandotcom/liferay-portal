@@ -126,9 +126,10 @@ if (portletTitleBasedNavigation) {
 							%>
 
 							<liferay-ui:icon
-								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+								icon="<%= assetRenderer.getIconCssClass() %>"
 								label="<%= true %>"
 								localizeMessage="<%= false %>"
+								markupView="lexicon"
 								message="<%= entry.getName() %>"
 								target="_blank"
 								url="<%= rowHREF %>"
@@ -184,9 +185,10 @@ if (portletTitleBasedNavigation) {
 							%>
 
 							<liferay-ui:icon
-								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+								icon="<%= assetRenderer.getIconCssClass() %>"
 								label="<%= true %>"
 								localizeMessage="<%= false %>"
+								markupView="lexicon"
 								message="<%= HtmlUtil.escape(folder.getName()) %>"
 								url="<%= rowURL %>"
 							/>

@@ -43,7 +43,7 @@
 }
 
 .control-menu-level-2 {
-	@media screen and (max-width: 767px) {
+	@include media-query(0, $screen-xs-max) {
 		bottom: 0;
 		display: none;
 		left: 0;
@@ -54,7 +54,7 @@
 	}
 
 	&.open {
-		@media screen and (max-width: 767px) {
+		@include media-query(0, $screen-xs-max) {
 			display: block;
 			overflow: auto;
 		}
@@ -71,11 +71,11 @@
 		padding-bottom: 8px;
 		padding-top: 8px;
 
-		@media screen and (min-width: 768px) {
+		@include sm {
 			margin-bottom: 0;
 		}
 
-		@media screen and (max-width: 767px) {
+		@include media-query(0, $screen-xs-max) {
 			display: block;
 			float: none;
 			padding: 10px 0;
@@ -85,12 +85,12 @@
 	}
 
 	.control-menu-nav {
-		@media screen and (max-width: 767px) {
+		@include media-query(0, $screen-xs-max) {
 			display: block;
 		}
 
 		li {
-			@media screen and (max-width: 767px) {
+			@include media-query(0, $screen-xs-max) {
 				margin-left: 0;
 				width: 100%;
 			}
@@ -113,14 +113,14 @@
 }
 
 .publish-btn-group {
-	@media screen and (min-width: 768px) {
+	@include sm {
 		border-radius: 4px;
 		overflow: hidden;
 	}
 }
 
 .staging-ready {
-	@media screen and (min-width: 768px) {
+	@include sm {
 		padding-top: 70px;
 	}
 }

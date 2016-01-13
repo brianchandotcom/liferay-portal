@@ -11,6 +11,11 @@
 <!--ROLE_TABLE-->
 <tr>
 	<td>ROLE_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TABLE_TITLE_LINK</td>
 	<td>//tr[contains(.,'${key_roleName}')]/td[2]/a</td>
 	<td></td>
 </tr>

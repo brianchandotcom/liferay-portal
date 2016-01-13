@@ -31,7 +31,7 @@
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
 		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_REPLY_1" value1="Reply" />
 

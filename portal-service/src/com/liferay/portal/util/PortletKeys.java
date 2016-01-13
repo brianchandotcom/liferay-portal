@@ -58,9 +58,6 @@ public class PortletKeys {
 	public static final String DOCUMENT_LIBRARY_ADMIN =
 		"com_liferay_document_library_web_portlet_DLAdminPortlet";
 
-	public static final String MEDIA_GALLERY_DISPLAY =
-		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
-
 	public static final String EXPANDO =
 		"com_liferay_expando_web_portlet_ExpandoPortlet";
 
@@ -99,6 +96,9 @@ public class PortletKeys {
 		"3_WAR_marketplaceportlet";
 
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
+
+	public static final String MEDIA_GALLERY_DISPLAY =
+		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
 
 	public static final String MESSAGE_BOARDS =
 		"com_liferay_message_boards_web_portlet_MBPortlet";
@@ -174,6 +174,9 @@ public class PortletKeys {
 
 	public static final String SITE_MEMBERS_DIRECTORY =
 		"com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet";
+
+	public static final String SITE_MEMBERSHIPS_ADMIN =
+		"com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet";
 
 	public static final String SITE_SETTINGS =
 		"com_liferay_site_admin_web_portlet_SiteSettingsPortlet";

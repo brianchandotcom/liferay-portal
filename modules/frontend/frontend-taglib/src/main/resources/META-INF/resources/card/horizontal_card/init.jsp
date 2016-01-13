@@ -18,5 +18,6 @@
 
 <%
 String icon = (String)request.getAttribute("liferay-frontend:card:icon");
+String iconHTML = (String)request.getAttribute("liferay-frontend:card:iconHTML");
 String text = (String)request.getAttribute("liferay-frontend:card:text");
 %>

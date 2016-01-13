@@ -31,14 +31,17 @@
 
 <div class="card card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
 	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
-		<c:if test="<%= Validator.isNotNull(imageUrl) || Validator.isNotNull(icon) %>">
+		<c:if test="<%= Validator.isNotNull(imageUrl) || Validator.isNotNull(icon) || Validator.isNotNull(iconHTML) %>">
 			<div class="card-col-field">
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(imageUrl) %>">
 						<img alt="" class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %>" src="<%= imageUrl %>" />
 					</c:when>
-					<c:otherwise>
+					<c:when test="<%= Validator.isNotNull(icon) %>">
 						<span class="<%= Validator.isNotNull(imageCSSClass) ? imageCSSClass : StringPool.BLANK %> <%= icon %>"></span>
+					</c:when>
+					<c:otherwise>
+						<%= iconHTML %>
 					</c:otherwise>
 				</c:choose>
 			</div>

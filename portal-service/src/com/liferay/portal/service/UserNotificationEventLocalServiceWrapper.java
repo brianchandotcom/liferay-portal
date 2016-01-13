@@ -536,30 +536,6 @@ public class UserNotificationEventLocalServiceWrapper
 		return _userNotificationEventLocalService.getUserNotificationEvents(userId);
 	}
 
-	/**
-	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
-	boolean)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived) {
-		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
-			archived);
-	}
-
-	/**
-	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
-	boolean, int, int)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived, int start, int end) {
-		return _userNotificationEventLocalService.getUserNotificationEvents(userId,
-			archived, start, end);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, int deliveryType) {
@@ -594,17 +570,6 @@ public class UserNotificationEventLocalServiceWrapper
 	@Override
 	public int getUserNotificationEventsCount(long userId) {
 		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0 {@link
-	#getArchivedUserNotificationEventsCount(long, boolean)}
-	*/
-	@Deprecated
-	@Override
-	public int getUserNotificationEventsCount(long userId, boolean archived) {
-		return _userNotificationEventLocalService.getUserNotificationEventsCount(userId,
-			archived);
 	}
 
 	@Override

@@ -68,35 +68,33 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 			</div>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<h5><strong><liferay-ui:message key="num-of-items" /></strong></h5>
 
-		<div class="sidebar-body">
-			<h5><strong><liferay-ui:message key="num-of-items" /></strong></h5>
+					<%
+					long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			<%
-			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+					if (folder != null) {
+						folderId = folder.getFolderId();
+					}
+					%>
 
-			if (folder != null) {
-				folderId = folder.getFolderId();
-			}
-			%>
+					<p>
+						<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, true) %>
+					</p>
 
-			<p>
-				<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, true) %>
-			</p>
+					<c:if test="<%= folder != null %>">
+						<h5><strong><liferay-ui:message key="created" /></strong></h5>
 
-			<c:if test="<%= folder != null %>">
-				<h5><strong><liferay-ui:message key="created" /></strong></h5>
-
-				<p>
-					<%= HtmlUtil.escape(folder.getUserName()) %>
-				</p>
-			</c:if>
-		</div>
+						<p>
+							<%= HtmlUtil.escape(folder.getUserName()) %>
+						</p>
+					</c:if>
+				</div>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
 	</c:when>
 	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(fileEntries) && (fileEntries.size() == 1) %>">
 
@@ -147,14 +145,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 			<h4><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></h4>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-
-		<div class="sidebar-body">
-			<h5><strong><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></strong></h5>
-		</div>
+		<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
+			<liferay-ui:section>
+				<div class="sidebar-body">
+					<h5><strong><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></strong></h5>
+				</div>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
 	</c:otherwise>
 </c:choose>

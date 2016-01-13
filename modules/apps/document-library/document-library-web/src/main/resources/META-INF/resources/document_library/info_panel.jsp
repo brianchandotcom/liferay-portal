@@ -19,47 +19,83 @@
 <%
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
+List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
+	long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"), ParamUtil.getLong(request, "folderId"));
+
+	folders = new ArrayList<Folder>();
+
+	Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+
+	if (folder != null) {
+		folders.add(folder);
+	}
+	else if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		folders.add(DLAppLocalServiceUtil.getFolder(folderId));
+	}
+	else {
+		folders.add(null);
+	}
+}
 %>
 
-<div class="sidebar-header">
-	<ul class="list-inline list-unstyled sidebar-header-actions">
-		<li>
-			<liferay-util:include page="/document_library/subscribe.jsp" servletContext="<%= application %>" />
-		</li>
+<c:choose>
+	<c:when test="<%= (ListUtil.isEmpty(fileEntries) && ListUtil.isNotEmpty(folders) && (folders.size() == 1)) %>">
 
-		<li>
-			<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
-		</li>
-	</ul>
+		<%
+		Folder folder = folders.get(0);
 
-	<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
+		request.setAttribute("info_panel.jsp-folder", folder);
+		%>
 
-	<div>
-		<liferay-ui:message key="folder" />
-	</div>
-</div>
+		<div class="sidebar-header">
+			<ul class="list-inline list-unstyled sidebar-header-actions">
+				<li>
+					<liferay-util:include page="/document_library/subscribe.jsp" servletContext="<%= application %>" />
+				</li>
 
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="details" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+				<li>
+					<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
 
-<div class="sidebar-body">
-	<h5><liferay-ui:message key="num-of-items" /></h5>
+			<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
 
-	<p>
-		<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, true) %>
-	</p>
+			<div>
+				<liferay-ui:message key="folder" />
+			</div>
+		</div>
 
-	<c:if test="<%= folder != null %>">
-		<h5><liferay-ui:message key="created" /></h5>
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="details" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
 
-		<p>
-			<%= HtmlUtil.escape(folder.getUserName()) %>
-		</p>
-	</c:if>
-</div>
+		<div class="sidebar-body">
+			<h5><liferay-ui:message key="num-of-items" /></h5>
+
+			<%
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (folder != null) {
+				folderId = folder.getFolderId();
+			}
+			%>
+
+			<p>
+				<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, true) %>
+			</p>
+
+			<c:if test="<%= folder != null %>">
+				<h5><liferay-ui:message key="created" /></h5>
+
+				<p>
+					<%= HtmlUtil.escape(folder.getUserName()) %>
+				</p>
+			</c:if>
+		</div>
+	</c:when>
+</c:choose>

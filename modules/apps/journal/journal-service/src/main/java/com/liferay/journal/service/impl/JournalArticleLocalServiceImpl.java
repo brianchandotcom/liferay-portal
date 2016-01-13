@@ -6487,42 +6487,48 @@ public class JournalArticleLocalServiceImpl
 		for (Element dynamicContentElement :
 				dynamicElementElement.elements("dynamic-content")) {
 
-			String value = dynamicContentElement.getText();
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
-
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
-			boolean tempFile = jsonObject.getBoolean("tempFile");
-
-			FileEntry fileEntry =
-				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
-
-			if (tempFile) {
-				String fileEntryName = DLUtil.getUniqueFileName(
-					fileEntry.getGroupId(), fileEntry.getFolderId(),
-					fileEntry.getFileName());
-
-				fileEntry = dlAppLocalService.addFileEntry(
-					fileEntry.getUserId(), fileEntry.getGroupId(), 0,
-					fileEntryName, fileEntry.getMimeType(), fileEntryName,
-					StringPool.BLANK, StringPool.BLANK,
-					fileEntry.getContentStream(), fileEntry.getSize(),
-					new ServiceContext());
-			}
-
-			String previewURL = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, true);
-
-			dynamicContentElement.clearContent();
-
-			dynamicContentElement.addCDATA(previewURL);
+			formatDocumentLibraryDynamicContent(dynamicContentElement);
 		}
+	}
+
+	protected void formatDocumentLibraryDynamicContent(
+			Element dynamicContentElement)
+		throws PortalException {
+
+		String value = dynamicContentElement.getText();
+
+		if (Validator.isNull(value)) {
+			return;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+		String uuid = jsonObject.getString("uuid");
+		long groupId = jsonObject.getLong("groupId");
+		boolean tempFile = jsonObject.getBoolean("tempFile");
+
+		FileEntry fileEntry = dlAppLocalService.getFileEntryByUuidAndGroupId(
+			uuid, groupId);
+
+		if (tempFile) {
+			String fileEntryName = DLUtil.getUniqueFileName(
+				fileEntry.getGroupId(), fileEntry.getFolderId(),
+				fileEntry.getFileName());
+
+			fileEntry = dlAppLocalService.addFileEntry(
+				fileEntry.getUserId(), fileEntry.getGroupId(), 0, fileEntryName,
+				fileEntry.getMimeType(), fileEntryName, StringPool.BLANK,
+				StringPool.BLANK, fileEntry.getContentStream(),
+				fileEntry.getSize(), new ServiceContext());
+		}
+
+		String previewURL = DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+			false, true);
+
+		dynamicContentElement.clearContent();
+
+		dynamicContentElement.addCDATA(previewURL);
 	}
 
 	protected void formatImage(
@@ -6534,6 +6540,19 @@ public class JournalArticleLocalServiceImpl
 		List<Element> imageContents = el.elements("dynamic-content");
 
 		for (Element dynamicContent : imageContents) {
+			String elType = dynamicContent.attributeValue(
+				"type", StringPool.BLANK);
+
+			if (elType.equals("document")) {
+				if (ExportImportThreadLocal.isImportInProcess()) {
+					continue;
+				}
+
+				formatDocumentLibraryDynamicContent(dynamicContent);
+
+				continue;
+			}
+
 			String elLanguage = dynamicContent.attributeValue(
 				"language-id", StringPool.BLANK);
 

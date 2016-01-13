@@ -47,7 +47,7 @@ public class LDAPSettingsUtil {
 	}
 
 	public static String[] getErrorPasswordHistories(long companyId) {
-		return _ldapSettings.getErrorPasswordHistories(companyId);
+		return _ldapSettings.getErrorPasswordHistoryKeywords(companyId);
 	}
 
 	public static Properties getGroupMappings(long ldapServerId, long companyId)

@@ -165,10 +165,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="Click" locator1="Button#ADD_USER" />
+		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertElementPresent" locator1="Button#ADD" />
-		<execute function="AssertVisible" locator1="Button#ADD" />
+		<execute function="AssertElementPresent#assertVisible" locator1="Button#ADD" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

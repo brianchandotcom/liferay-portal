@@ -1481,6 +1481,16 @@
 		<execute macro="User#deleteCP">
 			<var name="userFirstName" value="userfn" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#searchCP">
+			<var name="searchToken" value="usersn" />
+		</execute>
+
+		<execute macro="User#viewNoUsersFoundCP" />
 	</command>
 
 	<command name="EditOrganizationSite" priority="5">

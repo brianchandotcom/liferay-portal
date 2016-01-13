@@ -115,8 +115,7 @@ public class ResourceBundleUtil {
 			if (resourceBundle != null) {
 				currentResourceBundles.addFirst(resourceBundle);
 			}
-
-			if (currentResourceBundles.isEmpty()) {
+			else if (currentResourceBundles.isEmpty()) {
 				continue;
 			}
 

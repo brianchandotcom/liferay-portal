@@ -188,7 +188,7 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.amazon.rankings.web", "com.liferay.announcements.web",
 		"com.liferay.asset.browser.web",
 		"com.liferay.asset.categories.navigation.web",
-		"com.liferay.asset.publisher.web", "com.liferay.asset.tags.admin.web",
+		"com.liferay.asset.publisher.web",
 		"com.liferay.asset.tags.compiler.web",
 		"com.liferay.asset.tags.navigation.web",
 		"com.liferay.blogs.recent.bloggers.web", "com.liferay.blogs.web",

@@ -25,6 +25,9 @@ public class PortletKeys {
 		"com_liferay_asset_categories_admin_web_portlet_" +
 			"AssetCategoriesAdminPortlet";
 
+	public static final String ASSET_TAGS_ADMIN =
+		"com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
+
 	public static final String BACKGROUND_TASK = "189";
 
 	public static final String BLOGS =

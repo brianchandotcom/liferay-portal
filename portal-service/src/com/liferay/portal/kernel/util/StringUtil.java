@@ -237,8 +237,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns <code>true</code> if the string contains the text as a comma
-	 * delimited list entry.
+	 * Returns <code>true</code> if the string contains the text as one or more
+	 * consecutive comma delimited list entries.
 	 *
 	 * <p>
 	 * Examples:
@@ -256,16 +256,17 @@ public class StringUtil {
 	 *
 	 * @param  s the string in which to search
 	 * @param  text the text to search for in the string
-	 * @return <code>true</code> if the string contains the text as a comma
-	 *         delimited list entry; <code>false</code> otherwise
+	 * @return <code>true</code> if the string contains the text as one or more
+	 *         consecutive comma delimited list entries; <code>false</code>
+	 *         otherwise
 	 */
 	public static boolean contains(String s, String text) {
 		return contains(s, text, StringPool.COMMA);
 	}
 
 	/**
-	 * Returns <code>true</code> if the string contains the text as a delimited
-	 * list entry.
+	 * Returns <code>true</code> if the string contains the text as one or more
+	 * consecutive delimited list entries.
 	 *
 	 * <p>
 	 * Examples:
@@ -284,8 +285,8 @@ public class StringUtil {
 	 * @param  s the string in which to search
 	 * @param  text the text to search for in the string
 	 * @param  delimiter the delimiter
-	 * @return <code>true</code> if the string contains the text as a delimited
-	 *         list entry; <code>false</code> otherwise
+	 * @return <code>true</code> if the string contains the text as one or more
+	 *         consecutive delimited list entries; <code>false</code> otherwise
 	 */
 	public static boolean contains(String s, String text, String delimiter) {
 		if ((s == null) || (text == null) || (delimiter == null)) {
@@ -314,8 +315,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns <code>true</code> if the string contains the text as a comma
-	 * delimited list entry, ignoring case.
+	 * Returns <code>true</code> if the string contains the text as one or more
+	 * consecutive comma delimited list entries, ignoring case.
 	 *
 	 * <p>
 	 * Examples:
@@ -333,16 +334,17 @@ public class StringUtil {
 	 *
 	 * @param  s the string in which to search
 	 * @param  text the text to search for in the string
-	 * @return <code>true</code> if the string contains the text as a comma
-	 *         delimited list entry; <code>false</code> otherwise
+	 * @return <code>true</code> if the string contains the text as one or more
+	 *         consecutive comma delimited list entries; <code>false</code>
+	 *         otherwise
 	 */
 	public static boolean containsIgnoreCase(String s, String text) {
 		return containsIgnoreCase(s, text, StringPool.COMMA);
 	}
 
 	/**
-	 * Returns <code>true</code> if the string contains the text as a delimited
-	 * list entry, ignoring case.
+	 * Returns <code>true</code> if the string contains the text as one or more
+	 * consecutive delimited list entries, ignoring case.
 	 *
 	 * <p>
 	 * Examples:
@@ -361,8 +363,8 @@ public class StringUtil {
 	 * @param  s the string in which to search
 	 * @param  text the text to search for in the string
 	 * @param  delimiter the delimiter
-	 * @return <code>true</code> if the string contains the text as a delimited
-	 *         list entry; <code>false</code> otherwise
+	 * @return <code>true</code> if the string contains the text as one or more
+	 *         consecutive delimited list entries; <code>false</code> otherwise
 	 */
 	public static boolean containsIgnoreCase(
 		String s, String text, String delimiter) {

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
@@ -53,17 +54,16 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	public MVCPortletAuthTokenWhitelist() {
 		trackWhitelistServices(
 			"auth.token.ignore.mvc.action", MVCActionCommand.class,
-			_portletCSRFWhitelistActions);
+			_portletCSRFWhitelist);
 		trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
-			MVCActionCommand.class, _portletInvocationActionWhitelistActions);
+			MVCActionCommand.class, _portletInvocationWhitelistAction);
 		trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
-			MVCRenderCommand.class, _portletInvocationRenderWhitelistActions);
+			MVCRenderCommand.class, _portletInvocationWhitelistRender);
 		trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
-			MVCResourceCommand.class,
-			_portletInvocationResourceWhitelistActions);
+			MVCResourceCommand.class, _portletInvocationWhitelistResource);
 	}
 
 	@Override
@@ -72,22 +72,11 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 		String portletId = portlet.getPortletId();
 
-		String namespace = PortalUtil.getPortletNamespace(portletId);
+		String[] mvcActionCommandNames = getMVCActionCommandNames(
+			request, portletId);
 
-		String[] actionNameParameterValues = ParamUtil.getParameterValues(
-			request, namespace + ActionRequest.ACTION_NAME);
-
-		String actionNameParameterValue = StringUtil.merge(
-			actionNameParameterValues);
-
-		String[] actionNames = StringUtil.split(actionNameParameterValue);
-
-		if (actionNames.length == 0) {
-			return false;
-		}
-
-		return containsCSRFWhitelistActions(
-			portletId, _portletCSRFWhitelistActions, actionNames);
+		return _containsAll(
+			portletId, _portletCSRFWhitelist, mvcActionCommandNames);
 	}
 
 	@Override
@@ -100,15 +89,38 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isLifecycleAction()) {
-			return isActionInvocationWhitelisted(request, portletId);
+			String[] mvcActionCommandNames = getMVCActionCommandNames(
+				request, portletId);
+
+			return _containsAll(
+				portletId, _portletInvocationWhitelistAction,
+				mvcActionCommandNames);
 		}
 
 		else if (themeDisplay.isLifecycleRender()) {
-			return isRenderInvocationWhitelisted(request, portletId);
+			String namespace = PortalUtil.getPortletNamespace(portletId);
+
+			String mvcRenderCommandName = ParamUtil.getString(
+				request, namespace + "mvcRenderCommandName");
+
+			return _contains(
+				portletId, _portletInvocationWhitelistRender,
+				mvcRenderCommandName);
 		}
 
 		else if (themeDisplay.isLifecycleResource()) {
-			return isResourceInvocationWhitelisted(request, portletId);
+			String ppid = ParamUtil.getString(request, "p_p_id");
+
+			if (!portletId.equals(ppid)) {
+				return false;
+			}
+
+			String mvcResourceCommandName = ParamUtil.getString(
+				request, "p_p_resource_id");
+
+			return _contains(
+				portletId, _portletInvocationWhitelistResource,
+				mvcResourceCommandName);
 		}
 
 		return false;
@@ -118,25 +130,12 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	public boolean isPortletURLCSRFWhitelisted(
 		LiferayPortletURL liferayPortletURL) {
 
-		String portletId = liferayPortletURL.getPortletId();
+		String[] mvcActionCommandNames = getMVCActionCommandNames(
+			liferayPortletURL);
 
-		Map<String, String[]> parameterMap =
-			liferayPortletURL.getParameterMap();
-
-		String[] actionNameParameterValues = parameterMap.get(
-			ActionRequest.ACTION_NAME);
-
-		String actionNameParameterValue = StringUtil.merge(
-			actionNameParameterValues);
-
-		String[] actionNames = StringUtil.split(actionNameParameterValue);
-
-		if (actionNames.length == 0) {
-			return false;
-		}
-
-		return containsCSRFWhitelistActions(
-			portletId, _portletCSRFWhitelistActions, actionNames);
+		return _containsAll(
+			liferayPortletURL.getPortletId(), _portletCSRFWhitelist,
+			mvcActionCommandNames);
 	}
 
 	@Override
@@ -148,163 +147,64 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		String lifecycle = liferayPortletURL.getLifecycle();
 
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-			return isActionInvocationWhitelisted(liferayPortletURL, portletId);
+			String[] mvcActionCommandNames = getMVCActionCommandNames(
+				liferayPortletURL);
+
+			return _containsAll(
+				portletId, _portletInvocationWhitelistAction,
+				mvcActionCommandNames);
 		}
 
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
-			return isRenderInvocationWhitelisted(liferayPortletURL, portletId);
+			String mvcRenderCommandName = liferayPortletURL.getParameter(
+				"mvcRenderCommandName");
+
+			return _contains(
+				portletId, _portletInvocationWhitelistRender,
+				mvcRenderCommandName);
 		}
 
 		else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-			return isResourceInvocationWhitelisted(
-				liferayPortletURL, portletId);
+			String mvcResourceCommandName = liferayPortletURL.getResourceID();
+
+			return _contains(
+				portletId, _portletInvocationWhitelistResource,
+				mvcResourceCommandName);
 		}
 
 		return false;
 	}
 
-	protected boolean containsCSRFWhitelistActions(
-		String portletId, Set<String> whitelistActions, String[] actionNames) {
+	protected String[] getMVCActionCommandNames(
+		HttpServletRequest request, String portletId) {
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		for (String actionName : actionNames) {
-			if (!whitelistActions.contains(
-					getWhitelistValue(rootPortletId, actionName))) {
+		String[] actionNames = ParamUtil.getParameterValues(
+			request, namespace + ActionRequest.ACTION_NAME);
 
-				return false;
-			}
-		}
+		String actions = StringUtil.merge(actionNames);
 
-		return true;
+		return StringUtil.split(actions);
+	}
+
+	protected String[] getMVCActionCommandNames(
+		LiferayPortletURL liferayPortletURL) {
+
+		Map<String, String[]> parameterMap =
+			liferayPortletURL.getParameterMap();
+
+		String[] actionNames = parameterMap.get(ActionRequest.ACTION_NAME);
+
+		String actions = StringUtil.merge(actionNames);
+
+		return StringUtil.split(actions);
 	}
 
 	protected String getWhitelistValue(
 		String portletName, String whitelistAction) {
 
 		return portletName + StringPool.POUND + whitelistAction;
-	}
-
-	protected boolean isActionInvocationWhitelisted(
-		HttpServletRequest request, String portletId) {
-
-		String namespace = PortalUtil.getPortletNamespace(portletId);
-
-		String[] actionNameParameterValues = ParamUtil.getParameterValues(
-			request, namespace + ActionRequest.ACTION_NAME);
-
-		String actionNameParameterValue = StringUtil.merge(
-			actionNameParameterValues);
-
-		String[] mvcActionCommandNames = StringUtil.split(
-			actionNameParameterValue);
-
-		if (mvcActionCommandNames.length == 0) {
-			return false;
-		}
-
-		return containsCSRFWhitelistActions(
-			portletId, _portletInvocationActionWhitelistActions,
-			mvcActionCommandNames);
-	}
-
-	protected boolean isActionInvocationWhitelisted(
-		LiferayPortletURL liferayPortletURL, String portletId) {
-
-		Map<String, String[]> parameterMap =
-			liferayPortletURL.getParameterMap();
-
-		String[] actionNameParameterValues = parameterMap.get(
-			ActionRequest.ACTION_NAME);
-
-		String actionNameParameterValue = StringUtil.merge(
-			actionNameParameterValues);
-
-		String[] mvcActionCommandNames = StringUtil.split(
-			actionNameParameterValue);
-
-		if (mvcActionCommandNames.length == 0) {
-			return false;
-		}
-
-		return containsCSRFWhitelistActions(
-			portletId, _portletInvocationActionWhitelistActions,
-			mvcActionCommandNames);
-	}
-
-	protected boolean isRenderInvocationWhitelisted(
-		HttpServletRequest request, String portletId) {
-
-		String namespace = PortalUtil.getPortletNamespace(portletId);
-
-		String mvcRenderCommandName = ParamUtil.getString(
-			request, namespace + "mvcRenderCommandName");
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (_portletInvocationRenderWhitelistActions.contains(
-				getWhitelistValue(rootPortletId, mvcRenderCommandName))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isRenderInvocationWhitelisted(
-		LiferayPortletURL liferayPortletURL, String portletId) {
-
-		String mvcRenderCommandName = liferayPortletURL.getParameter(
-			"mvcRenderCommandName");
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (_portletInvocationRenderWhitelistActions.contains(
-				getWhitelistValue(rootPortletId, mvcRenderCommandName))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isResourceInvocationWhitelisted(
-		HttpServletRequest request, String portletId) {
-
-		String ppid = ParamUtil.getString(request, "p_p_id");
-
-		if (!portletId.equals(ppid)) {
-			return false;
-		}
-
-		String mvcResourceCommandName = ParamUtil.getString(
-			request, "p_p_resource_id");
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (_portletInvocationResourceWhitelistActions.contains(
-				getWhitelistValue(rootPortletId, mvcResourceCommandName))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isResourceInvocationWhitelisted(
-		LiferayPortletURL liferayPortletURL, String portletId) {
-
-		String mvcResourceCommandName = liferayPortletURL.getResourceID();
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (_portletInvocationResourceWhitelistActions.contains(
-				getWhitelistValue(rootPortletId, mvcResourceCommandName))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void trackWhitelistServices(
@@ -323,13 +223,42 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		serviceTrackers.add(serviceTracker);
 	}
 
-	private final Set<String> _portletCSRFWhitelistActions =
+	private boolean _contains(
+		String portletId, Set<String> whitelist, String item) {
+
+		if (Validator.isBlank(item)) {
+			return false;
+		}
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		return whitelist.contains(getWhitelistValue(rootPortletId, item));
+	}
+
+	private boolean _containsAll(
+		String portletId, Set<String> whitelist, String[] items) {
+
+		if (items.length == 0) {
+			return false;
+		}
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		for (String action : items) {
+			if (!whitelist.contains(getWhitelistValue(rootPortletId, action))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private final Set<String> _portletCSRFWhitelist = new ConcurrentHashSet<>();
+	private final Set<String> _portletInvocationWhitelistAction =
 		new ConcurrentHashSet<>();
-	private final Set<String> _portletInvocationActionWhitelistActions =
+	private final Set<String> _portletInvocationWhitelistRender =
 		new ConcurrentHashSet<>();
-	private final Set<String> _portletInvocationRenderWhitelistActions =
-		new ConcurrentHashSet<>();
-	private final Set<String> _portletInvocationResourceWhitelistActions =
+	private final Set<String> _portletInvocationWhitelistResource =
 		new ConcurrentHashSet<>();
 
 	private class TokenWhitelistTrackerCustomizer

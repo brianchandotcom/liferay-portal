@@ -171,6 +171,9 @@ public class PortletKeys {
 
 	public static final String REQUESTS = "121";
 
+	public static final String ROLES_ADMIN =
+		"com_liferay_roles_admin_web_portlet_RolesAdminPortlet";
+
 	public static final String SERVER_ADMIN =
 		"com_liferay_server_admin_web_portlet_ServerAdminPortlet";
 

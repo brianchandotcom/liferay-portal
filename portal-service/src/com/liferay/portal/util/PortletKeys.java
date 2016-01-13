@@ -39,6 +39,9 @@ public class PortletKeys {
 	public static final String BLOGS =
 		"com_liferay_blogs_web_portlet_BlogsPortlet";
 
+	public static final String BLOGS_ADMIN =
+		"com_liferay_blogs_web_portlet_BlogsAdminPortlet";
+
 	public static final String BLOGS_AGGREGATOR =
 		"com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 

@@ -139,11 +139,17 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+String currentURL = null;
 
-String currentURL = currentURLObj.toString();
+LayoutsAdminDisplayContext layoutsAdminDisplayContext = null;
 
-LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(liferayPortletRequest, liferayPortletResponse);
+if ((liferayPortletRequest != null) && (liferayPortletResponse != null)) {
+	PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+	currentURL = currentURLObj.toString();
+
+	layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(liferayPortletRequest, liferayPortletResponse);
+}
 %>
 
 <%@ include file="/init-ext.jsp" %>

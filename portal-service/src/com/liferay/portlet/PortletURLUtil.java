@@ -306,16 +306,15 @@ public class PortletURLUtil {
 	public static Map<String, String[]> getRefreshURLParameters(
 		HttpServletRequest request) {
 
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
-
-		String portletId = portlet.getPortletId();
+		Map<String, String[]> refreshURLParameters = new HashMap<>();
 
 		String ppid = ParamUtil.getString(request, "p_p_id");
 
-		Map<String, String[]> refreshURLParameters = new HashMap<>();
+		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
-		if (ppid.equals(portletId)) {
-			String namespace = PortalUtil.getPortletNamespace(portletId);
+		if (ppid.equals(portlet.getPortletId())) {
+			String namespace = PortalUtil.getPortletNamespace(
+				portlet.getPortletId());
 
 			Map<String, String[]> parameters = request.getParameterMap();
 

@@ -157,6 +157,9 @@ public class PortletKeys {
 	public static final String SITE_SETTINGS =
 		"com_liferay_site_admin_web_portlet_SiteSettingsPortlet";
 
+	public static final String SITE_TEAMS =
+		"com_liferay_site_teams_web_portlet_SiteTeamsPortlet";
+
 	public static final String STOCKS = "12";
 
 	public static final String TRANSLATOR = "26";

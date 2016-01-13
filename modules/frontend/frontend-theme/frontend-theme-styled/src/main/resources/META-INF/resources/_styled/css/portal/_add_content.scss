@@ -96,6 +96,18 @@
 		.input-group-btn {
 			right: 20px;
 		}
+
+		.display-style-bar {
+			margin: 10px;
+
+			.display-style {
+				padding: 5px;
+
+				&.active {
+					color: #869CAD;
+				}
+			}
+		}
 	}
 }
 

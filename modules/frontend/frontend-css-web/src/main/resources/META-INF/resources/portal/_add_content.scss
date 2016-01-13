@@ -31,25 +31,6 @@
 			}
 		}
 
-		.content-search {
-			.input-select-wrapper, .input-text-wrapper {
-				float: left;
-			}
-
-			.input-select-wrapper {
-				padding-left: 10px;
-				width: 25%;
-			}
-
-			.input-text-wrapper {
-				width: 75%;
-			}
-		}
-
-		.navbar {
-			clear: left;
-		}
-
 		.display-style-buttons-container {
 			.lfr-icon-menu {
 				.lfr-icon-menu-arrow {
@@ -121,9 +102,7 @@
 		}
 
 		.lfr-content-item {
-			line-height: 32px;
-			padding-left: 15px;
-			position: relative;
+			padding-left: 30px;
 
 			.drag-content-item {
 				display: inline-block;

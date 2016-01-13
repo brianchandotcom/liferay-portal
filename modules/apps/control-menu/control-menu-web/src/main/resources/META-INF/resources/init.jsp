@@ -80,6 +80,7 @@ page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@

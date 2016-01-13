@@ -31,50 +31,88 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 </portlet:resourceURL>
 
 <aui:form action="<%= updateContentListURL %>" name="addContentForm" onSubmit="event.preventDefault();">
-	<div class="content-search">
-		<aui:input cssClass="search-query" inlineField="<%= true %>" label="" name="searchContent" type="text" />
+	<div class="input-group search-bar">
+		<input class="form-control" id="<portlet:namespace />searchContent" name="<portlet:namespace />searchContent" placeholder='<%= LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD %>' type="text" />
 
-		<aui:select inlineField="<%= true %>" label="" name="numItems" title="number-of-items-to-display">
-
-			<%
-			for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-				if (curDelta > SearchContainer.MAX_DELTA) {
-					continue;
-				}
-			%>
-
-				<aui:option label="<%= curDelta %>" selected="<%= delta == curDelta %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
+		<span class="input-group-btn">
+			<liferay-ui:icon icon="search" markupView="lexicon" />
+		</span>
 	</div>
 
-	<aui:nav-bar>
-		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
-			<liferay-ui:app-view-display-style
-				displayStyle="<%= displayStyle %>"
-				displayStyles="<%= _DISPLAY_VIEWS %>"
-				eventName='<%= "AddContent:changeDisplayStyle" %>'
-			/>
-		</aui:nav>
+	<div class="display-style-bar">
+		<span class="dropdown" id="<portlet:namespace />numItems">
+			<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+				<span class="item-title"><%= delta %></span>
+				<span class="icon-sort"></span>
+			</a>
 
-		<span class="add-content-button">
+			<ul class="dropdown-menu">
+
+				<%
+				for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+					if (curDelta > SearchContainer.MAX_DELTA) {
+						continue;
+					}
+
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("delta", curDelta);
+				%>
+
+					<li class="num-item <%= (delta == curDelta) ? "active" : StringPool.BLANK %>">
+						<aui:a cssClass="num-item" data="<%= data %>" href="javascript:;" label="<%= String.valueOf(curDelta) %>" />
+					</li>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</span>
+
+		<span class="pull-right">
 
 			<%
-			PortletURL redirectURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+			Map<String, Object> data = new HashMap<String, Object>();
 
-			redirectURL.setParameter("mvcPath", "/add_content_redirect.jsp");
-			redirectURL.setWindowState(LiferayWindowState.POP_UP);
+			data.put("displaystyle", "icon");
 			%>
 
-			<liferay-ui:asset-add-button
-				redirect="<%= redirectURL.toString() %>"
+			<liferay-ui:icon
+				data="<%= data %>"
+				icon="cards2"
+				linkCssClass='<%= displayStyle.equals("icon") ? "display-style active" : "display-style" %>'
+				markupView="lexicon"
+				url="javascript:;"
+			/>
+
+			<%
+			data.put("displaystyle", "descriptive");
+			%>
+
+			<liferay-ui:icon
+				data="<%= data %>"
+				icon="list"
+				linkCssClass='<%= displayStyle.equals("descriptive") ? "display-style active" : "display-style" %>'
+				markupView="lexicon"
+				url="javascript:;"
 			/>
 		</span>
-	</aui:nav-bar>
+	</div>
+
+	<div class="add-content-button">
+
+		<%
+		PortletURL redirectURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+
+		redirectURL.setParameter("mvcPath", "/add_content_redirect.jsp");
+		redirectURL.setWindowState(LiferayWindowState.POP_UP);
+		%>
+
+		<liferay-ui:asset-add-button
+			redirect="<%= redirectURL.toString() %>"
+		/>
+	</div>
 
 	<div id="<portlet:namespace />entriesContainer">
 		<liferay-util:include page="/view_resources.jsp" servletContext="<%= application %>" />
@@ -88,6 +126,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 
 	var addContent = new ControlMenu.AddContent(
 		{
+			delta: '<%= delta %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			focusItem: searchContent,
 			inputNode: searchContent,
@@ -117,7 +156,3 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 
 	Liferay.component('<portlet:namespace />addContent', addContent);
 </aui:script>
-
-<%!
-private static final String[] _DISPLAY_VIEWS = {"icon", "descriptive", "list"};
-%>

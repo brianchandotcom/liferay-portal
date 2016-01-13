@@ -5,6 +5,10 @@ AUI.add(
 
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
 
+		var SELECTOR_DISPLAY_STYLE = '.display-style';
+
+		var SELECTOR_NUM_ITEMS = '.num-item';
+
 		var STR_CLICK = 'click';
 
 		var STR_RESPONSE_DATA = 'responseData';
@@ -22,6 +26,7 @@ AUI.add(
 						var instance = this;
 
 						instance._config = config;
+						instance._delta = config.delta;
 						instance._displayStyle = config.displayStyle;
 
 						instance._addContentForm = instance.byId('addContentForm');
@@ -41,9 +46,9 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandles.push(
-							instance._numItems.on('change', instance._onChangeNumItems, instance),
+							instance._addContentForm.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_DISPLAY_STYLE, instance),
+							instance._numItems.delegate(STR_CLICK, instance._onChangeNumItems, SELECTOR_NUM_ITEMS, instance),
 							instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance),
-							Liferay.on('AddContent:changeDisplayStyle', instance._onChangeDisplayStyle, instance),
 							Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance),
 							Liferay.on('showTab', instance._onShowTab, instance),
 							Liferay.on(
@@ -58,7 +63,7 @@ AUI.add(
 					_onChangeDisplayStyle: function(event) {
 						var instance = this;
 
-						var displayStyle = event.displayStyle;
+						var displayStyle = event.currentTarget.attr('data-displaystyle');
 
 						instance._displayStyle = displayStyle;
 
@@ -70,7 +75,11 @@ AUI.add(
 					_onChangeNumItems: function(event) {
 						var instance = this;
 
-						Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', instance._numItems.val());
+						var delta = event.currentTarget.attr('data-delta');
+
+						instance._delta = delta;
+
+						Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', delta);
 
 						instance._refreshContentList(event);
 					},
@@ -96,7 +105,7 @@ AUI.add(
 								},
 								data: instance.ns(
 									{
-										delta: instance._numItems.val(),
+										delta: instance._delta,
 										displayStyle: instance._displayStyle,
 										keywords: instance.get('inputNode').val(),
 										viewAssetEntries: true,

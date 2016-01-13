@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -58,6 +59,8 @@ import java.io.IOException;
 
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -101,6 +104,30 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class DDLFormPortlet extends MVCPortlet {
+
+	@Override
+	public void processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException, PortletException {
+
+		try {
+			super.processAction(actionRequest, actionResponse);
+		}
+		catch (Exception e) {
+			Throwable cause = getRootCause(e);
+
+			if (cause instanceof DDMFormEvaluationException) {
+				hideDefaultErrorMessage(actionRequest);
+
+				SessionErrors.add(
+					actionRequest, DDMFormEvaluationException.class,
+					cause.getMessage());
+			}
+			else {
+				throw e;
+			}
+		}
+	}
 
 	@Override
 	public void render(
@@ -276,6 +303,14 @@ public class DDLFormPortlet extends MVCPortlet {
 			ddmFormLayout.getDDMFormLayoutPages();
 
 		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
+	}
+
+	protected Throwable getRootCause(Throwable throwable) {
+		while (throwable.getCause() != null) {
+			throwable = throwable.getCause();
+		}
+
+		return throwable;
 	}
 
 	protected String getSubmitLabel(

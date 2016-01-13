@@ -21,10 +21,6 @@ import java.lang.reflect.Method;
  */
 public class JavadocMethodImpl extends JavadocMethod {
 
-	public JavadocMethodImpl(Method method) {
-		this(method, null);
-	}
-
 	public JavadocMethodImpl(Method method, String comment) {
 		_method = method;
 

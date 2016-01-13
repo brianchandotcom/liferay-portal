@@ -51,18 +51,6 @@ public class LastPath implements Serializable {
 		return _path;
 	}
 
-	public void setContextPath(String contextPath) {
-		_contextPath = contextPath;
-	}
-
-	public void setParameterMap(Map<String, String[]> parameterMap) {
-		_parameterMap = parameterMap;
-	}
-
-	public void setPath(String path) {
-		_path = path;
-	}
-
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(5);
@@ -76,8 +64,8 @@ public class LastPath implements Serializable {
 		return sb.toString();
 	}
 
-	private String _contextPath;
-	private Map<String, String[]> _parameterMap;
-	private String _path;
+	private final String _contextPath;
+	private final Map<String, String[]> _parameterMap;
+	private final String _path;
 
 }

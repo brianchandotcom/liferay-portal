@@ -178,6 +178,10 @@ public class ActionUtil {
 			FileEntry fileEntry, HttpServletRequest request)
 		throws Exception {
 
+		if (fileEntry == null) {
+			return null;
+		}
+
 		FileVersion fileVersion = null;
 
 		String version = ParamUtil.getString(request, "version");

@@ -42,6 +42,10 @@ public abstract class BaseCustomAttributesDisplay
 		return "icon-file-alt";
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return StringPool.BLANK;

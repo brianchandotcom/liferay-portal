@@ -192,8 +192,6 @@ public class InputAssetLinksDisplayContext {
 					"id", _getSelectorEntryId(assetRendererFactory));
 				selectorEntry.put(
 					"message", _getSelectorEntryMessage(assetRendererFactory));
-				selectorEntry.put(
-					"src", _getSelectorEntrySrc(assetRendererFactory));
 
 				selectorEntries.add(selectorEntry);
 			}
@@ -367,8 +365,6 @@ public class InputAssetLinksDisplayContext {
 				"id",
 				_getSelectorEntryId(assetRendererFactory, classType));
 			selectorEntry.put("message", _getSelectorEntryMessage(classType));
-			selectorEntry.put(
-				"src", _getSelectorEntrySrc(assetRendererFactory));
 
 			selectorEntries.add(selectorEntry);
 		}
@@ -437,12 +433,6 @@ public class InputAssetLinksDisplayContext {
 
 	private String _getSelectorEntryMessage(ClassType classType) {
 		return classType.getName();
-	}
-
-	private String _getSelectorEntrySrc(
-		AssetRendererFactory<?> assetRendererFactory) {
-
-		return assetRendererFactory.getIconPath(_portletRequest);
 	}
 
 	private boolean _isStagedLocally() {

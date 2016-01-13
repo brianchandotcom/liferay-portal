@@ -121,6 +121,10 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return getAssetRendererFactory().getIconCssClass();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(PortletRequest portletRequest) {
 		return StringPool.BLANK;

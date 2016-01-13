@@ -87,6 +87,10 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		return "icon-file-alt";
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
 		return StringPool.BLANK;

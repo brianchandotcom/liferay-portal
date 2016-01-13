@@ -16,6 +16,7 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Constants;
@@ -72,7 +73,7 @@ public class CancelCheckoutFileEntryPortletConfigurationIcon
 				fileEntryDisplayContextHelper.
 					isCancelCheckoutDocumentActionAvailable();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 		}
 
 		return false;

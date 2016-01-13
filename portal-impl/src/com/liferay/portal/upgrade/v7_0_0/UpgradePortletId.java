@@ -53,7 +53,9 @@ public class UpgradePortletId
 			new String[] {"125", PortletKeys.USERS_ADMIN},
 			new String[] {"129", PortletKeys.PASSWORD_POLICIES_ADMIN},
 			new String[] {"128", PortletKeys.ROLES_ADMIN},
-			new String[] {"146", PortletKeys.LAYOUT_PROTOTYPE}
+			new String[] {"146", PortletKeys.LAYOUT_PROTOTYPE},
+			new String[] {"149", PortletKeys.LAYOUT_SET_PROTOTYPE},
+			new String[] {"192", PortletKeys.SITE_TEMPLATE_SETTINGS}
 		};
 	}
 

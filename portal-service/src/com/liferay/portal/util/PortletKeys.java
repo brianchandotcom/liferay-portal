@@ -82,11 +82,15 @@ public class PortletKeys {
 	public static final String ITEM_SELECTOR =
 		"com_liferay_item_selector_web_portlet_ItemSelectorPortlet";
 
-	public static final String LAYOUTS_ADMIN =
-		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
-
 	public static final String LAYOUT_PROTOTYPE =
 		"com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet";
+
+	public static final String LAYOUT_SET_PROTOTYPE =
+		"com_liferay_layout_set_prototype_web_portlet_" +
+			"LayoutSetPrototypePortlet";
+
+	public static final String LAYOUTS_ADMIN =
+		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
 
 	public static final String LICENSE_MANAGER =
 		"com_liferay_license_manager_web_portlet_LicenseManagerPortlet";
@@ -196,6 +200,10 @@ public class PortletKeys {
 
 	public static final String SITE_TEAMS =
 		"com_liferay_site_teams_web_portlet_SiteTeamsPortlet";
+
+	public static final String SITE_TEMPLATE_SETTINGS =
+		"com_liferay_layout_set_prototype_web_portlet_" +
+			"SiteTemplateSettingsPortlet";
 
 	public static final String STOCKS = "12";
 

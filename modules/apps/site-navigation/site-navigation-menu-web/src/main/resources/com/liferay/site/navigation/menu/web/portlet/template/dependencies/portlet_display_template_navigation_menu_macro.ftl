@@ -1,6 +1,6 @@
 <#macro buildNavigation
 	branchNavItems
-	cssClass="layouts"
+	cssClass
 	includeAllChildNavItems
 	navItemLevel
 	navItems

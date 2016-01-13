@@ -22,13 +22,13 @@
 	<%
 	String emptyResultsMessage = null;
 
-	if (topLink.equals("my-posts")) {
+	if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
 		emptyResultsMessage = "you-do-not-have-any-posts";
 	}
-	else if (topLink.equals("my-subscriptions")) {
+	else if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
 		emptyResultsMessage = "you-are-not-subscribed-to-any-threads";
 	}
-	else if (topLink.equals("recent-posts")) {
+	else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
 		emptyResultsMessage = "there-are-no-recent-posts";
 	}
 	else {
@@ -56,21 +56,21 @@
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
-		else if (topLink.equals("my-posts")) {
+		else if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
 			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY);
 
 			searchContainer.setTotal(total);
 
 			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
 		}
-		else if (topLink.equals("my-subscriptions")) {
+		else if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
 			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true);
 
 			searchContainer.setTotal(total);
 
 			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
 		}
-		else if (topLink.equals("recent-posts")) {
+		else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
 			Calendar calendar = Calendar.getInstance();
 
 			int offset = GetterUtil.getInteger(recentPostsDateOffset);

@@ -18,7 +18,6 @@
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
 
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
@@ -33,41 +32,38 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-		String label = "message-boards-home";
-
-		portletURL.setParameter("topLink", label);
 		portletURL.setParameter("tag", StringPool.BLANK);
 		%>
 
-		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+		<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view") ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="message-boards-home" selected='<%= mvcRenderCommandName.equals("/message_boards/view") %>' />
 
 		<%
-		label = "recent-posts";
+		PortletURL viewRecentPostsURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("topLink", label);
+		viewRecentPostsURL.setParameter("mvcRenderCommandName", "/message_boards/view_recent_posts");
 		%>
 
-		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+		<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts") ? "active" : StringPool.BLANK %>' href="<%= viewRecentPostsURL.toString() %>" label="recent-posts" selected='<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>' />
 
 		<c:if test="<%= themeDisplay.isSignedIn() && !portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN) %>">
 
 			<%
-			label = "my-posts";
+			PortletURL viewMyPostsURL = renderResponse.createRenderURL();
 
-			portletURL.setParameter("topLink", label);
+			viewMyPostsURL.setParameter("mvcRenderCommandName", "/message_boards/view_my_posts");
 			%>
 
-			<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+			<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") ? "active" : StringPool.BLANK %>' href="<%= viewMyPostsURL.toString() %>" label="my-posts" selected='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") %>' />
 
 			<c:if test="<%= mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled() %>">
 
 				<%
-				label = "my-subscriptions";
+				PortletURL viewMySubscriptionsURL = renderResponse.createRenderURL();
 
-				portletURL.setParameter("topLink", label);
+				viewMySubscriptionsURL.setParameter("mvcRenderCommandName", "/message_boards/view_my_subscriptions");
 				%>
 
-				<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+				<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") ? "active" : StringPool.BLANK %>' href="<%= viewMySubscriptionsURL.toString() %>" label="my-subscriptions" selected='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") %>' />
 			</c:if>
 		</c:if>
 

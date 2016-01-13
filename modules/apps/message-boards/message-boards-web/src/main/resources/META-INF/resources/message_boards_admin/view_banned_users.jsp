@@ -29,7 +29,6 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_use
 		PortletURL navigationURL = renderResponse.createRenderURL();
 
 		navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-		navigationURL.setParameter("top-link", "message-boards-home");
 		navigationURL.setParameter("tag", StringPool.BLANK);
 		%>
 

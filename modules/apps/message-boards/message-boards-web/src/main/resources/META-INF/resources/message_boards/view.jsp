@@ -17,7 +17,7 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName", "/message_boards/view");
 
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
@@ -44,7 +44,7 @@ boolean useAssetEntryQuery = Validator.isNotNull(assetTagName);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-portletURL.setParameter("topLink", topLink);
+portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 request.setAttribute("view.jsp-categoryDisplay", categoryDisplay);
@@ -77,7 +77,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/message_boards/view_threads.jspf" %>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("message-boards-home") %>'>
+	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view") %>'>
 		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 			<div class="category-buttons">
 
@@ -191,10 +191,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("my-posts") || topLink.equals("my-subscriptions") || topLink.equals("recent-posts") %>'>
+	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") || mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
 
 		<%
-		if ((topLink.equals("my-posts") || topLink.equals("my-subscriptions")) && themeDisplay.isSignedIn()) {
+		if ((mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) && themeDisplay.isSignedIn()) {
 			groupThreadsUserId = user.getUserId();
 		}
 
@@ -203,13 +203,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		}
 		%>
 
-		<c:if test='<%= topLink.equals("recent-posts") && (groupThreadsUserId > 0) %>'>
+		<c:if test='<%= mvcRenderCommandName.equals("/message_boards/view_recent_posts") && (groupThreadsUserId > 0) %>'>
 			<div class="alert alert-info">
 				<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
 			</div>
 		</c:if>
 
-		<c:if test='<%= topLink.equals("my-subscriptions") %>'>
+		<c:if test='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") %>'>
 			<liferay-ui:search-container
 				curParam="cur1"
 				deltaConfigurable="<%= false %>"
@@ -244,7 +244,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		<%@ include file="/message_boards/view_threads.jspf" %>
 
-		<c:if test='<%= enableRSS && topLink.equals("recent-posts") %>'>
+		<c:if test='<%= enableRSS && mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
 			<br />
 
 			<liferay-ui:rss
@@ -257,8 +257,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</c:if>
 
 		<%
-		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+		String title = "message-boards-home";
+
+		if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
+			title = "my-subscriptions";
+		}
+		else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+			title = "recent-posts";
+		}
+
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(title, StringPool.UNDERLINE, StringPool.DASH)), request);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(title, TextFormatter.O)), portletURL.toString());
 		%>
 
 	</c:when>

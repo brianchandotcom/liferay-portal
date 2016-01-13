@@ -36,7 +36,7 @@
 
 <%@ include file="/message_boards/thread_columns_last_post.jspf" %>
 
-<c:if test='<%= topLink.equals("my-posts") %>'>
+<c:if test='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") %>'>
 	<liferay-ui:search-container-column-status
 		href="<%= rowURL %>"
 		name="status"

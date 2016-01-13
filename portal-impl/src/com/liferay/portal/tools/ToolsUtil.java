@@ -163,13 +163,14 @@ public class ToolsUtil {
 	}
 
 	public static boolean isInsideQuotes(String s, int pos) {
+		char delimeter = CharPool.SPACE;
 		boolean insideQuotes = false;
 
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
 			if (insideQuotes) {
-				if (c == CharPool.QUOTE) {
+				if (c == delimeter) {
 					int precedingBackSlashCount = 0;
 
 					for (int j = (i - 1); j >= 0; j--) {
@@ -188,7 +189,8 @@ public class ToolsUtil {
 					}
 				}
 			}
-			else if (c == CharPool.QUOTE) {
+			else if ((c == CharPool.APOSTROPHE) || (c == CharPool.QUOTE)) {
+				delimeter = c;
 				insideQuotes = true;
 			}
 

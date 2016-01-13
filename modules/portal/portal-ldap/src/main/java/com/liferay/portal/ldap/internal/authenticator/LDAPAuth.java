@@ -262,8 +262,9 @@ public class LDAPAuth implements Authenticator {
 		if (ldapContext == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No such LDAP context for ldapServerId: " +
-					ldapServerId + ", companyId: " + companyId);
+					"No LDAP server configuration available with " +
+						"ldapServerId: " + ldapServerId + ", companyId: " +
+						companyId);
 			}
 
 			return FAILURE;
@@ -356,9 +357,11 @@ public class LDAPAuth implements Authenticator {
 				if (!ldapAuthResult.isAuthenticated()) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Unable to authenticate LDAP server with " +
-							"ldapContext: " + ldapContext + ", companyId: " +
-							companyId);
+							"LDAP authentication failed for :" + fullUserDN +
+								" on LDAP server: " + ldapServerId +
+								", companyId: " + companyId +
+								", ldapContext: " + ldapContext +
+								", reason: " + errorMessage);
 					}
 
 					return FAILURE;

@@ -127,7 +127,6 @@ public class AuthTokenWhitelistUtil {
 	 *             #isPortletCSRFWhitelisted(HttpServletRequest, Portlet)}
 	 */
 	@Deprecated
-	@SuppressWarnings("deprecation")
 	public static boolean isPortletCSRFWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 
@@ -165,7 +164,6 @@ public class AuthTokenWhitelistUtil {
 	 *             #isPortletInvocationWhitelisted(HttpServletRequest, Portlet)}
 	 */
 	@Deprecated
-	@SuppressWarnings("deprecation")
 	public static boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 

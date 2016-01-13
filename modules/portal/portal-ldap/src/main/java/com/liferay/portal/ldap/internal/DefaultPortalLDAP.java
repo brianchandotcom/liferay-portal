@@ -14,11 +14,11 @@
 
 package com.liferay.portal.ldap.internal;
 
-import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.ldap.LDAPFilterValidator;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.security.ldap.PortalLDAP;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -180,7 +180,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 			String groupFilter = ldapServerConfiguration.groupSearchFilter();
 
-			LDAPUtil.validateFilter(
+			_ldapFilterValidator.validate(
 				groupFilter, "SystemLDAPConfiguration.groupSearchFilter");
 
 			StringBundler sb = new StringBundler(
@@ -535,7 +535,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			String userSearchFilter =
 				ldapServerConfiguration.userSearchFilter();
 
-			LDAPUtil.validateFilter(
+			_ldapFilterValidator.validate(
 				userSearchFilter, "LDAPServerConfiguration.userSearchFilter");
 
 			StringBundler sb = new StringBundler(
@@ -942,6 +942,13 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		return null;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLdapFilterValidator(
+		LDAPFilterValidator ldapFilterValidator) {
+
+		_ldapFilterValidator = ldapFilterValidator;
+	}
+
 	@Reference(
 		target = "(factoryPid=com.liferay.portal.ldap.configuration.LDAPServerConfiguration)",
 		unbind = "-"
@@ -1091,6 +1098,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		DefaultPortalLDAP.class);
 
 	private String _companySecurityAuthType;
+	private LDAPFilterValidator _ldapFilterValidator;
 	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
 	private LDAPSettings _ldapSettings;

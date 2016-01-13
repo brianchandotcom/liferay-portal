@@ -267,62 +267,6 @@
 		<execute function="AssertClick" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
 	</command>
 
-	<command name="gotoCmdCP">
-		<if>
-			<isset var="nodePort" />
-			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
-			</then>
-			<else>
-				<execute macro="Page#openURL">
-					<var name="friendlyURL" value="${friendlyURL}" />
-					<var name="pageAccess" value="${pageAccess}" />
-					<var name="pageStaging" value="${pageStaging}" />
-					<var name="siteName" value="${siteName}" />
-					<var name="siteNameURL" value="${siteNameURL}" />
-					<var name="siteURL" value="${siteURL}" />
-					<var name="specificURL" value="${specificURL}" />
-					<var name="virtualHostsURL" value="${virtualHostsURL}" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="ProductMenuHelper#expandPanelSites" />
-
-		<if>
-			<isset var="siteScopeName" />
-			<then>
-				<execute macro="ProductMenu#gotoSite">
-					<var name="site" value="${siteScopeName}" />
-				</execute>
-
-				<execute macro="ProductMenuHelper#expandPanelSites" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="nonAdminUser" />
-			</not>
-			<then>
-				<execute macro="ProductMenuHelper#expandCategory">
-					<var name="category" value="${category}" />
-				</execute>
-
-				<if>
-					<not>
-						<contains string="${portletName}" substring="{portletName}" />
-					</not>
-					<then>
-						<execute macro="ProductMenuHelper#gotoPortlet">
-							<var name="portlet" value="${portletName}" />
-						</execute>
-					</then>
-				</if>
-			</then>
-		</if>
-	</command>
-
 	<command name="gotoCmdLocalizedCP">
 		<execute macro="Page#openURL">
 			<var name="friendlyURL" value="${friendlyURL}" />
@@ -417,26 +361,6 @@
 		<var name="key_portletName" value="${portletName}" />
 
 		<execute function="AssertClick" locator1="Panel#MENU_ITEM" value1="${portletName}" />
-	</command>
-
-	<command name="gotoPagesCP">
-		<description message="Navigate to Site Administration > Pages > ${portletName}." />
-
-		<execute macro="Page#gotoCmdCP">
-			<var name="category" value="Pages" />
-			<var name="friendlyURL" value="${friendlyURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageAccess" value="${pageAccess}" />
-			<var name="pageStaging" value="${pageStaging}" />
-			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
-			<var name="portletName" value="${portletName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteNameURL" value="${siteNameURL}" />
-			<var name="siteScopeName" value="${siteScopeName}" />
-			<var name="siteURL" value="${siteURL}" />
-			<var name="specificURL" value="${specificURL}" />
-			<var name="virtualHostsURL" value="${virtualHostsURL}" />
-		</execute>
 	</command>
 
 	<command name="gotoPG" summary="Navigate to the page named '${pageName}'">

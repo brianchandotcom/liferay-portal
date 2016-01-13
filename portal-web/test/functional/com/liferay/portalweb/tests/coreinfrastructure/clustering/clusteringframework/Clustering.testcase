@@ -89,7 +89,7 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
+		<execute macro="Navigator#openNodePort">
 			<var name="nodePort" value="9080" />
 		</execute>
 

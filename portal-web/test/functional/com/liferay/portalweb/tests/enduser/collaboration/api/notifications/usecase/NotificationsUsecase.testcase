@@ -93,28 +93,22 @@
 			<var name="siteType" value="Community" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Community Site Name" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
-			<var name="pageName" value="Blank Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Public Pages" />
 			<var name="siteName" value="Community Site Name" />
-			<var name="siteScopeSelected" value="true" />
-		</execute>
-
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Blank Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Public Pages" />
+			<var name="siteName" value="Community Site Name" />
+		</execute>
+
+		<execute macro="Page#add">
 			<var name="pageName" value="Invite Members Page" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

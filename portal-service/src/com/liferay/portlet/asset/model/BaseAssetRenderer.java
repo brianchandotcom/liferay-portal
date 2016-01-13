@@ -123,10 +123,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	@Override
 	public String getIconPath(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getIconPath(themeDisplay);
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -392,10 +389,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		throws PortalException {
 
 		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
-	}
-
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
 	protected Locale getLocale(PortletRequest portletRequest) {

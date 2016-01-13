@@ -15,7 +15,6 @@
 package com.liferay.users.admin.web.custom.attributes;
 
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
@@ -40,11 +39,6 @@ public class LayoutCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 	@Override
 	public String getIconCssClass() {
 		return "icon-file-alt";
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
 }

@@ -24,10 +24,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
@@ -90,25 +88,6 @@ public class JournalFolderAssetRenderer
 		}
 
 		return super.getIconCssClass();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		try {
-			if (JournalServiceConfigurationValues.
-					JOURNAL_FOLDER_ICON_CHECK_COUNT &&
-				JournalFolderServiceUtil.getFoldersAndArticlesCount(
-					_folder.getGroupId(), _folder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED) > 0) {
-
-				return themeDisplay.getPathThemeImages() +
-					"/common/folder_full_document.png";
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
 	}
 
 	@Override

@@ -178,11 +178,6 @@ public class CalendarBookingAssetRendererFactory
 		_servletContext = servletContext;
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/date.png";
-	}
-
 	@Reference(unbind = "-")
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {

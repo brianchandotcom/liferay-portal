@@ -16,7 +16,6 @@ package com.liferay.exportimport.web.trash;
 
 import com.liferay.exportimport.web.constants.ExportImportWebKeys;
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
@@ -50,11 +49,6 @@ public class ExportImportConfigurationTrashRenderer
 	@Override
 	public long getClassPK() {
 		return _exportImportConfiguration.getPrimaryKey();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/configuration.png";
 	}
 
 	@Override

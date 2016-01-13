@@ -15,7 +15,6 @@
 package com.liferay.message.boards.web.custom.attributes;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -36,11 +35,6 @@ public class MBCategoryCustomAttributesDisplay
 	@Override
 	public String getClassName() {
 		return MBCategory.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
 
 }

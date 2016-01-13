@@ -15,7 +15,6 @@
 package com.liferay.blogs.web.custom.attributes;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
@@ -36,11 +35,6 @@ public class BlogsEntryCustomAttributesDisplay
 	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/blogs/blogs.png";
 	}
 
 }

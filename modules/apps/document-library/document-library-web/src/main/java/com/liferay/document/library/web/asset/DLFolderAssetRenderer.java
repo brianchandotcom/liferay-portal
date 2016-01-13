@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -130,27 +129,6 @@ public class DLFolderAssetRenderer
 		}
 
 		return super.getIconCssClass();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		try {
-			if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT &&
-				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
-					_folder.getRepositoryId(), _folder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED, true) > 0) {
-
-				return themeDisplay.getPathThemeImages() +
-					"/common/folder_full_document.png";
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
-		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
 	}
 
 	@Override

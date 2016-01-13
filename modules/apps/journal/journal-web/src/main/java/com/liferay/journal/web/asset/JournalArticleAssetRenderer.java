@@ -501,11 +501,6 @@ public class JournalArticleAssetRenderer
 		}
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/history.png";
-	}
-
 	protected PortletRequestModel getPortletRequestModel(
 		HttpServletRequest request, HttpServletResponse response) {
 

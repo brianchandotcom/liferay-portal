@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.buffer;
 
-import com.liferay.portal.search.internal.IndexerRequestBuffer;
-
 /**
  * @author Michael C. Han
  */

@@ -205,6 +205,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_VERTICAL_ELLIPSIS</td>
+	<td>//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROW_VERTICAL_ELLIPSIS</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>

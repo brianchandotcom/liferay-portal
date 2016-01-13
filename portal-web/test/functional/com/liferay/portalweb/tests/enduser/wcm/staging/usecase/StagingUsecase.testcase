@@ -3938,6 +3938,8 @@
 			</then>
 		</if>
 
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
 		<var locator="Staging#HISTORY_VERSION" name="historyVersion" />
@@ -4450,6 +4452,8 @@
 				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 			</then>
 		</if>
+
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 

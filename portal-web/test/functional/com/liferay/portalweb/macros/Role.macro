@@ -395,7 +395,7 @@
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_LANGUAGE" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_LANGUAGE" />
-						<var name="permissionNavigationValue" value="Language" />
+						<var name="permissionNavigationValue" value="Language Selector" />
 					</then>
 				</elseif>
 				<elseif>

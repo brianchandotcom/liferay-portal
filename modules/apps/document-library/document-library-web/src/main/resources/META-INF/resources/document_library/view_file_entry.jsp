@@ -122,104 +122,106 @@ if (portletTitleBasedNavigation) {
 
 	<div class="sidenav-menu-slider">
 		<div class="sidebar sidebar-default sidenav-menu">
-			<div class="asset-details-content">
-				<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
-					<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
-						<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
-					</h3>
-				</c:if>
+			<liferay-ui:tabs names="details,custom-fields,document-type,metadata,versions" refresh="<%= false %>" type="dropdown">
+				<liferay-ui:section>
+					<div class="asset-details-content">
+						<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+							<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
+								<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
+							</h3>
+						</c:if>
 
-				<div>
-					<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
-				</div>
-
-				<div class="icon-user lfr-asset-icon">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" translateArguments="<%= false %>" />
-				</div>
-
-				<div class="icon-calendar lfr-asset-icon">
-					<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
-				</div>
-
-				<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
-					<blockquote class="lfr-asset-description">
-						<%= HtmlUtil.escape(fileVersion.getDescription()) %>
-					</blockquote>
-				</c:if>
-
-				<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
-					<span class="download-document">
-						<liferay-ui:icon
-							iconCssClass="icon-download"
-							label="<%= true %>"
-							message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
-							url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
-						/>
-					</span>
-
-					<span class="conversions">
-
-						<%
-						for (int i = 0; i < conversions.length; i++) {
-							String conversion = conversions[i];
-						%>
-
-							<liferay-ui:icon
-								iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
-								label="<%= true %>"
-								message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
-								method="get"
-								url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
-							/>
-
-						<%
-						}
-						%>
-
-					</span>
-
-					<span class="webdav-url">
-						<c:choose>
-							<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-								<liferay-ui:message key="get-url-or-webdav-url" />
-							</c:when>
-
-							<c:otherwise>
-								<liferay-ui:message key="get-url" />
-							</c:otherwise>
-						</c:choose>
-					</span>
-
-					<div class="hide lfr-asset-field url-file-container">
-						<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
-					</div>
-
-					<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-						<div class="hide lfr-asset-field webdav-url-file-container">
-
-							<%
-							String webDavHelpMessage = null;
-
-							if (BrowserSnifferUtil.isWindows(request)) {
-								webDavHelpMessage = LanguageUtil.format(resourceBundle, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
-							}
-							else {
-								webDavHelpMessage = LanguageUtil.format(resourceBundle, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
-							}
-							%>
-
-							<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= webDavURL %>" />
+						<div>
+							<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
 						</div>
-					</c:if>
-				</c:if>
-			</div>
 
-			<%
-				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-			%>
+						<div class="icon-user lfr-asset-icon">
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" translateArguments="<%= false %>" />
+						</div>
 
-			<div class="lfr-asset-panels">
-				<liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
+						<div class="icon-calendar lfr-asset-icon">
+							<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
+						</div>
+
+						<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">
+							<blockquote class="lfr-asset-description">
+								<%= HtmlUtil.escape(fileVersion.getDescription()) %>
+							</blockquote>
+						</c:if>
+
+						<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() %>">
+							<span class="download-document">
+								<liferay-ui:icon
+									iconCssClass="icon-download"
+									label="<%= true %>"
+									message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+									url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+								/>
+							</span>
+
+							<span class="conversions">
+
+								<%
+								for (int i = 0; i < conversions.length; i++) {
+									String conversion = conversions[i];
+								%>
+
+									<liferay-ui:icon
+										iconCssClass="<%= DLUtil.getFileIconCssClass(conversion) %>"
+										label="<%= true %>"
+										message='<%= LanguageUtil.get(resourceBundle, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
+										method="get"
+										url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+									/>
+
+								<%
+								}
+								%>
+
+							</span>
+
+							<span class="webdav-url">
+								<c:choose>
+									<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
+										<liferay-ui:message key="get-url-or-webdav-url" />
+									</c:when>
+
+									<c:otherwise>
+										<liferay-ui:message key="get-url" />
+									</c:otherwise>
+								</c:choose>
+							</span>
+
+							<div class="hide lfr-asset-field url-file-container">
+								<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
+							</div>
+
+							<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
+								<div class="hide lfr-asset-field webdav-url-file-container">
+
+									<%
+									String webDavHelpMessage = null;
+
+									if (BrowserSnifferUtil.isWindows(request)) {
+										webDavHelpMessage = LanguageUtil.format(resourceBundle, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
+									}
+									else {
+										webDavHelpMessage = LanguageUtil.format(resourceBundle, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
+									}
+									%>
+
+									<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= webDavURL %>" />
+								</div>
+							</c:if>
+						</c:if>
+					</div>
+				</liferay-ui:section>
+
+				<%
+					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+				%>
+
+				<liferay-ui:section>
 
 					<%
 					try {
@@ -255,6 +257,9 @@ if (portletTitleBasedNavigation) {
 					}
 					%>
 
+				</liferay-ui:section>
+
+				<liferay-ui:section>
 					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
 						<liferay-ui:panel collapsible="<%= true %>" cssClass="custom-fields" id="documentLibraryCustomAttributesPanel" persistState="<%= true %>" title="custom-fields">
 							<liferay-ui:custom-attribute-list
@@ -265,6 +270,9 @@ if (portletTitleBasedNavigation) {
 							/>
 						</liferay-ui:panel>
 					</liferay-ui:custom-attributes-available>
+				</liferay-ui:section>
+
+				<liferay-ui:section>
 
 					<%
 					try {
@@ -307,6 +315,9 @@ if (portletTitleBasedNavigation) {
 					}
 					%>
 
+				</liferay-ui:section>
+
+				<liferay-ui:section>
 					<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
@@ -409,8 +420,8 @@ if (portletTitleBasedNavigation) {
 
 						</liferay-ui:panel>
 					</c:if>
-				</liferay-ui:panel-container>
-			</div>
+				</liferay-ui:section>
+			</liferay-ui:tabs>
 		</div>
 	</div>
 

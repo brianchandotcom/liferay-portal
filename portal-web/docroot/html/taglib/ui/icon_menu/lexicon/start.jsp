@@ -17,6 +17,7 @@
 
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon-menu:data");
 String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction");
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:icon"));
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
@@ -28,7 +29,7 @@ if (Validator.isNull(icon)) {
 }
 %>
 
-<div class="dropdown <%= cssClass %>">
+<div class="dropdown <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 	<a aria-expanded="false" class="dropdown-toggle <%= triggerCssClass %>" data-toggle="dropdown" href="#1" title="<%= message %>">
 		<aui:icon image="<%= icon %>" markupView="lexicon" />
 	</a>

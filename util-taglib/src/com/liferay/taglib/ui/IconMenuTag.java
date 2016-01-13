@@ -33,6 +33,7 @@ import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.PortalIncludeUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -91,6 +92,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		finally {
 			if (!ServerDetector.isResin()) {
 				_cssClass = null;
+				_data = null;
 				_direction = "left";
 				_endPage = null;
 				_extended = true;
@@ -160,6 +162,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
+	}
+
+	public void setData(Map<String, Object> data) {
+		_data = data;
 	}
 
 	public void setDirection(String direction) {
@@ -456,6 +462,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			(HttpServletRequest)pageContext.getRequest();
 
 		request.setAttribute("liferay-ui:icon-menu:cssClass", _cssClass);
+		request.setAttribute("liferay-ui:icon-menu:data", _data);
 		request.setAttribute("liferay-ui:icon-menu:direction", _direction);
 		request.setAttribute("liferay-ui:icon-menu:icon", _icon);
 
@@ -481,6 +488,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
 	private String _cssClass;
+	private Map<String, Object> _data;
 	private String _direction = "left";
 	private boolean _disabled;
 	private String _endPage;

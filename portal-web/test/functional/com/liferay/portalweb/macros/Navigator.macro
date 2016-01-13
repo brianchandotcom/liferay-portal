@@ -73,6 +73,10 @@
 		<execute function="Click" locator1="NavTab#TAB_LINK" />
 	</command>
 
+	<command name="openNodePort">
+		<execute function="Open" locator1="http://localhost:${nodePort}" />
+	</command>
+
 	<command name="openSiteURL">
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
 		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />

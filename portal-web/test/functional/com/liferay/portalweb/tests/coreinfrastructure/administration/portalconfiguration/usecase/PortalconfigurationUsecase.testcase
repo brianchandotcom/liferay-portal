@@ -225,8 +225,8 @@
 			<var name="pageName" value="Language Page" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Page#add">

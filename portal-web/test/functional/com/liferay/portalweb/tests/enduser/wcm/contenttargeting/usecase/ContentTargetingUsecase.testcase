@@ -1350,9 +1350,13 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Import Site" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portletName" value="Public Pages" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Import" />
 		</execute>
 
 		<execute macro="LAR#importSiteCP">

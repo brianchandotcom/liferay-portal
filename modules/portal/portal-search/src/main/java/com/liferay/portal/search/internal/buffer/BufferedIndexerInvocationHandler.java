@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.internal;
+package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.search.IndexerRequestBufferOverflowHandler;
+import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
+import com.liferay.portal.search.internal.IndexerRequest;
+import com.liferay.portal.search.internal.IndexerRequestBuffer;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;

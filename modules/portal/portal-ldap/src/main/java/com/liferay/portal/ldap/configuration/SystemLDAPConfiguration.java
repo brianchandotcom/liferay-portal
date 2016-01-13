@@ -46,22 +46,22 @@ public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 	public String[] errorPasswordAge();
 
 	@Meta.AD(deflt = "expired", required = false)
-	public String[] errorPasswordExpired();
+	public String[] errorPasswordExpireds();
 
 	@Meta.AD(deflt = "history", required = false)
-	public String[] errorPasswordHistory();
+	public String[] errorPasswordHistories();
 
 	@Meta.AD(deflt = "not allowed to change", required = false)
-	public String[] errorPasswordNotChangeable();
+	public String[] errorPasswordNotChangeables();
 
 	@Meta.AD(deflt = "syntax", required = false)
-	public String[] errorPasswordSyntax();
+	public String[] errorPasswordSyntaxes();
 
 	@Meta.AD(deflt = "trivial", required = false)
-	public String[] errorPasswordTrivial();
+	public String[] errorPasswordTrivials();
 
 	@Meta.AD(deflt = "retry limit", required = false)
-	public String[] errorUserLockout();
+	public String[] errorUserLockouts();
 
 	@Meta.AD(deflt = "com.sun.jndi.ldap.LdapCtxFactory", required = false)
 	public String factoryInitial();

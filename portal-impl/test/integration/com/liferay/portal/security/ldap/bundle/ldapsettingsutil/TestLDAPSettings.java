@@ -62,7 +62,7 @@ public class TestLDAPSettings implements LDAPSettings {
 	}
 
 	@Override
-	public String[] getErrorPasswordHistory(long companyId) {
+	public String[] getErrorPasswordHistories(long companyId) {
 		return new String[] {"history"};
 	}
 

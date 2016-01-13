@@ -1004,6 +1004,7 @@
 			<then>
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
 				<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="You are about to make changes that will only affect your calendar (${calendarName})." />
+
 				<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
 			</then>
 		</if>
@@ -1170,6 +1171,20 @@
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
+	<command name="publishRepeating">
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
+
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
+
+		<var method="StringUtil#replace('${saveOption}', ' ', '_')" name="saveOptionPath" />
+
+		<var method="StringUtil#upperCase('${saveOptionPath}')" name="saveOptionPath" />
+
+		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
 	<command name="publishWithUserNotification">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
 
@@ -1179,19 +1194,6 @@
 		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
-	</command>
-
-	<command name="publishRepeating">
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
-
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
-
-		<var method="StringUtil#replace('${saveOption}', ' ', '_')" name="saveOptionPath" />
-		<var method="StringUtil#upperCase('${saveOptionPath}')" name="saveOptionPath" />
-
-		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="rate4Stars">
@@ -1221,6 +1223,7 @@
 	<command name="saveEventUserInvite">
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
 		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
+
 		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
 	</command>
 

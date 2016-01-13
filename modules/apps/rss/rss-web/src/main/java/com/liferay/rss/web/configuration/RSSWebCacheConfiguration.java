@@ -12,36 +12,23 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.configuration;
+package com.liferay.rss.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
- * @author Raymond Augé
+ * @author Juergen Kappler
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration",
-	localization = "content/Language",
-	name = "%nested.portlets.configuration.name"
+	id = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
+	localization = "content/Language", name = "%rss.web.cache.configuration.name"
 )
-public interface NestedPortletsConfiguration {
+public interface RSSWebCacheConfiguration {
 
-	public static final String TEMPLATE_CONTENT = "TEMPLATE_CONTENT";
-
-	public static final String TEMPLATE_ID = "TEMPLATE_ID";
-
-	@Meta.AD(
-		deflt = "2_columns_i", id = "layout.template.default", required = false
-	)
-	public String layoutTemplateDefault();
-
-	@Meta.AD(
-		deflt = "freeform,1_column", id = "layout.template.unsupported",
-		required = false
-	)
-	public String[] layoutTemplatesUnsupported();
+	@Meta.AD(deflt = "20", required = false)
+	public int feedTime();
 
 }

@@ -32,7 +32,15 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface NestedPortletsPortletInstanceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(
+		deflt = "2_columns_i", id = "layout.template.default", required = false
+	)
 	public String layoutTemplateId();
+
+	@Meta.AD(
+		deflt = "freeform,1_column", id = "layout.template.unsupported",
+		required = false
+	)
+	public String[] layoutTemplatesUnsupported();
 
 }

@@ -14,9 +14,7 @@
 
 package com.liferay.nested.portlets.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
+import com.liferay.nested.portlets.web.constants.NestedPortletsWebKeys;
 import com.liferay.nested.portlets.web.display.context.NestedPortletsDisplayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,18 +51,14 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-nested-portlets",
 		"com.liferay.portlet.display-category=category.cms",
@@ -100,8 +94,7 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		try {
 			NestedPortletsDisplayContext nestedPortletsDisplayContext =
 				new NestedPortletsDisplayContext(
-					PortalUtil.getHttpServletRequest(renderRequest),
-					_nestedPortletsConfiguration);
+					PortalUtil.getHttpServletRequest(renderRequest));
 
 			layoutTemplateId =
 				nestedPortletsDisplayContext.getLayoutTemplateId();
@@ -164,10 +157,10 @@ public class NestedPortletsPortlet extends MVCPortlet {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		renderRequest.setAttribute(
-			NestedPortletsConfiguration.TEMPLATE_ID + portletDisplay.getId(),
+				NestedPortletsWebKeys.TEMPLATE_ID + portletDisplay.getId(),
 			templateId);
 		renderRequest.setAttribute(
-			NestedPortletsConfiguration.TEMPLATE_CONTENT +
+				NestedPortletsWebKeys.TEMPLATE_CONTENT +
 				portletDisplay.getId(),
 			templateContent);
 
@@ -183,18 +176,7 @@ public class NestedPortletsPortlet extends MVCPortlet {
 				WebKeys.VM_VARIABLES + portletDisplay.getId(), columnIds);
 		}
 
-		renderRequest.setAttribute(
-			NestedPortletsConfiguration.class.getName(),
-			_nestedPortletsConfiguration);
-
 		super.include(viewTemplate, renderRequest, renderResponse);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_nestedPortletsConfiguration = Configurable.createConfigurable(
-			NestedPortletsConfiguration.class, properties);
 	}
 
 	protected void checkLayout(Layout layout, Collection<String> columnIds) {
@@ -263,6 +245,5 @@ public class NestedPortletsPortlet extends MVCPortlet {
 
 	private LayoutLocalService _layoutLocalService;
 	private LayoutTemplateLocalService _layoutTemplateLocalService;
-	private volatile NestedPortletsConfiguration _nestedPortletsConfiguration;
 
 }

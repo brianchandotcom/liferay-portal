@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.rss.web.configuration;
-
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.configuration.admin.ConfigurationAdmin;
+package com.liferay.nested.portlets.web.constants;
 
 /**
- * @author Juergen Kappler
+ * @author Jürgen Kappler
  */
-@ConfigurationAdmin(category = "web-experience-management")
-@Meta.OCD(
-	id = "com.liferay.rss.web.configuration.RSSWebConfiguration",
-	localization = "content/Language", name = "%rss.web.configuration.name"
-)
-public interface RSSWebConfiguration {
+public class NestedPortletsWebKeys {
 
-	@Meta.AD(deflt = "20", required = false)
-	public int feedTime();
+	public static final String TEMPLATE_CONTENT = "TEMPLATE_CONTENT";
+
+	public static final String TEMPLATE_ID = "TEMPLATE_ID";
 
 }

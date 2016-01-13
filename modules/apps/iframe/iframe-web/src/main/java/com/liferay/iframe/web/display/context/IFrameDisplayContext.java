@@ -14,7 +14,6 @@
 
 package com.liferay.iframe.web.display.context;
 
-import com.liferay.iframe.web.configuration.IFrameConfiguration;
 import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
 import com.liferay.iframe.web.constants.IFrameWebKeys;
 import com.liferay.iframe.web.util.IFrameUtil;
@@ -42,11 +41,9 @@ import javax.portlet.WindowState;
  */
 public class IFrameDisplayContext {
 
-	public IFrameDisplayContext(
-			IFrameConfiguration iFrameConfiguration, PortletRequest request)
+	public IFrameDisplayContext(PortletRequest request)
 		throws ConfigurationException {
 
-		_iFrameConfiguration = iFrameConfiguration;
 		_request = request;
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -66,10 +63,6 @@ public class IFrameDisplayContext {
 
 		_authType = _iFramePortletInstanceConfiguration.authType();
 
-		if (Validator.isNull(_authType)) {
-			_authType = _iFrameConfiguration.authType();
-		}
-
 		return _authType;
 	}
 
@@ -79,10 +72,6 @@ public class IFrameDisplayContext {
 		}
 
 		_formMethod = _iFramePortletInstanceConfiguration.formMethod();
-
-		if (Validator.isNull(_formMethod)) {
-			_formMethod = _iFrameConfiguration.formMethod();
-		}
 
 		return _formMethod;
 	}
@@ -134,13 +123,9 @@ public class IFrameDisplayContext {
 			return _hiddenVariables;
 		}
 
-		_hiddenVariables =
-			_iFramePortletInstanceConfiguration.hiddenVariables();
-
-		if (Validator.isNull(_hiddenVariables)) {
-			_hiddenVariables = StringUtil.merge(
-				_iFrameConfiguration.hiddenVariables(), StringPool.SEMICOLON);
-		}
+		_hiddenVariables = StringUtil.merge(
+			_iFramePortletInstanceConfiguration.hiddenVariables(),
+			StringPool.PIPE);
 
 		return _hiddenVariables;
 	}
@@ -304,7 +289,6 @@ public class IFrameDisplayContext {
 	private String _height;
 	private String _hiddenVariables;
 	private String _iFrameBaseSrc;
-	private final IFrameConfiguration _iFrameConfiguration;
 	private final IFramePortletInstanceConfiguration
 		_iFramePortletInstanceConfiguration;
 	private String _iFrameSrc;

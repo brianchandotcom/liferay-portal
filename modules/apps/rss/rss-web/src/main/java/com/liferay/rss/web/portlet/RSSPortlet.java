@@ -17,7 +17,7 @@ package com.liferay.rss.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.rss.web.configuration.RSSWebConfiguration;
+import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
 
 import java.io.IOException;
 
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.rss.web.configuration.RSSWebConfiguration",
+	configurationPid = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-rss",
@@ -66,7 +66,8 @@ public class RSSPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			RSSWebConfiguration.class.getName(), _rssWebConfiguration);
+			RSSWebCacheConfiguration.class.getName(),
+			_rssWebCacheConfiguration);
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -74,10 +75,10 @@ public class RSSPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_rssWebConfiguration = Configurable.createConfigurable(
-			RSSWebConfiguration.class, properties);
+		_rssWebCacheConfiguration = Configurable.createConfigurable(
+			RSSWebCacheConfiguration.class, properties);
 	}
 
-	private volatile RSSWebConfiguration _rssWebConfiguration;
+	private volatile RSSWebCacheConfiguration _rssWebCacheConfiguration;
 
 }

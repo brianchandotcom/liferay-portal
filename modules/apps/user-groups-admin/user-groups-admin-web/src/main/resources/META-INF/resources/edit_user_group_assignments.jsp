@@ -74,41 +74,39 @@ renderResponse.setTitle(userGroup.getName());
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:if test="<%= UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams) > 0 %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="users"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= portletURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="users"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= userSearchContainer.getOrderByCol() %>"
-				orderByType="<%= userSearchContainer.getOrderByType() %>"
-				orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-				portletURL="<%= portletURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="removeUsers" label="remove" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= userSearchContainer.getOrderByCol() %>"
+			orderByType="<%= userSearchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
 
-<aui:button-row cssClass="text-center">
-	<aui:button cssClass="btn-lg" id="addUsers" primary="<%= true %>" value="add-users" />
-</aui:button-row>
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="removeUsers" label="remove" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
 	<aui:input name="addUserIds" type="hidden" />
 	<aui:input name="removeUserIds" type="hidden" />
@@ -122,7 +120,6 @@ renderResponse.setTitle(userGroup.getName());
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
-			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"
@@ -134,6 +131,10 @@ renderResponse.setTitle(userGroup.getName());
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-users") %>' url="javascript:;" />
+</liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
 	var form = AUI.$(document.<portlet:namespace />fm);

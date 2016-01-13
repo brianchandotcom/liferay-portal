@@ -31,13 +31,13 @@
 		modelVar="userGroup"
 	>
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
+			<portlet:param name="mvcPath" value="/edit_user_group_assignments.jsp" />
 			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
 
 		<%
-		if (!UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.VIEW)) {
+		if (!UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.ASSIGN_MEMBERS)) {
 			rowURL = null;
 		}
 

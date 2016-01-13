@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
-
-String redirect = ParamUtil.getString(request, "redirect");
-
 long userGroupId = ParamUtil.getLong(request, "userGroupId");
 
 UserGroup userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
@@ -41,8 +37,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_user_group_users.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()));
 portletURL.setParameter("eventName", eventName);
 
@@ -73,31 +67,34 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:if test="<%= UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams) > 0 %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="users"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= portletURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="users"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= userSearchContainer.getOrderByCol() %>"
-				orderByType="<%= userSearchContainer.getOrderByType() %>"
-				orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-				portletURL="<%= portletURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
 
-		<liferay-frontend:management-bar-action-buttons />
-	</liferay-frontend:management-bar>
-</c:if>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= userSearchContainer.getOrderByCol() %>"
+			orderByType="<%= userSearchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons />
+</liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
@@ -109,7 +106,6 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
-			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"

@@ -17,7 +17,7 @@
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-icon
-			icon="icon-group"
+			icon="users"
 		/>
 
 		<liferay-ui:search-container-column-text

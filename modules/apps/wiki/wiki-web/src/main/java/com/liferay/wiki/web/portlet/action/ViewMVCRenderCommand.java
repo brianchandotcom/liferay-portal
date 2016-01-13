@@ -14,10 +14,21 @@
 
 package com.liferay.wiki.web.portlet.action;
 
+import com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Iván Zaera
@@ -35,8 +46,32 @@ import org.osgi.service.component.annotations.Component;
 public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 
 	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			renderRequest);
+
+		request.setAttribute(
+			WikiWebKeys.DL_CSS_CLASS_FILE_MIME_TYPE_PROVIDER,
+			_dlCssClassFileMimeTypeProvider);
+
+		return super.render(renderRequest, renderResponse);
+	}
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL, unbind = "-")
+	public void setDLCssClassFileMimeTypeProvider(
+		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
+
+		_dlCssClassFileMimeTypeProvider = dlCssClassFileMimeTypeProvider;
+	}
+
+	@Override
 	protected String getPath() {
 		return "/wiki/view.jsp";
 	}
+
+	private DLCssClassFileMimeTypeProvider _dlCssClassFileMimeTypeProvider;
 
 }

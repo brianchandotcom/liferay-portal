@@ -19,6 +19,9 @@ package com.liferay.wiki.constants;
  */
 public class WikiWebKeys {
 
+	public static final String DL_CSS_CLASS_FILE_MIME_TYPE_PROVIDER =
+		"DL_CSS_CLASS_FILE_MIME_TYPE_PROVIDER";
+
 	public static final String WIKI_NODE = "WIKI_NODE";
 
 	public static final String WIKI_NODE_ID = "WIKI_NODE_ID";

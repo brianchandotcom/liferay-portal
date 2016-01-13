@@ -93,6 +93,10 @@ public interface CalendarService extends BaseService {
 		java.lang.String type) throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isManageableFromGroup(long calendarId, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.Calendar> search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
 		java.lang.String keywords, boolean andOperator, int start, int end,

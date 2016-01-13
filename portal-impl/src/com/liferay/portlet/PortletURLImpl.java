@@ -1071,8 +1071,10 @@ public class PortletURLImpl
 
 				String lastString = sb.stringAt(sb.index() - 1);
 
-				if (lastString.charAt(lastString.length() - 1) !=
-						CharPool.AMPERSAND) {
+				if ((lastString.charAt(lastString.length() - 1) !=
+						CharPool.AMPERSAND) &&
+					(lastString.charAt(lastString.length() - 1) !=
+						CharPool.QUESTION)) {
 
 					sb.append(StringPool.AMPERSAND);
 				}

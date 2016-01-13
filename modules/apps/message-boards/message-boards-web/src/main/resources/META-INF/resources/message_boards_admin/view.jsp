@@ -17,9 +17,6 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
-String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
-
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);
@@ -27,7 +24,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-portletURL.setParameter("topLink", topLink);
+portletURL.setParameter("topLink", "message-boards-home");
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 request.setAttribute("view.jsp-categoryId", categoryId);
@@ -49,7 +46,7 @@ PortletURL navigationURL = renderResponse.createRenderURL();
 navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 %>
 
-<aui:nav-bar cssClass='<%= topLink.equals("message-boards-home") ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%
@@ -60,17 +57,19 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		<aui:nav-item
 			href="<%= navigationURL.toString() %>"
 			label="message-boards-home"
-			selected='<%= topLink.equals("message-boards-home") %>'
+			selected="<%= true %>"
 		/>
 
 		<%
-		navigationURL.setParameter("topLink", "statistics");
+		PortletURL viewStatisticsURL = renderResponse.createRenderURL();
+
+		viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
 		%>
 
 		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
+			href="<%= viewStatisticsURL.toString() %>"
 			label="statistics"
-			selected='<%= topLink.equals("statistics") %>'
+			selected="<%= false %>"
 		/>
 
 		<%
@@ -82,33 +81,24 @@ navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		<aui:nav-item
 			href="<%= bannedUsersURL.toString() %>"
 			label="banned-users"
-			selected='<%= mvcRenderCommandName.equals("/message_boards/view_banned_users") %>'
+			selected="<%= false %>"
 		/>
 	</aui:nav>
 
-	<c:if test='<%= topLink.equals("message-boards-home") %>'>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
-		</liferay-portlet:renderURL>
+	<liferay-portlet:renderURL varImpl="searchURL">
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
+	</liferay-portlet:renderURL>
 
-		<aui:nav-bar-search>
-			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL %>" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
+			<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
 
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:choose>
-	<c:when test='<%= topLink.equals("message-boards-home") %>'>
-		<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= topLink.equals("statistics") %>'>
-		<liferay-util:include page="/message_boards_admin/statistics.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />

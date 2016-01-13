@@ -40,11 +40,13 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_use
 		/>
 
 		<%
-		navigationURL.setParameter("topLink", "statistics");
+		PortletURL viewStatisticsURL = renderResponse.createRenderURL();
+
+		viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
 		%>
 
 		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
+			href="<%= viewStatisticsURL.toString() %>"
 			label="statistics"
 			selected="<%= false %>"
 		/>

@@ -21,6 +21,10 @@
 		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
 	</command>
 
+	<command name="gotoToday">
+		<execute function="AssertClick" locator1="Calendar#VIEW_TODAY_BUTTON" value1="Today" />
+	</command>
+
 	<command name="gotoAddEvent">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />

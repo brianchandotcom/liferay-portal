@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 
-import java.util.List;
-
 /**
  * @author Allen Chiang
  * @author Bruno Farache
@@ -28,7 +26,7 @@ public interface SearchPermissionChecker {
 	public void addPermissionFields(long companyId, Document doc);
 
 	public BooleanFilter getPermissionBooleanFilter(
-		long companyId, List<Long> groupIds, long userId, String className,
+		long companyId, long[] groupIds, long userId, String className,
 		BooleanFilter booleanFilter, SearchContext searchContext);
 
 	public void updatePermissionFields(String name, String primKey);

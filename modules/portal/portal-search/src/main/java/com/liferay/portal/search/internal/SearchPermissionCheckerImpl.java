@@ -120,7 +120,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Override
 	public BooleanFilter getPermissionBooleanFilter(
-		long companyId, List<Long> groupIds, long userId, String className,
+		long companyId, long[] groupIds, long userId, String className,
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		try {
@@ -213,7 +213,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	protected BooleanFilter doGetPermissionBooleanFilter(
-			long companyId, List<Long> groupIds, long userId, String className,
+			long companyId, long[] groupIds, long userId, String className,
 			BooleanFilter booleanFilter, SearchContext searchContext)
 		throws Exception {
 
@@ -247,12 +247,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<>();
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
 
+		List<Long> groupIdsList = new ArrayList<>(ListUtil.toList(groupIds));
+
 		populate(
-			companyId, groupIds, userId, permissionChecker, groups, roles,
+			companyId, groupIdsList, userId, permissionChecker, groups, roles,
 			userGroupRoles, groupIdsToRoles, searchContext);
 
 		return doGetPermissionFilter_6(
-			companyId, groupIds, userId, permissionChecker, className,
+			companyId, groupIdsList, userId, permissionChecker, className,
 			booleanFilter, groups, roles, userGroupRoles, groupIdsToRoles);
 	}
 

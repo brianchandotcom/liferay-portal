@@ -214,16 +214,13 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			SearchPermissionChecker searchPermissionChecker =
 				SearchEngineHelperUtil.getSearchPermissionChecker();
 
-			List<Long> groupIds = new ArrayList<>();
+			long[] groupIds = searchContext.getGroupIds();
 
 			long groupId = GetterUtil.getLong(
 				searchContext.getAttribute("groupId"));
 
 			if (groupId > 0) {
-				groupIds.add(groupId);
-			}
-			else {
-				groupIds = ListUtil.toList(searchContext.getGroupIds());
+				groupIds = new long[] {groupId};
 			}
 
 			facetBooleanFilter =

@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.control.menu.web.constants;
+package com.liferay.layout.admin.web.constants;
 
 /**
  * @author Julio Camarero
  */
-public class ControlMenuWebKeys {
+public class LayoutAdminWebKeys {
 
-	public static final String PORTLET_BACK_URL = "PORTLET_BACK_URL";
-
-	public static final String PORTLET_DESCRIPTION = "PORTLET_DESCRIPTION";
-
-	public static final String PORTLET_TITLE = "PORTLET_TITLE";
+	public static final String CONTROL_MENU_ENTRY = "CONTROL_MENU_ENTRY";
 
 }

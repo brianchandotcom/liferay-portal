@@ -14,9 +14,7 @@
 
 package com.liferay.document.library.web.display.context;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.document.library.web.configuration.DLConfiguration;
+import com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,15 +36,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Iván Zaera
  */
-@Component(
-	configurationPid = "com.liferay.document.library.web.configuration.DLConfiguration",
-	service = DLDisplayContextProvider.class
-)
+@Component(immediate = true, service = DLDisplayContextProvider.class)
 public class DLDisplayContextProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
@@ -97,7 +93,8 @@ public class DLDisplayContextProvider {
 		try {
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
-					request, response, fileShortcut, _dlConfiguration);
+					request, response, fileShortcut,
+					_dlCssClassFileMimeTypeProvider);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -126,7 +123,8 @@ public class DLDisplayContextProvider {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
-				request, response, fileVersion, _dlConfiguration);
+				request, response, fileVersion,
+				_dlCssClassFileMimeTypeProvider);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -144,25 +142,23 @@ public class DLDisplayContextProvider {
 		return dlViewFileVersionDisplayContext;
 	}
 
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL, unbind = "-")
+	public void setDLCssClassFileMimeTypeProvider(
+		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
+
+		_dlCssClassFileMimeTypeProvider = dlCssClassFileMimeTypeProvider;
+	}
+
 	@Activate
 	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws InvalidSyntaxException {
 
-		_dlConfiguration = Configurable.createConfigurable(
-			DLConfiguration.class, properties);
-
 		_dlDisplayContextFactories = ServiceTrackerListFactory.open(
 			bundleContext, DLDisplayContextFactory.class);
 	}
 
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_dlConfiguration = Configurable.createConfigurable(
-			DLConfiguration.class, properties);
-	}
-
-	private volatile DLConfiguration _dlConfiguration;
+	private DLCssClassFileMimeTypeProvider _dlCssClassFileMimeTypeProvider;
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;
 

@@ -14,9 +14,8 @@
 
 package com.liferay.document.library.web.display.context;
 
-import com.liferay.document.library.web.configuration.DLConfiguration;
+import com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider;
 import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
-import com.liferay.document.library.web.display.context.logic.DLVisualizationHelper;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.display.context.logic.FileVersionDisplayContextHelper;
 import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
@@ -58,60 +57,33 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut, DLConfiguration dlConfiguration)
+			FileShortcut fileShortcut,
+			DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			dlConfiguration);
+			dlCssClassFileMimeTypeProvider);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, DLConfiguration dlConfiguration) {
+		FileVersion fileVersion,
+		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
 
-		this(request, response, fileVersion, null, dlConfiguration);
+		this(
+			request, response, fileVersion, null,
+			dlCssClassFileMimeTypeProvider);
 	}
 
 	@Override
 	public String getCssClassFileMimeType() {
-		String mimeType = _fileVersion.getMimeType();
-
-		if (_containsMimeType(_dlConfiguration.codeFileMimeTypes(), mimeType)) {
-			return "file-icon-color-7";
-		}
-		else if (_containsMimeType(
-					_dlConfiguration.compressedFileMimeTypes(), mimeType)) {
-
-			return "file-icon-color-1";
-		}
-		else if (_containsMimeType(
-					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
-
-			return "file-icon-color-3";
-		}
-		else if (_containsMimeType(
-					_dlConfiguration.presentationFileMimeTypes(), mimeType)) {
-
-			return "file-icon-color-4";
-		}
-		else if (_containsMimeType(
-					_dlConfiguration.spreadSheetFileMimeTypes(), mimeType)) {
-
-			return "file-icon-color-2";
-		}
-		else if (_containsMimeType(
-					_dlConfiguration.textFileMimeTypes(), mimeType)) {
-
-			return "file-icon-color-6";
-		}
-		else if (_containsMimeType(
-					_dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
-
-			return "file-icon-color-5";
+		if (_dlCssClassFileMimeTypeProvider == null) {
+			return "file-icon-color-0";
 		}
 
-		return "file-icon-color-0";
+		return _dlCssClassFileMimeTypeProvider.getCssClassFileMimeType(
+			_fileVersion.getMimeType());
 	}
 
 	@Override
@@ -210,14 +182,12 @@ public class DefaultDLViewFileVersionDisplayContext
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, FileShortcut fileShortcut,
-		DLConfiguration dlConfiguration) {
+		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
 
 		try {
 			_fileVersion = fileVersion;
 
 			DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
-
-			_dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 
 			_dlPortletInstanceSettingsHelper =
 				new DLPortletInstanceSettingsHelper(dlRequestHelper);
@@ -236,7 +206,7 @@ public class DefaultDLViewFileVersionDisplayContext
 				_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
 			}
 
-			_dlConfiguration = dlConfiguration;
+			_dlCssClassFileMimeTypeProvider = dlCssClassFileMimeTypeProvider;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -244,25 +214,6 @@ public class DefaultDLViewFileVersionDisplayContext
 					fileVersion,
 				pe);
 		}
-	}
-
-	private boolean _containsMimeType(String[] mimeTypes, String mimeType) {
-		for (String curMimeType : mimeTypes) {
-			int pos = curMimeType.indexOf("/");
-
-			if (pos != -1) {
-				if (mimeType.equals(curMimeType)) {
-					return true;
-				}
-			}
-			else {
-				if (mimeType.startsWith(curMimeType)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private FileEntry _getFileEntry(FileVersion fileVersion)
@@ -306,10 +257,10 @@ public class DefaultDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private final DLConfiguration _dlConfiguration;
+	private final DLCssClassFileMimeTypeProvider
+		_dlCssClassFileMimeTypeProvider;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
-	private final DLVisualizationHelper _dlVisualizationHelper;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper

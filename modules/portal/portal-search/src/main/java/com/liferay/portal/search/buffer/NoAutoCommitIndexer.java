@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.internal;
+package com.liferay.portal.search.buffer;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;

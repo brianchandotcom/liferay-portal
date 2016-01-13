@@ -20,7 +20,7 @@ AUI.add(
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var MAP_HIDDEN_FIELD_ATTRS = {
-			checkbox: ['readOnly', 'required'],
+			checkbox: ['readOnly'],
 
 			DEFAULT: ['readOnly', 'width'],
 

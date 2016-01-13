@@ -98,4 +98,63 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 			</c:if>
 		</div>
 	</c:when>
+	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(fileEntries) && (fileEntries.size() == 1) %>">
+
+		<%
+		FileEntry fileEntry = fileEntries.get(0);
+
+		request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
+		%>
+
+		<div class="sidebar-header">
+			<ul class="list-inline list-unstyled sidebar-header-actions">
+				<li>
+					<liferay-util:include page="/document_library/file_entry_action.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
+
+			<h4><%= fileEntry.getTitle() %></h4>
+
+			<div>
+				<liferay-ui:message key="document" />
+			</div>
+		</div>
+
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="details" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
+
+		<div class="sidebar-body">
+			<h5><strong><liferay-ui:message key="created" /></strong></h5>
+
+			<p>
+				<%= HtmlUtil.escape(fileEntry.getUserName()) %>
+			</p>
+
+			<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
+				<h5><strong><liferay-ui:message key="description" /></strong></h5>
+
+				<p>
+					<%= fileEntry.getDescription() %>
+				</p>
+			</c:if>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="sidebar-header">
+			<h4><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></h4>
+		</div>
+
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="details" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
+
+		<div class="sidebar-body">
+			<h5><strong><liferay-ui:message arguments="<%= folders.size() + fileEntries.size() %>" key="x-items-selected" /></strong></h5>
+		</div>
+	</c:otherwise>
 </c:choose>

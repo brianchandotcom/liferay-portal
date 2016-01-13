@@ -19,6 +19,37 @@
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.PUBLISH_TO_LIVE);
 
+long exportImportConfigurationId = 0;
+
+ExportImportConfiguration exportImportConfiguration = null;
+
+Map<String, Serializable> exportImportConfigurationSettingsMap = Collections.emptyMap();
+
+Map<String, String[]> parameterMap = Collections.emptyMap();
+
+if (SessionMessages.contains(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId")) {
+	exportImportConfigurationId = (Long)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "exportImportConfigurationId");
+
+	if (exportImportConfigurationId > 0) {
+		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+	}
+
+	exportImportConfigurationSettingsMap = (Map<String, Serializable>)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "settingsMap");
+
+	parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+}
+else {
+	exportImportConfigurationId = ParamUtil.getLong(request, "exportImportConfigurationId");
+
+	if (exportImportConfigurationId > 0) {
+		exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+
+		exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+
+		parameterMap = (Map<String, String[]>)exportImportConfigurationSettingsMap.get("parameterMap");
+	}
+}
+
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 
@@ -97,6 +128,8 @@ renderURL.setParameter("layoutSetBranchName", layoutSetBranchName);
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
+
+renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(request, "new-publication") : LanguageUtil.format(request, "new-publication-based-on-x", exportImportConfiguration.getName(), false));
 %>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>

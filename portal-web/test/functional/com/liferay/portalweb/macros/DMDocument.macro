@@ -341,7 +341,7 @@
 				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 				<execute function="AssertClick" locator1="AssetCategorization#CATEGORIES_CATEGORY" value1="${categoryName}" />
-				<execute function="AssertClick" locator1="Button#CLOSE_IFRAME" value1="×" />
+				<execute function="Click" locator1="Icon#CLOSE" />
 
 				<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
 			</then>
@@ -834,23 +834,6 @@
 	<command name="editCmd">
 		<if>
 			<not>
-				<contains string="${checkedOut}" substring="{checkedOut}" />
-			</not>
-			<then>
-				<if>
-					<equals arg1="${dmRepositoryName}" arg2="true" />
-					<then>
-						<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
-					</then>
-					<else>
-						<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<not>
 				<contains string="${dmDocumentFileEdit}" substring="{dmDocumentFileEdit}" />
 			</not>
 			<then>
@@ -975,22 +958,12 @@
 		</execute>
 
 		<execute macro="DMDocument#editCmd">
-			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
-			<var name="sharepointRepository" value="${sharepointRepository}" />
 		</execute>
 
-		<if>
-			<equals arg1="${checkedOut}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-			</else>
-		</if>
+		<execute function="Click" locator1="Button#PUBLISH" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -1008,12 +981,16 @@
 	</command>
 
 	<command name="editPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute function="Click" locator1="Button#EDIT" />
+
 		<execute macro="DMDocument#editCmd">
-			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
-			<var name="sharepointRepository" value="${sharepointRepository}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />

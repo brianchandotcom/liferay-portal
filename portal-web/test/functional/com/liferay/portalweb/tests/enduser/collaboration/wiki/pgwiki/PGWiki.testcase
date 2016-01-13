@@ -381,10 +381,10 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiFrontPageContentJavascript" priority="4">
+	<command name="AddWikiFrontPageContentNoJavascript" priority="4">
 		<var name="wikiPageContent">
 			<![CDATA[
-				<p id="demo">FAIL</p><script type="text/javascript">document.getElementById('demo').innerHTML="PASS";</script>
+				<p id="demo">PASS</p><script type="text/javascript">document.getElementById('demo').innerHTML="this code should not be read by the client";</script>
 			]]>
 		</var>
 		<var name="wikiPageRevision" value="1.1" />

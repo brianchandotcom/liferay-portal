@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>ALL_PAGES_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/following-sibling::td</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span//strong | //tr[contains(.,'${key_wikiPageTitle}')]/td[3]/span//strong</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,7 +198,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENT_TABLE_REMOVE</td>
-	<td>//tr[contains(.,'${key_attachmentFileName}')]/td[contains(.,'Remove')]/span/a</td>
+	<td>//tr[contains(.,'${key_attachmentFileName}')]//span[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
 <tr>

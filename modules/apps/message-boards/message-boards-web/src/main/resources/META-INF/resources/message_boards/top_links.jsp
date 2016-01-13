@@ -72,12 +72,12 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		</c:if>
 
 		<%
-		label = "statistics";
+		PortletURL viewStatisticsURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("topLink", label);
+		viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
 		%>
 
-		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+		<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_statistics") ? "active" : StringPool.BLANK %>' href="<%= viewStatisticsURL.toString() %>" label="statistics" selected='<%= mvcRenderCommandName.equals("/message_boards/view_statistics") %>' />
 
 		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
 

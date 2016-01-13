@@ -262,62 +262,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		%>
 
 	</c:when>
-	<c:when test='<%= topLink.equals("statistics") %>'>
-		<liferay-ui:panel-container cssClass="statistics-panel" extended="<%= false %>" id="messageBoardsStatisticsPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsGeneralStatisticsPanel" persistState="<%= true %>" title="general">
-				<dl>
-					<dt>
-						<liferay-ui:message key="num-of-categories" />:
-					</dt>
-					<dd>
-						<%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %>
-					</dd>
-					<dt>
-						<liferay-ui:message key="num-of-posts" />:
-					</dt>
-					<dd>
-						<%= numberFormat.format(MBStatsUserLocalServiceUtil.getMessageCountByGroupId(scopeGroupId)) %>
-					</dd>
-					<dt>
-						<liferay-ui:message key="num-of-participants" />:
-					</dt>
-					<dd>
-						<%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %>
-					</dd>
-				</dl>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsTopPostersPanel" persistState="<%= true %>" title="top-posters">
-				<liferay-ui:search-container
-					emptyResultsMessage="there-are-no-top-posters"
-					iteratorURL="<%= portletURL %>"
-					total="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId) %>"
-				>
-					<liferay-ui:search-container-results
-						results="<%= MBStatsUserLocalServiceUtil.getStatsUsersByGroupId(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-					/>
-
-					<liferay-ui:search-container-row
-						className="com.liferay.portlet.messageboards.model.MBStatsUser"
-						keyProperty="statsUserId"
-						modelVar="statsUser"
-					>
-						<liferay-ui:search-container-column-jsp
-							path="/message_boards/top_posters_user_display.jsp"
-						/>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator />
-				</liferay-ui:search-container>
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
-
-		<%
-		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
-		%>
-
-	</c:when>
 </c:choose>
 
 <%!

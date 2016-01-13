@@ -17,14 +17,58 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
+PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+%>
+
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		PortletURL navigationURL = renderResponse.createRenderURL();
+
+		navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+		navigationURL.setParameter("topLink", "message-boards-home");
+		navigationURL.setParameter("tag", StringPool.BLANK);
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="message-boards-home"
+			selected="<%= false %>"
+		/>
+
+		<%
+		PortletURL viewStatisticsURL = renderResponse.createRenderURL();
+
+		viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
+		%>
+
+		<aui:nav-item
+			href="<%= viewStatisticsURL.toString() %>"
+			label="statistics"
+			selected="<%= true %>"
+		/>
+
+		<%
+		PortletURL bannedUsersURL = renderResponse.createRenderURL();
+
+		bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+		%>
+
+		<aui:nav-item
+			href="<%= bannedUsersURL.toString() %>"
+			label="banned-users"
+			selected="<%= false %>"
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
+<%
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
-String displayStyle = GetterUtil.getString(request.getAttribute("view.jsp-displayStyle"));
 
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
-
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 %>
 
 <div class="container-fluid-1280">
@@ -72,13 +116,13 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 </div>
 
 <%
-PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+PortalUtil.setPageSubtitle(LanguageUtil.get(request, "statistics"), request);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format("statistics", TextFormatter.O)), portletURL.toString());
 %>

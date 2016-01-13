@@ -1,12 +1,12 @@
 dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:blogs:blogs-api")
-	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:portlet-display-template:portlet-display-template")
 	compile project(":apps:trash:trash-taglib")
+	compile project(":portal:portal-metatype")
 }
 
 liferay {

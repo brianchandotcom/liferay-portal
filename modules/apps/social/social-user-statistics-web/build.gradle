@@ -1,6 +1,6 @@
 dependencies {
-	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
+	compile project(":portal:portal-metatype")
 	compile project(":portal:portal-upgrade")
 }
 

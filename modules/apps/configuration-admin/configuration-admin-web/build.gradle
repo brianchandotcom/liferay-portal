@@ -4,7 +4,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
-	compile project(":portal:portal-metatype-ext")
+	compile project(":portal:portal-metatype")
 
 	provided group: "com.liferay.portal", name: "util-bridges", version: liferay.portalVersion
 	provided group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", transitive: false, version: "1.2.3"

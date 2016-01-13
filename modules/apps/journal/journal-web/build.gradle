@@ -1,7 +1,6 @@
 dependencies {
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:application-list:application-list-api")
-	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:item-selector:item-selector-api")
@@ -10,6 +9,7 @@ dependencies {
 	compile project(":apps:trash:trash-taglib")
 	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
+	compile project(":portal:portal-metatype")
 
 	provided group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 }

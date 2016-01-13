@@ -1,5 +1,6 @@
 dependencies {
 	compile project(":apps:configuration-admin:configuration-admin-api")
+	compile project(":portal:portal-metatype")
 }
 
 liferay {

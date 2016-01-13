@@ -539,6 +539,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_TEPMLATES</td>
+	<td>//a[@role='menuitem' and contains(.,'Publish Templates')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_TO_LIVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Publish to Live')]</td>
 	<td></td>

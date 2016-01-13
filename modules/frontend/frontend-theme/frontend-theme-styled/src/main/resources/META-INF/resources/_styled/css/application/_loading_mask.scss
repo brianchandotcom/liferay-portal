@@ -19,7 +19,8 @@
 		height: 64px;
 		overflow: hidden;
 		padding: 64px 0 0;
-		@include transform(translate(-50%, -50%));
 		width: 64px;
+
+		@include transform(translate(-50%, -50%));
 	}
 }

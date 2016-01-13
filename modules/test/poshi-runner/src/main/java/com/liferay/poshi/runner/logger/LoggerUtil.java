@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -107,8 +108,13 @@ public final class LoggerUtil {
 	}
 
 	public static void createSummary() throws Exception {
-		FileUtil.write(
-			_getSummaryLogFilePath(), SummaryLoggerHandler.getSummary());
+		try {
+			FileUtil.write(
+				_getSummaryLogFilePath(), SummaryLoggerHandler.getSummary());
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
+		}
 	}
 
 	public static void executeJavaScript(String script) {
@@ -184,16 +190,21 @@ public final class LoggerUtil {
 			return;
 		}
 
-		WebElement webElement = _webDriver.findElement(By.id("commandLog"));
+		try {
+			WebElement webElement = _webDriver.findElement(By.id("commandLog"));
 
-		String classAttribute = webElement.getAttribute("class");
+			String classAttribute = webElement.getAttribute("class");
 
-		while (classAttribute.contains("paused")) {
-			webElement = _webDriver.findElement(By.id("commandLog"));
+			while (classAttribute.contains("paused")) {
+				webElement = _webDriver.findElement(By.id("commandLog"));
 
-			classAttribute = webElement.getAttribute("class");
+				classAttribute = webElement.getAttribute("class");
 
-			Thread.sleep(1000);
+				Thread.sleep(1000);
+			}
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
 		}
 	}
 
@@ -273,60 +284,67 @@ public final class LoggerUtil {
 	}
 
 	public static void stopLogger() throws Exception {
-		if (!PropsValues.SELENIUM_LOGGER_ENABLED) {
-			String mainCSSContent = _readResource(
-				"META-INF/resources/css/main.css");
+		try {
+			if (!PropsValues.SELENIUM_LOGGER_ENABLED) {
+				String mainCSSContent = _readResource(
+					"META-INF/resources/css/main.css");
 
-			FileUtil.write(
-				_CURRENT_DIR_NAME + "/test-results/css/main.css",
-				mainCSSContent);
+				FileUtil.write(
+					_CURRENT_DIR_NAME + "/test-results/css/main.css",
+					mainCSSContent);
 
-			String componentJSContent = _readResource(
-				"META-INF/resources/js/component.js");
+				String componentJSContent = _readResource(
+					"META-INF/resources/js/component.js");
 
-			FileUtil.write(
-				_CURRENT_DIR_NAME + "/test-results/js/component.js",
-				componentJSContent);
+				FileUtil.write(
+					_CURRENT_DIR_NAME + "/test-results/js/component.js",
+					componentJSContent);
 
-			String mainJSContent = _readResource(
-				"META-INF/resources/js/main.js");
+				String mainJSContent = _readResource(
+					"META-INF/resources/js/main.js");
 
-			FileUtil.write(
-				_CURRENT_DIR_NAME + "/test-results/js/main.js", mainJSContent);
+				FileUtil.write(
+					_CURRENT_DIR_NAME + "/test-results/js/main.js",
+					mainJSContent);
+			}
+
+			String indexHTMLContent = _readResource(
+				"META-INF/resources/html/index.html");
+
+			indexHTMLContent = indexHTMLContent.replace(
+				"<ul class=\"command-log\" data-logid=\"01\" " +
+					"id=\"commandLog\"></ul>",
+				CommandLoggerHandler.getCommandLogText());
+			indexHTMLContent = indexHTMLContent.replace(
+				"<ul class=\"xml-log-container\" id=\"xmlLogContainer\"></ul>",
+				XMLLoggerHandler.getXMLLogText());
+
+			if (!PropsValues.TEST_RUN_LOCALLY) {
+				indexHTMLContent = StringUtil.replace(
+					indexHTMLContent, "<link href=\"../css/main.css\"",
+					"<link href=\"" + PropsValues.LOGGER_RESOURCES_URL +
+						"/css/.sass-cache/main.css\"");
+				indexHTMLContent = StringUtil.replace(
+					indexHTMLContent,
+					"<script defer src=\"../js/component.js\"",
+					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+						"/js/component.js\"");
+				indexHTMLContent = StringUtil.replace(
+					indexHTMLContent, "<script defer src=\"../js/main.js\"",
+					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+						"/js/main.js\"");
+			}
+
+			FileUtil.write(_getHtmlFilePath(), indexHTMLContent);
+
+			if (isLoggerStarted()) {
+				_webDriver.quit();
+
+				_webDriver = null;
+			}
 		}
-
-		String indexHTMLContent = _readResource(
-			"META-INF/resources/html/index.html");
-
-		indexHTMLContent = indexHTMLContent.replace(
-			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
-				"</ul>",
-			CommandLoggerHandler.getCommandLogText());
-		indexHTMLContent = indexHTMLContent.replace(
-			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\"></ul>",
-			XMLLoggerHandler.getXMLLogText());
-
-		if (!PropsValues.TEST_RUN_LOCALLY) {
-			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<link href=\"../css/main.css\"",
-				"<link href=\"" + PropsValues.LOGGER_RESOURCES_URL +
-					"/css/.sass-cache/main.css\"");
-			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<script defer src=\"../js/component.js\"",
-				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-					"/js/component.js\"");
-			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<script defer src=\"../js/main.js\"",
-				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-					"/js/main.js\"");
-		}
-
-		FileUtil.write(_getHtmlFilePath(), indexHTMLContent);
-
-		if (isLoggerStarted()) {
-			_webDriver.quit();
-
-			_webDriver = null;
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
 		}
 	}
 
@@ -381,49 +399,56 @@ public final class LoggerUtil {
 	}
 
 	private static void _startLogger() throws Exception {
-		_webDriver = new FirefoxDriver();
+		try {
+			_webDriver = new FirefoxDriver();
 
-		WebDriver.Options options = _webDriver.manage();
+			WebDriver.Options options = _webDriver.manage();
 
-		WebDriver.Window window = options.window();
+			WebDriver.Window window = options.window();
 
-		window.setPosition(new Point(1050, 45));
-		window.setSize(new Dimension(850, 950));
+			window.setPosition(new Point(1050, 45));
+			window.setSize(new Dimension(850, 950));
 
-		_javascriptExecutor = (JavascriptExecutor)_webDriver;
+			_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		String mainCSSContent = _readResource(
-			"META-INF/resources/css/main.css");
+			String mainCSSContent = _readResource(
+				"META-INF/resources/css/main.css");
 
-		FileUtil.write(
-			_CURRENT_DIR_NAME + "/test-results/css/main.css", mainCSSContent);
+			FileUtil.write(
+				_CURRENT_DIR_NAME + "/test-results/css/main.css",
+				mainCSSContent);
 
-		String indexHTMLContent = _readResource(
-			"META-INF/resources/html/index.html");
+			String indexHTMLContent = _readResource(
+				"META-INF/resources/html/index.html");
 
-		indexHTMLContent = indexHTMLContent.replace(
-			"<ul class=\"command-log\" data-logid=\"01\" id=\"commandLog\">" +
-				"</ul>",
-			CommandLoggerHandler.getCommandLogText());
-		indexHTMLContent = indexHTMLContent.replace(
-			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\"></ul>",
-			XMLLoggerHandler.getXMLLogText());
+			indexHTMLContent = indexHTMLContent.replace(
+				"<ul class=\"command-log\" data-logid=\"01\" " +
+					"id=\"commandLog\"></ul>",
+				CommandLoggerHandler.getCommandLogText());
+			indexHTMLContent = indexHTMLContent.replace(
+				"<ul class=\"xml-log-container\" id=\"xmlLogContainer\"></ul>",
+				XMLLoggerHandler.getXMLLogText());
 
-		FileUtil.write(_getHtmlFilePath(), indexHTMLContent);
+			FileUtil.write(_getHtmlFilePath(), indexHTMLContent);
 
-		String componentJSContent = _readResource(
-			"META-INF/resources/js/component.js");
+			String componentJSContent = _readResource(
+				"META-INF/resources/js/component.js");
 
-		FileUtil.write(
-			_CURRENT_DIR_NAME + "/test-results/js/component.js",
-			componentJSContent);
+			FileUtil.write(
+				_CURRENT_DIR_NAME + "/test-results/js/component.js",
+				componentJSContent);
 
-		String mainJSContent = _readResource("META-INF/resources/js/main.js");
+			String mainJSContent = _readResource(
+				"META-INF/resources/js/main.js");
 
-		FileUtil.write(
-			_CURRENT_DIR_NAME + "/test-results/js/main.js", mainJSContent);
+			FileUtil.write(
+				_CURRENT_DIR_NAME + "/test-results/js/main.js", mainJSContent);
 
-		_webDriver.get("file://" + _getHtmlFilePath());
+			_webDriver.get("file://" + _getHtmlFilePath());
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
+		}
 	}
 
 	private static final String _CURRENT_DIR_NAME =

@@ -86,15 +86,11 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		_userExporter.exportUser(userId, userGroupId, userOperation);
 
 		if (_log.isDebugEnabled()) {
-			if (userOperation.equals(UserOperation.ADD)) {
+			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Adding association to user: " + userId +
-					" in userGroup: " + userGroupId);
-			}
-			else {
-				_log.debug(
-					"Removing association from user: " + userId +
-					" in userGroup: " + userGroupId);
+					"Exporting userId: " + userId + " to userGroup: " +
+						userGroupId + " operation: " +
+						userOperation.name());
 			}
 		}
 	}

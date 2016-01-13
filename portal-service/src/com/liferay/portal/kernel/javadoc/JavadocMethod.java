@@ -17,71 +17,20 @@ package com.liferay.portal.kernel.javadoc;
 import java.lang.reflect.Method;
 
 /**
- * @author Igor Spasic
+ * @author Preston Crary
  */
-public class JavadocMethod extends BaseJavadoc {
+public abstract class JavadocMethod extends BaseJavadoc {
 
-	public JavadocMethod(Method method) {
-		this(method, null);
-	}
+	public abstract Method getMethod();
 
-	public JavadocMethod(Method method, String comment) {
-		_method = method;
+	public abstract String getParameterComment(int index);
 
-		setComment(comment);
-	}
+	public abstract String[] getParameterComments();
 
-	public Method getMethod() {
-		return _method;
-	}
+	public abstract String getReturnComment();
 
-	public String getParameterComment(int index) {
-		if (_parameterComments == null) {
-			return null;
-		}
+	public abstract String getThrowsComment(int index);
 
-		return _parameterComments[index];
-	}
-
-	public String[] getParameterComments() {
-		return _parameterComments;
-	}
-
-	public String getReturnComment() {
-		return _returnComment;
-	}
-
-	public String getThrowsComment(int index) {
-		if (_throwsComments == null) {
-			return null;
-		}
-
-		return _throwsComments[index];
-	}
-
-	public String[] getThrowsComments() {
-		return _throwsComments;
-	}
-
-	public void setMethod(Method method) {
-		_method = method;
-	}
-
-	public void setParameterComments(String[] parameterComments) {
-		_parameterComments = parameterComments;
-	}
-
-	public void setReturnComment(String returnComment) {
-		_returnComment = returnComment;
-	}
-
-	public void setThrowsComments(String[] throwsComments) {
-		_throwsComments = throwsComments;
-	}
-
-	private Method _method;
-	private String[] _parameterComments;
-	private String _returnComment;
-	private String[] _throwsComments;
+	public abstract String[] getThrowsComments();
 
 }

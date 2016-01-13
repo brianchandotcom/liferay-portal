@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.language.UTF8Control;
 
 import java.text.MessageFormat;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -104,18 +106,9 @@ public class ResourceBundleUtil {
 		Map<String, ResourceBundle> resourceBundles, String languageId,
 		ResourceBundleLoader resourceBundleLoader) {
 
-		String[] languageIdParts = ("_" + languageId).split("_");
-
-		String currentLanguageId = StringPool.BLANK;
 		Deque<ResourceBundle> currentResourceBundles = new LinkedList<>();
 
-		for (int i = 0; i < languageIdParts.length; i++) {
-			if ( i > 1 ) {
-				currentLanguageId += "_";
-			}
-
-			currentLanguageId += languageIdParts[i];
-
+		for (String currentLanguageId : _getLanguageIds(languageId)) {
 			ResourceBundle resourceBundle =
 				resourceBundleLoader.loadResourceBundle(currentLanguageId);
 
@@ -147,6 +140,24 @@ public class ResourceBundleUtil {
 
 		public ResourceBundle loadResourceBundle(String languageId);
 
+	}
+
+	private static List<String> _getLanguageIds(String languageId) {
+		List<String> languageIds = new ArrayList<>();
+
+		languageIds.add(StringPool.BLANK);
+
+		int index = 0;
+
+		while ((index = languageId.indexOf(CharPool.UNDERLINE, index + 1)) !=
+					-1) {
+
+			languageIds.add(languageId.substring(0, index));
+		}
+
+		languageIds.add(languageId);
+
+		return languageIds;
 	}
 
 }

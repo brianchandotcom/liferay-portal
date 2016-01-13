@@ -1182,7 +1182,7 @@
 
 		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="publishWithUserNotification">

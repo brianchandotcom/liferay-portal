@@ -53,11 +53,16 @@ public abstract class CompanyScopedConfigurationProvider
 		}
 
 		try {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
 			configuration.delete();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Deleting configuration for companyId: " + companyId);
+					"Deleted configuration: " + getMetatypeId() +
+						" for companyId: " + companyId +
+						" deleted properties: " + properties);
 			}
 		}
 		catch (IOException ioe) {
@@ -254,7 +259,9 @@ public abstract class CompanyScopedConfigurationProvider
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Updating configuration for companyId: " + companyId);
+					"Updated configuration: " + getMetatypeId() +
+						" for companyId: " + companyId +
+						" new properties: " + properties);
 			}
 		}
 		catch (IOException ioe) {

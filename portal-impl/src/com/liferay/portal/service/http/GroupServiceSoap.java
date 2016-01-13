@@ -151,6 +151,7 @@ public class GroupServiceSoap {
 	tag names for the group, and can set whether the group is for
 	staging
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, Map,
 	Map, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
@@ -194,6 +195,7 @@ public class GroupServiceSoap {
 	names for the group, and can set whether the group is for
 	staging
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, Map,
 	Map, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
@@ -247,6 +249,7 @@ public class GroupServiceSoap {
 	*
 	* @param roleId the primary key of the role
 	* @param groupIds the primary keys of the groups
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void addRoleGroups(long roleId, long[] groupIds)
 		throws RemoteException {
@@ -265,6 +268,7 @@ public class GroupServiceSoap {
 	* Staging.
 	*
 	* @param groupId the primary key of the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void checkRemoteStagingGroup(long groupId)
 		throws RemoteException {
@@ -289,6 +293,7 @@ public class GroupServiceSoap {
 	* </p>
 	*
 	* @param groupId the primary key of the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteGroup(long groupId) throws RemoteException {
 		try {
@@ -328,6 +333,7 @@ public class GroupServiceSoap {
 	*
 	* @param companyId the primary key of the company
 	* @return the group associated with the company
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap getCompanyGroup(
 		long companyId) throws RemoteException {
@@ -348,6 +354,7 @@ public class GroupServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @return the group with the primary key
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap getGroup(long groupId)
 		throws RemoteException {
@@ -369,6 +376,7 @@ public class GroupServiceSoap {
 	* @param companyId the primary key of the company
 	* @param groupKey the group key
 	* @return the group with the group key
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap getGroup(long companyId,
 		java.lang.String groupKey) throws RemoteException {
@@ -385,6 +393,17 @@ public class GroupServiceSoap {
 		}
 	}
 
+	/**
+	* Returns the group's display URL.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout set is private to the group
+	* @param secureConnection whether the generated URL uses a secure
+	connection
+	* @return the group's display URL
+	* @throws PortalException if a group with the primary key could not be
+	found or if a portal exception occurred
+	*/
 	public static java.lang.String getGroupDisplayURL(long groupId,
 		boolean privateLayout, boolean secureConnection)
 		throws RemoteException {
@@ -409,6 +428,7 @@ public class GroupServiceSoap {
 	* @param site whether the group is to be associated with a main site
 	* @return the matching groups, or <code>null</code> if no matches were
 	found
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getGroups(
 		long companyId, long parentGroupId, boolean site)
@@ -435,6 +455,7 @@ public class GroupServiceSoap {
 	inclusive)
 	* @return the range of site groups for which the user has Control Panel
 	access
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getManageableSiteGroups(
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
@@ -461,6 +482,7 @@ public class GroupServiceSoap {
 	inclusive)
 	* @return the range of site groups for which the user has Control Panel
 	access
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getManageableSiteGroups(Collection, int)}
 	*/
@@ -486,6 +508,7 @@ public class GroupServiceSoap {
 	*
 	* @param organizations the organizations
 	* @return the groups associated with the organizations
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getOrganizationsGroups(
 		com.liferay.portal.model.OrganizationSoap[] organizations)
@@ -509,6 +532,7 @@ public class GroupServiceSoap {
 	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
 	* @return the group directly associated with the user
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap getUserGroup(
 		long companyId, long userId) throws RemoteException {
@@ -530,6 +554,7 @@ public class GroupServiceSoap {
 	*
 	* @param userGroups the user groups
 	* @return the groups associated with the user groups
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getUserGroupsGroups(
 		com.liferay.portal.model.UserGroupSoap[] userGroups)
@@ -567,6 +592,7 @@ public class GroupServiceSoap {
 	* @param end the upper bound of the range of groups to consider (not
 	inclusive)
 	* @return the range of groups associated with the user's organizations
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getUserOrganizationsGroups(
 		long userId, int start, int end) throws RemoteException {
@@ -635,6 +661,7 @@ public class GroupServiceSoap {
 	#getUserSitesGroups(long, String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], int)}
 	*/
@@ -685,6 +712,7 @@ public class GroupServiceSoap {
 	#getUserSitesGroups(String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(String[],
 	int)}
 	*/
@@ -711,6 +739,7 @@ public class GroupServiceSoap {
 	* Panel.
 	*
 	* @return the number of user's groups &quot;sites&quot;
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
 	*/
 	@Deprecated
@@ -733,6 +762,7 @@ public class GroupServiceSoap {
 	*
 	* @return the user's layout set group, organization groups, and
 	inherited organization groups, and site groups
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups}
 	*/
 	@Deprecated
@@ -795,6 +825,7 @@ public class GroupServiceSoap {
 	#getUserSitesGroups(long, String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getUserSitesGroups(
 		long userId, java.lang.String[] classNames, int max)
@@ -842,6 +873,7 @@ public class GroupServiceSoap {
 	#getUserSitesGroups(long, String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] getUserSitesGroups(
 		java.lang.String[] classNames, int max) throws RemoteException {
@@ -865,6 +897,7 @@ public class GroupServiceSoap {
 	* Panel.
 	*
 	* @return the number of user's groups &quot;sites&quot;
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static int getUserSitesGroupsCount() throws RemoteException {
 		try {
@@ -888,6 +921,7 @@ public class GroupServiceSoap {
 	* @param groupId the primary key of the group
 	* @return <code>true</code> if the user is associated with the group;
 	<code>false</code> otherwise
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static boolean hasUserGroup(long userId, long groupId)
 		throws RemoteException {
@@ -932,6 +966,7 @@ public class GroupServiceSoap {
 	* @param end the upper bound of the range of groups to return (not
 	inclusive)
 	* @return the matching groups ordered by name
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap[] search(long companyId,
 		java.lang.String name, java.lang.String description,
@@ -989,6 +1024,7 @@ public class GroupServiceSoap {
 	*
 	* @param roleId the primary key of the role
 	* @param groupIds the primary keys of the groups
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void setRoleGroups(long roleId, long[] groupIds)
 		throws RemoteException {
@@ -1007,6 +1043,7 @@ public class GroupServiceSoap {
 	*
 	* @param roleId the primary key of the role
 	* @param groupIds the primary keys of the groups
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static void unsetRoleGroups(long roleId, long[] groupIds)
 		throws RemoteException {
@@ -1027,6 +1064,7 @@ public class GroupServiceSoap {
 	* @param friendlyURL the group's new friendlyURL (optionally
 	<code>null</code>)
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap updateFriendlyURL(
 		long groupId, java.lang.String friendlyURL) throws RemoteException {
@@ -1088,11 +1126,14 @@ public class GroupServiceSoap {
 	more information see {@link GroupConstants}.
 	* @param friendlyURL the group's new friendlyURL (optionally
 	<code>null</code>)
+	* @param inheritContent whether to inherit content from the parent
+	group
 	* @param active whether the group is active
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set the asset category IDs and asset
 	tag names for the group.
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
 	Map, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
@@ -1127,6 +1168,7 @@ public class GroupServiceSoap {
 	* @param typeSettings the group's new type settings (optionally
 	<code>null</code>)
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap updateGroup(long groupId,
 		java.lang.String typeSettings) throws RemoteException {

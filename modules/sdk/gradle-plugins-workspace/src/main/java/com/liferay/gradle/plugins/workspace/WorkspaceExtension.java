@@ -39,6 +39,9 @@ public class WorkspaceExtension {
 			project, "liferay.workspace.environment", (String)null);
 		_homeDir = GradleUtil.getProperty(
 			project, "liferay.workspace.home.dir", (File)null);
+		_modulesDefaultRepositoryEnabled = GradleUtil.getProperty(
+			project, "liferay.workspace.modules.default.repository.enabled",
+			true);
 		_modulesDir = GradleUtil.getProperty(
 			project, "liferay.workspace.modules.dir", (File)null);
 		_pluginsSDKDir = GradleUtil.getProperty(
@@ -83,12 +86,17 @@ public class WorkspaceExtension {
 		return _themesDir;
 	}
 
+	public boolean isModulesDefaultRepositoryEnabled() {
+		return _modulesDefaultRepositoryEnabled;
+	}
+
 	private final String _bundleArtifactGroup;
 	private final String _bundleArtifactName;
 	private final String _bundleArtifactVersion;
 	private final String _bundleMavenUrl;
 	private final String _environment;
 	private final File _homeDir;
+	private final boolean _modulesDefaultRepositoryEnabled;
 	private final File _modulesDir;
 	private final File _pluginsSDKDir;
 	private final File _themesDir;

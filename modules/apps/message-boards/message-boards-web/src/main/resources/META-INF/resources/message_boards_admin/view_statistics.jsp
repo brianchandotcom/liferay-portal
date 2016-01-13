@@ -23,45 +23,9 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_use
 %>
 
 <aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		PortletURL navigationURL = renderResponse.createRenderURL();
-
-		navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-		navigationURL.setParameter("tag", StringPool.BLANK);
-		%>
-
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="message-boards-home"
-			selected="<%= false %>"
-		/>
-
-		<%
-		PortletURL viewStatisticsURL = renderResponse.createRenderURL();
-
-		viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
-		%>
-
-		<aui:nav-item
-			href="<%= viewStatisticsURL.toString() %>"
-			label="statistics"
-			selected="<%= true %>"
-		/>
-
-		<%
-		PortletURL bannedUsersURL = renderResponse.createRenderURL();
-
-		bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
-		%>
-
-		<aui:nav-item
-			href="<%= bannedUsersURL.toString() %>"
-			label="banned-users"
-			selected="<%= false %>"
-		/>
-	</aui:nav>
+	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="navItemSelected" value="statistics" />
+	</liferay-util:include>
 </aui:nav-bar>
 
 <%

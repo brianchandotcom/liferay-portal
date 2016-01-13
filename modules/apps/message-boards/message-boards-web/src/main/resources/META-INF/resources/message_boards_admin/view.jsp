@@ -39,49 +39,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<%
-PortletURL navigationURL = renderResponse.createRenderURL();
-
-navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-%>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		navigationURL.setParameter("tag", StringPool.BLANK);
-		%>
-
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="message-boards-home"
-			selected="<%= true %>"
-		/>
-
-		<%
-		PortletURL viewStatisticsURL = renderResponse.createRenderURL();
-
-		viewStatisticsURL.setParameter("mvcRenderCommandName", "/message_boards/view_statistics");
-		%>
-
-		<aui:nav-item
-			href="<%= viewStatisticsURL.toString() %>"
-			label="statistics"
-			selected="<%= false %>"
-		/>
-
-		<%
-		PortletURL bannedUsersURL = renderResponse.createRenderURL();
-
-		bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
-		%>
-
-		<aui:nav-item
-			href="<%= bannedUsersURL.toString() %>"
-			label="banned-users"
-			selected="<%= false %>"
-		/>
-	</aui:nav>
+	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="navItemSelected" value="message-boards-home" />
+	</liferay-util:include>
 
 	<liferay-portlet:renderURL varImpl="searchURL">
 		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />

@@ -120,7 +120,7 @@ if (portletTitleBasedNavigation) {
 		</liferay-ui:app-view-toolbar>
 	</c:if>
 
-	<div class="lfr-asset-column-details sidenav-content">
+	<div class="sidenav-content">
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 			<liferay-ui:app-view-toolbar>
 				<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
@@ -275,7 +275,7 @@ if (portletTitleBasedNavigation) {
 		</div>
 	</div>
 
-	<div class="context-pane lfr-asset-column-details sidenav-menu-slider">
+	<div class="sidenav-menu-slider">
 		<div class="sidebar sidebar-default sidenav-menu">
 			<div class="asset-details-content">
 				<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">

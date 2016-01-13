@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div class="<%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %>">
+<div class="<%= portletTitleBasedNavigation ? "container-fluid-1280" : StringPool.BLANK %> sidenav-container sidenav-right">
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 	<aui:form action="<%= editFileEntry %>" method="post" name="fm">
@@ -122,7 +122,7 @@ if (portletTitleBasedNavigation) {
 		</c:if>
 
 		<aui:row>
-			<aui:col cssClass="lfr-asset-column-details" width="<%= 70 %>">
+			<div class="lfr-asset-column-details sidenav-content">
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && !portletTitleBasedNavigation %>">
 					<liferay-ui:app-view-toolbar>
 						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
@@ -275,10 +275,10 @@ if (portletTitleBasedNavigation) {
 						</liferay-ui:panel>
 					</c:if>
 				</div>
-			</aui:col>
+			</div>
 
-			<aui:col cssClass="context-pane lfr-asset-column-details" last="<%= true %>" width="<%= 30 %>">
-				<div class="asset-details body-row">
+			<div class="context-pane lfr-asset-column-details sidenav-menu-slider">
+				<div class="sidebar sidebar-default sidenav-menu">
 					<div class="asset-details-content">
 						<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 							<h3 class="version <%= fileEntry.isCheckedOut() ? "icon-lock" : StringPool.BLANK %>">
@@ -569,7 +569,7 @@ if (portletTitleBasedNavigation) {
 						</liferay-ui:panel-container>
 					</div>
 				</div>
-			</aui:col>
+			</div>
 		</aui:row>
 	</div>
 </div>

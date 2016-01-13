@@ -38,12 +38,12 @@ String data = JSONFactoryUtil.looseSerializeDeep(parameters);
 
 	Liferay.Portlet.addHTML(
 		{
+			data: A.JSON.parse('<%= HtmlUtil.escapeJS(data) %>'),
 			onComplete: function(portlet, portletId) {
 				portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
 			},
 			placeHolder: A.one('#p_p_id' + ns),
-			url: '<%= HtmlUtil.escapeJS(url) %>',
-			data: A.JSON.parse('<%= HtmlUtil.escapeJS(data) %>')
+			url: '<%= HtmlUtil.escapeJS(url) %>'
 		}
 	);
 </aui:script>

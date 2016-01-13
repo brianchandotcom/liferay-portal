@@ -22,7 +22,11 @@ Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 portletDisplay.setId(portlet.getPortletId());
 portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portlet.getPortletId()));
 
-String url = PortletURLUtil.getRefreshURL(request, themeDisplay);
+String url = PortletURLUtil.getRefreshURL(request, themeDisplay, false);
+
+Map<String, String[]> parameters = PortletURLUtil.getRefreshURLParameters(request);
+
+String data = JSONFactoryUtil.looseSerializeDeep(parameters);
 %>
 
 <div class="loading-animation" id="p_p_id<%= portletDisplay.getNamespace() %>">
@@ -38,7 +42,8 @@ String url = PortletURLUtil.getRefreshURL(request, themeDisplay);
 				portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
 			},
 			placeHolder: A.one('#p_p_id' + ns),
-			url: '<%= HtmlUtil.escapeJS(url) %>'
+			url: '<%= HtmlUtil.escapeJS(url) %>',
+			data: A.JSON.parse('<%= HtmlUtil.escapeJS(data) %>')
 		}
 	);
 </aui:script>

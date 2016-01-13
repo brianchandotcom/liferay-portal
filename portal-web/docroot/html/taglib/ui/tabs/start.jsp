@@ -111,12 +111,10 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					<%
 					String name = value;
 
-					for (int i = 0; i < values.length; i++) {
-						if (value.equals(values[i])) {
-							name = names[i];
+					int pos = Arrays.binarySearch(values, value);
 
-							break;
-						}
+					if (pos != -1) {
+						name = names[pos];
 					}
 					%>
 

@@ -45,7 +45,10 @@ public class UpgradePortletId
 			new String[] {"199", PortletKeys.DOCUMENT_LIBRARY_ADMIN},
 			new String[] {"110", PortletKeys.DOCUMENT_LIBRARY},
 			new String[] {"31", PortletKeys.MEDIA_GALLERY_DISPLAY},
-			new String[] {"174", PortletKeys.SITE_MEMBERSHIPS_ADMIN}
+			new String[] {"174", PortletKeys.SITE_MEMBERSHIPS_ADMIN},
+			new String[] {"88", PortletKeys.LAYOUTS_ADMIN},
+			new String[] {"140", PortletKeys.MY_PAGES},
+			new String[] {"156", PortletKeys.GROUP_PAGES}
 		};
 	}
 

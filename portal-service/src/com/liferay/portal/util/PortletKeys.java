@@ -73,6 +73,9 @@ public class PortletKeys {
 	public static final String FRIENDS_DIRECTORY =
 		"com_liferay_directory_web_portlet_FriendsDirectoryPortlet";
 
+	public static final String GROUP_PAGES =
+		"com_liferay_layout_admin_web_portlet_GroupPagesPortlet";
+
 	public static final String IMAGE_UPLOADER =
 		"com_liferay_image_uploader_web_portlet_ImageUploaderPortlet";
 

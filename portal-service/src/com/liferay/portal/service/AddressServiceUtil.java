@@ -40,24 +40,6 @@ public class AddressServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.AddressServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addAddress(String, long,
-	String, String, String, String, String, long, long, int,
-	boolean, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Address addAddress(
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addAddress(className, classPK, street1, street2, street3,
-			city, zip, regionId, countryId, typeId, mailing, primary);
-	}
-
 	public static com.liferay.portal.model.Address addAddress(
 		java.lang.String className, long classPK, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,

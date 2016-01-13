@@ -60,70 +60,6 @@ public interface GroupLocalService extends BaseLocalService,
 	* Adds a group.
 	*
 	* @param userId the primary key of the group's creator/owner
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @param liveGroupId the primary key of the live group
-	* @param name the entity's name
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param type the group's type. For more information see {@link
-	GroupConstants}.
-	* @param friendlyURL the group's friendlyURL (optionally
-	<code>null</code>)
-	* @param site whether the group is to be associated with a main site
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the group, and whether the group is for staging.
-	* @return the group
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, Map, Map, int, boolean, int, String, boolean,
-	boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Group addGroup(long userId,
-		java.lang.String className, long classPK, long liveGroupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Adds the group using the default live group.
-	*
-	* @param userId the primary key of the group's creator/owner
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @param name the entity's name
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param type the group's type. For more information see {@link
-	GroupConstants}.
-	* @param friendlyURL the group's friendlyURL
-	* @param site whether the group is to be associated with a main site
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the group, and whether the group is for staging.
-	* @return the group
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, Map, Map, int, boolean, int, String, boolean,
-	boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Group addGroup(long userId,
-		java.lang.String className, long classPK, java.lang.String name,
-		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Adds a group.
-	*
-	* @param userId the primary key of the group's creator/owner
 	* @param parentGroupId the primary key of the parent group
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
@@ -177,38 +113,6 @@ public interface GroupLocalService extends BaseLocalService,
 		int type, boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean inheritContent,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Adds the group using the default live group.
-	*
-	* @param userId the primary key of the group's creator/owner
-	* @param parentGroupId the primary key of the parent group
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @param name the entity's name
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param type the group's type. For more information see {@link
-	GroupConstants}.
-	* @param friendlyURL the group's friendlyURL
-	* @param site whether the group is to be associated with a main site
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the group, and whether the group is for staging.
-	* @return the group
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, Map, Map, int, boolean, int, String, boolean,
-	boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Group addGroup(long userId,
-		long parentGroupId, java.lang.String className, long classPK,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addOrganizationGroup(long organizationId,
@@ -760,34 +664,6 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group getLayoutSetPrototypeGroup(
 		long companyId, long layoutSetPrototypeId) throws PortalException;
-
-	/**
-	* Returns a range of all groups that are children of the parent group and
-	* that have at least one layout.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param parentGroupId the primary key of the parent group
-	* @param site whether the group is to be associated with a main site
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the range of matching groups
-	* @deprecated As of 6.2.0, replaced by {@link #getLayoutsGroups(long, long,
-	boolean, int, int, OrderByComparator)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getLayoutsGroups(
-		long companyId, long parentGroupId, boolean site, int start, int end);
 
 	/**
 	* Returns a range of all groups that are children of the parent group and

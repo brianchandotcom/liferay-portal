@@ -1946,23 +1946,6 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#updateArticleTranslation(long, String, double, Locale,
-	String, String, String, Map, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.journal.model.JournalArticle updateArticleTranslation(
-		long groupId, java.lang.String articleId, double version,
-		java.util.Locale locale, java.lang.String title,
-		java.lang.String description, java.lang.String content,
-		java.util.Map<java.lang.String, byte[]> images)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticleService.updateArticleTranslation(groupId,
-			articleId, version, locale, title, description, content, images);
-	}
-
-	/**
 	* Updates the translation of the web content article.
 	*
 	* @param groupId the primary key of the web content article's group

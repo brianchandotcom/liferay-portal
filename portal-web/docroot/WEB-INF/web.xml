@@ -766,10 +766,10 @@
 		<url-pattern>/webdav/*</url-pattern>
 	</servlet-mapping>
 	<session-config>
-		<session-timeout>30</session-timeout>
 		<cookie-config>
 			<http-only>true</http-only>
 		</cookie-config>
+		<session-timeout>30</session-timeout>
 	</session-config>
 	<mime-mapping>
 		<extension>js</extension>

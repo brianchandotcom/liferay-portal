@@ -17,41 +17,29 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "pending");
+DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
-PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
+String displayStyle = workflowTaskDisplayContext.getDisplayStyle();
 %>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280">
 	<c:choose>
-		<c:when test="<%= workflowTaskDisplayContext.isPendingTabSelected() %>">
+		<c:when test="<%= workflowTaskDisplayContext.isAssignedToMeTabSelected() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="workflowTasksPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="workflowMyTasksPanel" persistState="<%= true %>" title="assigned-to-me">
 
-					<%
-					WorkflowTaskSearch workflowTaskSearch = workflowTaskDisplayContext.getPendingTasksAssignedToMe();
-					%>
+				<%
+				WorkflowTaskSearch workflowTaskSearch = workflowTaskDisplayContext.getTasksAssignedToMe();
+				%>
 
-					<%@ include file="/workflow_tasks.jspf" %>
-				</liferay-ui:panel>
-
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="workflowMyRolesTasksPanel" persistState="<%= true %>" title="assigned-to-my-roles">
-
-					<%
-					WorkflowTaskSearch workflowTaskSearch = workflowTaskDisplayContext.getPendingTasksAssignedToMyRoles();
-					%>
-
-					<%@ include file="/workflow_tasks.jspf" %>
-				</liferay-ui:panel>
+				<%@ include file="/workflow_tasks.jspf" %>
 			</liferay-ui:panel-container>
 		</c:when>
 		<c:otherwise>
-			<div class="separator"></div>
 
 			<%
-			WorkflowTaskSearch workflowTaskSearch = workflowTaskDisplayContext.getCompletedTasksAssignedToMe();
+			WorkflowTaskSearch workflowTaskSearch = workflowTaskDisplayContext.getTasksAssignedToMyRoles();
 			%>
 
 			<%@ include file="/workflow_tasks.jspf" %>

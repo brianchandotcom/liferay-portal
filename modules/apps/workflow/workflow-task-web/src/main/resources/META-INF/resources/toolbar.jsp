@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "pending");
+String tabs1 = ParamUtil.getString(renderRequest, "tabs1", "assigned-to-me");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -28,33 +28,83 @@ portletURL.setParameter("tabs1", tabs1);
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
-			<portlet:renderURL var="viewPendingURL">
+			<portlet:renderURL var="viewAssignedToMeURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="tabs1" value="pending" />
+				<portlet:param name="tabs1" value="assigned-to-me" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewPendingURL %>"
-				label="pending"
-				selected='<%= tabs1.equals("pending") %>'
+				href="<%= viewAssignedToMeURL %>"
+				label="assigned-to-me"
+				selected='<%= tabs1.equals("assigned-to-me") %>'
 			/>
 
-			<portlet:renderURL var="viewCompletedURL">
+			<portlet:renderURL var="viewAssignedToMyRolesURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="tabs1" value="completed" />
+				<portlet:param name="tabs1" value="assigned-to-my-roles" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewCompletedURL %>"
-				label="completed"
-				selected='<%= tabs1.equals("completed") %>'
+				href="<%= viewAssignedToMyRolesURL %>"
+				label="assigned-to-my-roles"
+				selected='<%= tabs1.equals("assigned-to-my-roles") %>'
 			/>
 		</aui:nav>
 		<aui:nav-bar-search>
-			<liferay-ui:search-form
-				page="/search.jsp"
-				servletContext="<%= application %>"
-			/>
+			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm1">
+				<liferay-ui:search-form
+					page="/search.jsp"
+					servletContext="<%= application %>"
+				/>
+			</aui:form>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 </aui:form>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= false %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<c:if test="<%= !workflowTaskDisplayContext.isSearch() %>">
+			<liferay-frontend:management-bar-display-buttons
+				displayViews="<%= workflowTaskDisplayContext.getDisplayViews() %>"
+				portletURL="<%= workflowTaskDisplayContext.getPortletURL() %>"
+				selectedDisplayStyle="<%= workflowTaskDisplayContext.getDisplayStyle() %>"
+			/>
+		</c:if>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			label="<%= null %>"
+		>
+			<portlet:renderURL var="viewAllURL">
+				<portlet:param name="navigation" value="all" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationAll() %>" label="all" url="<%= viewAllURL.toString() %>" />
+
+			<portlet:renderURL var="viewPendingsURL">
+				<portlet:param name="navigation" value="pending" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationPending() %>" label="pending" url="<%= viewPendingsURL.toString() %>" />
+
+			<portlet:renderURL var="viewCompletedURL">
+				<portlet:param name="navigation" value="completed" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationCompleted() %>" label="completed" url="<%= viewCompletedURL.toString() %>" />
+		</liferay-frontend:management-bar-navigation>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= workflowTaskDisplayContext.getOrderByCol() %>"
+			orderByType="<%= workflowTaskDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"last-activity-date", "due-date"} %>'
+			portletURL="<%= workflowTaskDisplayContext.getPortletURL() %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>

@@ -316,19 +316,19 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public String getIconCssClass() {
-		String iconCss = "icon-globe";
+		String iconCss = "sites";
 
 		if (isCompany()) {
-			iconCss = "icon-globe";
+			iconCss = "sites";
 		}
 		else if (isLayout()) {
-			iconCss = "icon-file";
+			iconCss = "edit-layout";
 		}
 		else if (isOrganization()) {
-			iconCss = "icon-globe";
+			iconCss = "sites";
 		}
 		else if (isUser()) {
-			iconCss = "icon-user";
+			iconCss = "user";
 		}
 
 		return iconCss;

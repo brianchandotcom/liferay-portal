@@ -82,7 +82,7 @@ public class CommentAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-comments";
+		return "comments";
 	}
 
 	@Override

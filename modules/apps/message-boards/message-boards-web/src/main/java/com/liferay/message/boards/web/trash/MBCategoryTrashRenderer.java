@@ -51,7 +51,7 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-comments";
+		return "comments";
 	}
 
 	@Override

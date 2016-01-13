@@ -62,7 +62,7 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-comments";
+		return "comments";
 	}
 
 	@Override

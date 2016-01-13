@@ -84,7 +84,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 			return assetRendererFactory.getIconCssClass();
 		}
 
-		return "icon-file-alt";
+		return StringPool.BLANK;
 	}
 
 	/**

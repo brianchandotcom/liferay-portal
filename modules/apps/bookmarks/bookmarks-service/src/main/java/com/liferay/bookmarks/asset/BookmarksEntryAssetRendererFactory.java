@@ -87,7 +87,7 @@ public class BookmarksEntryAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-bookmark-empty";
+		return "bookmarks";
 	}
 
 	@Override

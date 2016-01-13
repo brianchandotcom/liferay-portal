@@ -122,7 +122,7 @@ public class DLFileEntryAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file-alt";
+		return "documents-and-media";
 	}
 
 	@Override

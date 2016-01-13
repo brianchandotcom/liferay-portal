@@ -78,7 +78,7 @@ public class MBMessageAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-comments";
+		return "comments";
 	}
 
 	@Override

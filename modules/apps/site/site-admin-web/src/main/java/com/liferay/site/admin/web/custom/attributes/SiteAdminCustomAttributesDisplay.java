@@ -39,7 +39,7 @@ public class SiteAdminCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-globe";
+		return "sites";
 	}
 
 }

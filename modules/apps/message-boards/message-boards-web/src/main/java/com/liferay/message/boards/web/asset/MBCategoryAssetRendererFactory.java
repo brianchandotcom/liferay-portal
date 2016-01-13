@@ -78,7 +78,7 @@ public class MBCategoryAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-comments";
+		return "comments";
 	}
 
 	@Override

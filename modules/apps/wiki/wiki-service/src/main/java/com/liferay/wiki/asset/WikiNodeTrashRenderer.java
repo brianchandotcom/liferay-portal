@@ -51,7 +51,7 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-copy";
+		return "folder";
 	}
 
 	@Override

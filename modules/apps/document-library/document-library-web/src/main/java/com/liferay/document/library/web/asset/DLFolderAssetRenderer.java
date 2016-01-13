@@ -20,26 +20,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -85,50 +78,6 @@ public class DLFolderAssetRenderer
 	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
-	}
-
-	@Override
-	public String getIconCssClass() throws PortalException {
-		try {
-			if (_folder.isMountPoint()) {
-				return "icon-hdd";
-			}
-
-			if (!PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
-				return "icon-folder-open";
-			}
-
-			List<Long> subfolderIds = DLAppServiceUtil.getSubfolderIds(
-				_folder.getRepositoryId(), _folder.getFolderId(), false);
-
-			if (!subfolderIds.isEmpty()) {
-				return "icon-folder-open";
-			}
-
-			int count = DLAppServiceUtil.getFoldersFileEntriesCount(
-				_folder.getRepositoryId(), Arrays.asList(_folder.getFolderId()),
-				WorkflowConstants.STATUS_APPROVED);
-
-			if (count > 0) {
-				return "icon-folder-open";
-			}
-		}
-		catch (PrincipalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return "icon-remove";
-		}
-		catch (RepositoryException re) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(re, re);
-			}
-
-			return "icon-remove";
-		}
-
-		return super.getIconCssClass();
 	}
 
 	@Override

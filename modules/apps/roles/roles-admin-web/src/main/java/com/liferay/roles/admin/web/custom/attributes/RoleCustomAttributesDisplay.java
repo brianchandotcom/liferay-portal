@@ -38,7 +38,7 @@ public class RoleCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-user";
+		return "user";
 	}
 
 }

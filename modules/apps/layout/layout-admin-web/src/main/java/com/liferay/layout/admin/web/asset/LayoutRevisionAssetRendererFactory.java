@@ -122,7 +122,7 @@ public class LayoutRevisionAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file";
+		return "edit-layout";
 	}
 
 	@Override

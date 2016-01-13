@@ -17,7 +17,6 @@ package com.liferay.bookmarks.asset;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -77,17 +76,6 @@ public class BookmarksFolderAssetRenderer
 	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
-	}
-
-	@Override
-	public String getIconCssClass() throws PortalException {
-		if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
-				_folder.getGroupId(), _folder.getFolderId()) > 0) {
-
-			return "icon-folder-open";
-		}
-
-		return super.getIconCssClass();
 	}
 
 	@Override

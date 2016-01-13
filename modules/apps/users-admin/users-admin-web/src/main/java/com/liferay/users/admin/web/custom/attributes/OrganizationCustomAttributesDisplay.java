@@ -39,7 +39,7 @@ public class OrganizationCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-globe";
+		return "sites";
 	}
 
 }

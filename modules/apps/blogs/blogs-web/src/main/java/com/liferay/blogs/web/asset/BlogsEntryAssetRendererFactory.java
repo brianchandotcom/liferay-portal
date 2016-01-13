@@ -96,7 +96,7 @@ public class BlogsEntryAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-edit";
+		return "blogs";
 	}
 
 	@Override

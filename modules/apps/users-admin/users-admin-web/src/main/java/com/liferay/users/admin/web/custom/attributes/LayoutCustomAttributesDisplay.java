@@ -38,7 +38,7 @@ public class LayoutCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file-alt";
+		return "edit-layout";
 	}
 
 }

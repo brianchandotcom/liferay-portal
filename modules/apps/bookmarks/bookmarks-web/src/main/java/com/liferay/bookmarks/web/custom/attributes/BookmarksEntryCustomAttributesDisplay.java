@@ -36,3 +36,5 @@ public class BookmarksEntryCustomAttributesDisplay
 	public String getClassName() {
 		return BookmarksEntry.class.getName();
 	}
+
+}

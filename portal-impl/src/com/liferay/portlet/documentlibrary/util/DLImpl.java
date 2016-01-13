@@ -467,7 +467,7 @@ public class DLImpl implements DL {
 
 	@Override
 	public String getFileIconCssClass(String extension) {
-		return "icon-file-alt";
+		return "documents-and-media";
 	}
 
 	@Override

@@ -93,7 +93,7 @@ public class DDLFormAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file-2";
+		return "dynamic-data-list";
 	}
 
 	@Override

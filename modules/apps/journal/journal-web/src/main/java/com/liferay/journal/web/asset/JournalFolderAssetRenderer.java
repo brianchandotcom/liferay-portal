@@ -14,10 +14,8 @@
 
 package com.liferay.journal.web.asset;
 
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -76,18 +74,6 @@ public class JournalFolderAssetRenderer
 	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
-	}
-
-	@Override
-	public String getIconCssClass() throws PortalException {
-		if (JournalServiceConfigurationValues.JOURNAL_FOLDER_ICON_CHECK_COUNT &&
-			JournalFolderServiceUtil.getFoldersAndArticlesCount(
-				_folder.getGroupId(), _folder.getFolderId()) > 0) {
-
-			return "icon-folder-open";
-		}
-
-		return super.getIconCssClass();
 	}
 
 	@Override

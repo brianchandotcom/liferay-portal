@@ -102,7 +102,7 @@ public class WikiPageAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file-alt";
+		return "wiki";
 	}
 
 	@Override

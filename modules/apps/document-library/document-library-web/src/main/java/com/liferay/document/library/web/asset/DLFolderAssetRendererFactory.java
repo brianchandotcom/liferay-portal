@@ -75,7 +75,7 @@ public class DLFolderAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-folder-close";
+		return "folder";
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public abstract class BaseCustomAttributesDisplay
 			return assetRendererFactory.getIconCssClass();
 		}
 
-		return "icon-file-alt";
+		return StringPool.BLANK;
 	}
 
 	/**

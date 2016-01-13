@@ -83,7 +83,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-user";
+		return "user";
 	}
 
 	@Override

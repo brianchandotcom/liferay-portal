@@ -39,7 +39,7 @@ public class UserGroupCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-group";
+		return "user";
 	}
 
 }

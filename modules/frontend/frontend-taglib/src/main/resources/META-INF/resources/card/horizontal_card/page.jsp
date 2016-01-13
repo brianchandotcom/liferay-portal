@@ -16,18 +16,23 @@
 
 <%@ include file="/card/horizontal_card/init.jsp" %>
 
-<c:if test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
-	<div class="checkbox checkbox-card checkbox-middle-left">
-		<label>
-			<c:choose>
-				<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-					<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
-				</c:when>
-				<c:otherwise>
-					<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(text)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
-				</c:otherwise>
-			</c:choose>
-</c:if>
+<c:choose>
+	<c:when test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
+		<div class="checkbox checkbox-card checkbox-middle-left">
+			<label>
+		<c:choose>
+			<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
+				<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+			</c:when>
+			<c:otherwise>
+				<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(text)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+			</c:otherwise>
+		</c:choose>
+	</c:when>
+	<c:otherwise>
+		<div class="control-label">
+	</c:otherwise>
+</c:choose>
 
 <div class="card card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
 	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
@@ -47,10 +52,12 @@
 			</div>
 		</c:if>
 
-		<div class="card-col-content card-col-gutters">
-			<h4>
-				<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(text) %>" />
-			</h4>
+		<div class="card-col-content card-col-gutters clamp-horizontal">
+			<div class="clamp-container">
+				<span class="h4 truncate-text">
+					<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(text) %>" />
+				</span>
+			</div>
 		</div>
 
 		<c:if test="<%= Validator.isNotNull(actionJsp) %>">
@@ -61,7 +68,12 @@
 	</div>
 </div>
 
-<c:if test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
-		</label>
-	</div>
-</c:if>
+<c:choose>
+	<c:when test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
+			</label>
+		</div>
+	</c:when>
+	<c:otherwise>
+		</div>
+	</c:otherwise>
+</c:choose>

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -49,7 +52,6 @@ import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.UserGroupRoleLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +61,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -68,7 +72,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Amos Fong
  */
-@Component(immediate = true, service = SearchPermissionChecker.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration",
+	immediate = true, service = SearchPermissionChecker.class
+)
 public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Override
@@ -145,6 +152,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_searchPermissionCheckerConfiguration = Configurable.createConfigurable(
+			SearchPermissionCheckerConfiguration.class, properties);
 	}
 
 	protected void addRequiredMemberRole(
@@ -428,8 +442,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		long searchContextGroupId = GetterUtil.getLong(
 			searchContext.getAttribute("groupId"));
 
-		if (PropsValues.SEARCH_USE_DEEP_SEARCH && (searchContextGroupId == 0)) {
-			groups.addAll(_groupLocalService.getUserGroups(userId, true));
+		if ((searchContextGroupId == 0) &&
+			_searchPermissionCheckerConfiguration.
+				includeInheritedPermissions()) {
+
+			List<Group> usersGroups = _groupLocalService.getUserGroups(
+				userId, true);
+
+			groups.addAll(usersGroups);
 
 			for (Group group : groups) {
 				if (!groupIds.contains(group.getGroupId())) {
@@ -535,6 +555,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
+	private SearchPermissionCheckerConfiguration
+		_searchPermissionCheckerConfiguration;
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 	private UserLocalService _userLocalService;
 

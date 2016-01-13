@@ -39,6 +39,10 @@ public class SearchContainerReference {
 	}
 
 	public String getId(HttpServletRequest request, String var) {
+		if (_searchContainers == null) {
+			return StringPool.BLANK;
+		}
+
 		SearchContainer<?> searchContainer = _searchContainers.get(var);
 
 		if (searchContainer == null) {
@@ -53,11 +57,14 @@ public class SearchContainerReference {
 	}
 
 	public void register(String var, SearchContainer<?> searchContainer) {
+		if (_searchContainers == null) {
+			_searchContainers = new HashMap<>();
+		}
+
 		_searchContainers.put(var, searchContainer);
 	}
 
 	private final String _namespace;
-	private final Map<String, SearchContainer<?>> _searchContainers =
-		new HashMap<>();
+	private Map<String, SearchContainer<?>> _searchContainers;
 
 }

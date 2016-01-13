@@ -162,7 +162,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	protected MavenArtifactRepository addRepositoryModules(Project project) {
 		return addRepository(
-			project, LiferayDefaultsPlugin.LIFERAY_REPOSITORY_URL);
+			project, LiferayDefaultsPlugin.DEFAULT_REPOSITORY_URL);
 	}
 
 	protected Task addTaskCreateLiferayThemeJson(

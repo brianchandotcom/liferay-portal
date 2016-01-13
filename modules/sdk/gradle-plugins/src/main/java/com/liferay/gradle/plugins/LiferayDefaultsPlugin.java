@@ -111,10 +111,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
-	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
-
-	public static final String LIFERAY_REPOSITORY_URL =
+	public static final String DEFAULT_REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+
+	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
 
@@ -992,7 +992,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		"maven.local.ignore");
 
 	private static final String _REPOSITORY_URL = System.getProperty(
-		"repository.url", LIFERAY_REPOSITORY_URL);
+		"repository.url", DEFAULT_REPOSITORY_URL);
 
 	private static final String _SNAPSHOT_PROPERTY_NAME = "snapshot";
 

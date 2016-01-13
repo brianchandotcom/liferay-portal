@@ -43,7 +43,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="siteTempate" />
+<liferay-ui:error-marker key="errorSection" value="site-tempate" />
 
 <c:if test="<%= publicLayoutSetPrototype != null %>">
 	<aui:fieldset label="public-site-template">

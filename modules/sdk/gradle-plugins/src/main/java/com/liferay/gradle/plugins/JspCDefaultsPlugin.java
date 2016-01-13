@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.extensions.AppServer;
+import com.liferay.gradle.plugins.extensions.JOnASAppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
@@ -76,9 +78,9 @@ public class JspCDefaultsPlugin
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
 
-		String appServerType = liferayExtension.getAppServerType();
+		AppServer appServer = liferayExtension.getAppServer();
 
-		if (appServerType.equals("jonas")) {
+		if (appServer instanceof JOnASAppServer) {
 			Map<String, Object> args = new HashMap<>();
 
 			args.put(

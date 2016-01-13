@@ -17,6 +17,10 @@ package com.liferay.portal.security.auth.bundle.authtokenwhitelistutil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.util.PortletKeys;
 
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -33,11 +37,19 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCResourceCommand.class
 )
-public class TestMVCResourceCommand {
+public class TestMVCResourceCommand implements MVCResourceCommand {
 
 	public static final String TEST_MVC_COMMAND_NAME =
 		"TEST_MVC_RESOURCE_COMMAND_NAME";
 
 	public static final String TEST_PORTLET = PortletKeys.PORTAL;
+
+	@Override
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		return false;
+	}
 
 }

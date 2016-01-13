@@ -283,7 +283,9 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 				}
 			}
 
-			return null;
+			Registry registry = RegistryUtil.getRegistry();
+
+			return registry.getService(serviceReference);
 		}
 
 		@Override

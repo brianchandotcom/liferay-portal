@@ -17,6 +17,10 @@ package com.liferay.portal.security.auth.bundle.authtokenwhitelistutil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.util.PortletKeys;
 
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -33,11 +37,19 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class TestMVCRenderCommand {
+public class TestMVCRenderCommand implements MVCRenderCommand {
 
 	public static final String TEST_MVC_COMMAND_NAME =
 		"TEST_MVC_RENDER_COMMAND_NAME";
 
 	public static final String TEST_PORTLET = PortletKeys.PORTAL;
+
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		return null;
+	}
 
 }

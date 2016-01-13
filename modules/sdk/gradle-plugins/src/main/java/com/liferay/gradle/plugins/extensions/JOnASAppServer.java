@@ -14,7 +14,16 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
+import com.liferay.gradle.util.GradleUtil;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.gradle.api.Project;
+import org.gradle.api.file.FileTree;
 
 /**
  * @author Manuel de la Peña
@@ -23,6 +32,23 @@ public class JOnASAppServer extends AppServer {
 
 	public JOnASAppServer(Project project) {
 		super("jonas", project);
+	}
+
+	@Override
+	public void addAppServerDependencies(LiferayExtension liferayExtension) {
+		Map<String, Object> args = new HashMap<>();
+
+		args.put(
+			"dir",
+			new File(liferayExtension.getAppServerDir(), "lib/endorsed"));
+		args.put(
+			"includes",
+			Arrays.asList("xercesImpl-*.jar", "xml-apis-*.jar"));
+
+		FileTree fileTree = project.fileTree(args);
+
+		GradleUtil.addDependency(
+			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
 	}
 
 }

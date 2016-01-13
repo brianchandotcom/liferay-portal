@@ -202,6 +202,7 @@ public class PortletURLImpl
 		return _parametersIncludedInPath;
 	}
 
+	@Override
 	public long getPlid() {
 		return _plid;
 	}

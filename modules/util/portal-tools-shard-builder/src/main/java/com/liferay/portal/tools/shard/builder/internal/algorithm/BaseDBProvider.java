@@ -180,20 +180,13 @@ public abstract class BaseDBProvider
 	protected final Properties dbProperties;
 
 	private List<String> _getSchemaTableNames(String sql) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
 		List<String> tableNames = new ArrayList<>();
 
-		try {
-			DataSource dataSource = getDataSource();
+		DataSource dataSource = getDataSource();
 
-			con = dataSource.getConnection();
-
-			ps = con.prepareStatement(sql);
-
-			rs = ps.executeQuery();
+		try (Connection con = dataSource.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery() ) {
 
 			while (rs.next()) {
 				tableNames.add(rs.getString(getTableNameFieldName()));
@@ -203,11 +196,9 @@ public abstract class BaseDBProvider
 			if (_logger.isErrorEnabled()) {
 				_logger.error(
 					"Error retrieving the table names of the schema using " +
-						"the query " + sql, sqle);
+						"the query " + sql,
+					sqle);
 			}
-		}
-		finally {
-			_dbManager.cleanUp(con, ps, rs);
 		}
 
 		return tableNames;

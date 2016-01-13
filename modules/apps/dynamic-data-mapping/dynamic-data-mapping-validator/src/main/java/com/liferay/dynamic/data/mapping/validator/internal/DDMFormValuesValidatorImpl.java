@@ -18,12 +18,19 @@ import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException.RequiredValue;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -33,6 +40,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -41,12 +49,14 @@ import org.osgi.service.component.annotations.Component;
 public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 	@Override
-	public void validate(DDMFormValues ddmFormValues) throws StorageException {
+	public void validate(DDMFormValues ddmFormValues) throws PortalException {
 		DDMForm ddmForm = ddmFormValues.getDDMForm();
 
 		if (ddmForm == null) {
 			throw new NullPointerException("A DDM Form instance was never set");
 		}
+
+		evaluateDDMFormFieldValidationExpressions(ddmFormValues, ddmForm);
 
 		traverseDDMFormFields(
 			ddmForm.getDDMFormFields(),
@@ -55,6 +65,17 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		traverseDDMFormFieldValues(
 			ddmFormValues.getDDMFormFieldValues(),
 			ddmForm.getDDMFormFieldsMap(false));
+	}
+
+	protected void evaluateDDMFormFieldValidationExpressions(
+			DDMFormValues ddmFormValues, DDMForm ddmForm)
+		throws DDMFormEvaluationException {
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			_ddmFormEvaluator.evaluate(
+				ddmForm, ddmFormValues, ddmFormValues.getDefaultLocale());
+
+		inspectDDMFormEvaluationResult(ddmFormEvaluationResult);
 	}
 
 	protected List<DDMFormFieldValue> getDDMFormFieldValuesByFieldName(
@@ -71,6 +92,42 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		return ddmFormFieldValues;
 	}
 
+	protected void inspectDDMFormEvaluationResult(
+			DDMFormEvaluationResult ddmFormEvaluationResult)
+		throws DDMFormEvaluationException {
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultsMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		StringBundler sb = new StringBundler(
+			ddmFormFieldEvaluationResultsMap.size() * 3);
+
+		for (Map.Entry<String, DDMFormFieldEvaluationResult> entry :
+				ddmFormFieldEvaluationResultsMap.entrySet()) {
+
+			inspectDDMFormFieldEvaluationResult(entry, sb);
+		}
+
+		if (sb.index() > 0) {
+			throw new DDMFormEvaluationException(sb.toString());
+		}
+	}
+
+	protected void inspectDDMFormFieldEvaluationResult(
+		Map.Entry<String, DDMFormFieldEvaluationResult> entry,
+		StringBundler sb) {
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			entry.getValue();
+
+		if (!ddmFormFieldEvaluationResult.isValid()) {
+			sb.append(entry.getKey().concat(StringPool.COLON));
+			sb.append(ddmFormFieldEvaluationResult.getErrorMessage());
+			sb.append(StringPool.NEW_LINE);
+		}
+	}
+
 	protected boolean isNull(Value value) {
 		if (value == null) {
 			return true;
@@ -83,6 +140,11 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
+		_ddmFormEvaluator = ddmFormEvaluator;
 	}
 
 	protected void traverseDDMFormFields(
@@ -215,5 +277,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 					ddmFormField.getName());
 		}
 	}
+
+	private DDMFormEvaluator _ddmFormEvaluator;
 
 }

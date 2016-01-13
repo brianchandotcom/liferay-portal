@@ -54,24 +54,21 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		_csrfTokenServiceTracker = trackWhitelistServices(
 			"auth.token.ignore.mvc.action", MVCActionCommand.class,
 			_portletCSRFWhitelistActions);
-
 		_portletInvocationTokenActionServiceTracker = trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
 			MVCActionCommand.class, _portletInvocationActionWhitelistActions);
-
 		_portletInvocationTokenRenderServiceTracker = trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
 			MVCRenderCommand.class, _portletInvocationRenderWhitelistActions);
-
 		_portletInvocationTokenResourceServiceTracker = trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
 			MVCResourceCommand.class,
 			_portletInvocationResourceWhitelistActions);
 	}
 
+	@Override
 	public void destroy() {
 		_csrfTokenServiceTracker.close();
-
 		_portletInvocationTokenActionServiceTracker.close();
 		_portletInvocationTokenRenderServiceTracker.close();
 		_portletInvocationTokenResourceServiceTracker.close();
@@ -326,7 +323,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		ServiceTracker<Object, Object> serviceTracker = registry.trackServices(
 			registry.getFilter(
 				"(&(&(" + whitelistName + "=*)(javax.portlet.name=*))" +
-				"(objectClass=" + serviceClass.getName() + "))"),
+					"(objectClass=" + serviceClass.getName() + "))"),
 			new TokenWhitelistTrackerCustomizer(whiteList));
 
 		serviceTracker.open();

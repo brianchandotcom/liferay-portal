@@ -39,7 +39,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-@SuppressWarnings("deprecation")
 public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 	@Override
@@ -94,6 +93,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return false;
 	}
 
+	@Deprecated
 	@Override
 	public boolean isPortletInvocationWhitelisted(long companyId, String
 		portletId, String strutsAction) {
@@ -151,17 +151,17 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	protected void registerPortalProperty(String propertyName) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		String[] propertyValue = PropsUtil.getArray(propertyName);
-
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put(propertyName, propertyValue);
+		String[] values = PropsUtil.getArray(propertyName);
+
+		properties.put(propertyName, values);
 
 		ServiceRegistration<Object> serviceRegistration =
 			registry.registerService(Object.class, new Object(), properties);
 
 		serviceRegistrations.put(
-			StringUtil.merge(propertyValue), serviceRegistration);
+			StringUtil.merge(values), serviceRegistration);
 	}
 
 	protected ServiceTracker<Object, Object> trackWhitelistServices(

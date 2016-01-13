@@ -19,10 +19,10 @@ import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import javax.portlet.PortletRequest;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import org.osgi.service.component.annotations.Component;
 
 /**

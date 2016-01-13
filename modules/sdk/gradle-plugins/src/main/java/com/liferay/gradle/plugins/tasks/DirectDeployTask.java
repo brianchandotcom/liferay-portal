@@ -219,16 +219,6 @@ public class DirectDeployTask extends BasePortalToolsTask {
 			project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
 
 		configuration.extendsFrom(portalConfiguration);
-
-		String appServerType = getAppServerType();
-
-		if (appServerType.equals("jonas")) {
-			File dir = new File(getAppServerDir(), "lib/endorsed");
-
-			GradleUtil.addDependency(
-				project, configuration.getName(),
-				FileUtil.getJarsFileTree(project, dir));
-		}
 	}
 
 	protected File getAppServerLibPortalDir() {

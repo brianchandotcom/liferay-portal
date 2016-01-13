@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
@@ -206,6 +207,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PORTAL_CONFIGURATION_NAME, "javax.servlet.jsp", "jsp-api",
 			"2.1");
+
+		AppServer appServer = liferayExtension.getAppServer();
+
+		appServer.addAdditionalDependencies(PORTAL_CONFIGURATION_NAME);
 	}
 
 	protected LiferayExtension addLiferayExtension(Project project) {

@@ -64,6 +64,7 @@ public class PanelCategoryTag extends BasePanelTag {
 		_showBody = true;
 		_showHeader = true;
 		_showOpen = false;
+		_persistState = false;
 	}
 
 	@Override
@@ -90,11 +91,28 @@ public class PanelCategoryTag extends BasePanelTag {
 			return true;
 		}
 
+		if (persistState()) {
+			String state = SessionClicks.get(
+				request, PanelCategory.class.getName() + getId(), "closed");
+
+			if (Validator.equals(state, "open")) {
+				return true;
+			}
+		}
+
 		if (panelApps.isEmpty()) {
 			return false;
 		}
 
 		return _panelCategory.isActive(request, panelCategoryHelper);
+	}
+
+	protected boolean persistState() {
+		if (_persistState || _panelCategory.isPersistState()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -138,6 +156,9 @@ public class PanelCategoryTag extends BasePanelTag {
 			"liferay-application-list:panel-category:panelCategory",
 			_panelCategory);
 		request.setAttribute(
+			"liferay-application-list:panel-category:persistState",
+			persistState());
+		request.setAttribute(
 			"liferay-application-list:panel-category:showBody", _showBody);
 		request.setAttribute(
 			"liferay-application-list:panel-category:showHeader", _showHeader);
@@ -146,6 +167,7 @@ public class PanelCategoryTag extends BasePanelTag {
 	}
 
 	private PanelCategory _panelCategory;
+	private boolean _persistState;
 	private boolean _showBody = true;
 	private boolean _showHeader = true;
 	private boolean _showOpen;

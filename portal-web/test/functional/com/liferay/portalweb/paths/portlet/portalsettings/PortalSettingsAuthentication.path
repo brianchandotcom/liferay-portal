@@ -255,52 +255,52 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER</td>
-	<td>//label[contains(@for,'ntlm-auth-domain-controller')]</td>
+	<td>//label[contains(@for,'PortalSettingsPortlet_domainControll')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD</td>
-	<td>//input[contains(@id,'ntlm-auth-domain-controller')]</td>
+	<td>//input[contains(@name,'ntlm--domainController')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER</td>
-	<td>//label[contains(@for,'ntlm-auth-domain-controller-name')]</td>
+	<td>//label[contains(@for,'PortalSettingsPortlet_domainControllerNa')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD</td>
-	<td>//input[contains(@id,'ntlm-auth-domain-controller-name')]</td>
+	<td>//input[contains(@name,'ntlm--domainControllerName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_HEADER</td>
-	<td>//label[contains(@for,'ntlm-auth-domain')]</td>
+	<td>//label[contains(@for,'PortalSettingsPortlet_doma') and .=' Domain ']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_DOMAIN_FIELD</td>
-	<td>//input[contains(@id,'ntlm-auth-domain')]</td>
+	<td>xpath=(//input[contains(@name,'ntlm--domain')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER</td>
-	<td>//label[contains(@for,'ntlm-auth-service-account')]</td>
+	<td>//label[contains(@for,'PortalSettingsPortlet_serviceAccou')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD</td>
-	<td>//input[contains(@id,'ntlm-auth-service-account')]</td>
+	<td>//input[contains(@name,'ntlm--serviceAccount')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER</td>
-	<td>//label[contains(@for,'ntlm-auth-service-password')]</td>
+	<td>//label[contains(@for,'PortalSettingsPortlet_servicePasswo')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD</td>
-	<td>//input[contains(@id,'ntlm-auth-service-password')]</td>
+	<td>//input[contains(@name,'ntlm--servicePassword')]</td>
 	<td></td>
 </tr>
 <tr>

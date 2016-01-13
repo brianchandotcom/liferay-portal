@@ -50,12 +50,13 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String topLink = ParamUtil.getString(request, "topLink");
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (topLink.equals("banned-users") &&
+		if (mvcRenderCommandName.equals("/message_boards/view_banned_users") &&
 			!MBPermission.contains(
 				permissionChecker, themeDisplay.getScopeGroupId(),
 				ActionKeys.BAN_USER)) {

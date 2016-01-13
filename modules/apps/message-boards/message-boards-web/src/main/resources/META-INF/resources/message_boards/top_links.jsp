@@ -17,6 +17,7 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
 
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
@@ -81,12 +82,12 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
 
 			<%
-			label = "banned-users";
+			PortletURL bannedUsersURL = renderResponse.createRenderURL();
 
-			portletURL.setParameter("topLink", label);
+			bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
 			%>
 
-			<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
+			<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view_banned_users") ? "active" : StringPool.BLANK %>' href="<%= bannedUsersURL.toString() %>" label="banned-users" selected='<%= mvcRenderCommandName.equals("/message_boards/view_banned_users") %>' />
 		</c:if>
 	</aui:nav>
 

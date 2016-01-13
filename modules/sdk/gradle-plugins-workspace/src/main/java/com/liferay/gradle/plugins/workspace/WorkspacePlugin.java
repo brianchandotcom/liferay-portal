@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace;
 
+import com.liferay.gradle.plugins.LiferayDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
@@ -135,8 +136,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected MavenArtifactRepository addRepositoryBundle(
-		Project project, final WorkspaceExtension workspaceExtension) {
+	protected MavenArtifactRepository addRepository(
+		Project project, final String mavenUrl) {
 
 		RepositoryHandler repositoryHandler = project.getRepositories();
 
@@ -147,11 +148,21 @@ public class WorkspacePlugin implements Plugin<Project> {
 				public void execute(
 					MavenArtifactRepository mavenArtifactRepository) {
 
-					mavenArtifactRepository.setUrl(
-						workspaceExtension.getBundleMavenUrl());
+					mavenArtifactRepository.setUrl(mavenUrl);
 				}
 
 			});
+	}
+
+	protected MavenArtifactRepository addRepositoryBundle(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		return addRepository(project, workspaceExtension.getBundleMavenUrl());
+	}
+
+	protected MavenArtifactRepository addRepositoryModules(Project project) {
+		return addRepository(
+			project, LiferayDefaultsPlugin.LIFERAY_REPOSITORY_URL);
 	}
 
 	protected Task addTaskCreateLiferayThemeJson(
@@ -389,6 +400,10 @@ public class WorkspacePlugin implements Plugin<Project> {
 							}
 
 						});
+				}
+
+				if (workspaceExtension.isModulesDefaultRepositoryEnabled()) {
+					addRepositoryModules(project);
 				}
 			}
 

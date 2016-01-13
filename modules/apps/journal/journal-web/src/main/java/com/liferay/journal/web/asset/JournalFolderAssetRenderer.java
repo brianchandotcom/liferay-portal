@@ -17,7 +17,6 @@ package com.liferay.journal.web.asset;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -142,34 +141,6 @@ public class JournalFolderAssetRenderer
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return _folder.getDescription();
-	}
-
-	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!JournalServiceConfigurationValues.
-				JOURNAL_FOLDER_ICON_CHECK_COUNT) {
-
-			return themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_empty_article.png";
-		}
-
-		int articlesCount = JournalArticleServiceUtil.getArticlesCount(
-			_folder.getGroupId(), _folder.getFolderId());
-		int foldersCount = JournalFolderServiceUtil.getFoldersCount(
-			_folder.getGroupId(), _folder.getFolderId());
-
-		if ((articlesCount > 0) || (foldersCount > 0)) {
-			return themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_full_article.png";
-		}
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/folder_empty_article.png";
 	}
 
 	@Override

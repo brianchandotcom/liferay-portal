@@ -181,33 +181,6 @@ public class DLFolderAssetRenderer
 	}
 
 	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {
-			return themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_empty_document.png";
-		}
-
-		int foldersCount = DLAppServiceUtil.getFoldersCount(
-			_folder.getRepositoryId(), _folder.getFolderId());
-		int entriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
-			_folder.getRepositoryId(), _folder.getFolderId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		if ((entriesCount > 0) || (foldersCount > 0)) {
-			return themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_full_document.png";
-		}
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/folder_empty_document.png";
-	}
-
-	@Override
 	public String getTitle(Locale locale) {
 		return TrashUtil.getOriginalTitle(_folder.getName());
 	}

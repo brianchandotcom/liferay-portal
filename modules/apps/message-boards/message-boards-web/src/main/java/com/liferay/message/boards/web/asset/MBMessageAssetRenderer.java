@@ -123,17 +123,6 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/message.png";
-	}
-
-	@Override
 	public String getTitle(Locale locale) {
 		return _message.getSubject();
 	}

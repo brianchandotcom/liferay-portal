@@ -180,11 +180,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/default.png";
+		return null;
 	}
 
 	@Override

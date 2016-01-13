@@ -220,8 +220,7 @@ public class JournalArticleAssetRenderer
 			return thumbnailSrc;
 		}
 
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/article.png";
+		return super.getThumbnailPath(portletRequest);
 	}
 
 	@Override

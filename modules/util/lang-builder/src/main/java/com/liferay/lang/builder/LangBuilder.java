@@ -717,8 +717,7 @@ public class LangBuilder {
 			return null;
 		}
 
-		// LPS-26741 + LPS 61961: Explicitly disabled automatic translations
-		// by request of the translation teams.
+		// LPS-61961
 
 		if (toLanguageId.equals("da") || toLanguageId.equals("de") ||
 			toLanguageId.equals("fi") || toLanguageId.equals("ja") ||

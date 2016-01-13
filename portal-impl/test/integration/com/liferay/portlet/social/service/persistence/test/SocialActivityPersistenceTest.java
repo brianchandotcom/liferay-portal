@@ -297,7 +297,7 @@ public class SocialActivityPersistenceTest {
 			true, "createDate", true, "activitySetId", true,
 			"mirrorActivityId", true, "classNameId", true, "classPK", true,
 			"parentClassNameId", true, "parentClassPK", true, "type", true,
-			"extraData", true, "receiverUserId", true);
+			"receiverUserId", true);
 	}
 
 	@Test

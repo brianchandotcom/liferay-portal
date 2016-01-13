@@ -83,7 +83,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 			{ "parentClassNameId", Types.BIGINT },
 			{ "parentClassPK", Types.BIGINT },
 			{ "type_", Types.INTEGER },
-			{ "extraData", Types.VARCHAR },
+			{ "extraData", Types.CLOB },
 			{ "receiverUserId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -101,11 +101,11 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		TABLE_COLUMNS_MAP.put("parentClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentClassPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("extraData", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("extraData", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("receiverUserId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivity (activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,parentClassNameId LONG,parentClassPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivity (activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,parentClassNameId LONG,parentClassPK LONG,type_ INTEGER,extraData TEXT null,receiverUserId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivity";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivity.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivity.createDate DESC";

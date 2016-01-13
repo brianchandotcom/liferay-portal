@@ -46,6 +46,20 @@
 
 	Liferay.provide(
 		Tabs,
+		'exists',
+		function(namespace, id) {
+			var namespacedId = namespace + toCharCode(id);
+
+			var tab = A.one('#' + namespacedId + 'TabsId');
+			var tabSection = A.one('#' + namespacedId + 'TabsSection');
+
+			return (tab && tabSection);
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Tabs,
 		'show',
 		function(namespace, names, id, callback) {
 			var namespacedId = namespace + toCharCode(id);

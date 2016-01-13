@@ -79,6 +79,11 @@ public class RootPanelCategory implements PanelCategory {
 	}
 
 	@Override
+	public boolean isPersistState() {
+		return false;
+	}
+
+	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group) {
 		return true;
 	}

@@ -46,4 +46,6 @@ public interface PanelCategory extends PanelEntry {
 	public boolean isActive(
 		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper);
 
+	public boolean isPersistState();
+
 }

@@ -95,6 +95,11 @@ public abstract class BasePanelCategory implements PanelCategory {
 	}
 
 	@Override
+	public boolean isPersistState() {
+		return false;
+	}
+
+	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 

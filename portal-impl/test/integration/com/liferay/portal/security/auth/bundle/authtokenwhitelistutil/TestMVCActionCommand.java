@@ -17,6 +17,10 @@ package com.liferay.portal.security.auth.bundle.authtokenwhitelistutil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.util.PortletKeys;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -34,11 +38,19 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class TestMVCActionCommand {
+public class TestMVCActionCommand implements MVCActionCommand {
 
 	public static final String TEST_MVC_COMMAND_NAME =
 		"TEST_MVC_ACTION_COMMAND_NAME";
 
 	public static final String TEST_PORTLET = PortletKeys.PORTAL;
+
+	@Override
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return false;
+	}
 
 }

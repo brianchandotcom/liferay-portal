@@ -93,7 +93,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%predefined-value",
 		properties = { "placeholder=%enter-a-default-value" },
-		tip = "%a-default-value-that-is-submitted-if-no-other-value-is-entered",
+		tip = "%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered",
 		type = "text"
 	)
 	public LocalizedValue predefinedValue();

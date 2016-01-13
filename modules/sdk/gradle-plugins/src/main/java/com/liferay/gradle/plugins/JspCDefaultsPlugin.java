@@ -85,7 +85,8 @@ public class JspCDefaultsPlugin
 				"dir",
 				new File(liferayExtension.getAppServerDir(), "lib/endorsed"));
 			args.put(
-				"includes", Arrays.asList("xercesImpl.jar", "xml-apis.jar"));
+				"includes",
+				Arrays.asList("xercesImpl-*.jar", "xml-apis-*.jar"));
 
 			fileTree = project.fileTree(args);
 

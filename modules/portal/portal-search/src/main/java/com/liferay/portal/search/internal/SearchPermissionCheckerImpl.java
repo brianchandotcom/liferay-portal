@@ -123,15 +123,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		long companyId, List<Long> groupIds, long userId, String className,
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		if (PropsValues.SEARCH_PERMISSION_FILTER_ENABLED) {
-			try {
-				booleanFilter = doGetPermissionBooleanFilter(
-					companyId, groupIds, userId, className, booleanFilter,
-					searchContext);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		try {
+			booleanFilter = doGetPermissionBooleanFilter(
+				companyId, groupIds, userId, className, booleanFilter,
+				searchContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return booleanFilter;

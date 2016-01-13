@@ -51,27 +51,19 @@ import javax.servlet.http.HttpServletRequest;
 public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	public MVCPortletAuthTokenWhitelist() {
-		_csrfTokenServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			"auth.token.ignore.mvc.action", MVCActionCommand.class,
 			_portletCSRFWhitelistActions);
-		_portletInvocationTokenActionServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
 			MVCActionCommand.class, _portletInvocationActionWhitelistActions);
-		_portletInvocationTokenRenderServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
 			MVCRenderCommand.class, _portletInvocationRenderWhitelistActions);
-		_portletInvocationTokenResourceServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			"portlet.add.default.resource.check.whitelist.mvc.action",
 			MVCResourceCommand.class,
 			_portletInvocationResourceWhitelistActions);
-	}
-
-	@Override
-	public void destroy() {
-		_csrfTokenServiceTracker.close();
-		_portletInvocationTokenActionServiceTracker.close();
-		_portletInvocationTokenRenderServiceTracker.close();
-		_portletInvocationTokenResourceServiceTracker.close();
 	}
 
 	@Override
@@ -315,7 +307,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		return false;
 	}
 
-	protected ServiceTracker<Object, Object> trackWhitelistServices(
+	protected void trackWhitelistServices(
 		String whitelistName, Class serviceClass, Set<String> whiteList) {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -328,10 +320,9 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 		serviceTracker.open();
 
-		return serviceTracker;
+		serviceTrackers.add(serviceTracker);
 	}
 
-	private final ServiceTracker<Object, Object> _csrfTokenServiceTracker;
 	private final Set<String> _portletCSRFWhitelistActions =
 		new ConcurrentHashSet<>();
 	private final Set<String> _portletInvocationActionWhitelistActions =
@@ -340,12 +331,6 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		new ConcurrentHashSet<>();
 	private final Set<String> _portletInvocationResourceWhitelistActions =
 		new ConcurrentHashSet<>();
-	private final ServiceTracker<Object, Object>
-		_portletInvocationTokenActionServiceTracker;
-	private final ServiceTracker<Object, Object>
-		_portletInvocationTokenRenderServiceTracker;
-	private final ServiceTracker<Object, Object>
-		_portletInvocationTokenResourceServiceTracker;
 
 	private class TokenWhitelistTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {

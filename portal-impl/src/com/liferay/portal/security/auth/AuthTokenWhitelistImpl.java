@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.util.Encryptor;
 
 import java.util.Set;
@@ -37,17 +36,17 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {
-		_originCSRFServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS, _originCSRFWhitelist);
 
 		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ORIGINS);
 
-		_portletCSRFServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS, _portletCSRFWhitelist);
 
 		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
 
-		_portletInvocationServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
 			_portletInvocationWhitelist);
 
@@ -157,12 +156,8 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 			Encryptor.digest(PropsValues.AUTH_TOKEN_SHARED_SECRET));
 	}
 
-	private final ServiceTracker<Object, Object> _originCSRFServiceTracker;
 	private final Set<String> _originCSRFWhitelist = new ConcurrentHashSet<>();
-	private final ServiceTracker<Object, Object> _portletCSRFServiceTracker;
 	private final Set<String> _portletCSRFWhitelist = new ConcurrentHashSet<>();
-	private final ServiceTracker<Object, Object>
-		_portletInvocationServiceTracker;
 	private final Set<String> _portletInvocationWhitelist =
 		new ConcurrentHashSet<>();
 

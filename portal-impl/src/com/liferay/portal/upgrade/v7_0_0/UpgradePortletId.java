@@ -29,7 +29,12 @@ public class UpgradePortletId
 			new String[] {"99", PortletKeys.ASSET_TAGS_ADMIN},
 			new String[] {"134", PortletKeys.SITE_ADMIN},
 			new String[] {"165", PortletKeys.SITE_SETTINGS},
-			new String[] {"191", PortletKeys.SITE_TEAMS}
+			new String[] {"191", PortletKeys.SITE_TEAMS},
+			new String[] {
+				"1_WAR_soannouncementsportlet", PortletKeys.ANNOUNCEMENTS
+			},
+			new String[] {"83", PortletKeys.ALERTS},
+			new String[] {"84", PortletKeys.ANNOUNCEMENTS}
 		};
 	}
 

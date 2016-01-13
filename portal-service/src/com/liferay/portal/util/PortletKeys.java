@@ -21,6 +21,12 @@ public class PortletKeys {
 
 	public static final String ADMIN_PLUGINS = "136";
 
+	public static final String ALERTS =
+		"com_liferay_announcements_web_portlet_AlertsPortlet";
+
+	public static final String ANNOUNCEMENTS =
+		"com_liferay_announcements_web_portlet_AnnouncementsPortlet";
+
 	public static final String ASSET_CATEGORIES_ADMIN =
 		"com_liferay_asset_categories_admin_web_portlet_" +
 			"AssetCategoriesAdminPortlet";

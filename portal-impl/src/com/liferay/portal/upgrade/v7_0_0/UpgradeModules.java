@@ -185,8 +185,7 @@ public class UpgradeModules extends UpgradeProcess {
 	}
 
 	private static final String[] _bundleSymbolicNames = new String[] {
-		"com.liferay.amazon.rankings.web", "com.liferay.announcements.web",
-		"com.liferay.asset.browser.web",
+		"com.liferay.amazon.rankings.web", "com.liferay.asset.browser.web",
 		"com.liferay.asset.categories.navigation.web",
 		"com.liferay.asset.publisher.web",
 		"com.liferay.asset.tags.compiler.web",

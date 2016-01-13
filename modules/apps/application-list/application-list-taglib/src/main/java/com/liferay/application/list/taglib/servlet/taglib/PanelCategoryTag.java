@@ -91,7 +91,7 @@ public class PanelCategoryTag extends BasePanelTag {
 			return true;
 		}
 
-		if (persistState()) {
+		if (isPersistState()) {
 			String state = SessionClicks.get(
 				request, PanelCategory.class.getName() + getId(), "closed");
 
@@ -107,7 +107,7 @@ public class PanelCategoryTag extends BasePanelTag {
 		return _panelCategory.isActive(request, panelCategoryHelper);
 	}
 
-	protected boolean persistState() {
+	protected boolean isPersistState() {
 		if (_persistState || _panelCategory.isPersistState()) {
 			return true;
 		}
@@ -157,7 +157,7 @@ public class PanelCategoryTag extends BasePanelTag {
 			_panelCategory);
 		request.setAttribute(
 			"liferay-application-list:panel-category:persistState",
-			persistState());
+			isPersistState());
 		request.setAttribute(
 			"liferay-application-list:panel-category:showBody", _showBody);
 		request.setAttribute(

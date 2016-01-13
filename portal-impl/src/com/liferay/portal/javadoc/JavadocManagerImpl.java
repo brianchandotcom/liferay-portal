@@ -15,15 +15,18 @@
 package com.liferay.portal.javadoc;
 
 import com.liferay.portal.kernel.javadoc.BaseJavadoc;
+import com.liferay.portal.kernel.javadoc.EmptyJavadocMethod;
 import com.liferay.portal.kernel.javadoc.JavadocClass;
 import com.liferay.portal.kernel.javadoc.JavadocManager;
 import com.liferay.portal.kernel.javadoc.JavadocMethod;
+import com.liferay.portal.kernel.javadoc.JavadocMethodImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -282,23 +285,26 @@ public class JavadocManagerImpl implements JavadocManager {
 
 		Method method = clazz.getDeclaredMethod(name, parameterTypeClasses);
 
-		JavadocMethod javadocMethod = new JavadocMethod(method);
-
 		String comment = methodElement.elementText("comment");
 
-		javadocMethod.setComment(comment);
+		if (Validator.isNull(comment)) {
+			return new EmptyJavadocMethod(servletContextName, method);
+		}
 
-		javadocMethod.setParameterComments(parameterComments);
+		JavadocMethodImpl javadocMethodImpl = new JavadocMethodImpl(
+			method, comment);
+
+		javadocMethodImpl.setParameterComments(parameterComments);
 
 		Element returnElement = methodElement.element("return");
 
 		if (returnElement != null) {
 			String returnComment = returnElement.elementText("comment");
 
-			javadocMethod.setReturnComment(returnComment);
+			javadocMethodImpl.setReturnComment(returnComment);
 		}
 
-		javadocMethod.setServletContextName(servletContextName);
+		javadocMethodImpl.setServletContextName(servletContextName);
 
 		List<Element> throwsElements = methodElement.elements("throws");
 
@@ -310,9 +316,9 @@ public class JavadocManagerImpl implements JavadocManager {
 			throwsComments[i] = throwElement.elementText("comment");
 		}
 
-		javadocMethod.setThrowsComments(throwsComments);
+		javadocMethodImpl.setThrowsComments(throwsComments);
 
-		return javadocMethod;
+		return javadocMethodImpl;
 	}
 
 	protected void unload(

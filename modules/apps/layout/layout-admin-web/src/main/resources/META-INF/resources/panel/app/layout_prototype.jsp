@@ -33,7 +33,7 @@ data.put("uuid", selLayout.getUuid());
 
 boolean selected = false;
 
-if ((selLayout.getPlid() == plid) || (Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, themeDisplay.getPpid()))) {
+if ((selLayout.getPlid() == plid) || Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, themeDisplay.getPpid())) {
 	selected = true;
 }
 %>

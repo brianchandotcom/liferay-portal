@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.control.menu.web;
+package com.liferay.layout.admin.web.control.menu;
 
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
-import com.liferay.control.menu.web.constants.ControlMenuWebKeys;
+import com.liferay.layout.admin.web.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
@@ -54,7 +54,7 @@ public class InformationMessagesControlMenuEntry
 
 	@Override
 	public String getJspPath() {
-		return "/entries/information_messages.jsp";
+		return "/control/menu/information_messages.jsp";
 	}
 
 	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
@@ -75,7 +75,7 @@ public class InformationMessagesControlMenuEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		request.setAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY, this);
+		request.setAttribute(LayoutAdminWebKeys.CONTROL_MENU_ENTRY, this);
 
 		return super.include(request, response);
 	}
@@ -180,7 +180,7 @@ public class InformationMessagesControlMenuEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.control.menu.web)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

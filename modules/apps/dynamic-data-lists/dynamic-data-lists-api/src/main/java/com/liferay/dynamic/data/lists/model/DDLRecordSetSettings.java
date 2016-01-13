@@ -104,8 +104,8 @@ public interface DDLRecordSetSettings {
 	public String redirectURL();
 
 	@DDMFormField(
-		label = "%require-captcha",
-		properties = {"showAsSwitcher=true"}, type = "checkbox"
+		label = "%require-captcha", properties = {"showAsSwitcher=true"},
+		type = "checkbox"
 	)
 	public boolean requireCaptcha();
 

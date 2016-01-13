@@ -393,15 +393,12 @@ public class PortletTracker
 		}
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			ResourceBundle resourceBundle;
-
-			Dictionary<String, Object> properties;
-
 			try {
-				resourceBundle = ResourceBundleUtil.getBundle(
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 					portletModel.getResourceBundle(), locale, classLoader);
 
-				properties = new HashMapDictionary<>();
+				Dictionary<String, Object> properties =
+					new HashMapDictionary<>();
 
 				properties.put(
 					"javax.portlet.name", portletModel.getPortletId());
@@ -423,7 +420,7 @@ public class PortletTracker
 				}
 			}
 
-			properties = new HashMapDictionary<>();
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			properties.put("javax.portlet.name", portletModel.getPortletId());
 			properties.put("language.id", LocaleUtil.toLanguageId(locale));

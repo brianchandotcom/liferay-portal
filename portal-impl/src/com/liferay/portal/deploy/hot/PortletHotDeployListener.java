@@ -184,13 +184,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		Registry registry = RegistryUtil.getRegistry();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			ResourceBundle resourceBundle;
-
-			Map<String, Object> properties = new HashMap<>();
-
 			try {
-				resourceBundle = ResourceBundleUtil.getBundle(
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 					portlet.getResourceBundle(), locale, classLoader);
+
+				Map<String, Object> properties = new HashMap<>();
 
 				properties.put("language.id", LocaleUtil.toLanguageId(locale));
 				properties.put("javax.portlet.name", portlet.getPortletId());
@@ -211,13 +209,14 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				}
 			}
 
-			properties = new HashMap<>();
+			Map<String, Object> properties = new HashMap<>();
 
 			properties.put("language.id", LocaleUtil.toLanguageId(locale));
 			properties.put("javax.portlet.name", portlet.getPortletId());
 			properties.put("service.ranking", Integer.MIN_VALUE);
 
-			resourceBundle = LanguageResources.getResourceBundle(locale);
+			ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+				locale);
 
 			ServiceRegistration<ResourceBundle> serviceRegistration =
 				registry.registerService(

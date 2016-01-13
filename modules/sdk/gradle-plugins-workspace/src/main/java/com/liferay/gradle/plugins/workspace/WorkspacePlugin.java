@@ -137,7 +137,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 	}
 
 	protected MavenArtifactRepository addRepository(
-		Project project, final String mavenUrl) {
+		Project project, final String url) {
 
 		RepositoryHandler repositoryHandler = project.getRepositories();
 
@@ -148,7 +148,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 				public void execute(
 					MavenArtifactRepository mavenArtifactRepository) {
 
-					mavenArtifactRepository.setUrl(mavenUrl);
+					mavenArtifactRepository.setUrl(url);
 				}
 
 			});

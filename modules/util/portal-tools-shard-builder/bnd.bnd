@@ -5,4 +5,6 @@ Export-Package: com.liferay.portal.tools.shard.builder.exporter
 Include-Resource:\
 	classes,\
 	@lib/HikariCP.jar,\
+	@lib/jcommander.jar,\
 	@lib/slf4j-api.jar
+Main-Class: com.liferay.portal.tools.shard.builder.Main

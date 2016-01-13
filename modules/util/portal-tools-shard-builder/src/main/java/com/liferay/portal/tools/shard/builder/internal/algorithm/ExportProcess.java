@@ -29,47 +29,82 @@ import java.util.List;
  */
 public class ExportProcess {
 
-	public ExportProcess(DBProvider dbProvider) {
-		_dbProvider = dbProvider;
+	public ExportProcess(DBExporter dbExporter) {
+		_dbExporter = dbExporter;
 	}
 
 	public void export(ExportContext exportContext) throws IOException {
 		List<String> partitionedTableNames =
-			_dbProvider.getPartitionedTableNames(exportContext.getSchemaName());
-		List<String> controlTableNames = _dbProvider.getControlTableNames(
+			_dbExporter.getPartitionedTableNames(exportContext.getSchemaName());
+		List<String> controlTableNames = _dbExporter.getControlTableNames(
 			exportContext.getSchemaName());
 
 		List<Long> companyIds = exportContext.getCompanyIds();
 
 		for (Long companyId : companyIds) {
-			_exportCompany(companyId, partitionedTableNames, exportContext);
-			_exportCompany(companyId, controlTableNames, exportContext);
+			_exportCompany(
+				companyId, partitionedTableNames, exportContext, true);
+			_exportCompany(companyId, controlTableNames, exportContext, false);
 		}
 	}
 
 	private void _exportCompany(
 			long companyId, List<String> tableNames,
-			ExportContext exportContext)
+			ExportContext exportContext, boolean filterByCompanyId)
 		throws IOException {
 
+		String tableType = "control";
+
+		if (filterByCompanyId) {
+			tableType = "partitioned";
+		}
+
 		String outputFileName =
-			exportContext.getSchemaName() + "-" + companyId + ".sql";
+			exportContext.getSchemaName() + "-" + companyId + "-" + tableType +
+				".sql";
 
 		File outputFile = new File(
 			exportContext.getOutputDirName(), outputFileName);
 
-		OutputStream outputStream = new BufferedOutputStream(
-			new FileOutputStream(outputFile));
+		OutputStream outputStream = null;
 
-		for (String tableName : tableNames) {
-			_dbProvider.write(tableName, outputStream);
+		if (!exportContext.isTableFiles()) {
+			outputStream = new BufferedOutputStream(
+				new FileOutputStream(outputFile));
 		}
 
-		outputStream.flush();
+		for (String tableName : tableNames) {
+			if (exportContext.isTableFiles()) {
+				outputFileName =
+					exportContext.getSchemaName() + "-" + companyId + "-" +
+						tableName + ".sql";
 
-		outputStream.close();
+				outputFile = new File(
+					exportContext.getOutputDirName(), outputFileName);
+
+				outputStream = new BufferedOutputStream(
+					new FileOutputStream(outputFile));
+			}
+
+			if (filterByCompanyId) {
+				_dbExporter.write(companyId, tableName, outputStream);
+			}
+			else {
+				_dbExporter.write(tableName, outputStream);
+			}
+
+			outputStream.flush();
+
+			if (exportContext.isTableFiles()) {
+				outputStream.close();
+			}
+		}
+
+		if (!exportContext.isTableFiles()) {
+			outputStream.close();
+		}
 	}
 
-	private final DBProvider _dbProvider;
+	private final DBExporter _dbExporter;
 
 }

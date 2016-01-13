@@ -14,10 +14,21 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Iván Zaera
  */
 public class JavaScriptMenuItem extends MenuItem implements JavaScriptUIItem {
+
+	public Map<String, Object> getData() {
+		if (_data == null) {
+			_data = new HashMap<>();
+		}
+
+		return _data;
+	}
 
 	public String getJavaScript() {
 		return _javaScript;
@@ -26,6 +37,10 @@ public class JavaScriptMenuItem extends MenuItem implements JavaScriptUIItem {
 	@Override
 	public String getOnClick() {
 		return _onClick;
+	}
+
+	public void setData(Map<String, Object> data) {
+		_data = data;
 	}
 
 	public void setJavaScript(String javaScript) {
@@ -37,6 +52,7 @@ public class JavaScriptMenuItem extends MenuItem implements JavaScriptUIItem {
 		_onClick = onClick;
 	}
 
+	private Map<String, Object> _data;
 	private String _javaScript;
 	private String _onClick;
 

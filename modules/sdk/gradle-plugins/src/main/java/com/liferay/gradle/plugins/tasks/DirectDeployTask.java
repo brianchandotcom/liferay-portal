@@ -18,7 +18,6 @@ import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -52,16 +51,6 @@ public class DirectDeployTask extends BasePortalToolsTask {
 		return GradleUtil.toString(_appServerType);
 	}
 
-	public String getArgAppServerType() {
-		String argAppServerType = GradleUtil.toString(_argAppServerType);
-
-		if (Validator.isNull(argAppServerType)) {
-			argAppServerType = getAppServerType();
-		}
-
-		return argAppServerType;
-	}
-
 	@Override
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>(3);
@@ -83,7 +72,7 @@ public class DirectDeployTask extends BasePortalToolsTask {
 
 		File webAppFile = getWebAppFile();
 
-		jvmArgs.add("-Ddeployer.app.server.type=" + getArgAppServerType());
+		jvmArgs.add("-Ddeployer.app.server.type=" + getAppServerType());
 		jvmArgs.add(
 			"-Ddeployer.base.dir=" +
 				FileUtil.getAbsolutePath(webAppFile.getParentFile()));
@@ -190,10 +179,6 @@ public class DirectDeployTask extends BasePortalToolsTask {
 		_appServerType = appServerType;
 	}
 
-	public void setArgAppServerType(Object argAppServerType) {
-		_argAppServerType = argAppServerType;
-	}
-
 	public void setCustomPortletXml(boolean customPortletXml) {
 		_customPortletXml = customPortletXml;
 	}
@@ -235,7 +220,6 @@ public class DirectDeployTask extends BasePortalToolsTask {
 	private Object _appServerLibGlobalDir;
 	private Object _appServerPortalDir;
 	private Object _appServerType;
-	private Object _argAppServerType;
 	private boolean _customPortletXml;
 	private boolean _unpackWar = true;
 	private Object _webAppFile;

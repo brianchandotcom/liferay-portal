@@ -240,7 +240,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//button[contains(.,'Delete')]</td>
+	<td>//*[@data-qa-id='deleteButton'] | //button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

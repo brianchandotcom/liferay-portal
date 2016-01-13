@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.kernel.security.ldap;
 
 import com.liferay.portal.kernel.ldap.LDAPFilterException;
 

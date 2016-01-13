@@ -81,6 +81,21 @@
 		<execute macro="CalendarScheduler#saveEvent" />
 	</command>
 
+	<command name="addLocalizedEvent">
+		<execute macro="CalendarNavigator#gotoAddEventToday">
+			<var name="viewType" value="${viewType}" />
+			<var name="viewTypeUppercase" value="${viewTypeUppercase}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#editTitle">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<var name="key_saveButton" value="${saveButton}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}" />
+	</command>
+
 	<command name="changeCalendar">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />

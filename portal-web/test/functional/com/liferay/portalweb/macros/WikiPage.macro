@@ -32,7 +32,7 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiChildPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
 
@@ -46,7 +46,7 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiChildPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
 
@@ -111,7 +111,7 @@
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 
@@ -125,7 +125,7 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiChildPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
 
@@ -140,7 +140,7 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiChildPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
 
@@ -295,7 +295,7 @@
 	<command name="addPageWithWorkflowPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 
@@ -307,7 +307,7 @@
 	<command name="addPageWithWorkflowPGViaWD">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 
@@ -345,7 +345,7 @@
 	<command name="addPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -590,7 +590,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitleCopy}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitleCopy}" />
 
 		<if>
 			<equals arg1="${creole}" arg2="true" />

@@ -49,7 +49,8 @@ public class UpgradePortletId
 			new String[] {"88", PortletKeys.LAYOUTS_ADMIN},
 			new String[] {"140", PortletKeys.MY_PAGES},
 			new String[] {"156", PortletKeys.GROUP_PAGES},
-			new String[] {"127", PortletKeys.USER_GROUPS_ADMIN}
+			new String[] {"127", PortletKeys.USER_GROUPS_ADMIN},
+			new String[] {"125", PortletKeys.USERS_ADMIN}
 		};
 	}
 

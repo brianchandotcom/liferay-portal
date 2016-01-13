@@ -54,11 +54,13 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> getPortletCSRFWhitelistActions() {
 		return _portletCSRFWhitelist;
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> getPortletInvocationWhitelistActions() {
 		return _portletInvocationWhitelist;

@@ -42,26 +42,31 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
+	@Deprecated
 	@Override
 	public Set<String> getOriginCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> getPortletCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> getPortletCSRFWhitelistActions() {
 		return Collections.emptySet();
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> getPortletInvocationWhitelist() {
 		return Collections.emptySet();
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> getPortletInvocationWhitelistActions() {
 		return Collections.emptySet();
@@ -121,21 +126,25 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return false;
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> resetOriginCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> resetPortletCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> resetPortletInvocationWhitelist() {
 		return Collections.emptySet();
 	}
 
+	@Deprecated
 	@Override
 	public Set<String> resetPortletInvocationWhitelistActions() {
 		return Collections.emptySet();

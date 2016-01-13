@@ -224,6 +224,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-alert', 'event-mouseenter', 'liferay-portlet-base', 'timers']
+		requires: ['aui-alert', 'aui-component', 'event-mouseenter', 'liferay-portlet-base', 'timers']
 	}
 );

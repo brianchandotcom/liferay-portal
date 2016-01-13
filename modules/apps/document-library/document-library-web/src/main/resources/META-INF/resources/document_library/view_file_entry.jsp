@@ -121,8 +121,32 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<div class="sidenav-menu-slider">
+
+		<%
+		boolean showCustomFieldsTab = false;
+		%>
+
+		<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
+
+			<%
+			showCustomFieldsTab = true;
+			%>
+
+		</liferay-ui:custom-attributes-available>
+
 		<div class="sidebar sidebar-default sidenav-menu">
-			<liferay-ui:tabs names="details,custom-fields,document-type,metadata,versions" refresh="<%= false %>" type="dropdown">
+
+			<%
+			String tabNames = "details";
+
+			if (showCustomFieldsTab) {
+				tabNames += ",custom-fields";
+			}
+
+			tabNames += ",document-type,metadata,versions";
+			%>
+
+			<liferay-ui:tabs names="<%= tabNames %>" refresh="<%= false %>" type="dropdown">
 				<liferay-ui:section>
 					<div class="sidebar-body">
 						<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
@@ -261,18 +285,16 @@ if (portletTitleBasedNavigation) {
 
 				</liferay-ui:section>
 
-				<liferay-ui:section>
-					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
-						<liferay-ui:panel collapsible="<%= true %>" cssClass="custom-fields" id="documentLibraryCustomAttributesPanel" persistState="<%= true %>" title="custom-fields">
-							<liferay-ui:custom-attribute-list
-								className="<%= DLFileEntryConstants.getClassName() %>"
-								classPK="<%= fileVersionId %>"
-								editable="<%= false %>"
-								label="<%= true %>"
-							/>
-						</liferay-ui:panel>
-					</liferay-ui:custom-attributes-available>
-				</liferay-ui:section>
+				<c:if test="<%= showCustomFieldsTab %>">
+					<liferay-ui:section>
+						<liferay-ui:custom-attribute-list
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= fileVersionId %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:section>
+				</c:if>
 
 				<liferay-ui:section>
 

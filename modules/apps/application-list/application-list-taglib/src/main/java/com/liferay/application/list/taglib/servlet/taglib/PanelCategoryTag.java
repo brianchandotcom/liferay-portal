@@ -61,10 +61,10 @@ public class PanelCategoryTag extends BasePanelTag {
 		super.cleanUp();
 
 		_panelCategory = null;
+		_persistState = false;
 		_showBody = true;
 		_showHeader = true;
 		_showOpen = false;
-		_persistState = false;
 	}
 
 	@Override

@@ -353,7 +353,9 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
 
 		<execute macro="Staging#addPublishTemplate">
 			<var name="publishTemplateDescription" value="Publish Template Description" />
@@ -574,7 +576,9 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
 
 		<execute macro="Staging#addPublishTemplate">
 			<var name="publishTemplateDescription" value="Publish Template Description" />
@@ -605,7 +609,9 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
 
 		<execute macro="Staging#moveToTheRecycleBinPublishTemplate">
 			<var name="publishTemplateName" value="Publish Template Name" />
@@ -4181,7 +4187,9 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
 
 		<execute macro="Staging#addPublishTemplate">
 			<var name="publishTemplateDescription" value="Publish Template Description" />
@@ -4303,7 +4311,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#gotoPublishToLive" />
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
 
 		<execute macro="Staging#addPublishTemplate">
 			<var name="publishTemplateDescription" value="Publish Template Description" />

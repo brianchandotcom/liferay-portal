@@ -158,22 +158,26 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					</c:if>
 				</c:if>
 
-				<c:if test="<%= enableRatings %>">
-					<div>
-						<liferay-ui:ratings
-							className="<%= MBMessage.class.getName() %>"
-							classPK="<%= message.getMessageId() %>"
-						/>
-					</div>
-				</c:if>
+				<c:if test="<%= enableFlags || enableRatings %>">
+					<div class="social-interaction">
+						<c:if test="<%= enableRatings %>">
+							<div>
+								<liferay-ui:ratings
+									className="<%= MBMessage.class.getName() %>"
+									classPK="<%= message.getMessageId() %>"
+								/>
+							</div>
+						</c:if>
 
-				<c:if test="<%= enableFlags %>">
-					<liferay-ui:flags
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= message.getMessageId() %>"
-						contentTitle="<%= message.getSubject() %>"
-						reportedUserId="<%= message.getUserId() %>"
-					/>
+						<c:if test="<%= enableFlags %>">
+							<liferay-ui:flags
+								className="<%= MBMessage.class.getName() %>"
+								classPK="<%= message.getMessageId() %>"
+								contentTitle="<%= message.getSubject() %>"
+								reportedUserId="<%= message.getUserId() %>"
+							/>
+						</c:if>
+					</div>
 				</c:if>
 			</div>
 

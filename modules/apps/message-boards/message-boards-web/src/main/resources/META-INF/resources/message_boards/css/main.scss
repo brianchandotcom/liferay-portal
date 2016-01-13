@@ -121,6 +121,20 @@
 		}
 	}
 
+	@include sm {
+		.social-interaction {
+			width: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
+
+			& > div {
+				float: right;
+				margin-right: 12px;
+			}
+		}
+	}
+
 	.clear {
 		clear: both;
 	}

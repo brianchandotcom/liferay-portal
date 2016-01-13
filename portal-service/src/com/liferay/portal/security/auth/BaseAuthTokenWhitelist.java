@@ -28,6 +28,7 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 import com.liferay.registry.util.StringPlus;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -146,6 +147,10 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 			serviceRegistration.unregister();
 		}
+
+		for (ServiceTracker serviceTracker : serviceTrackers) {
+			serviceTracker.close();
+		}
 	}
 
 	protected void registerPortalProperty(String propertyName) {
@@ -160,8 +165,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		ServiceRegistration<Object> serviceRegistration =
 			registry.registerService(Object.class, new Object(), properties);
 
-		serviceRegistrations.put(
-			StringUtil.merge(values), serviceRegistration);
+		serviceRegistrations.put(StringUtil.merge(values), serviceRegistration);
 	}
 
 	protected ServiceTracker<Object, Object> trackWhitelistServices(
@@ -175,11 +179,15 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 		serviceTracker.open();
 
+		serviceTrackers.add(serviceTracker);
+
 		return serviceTracker;
 	}
 
 	protected final StringServiceRegistrationMap<Object> serviceRegistrations =
 		new StringServiceRegistrationMapImpl<>();
+	protected final List<ServiceTracker<Object, Object>> serviceTrackers =
+		new ArrayList<>();
 
 	private class TokenWhitelistTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {

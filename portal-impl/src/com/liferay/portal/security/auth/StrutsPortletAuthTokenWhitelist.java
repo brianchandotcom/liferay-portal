@@ -29,7 +29,6 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Set;
 
@@ -42,25 +41,17 @@ import javax.servlet.http.HttpServletRequest;
 public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 	public StrutsPortletAuthTokenWhitelist() {
-		_csrfTokenServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, _portletCSRFWhitelistActions);
 
 		registerPortalProperty(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS);
 
-		_portletInvocationTokenServiceTracker = trackWhitelistServices(
+		trackWhitelistServices(
 			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS,
 			_portletInvocationWhitelistActions);
 
 		registerPortalProperty(
 			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_csrfTokenServiceTracker.close();
-		_portletInvocationTokenServiceTracker.close();
 	}
 
 	@Override
@@ -238,11 +229,8 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StrutsPortletAuthTokenWhitelist.class);
 
-	private final ServiceTracker<Object, Object> _csrfTokenServiceTracker;
 	private final Set<String> _portletCSRFWhitelistActions =
 		new ConcurrentHashSet<>();
-	private final ServiceTracker<Object, Object>
-		_portletInvocationTokenServiceTracker;
 	private final Set<String> _portletInvocationWhitelistActions =
 		new ConcurrentHashSet<>();
 

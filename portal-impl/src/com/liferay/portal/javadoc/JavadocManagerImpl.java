@@ -289,17 +289,12 @@ public class JavadocManagerImpl implements JavadocManager {
 			return new EmptyJavadocMethod(servletContextName, method);
 		}
 
-		JavadocMethodImpl javadocMethodImpl = new JavadocMethodImpl(
-			servletContextName, comment, method);
-
-		javadocMethodImpl.setParameterComments(parameterComments);
+		String returnComment = null;
 
 		Element returnElement = methodElement.element("return");
 
 		if (returnElement != null) {
-			String returnComment = returnElement.elementText("comment");
-
-			javadocMethodImpl.setReturnComment(returnComment);
+			returnComment = returnElement.elementText("comment");
 		}
 
 		List<Element> throwsElements = methodElement.elements("throws");
@@ -312,9 +307,9 @@ public class JavadocManagerImpl implements JavadocManager {
 			throwsComments[i] = throwElement.elementText("comment");
 		}
 
-		javadocMethodImpl.setThrowsComments(throwsComments);
-
-		return javadocMethodImpl;
+		return new JavadocMethodImpl(
+			servletContextName, comment, method, parameterComments,
+			returnComment, throwsComments);
 	}
 
 	protected void unload(

@@ -22,11 +22,16 @@ import java.lang.reflect.Method;
 public class JavadocMethodImpl extends JavadocMethod {
 
 	public JavadocMethodImpl(
-		String servletContextName, String comment, Method method) {
+		String servletContextName, String comment, Method method,
+		String[] parameterComments, String returnComment,
+		String[] throwsComments) {
 
 		super(servletContextName, comment);
 
 		_method = method;
+		_parameterComments = parameterComments;
+		_returnComment = returnComment;
+		_throwsComments = throwsComments;
 	}
 
 	@Override
@@ -67,25 +72,9 @@ public class JavadocMethodImpl extends JavadocMethod {
 		return _throwsComments;
 	}
 
-	public void setMethod(Method method) {
-		_method = method;
-	}
-
-	public void setParameterComments(String[] parameterComments) {
-		_parameterComments = parameterComments;
-	}
-
-	public void setReturnComment(String returnComment) {
-		_returnComment = returnComment;
-	}
-
-	public void setThrowsComments(String[] throwsComments) {
-		_throwsComments = throwsComments;
-	}
-
-	private Method _method;
-	private String[] _parameterComments;
-	private String _returnComment;
-	private String[] _throwsComments;
+	private final Method _method;
+	private final String[] _parameterComments;
+	private final String _returnComment;
+	private final String[] _throwsComments;
 
 }

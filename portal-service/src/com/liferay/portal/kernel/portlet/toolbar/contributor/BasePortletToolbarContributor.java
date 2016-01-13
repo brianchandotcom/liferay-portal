@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -42,6 +44,12 @@ public abstract class BasePortletToolbarContributor
 		List<Menu> menus = new ArrayList<>();
 
 		Menu menu = new Menu();
+
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("qa-id", "addButton");
+
+		menu.setData(data);
 
 		menu.setDirection("down");
 		menu.setExtended(false);

@@ -312,7 +312,7 @@ public class PortletURLUtil {
 
 		String ppid = ParamUtil.getString(request, "p_p_id");
 
-		Map<String, String[]> refreshUrlParameters = new HashMap<>();
+		Map<String, String[]> refreshURLParameters = new HashMap<>();
 
 		if (ppid.equals(portletId)) {
 			String namespace = PortalUtil.getPortletNamespace(portletId);
@@ -339,12 +339,12 @@ public class PortletURLUtil {
 						continue;
 					}
 
-					refreshUrlParameters.put(name, values);
+					refreshURLParameters.put(name, values);
 				}
 			}
 		}
 
-		return refreshUrlParameters;
+		return refreshURLParameters;
 	}
 
 	protected static boolean isRefreshURLReservedParameter(

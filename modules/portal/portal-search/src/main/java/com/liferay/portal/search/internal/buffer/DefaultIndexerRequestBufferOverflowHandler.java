@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.internal;
+package com.liferay.portal.search.internal.buffer;
 
-import com.liferay.portal.search.IndexerRequestBufferOverflowHandler;
+import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
+import com.liferay.portal.search.internal.IndexerRequestBuffer;
 
 /**
  * @author Michael C. Han

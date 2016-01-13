@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search;
+package com.liferay.portal.search.buffer;
 
 import com.liferay.portal.search.internal.IndexerRequestBuffer;
 

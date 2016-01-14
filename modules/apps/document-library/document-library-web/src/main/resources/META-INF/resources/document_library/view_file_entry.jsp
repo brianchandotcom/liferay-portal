@@ -433,19 +433,21 @@ if (portletTitleBasedNavigation) {
 							FileVersion curFileVersion = (FileVersion)fileVersions.get(0);
 						%>
 
-							<portlet:renderURL var="compareVersionsURL">
-								<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
-							</portlet:renderURL>
+							<div class="version-history-compare">
+								<portlet:renderURL var="compareVersionsURL">
+									<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
+								</portlet:renderURL>
 
-							<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
-								<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
-								<aui:input name="sourceFileVersionId" type="hidden" value="<%= curFileVersion.getFileVersionId() %>" />
-								<aui:input name="targetFileVersionId" type="hidden" value="<%= fileVersion.getFileVersionId() %>" />
+								<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
+									<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
+									<aui:input name="sourceFileVersionId" type="hidden" value="<%= curFileVersion.getFileVersionId() %>" />
+									<aui:input name="targetFileVersionId" type="hidden" value="<%= fileVersion.getFileVersionId() %>" />
 
-								<aui:button-row>
-									<aui:button cssClass="btn-lg" type="submit" value="compare-versions" />
-								</aui:button-row>
-							</aui:form>
+									<aui:button-row>
+										<aui:button type="submit" value="compare-versions" />
+									</aui:button-row>
+								</aui:form>
+							</div>
 
 						<%
 						}

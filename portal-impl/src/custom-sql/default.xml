@@ -8,6 +8,7 @@
 	<sql file="custom-sql/calendar.xml" />
 	<sql file="custom-sql/documentlibrary.xml" />
 	<sql file="custom-sql/expando.xml" />
+	<sql file="custom-sql/exportimport.xml" />
 	<sql file="custom-sql/messageboards.xml" />
 	<sql file="custom-sql/mobiledevicerules.xml" />
 	<sql file="custom-sql/ratings.xml" />

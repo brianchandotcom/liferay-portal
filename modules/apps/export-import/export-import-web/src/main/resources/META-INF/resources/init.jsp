@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException" %><%@
+page import="com.liferay.exportimport.util.ExportImportConfigurationNameComparator" %><%@
 page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
 page import="com.liferay.exportimport.web.portlet.action.ExportImportMVCActionCommand" %><%@
 page import="com.liferay.exportimport.web.search.ExportImportConfigurationDisplayTerms" %><%@
@@ -55,9 +56,6 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.lock.DuplicateLockException" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.search.BaseModelSearchResult" %><%@
-page import="com.liferay.portal.kernel.search.Sort" %><%@
-page import="com.liferay.portal.kernel.search.SortFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@

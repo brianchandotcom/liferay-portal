@@ -132,7 +132,12 @@
 
 		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_TITLE_LINK" value1="${roleName}" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<if>
+			<condition function="IsElementPresent#waitForVisible" locator1="MenuItem#ASSIGNEES" />
+			<then>
+				<execute function="Click" locator1="Button#PLUS" />
+			</then>
+		</if>
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_ASSIGNEES" />
 

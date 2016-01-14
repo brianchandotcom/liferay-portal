@@ -143,25 +143,25 @@ public class LiferayTemplateCache extends TemplateCache {
 
 		Object object = _portalCache.get(templateResource);
 
-		Template template;
-
-		if ((object != null) && (object instanceof Template)) {
-			template = (Template)object;
+		if ((object != null) && (object instanceof MaybeMissingTemplate)) {
+			return (MaybeMissingTemplate)object;
 		}
-		else {
-			template = new Template(
-				templateResource.getTemplateId(), templateResource.getReader(),
-				_configuration);
+
+		Template template = new Template(
+			templateResource.getTemplateId(), templateResource.getReader(),
+			_configuration);
+
+		try {
+			MaybeMissingTemplate maybeMissingTemplate =
+				_constructor.newInstance(template);
 
 			if (_freemarkerEngineConfiguration.resourceModificationCheck()
 					!= 0) {
 
-				_portalCache.put(templateResource, template);
+				_portalCache.put(templateResource, maybeMissingTemplate);
 			}
-		}
 
-		try {
-			return _constructor.newInstance(template);
+			return maybeMissingTemplate;
 		}
 		catch (ReflectiveOperationException roe) {
 			throw new IOException(roe);

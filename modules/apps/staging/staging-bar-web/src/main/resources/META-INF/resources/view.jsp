@@ -198,7 +198,7 @@ if (layout != null) {
 							<liferay-ui:message key="staging-options" />
 
 							<button aria-labelledby="Close" class="close" id="closeStagingOptions" type="button">
-								<aui:icon image="times" label="close" markupView="lexicon" />
+								<aui:icon image="times" markupView="lexicon" />
 							</button>
 						</div>
 

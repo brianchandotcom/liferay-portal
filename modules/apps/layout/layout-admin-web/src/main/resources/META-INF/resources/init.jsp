@@ -151,6 +151,8 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%
+WindowState windowState = liferayPortletRequest.getWindowState();
+
 String currentURL = null;
 
 LayoutsAdminDisplayContext layoutsAdminDisplayContext = null;

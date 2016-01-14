@@ -50,12 +50,12 @@ recordSetSearch.setOrderByType(orderByType);
 		>
 
 			<%
+			searchContainer.setTotal(ddlFormAdminDisplayContext.getSearchContainerTotal(searchContainer));
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 			%>
 
 			<liferay-ui:search-container-results
 				results="<%= ddlFormAdminDisplayContext.getSearchContainerResults(searchContainer) %>"
-				total="<%= ddlFormAdminDisplayContext.getSearchContainerTotal(searchContainer) %>"
 			/>
 
 			<liferay-ui:search-container-row

@@ -268,10 +268,11 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 		%>
 
-		<liferay-ui:search-container>
+		<liferay-ui:search-container
+			total="<%= roles.size() %>"
+		>
 			<liferay-ui:search-container-results
 				results="<%= roles %>"
-				total="<%= roles.size() %>"
 			/>
 
 			<liferay-ui:search-container-row

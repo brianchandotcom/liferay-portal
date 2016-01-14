@@ -61,10 +61,11 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 	</c:if>
 
 	<div class="branch-results">
-		<liferay-ui:search-container>
+		<liferay-ui:search-container
+			total="<%= layoutRevisions.size() %>"
+		>
 			<liferay-ui:search-container-results
 				results="<%= layoutRevisions %>"
-				total="<%= layoutRevisions.size() %>"
 			/>
 
 			<liferay-ui:search-container-row

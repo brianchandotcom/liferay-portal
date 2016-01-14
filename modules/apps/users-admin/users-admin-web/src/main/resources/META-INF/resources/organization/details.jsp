@@ -179,10 +179,10 @@ if (parentOrganization != null) {
 <liferay-ui:search-container
 	headerNames="name,type,null"
 	id="parentOrganizationSearchContainer"
+	total="<%= parentOrganizations.size() %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= parentOrganizations %>"
-		total="<%= parentOrganizations.size() %>"
 	/>
 
 	<liferay-ui:search-container-row

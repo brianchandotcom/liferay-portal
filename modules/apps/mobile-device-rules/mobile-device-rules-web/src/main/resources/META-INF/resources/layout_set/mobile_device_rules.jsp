@@ -17,11 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+boolean privateLayout = ParamUtil.getBoolean(liferayPortletRequest, "privateLayout");
 
-long groupId = selLayoutSet.getGroupId();
+Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+if (group.isLayoutSetPrototype() || group.isLayoutSetPrototype()) {
+	privateLayout = true;
+}
+
+LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
+
 String className = LayoutSet.class.getName();
 long classPK = selLayoutSet.getLayoutSetId();
+
+long selPlid = LayoutConstants.DEFAULT_PLID;
 %>
 
 <%@ include file="/layout/mobile_device_rules_header.jspf" %>

@@ -15,6 +15,13 @@
 		</if>
 
 		<if>
+			<isset var="pageStaging" />
+			<then>
+				<execute macro="Navigator#gotoStagedView" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
 				<execute macro="ProductMenu#gotoPrivatePages" />

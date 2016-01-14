@@ -17,10 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
-long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
+
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
 String typeSelection = ParamUtil.getString(request, "typeSelection");
+long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 

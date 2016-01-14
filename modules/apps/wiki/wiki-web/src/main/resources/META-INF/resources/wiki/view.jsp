@@ -386,30 +386,37 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= !childPages.isEmpty() %>">
 					<div class="child-pages container-fluid">
-						<h2><liferay-ui:message key="children-pages" /></h2>
+						<h5><liferay-ui:message key="children-pages" /></h5>
 
-						<ul>
+						<liferay-ui:search-container
+							headerNames="<%= null %>"
+							id="childPages"
+							total="<%= childPages.size() %>"
+						>
 
-							<%
-							PortletURL curPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
+							<liferay-ui:search-container-results
+								results="<%= childPages %>"
+							/>
 
-							for (int i = 0; i < childPages.size(); i++) {
-								WikiPage curPage = (WikiPage)childPages.get(i);
+							<liferay-ui:search-container-row
+								className="com.liferay.wiki.model.WikiPage"
+								keyProperty="pageId"
+								modelVar="curPage"
+							>
 
-								curPageURL.setParameter("title", curPage.getTitle());
-							%>
+								<%
+								PortletURL rowURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-							<c:if test="<%= Validator.isNull(curPage.getRedirectTitle()) %>">
-								<li>
-									<aui:a href="<%= curPageURL.toString() %>"><%= curPage.getTitle() %></aui:a>
-								</li>
-							</c:if>
+								rowURL.setParameter("title", curPage.getTitle());
+								%>
 
-							<%
-							}
-							%>
-
-						</ul>
+								<liferay-ui:search-container-column-text
+									href="<%= rowURL %>"
+									value="<%= curPage.getTitle() %>"
+								/>
+							</liferay-ui:search-container-row>
+							<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+						</liferay-ui:search-container>
 					</div>
 				</c:if>
 			</div>

@@ -16,12 +16,12 @@ package com.liferay.portal.security.antisamy.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Tomas Polesovsky
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration",
 	localization = "content/Language", name = "%anti.samy.configuration.name"

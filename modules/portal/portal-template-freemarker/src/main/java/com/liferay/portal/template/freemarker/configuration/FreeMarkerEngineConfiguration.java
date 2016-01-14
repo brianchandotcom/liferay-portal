@@ -16,12 +16,12 @@ package com.liferay.portal.template.freemarker.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Peter Fellwock
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	localization = "content/Language",

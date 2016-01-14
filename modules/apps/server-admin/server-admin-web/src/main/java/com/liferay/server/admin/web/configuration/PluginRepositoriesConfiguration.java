@@ -17,12 +17,12 @@ package com.liferay.server.admin.web.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Michael C. Han
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration",
 	localization = "content/Language",

@@ -16,13 +16,13 @@ package com.liferay.translator.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@ConfigurationAdmin(category = "other")
+@ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
 	id = "com.liferay.translator.web.configuration.TranslatorConfiguration",
 	localization = "content/Language", name = "%translator.configuration.name"

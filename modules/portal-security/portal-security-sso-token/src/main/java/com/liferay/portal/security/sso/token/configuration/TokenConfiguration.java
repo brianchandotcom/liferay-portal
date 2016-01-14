@@ -16,14 +16,14 @@ package com.liferay.portal.security.sso.token.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
 
 /**
  * @author Michael C. Han
  * @author Mika Koivisto
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration",
 	localization = "content/Language", name = "%token.configuration.name"

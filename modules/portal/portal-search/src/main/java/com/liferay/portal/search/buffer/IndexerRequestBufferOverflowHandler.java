@@ -12,25 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.internal;
-
-import com.liferay.portal.search.IndexerRequestBufferOverflowHandler;
+package com.liferay.portal.search.buffer;
 
 /**
  * @author Michael C. Han
  */
-public class DefaultIndexerRequestBufferOverflowHandler
-	implements IndexerRequestBufferOverflowHandler {
+public interface IndexerRequestBufferOverflowHandler {
 
-	@Override
 	public void bufferOverflowed(
-		IndexerRequestBuffer indexerRequestBuffer, int maxBufferSize) {
-
-		int numRequests = indexerRequestBuffer.size() - maxBufferSize;
-
-		if (numRequests > 0) {
-			indexerRequestBuffer.execute(numRequests);
-		}
-	}
+		IndexerRequestBuffer indexerRequestBuffer, int maxBufferSize);
 
 }

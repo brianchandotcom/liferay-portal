@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.internal;
+package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
+import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 
 import org.osgi.service.component.annotations.Component;
 

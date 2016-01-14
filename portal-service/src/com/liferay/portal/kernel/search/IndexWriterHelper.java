@@ -14,8 +14,13 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+
+import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -50,6 +55,9 @@ public interface IndexWriterHelper {
 	public void deleteEntityDocuments(
 			String searchEngineId, long companyId, String className,
 			boolean commitImmediately)
+		throws SearchException;
+
+	public int getReindexTaskCount(long groupId, boolean completed)
 		throws SearchException;
 
 	public void indexKeyword(
@@ -100,6 +108,16 @@ public interface IndexWriterHelper {
 	public void partiallyUpdateDocuments(
 			String searchEngineId, long companyId,
 			Collection<Document> documents, boolean commitImmediately)
+		throws SearchException;
+
+	public BackgroundTask reindex(
+			long userId, String jobName, long[] companyIds,
+			Map<String, Serializable> taskContextMap)
+		throws SearchException;
+
+	public BackgroundTask reindex(
+			long userId, String jobName, long[] companyIds, String className,
+			Map<String, Serializable> taskContextMap)
 		throws SearchException;
 
 	public void setIndexReadOnly(boolean indexReadOnly);

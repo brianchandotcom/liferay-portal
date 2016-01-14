@@ -1,8 +1,11 @@
 Bundle-Name: Liferay Portal Search
 Bundle-SymbolicName: com.liferay.portal.search
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.search.*;version=${plugin.full.version}
+Export-Package: \
+	com.liferay.portal.search.analysis.*;version=${plugin.full.version},\
+	com.liferay.portal.search.buffer.*;version=${plugin.full.version},\
+	com.liferay.portal.search.configuration.*;version=${plugin.full.version}
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Elasticsearch
+Liferay-Releng-Module-Group-Title: Search
 -include: ../../../marketplace/platform/bnd.bnd

@@ -640,6 +640,7 @@
 			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
 			<var name="permissionNavigationValue" value="Site Pages" />
 			<var name="roleName" value="Organization User" />
+			<var name="roleType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

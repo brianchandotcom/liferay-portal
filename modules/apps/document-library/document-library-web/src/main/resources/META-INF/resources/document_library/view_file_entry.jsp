@@ -143,7 +143,11 @@ if (portletTitleBasedNavigation) {
 				tabNames += ",custom-fields";
 			}
 
-			tabNames += ",document-type,metadata,versions";
+			if (dlViewFileVersionDisplayContext.getDDMStructuresCount() > 0) {
+				tabNames += ",document-type";
+			}
+
+			tabNames += ",metadata,versions";
 			%>
 
 			<liferay-ui:tabs names="<%= tabNames %>" refresh="<%= false %>" type="dropdown">
@@ -247,43 +251,45 @@ if (portletTitleBasedNavigation) {
 					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
-				<liferay-ui:section>
+				<c:if test="<%= dlViewFileVersionDisplayContext.getDDMStructuresCount() > 0 %>">
+					<liferay-ui:section>
 
-					<%
-					try {
-						List<DDMStructure> ddmStructures = dlViewFileVersionDisplayContext.getDDMStructures();
+						<%
+						try {
+							List<DDMStructure> ddmStructures = dlViewFileVersionDisplayContext.getDDMStructures();
 
-						for (DDMStructure ddmStructure : ddmStructures) {
-							DDMFormValues ddmFormValues = null;
+							for (DDMStructure ddmStructure : ddmStructures) {
+								DDMFormValues ddmFormValues = null;
 
-							try {
-								ddmFormValues = dlViewFileVersionDisplayContext.getDDMFormValues(ddmStructure);
+								try {
+									ddmFormValues = dlViewFileVersionDisplayContext.getDDMFormValues(ddmStructure);
+								}
+								catch (Exception e) {
+								}
+						%>
+
+								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
+
+									<liferay-ddm:html
+										classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+										classPK="<%= ddmStructure.getPrimaryKey() %>"
+										ddmFormValues="<%= DDMBeanTranslatorUtil.translate(ddmFormValues) %>"
+										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+										readOnly="<%= true %>"
+										requestedLocale="<%= locale %>"
+										showEmptyFieldLabel="<%= false %>"
+									/>
+								</liferay-ui:panel>
+
+						<%
 							}
-							catch (Exception e) {
-							}
-					%>
-
-							<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
-
-								<liferay-ddm:html
-									classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-									classPK="<%= ddmStructure.getPrimaryKey() %>"
-									ddmFormValues="<%= DDMBeanTranslatorUtil.translate(ddmFormValues) %>"
-									fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-									readOnly="<%= true %>"
-									requestedLocale="<%= locale %>"
-									showEmptyFieldLabel="<%= false %>"
-								/>
-							</liferay-ui:panel>
-
-					<%
 						}
-					}
-					catch (Exception e) {
-					}
-					%>
+						catch (Exception e) {
+						}
+						%>
 
-				</liferay-ui:section>
+					</liferay-ui:section>
+				</c:if>
 
 				<c:if test="<%= showCustomFieldsTab %>">
 					<liferay-ui:section>

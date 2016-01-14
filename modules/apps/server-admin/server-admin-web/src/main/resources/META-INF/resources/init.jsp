@@ -118,7 +118,7 @@ else if (portletName.equals(PortletKeys.SERVER_ADMIN)) {
 	tabs1 = "server";
 }
 
-String tabs2 = ParamUtil.getString(request, "tabs2");
+String tabs2 = ParamUtil.getString(request, "tabs2", "resources");
 String tabs3 = ParamUtil.getString(request, "tabs3");
 
 if (tabs1.equals("plugins")) {

@@ -59,7 +59,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				</li>
 			</ul>
 
-			<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
+			<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
 			<div>
 				<liferay-ui:message key="folder" />

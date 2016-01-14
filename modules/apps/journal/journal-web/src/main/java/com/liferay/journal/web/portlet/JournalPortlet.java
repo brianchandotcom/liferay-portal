@@ -99,7 +99,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
@@ -1092,24 +1091,23 @@ public class JournalPortlet extends MVCPortlet {
 		String referringPortletResource = ParamUtil.getString(
 			actionRequest, "referringPortletResource");
 
-		PortletURLImpl portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, JournalPortletKeys.JOURNAL, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
-		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
-			"referringPortletResource", referringPortletResource, false);
+			"referringPortletResource", referringPortletResource);
 		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(article.getResourcePrimKey()),
-			false);
+			"resourcePrimKey", String.valueOf(article.getResourcePrimKey()));
 		portletURL.setParameter(
-			"groupId", String.valueOf(article.getGroupId()), false);
+			"groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter(
-			"folderId", String.valueOf(article.getFolderId()), false);
-		portletURL.setParameter("articleId", article.getArticleId(), false);
+			"folderId", String.valueOf(article.getFolderId()));
+		portletURL.setParameter("articleId", article.getArticleId());
 		portletURL.setParameter(
-			"version", String.valueOf(article.getVersion()), false);
+			"version", String.valueOf(article.getVersion()));
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();

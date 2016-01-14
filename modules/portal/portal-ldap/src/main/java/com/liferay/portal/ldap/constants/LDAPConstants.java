@@ -40,20 +40,26 @@ public class LDAPConstants {
 
 	public static final String CONTACT_MAPPINGS = "contactMappings";
 
-	public static final String ERROR_PASSWORD_AGE = "errorPasswordAge";
+	public static final String ERROR_PASSWORD_AGE_KEYWORDS =
+		"errorPasswordAgeKeywords";
 
-	public static final String ERROR_PASSWORD_EXPIRED = "errorPasswordExpired";
+	public static final String ERROR_PASSWORD_EXPIRED_KEYWORDS =
+		"errorPasswordExpiredKeywords";
 
-	public static final String ERROR_PASSWORD_HISTORY = "errorPasswordHistory";
+	public static final String ERROR_PASSWORD_HISTORY_KEYWORDS =
+		"errorPasswordHistoryKeywords";
 
-	public static final String ERROR_PASSWORD_NOT_CHANGEABLE =
-		"errorPasswordNotChangeable";
+	public static final String ERROR_PASSWORD_NOT_CHANGEABLE_KEYWORDS =
+		"errorPasswordNotChangeableKeywords";
 
-	public static final String ERROR_PASSWORD_SYNTAX = "errorPasswordSyntax";
+	public static final String ERROR_PASSWORD_SYNTAX_KEYWORDS =
+		"errorPasswordSyntaxKeywords";
 
-	public static final String ERROR_PASSWORD_TRIVIAL = "errorPasswordTrivial";
+	public static final String ERROR_PASSWORD_TRIVIAL_KEYWORDS =
+		"errorPasswordTrivialTextKeywords";
 
-	public static final String ERROR_USER_LOCKOUT = "errorUserLockout";
+	public static final String ERROR_USER_LOCKOUT_KEYWORDS =
+		"errorUserLockoutKeywords";
 
 	public static final String EXPORT_ENABLED = "exportEnabled";
 

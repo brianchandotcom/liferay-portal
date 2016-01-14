@@ -40,7 +40,7 @@
 			<bean class="com.liferay.portal.util.LayoutTypePortletFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
+	<bean id="com.liferay.layouts.admin.kernel.util.SitemapUtil" class="com.liferay.layouts.admin.kernel.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
 		</property>

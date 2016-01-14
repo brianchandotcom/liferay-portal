@@ -47,8 +47,8 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
 import javax.portlet.PortletContext;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -290,9 +290,9 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		_ldapServerConfigurationProvider;
 
 	private CounterLocalService _counterLocalService;
-	private PortletContext _portletContext;
 	private Portal _portal;
 	private Portlet _portlet;
+	private PortletContext _portletContext;
 	private PortletContextFactory _portletContextFactory;
 	private ServletContext _servletContext;
 

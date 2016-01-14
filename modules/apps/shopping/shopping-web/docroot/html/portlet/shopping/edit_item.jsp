@@ -74,15 +74,20 @@ else {
 }
 
 int priceId = ParamUtil.getInteger(request, "priceId", -1);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((item == null) ? LanguageUtil.get(request, "new-item") : item.getName()));
 %>
 
 <portlet:actionURL var="editItemURL">
 	<portlet:param name="struts_action" value="/shopping/edit_item" />
 </portlet:actionURL>
 
-<aui:form action="<%= editItemURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveItem();" %>'>
+<aui:form action="<%= editItemURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="scroll" type="hidden" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (item == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="itemId" type="hidden" value="<%= itemId %>" />
@@ -95,35 +100,46 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	<aui:input name="pricesCount" type="hidden" value="<%= pricesCount %>" />
 	<aui:input name="priceId" type="hidden" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="item"
-	/>
-
 	<liferay-ui:error exception="<%= DuplicateItemSKUException.class %>" message="the-item-sku-you-requested-is-already-taken" />
 	<liferay-ui:error exception="<%= ItemNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= ItemSKUException.class %>" message="please-enter-a-valid-item-sku" />
 
-	<div class="breadcrumbs">
-		<%= ShoppingUtil.getBreadcrumbs(categoryId, renderRequest, renderResponse) %>
-	</div>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="sku" />
 
-	<aui:fieldset>
+			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="name" />
+
+			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="description" />
+
+			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="properties" />
+
+			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="requiresShipping" />
+
+			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="featured" />
+
+			<aui:input checked="<%= infiniteStock %>" helpMessage="disable-stock-checking-help" label="disable-stock-checking" name="infiniteStock" onChange='<%= renderResponse.getNamespace() + "toggleInfiniteStock(this);" %>' type="checkbox" />
+
+			<c:if test="<%= (fieldsCount == 0) && !infiniteStock %>">
+				<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="stockQuantity" />
+			</c:if>
+		</aui:fieldset>
+
 		<c:if test="<%= item != null %>">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="parent-category">
 
-			<%
-			String categoryName = "";
+				<%
+				String categoryName = "";
 
-			if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-				ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
+				if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+					ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
 
-				category = category.toEscapedModel();
+					category = category.toEscapedModel();
 
-				categoryName = category.getName();
-			}
-			%>
+					categoryName = category.getName();
+				}
+				%>
 
-			<div class="form-group">
 				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
 
 				<aui:button id="selectCategoryButton" value="select" />
@@ -133,76 +149,45 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				%>
 
 				<aui:button onClick="<%= taglibRemoveFolder %>" value="remove" />
-			</div>
 
-			<aui:script sandbox="<%= true %>">
-				$('#<portlet:namespace />selectCategoryButton').on(
-					'click',
-					function(event) {
-						Liferay.Util.selectEntity(
-							{
-								dialog: {
-									constrain: true,
-									modal: true,
-									width: 680
+				<aui:script sandbox="<%= true %>">
+					$('#<portlet:namespace />selectCategoryButton').on(
+						'click',
+						function(event) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										constrain: true,
+										modal: true
+									},
+									id: '<portlet:namespace />selectCategory',
+									title: '<liferay-ui:message arguments="category" key="select-x" />',
+									uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
 								},
-								id: '<portlet:namespace />selectCategory',
-								title: '<liferay-ui:message arguments="category" key="select-x" />',
-								uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/select_category" /><portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
-							},
-							function(event) {
-								var form = $(document.<portlet:namespace />fm);
+								function(event) {
+									var form = $(document.<portlet:namespace />fm);
 
-								form.fm('categoryId').val(event.categoryid);
+									form.fm('categoryId').val(event.categoryid);
 
-								form.fm('categoryName').val(_.unescape(event.name));
-							}
-						);
-					}
-				);
-			</aui:script>
-		</c:if>
-
-		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="sku" />
-
-		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="name" />
-
-		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="description" />
-
-		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="properties" />
-
-		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="requiresShipping" />
-
-		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="featured" />
-
-		<aui:input checked="<%= infiniteStock %>" helpMessage="disable-stock-checking-help" label="disable-stock-checking" name="infiniteStock" onChange='<%= renderResponse.getNamespace() + "toggleInfiniteStock(this);" %>' type="checkbox" />
-
-		<c:if test="<%= (fieldsCount == 0) && !infiniteStock %>">
-			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="stockQuantity" />
+									form.fm('categoryName').val(_.unescape(event.name));
+								}
+							);
+						}
+					);
+				</aui:script>
+			</aui:fieldset>
 		</c:if>
 
 		<c:if test="<%= item == null %>">
-			<aui:field-wrapper label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= ShoppingItem.class.getName() %>"
 				/>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
-	</aui:fieldset>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-
-	<liferay-ui:panel-container extended="<%= true %>" id="shoppingEditItemPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditItemFieldsPanel"  persistState="<%= true %>" title="fields">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="fields">
 			<aui:input name="fields" type="hidden" />
-
-			<liferay-ui:message key="fields-are-added-if-you-need-to-distinguish-items-based-on-criteria-chosen-by-the-user" />
-
-			<br /><br />
 
 			<liferay-ui:error exception="<%= DuplicateItemFieldNameException.class %>">
 
@@ -212,6 +197,10 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<liferay-ui:message key="field-names-must-be-unique.-the-following-field-names-are-duplicates" /> <%= difne.getMessage() %>.
 			</liferay-ui:error>
+
+			<div class="alert alert-info">
+				<liferay-ui:message key="fields-are-added-if-you-need-to-distinguish-items-based-on-criteria-chosen-by-the-user" />
+			</div>
 
 			<table class="lfr-table">
 
@@ -272,25 +261,17 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 			</table>
 
-			<c:if test="<%= (fieldsCount > 0) && !infiniteStock %>">
-				<br />
-			</c:if>
-
 			<aui:button onClick='<%= renderResponse.getNamespace() + "addField();" %>' value="add-field" />
 
 			<c:if test="<%= (fieldsCount > 0) && !infiniteStock %>">
 				<aui:button onClick='<%= renderResponse.getNamespace() + "editItemQuantities();" %>' value="edit-stock-quantity" />
 			</c:if>
+		</aui:fieldset>
 
-			<br /><br />
-
-		</liferay-ui:panel>
-
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>"  id="shoppingEditItemPricesPanel"  persistState="<%= true %>" title="prices">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="prices">
 			<aui:input name="prices" type="hidden" />
 
-			<aui:fieldset>
-				<table class="lfr-table">
+			<table class="lfr-table">
 
 				<%
 				for (int i = 0; i < pricesCount; i++) {
@@ -450,13 +431,12 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				}
 				%>
 
-				</table>
-			</aui:fieldset>
+			</table>
 
 			<aui:button onClick='<%= renderResponse.getNamespace() + "addPrice();" %>' value="add-price" />
-		</liferay-ui:panel>
+		</aui:fieldset>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>"  id="shoppingEditItemImagesPanel" persistState="<%= true %>" title="images">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="images">
 			<liferay-ui:error exception="<%= ItemLargeImageNameException.class %>">
 
 				<%
@@ -511,33 +491,37 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
-			<aui:fieldset>
-				<aui:input label="small-image-url" name="smallImageURL" />
+			<aui:input label="small-image-url" name="smallImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="small-image" />
+			<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="small-image" />
 
-				<aui:input label="" name="smallFile" type="file" />
+			<aui:input label="" name="smallFile" type="file" />
 
-				<aui:input checked="<%= ((item != null) && item.isSmallImage()) ? true : false %>" label="use-small-image" name="smallImage" type="checkbox" />
+			<aui:input checked="<%= ((item != null) && item.isSmallImage()) ? true : false %>" label="use-small-image" name="smallImage" type="checkbox" />
 
-				<aui:input label="medium-image-url" name="mediumImageURL" />
+			<aui:input label="medium-image-url" name="mediumImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="medium-image" />
+			<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="medium-image" />
 
-				<aui:input label="" name="mediumFile" type="file" />
+			<aui:input label="" name="mediumFile" type="file" />
 
-				<aui:input checked="<%= ((item != null) && item.isMediumImage()) ? true : false %>" label="use-medium-image" name="mediumImage" type="checkbox" />
+			<aui:input checked="<%= ((item != null) && item.isMediumImage()) ? true : false %>" label="use-medium-image" name="mediumImage" type="checkbox" />
 
-				<aui:input label="large-image-url" name="largeImageURL" />
+			<aui:input label="large-image-url" name="largeImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="large-image" />
+			<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(request, "or")) %> --</span> <liferay-ui:message key="large-image" />
 
-				<aui:input label="" name="largeFile" type="file" />
+			<aui:input label="" name="largeFile" type="file" />
 
-				<aui:input checked="<%= ((item != null) && item.isLargeImage()) ? true : false %>" label="use-large-image" name="largeImage" type="checkbox" />
-			</aui:fieldset>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+			<aui:input checked="<%= ((item != null) && item.isLargeImage()) ? true : false %>" label="use-large-image" name="largeImage" type="checkbox" />
+		</aui:fieldset>
+	</aui:fieldset-group>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>
@@ -611,14 +595,6 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 				uri: itemQuantitiesURL
 			}
 		);
-	}
-
-	function <portlet:namespace />saveItem() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('<%= (item == null) ? Constants.ADD : Constants.UPDATE %>');
-
-		submitForm(form);
 	}
 
 	function <portlet:namespace />toggleInfiniteStock(checkbox) {

@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
+import com.liferay.wiki.model.WikiNode;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -48,7 +50,9 @@ public class EditNodeAttachmentMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getNode(renderRequest);
+			WikiNode node = ActionUtil.getNode(renderRequest);
+
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

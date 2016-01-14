@@ -17,7 +17,6 @@ package com.liferay.portal.security.auth.bundle.authtokenwhitelistutil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.util.PortletKeys;
 
-import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -46,8 +45,7 @@ public class TestMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		return false;
 	}

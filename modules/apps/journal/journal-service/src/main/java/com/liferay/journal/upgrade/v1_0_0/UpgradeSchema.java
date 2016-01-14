@@ -49,6 +49,9 @@ public class UpgradeSchema extends UpgradeProcess {
 				"alter_column_name JournalFeed structureId DDMStructureKey " +
 					"TEXT null");
 			runSQL(
+				"alter_column_type JournalFeed targetPortletId VARCHAR(200) " +
+					"null");
+			runSQL(
 				"alter_column_name JournalFeed templateId DDMTemplateKey " +
 					"TEXT null");
 			runSQL(

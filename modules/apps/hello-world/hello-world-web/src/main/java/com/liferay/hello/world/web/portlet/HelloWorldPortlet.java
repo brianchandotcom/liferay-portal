@@ -12,40 +12,60 @@
  * details.
  */
 
-package com.liferay.portlet.helloworld;
+package com.liferay.hello.world.web.portlet;
 
+import com.liferay.hello.world.web.constants.HelloWorldPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.GenericPortlet;
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class HelloWorldPortlet extends GenericPortlet {
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-hello-world",
+		"com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.icon=/icons/hello-world.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.remoteable=true",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Hello World",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-display-default-configuration-icons=true",
+		"javax.portlet.name=" + HelloWorldPortletKeys.HELLO_WORLD,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
+public class HelloWorldPortlet extends MVCPortlet {
 
 	@Override
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException {
+		throws IOException, PortletException {
 
 		renderResponse.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
 		try (PrintWriter writer = renderResponse.getWriter()) {
 			writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ".");
 		}
-	}
-
-	@Override
-	public void processAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
 	}
 
 }

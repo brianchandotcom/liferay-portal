@@ -164,6 +164,8 @@ if (portletTitleBasedNavigation) {
 						</c:if>
 
 						<div>
+							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+
 							<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
 						</div>
 
@@ -582,8 +584,6 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</c:if>
 			</div>
-
-			<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 			<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
 

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-PortletURL portletURL = liferayPortletResponse.createRenderURL();
+package com.liferay.layout.admin.web.constants;
 
-portletURL.setParameter("mvcPath", "/view.jsp");
-portletURL.setParameter("selPlid", String.valueOf(layoutsAdminDisplayContext.getSelPlid()));
-portletURL.setParameter("className", className);
-portletURL.setParameter("classPK", String.valueOf(classPK));
+/**
+ * @author Julio Camarero
+ */
+public class LayoutAdminWebKeys {
 
-request.setAttribute("mobile_device_rules_header.jspf-portletURL", portletURL);
-%>
+	public static final String CONTROL_MENU_ENTRY = "CONTROL_MENU_ENTRY";
 
-<liferay-ui:error-marker key="errorSection" value="device" />
-
-<h3><liferay-ui:message key="mobile-device-rules" /></h3>
+}

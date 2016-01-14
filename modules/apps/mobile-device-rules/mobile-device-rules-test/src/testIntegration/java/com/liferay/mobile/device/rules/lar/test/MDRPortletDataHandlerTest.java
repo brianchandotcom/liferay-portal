@@ -15,6 +15,7 @@
 package com.liferay.mobile.device.rules.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.lar.MDRPortletDataHandler;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.Map;
@@ -80,7 +80,7 @@ public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.MOBILE_DEVICE_RULES;
+		return MDRPortletKeys.MOBILE_DEVICE_RULES;
 	}
 
 }

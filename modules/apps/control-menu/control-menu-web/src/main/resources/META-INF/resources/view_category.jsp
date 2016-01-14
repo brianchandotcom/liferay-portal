@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String panelContainerId = ParamUtil.getString(request, "panelContainerId");
-
 PortletCategory portletCategory = (PortletCategory)request.getAttribute(WebKeys.PORTLET_CATEGORY);
 
 int portletCategoryIndex = GetterUtil.getInteger((String)request.getAttribute(WebKeys.PORTLET_CATEGORY_INDEX));
@@ -78,146 +76,153 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName());
 %>
 
-	<div class="lfr-add-content">
-		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category list-unstyled panel-page-category" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
-			<aui:nav collapsible="<%= false %>">
+	<div class="lfr-content-category panel-page-category">
+		<a class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelId %>">
+			<%= title %>
+		</a>
 
-				<%
-				for (PortletCategory category : categories) {
-					request.setAttribute(WebKeys.PORTLET_CATEGORY, category);
-					request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
-					request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
-				%>
+		<div class="collapse list-group-panel" id="<%= panelId %>">
+			<div class="list-group-item">
+				<ul class="nav nav-equal-height">
 
-					<liferay-util:include page="/view_category.jsp" servletContext="<%= application %>">
-						<liferay-util:param name="panelContainerId" value="<%= panelContainerId %>" />
-					</liferay-util:include>
+					<%
+					for (PortletCategory category : categories) {
+						request.setAttribute(WebKeys.PORTLET_CATEGORY, category);
+						request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
+						request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
+					%>
 
-				<%
-					request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, oldCategoryPath);
+						<liferay-util:include page="/view_category.jsp" servletContext="<%= application %>" />
 
-					portletCategoryIndex++;
-				}
+					<%
+						request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, oldCategoryPath);
 
-				for (Portlet portlet : portlets) {
-					divId.setIndex(0);
-
-					divId.append(newCategoryPath);
-					divId.append(":");
-
-					matcher = pattern.matcher(PortalUtil.getPortletTitle(portlet, application, locale));
-
-					while (matcher.find()) {
-						divId.append(matcher.group());
+						portletCategoryIndex++;
 					}
 
-					boolean portletInstanceable = portlet.isInstanceable();
+					for (Portlet portlet : portlets) {
+						divId.setIndex(0);
 
-					boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
+						divId.append(newCategoryPath);
+						divId.append(":");
 
-					boolean portletLocked = (!portletInstanceable && portletUsed);
+						matcher = pattern.matcher(PortalUtil.getPortletTitle(portlet, application, locale));
 
-					if (portletInstanceable && layout.isTypePanel()) {
-						continue;
-					}
-				%>
+						while (matcher.find()) {
+							divId.append(matcher.group());
+						}
 
-					<c:choose>
-						<c:when test="<%= layout.isTypePortlet() %>">
+						boolean portletInstanceable = portlet.isInstanceable();
 
-							<%
-							Map<String, Object> data = new HashMap<String, Object>();
+						boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
 
-							data.put("draggable", true);
-							data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
-							data.put("instanceable", portletInstanceable);
-							data.put("plid", plid);
-							data.put("portlet-id", portlet.getPortletId());
-							data.put("search", divId.toString().replace(':', '-'));
-							data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
+						boolean portletLocked = (!portletInstanceable && portletUsed);
 
-							String cssClass = "drag-content-item";
+						if (portletInstanceable && layout.isTypePanel()) {
+							continue;
+						}
+					%>
 
-							if (portletLocked) {
-								cssClass += " lfr-portlet-used";
-							}
-							%>
-
-							<aui:nav-item cssClass="lfr-content-item" href="">
-								<aui:icon cssClass="<%= cssClass %>" data="<%= data %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" markupView="lexicon" />
+						<c:choose>
+							<c:when test="<%= layout.isTypePortlet() %>">
 
 								<%
-								data.remove("draggable");
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("draggable", true);
+								data.put("id", renderResponse.getNamespace() + "portletItem" + portlet.getPortletId());
+								data.put("instanceable", portletInstanceable);
+								data.put("plid", plid);
+								data.put("portlet-id", portlet.getPortletId());
+								data.put("search", divId.toString().replace(':', '-'));
+								data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
+
+								String cssClass = "drag-content-item";
+
+								if (portletLocked) {
+									cssClass += " lfr-portlet-used";
+								}
 								%>
 
-								<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
-									<liferay-ui:message key="add" />
-								</span>
-							</aui:nav-item>
-
-							<%
-							List<PortletItem> portletItems = PortletItemLocalServiceUtil.getPortletItems(themeDisplay.getScopeGroupId(), portlet.getPortletId(), com.liferay.portal.model.PortletPreferences.class.getName());
-
-							for (PortletItem portletItem : portletItems) {
-								divId.setIndex(0);
-
-								divId.append(newCategoryPath);
-								divId.append(":");
-								divId.append(PortalUtil.getPortletTitle(portlet, application, locale));
-								divId.append(":");
-
-								matcher = pattern.matcher(HtmlUtil.escape(portletItem.getName()));
-
-								while (matcher.find()) {
-									divId.append(matcher.group());
-								}
-
-								Map<String, Object> portletItemData = new HashMap<String, Object>();
-
-								portletItemData.put("draggable", true);
-								portletItemData.put("id", renderResponse.getNamespace() + "portletItem" + portletItem.getPortletItemId());
-								portletItemData.put("instanceable", portletInstanceable);
-								portletItemData.put("plid", plid);
-								portletItemData.put("portlet-id", portlet.getPortletId());
-								portletItemData.put("portlet-item-id", portletItem.getPortletItemId());
-								portletItemData.put("search", divId.toString().replace(':', '-'));
-								portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
-							%>
-
-								<aui:nav-item cssClass="lfr-archived-setup lfr-content-item" href="">
-									<span <%= AUIUtil.buildData(portletItemData) %> class="<%= cssClass %>">
-										<aui:icon cssClass="<%= cssClass %>" data="<%= data %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" markupView="lexicon" />
-
-										<liferay-ui:message key="<%= HtmlUtil.escape(portletItem.getName()) %>" />
-									</span>
+								<li class="lfr-content-item" role="presentation">
+									<aui:icon cssClass="<%= cssClass %>" data="<%= data %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" markupView="lexicon" />
 
 									<%
 									data.remove("draggable");
 									%>
 
-									<span <%= AUIUtil.buildData(portletItemData) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
+									<span <%= AUIUtil.buildData(data) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
 										<liferay-ui:message key="add" />
 									</span>
-								</aui:nav-item>
+								</li>
 
-							<%
-							}
-							%>
+								<%
+								List<PortletItem> portletItems = PortletItemLocalServiceUtil.getPortletItems(themeDisplay.getScopeGroupId(), portlet.getPortletId(), com.liferay.portal.model.PortletPreferences.class.getName());
+								%>
 
-						</c:when>
-						<c:otherwise>
-							<div>
-								<a href="<liferay-portlet:renderURL portletName="<%= portlet.getRootPortletId() %>" windowState="<%= WindowState.MAXIMIZED.toString() %>"></liferay-portlet:renderURL>"><%= PortalUtil.getPortletTitle(portlet, application, locale) %></a>
-							</div>
-						</c:otherwise>
-					</c:choose>
+								<c:if test="<%= ListUtil.isNotEmpty(portletItems) %>">
+									<ul class="nav nav-equal-height">
 
-				<%
-				}
-				%>
+										<%
+										for (PortletItem portletItem : portletItems) {
+											divId.setIndex(0);
 
-			</aui:nav>
-		</liferay-ui:panel>
+											divId.append(newCategoryPath);
+											divId.append(":");
+											divId.append(PortalUtil.getPortletTitle(portlet, application, locale));
+											divId.append(":");
+
+											matcher = pattern.matcher(HtmlUtil.escape(portletItem.getName()));
+
+											while (matcher.find()) {
+												divId.append(matcher.group());
+											}
+
+											Map<String, Object> portletItemData = new HashMap<String, Object>();
+
+											portletItemData.put("draggable", true);
+											portletItemData.put("id", renderResponse.getNamespace() + "portletItem" + portletItem.getPortletItemId());
+											portletItemData.put("instanceable", portletInstanceable);
+											portletItemData.put("plid", plid);
+											portletItemData.put("portlet-id", portlet.getPortletId());
+											portletItemData.put("portlet-item-id", portletItem.getPortletItemId());
+											portletItemData.put("search", divId.toString().replace(':', '-'));
+											portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
+										%>
+
+											<li class="lfr-archived-setup lfr-content-item" role="presentation">
+												<aui:icon cssClass="<%= cssClass %>" data="<%= portletItemData %>" image='<%= portletInstanceable ? "grid" : "live" %>' label="<%= HtmlUtil.escape(portletItem.getName()) %>" markupView="lexicon" />
+
+												<%
+												portletItemData.remove("draggable");
+												%>
+
+												<span <%= AUIUtil.buildData(portletItemData) %> class='add-content-item <%= portletLocked ? "lfr-portlet-used" : StringPool.BLANK %>'>
+													<liferay-ui:message key="add" />
+												</span>
+											</li>
+
+										<%
+										}
+										%>
+
+									</ul>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+								<div>
+									<a href="<liferay-portlet:renderURL portletName="<%= portlet.getRootPortletId() %>" windowState="<%= WindowState.MAXIMIZED.toString() %>"></liferay-portlet:renderURL>"><%= PortalUtil.getPortletTitle(portlet, application, locale) %></a>
+								</div>
+							</c:otherwise>
+						</c:choose>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</div>
+		</div>
 	</div>
 
 	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= newCategoryPath.replace(':', '-') %>" />

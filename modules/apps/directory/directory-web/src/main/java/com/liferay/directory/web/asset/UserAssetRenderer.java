@@ -186,11 +186,6 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 		return false;
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/user_icon.png";
-	}
-
 	private final User _user;
 
 }

@@ -77,9 +77,10 @@ if (folder != null) {
 				%>
 
 				<liferay-ui:icon
-					iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+					icon="<%= assetRenderer.getIconCssClass() %>"
 					label="<%= true %>"
 					localizeMessage="<%= false %>"
+					markupView="lexicon"
 					message="<%= HtmlUtil.escape(curFolder.getName()) %>"
 					url="<%= viewFolderURL %>"
 				/>

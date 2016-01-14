@@ -21,7 +21,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.UserPermissionUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -84,7 +83,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-user";
+		return "user";
 	}
 
 	@Override
@@ -99,11 +98,6 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 
 		return UserPermissionUtil.contains(
 			permissionChecker, classPK, actionId);
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/user_icon.png";
 	}
 
 	@Reference(unbind = "-")

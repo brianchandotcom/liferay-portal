@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -38,12 +39,16 @@ public abstract class BaseCustomAttributesDisplay
 			return assetRendererFactory.getIconCssClass();
 		}
 
-		return "icon-file-alt";
+		return StringPool.BLANK;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/page.png";
+		return StringPool.BLANK;
 	}
 
 	@Override

@@ -50,7 +50,9 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 				AssetRendererFactory<?> dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 				%>
 
-				<div class="<%= dlFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
+				<div class="lfr-asset-icon">
+					<liferay-ui:icon icon="<%= dlFolderAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+
 					<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 				</div>
 
@@ -58,7 +60,9 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 				AssetRendererFactory<?> dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 				%>
 
-				<div class="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
+				<div class="last lfr-asset-icon">
+					<liferay-ui:icon icon="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+
 					<%= fileEntriesCount %> <liferay-ui:message key='<%= (fileEntriesCount == 1) ? "document" : "documents" %>' />
 				</div>
 			</div>

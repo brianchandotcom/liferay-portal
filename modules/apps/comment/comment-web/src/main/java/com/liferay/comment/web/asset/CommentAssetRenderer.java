@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
@@ -117,17 +116,6 @@ public class CommentAssetRenderer
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return _workflowableComment.getBody();
-	}
-
-	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/message.png";
 	}
 
 	@Override
@@ -240,11 +228,6 @@ public class CommentAssetRenderer
 	@Override
 	public boolean isPrintable() {
 		return true;
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/message.png";
 	}
 
 	private final WorkflowableComment _workflowableComment;

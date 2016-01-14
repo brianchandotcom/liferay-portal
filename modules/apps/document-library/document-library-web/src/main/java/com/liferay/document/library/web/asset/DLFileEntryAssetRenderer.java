@@ -126,12 +126,6 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
-			_fileEntry.getIcon() + ".png";
-	}
-
-	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
@@ -203,8 +197,7 @@ public class DLFileEntryAssetRenderer
 			return thumbnailSrc;
 		}
 
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/document.png";
+		return super.getThumbnailPath(portletRequest);
 	}
 
 	@Override

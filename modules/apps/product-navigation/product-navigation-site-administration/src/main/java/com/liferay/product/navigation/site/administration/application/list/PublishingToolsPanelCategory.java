@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Component;
 public class PublishingToolsPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-retweet";
-	}
-
-	@Override
 	public String getKey() {
 		return PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS;
 	}

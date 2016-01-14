@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
@@ -68,11 +67,6 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 
 		return _blogsEntryLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/blogs/blogs.png";
 	}
 
 	@Reference(unbind = "-")

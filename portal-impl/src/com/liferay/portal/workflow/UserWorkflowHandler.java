@@ -23,7 +23,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
@@ -74,11 +73,6 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 		return UserLocalServiceUtil.updateStatus(
 			userId, status, serviceContext);
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/user_icon.png";
 	}
 
 }

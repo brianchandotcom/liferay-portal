@@ -480,7 +480,7 @@ public class PortletTracker
 			createPortletServlet(bundleContext, contextName, classLoader));
 		serviceRegistrations.addServiceRegistration(
 			createRestrictPortletServletRequestFilter(
-				bundleContext, contextName, classLoader));
+				bundleContext, contextName));
 	}
 
 	protected void collectApplicationTypes(
@@ -1193,8 +1193,7 @@ public class PortletTracker
 	}
 
 	protected ServiceRegistration<?> createRestrictPortletServletRequestFilter(
-		BundleContext bundleContext, String contextName,
-		ClassLoader classLoader) {
+		BundleContext bundleContext, String contextName) {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 

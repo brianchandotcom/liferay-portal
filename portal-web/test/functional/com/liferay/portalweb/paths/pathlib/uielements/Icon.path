@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIBE</td>
+	<td>//span/*[name()='svg'][contains(@class,'icon-star')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLTIP</td>
 	<td>//span[@class='taglib-icon-help']</td>
 	<td></td>

@@ -17,9 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 
-long groupId = selLayout.getGroupId();
+Layout selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
+
 String className = Layout.class.getName();
 long classPK = selLayout.getPlid();
 %>
@@ -27,20 +28,20 @@ long classPK = selLayout.getPlid();
 <%@ include file="/layout/mobile_device_rules_header.jspf" %>
 
 <%
-PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
+PortletURL editLayoutSetURL = liferayPortletResponse.createRenderURL();
+
+editLayoutSetURL.setParameter("selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+editLayoutSetURL.setParameter("groupId", String.valueOf(selLayout.getGroupId()));
 
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
+
+Group group = GroupLocalServiceUtil.getGroup(selLayout.getGroupId());
+
+String rootNodeName = group.getLayoutRootNodeName(selLayout.isPrivateLayout(), locale);
 %>
 
 <liferay-util:buffer var="rootNodeNameLink">
-	<c:choose>
-		<c:when test="<%= themeDisplay.isStateExclusive() %>">
-			<%= HtmlUtil.escape(layoutsAdminDisplayContext.getRootNodeName()) %>
-		</c:when>
-		<c:otherwise>
-			<aui:a href='<%= redirectURL.toString() + "#tab=mobileDeviceRules" %>'><%= HtmlUtil.escape(layoutsAdminDisplayContext.getRootNodeName()) %></aui:a>
-		</c:otherwise>
-	</c:choose>
+	<aui:a href='<%= editLayoutSetURL.toString() + "#tab=mobileDeviceRules" %>'><%= HtmlUtil.escape(rootNodeName) %></aui:a>
 </liferay-util:buffer>
 
 <aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(request, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
@@ -55,7 +56,7 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 
 <div class="<%= (mdrRuleGroupInstancesCount > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />uniqueRuleGroupInstancesContainer">
 	<liferay-util:include page="/layout/mobile_device_rules_rule_group_instances.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<liferay-util:param name="groupId" value="<%= String.valueOf(selLayout.getGroupId()) %>" />
 		<liferay-util:param name="className" value="<%= className %>" />
 		<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	</liferay-util:include>

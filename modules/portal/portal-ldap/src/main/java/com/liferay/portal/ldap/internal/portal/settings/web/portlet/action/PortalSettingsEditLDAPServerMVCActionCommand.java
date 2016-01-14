@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -34,8 +35,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.constants.LDAPConstants;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.Portal;
+import com.liferay.portlet.PortletContextFactory;
 
 import java.util.Dictionary;
 import java.util.List;
@@ -43,7 +47,12 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletContext;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -80,13 +89,21 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			String mvcPath = "/edit_ldap_server.jsp";
+			String mvcPath =
+				"/com.liferay.portal.settings.web/edit_ldap_server.jsp";
 
 			if (e instanceof DuplicateLDAPServerNameException ||
 				e instanceof LDAPFilterException ||
 				e instanceof LDAPServerNameException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(actionRequest);
+
+				httpServletRequest.setAttribute(
+					MVCRenderCommand.PORTLET_CONTEXT_OVERRIDE_PREFIX + mvcPath,
+					_portletContext);
 			}
 			else if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
@@ -99,6 +116,12 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 
 			actionResponse.setRenderParameter("mvcPath", mvcPath);
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		_portletContext = _portletContextFactory.newUntrackedInstance(
+			_portlet, _servletContext);
 	}
 
 	protected void deleteLDAPServer(ActionRequest actionRequest)
@@ -129,6 +152,33 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 			ldapServerConfigurationProvider) {
 
 		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS + ")",
+		unbind = "-"
+	)
+	protected void setPortlet(Portlet portlet) {
+		_portlet = portlet;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletContextFactory(
+		PortletContextFactory portletContextFactory) {
+
+		_portletContextFactory = portletContextFactory;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.ldap)", unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	protected void updateLDAPServer(ActionRequest actionRequest)
@@ -239,5 +289,10 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		_ldapServerConfigurationProvider;
 
 	private CounterLocalService _counterLocalService;
+	private Portal _portal;
+	private Portlet _portlet;
+	private PortletContext _portletContext;
+	private PortletContextFactory _portletContextFactory;
+	private ServletContext _servletContext;
 
 }

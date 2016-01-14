@@ -132,6 +132,12 @@
 		clear: both;
 	}
 
+	.sidenav-right {
+		> .btn-group {
+			margin: 20px 0;
+		}
+	}
+
 	.folder.error:hover {
 		background-color: #FDD;
 	}

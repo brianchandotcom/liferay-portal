@@ -43,7 +43,6 @@ boolean useAssetEntryQuery = Validator.isNotNull(assetTagName);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
@@ -77,7 +76,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/message_boards/view_threads.jspf" %>
 
 	</c:when>
-	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view") %>'>
+	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") %>'>
 		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 			<div class="category-buttons">
 
@@ -165,8 +164,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			%>
 
 			<portlet:renderURL var="backURL">
-				<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-				<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+				<c:choose>
+					<c:when test="<%= parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+					</c:when>
+					<c:otherwise>
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
+						<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+					</c:otherwise>
+				</c:choose>
 			</portlet:renderURL>
 
 			<liferay-ui:header
@@ -231,7 +237,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
 
 					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 

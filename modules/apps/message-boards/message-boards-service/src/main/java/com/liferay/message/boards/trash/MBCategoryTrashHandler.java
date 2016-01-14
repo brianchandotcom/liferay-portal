@@ -406,7 +406,8 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 				portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 		}
 
-		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/message_boards/view_category");
 
 		return portletURL;
 	}

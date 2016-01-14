@@ -9,7 +9,7 @@
 	<route>
 		<pattern>/category</pattern>
 		<implicit-parameter name="mbCategoryId">0</implicit-parameter>
-		<implicit-parameter name="mvcRenderCommandName">/message_boards/view</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_category</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
@@ -49,13 +49,13 @@
 	</route>
 	<route>
 		<pattern>/category/{mbCategoryId:\d+}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/message_boards/view</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_category</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/category/{p_p_state}</pattern>
 		<implicit-parameter name="mbCategoryId">0</implicit-parameter>
-		<implicit-parameter name="mvcRenderCommandName">/message_boards/view</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_category</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/message/{messageId:\d+}</pattern>
@@ -97,7 +97,7 @@
 	</route>
 	<route>
 		<pattern>/category/{mbCategoryId:\d+}/{p_p_state}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/message_boards/view</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/view_category</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/message/{messageId:\d+}/{p_p_state}</pattern>

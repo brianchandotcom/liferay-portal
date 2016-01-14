@@ -128,7 +128,8 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/message_boards/view_category");
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 		portletURL.setWindowState(windowState);

@@ -62,7 +62,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
 
 					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 

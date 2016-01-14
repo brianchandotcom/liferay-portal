@@ -40,8 +40,8 @@ page import="com.liferay.portal.util.LicenseUtil" %><%@
 page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
-page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler" %><%@
-page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType" %>
+page import="com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType" %><%@
+page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler" %>
 
 <%@ page import="org.apache.struts.action.ActionMapping" %><%@
 page import="org.apache.struts.tiles.ComponentDefinition" %><%@

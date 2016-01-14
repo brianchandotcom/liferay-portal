@@ -22,4 +22,7 @@ public class JournalPortletKeys {
 	public static final String JOURNAL =
 		"com_liferay_journal_web_portlet_JournalPortlet";
 
+	public static final String JOURNAL_RSS =
+		"com_liferay_journal_web_portlet_JournalRSSPortlet";
+
 }

@@ -117,7 +117,9 @@
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
-		<field name="targetPortletId" type="String" />
+		<field name="targetPortletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="contentField" type="String" />
 		<field name="feedFormat" type="String" />
 		<field name="feedVersion" type="double" />

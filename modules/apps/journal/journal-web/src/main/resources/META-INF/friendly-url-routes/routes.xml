@@ -3,14 +3,14 @@
 
 <routes>
 	<route>
-		<pattern>/rss/{feedId}</pattern>
+		<pattern>/feed/{id:\d+}</pattern>
 		<ignored-parameter name="p_p_cacheability" />
 		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
 		<implicit-parameter name="p_p_resource_id">rss</implicit-parameter>
 		<overridden-parameter name="p_p_cacheability">cacheLevelFull</overridden-parameter>
 	</route>
 	<route>
-		<pattern>/rss/{groupId}/{feedId}</pattern>
+		<pattern>/feed/{groupId:\d+}/{feedId}</pattern>
 		<ignored-parameter name="p_p_cacheability" />
 		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
 		<implicit-parameter name="p_p_resource_id">rss</implicit-parameter>

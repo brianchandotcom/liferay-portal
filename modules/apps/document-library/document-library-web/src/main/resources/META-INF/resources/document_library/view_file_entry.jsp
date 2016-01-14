@@ -147,7 +147,11 @@ if (portletTitleBasedNavigation) {
 				tabNames += ",document-type";
 			}
 
-			tabNames += ",metadata,versions";
+			tabNames += ",metadata";
+
+			if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
+				tabNames += ",versions";
+			}
 			%>
 
 			<liferay-ui:tabs names="<%= tabNames %>" refresh="<%= false %>" type="dropdown">
@@ -347,8 +351,8 @@ if (portletTitleBasedNavigation) {
 
 				</liferay-ui:section>
 
-				<liferay-ui:section>
-					<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+				<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
+					<liferay-ui:section>
 						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
 							<%
@@ -449,8 +453,8 @@ if (portletTitleBasedNavigation) {
 							%>
 
 						</liferay-ui:panel>
-					</c:if>
-				</liferay-ui:section>
+					</liferay-ui:section>
+				</c:if>
 			</liferay-ui:tabs>
 		</div>
 	</div>

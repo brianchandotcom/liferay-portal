@@ -192,7 +192,7 @@ public class PasswordPolicyRelUtil {
 	public static PasswordPolicyRel findByPasswordPolicyId_First(
 		long passwordPolicyId,
 		OrderByComparator<PasswordPolicyRel> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException {
 		return getPersistence()
 				   .findByPasswordPolicyId_First(passwordPolicyId,
 			orderByComparator);
@@ -224,7 +224,7 @@ public class PasswordPolicyRelUtil {
 	public static PasswordPolicyRel findByPasswordPolicyId_Last(
 		long passwordPolicyId,
 		OrderByComparator<PasswordPolicyRel> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException {
 		return getPersistence()
 				   .findByPasswordPolicyId_Last(passwordPolicyId,
 			orderByComparator);
@@ -257,7 +257,7 @@ public class PasswordPolicyRelUtil {
 	public static PasswordPolicyRel[] findByPasswordPolicyId_PrevAndNext(
 		long passwordPolicyRelId, long passwordPolicyId,
 		OrderByComparator<PasswordPolicyRel> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException {
 		return getPersistence()
 				   .findByPasswordPolicyId_PrevAndNext(passwordPolicyRelId,
 			passwordPolicyId, orderByComparator);
@@ -291,7 +291,7 @@ public class PasswordPolicyRelUtil {
 	* @throws NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
 	*/
 	public static PasswordPolicyRel findByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -328,7 +328,7 @@ public class PasswordPolicyRelUtil {
 	* @return the password policy rel that was removed
 	*/
 	public static PasswordPolicyRel removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -379,7 +379,7 @@ public class PasswordPolicyRelUtil {
 	* @throws NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
 	*/
 	public static PasswordPolicyRel remove(long passwordPolicyRelId)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException {
 		return getPersistence().remove(passwordPolicyRelId);
 	}
 
@@ -396,7 +396,7 @@ public class PasswordPolicyRelUtil {
 	* @throws NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
 	*/
 	public static PasswordPolicyRel findByPrimaryKey(long passwordPolicyRelId)
-		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException {
 		return getPersistence().findByPrimaryKey(passwordPolicyRelId);
 	}
 

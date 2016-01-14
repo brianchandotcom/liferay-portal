@@ -184,7 +184,7 @@ public class PortletUtil {
 	*/
 	public static Portlet findByCompanyId_First(long companyId,
 		OrderByComparator<Portlet> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletException {
+		throws com.liferay.portal.exception.NoSuchPortletException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -212,7 +212,7 @@ public class PortletUtil {
 	*/
 	public static Portlet findByCompanyId_Last(long companyId,
 		OrderByComparator<Portlet> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletException {
+		throws com.liferay.portal.exception.NoSuchPortletException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -241,7 +241,7 @@ public class PortletUtil {
 	*/
 	public static Portlet[] findByCompanyId_PrevAndNext(long id,
 		long companyId, OrderByComparator<Portlet> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletException {
+		throws com.liferay.portal.exception.NoSuchPortletException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(id, companyId, orderByComparator);
 	}
@@ -274,7 +274,7 @@ public class PortletUtil {
 	* @throws NoSuchPortletException if a matching portlet could not be found
 	*/
 	public static Portlet findByC_P(long companyId, java.lang.String portletId)
-		throws com.liferay.portal.NoSuchPortletException {
+		throws com.liferay.portal.exception.NoSuchPortletException {
 		return getPersistence().findByC_P(companyId, portletId);
 	}
 
@@ -311,7 +311,7 @@ public class PortletUtil {
 	* @return the portlet that was removed
 	*/
 	public static Portlet removeByC_P(long companyId, java.lang.String portletId)
-		throws com.liferay.portal.NoSuchPortletException {
+		throws com.liferay.portal.exception.NoSuchPortletException {
 		return getPersistence().removeByC_P(companyId, portletId);
 	}
 
@@ -362,7 +362,7 @@ public class PortletUtil {
 	* @throws NoSuchPortletException if a portlet with the primary key could not be found
 	*/
 	public static Portlet remove(long id)
-		throws com.liferay.portal.NoSuchPortletException {
+		throws com.liferay.portal.exception.NoSuchPortletException {
 		return getPersistence().remove(id);
 	}
 
@@ -378,7 +378,7 @@ public class PortletUtil {
 	* @throws NoSuchPortletException if a portlet with the primary key could not be found
 	*/
 	public static Portlet findByPrimaryKey(long id)
-		throws com.liferay.portal.NoSuchPortletException {
+		throws com.liferay.portal.exception.NoSuchPortletException {
 		return getPersistence().findByPrimaryKey(id);
 	}
 

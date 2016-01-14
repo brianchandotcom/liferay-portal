@@ -191,7 +191,7 @@ public class ServiceComponentUtil {
 	public static ServiceComponent findByBuildNamespace_First(
 		java.lang.String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator)
-		throws com.liferay.portal.NoSuchServiceComponentException {
+		throws com.liferay.portal.exception.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_First(buildNamespace, orderByComparator);
 	}
@@ -222,7 +222,7 @@ public class ServiceComponentUtil {
 	public static ServiceComponent findByBuildNamespace_Last(
 		java.lang.String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator)
-		throws com.liferay.portal.NoSuchServiceComponentException {
+		throws com.liferay.portal.exception.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_Last(buildNamespace, orderByComparator);
 	}
@@ -253,7 +253,7 @@ public class ServiceComponentUtil {
 	public static ServiceComponent[] findByBuildNamespace_PrevAndNext(
 		long serviceComponentId, java.lang.String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator)
-		throws com.liferay.portal.NoSuchServiceComponentException {
+		throws com.liferay.portal.exception.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_PrevAndNext(serviceComponentId,
 			buildNamespace, orderByComparator);
@@ -288,7 +288,7 @@ public class ServiceComponentUtil {
 	*/
 	public static ServiceComponent findByBNS_BNU(
 		java.lang.String buildNamespace, long buildNumber)
-		throws com.liferay.portal.NoSuchServiceComponentException {
+		throws com.liferay.portal.exception.NoSuchServiceComponentException {
 		return getPersistence().findByBNS_BNU(buildNamespace, buildNumber);
 	}
 
@@ -329,7 +329,7 @@ public class ServiceComponentUtil {
 	*/
 	public static ServiceComponent removeByBNS_BNU(
 		java.lang.String buildNamespace, long buildNumber)
-		throws com.liferay.portal.NoSuchServiceComponentException {
+		throws com.liferay.portal.exception.NoSuchServiceComponentException {
 		return getPersistence().removeByBNS_BNU(buildNamespace, buildNumber);
 	}
 
@@ -381,7 +381,7 @@ public class ServiceComponentUtil {
 	* @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	*/
 	public static ServiceComponent remove(long serviceComponentId)
-		throws com.liferay.portal.NoSuchServiceComponentException {
+		throws com.liferay.portal.exception.NoSuchServiceComponentException {
 		return getPersistence().remove(serviceComponentId);
 	}
 
@@ -397,7 +397,7 @@ public class ServiceComponentUtil {
 	* @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	*/
 	public static ServiceComponent findByPrimaryKey(long serviceComponentId)
-		throws com.liferay.portal.NoSuchServiceComponentException {
+		throws com.liferay.portal.exception.NoSuchServiceComponentException {
 		return getPersistence().findByPrimaryKey(serviceComponentId);
 	}
 

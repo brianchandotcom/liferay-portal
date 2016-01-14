@@ -105,7 +105,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	* @param orderId the order ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping order item
-	* @throws com.liferay.shopping.NoSuchOrderItemException if a matching shopping order item could not be found
+	* @throws NoSuchOrderItemException if a matching shopping order item could not be found
 	*/
 	public ShoppingOrderItem findByOrderId_First(long orderId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrderItem> orderByComparator)
@@ -127,7 +127,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	* @param orderId the order ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping order item
-	* @throws com.liferay.shopping.NoSuchOrderItemException if a matching shopping order item could not be found
+	* @throws NoSuchOrderItemException if a matching shopping order item could not be found
 	*/
 	public ShoppingOrderItem findByOrderId_Last(long orderId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingOrderItem> orderByComparator)
@@ -150,7 +150,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	* @param orderId the order ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping order item
-	* @throws com.liferay.shopping.NoSuchOrderItemException if a shopping order item with the primary key could not be found
+	* @throws NoSuchOrderItemException if a shopping order item with the primary key could not be found
 	*/
 	public ShoppingOrderItem[] findByOrderId_PrevAndNext(long orderItemId,
 		long orderId,
@@ -200,7 +200,7 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	*
 	* @param orderItemId the primary key of the shopping order item
 	* @return the shopping order item that was removed
-	* @throws com.liferay.shopping.NoSuchOrderItemException if a shopping order item with the primary key could not be found
+	* @throws NoSuchOrderItemException if a shopping order item with the primary key could not be found
 	*/
 	public ShoppingOrderItem remove(long orderItemId)
 		throws com.liferay.shopping.exception.NoSuchOrderItemException;
@@ -208,11 +208,11 @@ public interface ShoppingOrderItemPersistence extends BasePersistence<ShoppingOr
 	public ShoppingOrderItem updateImpl(ShoppingOrderItem shoppingOrderItem);
 
 	/**
-	* Returns the shopping order item with the primary key or throws a {@link com.liferay.shopping.NoSuchOrderItemException} if it could not be found.
+	* Returns the shopping order item with the primary key or throws a {@link NoSuchOrderItemException} if it could not be found.
 	*
 	* @param orderItemId the primary key of the shopping order item
 	* @return the shopping order item
-	* @throws com.liferay.shopping.NoSuchOrderItemException if a shopping order item with the primary key could not be found
+	* @throws NoSuchOrderItemException if a shopping order item with the primary key could not be found
 	*/
 	public ShoppingOrderItem findByPrimaryKey(long orderItemId)
 		throws com.liferay.shopping.exception.NoSuchOrderItemException;

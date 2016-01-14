@@ -187,7 +187,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByUuid_First(java.lang.String uuid,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -241,7 +241,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary[] findByUuid_PrevAndNext(long vocabularyId,
 		java.lang.String uuid,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(vocabularyId, uuid, orderByComparator);
 	}
@@ -275,7 +275,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -313,7 +313,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary removeByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -414,7 +414,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -444,7 +444,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -476,7 +476,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary[] findByUuid_C_PrevAndNext(
 		long vocabularyId, java.lang.String uuid, long companyId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(vocabularyId, uuid, companyId,
 			orderByComparator);
@@ -581,7 +581,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByGroupId_First(long groupId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -607,7 +607,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByGroupId_Last(long groupId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -635,7 +635,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary[] findByGroupId_PrevAndNext(
 		long vocabularyId, long groupId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(vocabularyId, groupId,
 			orderByComparator);
@@ -699,7 +699,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary[] filterFindByGroupId_PrevAndNext(
 		long vocabularyId, long groupId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(vocabularyId, groupId,
 			orderByComparator);
@@ -952,7 +952,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByCompanyId_First(long companyId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -980,7 +980,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary findByCompanyId_Last(long companyId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -1010,7 +1010,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary[] findByCompanyId_PrevAndNext(
 		long vocabularyId, long companyId,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(vocabularyId, companyId,
 			orderByComparator);
@@ -1044,7 +1044,7 @@ public class AssetVocabularyUtil {
 	* @throws NoSuchVocabularyException if a matching asset vocabulary could not be found
 	*/
 	public static AssetVocabulary findByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().findByG_N(groupId, name);
 	}
 
@@ -1081,7 +1081,7 @@ public class AssetVocabularyUtil {
 	*/
 	public static AssetVocabulary removeByG_N(long groupId,
 		java.lang.String name)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
 
@@ -1183,7 +1183,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary findByG_LikeN_First(long groupId,
 		java.lang.String name,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByG_LikeN_First(groupId, name, orderByComparator);
 	}
@@ -1215,7 +1215,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary findByG_LikeN_Last(long groupId,
 		java.lang.String name,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByG_LikeN_Last(groupId, name, orderByComparator);
 	}
@@ -1248,7 +1248,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary[] findByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, java.lang.String name,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .findByG_LikeN_PrevAndNext(vocabularyId, groupId, name,
 			orderByComparator);
@@ -1319,7 +1319,7 @@ public class AssetVocabularyUtil {
 	public static AssetVocabulary[] filterFindByG_LikeN_PrevAndNext(
 		long vocabularyId, long groupId, java.lang.String name,
 		OrderByComparator<AssetVocabulary> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence()
 				   .filterFindByG_LikeN_PrevAndNext(vocabularyId, groupId,
 			name, orderByComparator);
@@ -1393,7 +1393,7 @@ public class AssetVocabularyUtil {
 	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
 	public static AssetVocabulary remove(long vocabularyId)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().remove(vocabularyId);
 	}
 
@@ -1409,7 +1409,7 @@ public class AssetVocabularyUtil {
 	* @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
 	*/
 	public static AssetVocabulary findByPrimaryKey(long vocabularyId)
-		throws com.liferay.portlet.asset.NoSuchVocabularyException {
+		throws com.liferay.portlet.asset.exception.NoSuchVocabularyException {
 		return getPersistence().findByPrimaryKey(vocabularyId);
 	}
 

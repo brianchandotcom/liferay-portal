@@ -191,7 +191,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static UserNotificationDelivery findByUserId_First(long userId,
 		OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
+		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -217,7 +217,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static UserNotificationDelivery findByUserId_Last(long userId,
 		OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
+		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -245,7 +245,7 @@ public class UserNotificationDeliveryUtil {
 	public static UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
 		OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
+		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(userNotificationDeliveryId,
 			userId, orderByComparator);
@@ -284,7 +284,7 @@ public class UserNotificationDeliveryUtil {
 	public static UserNotificationDelivery findByU_P_C_N_D(long userId,
 		java.lang.String portletId, long classNameId, int notificationType,
 		int deliveryType)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
+		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
 				   .findByU_P_C_N_D(userId, portletId, classNameId,
 			notificationType, deliveryType);
@@ -340,7 +340,7 @@ public class UserNotificationDeliveryUtil {
 	public static UserNotificationDelivery removeByU_P_C_N_D(long userId,
 		java.lang.String portletId, long classNameId, int notificationType,
 		int deliveryType)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
+		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
 				   .removeByU_P_C_N_D(userId, portletId, classNameId,
 			notificationType, deliveryType);
@@ -403,7 +403,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static UserNotificationDelivery remove(
 		long userNotificationDeliveryId)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
+		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence().remove(userNotificationDeliveryId);
 	}
 
@@ -421,7 +421,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static UserNotificationDelivery findByPrimaryKey(
 		long userNotificationDeliveryId)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
+		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByPrimaryKey(userNotificationDeliveryId);
 	}
 

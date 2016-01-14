@@ -105,7 +105,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -127,7 +127,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -150,7 +150,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public DDMContent[] findByUuid_PrevAndNext(long contentId,
 		java.lang.String uuid,
@@ -173,12 +173,12 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the d d m content where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.dynamic.data.mapping.NoSuchContentException} if it could not be found.
+	* Returns the d d m content where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchContentException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException;
@@ -293,7 +293,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -318,7 +318,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -343,7 +343,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public DDMContent[] findByUuid_C_PrevAndNext(long contentId,
 		java.lang.String uuid, long companyId,
@@ -432,7 +432,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -454,7 +454,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -477,7 +477,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public DDMContent[] findByGroupId_PrevAndNext(long contentId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -563,7 +563,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -585,7 +585,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a matching d d m content could not be found
+	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public DDMContent findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMContent> orderByComparator)
@@ -608,7 +608,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public DDMContent[] findByCompanyId_PrevAndNext(long contentId,
 		long companyId,
@@ -657,7 +657,7 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	*
 	* @param contentId the primary key of the d d m content
 	* @return the d d m content that was removed
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public DDMContent remove(long contentId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException;
@@ -665,11 +665,11 @@ public interface DDMContentPersistence extends BasePersistence<DDMContent> {
 	public DDMContent updateImpl(DDMContent ddmContent);
 
 	/**
-	* Returns the d d m content with the primary key or throws a {@link com.liferay.dynamic.data.mapping.NoSuchContentException} if it could not be found.
+	* Returns the d d m content with the primary key or throws a {@link NoSuchContentException} if it could not be found.
 	*
 	* @param contentId the primary key of the d d m content
 	* @return the d d m content
-	* @throws com.liferay.dynamic.data.mapping.NoSuchContentException if a d d m content with the primary key could not be found
+	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public DDMContent findByPrimaryKey(long contentId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException;

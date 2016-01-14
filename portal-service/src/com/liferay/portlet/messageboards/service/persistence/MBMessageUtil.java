@@ -186,7 +186,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] findByUuid_PrevAndNext(long messageId,
 		java.lang.String uuid, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(messageId, uuid, orderByComparator);
 	}
@@ -272,7 +272,7 @@ public class MBMessageUtil {
 	* @throws NoSuchMessageException if a matching message-boards message could not be found
 	*/
 	public static MBMessage findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -308,7 +308,7 @@ public class MBMessageUtil {
 	* @return the message-boards message that was removed
 	*/
 	public static MBMessage removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -409,7 +409,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -439,7 +439,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -471,7 +471,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByUuid_C_PrevAndNext(long messageId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(messageId, uuid, companyId,
 			orderByComparator);
@@ -575,7 +575,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByGroupId_First(long groupId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -601,7 +601,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByGroupId_Last(long groupId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -628,7 +628,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] findByGroupId_PrevAndNext(long messageId,
 		long groupId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(messageId, groupId,
 			orderByComparator);
@@ -691,7 +691,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] filterFindByGroupId_PrevAndNext(long messageId,
 		long groupId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(messageId, groupId,
 			orderByComparator);
@@ -804,7 +804,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByCompanyId_First(long companyId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -832,7 +832,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByCompanyId_Last(long companyId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -861,7 +861,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] findByCompanyId_PrevAndNext(long messageId,
 		long companyId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(messageId, companyId,
 			orderByComparator);
@@ -963,7 +963,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByUserId_First(long userId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -989,7 +989,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByUserId_Last(long userId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -1016,7 +1016,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] findByUserId_PrevAndNext(long messageId,
 		long userId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(messageId, userId,
 			orderByComparator);
@@ -1119,7 +1119,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByThreadId_First(long threadId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByThreadId_First(threadId, orderByComparator);
 	}
 
@@ -1146,7 +1146,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByThreadId_Last(long threadId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByThreadId_Last(threadId, orderByComparator);
 	}
 
@@ -1173,7 +1173,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] findByThreadId_PrevAndNext(long messageId,
 		long threadId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadId_PrevAndNext(messageId, threadId,
 			orderByComparator);
@@ -1276,7 +1276,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByThreadReplies_First(long threadId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadReplies_First(threadId, orderByComparator);
 	}
@@ -1304,7 +1304,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByThreadReplies_Last(long threadId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadReplies_Last(threadId, orderByComparator);
 	}
@@ -1333,7 +1333,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] findByThreadReplies_PrevAndNext(long messageId,
 		long threadId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadReplies_PrevAndNext(messageId, threadId,
 			orderByComparator);
@@ -1441,7 +1441,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_U_First(long groupId, long userId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -1471,7 +1471,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_U_Last(long groupId, long userId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -1503,7 +1503,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByG_U_PrevAndNext(long messageId,
 		long groupId, long userId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(messageId, groupId, userId,
 			orderByComparator);
@@ -1572,7 +1572,7 @@ public class MBMessageUtil {
 	public static MBMessage[] filterFindByG_U_PrevAndNext(long messageId,
 		long groupId, long userId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_U_PrevAndNext(messageId, groupId, userId,
 			orderByComparator);
@@ -1693,7 +1693,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_C_First(long groupId, long categoryId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_First(groupId, categoryId, orderByComparator);
 	}
@@ -1723,7 +1723,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_C_Last(long groupId, long categoryId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, categoryId, orderByComparator);
 	}
@@ -1755,7 +1755,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByG_C_PrevAndNext(long messageId,
 		long groupId, long categoryId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(messageId, groupId, categoryId,
 			orderByComparator);
@@ -1825,7 +1825,7 @@ public class MBMessageUtil {
 	public static MBMessage[] filterFindByG_C_PrevAndNext(long messageId,
 		long groupId, long categoryId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_PrevAndNext(messageId, groupId, categoryId,
 			orderByComparator);
@@ -1946,7 +1946,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_S_First(long groupId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
 	}
@@ -1976,7 +1976,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_S_Last(long groupId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -2007,7 +2007,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] findByG_S_PrevAndNext(long messageId,
 		long groupId, int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(messageId, groupId, status,
 			orderByComparator);
@@ -2075,7 +2075,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage[] filterFindByG_S_PrevAndNext(long messageId,
 		long groupId, int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_S_PrevAndNext(messageId, groupId, status,
 			orderByComparator);
@@ -2196,7 +2196,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByC_S_First(long companyId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_S_First(companyId, status, orderByComparator);
 	}
@@ -2226,7 +2226,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByC_S_Last(long companyId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_S_Last(companyId, status, orderByComparator);
 	}
@@ -2258,7 +2258,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByC_S_PrevAndNext(long messageId,
 		long companyId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_S_PrevAndNext(messageId, companyId, status,
 			orderByComparator);
@@ -2368,7 +2368,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_First(long userId, long classNameId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_First(userId, classNameId, orderByComparator);
 	}
@@ -2398,7 +2398,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_Last(long userId, long classNameId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_Last(userId, classNameId, orderByComparator);
 	}
@@ -2430,7 +2430,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByU_C_PrevAndNext(long messageId,
 		long userId, long classNameId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_PrevAndNext(messageId, userId, classNameId,
 			orderByComparator);
@@ -2629,7 +2629,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByC_C_First(long classNameId, long classPK,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -2659,7 +2659,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -2691,7 +2691,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByC_C_PrevAndNext(long messageId,
 		long classNameId, long classPK,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(messageId, classNameId, classPK,
 			orderByComparator);
@@ -2804,7 +2804,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByT_P_First(long threadId,
 		long parentMessageId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_P_First(threadId, parentMessageId, orderByComparator);
 	}
@@ -2835,7 +2835,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByT_P_Last(long threadId, long parentMessageId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_P_Last(threadId, parentMessageId, orderByComparator);
 	}
@@ -2867,7 +2867,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByT_P_PrevAndNext(long messageId,
 		long threadId, long parentMessageId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_P_PrevAndNext(messageId, threadId, parentMessageId,
 			orderByComparator);
@@ -2977,7 +2977,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByT_A_First(long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_A_First(threadId, answer, orderByComparator);
 	}
@@ -3007,7 +3007,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByT_A_Last(long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_A_Last(threadId, answer, orderByComparator);
 	}
@@ -3039,7 +3039,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByT_A_PrevAndNext(long messageId,
 		long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_A_PrevAndNext(messageId, threadId, answer,
 			orderByComparator);
@@ -3149,7 +3149,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByT_S_First(long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_S_First(threadId, status, orderByComparator);
 	}
@@ -3179,7 +3179,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByT_S_Last(long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_S_Last(threadId, status, orderByComparator);
 	}
@@ -3211,7 +3211,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByT_S_PrevAndNext(long messageId,
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_S_PrevAndNext(messageId, threadId, status,
 			orderByComparator);
@@ -3321,7 +3321,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByTR_S_First(long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByTR_S_First(threadId, status, orderByComparator);
 	}
@@ -3351,7 +3351,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByTR_S_Last(long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByTR_S_Last(threadId, status, orderByComparator);
 	}
@@ -3383,7 +3383,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByTR_S_PrevAndNext(long messageId,
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByTR_S_PrevAndNext(messageId, threadId, status,
 			orderByComparator);
@@ -3502,7 +3502,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_U_S_First(long groupId, long userId,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_S_First(groupId, userId, status, orderByComparator);
 	}
@@ -3535,7 +3535,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_U_S_Last(long groupId, long userId,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_S_Last(groupId, userId, status, orderByComparator);
 	}
@@ -3569,7 +3569,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByG_U_S_PrevAndNext(long messageId,
 		long groupId, long userId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_S_PrevAndNext(messageId, groupId, userId, status,
 			orderByComparator);
@@ -3645,7 +3645,7 @@ public class MBMessageUtil {
 	public static MBMessage[] filterFindByG_U_S_PrevAndNext(long messageId,
 		long groupId, long userId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_U_S_PrevAndNext(messageId, groupId, userId,
 			status, orderByComparator);
@@ -3779,7 +3779,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_C_T_First(long groupId, long categoryId,
 		long threadId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_First(groupId, categoryId, threadId,
 			orderByComparator);
@@ -3813,7 +3813,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_C_T_Last(long groupId, long categoryId,
 		long threadId, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_Last(groupId, categoryId, threadId,
 			orderByComparator);
@@ -3849,7 +3849,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByG_C_T_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_PrevAndNext(messageId, groupId, categoryId,
 			threadId, orderByComparator);
@@ -3925,7 +3925,7 @@ public class MBMessageUtil {
 	public static MBMessage[] filterFindByG_C_T_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_T_PrevAndNext(messageId, groupId,
 			categoryId, threadId, orderByComparator);
@@ -4061,7 +4061,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_C_S_First(long groupId, long categoryId,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_S_First(groupId, categoryId, status,
 			orderByComparator);
@@ -4095,7 +4095,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByG_C_S_Last(long groupId, long categoryId,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_S_Last(groupId, categoryId, status,
 			orderByComparator);
@@ -4131,7 +4131,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByG_C_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_S_PrevAndNext(messageId, groupId, categoryId,
 			status, orderByComparator);
@@ -4207,7 +4207,7 @@ public class MBMessageUtil {
 	public static MBMessage[] filterFindByG_C_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_S_PrevAndNext(messageId, groupId,
 			categoryId, status, orderByComparator);
@@ -4342,7 +4342,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_C_First(long userId, long classNameId,
 		long classPK, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_First(userId, classNameId, classPK,
 			orderByComparator);
@@ -4376,7 +4376,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_C_Last(long userId, long classNameId,
 		long classPK, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_Last(userId, classNameId, classPK,
 			orderByComparator);
@@ -4412,7 +4412,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByU_C_C_PrevAndNext(long messageId,
 		long userId, long classNameId, long classPK,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_PrevAndNext(messageId, userId, classNameId,
 			classPK, orderByComparator);
@@ -4534,7 +4534,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_S_First(long userId, long classNameId,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_S_First(userId, classNameId, status,
 			orderByComparator);
@@ -4568,7 +4568,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_S_Last(long userId, long classNameId,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_S_Last(userId, classNameId, status,
 			orderByComparator);
@@ -4604,7 +4604,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByU_C_S_PrevAndNext(long messageId,
 		long userId, long classNameId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_S_PrevAndNext(messageId, userId, classNameId,
 			status, orderByComparator);
@@ -4823,7 +4823,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByC_C_S_First(long classNameId, long classPK,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_S_First(classNameId, classPK, status,
 			orderByComparator);
@@ -4857,7 +4857,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByC_C_S_Last(long classNameId, long classPK,
 		int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_S_Last(classNameId, classPK, status,
 			orderByComparator);
@@ -4893,7 +4893,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByC_C_S_PrevAndNext(long messageId,
 		long classNameId, long classPK, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_S_PrevAndNext(messageId, classNameId, classPK,
 			status, orderByComparator);
@@ -5023,7 +5023,7 @@ public class MBMessageUtil {
 	public static MBMessage findByG_C_T_A_First(long groupId, long categoryId,
 		long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_A_First(groupId, categoryId, threadId, answer,
 			orderByComparator);
@@ -5061,7 +5061,7 @@ public class MBMessageUtil {
 	public static MBMessage findByG_C_T_A_Last(long groupId, long categoryId,
 		long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_A_Last(groupId, categoryId, threadId, answer,
 			orderByComparator);
@@ -5100,7 +5100,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByG_C_T_A_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_A_PrevAndNext(messageId, groupId, categoryId,
 			threadId, answer, orderByComparator);
@@ -5182,7 +5182,7 @@ public class MBMessageUtil {
 	public static MBMessage[] filterFindByG_C_T_A_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_T_A_PrevAndNext(messageId, groupId,
 			categoryId, threadId, answer, orderByComparator);
@@ -5332,7 +5332,7 @@ public class MBMessageUtil {
 	public static MBMessage findByG_C_T_S_First(long groupId, long categoryId,
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_S_First(groupId, categoryId, threadId, status,
 			orderByComparator);
@@ -5370,7 +5370,7 @@ public class MBMessageUtil {
 	public static MBMessage findByG_C_T_S_Last(long groupId, long categoryId,
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_S_Last(groupId, categoryId, threadId, status,
 			orderByComparator);
@@ -5409,7 +5409,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByG_C_T_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_S_PrevAndNext(messageId, groupId, categoryId,
 			threadId, status, orderByComparator);
@@ -5491,7 +5491,7 @@ public class MBMessageUtil {
 	public static MBMessage[] filterFindByG_C_T_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_T_S_PrevAndNext(messageId, groupId,
 			categoryId, threadId, status, orderByComparator);
@@ -5640,7 +5640,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_C_S_First(long userId, long classNameId,
 		long classPK, int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_S_First(userId, classNameId, classPK, status,
 			orderByComparator);
@@ -5676,7 +5676,7 @@ public class MBMessageUtil {
 	*/
 	public static MBMessage findByU_C_C_S_Last(long userId, long classNameId,
 		long classPK, int status, OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_S_Last(userId, classNameId, classPK, status,
 			orderByComparator);
@@ -5714,7 +5714,7 @@ public class MBMessageUtil {
 	public static MBMessage[] findByU_C_C_S_PrevAndNext(long messageId,
 		long userId, long classNameId, long classPK, int status,
 		OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_S_PrevAndNext(messageId, userId, classNameId,
 			classPK, status, orderByComparator);
@@ -5784,7 +5784,7 @@ public class MBMessageUtil {
 	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	*/
 	public static MBMessage remove(long messageId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().remove(messageId);
 	}
 
@@ -5800,7 +5800,7 @@ public class MBMessageUtil {
 	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	*/
 	public static MBMessage findByPrimaryKey(long messageId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException {
 		return getPersistence().findByPrimaryKey(messageId);
 	}
 

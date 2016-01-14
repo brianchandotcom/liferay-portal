@@ -46,7 +46,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @throws NoSuchClassNameException if a matching class name could not be found
 	*/
 	public ClassName findByValue(java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException;
+		throws com.liferay.portal.exception.NoSuchClassNameException;
 
 	/**
 	* Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -73,7 +73,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @return the class name that was removed
 	*/
 	public ClassName removeByValue(java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException;
+		throws com.liferay.portal.exception.NoSuchClassNameException;
 
 	/**
 	* Returns the number of class names where value = &#63;.
@@ -113,7 +113,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @throws NoSuchClassNameException if a class name with the primary key could not be found
 	*/
 	public ClassName remove(long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException;
+		throws com.liferay.portal.exception.NoSuchClassNameException;
 
 	public ClassName updateImpl(ClassName className);
 
@@ -125,7 +125,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @throws NoSuchClassNameException if a class name with the primary key could not be found
 	*/
 	public ClassName findByPrimaryKey(long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException;
+		throws com.liferay.portal.exception.NoSuchClassNameException;
 
 	/**
 	* Returns the class name with the primary key or returns <code>null</code> if it could not be found.

@@ -192,7 +192,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static SocialActivityAchievement findByGroupId_First(long groupId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -218,7 +218,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static SocialActivityAchievement findByGroupId_Last(long groupId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -246,7 +246,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement[] findByGroupId_PrevAndNext(
 		long activityAchievementId, long groupId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityAchievementId, groupId,
 			orderByComparator);
@@ -358,7 +358,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_U_First(long groupId,
 		long userId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -390,7 +390,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_U_Last(long groupId,
 		long userId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -423,7 +423,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement[] findByG_U_PrevAndNext(
 		long activityAchievementId, long groupId, long userId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(activityAchievementId, groupId,
 			userId, orderByComparator);
@@ -537,7 +537,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_N_First(long groupId,
 		java.lang.String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByG_N_First(groupId, name, orderByComparator);
 	}
 
@@ -568,7 +568,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_N_Last(long groupId,
 		java.lang.String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByG_N_Last(groupId, name, orderByComparator);
 	}
 
@@ -599,7 +599,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement[] findByG_N_PrevAndNext(
 		long activityAchievementId, long groupId, java.lang.String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_N_PrevAndNext(activityAchievementId, groupId, name,
 			orderByComparator);
@@ -714,7 +714,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_F_First(long groupId,
 		boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_F_First(groupId, firstInGroup, orderByComparator);
 	}
@@ -746,7 +746,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_F_Last(long groupId,
 		boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_F_Last(groupId, firstInGroup, orderByComparator);
 	}
@@ -779,7 +779,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement[] findByG_F_PrevAndNext(
 		long activityAchievementId, long groupId, boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_F_PrevAndNext(activityAchievementId, groupId,
 			firstInGroup, orderByComparator);
@@ -817,7 +817,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static SocialActivityAchievement findByG_U_N(long groupId,
 		long userId, java.lang.String name)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByG_U_N(groupId, userId, name);
 	}
 
@@ -859,7 +859,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static SocialActivityAchievement removeByG_U_N(long groupId,
 		long userId, java.lang.String name)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().removeByG_U_N(groupId, userId, name);
 	}
 
@@ -970,7 +970,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_U_F_First(long groupId,
 		long userId, boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_F_First(groupId, userId, firstInGroup,
 			orderByComparator);
@@ -1006,7 +1006,7 @@ public class SocialActivityAchievementUtil {
 	public static SocialActivityAchievement findByG_U_F_Last(long groupId,
 		long userId, boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_F_Last(groupId, userId, firstInGroup,
 			orderByComparator);
@@ -1044,7 +1044,7 @@ public class SocialActivityAchievementUtil {
 		long activityAchievementId, long groupId, long userId,
 		boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence()
 				   .findByG_U_F_PrevAndNext(activityAchievementId, groupId,
 			userId, firstInGroup, orderByComparator);
@@ -1113,7 +1113,7 @@ public class SocialActivityAchievementUtil {
 	* @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
 	*/
 	public static SocialActivityAchievement remove(long activityAchievementId)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().remove(activityAchievementId);
 	}
 
@@ -1131,7 +1131,7 @@ public class SocialActivityAchievementUtil {
 	*/
 	public static SocialActivityAchievement findByPrimaryKey(
 		long activityAchievementId)
-		throws com.liferay.portlet.social.NoSuchActivityAchievementException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityAchievementException {
 		return getPersistence().findByPrimaryKey(activityAchievementId);
 	}
 

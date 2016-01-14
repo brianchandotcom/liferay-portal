@@ -104,7 +104,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public Image findByLtSize_First(int size,
 		com.liferay.portal.kernel.util.OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.NoSuchImageException;
+		throws com.liferay.portal.exception.NoSuchImageException;
 
 	/**
 	* Returns the first image in the ordered set where size &lt; &#63;.
@@ -126,7 +126,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public Image findByLtSize_Last(int size,
 		com.liferay.portal.kernel.util.OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.NoSuchImageException;
+		throws com.liferay.portal.exception.NoSuchImageException;
 
 	/**
 	* Returns the last image in the ordered set where size &lt; &#63;.
@@ -149,7 +149,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public Image[] findByLtSize_PrevAndNext(long imageId, int size,
 		com.liferay.portal.kernel.util.OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.NoSuchImageException;
+		throws com.liferay.portal.exception.NoSuchImageException;
 
 	/**
 	* Removes all the images where size &lt; &#63; from the database.
@@ -196,7 +196,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @throws NoSuchImageException if a image with the primary key could not be found
 	*/
 	public Image remove(long imageId)
-		throws com.liferay.portal.NoSuchImageException;
+		throws com.liferay.portal.exception.NoSuchImageException;
 
 	public Image updateImpl(Image image);
 
@@ -208,7 +208,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @throws NoSuchImageException if a image with the primary key could not be found
 	*/
 	public Image findByPrimaryKey(long imageId)
-		throws com.liferay.portal.NoSuchImageException;
+		throws com.liferay.portal.exception.NoSuchImageException;
 
 	/**
 	* Returns the image with the primary key or returns <code>null</code> if it could not be found.

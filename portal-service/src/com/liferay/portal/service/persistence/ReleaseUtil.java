@@ -115,7 +115,7 @@ public class ReleaseUtil {
 	*/
 	public static Release findByServletContextName(
 		java.lang.String servletContextName)
-		throws com.liferay.portal.NoSuchReleaseException {
+		throws com.liferay.portal.exception.NoSuchReleaseException {
 		return getPersistence().findByServletContextName(servletContextName);
 	}
 
@@ -152,7 +152,7 @@ public class ReleaseUtil {
 	*/
 	public static Release removeByServletContextName(
 		java.lang.String servletContextName)
-		throws com.liferay.portal.NoSuchReleaseException {
+		throws com.liferay.portal.exception.NoSuchReleaseException {
 		return getPersistence().removeByServletContextName(servletContextName);
 	}
 
@@ -203,7 +203,7 @@ public class ReleaseUtil {
 	* @throws NoSuchReleaseException if a release with the primary key could not be found
 	*/
 	public static Release remove(long releaseId)
-		throws com.liferay.portal.NoSuchReleaseException {
+		throws com.liferay.portal.exception.NoSuchReleaseException {
 		return getPersistence().remove(releaseId);
 	}
 
@@ -219,7 +219,7 @@ public class ReleaseUtil {
 	* @throws NoSuchReleaseException if a release with the primary key could not be found
 	*/
 	public static Release findByPrimaryKey(long releaseId)
-		throws com.liferay.portal.NoSuchReleaseException {
+		throws com.liferay.portal.exception.NoSuchReleaseException {
 		return getPersistence().findByPrimaryKey(releaseId);
 	}
 

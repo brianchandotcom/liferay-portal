@@ -186,7 +186,7 @@ public class UserIdMapperUtil {
 	*/
 	public static UserIdMapper findByUserId_First(long userId,
 		OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class UserIdMapperUtil {
 	*/
 	public static UserIdMapper findByUserId_Last(long userId,
 		OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class UserIdMapperUtil {
 	*/
 	public static UserIdMapper[] findByUserId_PrevAndNext(long userIdMapperId,
 		long userId, OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(userIdMapperId, userId,
 			orderByComparator);
@@ -273,7 +273,7 @@ public class UserIdMapperUtil {
 	* @throws NoSuchUserIdMapperException if a matching user ID mapper could not be found
 	*/
 	public static UserIdMapper findByU_T(long userId, java.lang.String type)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().findByU_T(userId, type);
 	}
 
@@ -309,7 +309,7 @@ public class UserIdMapperUtil {
 	* @return the user ID mapper that was removed
 	*/
 	public static UserIdMapper removeByU_T(long userId, java.lang.String type)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().removeByU_T(userId, type);
 	}
 
@@ -334,7 +334,7 @@ public class UserIdMapperUtil {
 	*/
 	public static UserIdMapper findByT_E(java.lang.String type,
 		java.lang.String externalUserId)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().findByT_E(type, externalUserId);
 	}
 
@@ -373,7 +373,7 @@ public class UserIdMapperUtil {
 	*/
 	public static UserIdMapper removeByT_E(java.lang.String type,
 		java.lang.String externalUserId)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().removeByT_E(type, externalUserId);
 	}
 
@@ -425,7 +425,7 @@ public class UserIdMapperUtil {
 	* @throws NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	*/
 	public static UserIdMapper remove(long userIdMapperId)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().remove(userIdMapperId);
 	}
 
@@ -441,7 +441,7 @@ public class UserIdMapperUtil {
 	* @throws NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	*/
 	public static UserIdMapper findByPrimaryKey(long userIdMapperId)
-		throws com.liferay.portal.NoSuchUserIdMapperException {
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException {
 		return getPersistence().findByPrimaryKey(userIdMapperId);
 	}
 

@@ -186,7 +186,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class MBMailingListUtil {
 	public static MBMailingList[] findByUuid_PrevAndNext(long mailingListId,
 		java.lang.String uuid,
 		OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(mailingListId, uuid,
 			orderByComparator);
@@ -274,7 +274,7 @@ public class MBMailingListUtil {
 	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
 	public static MBMailingList findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -312,7 +312,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList removeByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -413,7 +413,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -443,7 +443,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -475,7 +475,7 @@ public class MBMailingListUtil {
 	public static MBMailingList[] findByUuid_C_PrevAndNext(long mailingListId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(mailingListId, uuid, companyId,
 			orderByComparator);
@@ -580,7 +580,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList findByActive_First(boolean active,
 		OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
 
@@ -606,7 +606,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList findByActive_Last(boolean active,
 		OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
 
@@ -633,7 +633,7 @@ public class MBMailingListUtil {
 	*/
 	public static MBMailingList[] findByActive_PrevAndNext(long mailingListId,
 		boolean active, OrderByComparator<MBMailingList> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(mailingListId, active,
 			orderByComparator);
@@ -667,7 +667,7 @@ public class MBMailingListUtil {
 	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
 	public static MBMailingList findByG_C(long groupId, long categoryId)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().findByG_C(groupId, categoryId);
 	}
 
@@ -704,7 +704,7 @@ public class MBMailingListUtil {
 	* @return the message boards mailing list that was removed
 	*/
 	public static MBMailingList removeByG_C(long groupId, long categoryId)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().removeByG_C(groupId, categoryId);
 	}
 
@@ -755,7 +755,7 @@ public class MBMailingListUtil {
 	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
 	public static MBMailingList remove(long mailingListId)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().remove(mailingListId);
 	}
 
@@ -771,7 +771,7 @@ public class MBMailingListUtil {
 	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
 	public static MBMailingList findByPrimaryKey(long mailingListId)
-		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchMailingListException {
 		return getPersistence().findByPrimaryKey(mailingListId);
 	}
 

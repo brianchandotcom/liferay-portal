@@ -109,7 +109,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public DLSyncEvent findByModifiedTime_First(long modifiedTime,
 		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
 
 	/**
 	* Returns the first d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -131,7 +131,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*/
 	public DLSyncEvent findByModifiedTime_Last(long modifiedTime,
 		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
 
 	/**
 	* Returns the last d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -155,7 +155,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	public DLSyncEvent[] findByModifiedTime_PrevAndNext(long syncEventId,
 		long modifiedTime,
 		com.liferay.portal.kernel.util.OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
 
 	/**
 	* Removes all the d l sync events where modifiedTime &gt; &#63; from the database.
@@ -180,7 +180,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
 	*/
 	public DLSyncEvent findByTypePK(long typePK)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
 
 	/**
 	* Returns the d l sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -206,7 +206,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @return the d l sync event that was removed
 	*/
 	public DLSyncEvent removeByTypePK(long typePK)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
 
 	/**
 	* Returns the number of d l sync events where typePK = &#63;.
@@ -246,7 +246,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
 	*/
 	public DLSyncEvent remove(long syncEventId)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
 
 	public DLSyncEvent updateImpl(DLSyncEvent dlSyncEvent);
 
@@ -258,7 +258,7 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
 	*/
 	public DLSyncEvent findByPrimaryKey(long syncEventId)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException;
 
 	/**
 	* Returns the d l sync event with the primary key or returns <code>null</code> if it could not be found.

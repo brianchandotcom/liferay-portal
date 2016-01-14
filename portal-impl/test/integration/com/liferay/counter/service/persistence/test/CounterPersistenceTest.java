@@ -14,7 +14,7 @@
 
 package com.liferay.counter.service.persistence.test;
 
-import com.liferay.counter.NoSuchCounterException;
+import com.liferay.counter.exception.NoSuchCounterException;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.persistence.CounterPersistence;
 import com.liferay.counter.service.persistence.CounterUtil;

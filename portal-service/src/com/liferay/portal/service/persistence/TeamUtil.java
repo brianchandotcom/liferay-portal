@@ -182,7 +182,7 @@ public class TeamUtil {
 	*/
 	public static Team findByUuid_First(java.lang.String uuid,
 		OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -208,7 +208,7 @@ public class TeamUtil {
 	*/
 	public static Team findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -235,7 +235,7 @@ public class TeamUtil {
 	*/
 	public static Team[] findByUuid_PrevAndNext(long teamId,
 		java.lang.String uuid, OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(teamId, uuid, orderByComparator);
 	}
@@ -268,7 +268,7 @@ public class TeamUtil {
 	* @throws NoSuchTeamException if a matching team could not be found
 	*/
 	public static Team findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -304,7 +304,7 @@ public class TeamUtil {
 	* @return the team that was removed
 	*/
 	public static Team removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -403,7 +403,7 @@ public class TeamUtil {
 	*/
 	public static Team findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -433,7 +433,7 @@ public class TeamUtil {
 	*/
 	public static Team findByUuid_C_Last(java.lang.String uuid, long companyId,
 		OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -465,7 +465,7 @@ public class TeamUtil {
 	public static Team[] findByUuid_C_PrevAndNext(long teamId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(teamId, uuid, companyId,
 			orderByComparator);
@@ -568,7 +568,7 @@ public class TeamUtil {
 	*/
 	public static Team findByGroupId_First(long groupId,
 		OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -594,7 +594,7 @@ public class TeamUtil {
 	*/
 	public static Team findByGroupId_Last(long groupId,
 		OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -621,7 +621,7 @@ public class TeamUtil {
 	*/
 	public static Team[] findByGroupId_PrevAndNext(long teamId, long groupId,
 		OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(teamId, groupId, orderByComparator);
 	}
@@ -683,7 +683,7 @@ public class TeamUtil {
 	*/
 	public static Team[] filterFindByGroupId_PrevAndNext(long teamId,
 		long groupId, OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(teamId, groupId,
 			orderByComparator);
@@ -727,7 +727,7 @@ public class TeamUtil {
 	* @throws NoSuchTeamException if a matching team could not be found
 	*/
 	public static Team findByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().findByG_N(groupId, name);
 	}
 
@@ -763,7 +763,7 @@ public class TeamUtil {
 	* @return the team that was removed
 	*/
 	public static Team removeByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
 
@@ -814,7 +814,7 @@ public class TeamUtil {
 	* @throws NoSuchTeamException if a team with the primary key could not be found
 	*/
 	public static Team remove(long teamId)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().remove(teamId);
 	}
 
@@ -830,7 +830,7 @@ public class TeamUtil {
 	* @throws NoSuchTeamException if a team with the primary key could not be found
 	*/
 	public static Team findByPrimaryKey(long teamId)
-		throws com.liferay.portal.NoSuchTeamException {
+		throws com.liferay.portal.exception.NoSuchTeamException {
 		return getPersistence().findByPrimaryKey(teamId);
 	}
 

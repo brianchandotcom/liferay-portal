@@ -191,7 +191,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByUuid_First(
 		java.lang.String uuid,
@@ -219,7 +219,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByUuid_Last(
 		java.lang.String uuid,
@@ -248,7 +248,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
+	* @throws NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
 	*/
 	public static CalendarNotificationTemplate[] findByUuid_PrevAndNext(
 		long calendarNotificationTemplateId, java.lang.String uuid,
@@ -279,12 +279,12 @@ public class CalendarNotificationTemplateUtil {
 	}
 
 	/**
-	* Returns the calendar notification template where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.calendar.NoSuchNotificationTemplateException} if it could not be found.
+	* Returns the calendar notification template where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchNotificationTemplateException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByUUID_G(
 		java.lang.String uuid, long groupId)
@@ -423,7 +423,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByUuid_C_First(
 		java.lang.String uuid, long companyId,
@@ -455,7 +455,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
@@ -488,7 +488,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
+	* @throws NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
 	*/
 	public static CalendarNotificationTemplate[] findByUuid_C_PrevAndNext(
 		long calendarNotificationTemplateId, java.lang.String uuid,
@@ -598,7 +598,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param calendarId the calendar ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByCalendarId_First(
 		long calendarId,
@@ -628,7 +628,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param calendarId the calendar ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByCalendarId_Last(
 		long calendarId,
@@ -659,7 +659,7 @@ public class CalendarNotificationTemplateUtil {
 	* @param calendarId the calendar ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
+	* @throws NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
 	*/
 	public static CalendarNotificationTemplate[] findByCalendarId_PrevAndNext(
 		long calendarNotificationTemplateId, long calendarId,
@@ -690,13 +690,13 @@ public class CalendarNotificationTemplateUtil {
 	}
 
 	/**
-	* Returns the calendar notification template where calendarId = &#63; and notificationType = &#63; and notificationTemplateType = &#63; or throws a {@link com.liferay.calendar.NoSuchNotificationTemplateException} if it could not be found.
+	* Returns the calendar notification template where calendarId = &#63; and notificationType = &#63; and notificationTemplateType = &#63; or throws a {@link NoSuchNotificationTemplateException} if it could not be found.
 	*
 	* @param calendarId the calendar ID
 	* @param notificationType the notification type
 	* @param notificationTemplateType the notification template type
 	* @return the matching calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a matching calendar notification template could not be found
+	* @throws NoSuchNotificationTemplateException if a matching calendar notification template could not be found
 	*/
 	public static CalendarNotificationTemplate findByC_NT_NTT(long calendarId,
 		java.lang.String notificationType,
@@ -809,7 +809,7 @@ public class CalendarNotificationTemplateUtil {
 	*
 	* @param calendarNotificationTemplateId the primary key of the calendar notification template
 	* @return the calendar notification template that was removed
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
+	* @throws NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
 	*/
 	public static CalendarNotificationTemplate remove(
 		long calendarNotificationTemplateId)
@@ -823,11 +823,11 @@ public class CalendarNotificationTemplateUtil {
 	}
 
 	/**
-	* Returns the calendar notification template with the primary key or throws a {@link com.liferay.calendar.NoSuchNotificationTemplateException} if it could not be found.
+	* Returns the calendar notification template with the primary key or throws a {@link NoSuchNotificationTemplateException} if it could not be found.
 	*
 	* @param calendarNotificationTemplateId the primary key of the calendar notification template
 	* @return the calendar notification template
-	* @throws com.liferay.calendar.NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
+	* @throws NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
 	*/
 	public static CalendarNotificationTemplate findByPrimaryKey(
 		long calendarNotificationTemplateId)

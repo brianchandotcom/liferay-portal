@@ -113,7 +113,7 @@ public class TicketUtil {
 	* @throws NoSuchTicketException if a matching ticket could not be found
 	*/
 	public static Ticket findByKey(java.lang.String key)
-		throws com.liferay.portal.NoSuchTicketException {
+		throws com.liferay.portal.exception.NoSuchTicketException {
 		return getPersistence().findByKey(key);
 	}
 
@@ -146,7 +146,7 @@ public class TicketUtil {
 	* @return the ticket that was removed
 	*/
 	public static Ticket removeByKey(java.lang.String key)
-		throws com.liferay.portal.NoSuchTicketException {
+		throws com.liferay.portal.exception.NoSuchTicketException {
 		return getPersistence().removeByKey(key);
 	}
 
@@ -252,7 +252,7 @@ public class TicketUtil {
 	*/
 	public static Ticket findByC_C_T_First(long classNameId, long classPK,
 		int type, OrderByComparator<Ticket> orderByComparator)
-		throws com.liferay.portal.NoSuchTicketException {
+		throws com.liferay.portal.exception.NoSuchTicketException {
 		return getPersistence()
 				   .findByC_C_T_First(classNameId, classPK, type,
 			orderByComparator);
@@ -286,7 +286,7 @@ public class TicketUtil {
 	*/
 	public static Ticket findByC_C_T_Last(long classNameId, long classPK,
 		int type, OrderByComparator<Ticket> orderByComparator)
-		throws com.liferay.portal.NoSuchTicketException {
+		throws com.liferay.portal.exception.NoSuchTicketException {
 		return getPersistence()
 				   .findByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -322,7 +322,7 @@ public class TicketUtil {
 	public static Ticket[] findByC_C_T_PrevAndNext(long ticketId,
 		long classNameId, long classPK, int type,
 		OrderByComparator<Ticket> orderByComparator)
-		throws com.liferay.portal.NoSuchTicketException {
+		throws com.liferay.portal.exception.NoSuchTicketException {
 		return getPersistence()
 				   .findByC_C_T_PrevAndNext(ticketId, classNameId, classPK,
 			type, orderByComparator);
@@ -387,7 +387,7 @@ public class TicketUtil {
 	* @throws NoSuchTicketException if a ticket with the primary key could not be found
 	*/
 	public static Ticket remove(long ticketId)
-		throws com.liferay.portal.NoSuchTicketException {
+		throws com.liferay.portal.exception.NoSuchTicketException {
 		return getPersistence().remove(ticketId);
 	}
 
@@ -403,7 +403,7 @@ public class TicketUtil {
 	* @throws NoSuchTicketException if a ticket with the primary key could not be found
 	*/
 	public static Ticket findByPrimaryKey(long ticketId)
-		throws com.liferay.portal.NoSuchTicketException {
+		throws com.liferay.portal.exception.NoSuchTicketException {
 		return getPersistence().findByPrimaryKey(ticketId);
 	}
 

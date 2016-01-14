@@ -46,7 +46,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
 	public Country findByName(java.lang.String name)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the country where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -72,7 +72,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @return the country that was removed
 	*/
 	public Country removeByName(java.lang.String name)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the number of countries where name = &#63;.
@@ -90,7 +90,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
 	public Country findByA2(java.lang.String a2)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -116,7 +116,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @return the country that was removed
 	*/
 	public Country removeByA2(java.lang.String a2)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the number of countries where a2 = &#63;.
@@ -134,7 +134,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @throws NoSuchCountryException if a matching country could not be found
 	*/
 	public Country findByA3(java.lang.String a3)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -160,7 +160,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @return the country that was removed
 	*/
 	public Country removeByA3(java.lang.String a3)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the number of countries where a3 = &#63;.
@@ -239,7 +239,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public Country findByActive_First(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Country> orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the first country in the ordered set where active = &#63;.
@@ -261,7 +261,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public Country findByActive_Last(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Country> orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the last country in the ordered set where active = &#63;.
@@ -284,7 +284,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public Country[] findByActive_PrevAndNext(long countryId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Country> orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Removes all the countries where active = &#63; from the database.
@@ -331,7 +331,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @throws NoSuchCountryException if a country with the primary key could not be found
 	*/
 	public Country remove(long countryId)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	public Country updateImpl(Country country);
 
@@ -343,7 +343,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @throws NoSuchCountryException if a country with the primary key could not be found
 	*/
 	public Country findByPrimaryKey(long countryId)
-		throws com.liferay.portal.NoSuchCountryException;
+		throws com.liferay.portal.exception.NoSuchCountryException;
 
 	/**
 	* Returns the country with the primary key or returns <code>null</code> if it could not be found.

@@ -188,7 +188,7 @@ public class DLSyncEventUtil {
 	*/
 	public static DLSyncEvent findByModifiedTime_First(long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException {
 		return getPersistence()
 				   .findByModifiedTime_First(modifiedTime, orderByComparator);
 	}
@@ -216,7 +216,7 @@ public class DLSyncEventUtil {
 	*/
 	public static DLSyncEvent findByModifiedTime_Last(long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException {
 		return getPersistence()
 				   .findByModifiedTime_Last(modifiedTime, orderByComparator);
 	}
@@ -246,7 +246,7 @@ public class DLSyncEventUtil {
 	public static DLSyncEvent[] findByModifiedTime_PrevAndNext(
 		long syncEventId, long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException {
 		return getPersistence()
 				   .findByModifiedTime_PrevAndNext(syncEventId, modifiedTime,
 			orderByComparator);
@@ -279,7 +279,7 @@ public class DLSyncEventUtil {
 	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
 	*/
 	public static DLSyncEvent findByTypePK(long typePK)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException {
 		return getPersistence().findByTypePK(typePK);
 	}
 
@@ -312,7 +312,7 @@ public class DLSyncEventUtil {
 	* @return the d l sync event that was removed
 	*/
 	public static DLSyncEvent removeByTypePK(long typePK)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException {
 		return getPersistence().removeByTypePK(typePK);
 	}
 
@@ -362,7 +362,7 @@ public class DLSyncEventUtil {
 	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
 	*/
 	public static DLSyncEvent remove(long syncEventId)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException {
 		return getPersistence().remove(syncEventId);
 	}
 
@@ -378,7 +378,7 @@ public class DLSyncEventUtil {
 	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
 	*/
 	public static DLSyncEvent findByPrimaryKey(long syncEventId)
-		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchSyncEventException {
 		return getPersistence().findByPrimaryKey(syncEventId);
 	}
 

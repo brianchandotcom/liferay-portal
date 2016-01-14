@@ -195,7 +195,7 @@ public class ResourceBlockUtil {
 	public static ResourceBlock findByC_N_First(long companyId,
 		java.lang.String name,
 		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_First(companyId, name, orderByComparator);
 	}
@@ -227,7 +227,7 @@ public class ResourceBlockUtil {
 	public static ResourceBlock findByC_N_Last(long companyId,
 		java.lang.String name,
 		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_Last(companyId, name, orderByComparator);
 	}
@@ -260,7 +260,7 @@ public class ResourceBlockUtil {
 	public static ResourceBlock[] findByC_N_PrevAndNext(long resourceBlockId,
 		long companyId, java.lang.String name,
 		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_PrevAndNext(resourceBlockId, companyId, name,
 			orderByComparator);
@@ -380,7 +380,7 @@ public class ResourceBlockUtil {
 	public static ResourceBlock findByC_G_N_First(long companyId, long groupId,
 		java.lang.String name,
 		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_First(companyId, groupId, name,
 			orderByComparator);
@@ -416,7 +416,7 @@ public class ResourceBlockUtil {
 	public static ResourceBlock findByC_G_N_Last(long companyId, long groupId,
 		java.lang.String name,
 		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_Last(companyId, groupId, name, orderByComparator);
 	}
@@ -453,7 +453,7 @@ public class ResourceBlockUtil {
 		long resourceBlockId, long companyId, long groupId,
 		java.lang.String name,
 		OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_PrevAndNext(resourceBlockId, companyId,
 			groupId, name, orderByComparator);
@@ -496,7 +496,7 @@ public class ResourceBlockUtil {
 	*/
 	public static ResourceBlock findByC_G_N_P(long companyId, long groupId,
 		java.lang.String name, java.lang.String permissionsHash)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
@@ -545,7 +545,7 @@ public class ResourceBlockUtil {
 	*/
 	public static ResourceBlock removeByC_G_N_P(long companyId, long groupId,
 		java.lang.String name, java.lang.String permissionsHash)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence()
 				   .removeByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
@@ -601,7 +601,7 @@ public class ResourceBlockUtil {
 	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
 	public static ResourceBlock remove(long resourceBlockId)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence().remove(resourceBlockId);
 	}
 
@@ -617,7 +617,7 @@ public class ResourceBlockUtil {
 	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
 	public static ResourceBlock findByPrimaryKey(long resourceBlockId)
-		throws com.liferay.portal.NoSuchResourceBlockException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockException {
 		return getPersistence().findByPrimaryKey(resourceBlockId);
 	}
 

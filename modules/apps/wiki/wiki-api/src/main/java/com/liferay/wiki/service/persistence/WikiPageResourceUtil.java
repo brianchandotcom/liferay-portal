@@ -186,7 +186,7 @@ public class WikiPageResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public static WikiPageResource findByUuid_First(java.lang.String uuid,
 		OrderByComparator<WikiPageResource> orderByComparator)
@@ -212,7 +212,7 @@ public class WikiPageResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public static WikiPageResource findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<WikiPageResource> orderByComparator)
@@ -239,7 +239,7 @@ public class WikiPageResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public static WikiPageResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
@@ -270,12 +270,12 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
-	* Returns the wiki page resource where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
+	* Returns the wiki page resource where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchPageResourceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public static WikiPageResource findByUUID_G(java.lang.String uuid,
 		long groupId)
@@ -414,7 +414,7 @@ public class WikiPageResourceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public static WikiPageResource findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<WikiPageResource> orderByComparator)
@@ -444,7 +444,7 @@ public class WikiPageResourceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public static WikiPageResource findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<WikiPageResource> orderByComparator)
@@ -475,7 +475,7 @@ public class WikiPageResourceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public static WikiPageResource[] findByUuid_C_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid, long companyId,
@@ -508,12 +508,12 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
-	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
+	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or throws a {@link NoSuchPageResourceException} if it could not be found.
 	*
 	* @param nodeId the node ID
 	* @param title the title
 	* @return the matching wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public static WikiPageResource findByN_T(long nodeId, java.lang.String title)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
@@ -602,7 +602,7 @@ public class WikiPageResourceUtil {
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource
 	* @return the wiki page resource that was removed
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public static WikiPageResource remove(long resourcePrimKey)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {
@@ -614,11 +614,11 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
-	* Returns the wiki page resource with the primary key or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
+	* Returns the wiki page resource with the primary key or throws a {@link NoSuchPageResourceException} if it could not be found.
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource
 	* @return the wiki page resource
-	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public static WikiPageResource findByPrimaryKey(long resourcePrimKey)
 		throws com.liferay.wiki.exception.NoSuchPageResourceException {

@@ -180,7 +180,7 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
+	* @throws NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_First(java.lang.String uuid,
 		OrderByComparator<Lock> orderByComparator)
@@ -206,7 +206,7 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
+	* @throws NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<Lock> orderByComparator)
@@ -233,7 +233,7 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
+	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock[] findByUuid_PrevAndNext(long lockId,
 		java.lang.String uuid, OrderByComparator<Lock> orderByComparator)
@@ -341,7 +341,7 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
+	* @throws NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<Lock> orderByComparator)
@@ -371,7 +371,7 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
+	* @throws NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_C_Last(java.lang.String uuid, long companyId,
 		OrderByComparator<Lock> orderByComparator)
@@ -402,7 +402,7 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
+	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock[] findByUuid_C_PrevAndNext(long lockId,
 		java.lang.String uuid, long companyId,
@@ -512,7 +512,7 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
+	* @throws NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByLtExpirationDate_First(
 		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
@@ -542,7 +542,7 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
+	* @throws NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByLtExpirationDate_Last(
 		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
@@ -573,7 +573,7 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
+	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock[] findByLtExpirationDate_PrevAndNext(long lockId,
 		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
@@ -603,12 +603,12 @@ public class LockUtil {
 	}
 
 	/**
-	* Returns the lock where className = &#63; and key = &#63; or throws a {@link com.liferay.portal.lock.NoSuchLockException} if it could not be found.
+	* Returns the lock where className = &#63; and key = &#63; or throws a {@link NoSuchLockException} if it could not be found.
 	*
 	* @param className the class name
 	* @param key the key
 	* @return the matching lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
+	* @throws NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByC_K(java.lang.String className,
 		java.lang.String key)
@@ -699,7 +699,7 @@ public class LockUtil {
 	*
 	* @param lockId the primary key of the lock
 	* @return the lock that was removed
-	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
+	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock remove(long lockId)
 		throws com.liferay.portal.lock.exception.NoSuchLockException {
@@ -711,11 +711,11 @@ public class LockUtil {
 	}
 
 	/**
-	* Returns the lock with the primary key or throws a {@link com.liferay.portal.lock.NoSuchLockException} if it could not be found.
+	* Returns the lock with the primary key or throws a {@link NoSuchLockException} if it could not be found.
 	*
 	* @param lockId the primary key of the lock
 	* @return the lock
-	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
+	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock findByPrimaryKey(long lockId)
 		throws com.liferay.portal.lock.exception.NoSuchLockException {

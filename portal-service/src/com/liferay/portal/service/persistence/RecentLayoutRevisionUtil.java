@@ -189,7 +189,7 @@ public class RecentLayoutRevisionUtil {
 	*/
 	public static RecentLayoutRevision findByGroupId_First(long groupId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -215,7 +215,7 @@ public class RecentLayoutRevisionUtil {
 	*/
 	public static RecentLayoutRevision findByGroupId_Last(long groupId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -243,7 +243,7 @@ public class RecentLayoutRevisionUtil {
 	public static RecentLayoutRevision[] findByGroupId_PrevAndNext(
 		long recentLayoutRevisionId, long groupId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(recentLayoutRevisionId, groupId,
 			orderByComparator);
@@ -348,7 +348,7 @@ public class RecentLayoutRevisionUtil {
 	*/
 	public static RecentLayoutRevision findByUserId_First(long userId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -374,7 +374,7 @@ public class RecentLayoutRevisionUtil {
 	*/
 	public static RecentLayoutRevision findByUserId_Last(long userId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -402,7 +402,7 @@ public class RecentLayoutRevisionUtil {
 	public static RecentLayoutRevision[] findByUserId_PrevAndNext(
 		long recentLayoutRevisionId, long userId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(recentLayoutRevisionId, userId,
 			orderByComparator);
@@ -511,7 +511,7 @@ public class RecentLayoutRevisionUtil {
 	public static RecentLayoutRevision findByLayoutRevisionId_First(
 		long layoutRevisionId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence()
 				   .findByLayoutRevisionId_First(layoutRevisionId,
 			orderByComparator);
@@ -543,7 +543,7 @@ public class RecentLayoutRevisionUtil {
 	public static RecentLayoutRevision findByLayoutRevisionId_Last(
 		long layoutRevisionId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence()
 				   .findByLayoutRevisionId_Last(layoutRevisionId,
 			orderByComparator);
@@ -576,7 +576,7 @@ public class RecentLayoutRevisionUtil {
 	public static RecentLayoutRevision[] findByLayoutRevisionId_PrevAndNext(
 		long recentLayoutRevisionId, long layoutRevisionId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence()
 				   .findByLayoutRevisionId_PrevAndNext(recentLayoutRevisionId,
 			layoutRevisionId, orderByComparator);
@@ -612,7 +612,7 @@ public class RecentLayoutRevisionUtil {
 	*/
 	public static RecentLayoutRevision findByU_L_P(long userId,
 		long layoutSetBranchId, long plid)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().findByU_L_P(userId, layoutSetBranchId, plid);
 	}
 
@@ -655,7 +655,7 @@ public class RecentLayoutRevisionUtil {
 	*/
 	public static RecentLayoutRevision removeByU_L_P(long userId,
 		long layoutSetBranchId, long plid)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().removeByU_L_P(userId, layoutSetBranchId, plid);
 	}
 
@@ -709,7 +709,7 @@ public class RecentLayoutRevisionUtil {
 	* @throws NoSuchRecentLayoutRevisionException if a recent layout revision with the primary key could not be found
 	*/
 	public static RecentLayoutRevision remove(long recentLayoutRevisionId)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().remove(recentLayoutRevisionId);
 	}
 
@@ -727,7 +727,7 @@ public class RecentLayoutRevisionUtil {
 	*/
 	public static RecentLayoutRevision findByPrimaryKey(
 		long recentLayoutRevisionId)
-		throws com.liferay.portal.NoSuchRecentLayoutRevisionException {
+		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException {
 		return getPersistence().findByPrimaryKey(recentLayoutRevisionId);
 	}
 

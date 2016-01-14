@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.asset.NoSuchTagStatsException;
+import com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 import com.liferay.portlet.asset.model.AssetTagStats;
 import com.liferay.portlet.asset.service.AssetTagStatsLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetTagStatsPersistence;

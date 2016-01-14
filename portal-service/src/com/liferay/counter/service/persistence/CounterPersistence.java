@@ -70,7 +70,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
 	public Counter remove(java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException;
+		throws com.liferay.counter.exception.NoSuchCounterException;
 
 	public Counter updateImpl(Counter counter);
 
@@ -82,7 +82,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
 	public Counter findByPrimaryKey(java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException;
+		throws com.liferay.counter.exception.NoSuchCounterException;
 
 	/**
 	* Returns the counter with the primary key or returns <code>null</code> if it could not be found.

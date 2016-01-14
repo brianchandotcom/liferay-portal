@@ -187,7 +187,7 @@ public class ExpandoRowUtil {
 	*/
 	public static ExpandoRow findByTableId_First(long tableId,
 		OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().findByTableId_First(tableId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class ExpandoRowUtil {
 	*/
 	public static ExpandoRow findByTableId_Last(long tableId,
 		OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().findByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class ExpandoRowUtil {
 	*/
 	public static ExpandoRow[] findByTableId_PrevAndNext(long rowId,
 		long tableId, OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence()
 				   .findByTableId_PrevAndNext(rowId, tableId, orderByComparator);
 	}
@@ -342,7 +342,7 @@ public class ExpandoRowUtil {
 	*/
 	public static ExpandoRow findByClassPK_First(long classPK,
 		OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().findByClassPK_First(classPK, orderByComparator);
 	}
 
@@ -368,7 +368,7 @@ public class ExpandoRowUtil {
 	*/
 	public static ExpandoRow findByClassPK_Last(long classPK,
 		OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().findByClassPK_Last(classPK, orderByComparator);
 	}
 
@@ -395,7 +395,7 @@ public class ExpandoRowUtil {
 	*/
 	public static ExpandoRow[] findByClassPK_PrevAndNext(long rowId,
 		long classPK, OrderByComparator<ExpandoRow> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence()
 				   .findByClassPK_PrevAndNext(rowId, classPK, orderByComparator);
 	}
@@ -428,7 +428,7 @@ public class ExpandoRowUtil {
 	* @throws NoSuchRowException if a matching expando row could not be found
 	*/
 	public static ExpandoRow findByT_C(long tableId, long classPK)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().findByT_C(tableId, classPK);
 	}
 
@@ -464,7 +464,7 @@ public class ExpandoRowUtil {
 	* @return the expando row that was removed
 	*/
 	public static ExpandoRow removeByT_C(long tableId, long classPK)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().removeByT_C(tableId, classPK);
 	}
 
@@ -515,7 +515,7 @@ public class ExpandoRowUtil {
 	* @throws NoSuchRowException if a expando row with the primary key could not be found
 	*/
 	public static ExpandoRow remove(long rowId)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().remove(rowId);
 	}
 
@@ -531,7 +531,7 @@ public class ExpandoRowUtil {
 	* @throws NoSuchRowException if a expando row with the primary key could not be found
 	*/
 	public static ExpandoRow findByPrimaryKey(long rowId)
-		throws com.liferay.portlet.expando.NoSuchRowException {
+		throws com.liferay.portlet.expando.exception.NoSuchRowException {
 		return getPersistence().findByPrimaryKey(rowId);
 	}
 

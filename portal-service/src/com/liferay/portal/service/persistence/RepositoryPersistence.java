@@ -107,7 +107,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the first repository in the ordered set where uuid = &#63;.
@@ -129,7 +129,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the last repository in the ordered set where uuid = &#63;.
@@ -153,7 +153,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	public Repository[] findByUuid_PrevAndNext(long repositoryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Removes all the repositories where uuid = &#63; from the database.
@@ -179,7 +179,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	* @throws NoSuchRepositoryException if a matching repository could not be found
 	*/
 	public Repository findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the repository where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -209,7 +209,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	* @return the repository that was removed
 	*/
 	public Repository removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the number of repositories where uuid = &#63; and groupId = &#63;.
@@ -295,7 +295,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the first repository in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -320,7 +320,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the last repository in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -346,7 +346,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	public Repository[] findByUuid_C_PrevAndNext(long repositoryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Removes all the repositories where uuid = &#63; and companyId = &#63; from the database.
@@ -434,7 +434,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the first repository in the ordered set where groupId = &#63;.
@@ -456,7 +456,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the last repository in the ordered set where groupId = &#63;.
@@ -480,7 +480,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	public Repository[] findByGroupId_PrevAndNext(long repositoryId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Repository> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Removes all the repositories where groupId = &#63; from the database.
@@ -508,7 +508,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository findByG_N_P(long groupId, java.lang.String name,
 		java.lang.String portletId)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the repository where groupId = &#63; and name = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -543,7 +543,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public Repository removeByG_N_P(long groupId, java.lang.String name,
 		java.lang.String portletId)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the number of repositories where groupId = &#63; and name = &#63; and portletId = &#63;.
@@ -586,7 +586,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	* @throws NoSuchRepositoryException if a repository with the primary key could not be found
 	*/
 	public Repository remove(long repositoryId)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	public Repository updateImpl(Repository repository);
 
@@ -598,7 +598,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	* @throws NoSuchRepositoryException if a repository with the primary key could not be found
 	*/
 	public Repository findByPrimaryKey(long repositoryId)
-		throws com.liferay.portal.NoSuchRepositoryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryException;
 
 	/**
 	* Returns the repository with the primary key or returns <code>null</code> if it could not be found.

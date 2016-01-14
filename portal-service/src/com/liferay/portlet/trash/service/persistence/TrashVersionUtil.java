@@ -187,7 +187,7 @@ public class TrashVersionUtil {
 	*/
 	public static TrashVersion findByEntryId_First(long entryId,
 		OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence().findByEntryId_First(entryId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class TrashVersionUtil {
 	*/
 	public static TrashVersion findByEntryId_Last(long entryId,
 		OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence().findByEntryId_Last(entryId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class TrashVersionUtil {
 	*/
 	public static TrashVersion[] findByEntryId_PrevAndNext(long versionId,
 		long entryId, OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence()
 				   .findByEntryId_PrevAndNext(versionId, entryId,
 			orderByComparator);
@@ -349,7 +349,7 @@ public class TrashVersionUtil {
 	*/
 	public static TrashVersion findByE_C_First(long entryId, long classNameId,
 		OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence()
 				   .findByE_C_First(entryId, classNameId, orderByComparator);
 	}
@@ -379,7 +379,7 @@ public class TrashVersionUtil {
 	*/
 	public static TrashVersion findByE_C_Last(long entryId, long classNameId,
 		OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence()
 				   .findByE_C_Last(entryId, classNameId, orderByComparator);
 	}
@@ -411,7 +411,7 @@ public class TrashVersionUtil {
 	public static TrashVersion[] findByE_C_PrevAndNext(long versionId,
 		long entryId, long classNameId,
 		OrderByComparator<TrashVersion> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence()
 				   .findByE_C_PrevAndNext(versionId, entryId, classNameId,
 			orderByComparator);
@@ -447,7 +447,7 @@ public class TrashVersionUtil {
 	* @throws NoSuchVersionException if a matching trash version could not be found
 	*/
 	public static TrashVersion findByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -484,7 +484,7 @@ public class TrashVersionUtil {
 	* @return the trash version that was removed
 	*/
 	public static TrashVersion removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -535,7 +535,7 @@ public class TrashVersionUtil {
 	* @throws NoSuchVersionException if a trash version with the primary key could not be found
 	*/
 	public static TrashVersion remove(long versionId)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence().remove(versionId);
 	}
 
@@ -551,7 +551,7 @@ public class TrashVersionUtil {
 	* @throws NoSuchVersionException if a trash version with the primary key could not be found
 	*/
 	public static TrashVersion findByPrimaryKey(long versionId)
-		throws com.liferay.portlet.trash.NoSuchVersionException {
+		throws com.liferay.portlet.trash.exception.NoSuchVersionException {
 		return getPersistence().findByPrimaryKey(versionId);
 	}
 

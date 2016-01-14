@@ -186,7 +186,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByUserId_First(long userId,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByUserId_Last(long userId,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank[] findByUserId_PrevAndNext(long fileRankId,
 		long userId, OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(fileRankId, userId,
 			orderByComparator);
@@ -342,7 +342,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByFileEntryId_First(long fileEntryId,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByFileEntryId_First(fileEntryId, orderByComparator);
 	}
@@ -370,7 +370,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByFileEntryId_Last(long fileEntryId,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByFileEntryId_Last(fileEntryId, orderByComparator);
 	}
@@ -399,7 +399,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank[] findByFileEntryId_PrevAndNext(long fileRankId,
 		long fileEntryId, OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByFileEntryId_PrevAndNext(fileRankId, fileEntryId,
 			orderByComparator);
@@ -507,7 +507,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByG_U_First(long groupId, long userId,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -537,7 +537,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByG_U_Last(long groupId, long userId,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -569,7 +569,7 @@ public class DLFileRankUtil {
 	public static DLFileRank[] findByG_U_PrevAndNext(long fileRankId,
 		long groupId, long userId,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(fileRankId, groupId, userId,
 			orderByComparator);
@@ -688,7 +688,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByG_U_A_First(long groupId, long userId,
 		boolean active, OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByG_U_A_First(groupId, userId, active, orderByComparator);
 	}
@@ -721,7 +721,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByG_U_A_Last(long groupId, long userId,
 		boolean active, OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByG_U_A_Last(groupId, userId, active, orderByComparator);
 	}
@@ -755,7 +755,7 @@ public class DLFileRankUtil {
 	public static DLFileRank[] findByG_U_A_PrevAndNext(long fileRankId,
 		long groupId, long userId, boolean active,
 		OrderByComparator<DLFileRank> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence()
 				   .findByG_U_A_PrevAndNext(fileRankId, groupId, userId,
 			active, orderByComparator);
@@ -795,7 +795,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank findByC_U_F(long companyId, long userId,
 		long fileEntryId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence().findByC_U_F(companyId, userId, fileEntryId);
 	}
 
@@ -838,7 +838,7 @@ public class DLFileRankUtil {
 	*/
 	public static DLFileRank removeByC_U_F(long companyId, long userId,
 		long fileEntryId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence().removeByC_U_F(companyId, userId, fileEntryId);
 	}
 
@@ -890,7 +890,7 @@ public class DLFileRankUtil {
 	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
 	public static DLFileRank remove(long fileRankId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence().remove(fileRankId);
 	}
 
@@ -906,7 +906,7 @@ public class DLFileRankUtil {
 	* @throws NoSuchFileRankException if a document library file rank with the primary key could not be found
 	*/
 	public static DLFileRank findByPrimaryKey(long fileRankId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileRankException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileRankException {
 		return getPersistence().findByPrimaryKey(fileRankId);
 	}
 

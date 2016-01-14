@@ -47,7 +47,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	* @throws NoSuchWebDAVPropsException if a matching web d a v props could not be found
 	*/
 	public WebDAVProps findByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchWebDAVPropsException;
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException;
 
 	/**
 	* Returns the web d a v props where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -77,7 +77,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	* @return the web d a v props that was removed
 	*/
 	public WebDAVProps removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchWebDAVPropsException;
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException;
 
 	/**
 	* Returns the number of web d a v propses where classNameId = &#63; and classPK = &#63;.
@@ -118,7 +118,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	* @throws NoSuchWebDAVPropsException if a web d a v props with the primary key could not be found
 	*/
 	public WebDAVProps remove(long webDavPropsId)
-		throws com.liferay.portal.NoSuchWebDAVPropsException;
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException;
 
 	public WebDAVProps updateImpl(WebDAVProps webDAVProps);
 
@@ -130,7 +130,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	* @throws NoSuchWebDAVPropsException if a web d a v props with the primary key could not be found
 	*/
 	public WebDAVProps findByPrimaryKey(long webDavPropsId)
-		throws com.liferay.portal.NoSuchWebDAVPropsException;
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException;
 
 	/**
 	* Returns the web d a v props with the primary key or returns <code>null</code> if it could not be found.

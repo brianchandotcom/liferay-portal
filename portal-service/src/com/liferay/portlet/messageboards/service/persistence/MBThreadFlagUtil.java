@@ -186,7 +186,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag[] findByUuid_PrevAndNext(long threadFlagId,
 		java.lang.String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(threadFlagId, uuid, orderByComparator);
 	}
@@ -272,7 +272,7 @@ public class MBThreadFlagUtil {
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
 	public static MBThreadFlag findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -309,7 +309,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag removeByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -410,7 +410,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -440,7 +440,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -472,7 +472,7 @@ public class MBThreadFlagUtil {
 	public static MBThreadFlag[] findByUuid_C_PrevAndNext(long threadFlagId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(threadFlagId, uuid, companyId,
 			orderByComparator);
@@ -577,7 +577,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByUserId_First(long userId,
 		OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -603,7 +603,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByUserId_Last(long userId,
 		OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -630,7 +630,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag[] findByUserId_PrevAndNext(long threadFlagId,
 		long userId, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(threadFlagId, userId,
 			orderByComparator);
@@ -733,7 +733,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByThreadId_First(long threadId,
 		OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByThreadId_First(threadId, orderByComparator);
 	}
 
@@ -760,7 +760,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag findByThreadId_Last(long threadId,
 		OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByThreadId_Last(threadId, orderByComparator);
 	}
 
@@ -787,7 +787,7 @@ public class MBThreadFlagUtil {
 	*/
 	public static MBThreadFlag[] findByThreadId_PrevAndNext(long threadFlagId,
 		long threadId, OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence()
 				   .findByThreadId_PrevAndNext(threadFlagId, threadId,
 			orderByComparator);
@@ -821,7 +821,7 @@ public class MBThreadFlagUtil {
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
 	public static MBThreadFlag findByU_T(long userId, long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByU_T(userId, threadId);
 	}
 
@@ -857,7 +857,7 @@ public class MBThreadFlagUtil {
 	* @return the message boards thread flag that was removed
 	*/
 	public static MBThreadFlag removeByU_T(long userId, long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().removeByU_T(userId, threadId);
 	}
 
@@ -908,7 +908,7 @@ public class MBThreadFlagUtil {
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
 	public static MBThreadFlag remove(long threadFlagId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().remove(threadFlagId);
 	}
 
@@ -924,7 +924,7 @@ public class MBThreadFlagUtil {
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
 	public static MBThreadFlag findByPrimaryKey(long threadFlagId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadFlagException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException {
 		return getPersistence().findByPrimaryKey(threadFlagId);
 	}
 

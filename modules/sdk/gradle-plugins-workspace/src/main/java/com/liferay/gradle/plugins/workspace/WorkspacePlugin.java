@@ -55,15 +55,17 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.file.FileTree;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.AbstractCopyTask;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
+import org.gradle.api.tasks.bundling.Compression;
 import org.gradle.api.tasks.bundling.Tar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
@@ -101,9 +103,15 @@ public class WorkspacePlugin implements Plugin<Project> {
 		addRepositoryBundle(project, workspaceExtension);
 
 		Tar distBundleTarTask = addTaskDistBundle(
-			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, bundleConfiguration);
+			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, bundleConfiguration,
+			workspaceExtension);
+
+		distBundleTarTask.setCompression(Compression.GZIP);
+		distBundleTarTask.setExtension("tar.gz");
+
 		Zip distBundleZipTask = addTaskDistBundle(
-			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, bundleConfiguration);
+			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, bundleConfiguration,
+			workspaceExtension);
 
 		AbstractArchiveTask[] distBundleTasks = {
 			distBundleTarTask, distBundleZipTask
@@ -235,36 +243,16 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	protected <T extends AbstractArchiveTask> T addTaskDistBundle(
 		final Project project, String taskName, Class<T> clazz,
-		final Configuration bundleConfiguration) {
+		final Configuration bundleConfiguration,
+		WorkspaceExtension workspaceExtension) {
 
 		T task = GradleUtil.addTask(project, taskName, clazz);
 
+		configureTaskCopyBundle(task, bundleConfiguration);
+
 		task.from(
-			new Callable<FileTree>() {
-
-				@Override
-				public FileTree call() throws Exception {
-					File file = bundleConfiguration.getSingleFile();
-
-					String fileName = file.getName();
-
-					if (fileName.endsWith(".tar.gz")) {
-						return project.tarTree(file);
-					}
-					else {
-						return project.zipTree(file);
-					}
-				}
-
-			},
-			new Closure<Void>(null) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(1));
-				}
-
-			});
+			project.file("configs/common"),
+			project.file("configs/" + workspaceExtension.getEnvironment()));
 
 		task.setBaseName(project.getName());
 		task.setDescription("Assembles the bundle and zips it up.");
@@ -293,32 +281,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 			});
 
-		copy.from(
-			new Callable<FileTree>() {
-
-				@Override
-				public FileTree call() throws Exception {
-					File file = bundleConfiguration.getSingleFile();
-
-					String fileName = file.getName();
-
-					if (fileName.endsWith(".tar.gz")) {
-						return project.tarTree(file);
-					}
-					else {
-						return project.zipTree(file);
-					}
-				}
-
-			},
-			new Closure<Void>(null) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(1));
-				}
-
-			});
+		configureTaskCopyBundle(copy, bundleConfiguration);
 
 		Project rootProject = project.getRootProject();
 
@@ -464,6 +427,60 @@ public class WorkspacePlugin implements Plugin<Project> {
 		}
 	}
 
+	protected void configureTaskCopyBundle(
+		final AbstractCopyTask abstractCopyTask,
+		final Configuration bundleConfiguration) {
+
+		abstractCopyTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					File file = bundleConfiguration.getSingleFile();
+
+					GradleUtil.setProperty(
+						task, _BUNDLE_FILE_PROPERTY_NAME, file);
+				}
+
+			});
+
+		abstractCopyTask.from(
+			new Callable<FileCollection>() {
+
+				@Override
+				public FileCollection call() throws Exception {
+					Project project = abstractCopyTask.getProject();
+
+					if (!abstractCopyTask.hasProperty(
+							_BUNDLE_FILE_PROPERTY_NAME)) {
+
+						return project.files();
+					}
+
+					File file =
+						(File)abstractCopyTask.property(_BUNDLE_FILE_PROPERTY_NAME);
+
+					String fileName = file.getName();
+
+					if (fileName.endsWith(".tar.gz")) {
+						return project.tarTree(file);
+					}
+					else {
+						return project.zipTree(file);
+					}
+				}
+
+			},
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(new StripPathSegmentsAction(1));
+				}
+
+			});
+	}
+
 	protected void configureThemes(
 		Project project, final WorkspaceExtension workspaceExtension,
 		final AbstractArchiveTask[] distBundleTasks) {
@@ -553,6 +570,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 		themesProject.subprojects(action);
 	}
+
+	private static final String _BUNDLE_FILE_PROPERTY_NAME = "bundleFile";
 
 	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";
 

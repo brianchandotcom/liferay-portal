@@ -487,10 +487,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="WebContent#addPGViaWCD">
+		<execute macro="WebContent#addLocalizedPGViaWCD">
 			<var name="localizedBasicWebContent" value="Contenido web básico" />
-			<var name="localizedTitle" value="true" />
-			<var name="lowercaseLanguageCode" value="es" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>

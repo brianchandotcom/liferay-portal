@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -32,9 +31,11 @@ public class RepositoryPermissionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public RepositoryPermissionPortletConfigurationIcon(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, Repository repository) {
 
 		super(portletRequest);
+
+		_repository = repository;
 	}
 
 	@Override
@@ -47,12 +48,10 @@ public class RepositoryPermissionPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			Repository repository = ActionUtil.getRepository(portletRequest);
-
 			url = PermissionsURLTag.doTag(
 				null, DLFolderConstants.getClassName(),
-				HtmlUtil.unescape(repository.getName()), null,
-				String.valueOf(repository.getDlFolderId()),
+				HtmlUtil.unescape(_repository.getName()), null,
+				String.valueOf(_repository.getDlFolderId()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
@@ -64,14 +63,8 @@ public class RepositoryPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		try {
-			Repository repository = ActionUtil.getRepository(portletRequest);
-
-			if (repository != null) {
-				return true;
-			}
-		}
-		catch (Exception e) {
+		if (_repository != null) {
+			return true;
 		}
 
 		return false;
@@ -86,5 +79,7 @@ public class RepositoryPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	private final Repository _repository;
 
 }

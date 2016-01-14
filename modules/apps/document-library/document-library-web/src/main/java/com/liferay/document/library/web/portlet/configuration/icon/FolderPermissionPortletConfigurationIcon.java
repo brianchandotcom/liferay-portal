@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -32,9 +31,11 @@ public class FolderPermissionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public FolderPermissionPortletConfigurationIcon(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, Folder folder) {
 
 		super(portletRequest);
+
+		_folder = folder;
 	}
 
 	@Override
@@ -47,13 +48,11 @@ public class FolderPermissionPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			Folder folder = ActionUtil.getFolder(portletRequest);
-
-			if (folder != null) {
+			if (_folder != null) {
 				url = PermissionsURLTag.doTag(
 					null, DLFolderConstants.getClassName(),
-					HtmlUtil.unescape(folder.getName()), null,
-					String.valueOf(folder.getFolderId()),
+					HtmlUtil.unescape(_folder.getName()), null,
+					String.valueOf(_folder.getFolderId()),
 					LiferayWindowState.POP_UP.toString(), null,
 					themeDisplay.getRequest());
 			}
@@ -74,14 +73,8 @@ public class FolderPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		try {
-			Folder folder = ActionUtil.getFolder(portletRequest);
-
-			if (folder != null) {
-				return true;
-			}
-		}
-		catch (Exception e) {
+		if (_folder != null) {
+			return true;
 		}
 
 		return false;
@@ -96,5 +89,7 @@ public class FolderPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	private final Folder _folder;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -56,7 +57,7 @@ public class DeleteFileEntryPortletConfigurationIcon
 			PortletRequest.ACTION_PHASE);
 
 		deleteURL.setParameter(
-			"javax.portlet.action", "/document_library/edit_file_entry");
+			ActionRequest.ACTION_NAME, "/document_library/edit_file_entry");
 
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
 			deleteURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);

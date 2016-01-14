@@ -45,18 +45,18 @@ public class EditFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL editURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		editURL.setParameter(
+		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
 
-		editURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		editURL.setParameter(
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		return editURL.toString();
+		return portletURL.toString();
 	}
 
 	@Override

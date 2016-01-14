@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
-import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,11 +36,13 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public OpenInMSOfficeFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry) {
+		PortletRequest portletRequest, FileEntry fileEntry,
+		FileVersion fileVersion) {
 
 		super(portletRequest);
 
 		_fileEntry = fileEntry;
+		_fileVersion = fileVersion;
 	}
 
 	@Override
@@ -83,15 +84,12 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				portletRequest);
 
-			FileVersion fileVersion = ActionUtil.getFileVersion(
-				request, _fileEntry);
-
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
-				request, fileVersion);
+				request, _fileVersion);
 
 			return uiItemsBuilder.isOpenInMsOfficeActionAvailable();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 		}
 
 		return false;
@@ -108,5 +106,6 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	}
 
 	private final FileEntry _fileEntry;
+	private final FileVersion _fileVersion;
 
 }

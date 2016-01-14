@@ -457,8 +457,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 						return project.files();
 					}
 
-					File file =
-						(File)abstractCopyTask.property(_BUNDLE_FILE_PROPERTY_NAME);
+					File file = (File)abstractCopyTask.property(
+						_BUNDLE_FILE_PROPERTY_NAME);
 
 					String fileName = file.getName();
 

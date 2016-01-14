@@ -234,6 +234,21 @@ public class ExportImportConfigurationFinderImpl
 			queryDefinition, false);
 	}
 
+	protected String checkStatusCriteria(
+		String sql,
+		QueryDefinition<ExportImportConfiguration> queryDefinition) {
+
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			return sql;
+		}
+
+		if (queryDefinition.isExcludeStatus()) {
+			return CustomSQLUtil.appendCriteria(sql, "AND (status != ?)");
+		}
+
+		return CustomSQLUtil.appendCriteria(sql, "AND (status = ?)");
+	}
+
 	protected int doCountByC_G_N_D_T(
 		long companyId, long groupId, String[] names, String[] descriptions,
 		int type, boolean andOperator,
@@ -250,7 +265,7 @@ public class ExportImportConfigurationFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_G_N_D_T);
 
-			sql = updateSQL(sql, queryDefinition);
+			sql = checkStatusCriteria(sql, queryDefinition);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -318,7 +333,7 @@ public class ExportImportConfigurationFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_D_T);
 
-			sql = updateSQL(sql, queryDefinition);
+			sql = checkStatusCriteria(sql, queryDefinition);
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
@@ -365,21 +380,6 @@ public class ExportImportConfigurationFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected String updateSQL(
-		String sql,
-		QueryDefinition<ExportImportConfiguration> queryDefinition) {
-
-		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-			return sql;
-		}
-
-		if (queryDefinition.isExcludeStatus()) {
-			return CustomSQLUtil.appendCriteria(sql, "AND (status != ?)");
-		}
-
-		return CustomSQLUtil.appendCriteria(sql, "AND (status = ?)");
 	}
 
 }

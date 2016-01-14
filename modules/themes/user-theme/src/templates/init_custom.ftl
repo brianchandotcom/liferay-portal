@@ -12,12 +12,12 @@
 </#if>
 
 <#if pageDistributionType = "horizontal">
-	<#assign css_class = "css_class user-card-horizontal">
+	<#assign css_class = css_class + " user-card-horizontal">
 	<#assign firstColumnClass = "col-md-3">
 	<#assign secondColumnClass = "col-md-9">
 	<#assign userIconSize = "user-icon-xxl">
 <#else>
-	<#assign css_class = "css_class user-card-vertical">
+	<#assign css_class = css_class + " user-card-vertical">
 	<#assign firstColumnClass = "col-md-12">
 	<#assign secondColumnClass = "col-md-12">
 	<#assign userIconSize = "user-icon-xl">

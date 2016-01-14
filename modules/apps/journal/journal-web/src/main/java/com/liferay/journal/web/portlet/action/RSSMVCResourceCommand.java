@@ -18,16 +18,12 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.util.JournalRSSUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,18 +44,13 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 	public boolean serveResource(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
-
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			resourceResponse);
-
 		try {
 			byte[] xml = _journalRSSUtil.getRSS(
 				resourceRequest, resourceResponse);
 
-			ServletResponseUtil.sendFile(
-				request, response, null, xml, ContentTypes.TEXT_XML_UTF8);
+			PortletResponseUtil.sendFile(
+				resourceRequest, resourceResponse, null, xml,
+				ContentTypes.TEXT_XML_UTF8);
 
 			return false;
 		}

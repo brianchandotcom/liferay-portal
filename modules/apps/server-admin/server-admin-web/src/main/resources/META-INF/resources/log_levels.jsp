@@ -19,6 +19,12 @@
 <%
 String keywords = ParamUtil.getString(request, "keywords");
 
+String[] tabNames = new String[] {"update-categories", "add-category"};
+
+if (!ArrayUtil.contains(tabNames, tabs3)) {
+	tabs3 = tabNames[0];
+}
+
 PortletURL serverURL = renderResponse.createRenderURL();
 
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
@@ -27,11 +33,31 @@ serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
 %>
 
-<liferay-ui:tabs
-	names="update-categories,add-category"
-	param="tabs3"
-	portletURL="<%= serverURL %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		for (String tabName : tabNames) {
+
+			serverURL.setParameter("tabs3", tabName);
+		%>
+
+			<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs3.equals(tabName) %>" />
+
+		<%
+		}
+
+		serverURL.setParameter("tabs3", tabs3);
+		%>
+
+	</aui:nav>
+
+	<c:if test="<%= tabs3.equals("update-categories") %>">
+		<aui:nav-bar-search>
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-categories") %>' />
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
 
 <c:choose>
 	<c:when test='<%= tabs3.equals("add-category") %>'>
@@ -58,9 +84,6 @@ serverURL.setParameter("tabs3", tabs3);
 		</aui:button-row>
 	</c:when>
 	<c:otherwise>
-		<div class="form-search">
-			<liferay-ui:input-search placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-categories") %>' />
-		</div>
 
 		<%
 		Map currentLoggerNames = new TreeMap();

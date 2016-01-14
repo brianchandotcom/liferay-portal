@@ -28,6 +28,7 @@
 		portletURL.setParameter("mvcRenderCommandName", "/server_admin/view");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("tabs2", tabs2);
+		portletURL.setParameter("tabs3", tabs3);
 		%>
 
 		<portlet:renderURL var="redirectURL">

@@ -19,6 +19,12 @@
 <%
 String keywords = ParamUtil.getString(request, "keywords");
 
+String[] tabNames = new String[] {"system-properties", "portal-properties"};
+
+if (!ArrayUtil.contains(tabNames, tabs3)) {
+	tabs3 = tabNames[0];
+}
+
 PortletURL serverURL = renderResponse.createRenderURL();
 
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
@@ -27,17 +33,29 @@ serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
 %>
 
-<liferay-ui:tabs
-	names="system-properties,portal-properties"
-	param="tabs3"
-	portletURL="<%= serverURL %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
 
-<div class="form-search">
-	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
+		<%
+		for (String tabName : tabNames) {
 
-	<liferay-ui:input-search placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
-</div>
+			serverURL.setParameter("tabs3", tabName);
+		%>
+
+			<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs3.equals(tabName) %>" />
+
+		<%
+		}
+
+		serverURL.setParameter("tabs3", tabs3);
+		%>
+
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <%
 Map<String, String> filteredProperties = new TreeMap<String, String>();

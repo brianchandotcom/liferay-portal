@@ -16,10 +16,6 @@
 
 <#assign css_class = css_class + " " + htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam" />
 
-<#assign liferay_product_menu_state = sessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed") />
-
-<#assign css_class = css_class + " " + liferay_product_menu_state />
-
 <#assign liferay_toggle_controls = sessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible") />
 
 <#if layout??>

@@ -147,7 +147,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public int getDDMStructuresCount() throws PortalException {
-		return getDDMStructures().size();
+		List<DDMStructure> ddmStructures = getDDMStructures();
+
+		return ddmStructures.size();
 	}
 
 	@Override

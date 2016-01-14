@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Wiki Admin",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.mvc-command-names-default-views=/wiki_admin/view,/wiki_admin/view_pages",
+		"javax.portlet.init-param.mvc-command-names-default-views=/wiki_admin/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,

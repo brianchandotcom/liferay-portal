@@ -44,7 +44,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		loadConfigurationBeanClass(bundle);
 
 		if (_configurationBeanClass != null) {
-			processConfigurationAdminFields();
+			processExtendedMetatypeFields();
 		}
 	}
 
@@ -123,7 +123,7 @@ public class AnnotationsExtendedObjectClassDefinition
 		}
 	}
 
-	protected void processConfigurationAdminFields() {
+	protected void processExtendedMetatypeFields() {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			_configurationBeanClass.getAnnotation(
 				ExtendedObjectClassDefinition.class);

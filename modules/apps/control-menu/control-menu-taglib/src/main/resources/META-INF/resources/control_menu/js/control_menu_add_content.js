@@ -5,10 +5,6 @@ AUI.add(
 
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
 
-		var SELECTOR_DISPLAY_STYLE = '.display-style';
-
-		var SELECTOR_NUM_ITEMS = '.num-item';
-
 		var STR_CLICK = 'click';
 
 		var STR_RESPONSE_DATA = 'responseData';
@@ -31,7 +27,8 @@ AUI.add(
 
 						instance._addContentForm = instance.byId('addContentForm');
 						instance._entriesPanel = instance.byId('entriesContainer');
-						instance._numItems = instance.byId('numItems');
+
+						instance._entriesPanel.plug(A.Plugin.ParseContent);
 
 						instance._bindUI();
 					},
@@ -46,8 +43,6 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandles.push(
-							instance._addContentForm.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_DISPLAY_STYLE, instance),
-							instance._numItems.delegate(STR_CLICK, instance._onChangeNumItems, SELECTOR_NUM_ITEMS, instance),
 							instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance),
 							Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance),
 							Liferay.on('showTab', instance._onShowTab, instance),
@@ -58,30 +53,6 @@ AUI.add(
 								}
 							)
 						);
-					},
-
-					_onChangeDisplayStyle: function(event) {
-						var instance = this;
-
-						var displayStyle = event.currentTarget.attr('data-displaystyle');
-
-						instance._displayStyle = displayStyle;
-
-						Liferay.Store('com.liferay.control.menu.web_addPanelDisplayStyle', displayStyle);
-
-						instance._refreshContentList(event);
-					},
-
-					_onChangeNumItems: function(event) {
-						var instance = this;
-
-						var delta = event.currentTarget.attr('data-delta');
-
-						instance._delta = delta;
-
-						Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', delta);
-
-						instance._refreshContentList(event);
 					},
 
 					_onShowTab: function(event) {
@@ -96,6 +67,22 @@ AUI.add(
 
 					_refreshContentList: function(event) {
 						var instance = this;
+
+						var delta = event.delta;
+
+						if (delta) {
+							instance._delta = delta;
+
+							Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', delta);
+						}
+
+						var displayStyle = event.displayStyle;
+
+						if (displayStyle) {
+							instance._displayStyle = displayStyle;
+
+							Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', displayStyle);
+						}
 
 						A.io.request(
 							instance._addContentForm.getAttribute('action'),
@@ -121,6 +108,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-search']
+		requires: ['aui-parse-content', 'aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-search']
 	}
 );

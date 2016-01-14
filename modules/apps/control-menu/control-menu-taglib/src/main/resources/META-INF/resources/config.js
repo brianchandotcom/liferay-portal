@@ -43,6 +43,7 @@
 							path: 'control_menu/js/control_menu_add_content.js',
 							requires: [
 								'aui-io-request',
+								'aui-parse-content',
 								'event-mouseenter',
 								'liferay-control-menu',
 								'liferay-control-menu-add-content-search',

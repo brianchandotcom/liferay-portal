@@ -11,7 +11,7 @@ AUI.add(
 
 		var AddContent = A.Component.create(
 			{
-				AUGMENTS: [ControlMenu.AddContentPreview, ControlMenu.AddContentSearch, Liferay.PortletBase],
+				AUGMENTS: [ControlMenu.AddContentSearch, Liferay.PortletBase],
 
 				EXTENDS: ControlMenu.AddBase,
 
@@ -22,11 +22,13 @@ AUI.add(
 						var instance = this;
 
 						instance._config = config;
+						instance._delta = config.delta;
 						instance._displayStyle = config.displayStyle;
 
 						instance._addContentForm = instance.byId('addContentForm');
 						instance._entriesPanel = instance.byId('entriesContainer');
-						instance._numItems = instance.byId('numItems');
+
+						instance._entriesPanel.plug(A.Plugin.ParseContent);
 
 						instance._bindUI();
 					},
@@ -41,9 +43,7 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandles.push(
-							instance._numItems.on('change', instance._onChangeNumItems, instance),
 							instance._entriesPanel.delegate(STR_CLICK, instance._addContent, SELECTOR_ADD_CONTENT_ITEM, instance),
-							Liferay.on('AddContent:changeDisplayStyle', instance._onChangeDisplayStyle, instance),
 							Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance),
 							Liferay.on('showTab', instance._onShowTab, instance),
 							Liferay.on(
@@ -53,26 +53,6 @@ AUI.add(
 								}
 							)
 						);
-					},
-
-					_onChangeDisplayStyle: function(event) {
-						var instance = this;
-
-						var displayStyle = event.displayStyle;
-
-						instance._displayStyle = displayStyle;
-
-						Liferay.Store('com.liferay.control.menu.web_addPanelDisplayStyle', displayStyle);
-
-						instance._refreshContentList(event);
-					},
-
-					_onChangeNumItems: function(event) {
-						var instance = this;
-
-						Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', instance._numItems.val());
-
-						instance._refreshContentList(event);
 					},
 
 					_onShowTab: function(event) {
@@ -88,6 +68,22 @@ AUI.add(
 					_refreshContentList: function(event) {
 						var instance = this;
 
+						var delta = event.delta;
+
+						if (delta) {
+							instance._delta = delta;
+
+							Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', delta);
+						}
+
+						var displayStyle = event.displayStyle;
+
+						if (displayStyle) {
+							instance._displayStyle = displayStyle;
+
+							Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', displayStyle);
+						}
+
 						A.io.request(
 							instance._addContentForm.getAttribute('action'),
 							{
@@ -96,11 +92,9 @@ AUI.add(
 								},
 								data: instance.ns(
 									{
-										delta: instance._numItems.val(),
+										delta: instance._delta,
 										displayStyle: instance._displayStyle,
-										keywords: instance.get('inputNode').val(),
-										viewAssetEntries: true,
-										viewAssetPreview: false
+										keywords: instance.get('inputNode').val()
 									}
 								)
 							}
@@ -114,6 +108,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-preview', 'liferay-control-menu-add-content-search']
+		requires: ['aui-parse-content', 'aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-search']
 	}
 );

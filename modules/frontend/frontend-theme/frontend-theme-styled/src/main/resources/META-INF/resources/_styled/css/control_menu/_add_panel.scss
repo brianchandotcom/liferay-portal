@@ -1,20 +1,10 @@
 .lfr-admin-panel {
-	background-color: #1F282E;
 	bottom: 0;
-	color: #FFF;
 	overflow: auto;
 	position: fixed;
 	right: 0;
 	top: 0;
 	z-index: 990;
-
-	h1 {
-		font-size: 19px;
-	}
-
-	a:not(.btn), .form-control {
-		color: #869CAD;
-	}
 
 	a.close {
 		color: #FFF;

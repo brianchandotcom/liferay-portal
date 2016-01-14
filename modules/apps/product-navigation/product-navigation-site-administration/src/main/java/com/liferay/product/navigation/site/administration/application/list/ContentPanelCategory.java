@@ -40,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ContentPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-file-text";
-	}
-
-	@Override
 	public String getJspPath() {
 		return "/content/content.jsp";
 	}

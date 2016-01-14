@@ -23,7 +23,6 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.Serializable;
 
@@ -63,11 +62,6 @@ public class LayoutRevisionWorkflowHandler
 
 		return LayoutRevisionLocalServiceUtil.updateStatus(
 			userId, layoutRevisionId, status, serviceContext);
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
 
 }

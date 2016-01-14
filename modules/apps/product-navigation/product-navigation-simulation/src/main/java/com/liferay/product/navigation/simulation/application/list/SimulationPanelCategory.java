@@ -39,11 +39,6 @@ public class SimulationPanelCategory extends BasePanelCategory {
 	public static final String SIMULATION = "simulation";
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-screenshot";
-	}
-
-	@Override
 	public String getKey() {
 		return SIMULATION;
 	}

@@ -15,7 +15,6 @@
 package com.liferay.site.admin.web.custom.attributes;
 
 import com.liferay.portal.model.Group;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
@@ -40,12 +39,7 @@ public class SiteAdminCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-globe";
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/site_icon.png";
+		return "sites";
 	}
 
 }

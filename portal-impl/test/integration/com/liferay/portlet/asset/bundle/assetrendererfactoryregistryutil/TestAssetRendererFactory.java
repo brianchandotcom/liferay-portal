@@ -123,6 +123,10 @@ public class TestAssetRendererFactory
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(PortletRequest portletRequest) {
 		return null;

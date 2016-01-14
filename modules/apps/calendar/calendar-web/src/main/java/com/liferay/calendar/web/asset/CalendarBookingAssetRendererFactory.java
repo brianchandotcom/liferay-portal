@@ -88,7 +88,7 @@ public class CalendarBookingAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-calendar";
+		return "calendar";
 	}
 
 	@Override
@@ -176,11 +176,6 @@ public class CalendarBookingAssetRendererFactory
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/date.png";
 	}
 
 	@Reference(unbind = "-")

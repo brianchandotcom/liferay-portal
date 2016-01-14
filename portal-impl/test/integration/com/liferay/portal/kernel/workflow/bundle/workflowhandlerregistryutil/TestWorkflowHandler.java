@@ -70,6 +70,10 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(LiferayPortletRequest liferayPortletRequest) {
 		return null;

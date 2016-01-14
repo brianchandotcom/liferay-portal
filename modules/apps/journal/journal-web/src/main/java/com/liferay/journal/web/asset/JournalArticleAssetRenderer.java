@@ -220,8 +220,7 @@ public class JournalArticleAssetRenderer
 			return thumbnailSrc;
 		}
 
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/article.png";
+		return super.getThumbnailPath(portletRequest);
 	}
 
 	@Override
@@ -500,11 +499,6 @@ public class JournalArticleAssetRenderer
 				_article, ddmTemplateKey, viewMode, languageId, articlePage,
 				portletRequestModel, themeDisplay);
 		}
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
 	protected PortletRequestModel getPortletRequestModel(

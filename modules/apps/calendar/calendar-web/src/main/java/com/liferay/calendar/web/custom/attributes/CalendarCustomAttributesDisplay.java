@@ -16,7 +16,6 @@ package com.liferay.calendar.web.custom.attributes;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 
@@ -37,11 +36,6 @@ public class CalendarCustomAttributesDisplay
 	@Override
 	public String getClassName() {
 		return CalendarBooking.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/date.png";
 	}
 
 }

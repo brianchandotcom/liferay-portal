@@ -16,7 +16,6 @@ package com.liferay.journal.web.custom.attributes;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 
@@ -36,11 +35,6 @@ public class JournalFolderCustomAttributesDisplay
 	@Override
 	public String getClassName() {
 		return JournalFolder.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
 
 }

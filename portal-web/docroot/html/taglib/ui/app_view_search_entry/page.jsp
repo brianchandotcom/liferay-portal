@@ -130,8 +130,9 @@ summary.setQueryTerms(queryTerms);
 
 					<span class="title">
 						<liferay-ui:icon
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+							icon="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
+							markupView="lexicon"
 							message='<%= LanguageUtil.format(locale, "attachment-added-by-x", HtmlUtil.escape(fileEntry.getUserName()), false) %>'
 						/>
 					</span>

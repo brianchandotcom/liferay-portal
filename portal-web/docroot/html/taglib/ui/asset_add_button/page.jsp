@@ -36,7 +36,7 @@ for (long groupId : groupIds) {
 %>
 
 	<c:if test="<%= (addPortletURLs != null) && !addPortletURLs.isEmpty() %>">
-		<aui:nav cssClass="navbar-nav">
+		<aui:nav>
 			<c:choose>
 				<c:when test="<%= addPortletURLs.size() == 1 %>">
 

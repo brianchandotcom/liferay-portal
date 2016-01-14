@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Component;
 public class ConfigurationPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-hdd";
-	}
-
-	@Override
 	public String getKey() {
 		return PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION;
 	}

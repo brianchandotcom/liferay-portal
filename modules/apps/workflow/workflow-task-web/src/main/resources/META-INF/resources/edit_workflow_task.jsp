@@ -135,8 +135,9 @@ renderResponse.setTitle(headerTitle);
 
 						<h3 class="task-content-title">
 							<liferay-ui:icon
-								iconCssClass="<%= workflowHandler.getIconCssClass() %>"
+								icon="<%= workflowHandler.getIconCssClass() %>"
 								label="<%= true %>"
+								markupView="lexicon"
 								message="<%= workflowTaskDisplayContext.getTaskContentTitle(workflowTask) %>"
 							/>
 						</h3>

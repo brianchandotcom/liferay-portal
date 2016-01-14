@@ -121,12 +121,13 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return getAssetRendererFactory().getIconCssClass();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getIconPath(themeDisplay);
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -180,11 +181,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/default.png";
+		return null;
 	}
 
 	@Override
@@ -396,10 +393,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		throws PortalException {
 
 		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
-	}
-
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
 	protected Locale getLocale(PortletRequest portletRequest) {

@@ -23,7 +23,6 @@ PortletURL addURL = PortletURLFactoryUtil.create(request, ControlMenuPortletKeys
 
 addURL.setParameter("mvcPath", "/add_panel.jsp");
 addURL.setParameter("stateMaximized", String.valueOf(themeDisplay.isStateMaximized()));
-addURL.setParameter("viewAssetEntries", Boolean.TRUE.toString());
 addURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 data.put("panelURL", addURL);

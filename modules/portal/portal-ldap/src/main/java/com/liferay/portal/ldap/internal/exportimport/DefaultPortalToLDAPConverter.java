@@ -66,7 +66,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  */
 @Component(
-	configurationPid = "com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration",
 	immediate = true, service = PortalToLDAPConverter.class
 )
 public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {

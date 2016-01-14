@@ -616,8 +616,8 @@
 	<bean id="com.liferay.portlet.usersadmin.util.ContactIndexer" class="com.liferay.portlet.usersadmin.util.ContactIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.UserIndexer" class="com.liferay.portlet.usersadmin.util.UserIndexer" />
-	<bean id="com.liferay.portlet.usersadmin.util.UsersAdmin" class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" />
-	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
-		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
+	<bean id="com.liferay.portal.kernel.portlet.usersadmin.util.UsersAdmin" class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" />
+	<bean id="com.liferay.portal.kernel.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portal.kernel.portlet.usersadmin.util.UsersAdminUtil">
+		<property name="usersAdmin" ref="com.liferay.portal.kernel.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
 </beans>

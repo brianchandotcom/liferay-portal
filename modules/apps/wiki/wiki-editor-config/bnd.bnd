@@ -2,3 +2,6 @@ Bundle-Name: Liferay Wiki Editor Config
 Bundle-SymbolicName: com.liferay.wiki.editor.config
 Bundle-Version: 1.0.0
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../marketplace/collaboration/bnd.bnd

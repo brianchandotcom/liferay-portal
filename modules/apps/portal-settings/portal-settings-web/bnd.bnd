@@ -6,4 +6,7 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	META-INF/resources/users_admin/css=@lib/com.liferay.users.admin.web.jar!/META-INF/resources/css,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /portlet-settings-web
+-include: ../../../../marketplace/platform/bnd.bnd

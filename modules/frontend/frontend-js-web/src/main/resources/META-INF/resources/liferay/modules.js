@@ -50,6 +50,7 @@
 						path: 'alert.js',
 						requires: [
 							'aui-alert',
+							'aui-component',
 							'event-mouseenter',
 							'liferay-portlet-base',
 							'timers'

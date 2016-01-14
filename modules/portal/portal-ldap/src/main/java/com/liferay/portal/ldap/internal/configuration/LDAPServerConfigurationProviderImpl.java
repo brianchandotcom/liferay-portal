@@ -189,23 +189,23 @@ public class LDAPServerConfigurationProviderImpl
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long ldapServerId, boolean useDefault) {
 
-		Map<Long, Configuration> configurations = _configurations.get(
-			companyId);
+		Map<Long, Configuration> configurations;
 
-		if ((configurations == null) && useDefault) {
-			return new HashMapDictionary<>();
+		if (ldapServerId == LDAPConstants.SYSTEM_DEFAULT) {
+			configurations = _configurations.get(LDAPConstants.SYSTEM_DEFAULT);
 		}
-		else if ((configurations == null) && !useDefault) {
-			return null;
+		else {
+			configurations = _configurations.get(companyId);
+		}
+
+		if (configurations == null) {
+			return new HashMapDictionary<>();
 		}
 
 		Configuration configuration = configurations.get(ldapServerId);
 
-		if ((configuration == null) && useDefault) {
+		if (configuration == null) {
 			return new HashMapDictionary<>();
-		}
-		else if ((configuration == null) && !useDefault) {
-			return null;
 		}
 
 		return configuration.getProperties();
@@ -329,6 +329,10 @@ public class LDAPServerConfigurationProviderImpl
 				long ldapServerId = (Long)tuple.getObject(1);
 
 				configurations.remove(ldapServerId);
+
+				if (configurations.isEmpty()) {
+					_configurations.remove(companyId);
+				}
 			}
 		}
 	}

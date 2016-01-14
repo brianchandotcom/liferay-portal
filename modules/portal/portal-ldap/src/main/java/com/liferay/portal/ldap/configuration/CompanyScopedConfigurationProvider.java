@@ -120,12 +120,12 @@ public abstract class CompanyScopedConfigurationProvider
 
 		Configuration configuration = _configurations.get(companyId);
 
-		if (useDefault && (configuration == null)) {
-			return new HashMapDictionary<>();
-		}
-
 		if (configuration == null) {
-			return null;
+			configuration = _configurations.get(LDAPConstants.SYSTEM_DEFAULT);
+
+			if (configuration == null) {
+				return new HashMapDictionary<>();
+			}
 		}
 
 		Dictionary<String, Object> properties = configuration.getProperties();

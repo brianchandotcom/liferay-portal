@@ -1,4 +1,5 @@
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {

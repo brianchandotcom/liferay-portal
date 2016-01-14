@@ -6,4 +6,5 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Recycle Bin
+Web-ContextPath: /trash-web
 -include: ../../../../marketplace/web-content-management/bnd.bnd

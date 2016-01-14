@@ -47,6 +47,8 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -276,7 +278,7 @@ public class MVCPortlet extends LiferayPortlet {
 					renderRequest, renderResponse);
 			}
 
-			if (mvcPath == MVCRenderCommand.MVC_PATH_SKIP_DISPATCH) {
+			if (MVCRenderCommand.MVC_PATH_SKIP_DISPATCH.equals(mvcPath)) {
 				return;
 			}
 
@@ -538,7 +540,16 @@ public class MVCPortlet extends LiferayPortlet {
 			PortletResponse portletResponse, String lifecycle)
 		throws IOException, PortletException {
 
-		PortletContext portletContext = getPortletContext();
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		PortletContext portletContext =
+			(PortletContext)httpServletRequest.getAttribute(
+				MVCRenderCommand.PORTLET_CONTEXT_OVERRIDE_PREFIX + path);
+
+		if (portletContext == null) {
+			portletContext = getPortletContext();
+		}
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			portletContext.getRequestDispatcher(path);

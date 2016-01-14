@@ -258,7 +258,8 @@ public class ReleaseManager {
 		@Override
 		public void keyRemoved(
 			ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap,
-			String key, UpgradeInfo service, List<UpgradeInfo> content) {
+			String key, UpgradeInfo upgradeInfo,
+			List<UpgradeInfo> upgradeInfos) {
 		}
 
 	}

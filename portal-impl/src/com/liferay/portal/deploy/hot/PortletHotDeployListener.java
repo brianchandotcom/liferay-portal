@@ -194,9 +194,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				properties.put("javax.portlet.name", portlet.getPortletId());
 
 				ServiceRegistration<ResourceBundle> serviceRegistration =
-						registry.registerService(
-								ResourceBundle.class, resourceBundle,
-								properties);
+					registry.registerService(
+						ResourceBundle.class, resourceBundle, properties);
 
 				_serviceRegistrations.put(resourceBundle, serviceRegistration);
 			}

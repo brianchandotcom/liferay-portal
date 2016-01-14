@@ -323,7 +323,8 @@ public class VerifyProcessTracker {
 		@Override
 		public void keyRemoved(
 			ServiceTrackerMap<String, VerifyProcess> serviceTrackerMap,
-			String key, VerifyProcess service, VerifyProcess content) {
+			String key, VerifyProcess serviceVerifyProcess,
+			VerifyProcess contentVerifyProcess) {
 		}
 
 	}

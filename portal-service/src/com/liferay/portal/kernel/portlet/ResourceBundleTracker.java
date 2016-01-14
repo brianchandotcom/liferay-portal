@@ -113,17 +113,17 @@ public class ResourceBundleTracker implements Closeable {
 			ServiceTrackerMap<String, List<ResourceBundle>>
 				serviceTrackerMap,
 			String languageId, ResourceBundle resourceBundle,
-			List<ResourceBundle> content) {
+			List<ResourceBundle> resourceBundles) {
 
 			synchronized (_resourceBundles) {
 				Set<String> keySet = _resourceBundles.keySet();
 				Iterator<String> iterator = keySet.iterator();
 
 				while (iterator.hasNext()) {
-					String subLanguageId = iterator.next();
+					String sublanguageId = iterator.next();
 
-					if (!languageId.equals(subLanguageId) &&
-						subLanguageId.startsWith(languageId)) {
+					if (!languageId.equals(sublanguageId) &&
+						sublanguageId.startsWith(languageId)) {
 
 						iterator.remove();
 					}
@@ -135,17 +135,17 @@ public class ResourceBundleTracker implements Closeable {
 		public void keyRemoved(
 			ServiceTrackerMap<String, List<ResourceBundle>>
 				serviceTrackerMap,
-			String languageId, ResourceBundle service,
-			List<ResourceBundle> content) {
+			String languageId, ResourceBundle resourceBundle,
+			List<ResourceBundle> resourceBundles) {
 
 			synchronized (_resourceBundles) {
 				Set<String> keySet = _resourceBundles.keySet();
 				Iterator<String> iterator = keySet.iterator();
 
 				while (iterator.hasNext()) {
-					String subLanguageId = iterator.next();
+					String sublanguageId = iterator.next();
 
-					if (subLanguageId.startsWith(languageId)) {
+					if (sublanguageId.startsWith(languageId)) {
 						iterator.remove();
 					}
 				}

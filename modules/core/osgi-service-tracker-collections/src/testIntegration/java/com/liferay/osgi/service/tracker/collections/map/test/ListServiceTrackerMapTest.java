@@ -353,18 +353,20 @@ public class ListServiceTrackerMapTest {
 
 					@Override
 					public void keyEmitted(
-						ServiceTrackerMap<String, List<TrackedOne>> map,
-						String key, TrackedOne service,
-						List<TrackedOne> content) {
+						ServiceTrackerMap<String, List<TrackedOne>>
+							serviceTrackerMap,
+						String key, TrackedOne serviceTrackedOne,
+						List<TrackedOne> contentTrackedOnes) {
 
-						trackedOnes.add(service);
+						trackedOnes.add(serviceTrackedOne);
 					}
 
 					@Override
 					public void keyRemoved(
-						ServiceTrackerMap<String, List<TrackedOne>> map,
-						String key, TrackedOne service,
-						List<TrackedOne> content) {
+						ServiceTrackerMap<String, List<TrackedOne>>
+							serviceTrackerMap,
+						String key, TrackedOne serviceTrackedOne,
+						List<TrackedOne> contentTrackedOnes) {
 					}
 
 				};
@@ -399,12 +401,13 @@ public class ListServiceTrackerMapTest {
 
 					@Override
 					public void keyEmitted(
-						ServiceTrackerMap<String, List<TrackedOne>> map,
-						String key, TrackedOne service,
-						List<TrackedOne> content) {
+						ServiceTrackerMap<String, List<TrackedOne>>
+							serviceTrackerMap,
+						String key, TrackedOne serviceTrackedOne,
+						List<TrackedOne> contentTrackedOnes) {
 
 						try {
-							content.add(new TrackedOne("spurious"));
+							contentTrackedOnes.add(new TrackedOne("spurious"));
 						}
 						catch (Exception e) {
 						}
@@ -412,9 +415,10 @@ public class ListServiceTrackerMapTest {
 
 					@Override
 					public void keyRemoved(
-							ServiceTrackerMap<String, List<TrackedOne>> map,
-							String key, TrackedOne service,
-							List<TrackedOne> content) {
+						ServiceTrackerMap<String, List<TrackedOne>>
+							serviceTrackerMap,
+						String key, TrackedOne serviceTrackedOne,
+						List<TrackedOne> contentTrackedOnes) {
 					}
 
 				};
@@ -454,15 +458,16 @@ public class ListServiceTrackerMapTest {
 
 					@Override
 					public void keyEmitted(
-						ServiceTrackerMap<String, List<TrackedOne>> map,
-						String key, TrackedOne service,
-						List<TrackedOne> content) {
+						ServiceTrackerMap<String, List<TrackedOne>>
+							serviceTrackerMap,
+						String key, TrackedOne serviceTrackedOne,
+						List<TrackedOne> contentTrackedOnes) {
 
 						try {
 							Assert.assertEquals("aTarget", key);
-							Assert.assertEquals(trackedOne, service);
+							Assert.assertEquals(trackedOne, serviceTrackedOne);
 							Assert.assertEquals(
-								content, Arrays.asList(trackedOne));
+								contentTrackedOnes, Arrays.asList(trackedOne));
 						}
 						catch (Throwable t) {
 							throwables.add(t);
@@ -471,9 +476,10 @@ public class ListServiceTrackerMapTest {
 
 					@Override
 					public void keyRemoved(
-						ServiceTrackerMap<String, List<TrackedOne>> map,
-						String key, TrackedOne service,
-						List<TrackedOne> content) {
+						ServiceTrackerMap<String, List<TrackedOne>>
+							serviceTrackerMap,
+						String key, TrackedOne serviceTrackedOne,
+						List<TrackedOne> contentTrackedOnes) {
 					}
 
 				};

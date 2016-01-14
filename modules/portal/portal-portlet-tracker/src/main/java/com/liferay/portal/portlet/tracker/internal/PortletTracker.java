@@ -278,9 +278,6 @@ public class PortletTracker
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		ServiceRegistrations serviceRegistrations = getServiceRegistrations(
-			bundle);
-
 		PassThroughClassLoader passThroughClassLoader =
 			new PassThroughClassLoader(bundleWiring.getClassLoader());
 
@@ -289,6 +286,9 @@ public class PortletTracker
 		ClassLoader contextClassLoader = thread.getContextClassLoader();
 
 		thread.setContextClassLoader(bundleWiring.getClassLoader());
+
+		ServiceRegistrations serviceRegistrations = getServiceRegistrations(
+			bundle);
 
 		try {
 			BundlePortletApp bundlePortletApp = createBundlePortletApp(
@@ -416,7 +416,7 @@ public class PortletTracker
 					_log.info(
 						"Portlet " + portletModel.getPortletName() + " does " +
 							"not have translations for available locale " +
-						locale);
+								locale);
 				}
 			}
 

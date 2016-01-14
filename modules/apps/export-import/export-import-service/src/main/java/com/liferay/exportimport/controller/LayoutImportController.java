@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.sites.util.Sites;
+import com.liferay.portal.kernel.portlet.sites.util.SitesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -90,8 +92,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.sites.util.Sites;
-import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 import java.io.Serializable;

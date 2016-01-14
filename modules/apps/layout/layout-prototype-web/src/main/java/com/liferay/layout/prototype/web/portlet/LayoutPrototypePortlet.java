@@ -18,6 +18,7 @@ import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.sites.util.SitesUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutPrototypeService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
 

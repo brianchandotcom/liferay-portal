@@ -37,6 +37,7 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletModeFactory" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.sites.util.SitesUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourceConstants" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %><%@
 page import="com.liferay.portal.kernel.settings.ArchivedSettings" %><%@
@@ -87,7 +88,6 @@ page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.exportimport.LARFileSizeException" %><%@
 page import="com.liferay.portlet.portletconfiguration.action.ActionUtil" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %><%@
-page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 

@@ -16,6 +16,7 @@ package com.liferay.portal.layoutconfiguration.util.velocity;
 
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.sites.util.SitesUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.taglib.aui.InputTag;
 
 import java.io.Writer;

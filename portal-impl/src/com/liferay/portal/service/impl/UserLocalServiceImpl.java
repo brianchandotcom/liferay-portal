@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -142,7 +143,6 @@ import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.social.model.SocialRelation;
 import com.liferay.portlet.social.model.SocialRelationConstants;
-import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 

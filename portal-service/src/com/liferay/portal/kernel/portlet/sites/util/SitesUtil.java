@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.sites.util;
+package com.liferay.portal.kernel.portlet.sites.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;

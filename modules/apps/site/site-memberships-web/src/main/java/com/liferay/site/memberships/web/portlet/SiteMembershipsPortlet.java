@@ -18,6 +18,7 @@ import com.liferay.portal.MembershipRequestCommentsException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,7 +46,6 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
 
 import java.io.IOException;

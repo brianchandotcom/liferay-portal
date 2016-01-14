@@ -38,6 +38,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.sites.util.Sites" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.DynamicInclude" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
@@ -71,7 +72,6 @@ page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.ratings.RatingsType" %><%@
 page import="com.liferay.portlet.ratings.display.context.CompanyPortletRatingsDefinitionDisplayContext" %><%@
 page import="com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil" %><%@
-page import="com.liferay.portlet.sites.util.Sites" %><%@
 page import="com.liferay.taglib.servlet.JspWriterHttpServletResponse" %><%@
 page import="com.liferay.util.ContentUtil" %>
 

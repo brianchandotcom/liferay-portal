@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.sites.util.SitesUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
@@ -90,7 +91,6 @@ import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
 import java.io.Serializable;

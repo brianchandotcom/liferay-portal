@@ -15,6 +15,7 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.sites.util.SitesUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -38,7 +39,6 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.List;
 

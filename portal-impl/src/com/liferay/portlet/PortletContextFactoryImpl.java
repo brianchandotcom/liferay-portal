@@ -32,7 +32,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletContextFactory {
+public class PortletContextFactoryImpl {
 
 	public static PortletContext create(
 		Portlet portlet, ServletContext servletContext) {
@@ -44,7 +44,7 @@ public class PortletContextFactory {
 		_instance._destroy(portlet);
 	}
 
-	private PortletContextFactory() {
+	private PortletContextFactoryImpl() {
 		_pool = new ConcurrentHashMap<>();
 	}
 
@@ -100,10 +100,10 @@ public class PortletContextFactory {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletContextFactory.class);
+		PortletContextFactoryImpl.class);
 
-	private static final PortletContextFactory _instance =
-		new PortletContextFactory();
+	private static final PortletContextFactoryImpl _instance =
+		new PortletContextFactoryImpl();
 
 	private final Map<String, Map<String, PortletContext>> _pool;
 

@@ -54,11 +54,9 @@ data.put("qa-id", "navigation");
 	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= journalDisplayContext.isShowManagementBar() %>">
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="searchContainerId" value="articles" />
-	</liferay-util:include>
-</c:if>
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchContainerId" value="articles" />
+</liferay-util:include>
 
 <div id="<portlet:namespace />journalContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

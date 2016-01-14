@@ -329,7 +329,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								>
 									<liferay-frontend:vertical-card-sticker-bottom>
 										<div class="sticker sticker-bottom <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
-											<%= StringUtil.upperCase(latestFileVersion.getExtension()) %>
+											<%= StringUtil.shorten(StringUtil.upperCase(latestFileVersion.getExtension()), 3, StringPool.BLANK) %>
 										</div>
 									</liferay-frontend:vertical-card-sticker-bottom>
 

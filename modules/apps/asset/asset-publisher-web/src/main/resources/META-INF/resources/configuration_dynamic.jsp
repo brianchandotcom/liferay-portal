@@ -553,7 +553,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	var ddmStructureFieldName = $('#<portlet:namespace />ddmStructureFieldName');
 	var orderByColumn1 = $('#<portlet:namespace />orderByColumn1');
 	var orderByColumn2 = $('#<portlet:namespace />orderByColumn2');
-	var sourcePanel = $('#assetPublisherSourcePanel');
+	var sourcePanel = $('#<portlet:namespace />assetPublisherSourcePanel');
 
 	<%
 	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {

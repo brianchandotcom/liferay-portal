@@ -83,7 +83,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.PortletConfigFactoryUtil;
-import com.liferay.portlet.PortletContextFactory;
+import com.liferay.portlet.PortletContextFactoryUtil;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletQNameUtil;
@@ -852,7 +852,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					PortletInstanceFactoryUtil.clear(portlet);
 
 					PortletConfigFactoryUtil.destroy(portlet);
-					PortletContextFactory.destroy(portlet);
+					PortletContextFactoryUtil.destroy(portlet);
 				}
 
 				portlet = entry.getValue();
@@ -882,7 +882,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					PortletInstanceFactoryUtil.clear(portlet);
 
 					PortletConfigFactoryUtil.destroy(portlet);
-					PortletContextFactory.destroy(portlet);
+					PortletContextFactoryUtil.destroy(portlet);
 				}
 			}
 

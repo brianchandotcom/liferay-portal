@@ -228,7 +228,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		clear(portlet);
 
 		PortletConfigFactoryUtil.destroy(portlet);
-		PortletContextFactory.destroy(portlet);
+		PortletContextFactoryUtil.destroy(portlet);
 
 		PortletLocalServiceUtil.destroyPortlet(portlet);
 	}

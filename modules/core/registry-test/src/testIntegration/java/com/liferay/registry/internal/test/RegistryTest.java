@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.jboss.arquillian.junit.Arquillian;
@@ -628,7 +629,7 @@ public class RegistryTest {
 
 				};
 
-		testTrackServicesByServiceTrackerCustomizer.test(2);
+		testTrackServicesByServiceTrackerCustomizer.test(2, 2, 0, 2);
 	}
 
 	@Test
@@ -666,7 +667,7 @@ public class RegistryTest {
 
 				};
 
-		testTrackServicesByServiceTrackerCustomizer.test(2);
+		testTrackServicesByServiceTrackerCustomizer.test(2, 2, 0, 2);
 	}
 
 	@Test
@@ -709,7 +710,7 @@ public class RegistryTest {
 
 				};
 
-		testTrackServicesByServiceTrackerCustomizer.test(1);
+		testTrackServicesByServiceTrackerCustomizer.test(1, 1, 0, 1);
 	}
 
 	protected InterfaceOne getInstance() {
@@ -753,25 +754,49 @@ public class RegistryTest {
 				_referenceB.set(trackedOne);
 			}
 
+			_addingInvocationCount.incrementAndGet();
+
 			return trackedOne;
+		}
+
+		public int getAddingInvocationCount() {
+			return _addingInvocationCount.get();
+		}
+
+		public int getModifiedInvocationCount() {
+			return _modifiedInvocationCount.get();
+		}
+
+		public int getRemovedInvocationCount() {
+			return _removedInvocationCount.get();
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<InterfaceOne> serviceReference,
 			TrackedOne trackedOne) {
+
+			_modifiedInvocationCount.incrementAndGet();
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<InterfaceOne> serviceReference,
 			TrackedOne trackedOne) {
+
+			_removedInvocationCount.incrementAndGet();
 		}
 
+		private final AtomicInteger _addingInvocationCount = new AtomicInteger(
+			0);
 		private final InterfaceOne _interfaceOneA;
 		private final InterfaceOne _interfaceOneB;
+		private final AtomicInteger _modifiedInvocationCount =
+			new AtomicInteger(0);
 		private final AtomicReference<TrackedOne> _referenceA;
 		private final AtomicReference<TrackedOne> _referenceB;
+		private final AtomicInteger _removedInvocationCount = new AtomicInteger(
+			0);
 
 	}
 
@@ -868,18 +893,22 @@ public class RegistryTest {
 				ServiceTrackerCustomizer<InterfaceOne, TrackedOne>
 					serviceTrackerCustomizer);
 
-		public void test(int expectedServicesCount) {
+		public void test(
+			int expectedServicesCount, int expectedAddingInvocationCount,
+			int expectedModifiedInvocationCount,
+			int expectedRemovedInvocationCount) {
+
 			InterfaceOne interfaceOneA = getInstance();
 			InterfaceOne interfaceOneB = getInstance();
 			AtomicReference<TrackedOne> referenceA = new AtomicReference<>();
 			AtomicReference<TrackedOne> referenceB = new AtomicReference<>();
 
-			ServiceTrackerCustomizer<InterfaceOne, TrackedOne>
-				serviceTrackerCustomizer = new MockServiceTrackerCustomizer(
+			MockServiceTrackerCustomizer
+				mockServiceTrackerCustomizer = new MockServiceTrackerCustomizer(
 					interfaceOneA, interfaceOneB, referenceA, referenceB);
 
 			ServiceTracker<InterfaceOne, TrackedOne> serviceTracker =
-				getServiceTracker(serviceTrackerCustomizer);
+				getServiceTracker(mockServiceTrackerCustomizer);
 
 			serviceTracker.open();
 
@@ -949,8 +978,29 @@ public class RegistryTest {
 
 			Assert.assertNotNull(trackedServiceReferences);
 			Assert.assertEquals(0, trackedServiceReferences.size());
+			assertInvocationCounts(
+				mockServiceTrackerCustomizer, expectedAddingInvocationCount,
+				expectedModifiedInvocationCount,
+				expectedRemovedInvocationCount);
 
 			serviceTracker.close();
+		}
+
+		protected void assertInvocationCounts(
+			MockServiceTrackerCustomizer mockServiceTrackerCustomizer,
+			int expectedAddingInvocationCount,
+			int expectedModifiedInvocationCount,
+			int expectedRemovedInvocationCount) {
+
+			Assert.assertEquals(
+				expectedAddingInvocationCount,
+				mockServiceTrackerCustomizer.getAddingInvocationCount());
+			Assert.assertEquals(
+				expectedModifiedInvocationCount,
+				mockServiceTrackerCustomizer.getModifiedInvocationCount());
+			Assert.assertEquals(
+				expectedRemovedInvocationCount,
+				mockServiceTrackerCustomizer.getRemovedInvocationCount());
 		}
 
 	}

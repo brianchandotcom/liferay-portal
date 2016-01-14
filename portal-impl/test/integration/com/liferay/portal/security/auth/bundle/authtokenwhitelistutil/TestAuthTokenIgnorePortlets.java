@@ -24,14 +24,14 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS + "=" + TestAuthTokenIgnoreActions.TEST_AUTH_TOKEN_IGNORE_ACTION_URL,
+		PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS + "=" + TestAuthTokenIgnorePortlets.TEST_AUTH_TOKEN_IGNORE_PORTLETS_URL,
 		"service.ranking:Integer=" + Integer.MAX_VALUE
 	},
 	service = Object.class
 )
-public class TestAuthTokenIgnoreActions {
+public class TestAuthTokenIgnorePortlets {
 
-	public static final String TEST_AUTH_TOKEN_IGNORE_ACTION_URL =
-		"TEST_AUTH_TOKEN_IGNORE_ACTION_URL";
+	public static final String TEST_AUTH_TOKEN_IGNORE_PORTLETS_URL =
+		"TEST_AUTH_TOKEN_IGNORE_PORTLETS_URL";
 
 }

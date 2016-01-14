@@ -19,19 +19,20 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Cristina González
+ * @author Tomas Polesovsky
  */
 @Component(
 	immediate = true,
 	property = {
-		PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS + "=" + TestAuthTokenIgnoreActions.TEST_AUTH_TOKEN_IGNORE_ACTION_URL,
+		PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST + "=" + TestPortalAddDefaultResourceCheckWhitelist.TEST_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_URL,
 		"service.ranking:Integer=" + Integer.MAX_VALUE
 	},
 	service = Object.class
 )
-public class TestAuthTokenIgnoreActions {
+public class TestPortalAddDefaultResourceCheckWhitelist {
 
-	public static final String TEST_AUTH_TOKEN_IGNORE_ACTION_URL =
-		"TEST_AUTH_TOKEN_IGNORE_ACTION_URL";
+	public static final String
+		TEST_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_URL =
+			"TEST_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_URL";
 
 }

@@ -208,7 +208,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	}
 
 	protected void trackWhitelistServices(
-		String whitelistName, Class serviceClass, Set<String> whiteList) {
+		String whitelistName, Class<?> serviceClass, Set<String> whiteList) {
 
 		Registry registry = RegistryUtil.getRegistry();
 

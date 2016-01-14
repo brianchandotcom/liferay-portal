@@ -116,6 +116,25 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
 	</command>
 
+	<command name="addLocalizedPGViaWCD">
+		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
+
+		<var name="key_localizedBasicWebContent" value="${localizedBasicWebContent}" />
+
+		<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT_LOCALIZED" value1="${localizedBasicWebContent}" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+
+		<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
+
+		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+
+		<execute function="Click" locator1="Button#PUBLISH_LOCALIZED" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="addNullCP">
 		<if>
 			<isset var="webContentContent" />
@@ -171,22 +190,6 @@
 		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
 
 		<if>
-			<equals arg1="${localizedTitle}" arg2="true" />
-			<then>
-				<var name="key_localizedBasicWebContent" value="${localizedBasicWebContent}" />
-
-				<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT_LOCALIZED" value1="${localizedBasicWebContent}" />
-
-				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-
-				<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
-
-				<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-				<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-				<execute function="Click" locator1="Button#PUBLISH_LOCALIZED" />
-				<execute function="SelectFrame" value1="relative=top" />
-			</then>
-			<elseif>
 				<isset var="structureName" />
 				<then>
 					<var name="key_structureName" value="${structureName}" />

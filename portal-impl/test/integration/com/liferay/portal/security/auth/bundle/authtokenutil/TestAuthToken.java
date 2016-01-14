@@ -80,6 +80,10 @@ public class TestAuthToken implements AuthToken {
 		return "VALID_PORTLET_INVOCATION_TOKEN".equals(tokenValue);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public boolean isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,

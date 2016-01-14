@@ -51,6 +51,7 @@ public class RolesAdminXStreamConfigurator implements XStreamConfigurator {
 	@Activate
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
+			new XStreamAlias(PermissionImpl.class, "Permission"),
 			new XStreamAlias(RoleImpl.class, "Role")
 		};
 

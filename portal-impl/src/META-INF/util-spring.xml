@@ -585,9 +585,9 @@
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />
 	</bean>
-	<bean id="com.liferay.portlet.sites.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
-	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
-		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
+	<bean id="com.liferay.sites.kernel.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
+	<bean id="com.liferay.sites.kernel.util.SitesUtil" class="com.liferay.sites.kernel.util.SitesUtil">
+		<property name="sites" ref="com.liferay.sites.kernel.util.Sites" />
 	</bean>
 	<bean id="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" class="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil">
 		<property name="socialActivityPermission">

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -93,11 +94,10 @@ public class PortletConfigurationIconTracker {
 					paths.add(StringPool.DASH);
 				}
 			}
-			else if (ArrayUtil.isNotEmpty(defaultViewsArray)) {
-				paths.addAll(defaultViews);
+		}
 
-				paths.add(StringPool.DASH);
-			}
+		if (SetUtil.isEmpty(paths)) {
+			paths.add(StringPool.DASH);
 		}
 
 		return paths;

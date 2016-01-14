@@ -22,8 +22,8 @@ Layout selLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScope
 PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, PortletRequest.RENDER_PHASE);
 
 editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
 editLayoutURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
+editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
 editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 Map<String, Object> data = new HashMap<String, Object>();

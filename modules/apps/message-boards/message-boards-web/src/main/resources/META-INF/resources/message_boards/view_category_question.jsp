@@ -30,7 +30,6 @@ Set<Long> threadSubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 %>

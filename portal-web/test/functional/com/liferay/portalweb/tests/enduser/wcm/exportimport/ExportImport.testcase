@@ -427,6 +427,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

@@ -16,7 +16,7 @@
 
 <c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
 	<div class="btn-toolbar">
-		<aui:button name="saveInstance" value="select-device-family" />
+		<a class="btn btn-default" href="javascript:;" id="<portlet:namespace />saveInstance"><liferay-ui:message key="select-device-family" /></a>
 
 		<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
 			<aui:button name="managePriorities" value="manage-rule-priorities" />
@@ -35,7 +35,7 @@
 		var $ = AUI.$;
 
 		$.ajax(
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getMobileDeviceRules" var="viewRuleGroupInstancesURL">
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getMobileDeviceRules" portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" var="viewRuleGroupInstancesURL">
 				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -54,7 +54,7 @@
 
 	function <portlet:namespace />deleteRuleGroupInstance(ruleGroupInstanceId) {
 		Liferay.Service(
-			'/mdrrulegroupinstance/delete-rule-group-instance',
+			'/mdr.mdrrulegroupinstance/delete-rule-group-instance',
 			{
 				ruleGroupInstanceId: ruleGroupInstanceId,
 				serviceContext: JSON.stringify(
@@ -72,7 +72,7 @@
 
 	function <portlet:namespace />saveRuleGroupInstance(ruleGroupId, ruleGroupName) {
 		Liferay.Service(
-			'/mdrrulegroupinstance/add-rule-group-instance',
+			'/mdr.mdrrulegroupinstance/add-rule-group-instance',
 			{
 				className: '<%= HtmlUtil.escapeJS(className) %>',
 				classPK: <%= classPK %>,
@@ -106,7 +106,7 @@
 					id: '<portlet:namespace />selectRuleGroup',
 					title: '<%= UnicodeLanguageUtil.get(request, "device-families") %>',
 
-					<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_RULES %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/select_rule_group" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="className" value="<%= className %>" />
@@ -131,7 +131,7 @@
 					id: '<portlet:namespace />ruleGroupsPriorities',
 					title: '<%= UnicodeLanguageUtil.get(request, "rule-priorities") %>',
 
-					<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_RULES %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="className" value="<%= className %>" />

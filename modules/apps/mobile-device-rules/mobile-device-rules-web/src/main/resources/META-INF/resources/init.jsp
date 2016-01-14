@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.mobile.device.rules.action.ActionHandler" %><%@
 page import="com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil" %><%@
+page import="com.liferay.mobile.device.rules.constants.MDRPortletKeys" %><%@
 page import="com.liferay.mobile.device.rules.exception.ActionTypeException" %><%@
 page import="com.liferay.mobile.device.rules.exception.NoSuchActionException" %><%@
 page import="com.liferay.mobile.device.rules.exception.NoSuchRuleException" %><%@
@@ -69,9 +70,11 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
@@ -80,6 +83,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.model.ColorScheme" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
+page import="com.liferay.portal.model.LayoutConstants" %><%@
 page import="com.liferay.portal.model.LayoutSet" %><%@
 page import="com.liferay.portal.model.Theme" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@

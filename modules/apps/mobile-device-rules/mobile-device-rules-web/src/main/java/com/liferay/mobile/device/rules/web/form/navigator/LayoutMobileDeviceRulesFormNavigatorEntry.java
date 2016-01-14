@@ -12,9 +12,16 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.servlet.taglib.ui;
+package com.liferay.mobile.device.rules.web.form.navigator;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Layout;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -29,7 +36,17 @@ import org.osgi.service.component.annotations.Reference;
 	service = FormNavigatorEntry.class
 )
 public class LayoutMobileDeviceRulesFormNavigatorEntry
-	extends BaseLayoutFormNavigatorEntry {
+	extends BaseJSPFormNavigatorEntry<Layout> {
+
+	@Override
+	public String getCategoryKey() {
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT;
+	}
 
 	@Override
 	public String getKey() {
@@ -37,8 +54,13 @@ public class LayoutMobileDeviceRulesFormNavigatorEntry
 	}
 
 	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, getKey());
+	}
+
+	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		target = "(osgi.web.symbolicname=com.liferay.mobile.device.rules.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

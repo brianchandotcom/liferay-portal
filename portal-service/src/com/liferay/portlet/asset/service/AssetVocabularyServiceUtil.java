@@ -59,16 +59,6 @@ public class AssetVocabularyServiceUtil {
 			settings, serviceContext);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static void deleteVocabularies(long[] vocabularyIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteVocabularies(vocabularyIds);
-	}
-
 	public static java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> deleteVocabularies(
 		long[] vocabularyIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -181,18 +171,6 @@ public class AssetVocabularyServiceUtil {
 		long[] groupIds, java.lang.String className, long classTypePK) {
 		return getService()
 				   .getGroupsVocabularies(groupIds, className, classTypePK);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, with no direct replacement
-	*/
-	@Deprecated
-	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
-		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getJSONGroupVocabularies(groupId, name, start, end, obc);
 	}
 
 	/**

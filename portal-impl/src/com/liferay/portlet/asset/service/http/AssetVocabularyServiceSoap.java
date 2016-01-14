@@ -112,23 +112,6 @@ public class AssetVocabularyServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static void deleteVocabularies(long[] vocabularyIds)
-		throws RemoteException {
-		try {
-			AssetVocabularyServiceUtil.deleteVocabularies(vocabularyIds);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portlet.asset.model.AssetVocabularySoap[] deleteVocabularies(
 		long[] vocabularyIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -411,27 +394,6 @@ public class AssetVocabularyServiceSoap {
 					name, start, end, obc);
 
 			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* @deprecated As of 6.2.0, with no direct replacement
-	*/
-	@Deprecated
-	public static java.lang.String getJSONGroupVocabularies(long groupId,
-		java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue = AssetVocabularyServiceUtil.getJSONGroupVocabularies(groupId,
-					name, start, end, obc);
-
-			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

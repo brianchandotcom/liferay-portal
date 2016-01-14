@@ -47,6 +47,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -254,7 +255,7 @@ public class DLFileEntryAssetRenderer
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
-			"javax.portlet.action", "/document_library/get_file");
+			ActionRequest.ACTION_NAME, "/document_library/get_file");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_fileEntry.getRepositoryId()));
 		portletURL.setParameter(

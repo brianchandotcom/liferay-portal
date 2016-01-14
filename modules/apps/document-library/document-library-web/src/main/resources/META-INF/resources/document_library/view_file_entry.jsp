@@ -115,7 +115,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<div class="view">
-		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && !portletTitleBasedNavigation %>">
 			<liferay-ui:app-view-toolbar>
 				<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 			</liferay-ui:app-view-toolbar>
@@ -123,7 +123,7 @@ if (portletTitleBasedNavigation) {
 
 		<aui:row>
 			<aui:col cssClass="lfr-asset-column-details" width="<%= 70 %>">
-				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && !portletTitleBasedNavigation %>">
 					<liferay-ui:app-view-toolbar>
 						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
 					</liferay-ui:app-view-toolbar>
@@ -628,7 +628,7 @@ if (portletTitleBasedNavigation) {
 	<%@ include file="/document_library/action/open_document_js.jspf" %>
 </c:if>
 
-<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && !portletTitleBasedNavigation %>">
 	<aui:script use="aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />fileEntryToolbar');
 

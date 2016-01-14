@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
@@ -54,9 +53,9 @@ public class ThreadSubscriptionPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/message_boards/edit_message");

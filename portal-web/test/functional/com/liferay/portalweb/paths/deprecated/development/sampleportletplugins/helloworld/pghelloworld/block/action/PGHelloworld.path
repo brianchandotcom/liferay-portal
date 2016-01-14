@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//section[@id='portlet_47']//h1[@class='portlet-title']/span</td>
+	<td>//section[@id='portlet_com_liferay_hello_world_web_portlet_HelloWorldPortlet']//h2[@class='portlet-title-text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTLET_CONTENT</td>
-	<td>//section[@id='portlet_47']//div[@class='portlet-body']</td>
+	<td>//section[@id='portlet_com_liferay_hello_world_web_portlet_HelloWorldPortlet']//div[@class='portlet-body']</td>
 	<td></td>
 </tr>
 </tbody>

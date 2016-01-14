@@ -160,13 +160,13 @@ public abstract class CompanyScopedConfigurationProvider
 		List<T> configurables = new ArrayList<>(
 			configurationsProperties.size());
 
-		if (ListUtil.isEmpty(configurationsProperties) && useDefault) {
+		if (ListUtil.isEmpty(configurationsProperties)) {
 			T configurable = Configurable.createConfigurable(
 				getMetatype(), new HashMapDictionary<>());
 
 			configurables.add(configurable);
 		}
-		else if (ListUtil.isNotEmpty(configurationsProperties)) {
+		else {
 			for (Dictionary<String, Object> configurationProperties :
 					configurationsProperties) {
 

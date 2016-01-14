@@ -121,7 +121,7 @@ public class LDAPServerConfigurationProviderImpl
 		if (!ldapServerConfigurations.isEmpty()) {
 			ldapServerConfiguration = ldapServerConfigurations.get(0);
 		}
-		else if (useDefault) {
+		else {
 			ldapServerConfiguration = Configurable.createConfigurable(
 				getMetatype(), new HashMapDictionary<>());
 		}
@@ -166,10 +166,6 @@ public class LDAPServerConfigurationProviderImpl
 
 		List<Dictionary<String, Object>> configurationsProperties =
 			getConfigurationsProperties(companyId);
-
-		if (configurationsProperties.isEmpty() && !useDefault) {
-			return null;
-		}
 
 		if (configurationsProperties.isEmpty()) {
 			return new HashMapDictionary<>();
@@ -226,14 +222,14 @@ public class LDAPServerConfigurationProviderImpl
 		List<LDAPServerConfiguration> ldapServerConfigurations =
 			new ArrayList<>(configurationsProperties.size());
 
-		if (ListUtil.isEmpty(configurationsProperties) && useDefault) {
+		if (ListUtil.isEmpty(configurationsProperties)) {
 			LDAPServerConfiguration ldapServerConfiguration =
 				Configurable.createConfigurable(
 					getMetatype(), new HashMapDictionary<>());
 
 			ldapServerConfigurations.add(ldapServerConfiguration);
 		}
-		else if (ListUtil.isNotEmpty(configurationsProperties)) {
+		else {
 			for (Dictionary<String, Object> configurationProperties :
 					configurationsProperties) {
 

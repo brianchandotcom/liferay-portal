@@ -167,16 +167,21 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		sb.append(locale.getCountry());
 		sb.append(locale.getVariant());
 
-		String resourceBundleId = sb.toString();
-
-		resourceBundle = _resourceBundles.get(resourceBundleId);
-
 		if (resourceBundle == null) {
 			if (!_portletApp.isWARFile() &&
 				resourceBundleClassName.equals(
 					StrutsResourceBundle.class.getName())) {
 
-				resourceBundle = new StrutsResourceBundle(_portletName, locale);
+				String resourceBundleId = sb.toString();
+
+				resourceBundle = _resourceBundles.get(resourceBundleId);
+
+				if (resourceBundle == null) {
+					resourceBundle = new StrutsResourceBundle(
+						_portletName, locale);
+				}
+
+				_resourceBundles.put(resourceBundleId, resourceBundle);
 			}
 			else {
 				PortletBag portletBag = PortletBagPool.get(
@@ -187,8 +192,6 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 			resourceBundle = new PortletResourceBundle(
 				resourceBundle, _portlet.getPortletInfo());
-
-			_resourceBundles.put(resourceBundleId, resourceBundle);
 		}
 
 		return resourceBundle;

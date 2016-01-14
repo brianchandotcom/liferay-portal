@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.5"
 	compile group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.4"
 	// @formatter:off
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion

@@ -468,6 +468,7 @@ public class JournalRSSUtil {
 			PortletRequest.RESOURCE_PHASE);
 
 		feedURL.setCacheability(ResourceURL.FULL);
+		feedURL.setParameter("p_p_resource_id", "rss");
 		feedURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
 		feedURL.setParameter("feedId", String.valueOf(feed.getFeedId()));
 

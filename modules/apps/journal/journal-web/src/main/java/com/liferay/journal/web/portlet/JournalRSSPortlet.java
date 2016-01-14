@@ -19,6 +19,7 @@ import com.liferay.journal.web.util.JournalRSSUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.ByteArrayInputStream;
@@ -64,27 +65,33 @@ public class JournalRSSPortlet extends MVCPortlet {
 
 		InputStream inputStream = null;
 
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			resourceRequest);
 
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			resourceResponse);
 
-		try {
-			byte[] xml = _journalRSSUtil.getRSS(
-				resourceRequest, resourceResponse);
+		if (resourceID.equals("rss")) {
 
-			inputStream = new ByteArrayInputStream(xml);
-
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, null, inputStream,
-				ContentTypes.TEXT_XML_UTF8);
-		}
-		catch (Exception e) {
 			try {
-				PortalUtil.sendError(e, request, response);
+				byte[] xml = _journalRSSUtil.getRSS(
+					resourceRequest, resourceResponse);
+
+				inputStream = new ByteArrayInputStream(xml);
+
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, null, inputStream,
+					ContentTypes.TEXT_XML_UTF8);
 			}
-			catch (ServletException se) {
+			catch (Exception e) {
+				try {
+					PortalUtil.sendError(e, request, response);
+				}
+				catch (ServletException se) {
+				}
 			}
 		}
 	}

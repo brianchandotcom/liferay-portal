@@ -1,0 +1,15 @@
+{
+	"dynamic_templates": [
+		{
+			"template_": {
+				"mapping": {
+					"index": "analyzed",
+					"store": "true",
+					"type": "string"
+				},
+				"match": "*",
+				"match_mapping_type": "string"
+			}
+		}
+	]
+}

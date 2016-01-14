@@ -26,6 +26,7 @@ import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch.settings.IndexSettingsContributor;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.HashMap;
@@ -39,6 +40,8 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.Settings;
@@ -77,16 +80,9 @@ public class CompanyIndexFactory implements IndexFactory {
 			return;
 		}
 
-		CreateIndexRequestBuilder createIndexRequestBuilder =
-			indicesAdminClient.prepareCreate(String.valueOf(companyId));
+		createIndex(companyId, indicesAdminClient);
 
-		addMappings(createIndexRequestBuilder);
-		setSettings(createIndexRequestBuilder);
-
-		CreateIndexResponse createIndexResponse =
-			createIndexRequestBuilder.get();
-
-		LogUtil.logActionResponse(_log, createIndexResponse);
+		updateLiferayDocumentType(companyId, indicesAdminClient);
 	}
 
 	@Override
@@ -141,6 +137,8 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		setAdditionalIndexConfigurations(
 			elasticsearchConfiguration.additionalIndexConfigurations());
+		setAdditionalTypeMappings(
+			elasticsearchConfiguration.additionalTypeMappings());
 		setIndexConfigFileName(
 			MapUtil.getString(properties, "indexConfigFileName"));
 
@@ -165,13 +163,25 @@ public class CompanyIndexFactory implements IndexFactory {
 		throws Exception {
 
 		for (Map.Entry<String, String> entry : _typeMappings.entrySet()) {
-			Class<?> clazz = getClass();
-
-			String typeMapping = StringUtil.read(
-				clazz.getClassLoader(), entry.getValue());
-
-			createIndexRequestBuilder.addMapping(entry.getKey(), typeMapping);
+			createIndexRequestBuilder.addMapping(
+				entry.getKey(), read(entry.getValue()));
 		}
+	}
+
+	protected void createIndex(
+			long companyId, IndicesAdminClient indicesAdminClient)
+		throws Exception {
+
+		CreateIndexRequestBuilder createIndexRequestBuilder =
+			indicesAdminClient.prepareCreate(String.valueOf(companyId));
+
+		addMappings(createIndexRequestBuilder);
+		setSettings(createIndexRequestBuilder);
+
+		CreateIndexResponse createIndexResponse =
+			createIndexRequestBuilder.get();
+
+		LogUtil.logActionResponse(_log, createIndexResponse);
 	}
 
 	protected boolean hasIndex(
@@ -193,6 +203,17 @@ public class CompanyIndexFactory implements IndexFactory {
 		}
 
 		builder.loadFromSource(_additionalIndexConfigurations);
+	}
+
+	protected void loadAdditionalTypeMappings(
+			long companyId, IndicesAdminClient indicesAdminClient)
+		throws IOException {
+
+		if (_additionalTypeMappings == null) {
+			return;
+		}
+
+		putMapping(companyId, _additionalTypeMappings, indicesAdminClient);
 	}
 
 	protected void loadIndexConfigFile(Settings.Builder builder) {
@@ -218,6 +239,41 @@ public class CompanyIndexFactory implements IndexFactory {
 		}
 	}
 
+	protected void loadOptionalDefaultTypeMappings(
+			long companyId, IndicesAdminClient indicesAdminClient)
+		throws IOException {
+
+		String name = StringUtil.replace(
+			LiferayTypeMappingsConstants.FILE, ".json",
+			"-optional-defaults.json");
+
+		putMapping(companyId, read(name), indicesAdminClient);
+	}
+
+	protected void putMapping(
+			long companyId, String source,
+			IndicesAdminClient indicesAdminClient)
+		throws IOException {
+
+		PutMappingRequestBuilder putMappingRequestBuilder =
+			indicesAdminClient.preparePutMapping(String.valueOf(companyId));
+
+		putMappingRequestBuilder.setSource(source);
+		putMappingRequestBuilder.setType(LiferayTypeMappingsConstants.TYPE);
+
+		PutMappingResponse putMappingResponse = putMappingRequestBuilder.get();
+
+		LogUtil.logActionResponse(_log, putMappingResponse);
+	}
+
+	protected String read(String name) throws IOException {
+		Class<?> clazz = getClass();
+
+		try (InputStream inputStream = clazz.getResourceAsStream(name)) {
+			return StringUtil.read(inputStream);
+		}
+	}
+
 	protected void removeIndexSettingsContributor(
 		IndexSettingsContributor indexSettingsContributor) {
 
@@ -228,6 +284,10 @@ public class CompanyIndexFactory implements IndexFactory {
 		String additionalIndexConfigurations) {
 
 		_additionalIndexConfigurations = additionalIndexConfigurations;
+	}
+
+	protected void setAdditionalTypeMappings(String additionalTypeMappings) {
+		_additionalTypeMappings = additionalTypeMappings;
 	}
 
 	protected void setSettings(
@@ -244,12 +304,26 @@ public class CompanyIndexFactory implements IndexFactory {
 		createIndexRequestBuilder.setSettings(builder);
 	}
 
+	protected void updateLiferayDocumentType(
+			long companyId, IndicesAdminClient indicesAdminClient)
+		throws IOException {
+
+		if (!_typeMappings.containsKey(LiferayTypeMappingsConstants.TYPE)) {
+			return;
+		}
+
+		loadAdditionalTypeMappings(companyId, indicesAdminClient);
+
+		loadOptionalDefaultTypeMappings(companyId, indicesAdminClient);
+	}
+
 	private static final String _PREFIX = "typeMappings.";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);
 
 	private volatile String _additionalIndexConfigurations;
+	private String _additionalTypeMappings;
 	private String _indexConfigFileName;
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		new ConcurrentSkipListSet<>();

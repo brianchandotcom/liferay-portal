@@ -922,7 +922,7 @@
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent1}${wikiPageContent2}" />
 
-		<execute function="WikiEntry#publish" />
+		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />

@@ -14,13 +14,13 @@
 
 package com.liferay.mobile.device.rules.service.permission;
 
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -77,7 +77,7 @@ public class MDRRuleGroupPermission implements BaseModelPermissionChecker {
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, ruleGroup.getGroupId(),
 			MDRRuleGroup.class.getName(), ruleGroup.getRuleGroupId(),
-			PortletKeys.MOBILE_DEVICE_RULES, actionId);
+			MDRPortletKeys.MOBILE_DEVICE_RULES, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

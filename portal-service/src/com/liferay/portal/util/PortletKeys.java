@@ -78,9 +78,6 @@ public class PortletKeys {
 
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
 
-	public static final String MOBILE_DEVICE_RULES =
-		"com_liferay_mobile_device_rules_web_portlet_MDRPortlet";
-
 	public static final String MONITORING_INVOKER =
 		"com_liferay_monitoring_web_portlet_" +
 			"MonitoringInvokerPortletFactoryImpl";

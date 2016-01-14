@@ -58,10 +58,10 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 	<liferay-ui:search-container
 		emptyResultsMessage='<%= LanguageUtil.get(request, "custom-fields-are-not-enabled-for-any-resource") %>'
 		iteratorURL="<%= portletURL %>"
+		total="<%= customAttributesDisplays.size() %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= customAttributesDisplays %>"
-			total="<%= customAttributesDisplays.size() %>"
 		/>
 
 		<liferay-ui:search-container-row

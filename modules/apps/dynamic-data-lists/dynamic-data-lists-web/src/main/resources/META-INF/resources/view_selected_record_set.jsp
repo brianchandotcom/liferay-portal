@@ -184,7 +184,7 @@ if (recordSet != null) {
 				</liferay-portlet:renderURL>
 
 				<%
-				String taglibAddRecordSetURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + ddlDisplayContext.getEditFormDDMTemplateTitle() + "', uri:'" + HtmlUtil.escapeJS(addRecordSetURL.toString()) + "'});";
+				String taglibAddRecordSetURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + LanguageUtil.get(locale, "add-list") + "', uri:'" + HtmlUtil.escapeJS(addRecordSetURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon

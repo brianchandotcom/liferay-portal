@@ -167,12 +167,21 @@ if (portletTitleBasedNavigation) {
 							<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
 						</div>
 
-						<div class="icon-user lfr-asset-icon">
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" translateArguments="<%= false %>" />
+						<div>
+							<h5><strong><liferay-ui:message key="created" /></strong></h5>
+
+							<p>
+
+								<liferay-ui:message arguments="<%= new Object[] { HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate()) } %>" key="by-x-on-x" translateArguments="<%= false %>" />
+							</p>
 						</div>
 
-						<div class="icon-calendar lfr-asset-icon">
-							<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
+						<div>
+							<h5><strong><liferay-ui:message key="modified" /></strong></h5>
+
+							<p>
+								<liferay-ui:message arguments="<%= new Object[] { HtmlUtil.escape(fileVersion.getStatusByUserName()), dateFormatDateTime.format(fileVersion.getModifiedDate()) } %>" key="by-x-on-x" translateArguments="<%= false %>" />
+							</p>
 						</div>
 
 						<c:if test="<%= Validator.isNotNull(fileVersion.getDescription()) %>">

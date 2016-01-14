@@ -136,32 +136,34 @@ if (portletTitleBasedNavigation) {
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:choose>
-		<c:when test="<%= print %>">
-			<div class="popup-print">
-				<liferay-ui:icon
-					iconCssClass="icon-print"
-					label="<%= true %>"
-					message="print"
-					url="javascript:print();"
-				/>
-			</div>
-
-			<aui:script>
-				print();
-			</aui:script>
-		</c:when>
-		<c:otherwise>
-			<aui:script>
-				function <portlet:namespace />printPage() {
-					window.open('<%= printPageURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
-				}
-			</aui:script>
-		</c:otherwise>
-	</c:choose>
-
 	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<c:choose>
+			<c:when test="<%= print %>">
+				<div class="popup-print">
+					<liferay-ui:icon
+						iconCssClass="icon-print"
+						label="<%= true %>"
+						message="print"
+						url="javascript:print();"
+					/>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<aui:script>
+					function <portlet:namespace />printPage() {
+						window.open('<%= printPageURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
+					}
+				</aui:script>
+			</c:otherwise>
+		</c:choose>
+
 		<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
+	</c:if>
+
+	<c:if test="<%= print %>">
+		<aui:script>
+			print();
+		</aui:script>
 	</c:if>
 
 	<%
@@ -195,7 +197,7 @@ if (portletTitleBasedNavigation) {
 			/>
 		</c:if>
 
-		<c:if test="<%= !print %>">
+		<c:if test="<%= !print && !portletTitleBasedNavigation %>">
 			<div class="page-actions top-actions">
 				<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 					<c:if test="<%= followRedirect || (redirectPage == null) %>">
@@ -318,7 +320,7 @@ if (portletTitleBasedNavigation) {
 
 			<div class="page-actions">
 				<div class="article-actions">
-					<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
+					<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) && !portletTitleBasedNavigation %>">
 						<liferay-ui:icon
 							iconCssClass="icon-plus"
 							label="<%= true %>"

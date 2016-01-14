@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.webserver;
+package com.liferay.portal.kernel.webserver;
 
 /**
  * @author Brian Wing Shun Chan

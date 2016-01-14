@@ -91,15 +91,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return _AVAILABLE_LANGUAGE_IDS;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getAvailableLanguageIds}
-	 */
-	@Deprecated
-	@Override
-	public String[] getAvailableLocales() {
-		return getAvailableLanguageIds();
-	}
-
 	@Override
 	public DDMFormValuesReader getDDMFormValuesReader() {
 		return _nullDDMFormValuesReader;

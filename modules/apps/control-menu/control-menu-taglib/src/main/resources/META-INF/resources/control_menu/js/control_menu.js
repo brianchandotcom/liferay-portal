@@ -15,7 +15,7 @@ AUI.add(
 
 		var TPL_ADD_CONTENT = '<div class="lfr-add-panel lfr-admin-panel product-menu sidebar-inverse" id="{0}" />';
 
-		var TPL_LOADING = '<div class="loading-animation" />';
+		var TPL_LOADING = '<div class="loading-animation loading-animation-centered loading-animation-inverse" />';
 
 		var ControlMenu = {
 			init: function(containerId) {

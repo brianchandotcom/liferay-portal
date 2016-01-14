@@ -84,10 +84,10 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 
 		<liferay-ui:search-container
 			searchContainer="<%= openSearchSearchContainer %>"
+			total="<%= totalRows %>"
 		>
 			<liferay-ui:search-container-results
 				results="<%= resultRows %>"
-				total="<%= totalRows %>"
 			/>
 			<div class="section-title">
 

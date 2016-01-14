@@ -46,12 +46,12 @@ ddmDataProviderSearch.setOrderByType(orderByType);
 		>
 
 			<%
+			searchContainer.setTotal(ddmDataProviderDisplayContext.getSearchContainerTotal(searchContainer));
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 			%>
 
 			<liferay-ui:search-container-results
 				results="<%= ddmDataProviderDisplayContext.getSearchContainerResults(searchContainer) %>"
-				total="<%= ddmDataProviderDisplayContext.getSearchContainerTotal(searchContainer) %>"
 			/>
 
 			<liferay-ui:search-container-row

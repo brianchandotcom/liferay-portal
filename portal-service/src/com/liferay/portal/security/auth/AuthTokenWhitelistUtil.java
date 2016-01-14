@@ -38,8 +38,8 @@ public class AuthTokenWhitelistUtil {
 	public static AuthTokenWhitelist getAuthTokenWhitelist() {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		if (_authTokenWhiteLists.size() > 0) {
-			return _authTokenWhiteLists.get(0);
+		if (_authTokenWhitelists.size() > 0) {
+			return _authTokenWhitelists.get(0);
 		}
 
 		return null;
@@ -54,7 +54,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> portletCSRFWhitelist = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			portletCSRFWhitelist.addAll(
 				authTokenWhitelist.getPortletCSRFWhitelist());
 		}
@@ -71,7 +71,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> portletCSRFWhitelistActions = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			portletCSRFWhitelistActions.addAll(
 				authTokenWhitelist.getPortletCSRFWhitelistActions());
 		}
@@ -88,7 +88,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> portletInvocationWhitelist = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			portletInvocationWhitelist.addAll(
 				authTokenWhitelist.getPortletInvocationWhitelist());
 		}
@@ -105,7 +105,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> portletInvocationWhitelistActions = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			portletInvocationWhitelistActions.addAll(
 				authTokenWhitelist.getPortletInvocationWhitelistActions());
 		}
@@ -129,7 +129,7 @@ public class AuthTokenWhitelistUtil {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isOriginCSRFWhitelisted(companyId, origin)) {
 				return true;
 			}
@@ -143,7 +143,7 @@ public class AuthTokenWhitelistUtil {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isPortletCSRFWhitelisted(request, portlet)) {
 				return true;
 			}
@@ -162,7 +162,7 @@ public class AuthTokenWhitelistUtil {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isPortletCSRFWhitelisted(
 					companyId, portletId, strutsAction)) {
 
@@ -178,7 +178,7 @@ public class AuthTokenWhitelistUtil {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isPortletInvocationWhitelisted(
 					request, portlet)) {
 
@@ -199,7 +199,7 @@ public class AuthTokenWhitelistUtil {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isPortletInvocationWhitelisted(
 					companyId, portletId, strutsAction)) {
 
@@ -215,7 +215,7 @@ public class AuthTokenWhitelistUtil {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isPortletURLCSRFWhitelisted(
 					liferayPortletURL)) {
 
@@ -231,7 +231,7 @@ public class AuthTokenWhitelistUtil {
 
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isPortletURLPortletInvocationWhitelisted(
 					liferayPortletURL)) {
 
@@ -245,7 +245,7 @@ public class AuthTokenWhitelistUtil {
 	public static boolean isValidSharedSecret(String sharedSecret) {
 		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			if (authTokenWhitelist.isValidSharedSecret(sharedSecret)) {
 				return true;
 			}
@@ -263,7 +263,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> originCSRFWhitelist = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			originCSRFWhitelist.addAll(
 				authTokenWhitelist.resetOriginCSRFWhitelist());
 		}
@@ -280,7 +280,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> portletCSRFWhitelist = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			portletCSRFWhitelist.addAll(
 				authTokenWhitelist.resetPortletCSRFWhitelist());
 		}
@@ -297,7 +297,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> portletInvocationWhitelist = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			portletInvocationWhitelist.addAll(
 				authTokenWhitelist.resetPortletInvocationWhitelist());
 		}
@@ -314,7 +314,7 @@ public class AuthTokenWhitelistUtil {
 
 		Set<String> portletInvocationWhitelistActions = new HashSet<>();
 
-		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhiteLists) {
+		for (AuthTokenWhitelist authTokenWhitelist : _authTokenWhitelists) {
 			portletInvocationWhitelistActions.addAll(
 				authTokenWhitelist.resetPortletInvocationWhitelistActions());
 		}
@@ -330,7 +330,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	private static final ServiceTrackerList<AuthTokenWhitelist>
-		_authTokenWhiteLists = ServiceTrackerCollections.openList(
+		_authTokenWhitelists = ServiceTrackerCollections.openList(
 			AuthTokenWhitelist.class);
 
 }

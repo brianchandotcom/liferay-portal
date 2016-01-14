@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal;
+package com.liferay.portal.exception;
 
 /**
  * @author Brian Wing Shun Chan

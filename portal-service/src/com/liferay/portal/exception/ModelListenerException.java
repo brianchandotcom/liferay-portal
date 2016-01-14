@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.portal;
+package com.liferay.portal.exception;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchBackgroundTaskException extends NoSuchModelException {
+public class ModelListenerException extends SystemException {
 
-	public NoSuchBackgroundTaskException() {
+	public ModelListenerException() {
 	}
 
-	public NoSuchBackgroundTaskException(String msg) {
+	public ModelListenerException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchBackgroundTaskException(String msg, Throwable cause) {
+	public ModelListenerException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchBackgroundTaskException(Throwable cause) {
+	public ModelListenerException(Throwable cause) {
 		super(cause);
 	}
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.util.PortalUtil;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -46,20 +47,18 @@ public class CancelCheckoutFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL cancelCheckoutURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		cancelCheckoutURL.setParameter(
-			"javax.portlet.action", "/document_library/edit_file_entry");
-		cancelCheckoutURL.setParameter
-			(Constants.CMD, Constants.CANCEL_CHECKOUT);
-		cancelCheckoutURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-		cancelCheckoutURL.setParameter(
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/document_library/edit_file_entry");
+		portletURL.setParameter(Constants.CMD, Constants.CANCEL_CHECKOUT);
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		return cancelCheckoutURL.toString();
+		return portletURL.toString();
 	}
 
 	@Override

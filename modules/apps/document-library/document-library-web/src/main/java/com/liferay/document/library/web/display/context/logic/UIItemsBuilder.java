@@ -60,6 +60,7 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -748,7 +749,8 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
-		portletURL.setParameter("javax.portlet.action", mvcActionCommandName);
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, mvcActionCommandName);
 		portletURL.setParameter(Constants.CMD, cmd);
 		portletURL.setParameter("redirect", _getCurrentURL());
 

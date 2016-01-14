@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,9 +31,11 @@ public class FileEntryPermissionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public FileEntryPermissionPortletConfigurationIcon(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, FileEntry fileEntry) {
 
 		super(portletRequest);
+
+		_fileEntry = fileEntry;
 	}
 
 	@Override
@@ -47,12 +48,10 @@ public class FileEntryPermissionPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
-
 			url = PermissionsURLTag.doTag(
 				null, DLFileEntryConstants.getClassName(),
-				HtmlUtil.unescape(fileEntry.getTitle()), null,
-				String.valueOf(fileEntry.getFileEntryId()),
+				HtmlUtil.unescape(_fileEntry.getTitle()), null,
+				String.valueOf(_fileEntry.getFileEntryId()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
@@ -64,14 +63,8 @@ public class FileEntryPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		try {
-			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
-
-			if (fileEntry != null) {
-				return true;
-			}
-		}
-		catch (Exception e) {
+		if (_fileEntry != null) {
+			return true;
 		}
 
 		return false;
@@ -86,5 +79,7 @@ public class FileEntryPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	private final FileEntry _fileEntry;
 
 }

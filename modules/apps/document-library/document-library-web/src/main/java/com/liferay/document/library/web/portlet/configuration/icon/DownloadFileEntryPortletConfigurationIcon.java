@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,11 +31,13 @@ public class DownloadFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public DownloadFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry) {
+		PortletRequest portletRequest, FileEntry fileEntry,
+		FileVersion fileVersion) {
 
 		super(portletRequest);
 
 		_fileEntry = fileEntry;
+		_fileVersion = fileVersion;
 	}
 
 	@Override
@@ -51,19 +52,8 @@ public class DownloadFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		String url = StringPool.BLANK;
-
-		try {
-			FileVersion fileVersion = ActionUtil.getFileVersion(
-				portletRequest, _fileEntry);
-
-			url = DLUtil.getDownloadURL(
-				_fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
-		}
-		catch (Exception e) {
-		}
-
-		return url;
+		return DLUtil.getDownloadURL(
+			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK);
 	}
 
 	@Override
@@ -87,5 +77,6 @@ public class DownloadFileEntryPortletConfigurationIcon
 	}
 
 	private final FileEntry _fileEntry;
+	private final FileVersion _fileVersion;
 
 }

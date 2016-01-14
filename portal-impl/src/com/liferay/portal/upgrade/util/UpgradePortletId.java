@@ -309,9 +309,7 @@ public class UpgradePortletId extends UpgradeProcess {
 				"update Portlet set portletId = '" + newRootPortletId +
 					"' where portletId = '" + oldRootPortletId + "'");
 
-			runSQL(
-				"update ResourceAction set name = '" + newRootPortletId +
-					"' where name = '" + oldRootPortletId + "'");
+			updateResourceAction(oldRootPortletId, newRootPortletId);
 
 			updateResourcePermission(oldRootPortletId, newRootPortletId, true);
 
@@ -347,6 +345,28 @@ public class UpgradePortletId extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(ps);
+		}
+	}
+
+	protected void updateResourceAction(String oldName, String newName)
+		throws Exception {
+
+		String selectSQL =
+			"select name from ResourceAction where name = '" + newName + "'";
+
+		try (PreparedStatement ps = connection.prepareStatement(selectSQL);
+			ResultSet rs = ps.executeQuery()) {
+
+			if (rs.next()) {
+				runSQL(
+					"delete from ResourceAction where name = '" + oldName +
+						"'");
+			}
+			else {
+				runSQL(
+					"update ResourceAction set name = '" + newName +
+						"' where name = '" + oldName + "'");
+			}
 		}
 	}
 

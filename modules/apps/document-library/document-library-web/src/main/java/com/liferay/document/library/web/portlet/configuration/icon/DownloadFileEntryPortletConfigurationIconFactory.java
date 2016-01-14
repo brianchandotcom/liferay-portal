@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.portlet.PortletRequest;
 
@@ -44,8 +45,11 @@ public class DownloadFileEntryPortletConfigurationIconFactory
 		try {
 			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
-			return new DownloadFileEntryPortletConfigurationIcon(
+			FileVersion fileVersion = ActionUtil.getFileVersion(
 				portletRequest, fileEntry);
+
+			return new DownloadFileEntryPortletConfigurationIcon(
+				portletRequest, fileEntry, fileVersion);
 		}
 		catch (Exception e) {
 		}

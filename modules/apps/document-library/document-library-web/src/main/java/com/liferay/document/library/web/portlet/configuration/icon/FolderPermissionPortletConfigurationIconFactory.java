@@ -15,9 +15,11 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.repository.model.Folder;
 
 import javax.portlet.PortletRequest;
 
@@ -39,7 +41,16 @@ public class FolderPermissionPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new FolderPermissionPortletConfigurationIcon(portletRequest);
+		try {
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			return new FolderPermissionPortletConfigurationIcon(
+				portletRequest, folder);
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	@Override

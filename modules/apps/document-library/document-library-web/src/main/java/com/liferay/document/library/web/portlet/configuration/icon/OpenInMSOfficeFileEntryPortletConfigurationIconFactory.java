@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.portlet.PortletRequest;
 
@@ -44,8 +45,11 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIconFactory
 		try {
 			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
-			return new OpenInMSOfficeFileEntryPortletConfigurationIcon(
+			FileVersion fileVersion = ActionUtil.getFileVersion(
 				portletRequest, fileEntry);
+
+			return new OpenInMSOfficeFileEntryPortletConfigurationIcon(
+				portletRequest, fileEntry, fileVersion);
 		}
 		catch (Exception e) {
 		}

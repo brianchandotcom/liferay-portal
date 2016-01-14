@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
@@ -28,9 +27,11 @@ public class CheckinFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public CheckinFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, FileEntry fileEntry) {
 
 		super(portletRequest);
+
+		_fileEntry = fileEntry;
 	}
 
 	@Override
@@ -46,11 +47,9 @@ public class CheckinFileEntryPortletConfigurationIcon
 	@Override
 	public boolean isShow() {
 		try {
-			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
-
 			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 				new FileEntryDisplayContextHelper(
-					themeDisplay.getPermissionChecker(), fileEntry);
+					themeDisplay.getPermissionChecker(), _fileEntry);
 
 			return fileEntryDisplayContextHelper.isCheckinActionAvailable();
 		}
@@ -64,5 +63,7 @@ public class CheckinFileEntryPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
+
+	private final FileEntry _fileEntry;
 
 }

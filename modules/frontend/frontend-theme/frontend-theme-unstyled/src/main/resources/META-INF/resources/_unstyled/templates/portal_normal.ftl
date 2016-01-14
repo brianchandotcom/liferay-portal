@@ -18,7 +18,7 @@
 
 ${theme.include(body_top_include)}
 
-<@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
+<@liferay.product_menu_sidebar state="${liferay_product_menu_state!}" />
 
 <@liferay.control_menu />
 

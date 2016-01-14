@@ -20,7 +20,7 @@ ${theme.include(body_top_include)}
 
 <#assign scope_group = theme_display.getScopeGroup()>
 
-<@liferay.product_menu_sidebar state="${liferay_product_menu_state}" />
+<@liferay.product_menu_sidebar state="${liferay_product_menu_state!}" />
 
 <div id="wrapper">
 	<div id="content-wrapper">

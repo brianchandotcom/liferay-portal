@@ -104,6 +104,7 @@ import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalSe
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
 import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.InputStream;

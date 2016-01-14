@@ -27,7 +27,7 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 

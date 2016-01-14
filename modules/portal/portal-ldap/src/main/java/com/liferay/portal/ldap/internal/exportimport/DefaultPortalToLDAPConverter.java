@@ -65,9 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Wesley Gong
  */
-@Component(
-	immediate = true, service = PortalToLDAPConverter.class
-)
+@Component(immediate = true, service = PortalToLDAPConverter.class)
 public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	public DefaultPortalToLDAPConverter() {

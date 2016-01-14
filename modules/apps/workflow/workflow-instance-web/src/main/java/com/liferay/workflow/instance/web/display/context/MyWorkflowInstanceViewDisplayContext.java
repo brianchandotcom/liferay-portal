@@ -88,7 +88,7 @@ public class MyWorkflowInstanceViewDisplayContext
 		if (Validator.isNotNull(searchTerms.getKeywords())) {
 			searchContainer.setEmptyResultsMessage(
 				searchContainer.getEmptyResultsMessage() +
-				"-with-the-specified-search-criteria");
+					"-with-the-specified-search-criteria");
 		}
 	}
 

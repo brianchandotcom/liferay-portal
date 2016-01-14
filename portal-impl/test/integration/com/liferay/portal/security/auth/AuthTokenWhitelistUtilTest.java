@@ -59,6 +59,10 @@ public class AuthTokenWhitelistUtilTest {
 			new LiferayIntegrationTestRule(),
 			new SyntheticBundleRule("bundle.authtokenwhitelistutil"));
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletCSRFWhitelistActionsFromBundle() {
 		Set<String> portletCSRFWhitelistActions =
@@ -69,6 +73,10 @@ public class AuthTokenWhitelistUtilTest {
 				TestAuthTokenIgnoreActions.TEST_AUTH_TOKEN_IGNORE_ACTION_URL));
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletCSRFWhitelistActionsFromPortalProperties() {
 		Set<String> portletCSRFWhitelistActions =
@@ -82,6 +90,10 @@ public class AuthTokenWhitelistUtilTest {
 		}
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletCSRFWhitelistFromBundle() {
 		Set<String> portletCSRFWhitelist =
@@ -93,6 +105,10 @@ public class AuthTokenWhitelistUtilTest {
 					TEST_AUTH_TOKEN_IGNORE_PORTLETS_URL));
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletCSRFWhitelistFromProperties() {
 		Set<String> portletCSRFWhitelist =
@@ -106,6 +122,10 @@ public class AuthTokenWhitelistUtilTest {
 		}
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletInvocationWhitelistActionsFromBundle() {
 		Set<String> portletInvocationWhitelistActions =
@@ -118,6 +138,10 @@ public class AuthTokenWhitelistUtilTest {
 		Assert.assertTrue(portletInvocationWhitelistActions.contains(action));
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletInvocationWhitelistActionsFromPortalProperties() {
 		Set<String> portletInvocationWhitelistActions =
@@ -132,6 +156,10 @@ public class AuthTokenWhitelistUtilTest {
 		}
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletInvocationWhitelistFromBundle() {
 		Set<String> portletInvocationWhitelist =
@@ -144,6 +172,10 @@ public class AuthTokenWhitelistUtilTest {
 		Assert.assertTrue(portletInvocationWhitelist.contains(action));
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	@Test
 	public void testGetPortletInvocationWhitelistFromPortalProperties() {
 		Set<String> portletInvocationWhitelist =

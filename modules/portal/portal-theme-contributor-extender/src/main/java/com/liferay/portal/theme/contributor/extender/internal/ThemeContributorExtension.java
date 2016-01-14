@@ -12,27 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.theme.contributor.extender;
+package com.liferay.portal.theme.contributor.extender.internal;
 
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.theme.contributor.extender.ThemeContributorExtender.BundleWebResources;
-import com.liferay.portal.util.PortalUtil;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.theme.contributor.extender.BundleWebResources;
 import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
@@ -50,7 +40,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ThemeContributorExtension implements Extension {
 
 	public ThemeContributorExtension(
-		Bundle bundle, BundleWebResources bundleWebResources) {
+		Bundle bundle, BundleWebResourcesImpl bundleWebResources) {
 
 		_bundle = bundle;
 		_bundleWebResources = bundleWebResources;
@@ -92,12 +82,11 @@ public class ThemeContributorExtension implements Extension {
 
 				String contextPath = servletContext.getContextPath();
 
+				_bundleWebResources.setServletContextPath(contextPath);
+
 				serviceRegistrations.add(
 					bundleContext.registerService(
-						DynamicInclude.class.getName(),
-						new ThemeContributorDynamicInclude(
-							_bundle, contextPath, _bundleWebResources),
-					null));
+						BundleWebResources.class, _bundleWebResources, null));
 
 				return serviceRegistrations;
 			}
@@ -132,87 +121,9 @@ public class ThemeContributorExtension implements Extension {
 	}
 
 	private final Bundle _bundle;
-	private BundleWebResources _bundleWebResources;
+	private final BundleWebResourcesImpl _bundleWebResources;
 	private ServiceTracker<ServletContext, Collection<ServiceRegistration<?>>>
 		_serviceTracker;
-
-	private static class ThemeContributorDynamicInclude
-		implements DynamicInclude {
-
-		public ThemeContributorDynamicInclude(
-			Bundle bundle, String contextPath,
-			BundleWebResources bundleWebResources) {
-
-			_bundle = bundle;
-			_contextPath = contextPath;
-			_bundleWebResources = bundleWebResources;
-		}
-
-		@Override
-		public void include(
-				HttpServletRequest request, HttpServletResponse response,
-				String key)
-			throws IOException {
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			long bundleLastModified = _bundle.getLastModified();
-
-			String basePath =
-				themeDisplay.getPortalURL() + themeDisplay.getPathContext() +
-					_contextPath;
-
-			Collection<String> cssResourcePaths =
-				_bundleWebResources.getCssResourcePaths();
-
-			for (String resourcePath : cssResourcePaths) {
-				PrintWriter printWriter = response.getWriter();
-
-				StringBundler sb = new StringBundler(3);
-
-				String resourceUrl = PortalUtil.getStaticResourceURL(
-					request, basePath + resourcePath, bundleLastModified);
-
-				sb.append("<link href=\"");
-				sb.append(resourceUrl);
-				sb.append("\" rel=\"stylesheet\" type = \"text/css\" />");
-
-				printWriter.println(sb.toString());
-			}
-
-			Collection<String> jsResourcePaths =
-				_bundleWebResources.getJsResourcePaths();
-
-			for (String resourcePath : jsResourcePaths) {
-				PrintWriter printWriter = response.getWriter();
-
-				StringBundler sb = new StringBundler(3);
-
-				String resourceUrl = PortalUtil.getStaticResourceURL(
-					request, basePath + resourcePath, bundleLastModified);
-
-				sb.append("<script src=\"");
-				sb.append(resourceUrl);
-				sb.append("\" type = \"text/javascript\"></script>");
-
-				printWriter.println(sb.toString());
-			}
-		}
-
-		@Override
-		public void register(
-			DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
-
-			dynamicIncludeRegistry.register(
-				"/html/common/themes/top_head.jsp#post");
-		}
-
-		private final Bundle _bundle;
-		private final BundleWebResources _bundleWebResources;
-		private final String _contextPath;
-
-	}
 
 	private class ThemeContributorPortalWebResources
 		implements PortalWebResources {

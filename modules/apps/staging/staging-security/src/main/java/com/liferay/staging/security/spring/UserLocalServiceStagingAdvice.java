@@ -16,6 +16,7 @@ package com.liferay.staging.security.spring;
 
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portlet.exportimport.staging.Staging;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +56,10 @@ public class UserLocalServiceStagingAdvice extends LiveGroupStagingAdvice {
 	@Reference
 	protected void setService(UserLocalService service) {
 		registerAdvice(service);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
 	}
 
 	protected void unsetService(UserLocalService service) {

@@ -15,6 +15,7 @@
 package com.liferay.staging.security.spring;
 
 import com.liferay.portal.service.OrganizationLocalService;
+import com.liferay.portlet.exportimport.staging.Staging;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +46,10 @@ public class OrganizationLocalServiceStagingAdvice
 	@Reference
 	protected void setService(OrganizationLocalService service) {
 		registerAdvice(service);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
 	}
 
 	protected void unsetService(OrganizationLocalService service) {

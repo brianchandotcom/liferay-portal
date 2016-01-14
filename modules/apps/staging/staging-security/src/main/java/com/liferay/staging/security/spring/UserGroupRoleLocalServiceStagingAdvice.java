@@ -15,6 +15,7 @@
 package com.liferay.staging.security.spring;
 
 import com.liferay.portal.service.UserGroupRoleLocalService;
+import com.liferay.portlet.exportimport.staging.Staging;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +77,10 @@ public class UserGroupRoleLocalServiceStagingAdvice
 	@Reference
 	protected void setService(UserGroupRoleLocalService service) {
 		registerAdvice(service);
+	}
+
+	@Reference(unbind = "-")
+	protected void setStaging(Staging staging) {
 	}
 
 	protected void unsetService(UserGroupRoleLocalService service) {

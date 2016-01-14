@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:fieldset label="configure-the-file-upload-settings">
+<aui:fieldset>
 	<liferay-ui:panel-container extended="<%= true %>" id="adminGeneralUploadPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminGeneralUploadPanel" markupView="lexicon" persistState="<%= true %>" title="general">
 			<aui:input cssClass="lfr-input-text-container" label="overall-maximum-upload-request-size" name="uploadServletRequestImplMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) %>" />

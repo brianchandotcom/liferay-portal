@@ -182,7 +182,6 @@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" 
 page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
@@ -235,8 +234,7 @@ page import="java.util.Set" %><%@
 page import="java.util.TimeZone" %><%@
 page import="java.util.TreeSet" %>
 
-<%@ page import="javax.portlet.ActionRequest" %><%@
-page import="javax.portlet.MimeResponse" %><%@
+<%@ page import="javax.portlet.MimeResponse" %><%@
 page import="javax.portlet.PortletConfig" %><%@
 page import="javax.portlet.PortletContext" %><%@
 page import="javax.portlet.PortletException" %><%@

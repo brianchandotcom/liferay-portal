@@ -507,8 +507,8 @@ if (portletTitleBasedNavigation) {
 		</liferay-util:buffer>
 
 		<div class="body-row">
-			<div class="document-info">
-				<h2 class="document-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
+			<div class="document-info panel panel-body">
+				<h2 title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
 					<%= HtmlUtil.escape(documentTitle) %>
 				</h2>
 

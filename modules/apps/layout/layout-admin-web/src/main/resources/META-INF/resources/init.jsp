@@ -114,7 +114,7 @@ page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
-page import="com.liferay.portlet.sites.util.SitesUtil" %>
+page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.HashMap" %><%@

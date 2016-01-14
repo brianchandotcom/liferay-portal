@@ -18,7 +18,8 @@
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
-portletURL.setParameter("selPlid", String.valueOf(layoutsAdminDisplayContext.getSelPlid()));
+
+portletURL.setParameter("selPlid", String.valueOf(selPlid));
 portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));
 

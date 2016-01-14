@@ -685,6 +685,6 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;
 	@BeanReference(type = MDRRuleGroupFinder.class)
 	protected MDRRuleGroupFinder mdrRuleGroupFinder;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

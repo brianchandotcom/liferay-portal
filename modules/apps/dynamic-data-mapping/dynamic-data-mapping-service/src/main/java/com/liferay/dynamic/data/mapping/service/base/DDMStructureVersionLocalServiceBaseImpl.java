@@ -431,6 +431,6 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
 	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

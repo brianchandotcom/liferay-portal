@@ -17,7 +17,6 @@ package com.liferay.registry.collections;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper.Emitter;
 
 /**
  * @author Carlos Sierra Andrés

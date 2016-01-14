@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Workflow Lang
+Bundle-SymbolicName: com.liferay.workflow.lang
+Bundle-Version: 1.0.0
+Include-Resource: classes

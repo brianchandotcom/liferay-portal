@@ -16,33 +16,39 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Layout selLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, PortletRequest.RENDER_PHASE);
-
-editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-editLayoutURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
-editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
-editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
-
-Map<String, Object> data = new HashMap<String, Object>();
-
-data.put("url", selLayout.getFriendlyURL(locale));
-data.put("uuid", selLayout.getUuid());
-
-boolean selected = false;
-
-if ((selLayout.getPlid() == plid) || Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, themeDisplay.getPpid())) {
-	selected = true;
-}
-%>
-
 <div class="tree-container tree-pages">
 	<li class="tree-node">
+
+		<%
+		boolean selected = false;
+
+		Layout selLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if ((selLayout.getPlid() == plid) || Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, themeDisplay.getPpid())) {
+			selected = true;
+		}
+		%>
+
 		<div class="tree-node-content <%= selected ? "tree-node-selected" : StringPool.BLANK %>">
 			<span class="tree-label">
+
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("url", selLayout.getFriendlyURL(locale));
+				data.put("uuid", selLayout.getUuid());
+				%>
+
 				<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
+
+				<%
+				PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, PortletRequest.RENDER_PHASE);
+
+				editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+				editLayoutURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
+				editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
+				editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+				%>
 
 				<liferay-ui:icon
 					cssClass="layout-tree-edit"

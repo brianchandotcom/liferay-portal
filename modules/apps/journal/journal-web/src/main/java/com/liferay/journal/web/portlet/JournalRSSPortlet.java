@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -63,8 +61,6 @@ public class JournalRSSPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		InputStream inputStream = null;
-
 		String resourceID = GetterUtil.getString(
 			resourceRequest.getResourceID());
 
@@ -75,15 +71,12 @@ public class JournalRSSPortlet extends MVCPortlet {
 			resourceResponse);
 
 		if (resourceID.equals("rss")) {
-
 			try {
 				byte[] xml = _journalRSSUtil.getRSS(
 					resourceRequest, resourceResponse);
 
-				inputStream = new ByteArrayInputStream(xml);
-
 				PortletResponseUtil.sendFile(
-					resourceRequest, resourceResponse, null, inputStream,
+					resourceRequest, resourceResponse, null, xml,
 					ContentTypes.TEXT_XML_UTF8);
 			}
 			catch (Exception e) {

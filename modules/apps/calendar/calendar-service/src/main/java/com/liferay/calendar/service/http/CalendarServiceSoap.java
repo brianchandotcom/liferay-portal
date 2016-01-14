@@ -199,6 +199,21 @@ public class CalendarServiceSoap {
 		}
 	}
 
+	public static boolean isManageableFromGroup(long calendarId, long groupId)
+		throws RemoteException {
+		try {
+			boolean returnValue = CalendarServiceUtil.isManageableFromGroup(calendarId,
+					groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.calendar.model.CalendarSoap[] search(
 		long companyId, long[] groupIds, long[] calendarResourceIds,
 		java.lang.String keywords, boolean andOperator, int start, int end,

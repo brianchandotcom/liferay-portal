@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules;
+package com.liferay.mobile.device.rules.kernel;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;

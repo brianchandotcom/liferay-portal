@@ -1351,7 +1351,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portletName" value="Public Pages" />
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Import Site" />
 		</execute>
 

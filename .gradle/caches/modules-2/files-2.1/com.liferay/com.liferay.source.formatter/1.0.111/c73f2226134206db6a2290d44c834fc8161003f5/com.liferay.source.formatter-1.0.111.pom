@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
-  <artifactId>com.liferay.portal.tools.service.builder</artifactId>
-  <version>1.0.67</version>
+  <artifactId>com.liferay.source.formatter</artifactId>
+  <version>1.0.111</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -40,12 +40,12 @@
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
       <version>1.9.4</version>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>jalopy</groupId>
-      <artifactId>jalopy</artifactId>
-      <version>1.5rc3</version>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -59,18 +59,6 @@
       <artifactId>maven-plugin-api</artifactId>
       <version>3.0.4</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>org.freemarker</artifactId>
-      <version>2.3.17.LIFERAY-PATCHED-1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.liferay.portal</groupId>

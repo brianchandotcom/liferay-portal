@@ -26,7 +26,7 @@
 			<then>
 				<execute macro="ProductMenu#gotoPrivatePages" />
 
-				<execute function="Click" locator1="ProductMenu#ADD_PRIVATE_PAGE_ICON" />
+				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PRIVATE_PAGE_ICON" />
 			</then>
 			<else>
 				<execute macro="ProductMenu#gotoPublicPages" />
@@ -197,7 +197,7 @@
 	<command name="changeLogoViaPageCP">
 		<var name="key_page" value="${page}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PUBLIC_PAGE_ICON" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Logo" />

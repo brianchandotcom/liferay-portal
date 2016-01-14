@@ -35,9 +35,31 @@ else {
 }
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
+
+if (groupThreadsUserId > 0) {
+	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
+}
+
+Calendar calendar = Calendar.getInstance();
+
+int offset = GetterUtil.getInteger(recentPostsDateOffset);
+
+calendar.add(Calendar.DATE, -offset);
+
+int entriesTotal = 0;
+
+if (entriesNavigation.equals("all")) {
+	entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
+}
+else if (entriesNavigation.equals("recent")) {
+	entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+}
 %>
 
 <liferay-frontend:management-bar
+	checkBoxDisabled="<%= entriesTotal == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbEntries"
 >
@@ -52,6 +74,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
+			disabled="<%= entriesTotal == 0 %>"
 			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
@@ -141,29 +164,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-
-		<%
-		long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
-		if (groupThreadsUserId > 0) {
-			portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
-		}
-
-		Calendar calendar = Calendar.getInstance();
-
-		int offset = GetterUtil.getInteger(recentPostsDateOffset);
-
-		calendar.add(Calendar.DATE, -offset);
-
-		int entriesTotal = 0;
-
-		if (entriesNavigation.equals("all")) {
-			entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
-		}
-		else if (entriesNavigation.equals("recent")) {
-			entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
-		}
-		%>
 
 		<liferay-ui:search-container
 			curParam="cur1"

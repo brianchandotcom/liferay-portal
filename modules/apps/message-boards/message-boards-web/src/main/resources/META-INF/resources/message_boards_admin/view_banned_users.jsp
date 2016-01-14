@@ -39,9 +39,12 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
+
+int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 %>
 
 <liferay-frontend:management-bar
+	checkBoxDisabled="<%= totalBannedUsers == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbBanUsers"
 >
@@ -54,6 +57,7 @@ else {
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
+			disabled="<%= totalBannedUsers == 0 %>"
 			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
@@ -81,7 +85,7 @@ else {
 			id="mbBanUsers"
 			iteratorURL="<%= portletURL %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			total="<%= MBBanLocalServiceUtil.getBansCount(scopeGroupId) %>"
+			total="<%= totalBannedUsers %>"
 		>
 			<liferay-ui:search-container-results
 				results="<%= MBBanLocalServiceUtil.getBans(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"

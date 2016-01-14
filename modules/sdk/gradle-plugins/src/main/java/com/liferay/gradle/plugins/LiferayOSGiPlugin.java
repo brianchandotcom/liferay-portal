@@ -333,6 +333,17 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 					jarBuilder.withBase(BundleUtils.getBase(project));
 
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					jarBuilder.withClasspath(
+						new File[] {
+							sourceSetOutput.getClassesDir(),
+							sourceSetOutput.getResourcesDir()
+						});
+
 					LiferayOSGiExtension liferayOSGiExtension =
 						GradleUtil.getExtension(
 							project, LiferayOSGiExtension.class);
@@ -374,6 +385,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 					jarBuilder.withProperties(properties);
 
+					jarBuilder.withName(
+						properties.get(Constants.BUNDLE_SYMBOLICNAME));
+					jarBuilder.withResources(new File[0]);
 					jarBuilder.withSourcepath(BundleUtils.getSources(project));
 					jarBuilder.withTrace(bundleExtension.isTrace());
 					jarBuilder.withVersion(BundleUtils.getVersion(project));

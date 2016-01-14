@@ -256,12 +256,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return booleanFilter;
 		}
 
+		List<Long> groupIdsList = new ArrayList<>(ListUtil.toList(groupIds));
 		Set<Group> groups = new LinkedHashSet<>();
 		Set<Role> roles = new LinkedHashSet<>();
 		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<>();
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
-
-		List<Long> groupIdsList = new ArrayList<>(ListUtil.toList(groupIds));
 
 		populate(
 			companyId, groupIdsList, userId, permissionChecker, groups, roles,

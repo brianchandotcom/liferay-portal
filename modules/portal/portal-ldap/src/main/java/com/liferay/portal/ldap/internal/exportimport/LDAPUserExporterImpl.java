@@ -83,7 +83,6 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 
 		if (!_ldapSettings.isExportEnabled(companyId)) {
-
 			return;
 		}
 
@@ -268,7 +267,6 @@ public class LDAPUserExporterImpl implements UserExporter {
 		long companyId = user.getCompanyId();
 
 		if (!_ldapSettings.isExportEnabled(companyId)) {
-
 			return;
 		}
 

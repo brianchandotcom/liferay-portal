@@ -275,30 +275,3 @@
 		}
 	}
 }
-
-.lfr-add-content-preview {
-	.add-button-preview {
-		float: right;
-		margin-bottom: 10px;
-	}
-
-	.asset-image-preview {
-		text-align: center;
-
-		img {
-			max-width: 230px;
-		}
-	}
-
-	.asset-information, .asset-metadata, .asset-summary {
-		margin-bottom: 20px;
-	}
-
-	.asset-image-preview, .asset-metadata .categories, .asset-title {
-		margin-bottom: 5px;
-	}
-
-	.asset-summary, .asset-title {
-		@include ellipsis;
-	}
-}

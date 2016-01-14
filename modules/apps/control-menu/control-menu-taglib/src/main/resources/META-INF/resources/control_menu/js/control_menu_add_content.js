@@ -15,7 +15,7 @@ AUI.add(
 
 		var AddContent = A.Component.create(
 			{
-				AUGMENTS: [ControlMenu.AddContentPreview, ControlMenu.AddContentSearch, Liferay.PortletBase],
+				AUGMENTS: [ControlMenu.AddContentSearch, Liferay.PortletBase],
 
 				EXTENDS: ControlMenu.AddBase,
 
@@ -107,9 +107,7 @@ AUI.add(
 									{
 										delta: instance._delta,
 										displayStyle: instance._displayStyle,
-										keywords: instance.get('inputNode').val(),
-										viewAssetEntries: true,
-										viewAssetPreview: false
+										keywords: instance.get('inputNode').val()
 									}
 								)
 							}
@@ -123,6 +121,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-preview', 'liferay-control-menu-add-content-search']
+		requires: ['aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-search']
 	}
 );

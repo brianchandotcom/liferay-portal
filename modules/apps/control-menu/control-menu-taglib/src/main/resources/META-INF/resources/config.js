@@ -45,7 +45,6 @@
 								'aui-io-request',
 								'event-mouseenter',
 								'liferay-control-menu',
-								'liferay-control-menu-add-content-preview',
 								'liferay-control-menu-add-content-search',
 								'liferay-portlet-base'
 							]
@@ -60,14 +59,6 @@
 								'liferay-layout-column',
 								'liferay-layout-freeform',
 								'liferay-portlet-base'
-							]
-						},
-						'liferay-control-menu-add-content-preview': {
-							path: 'control_menu/js/control_menu_add_content_preview.js',
-							requires: [
-								'aui-debounce',
-								'aui-io-request',
-								'event-mouseenter'
 							]
 						},
 						'liferay-control-menu-add-content-search': {

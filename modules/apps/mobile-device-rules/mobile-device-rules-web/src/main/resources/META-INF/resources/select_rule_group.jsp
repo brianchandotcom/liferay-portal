@@ -52,7 +52,9 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav-item label="device-families" selected="<%= true %>" />
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="device-families" selected="<%= true %>" />
+	</aui:nav>
 
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">

@@ -27,22 +27,25 @@ long classPK = selLayout.getPlid();
 
 <%@ include file="/layout/mobile_device_rules_header.jspf" %>
 
-<%
-PortletURL editLayoutSetURL = liferayPortletResponse.createRenderURL();
-
-editLayoutSetURL.setParameter("selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
-editLayoutSetURL.setParameter("groupId", String.valueOf(selLayout.getGroupId()));
-
-int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
-
-Group group = GroupLocalServiceUtil.getGroup(selLayout.getGroupId());
-
-String rootNodeName = group.getLayoutRootNodeName(selLayout.isPrivateLayout(), locale);
-%>
-
 <liferay-util:buffer var="rootNodeNameLink">
+
+	<%
+	PortletURL editLayoutSetURL = liferayPortletResponse.createRenderURL();
+
+	editLayoutSetURL.setParameter("selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+	editLayoutSetURL.setParameter("groupId", String.valueOf(selLayout.getGroupId()));
+
+	Group group = GroupLocalServiceUtil.getGroup(selLayout.getGroupId());
+
+	String rootNodeName = group.getLayoutRootNodeName(selLayout.isPrivateLayout(), locale);
+	%>
+
 	<aui:a href='<%= editLayoutSetURL.toString() + "#tab=mobileDeviceRules" %>'><%= HtmlUtil.escape(rootNodeName) %></aui:a>
 </liferay-util:buffer>
+
+<%
+int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
+%>
 
 <aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(request, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
 

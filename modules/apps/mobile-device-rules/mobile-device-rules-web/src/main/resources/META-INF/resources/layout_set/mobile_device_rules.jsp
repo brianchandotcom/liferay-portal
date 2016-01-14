@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long selPlid = LayoutConstants.DEFAULT_PLID;
+
 boolean privateLayout = ParamUtil.getBoolean(liferayPortletRequest, "privateLayout");
 
 Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -29,8 +31,6 @@ LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, private
 
 String className = LayoutSet.class.getName();
 long classPK = selLayoutSet.getLayoutSetId();
-
-long selPlid = LayoutConstants.DEFAULT_PLID;
 %>
 
 <%@ include file="/layout/mobile_device_rules_header.jspf" %>

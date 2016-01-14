@@ -29,24 +29,27 @@ public class SearchContainerReference {
 	public SearchContainerReference(
 		HttpServletRequest request, String namespace) {
 
-		_request = request;
 		_namespace = namespace;
 
 		request.setAttribute(WebKeys.SEARCH_CONTAINER_REFERENCE, this);
 	}
 
-	public String getId() {
-		return getId(SearchContainer.DEFAULT_VAR);
+	public String getId(HttpServletRequest request) {
+		return getId(request, SearchContainer.DEFAULT_VAR);
 	}
 
-	public String getId(String var) {
+	public String getId(HttpServletRequest request, String var) {
+		if (_searchContainers == null) {
+			return StringPool.BLANK;
+		}
+
 		SearchContainer<?> searchContainer = _searchContainers.get(var);
 
 		if (searchContainer == null) {
 			return StringPool.BLANK;
 		}
 
-		return searchContainer.getId(_request, _namespace);
+		return searchContainer.getId(request, _namespace);
 	}
 
 	public void register(SearchContainer<?> searchContainer) {
@@ -54,12 +57,14 @@ public class SearchContainerReference {
 	}
 
 	public void register(String var, SearchContainer<?> searchContainer) {
+		if (_searchContainers == null) {
+			_searchContainers = new HashMap<>();
+		}
+
 		_searchContainers.put(var, searchContainer);
 	}
 
 	private final String _namespace;
-	private final HttpServletRequest _request;
-	private final Map<String, SearchContainer<?>> _searchContainers =
-		new HashMap<>();
+	private Map<String, SearchContainer<?>> _searchContainers;
 
 }

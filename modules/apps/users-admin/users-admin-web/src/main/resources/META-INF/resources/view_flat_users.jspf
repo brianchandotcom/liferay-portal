@@ -309,6 +309,6 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 </liferay-ui:search-container>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deactivate', '#<portlet:namespace /><%= searchContainerReference.getId("userSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />restore', '#<portlet:namespace /><%= searchContainerReference.getId("userSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deactivate', '#<portlet:namespace /><%= searchContainerReference.getId(request, "userSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />restore', '#<portlet:namespace /><%= searchContainerReference.getId(request, "userSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 </aui:script>

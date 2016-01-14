@@ -408,7 +408,13 @@
 		getLexiconIcon: function(icon) {
 			var instance = this;
 
-			return $(_.sub(TPL_LEXICON_ICON, icon))[0];
+			return $(instance.getLexiconIconTpl(icon))[0];
+		},
+
+		getLexiconIconTpl: function(icon) {
+			var instance = this;
+
+			return _.sub(TPL_LEXICON_ICON, icon);
 		},
 
 		getOpener: function() {

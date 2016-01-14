@@ -30,7 +30,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
-import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.io.InputStream;
 

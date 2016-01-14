@@ -45,8 +45,8 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 

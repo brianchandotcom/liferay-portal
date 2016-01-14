@@ -14,8 +14,8 @@
 
 package com.liferay.configuration.admin.annotations;
 
-import com.liferay.configuration.admin.ExtendedMetaTypeInformation;
-import com.liferay.configuration.admin.ExtendedMetaTypeService;
+import com.liferay.portal.metatype.definitions.ExtendedMetaTypeInformation;
+import com.liferay.portal.metatype.definitions.ExtendedMetaTypeService;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;

@@ -14,8 +14,8 @@
 
 package com.liferay.configuration.admin.equinox;
 
-import com.liferay.configuration.admin.ExtendedAttributeDefinition;
-import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
+import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
+import com.liferay.portal.metatype.definitions.ExtendedObjectClassDefinition;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -293,7 +293,7 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 		copy.setDescription(
 			"Downloads and unzips the bundle into " +
-			workspaceExtension.getHomeDir() + ".");
+				workspaceExtension.getHomeDir() + ".");
 		copy.setIncludeEmptyDirs(false);
 
 		return copy;

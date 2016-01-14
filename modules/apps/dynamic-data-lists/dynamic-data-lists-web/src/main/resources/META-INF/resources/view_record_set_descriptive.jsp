@@ -31,7 +31,7 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 <liferay-ui:app-view-entry
 	actionJsp="/record_set_action.jsp"
 	actionJspServletContext="<%= application %>"
-	author="<%= ddlRecordSet.getUserName() %>"
+	author="<%= HtmlUtil.unescape(ddlRecordSet.getUserName()) %>"
 	createDate="<%= ddlRecordSet.getCreateDate() %>"
 	description="<%= ddlRecordSet.getDescription(locale) %>"
 	displayStyle="descriptive"

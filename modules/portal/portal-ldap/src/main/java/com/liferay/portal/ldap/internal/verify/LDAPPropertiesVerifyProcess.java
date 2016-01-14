@@ -63,10 +63,6 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		verifyLDAPProperties();
 	}
 
-	protected String merge(String[] stringArray) {
-		return StringUtil.merge(stringArray, StringPool.PIPE);
-	}
-
 	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -364,33 +360,27 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				"ldap://localhost:10389"));
 		dictionary.put(
 			LDAPConstants.CONTACT_CUSTOM_MAPPINGS,
-			merge(
-				_prefsProps.getStringArray(
-					companyId,
-					LegacyLDAPPropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix,
-					StringPool.NEW_LINE)));
+			_prefsProps.getStringArray(
+				companyId,
+				LegacyLDAPPropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix,
+				StringPool.NEW_LINE));
 		dictionary.put(
 			LDAPConstants.CONTACT_MAPPINGS,
-			merge(
-				_prefsProps.getStringArray(
-					companyId,
-					LegacyLDAPPropsKeys.LDAP_CONTACT_MAPPINGS + postfix,
-					StringPool.NEW_LINE)));
+			_prefsProps.getStringArray(
+				companyId, LegacyLDAPPropsKeys.LDAP_CONTACT_MAPPINGS + postfix,
+				StringPool.NEW_LINE));
 		dictionary.put(
 			LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES,
-			merge(
-				_prefsProps.getStringArray(
-					companyId,
-					LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES +
-						postfix,
-					StringPool.COMMA)));
+			_prefsProps.getStringArray(
+				companyId,
+				LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES +
+					postfix,
+				StringPool.COMMA));
 		dictionary.put(
 			LDAPConstants.GROUP_MAPPINGS,
-			merge(
-				_prefsProps.getStringArray(
-					companyId,
-					LegacyLDAPPropsKeys.LDAP_GROUP_MAPPINGS + postfix,
-					StringPool.NEW_LINE)));
+			_prefsProps.getStringArray(
+				companyId, LegacyLDAPPropsKeys.LDAP_GROUP_MAPPINGS + postfix,
+				StringPool.NEW_LINE));
 		dictionary.put(
 			LDAPConstants.GROUP_SEARCH_FILTER,
 			_prefsProps.getString(
@@ -427,32 +417,28 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				companyId, LegacyLDAPPropsKeys.LDAP_SERVER_NAME + postfix));
 		dictionary.put(
 			LDAPConstants.USER_CUSTOM_MAPPINGS,
-			merge(
-				_prefsProps.getStringArray(
-					companyId,
-					LegacyLDAPPropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix,
-					StringPool.NEW_LINE)));
+			_prefsProps.getStringArray(
+				companyId,
+				LegacyLDAPPropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix,
+				StringPool.NEW_LINE));
 		dictionary.put(
 			LDAPConstants.USER_DEFAULT_OBJECT_CLASSES,
-			merge(
-				_prefsProps.getStringArray(
-					companyId,
-					LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES +
-						postfix,
-					StringPool.COMMA)));
+			_prefsProps.getStringArray(
+				companyId,
+				LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES +
+					postfix,
+				StringPool.COMMA));
 		dictionary.put(
 			LDAPConstants.USER_IGNORE_ATTRIBUTES,
-			merge(
-				_prefsProps.getStringArray(
-					companyId,
-					LegacyLDAPPropsKeys.LDAP_USER_IGNORE_ATTRIBUTES + postfix,
-					StringPool.COMMA)));
+			_prefsProps.getStringArray(
+				companyId,
+				LegacyLDAPPropsKeys.LDAP_USER_IGNORE_ATTRIBUTES + postfix,
+				StringPool.COMMA));
 		dictionary.put(
 			LDAPConstants.USER_MAPPINGS,
-			merge(
-				_prefsProps.getStringArray(
-					companyId, LegacyLDAPPropsKeys.LDAP_USER_MAPPINGS + postfix,
-					StringPool.NEW_LINE)));
+			_prefsProps.getStringArray(
+				companyId, LegacyLDAPPropsKeys.LDAP_USER_MAPPINGS + postfix,
+				StringPool.NEW_LINE));
 		dictionary.put(
 			LDAPConstants.USER_SEARCH_FILTER,
 			_prefsProps.getString(
@@ -497,40 +483,55 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			connectionPropertiesList.toArray(
 				new String[connectionPropertiesList.size()]));
 		dictionary.put(
-			LDAPConstants.ERROR_PASSWORD_AGE,
-			_prefsProps.getString(
-				companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_AGE, "age"));
+			LDAPConstants.ERROR_PASSWORD_AGE_KEYWORDS,
+			new String[] {
+				_prefsProps.getString(
+					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_AGE,
+					"age")
+				});
 		dictionary.put(
-			LDAPConstants.ERROR_PASSWORD_EXPIRED,
-			_prefsProps.getString(
-				companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_EXPIRED,
-				"expired"));
+			LDAPConstants.ERROR_PASSWORD_EXPIRED_KEYWORDS,
+			new String[] {
+				_prefsProps.getString(
+					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_EXPIRED,
+					"expired")
+				});
 		dictionary.put(
-			LDAPConstants.ERROR_PASSWORD_HISTORY,
-			_prefsProps.getString(
-				companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_HISTORY,
-				"history"));
+			LDAPConstants.ERROR_PASSWORD_HISTORY_KEYWORDS,
+			new String[] {
+				_prefsProps.getString(
+					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_HISTORY,
+					"history")
+				});
 		dictionary.put(
-			LDAPConstants.ERROR_PASSWORD_NOT_CHANGEABLE,
-			_prefsProps.getString(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_NOT_CHANGEABLE,
-				"not allowed to change"));
+			LDAPConstants.ERROR_PASSWORD_NOT_CHANGEABLE_KEYWORDS,
+			new String[] {
+				_prefsProps.getString(
+					companyId,
+					LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_NOT_CHANGEABLE,
+					"not allowed to change")
+				});
 		dictionary.put(
-			LDAPConstants.ERROR_PASSWORD_SYNTAX,
-			_prefsProps.getString(
-				companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_SYNTAX,
-				"syntax"));
+			LDAPConstants.ERROR_PASSWORD_SYNTAX_KEYWORDS,
+			new String[] {
+				_prefsProps.getString(
+					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_SYNTAX,
+					"syntax")
+				});
 		dictionary.put(
-			LDAPConstants.ERROR_PASSWORD_TRIVIAL,
-			_prefsProps.getString(
-				companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_TRIVIAL,
-				"trivial"));
+			LDAPConstants.ERROR_PASSWORD_TRIVIAL_KEYWORDS,
+			new String[] {
+				_prefsProps.getString(
+					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_TRIVIAL,
+					"trivial")
+				});
 		dictionary.put(
-			LDAPConstants.ERROR_USER_LOCKOUT,
-			_prefsProps.getString(
-				companyId, LegacyLDAPPropsKeys.LDAP_ERROR_USER_LOCKOUT,
-				"retry limit"));
+			LDAPConstants.ERROR_USER_LOCKOUT_KEYWORDS,
+			new String[] {
+				_prefsProps.getString(
+					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_USER_LOCKOUT,
+					"retry limit")
+				});
 		dictionary.put(
 			LDAPConstants.FACTORY_INITIAL,
 			_prefsProps.getString(

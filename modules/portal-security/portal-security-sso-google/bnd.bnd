@@ -25,4 +25,7 @@ Include-Resource:\
 	lib/google-oauth-client.jar=lib/google-oauth-client.jar,\
 	lib/jackson-core.jar=lib/jackson-core.jar,\
 	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /portal-security-sso-google
+-include: ../../../marketplace/platform/bnd.bnd

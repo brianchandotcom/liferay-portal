@@ -17,6 +17,8 @@ Include-Resource:\
 	@../util-java/util-java.jar!/com/liferay/util/JS.class,\
 	@../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../util-java/util-java.jar!/com/liferay/util/PwdGenerator.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
@@ -63,3 +65,4 @@ Provide-Capability:\
 		uri="http://liferay.com/tld/util";\
 		version:Version="${Bundle-Version}"
 -baseline: *;version="6.2.0"
+-include: ../marketplace/platform/bnd.bnd

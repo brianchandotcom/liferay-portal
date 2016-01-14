@@ -35,7 +35,7 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 			for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems) {
 			%>
 
-				<li class="<%= Validator.equals(managementBarFilterItem.getLabel(), value) ? "active" : StringPool.BLANK %>">
+				<li class="<%= Validator.equals(managementBarFilterItem.getValue(), value) ? "active" : StringPool.BLANK %>">
 					<aui:a href="<%= managementBarFilterItem.getURL() %>" label="<%= managementBarFilterItem.getLabel() %>" />
 				</li>
 

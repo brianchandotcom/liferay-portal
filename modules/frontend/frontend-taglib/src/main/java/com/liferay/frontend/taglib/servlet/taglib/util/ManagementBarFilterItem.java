@@ -20,8 +20,13 @@ package com.liferay.frontend.taglib.servlet.taglib.util;
 public class ManagementBarFilterItem {
 
 	public ManagementBarFilterItem(String label, String url) {
+		this(label, url, label);
+	}
+
+	public ManagementBarFilterItem(String label, String url, String value) {
 		_label = label;
 		_url = url;
+		_value = value;
 	}
 
 	public String getLabel() {
@@ -32,7 +37,12 @@ public class ManagementBarFilterItem {
 		return _url;
 	}
 
+	public String getValue() {
+		return _value;
+	}
+
 	private final String _label;
 	private final String _url;
+	private final String _value;
 
 }

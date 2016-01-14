@@ -15,9 +15,12 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 
 import javax.portlet.PortletRequest;
 
@@ -39,7 +42,17 @@ public class DeleteThreadPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new DeleteThreadPortletConfigurationIcon(portletRequest);
+		try {
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
+
+			return new DeleteThreadPortletConfigurationIcon(
+				portletRequest, messageDisplay);
+		}
+		catch (PortalException pe) {
+		}
+
+		return null;
 	}
 
 	@Override

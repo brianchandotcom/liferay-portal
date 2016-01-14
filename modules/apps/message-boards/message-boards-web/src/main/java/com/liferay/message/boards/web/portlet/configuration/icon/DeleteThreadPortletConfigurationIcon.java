@@ -15,11 +15,9 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -41,8 +39,12 @@ import javax.portlet.PortletURL;
 public class DeleteThreadPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DeleteThreadPortletConfigurationIcon(PortletRequest portletRequest) {
+	public DeleteThreadPortletConfigurationIcon(
+		PortletRequest portletRequest, MBMessageDisplay messageDisplay) {
+
 		super(portletRequest);
+
+		_messageDisplay = messageDisplay;
 	}
 
 	@Override
@@ -56,26 +58,22 @@ public class DeleteThreadPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		try {
-			PortletURL deleteURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				PortletRequest.ACTION_PHASE);
+		PortletURL deleteURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+			PortletRequest.ACTION_PHASE);
 
-			deleteURL.setParameter(
-				ActionRequest.ACTION_NAME, "/message_boards/delete_thread");
+		deleteURL.setParameter(
+			ActionRequest.ACTION_NAME, "/message_boards/delete_thread");
 
-			String cmd = Constants.DELETE;
+		String cmd = Constants.DELETE;
 
-			if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-				cmd = Constants.MOVE_TO_TRASH;
-			}
+		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+			cmd = Constants.MOVE_TO_TRASH;
+		}
 
-			deleteURL.setParameter(Constants.CMD, cmd);
+		deleteURL.setParameter(Constants.CMD, cmd);
 
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBCategory category = messageDisplay.getCategory();
+		MBCategory category = _messageDisplay.getCategory();
 
 			PortletURL parentCategoryURL = PortletURLFactoryUtil.create(
 				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -94,29 +92,21 @@ public class DeleteThreadPortletConfigurationIcon
 					"mbCategoryId", String.valueOf(categoryId));
 			}
 
-			deleteURL.setParameter("redirect", parentCategoryURL.toString());
+		deleteURL.setParameter("redirect", parentCategoryURL.toString());
 
-			MBThread thread = messageDisplay.getThread();
+		MBThread thread = _messageDisplay.getThread();
 
-			deleteURL.setParameter(
-				"threadId", String.valueOf(thread.getThreadId()));
+		deleteURL.setParameter(
+			"threadId", String.valueOf(thread.getThreadId()));
 
-			return deleteURL.toString();
-		}
-		catch (PortalException pe) {
-		}
-
-		return StringPool.BLANK;
+		return deleteURL.toString();
 	}
 
 	@Override
 	public boolean isShow() {
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBMessage message = messageDisplay.getMessage();
-			MBThread thread = messageDisplay.getThread();
+			MBMessage message = _messageDisplay.getMessage();
+			MBThread thread = _messageDisplay.getThread();
 
 			if (MBMessagePermission.contains(
 					themeDisplay.getPermissionChecker(), message,
@@ -126,7 +116,7 @@ public class DeleteThreadPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 		}
 
 		return false;
@@ -153,5 +143,7 @@ public class DeleteThreadPortletConfigurationIcon
 
 		return false;
 	}
+
+	private final MBMessageDisplay _messageDisplay;
 
 }

@@ -3,7 +3,7 @@
 
 <routes>
 	<route>
-		<pattern>/rss/{feedId}</pattern>
+		<pattern>/rss/{id}</pattern>
 		<ignored-parameter name="p_p_cacheability" />
 		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
 		<implicit-parameter name="p_p_resource_id">rss</implicit-parameter>

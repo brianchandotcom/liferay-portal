@@ -128,14 +128,26 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
+		if (_ddmStructures != null) {
+			return _ddmStructures;
+		}
+
 		if (_fileVersionDisplayContextHelper.isDLFileVersion()) {
 			DLFileVersion dlFileVersion =
 				(DLFileVersion)_fileVersion.getModel();
 
-			return dlFileVersion.getDDMStructures();
+			_ddmStructures = dlFileVersion.getDDMStructures();
+		}
+		else {
+			_ddmStructures = Collections.emptyList();
 		}
 
-		return Collections.emptyList();
+		return _ddmStructures;
+	}
+
+	@Override
+	public int getDDMStructuresCount() throws PortalException {
+		return getDDMStructures().size();
 	}
 
 	@Override
@@ -306,6 +318,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
+	private List<DDMStructure> _ddmStructures;
 	private final DLConfiguration _dlConfiguration;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;

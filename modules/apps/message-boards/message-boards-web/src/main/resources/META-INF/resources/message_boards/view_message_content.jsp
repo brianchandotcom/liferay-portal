@@ -32,10 +32,6 @@ MBThread thread = messageDisplay.getThread();
 MBThread previousThread = messageDisplay.getPreviousThread();
 MBThread nextThread = messageDisplay.getNextThread();
 
-String threadView = messageDisplay.getThreadView();
-
-MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDisplay.getUserId(), thread);
-
 if (Validator.isNull(redirect)) {
 	PortletURL backPortletURL = renderResponse.createRenderURL();
 
@@ -62,58 +58,6 @@ if (portletTitleBasedNavigation) {
 		title="<%= message.getSubject() %>"
 	/>
 </c:if>
-
-<ul class="thread-view-controls">
-	<c:if test="<%= PropsValues.MESSAGE_BOARDS_THREAD_VIEWS.length > 1 %>">
-		<c:if test="<%= ArrayUtil.contains(PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, MBThreadConstants.THREAD_VIEW_COMBINATION) %>">
-			<li class="thread-icon">
-
-				<%
-				currentURLObj.setParameter("threadView", MBThreadConstants.THREAD_VIEW_COMBINATION);
-				%>
-
-				<liferay-ui:icon
-					image="../message_boards/thread_view_combination"
-					message="combination-view"
-					method="get"
-					url="<%= currentURLObj.toString() %>"
-				/>
-			</li>
-		</c:if>
-
-		<c:if test="<%= ArrayUtil.contains(PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, MBThreadConstants.THREAD_VIEW_FLAT) %>">
-			<li class="thread-icon">
-
-				<%
-				currentURLObj.setParameter("threadView", MBThreadConstants.THREAD_VIEW_FLAT);
-				%>
-
-				<liferay-ui:icon
-					image="../message_boards/thread_view_flat"
-					message="flat-view"
-					method="get"
-					url="<%= currentURLObj.toString() %>"
-				/>
-			</li>
-		</c:if>
-
-		<c:if test="<%= ArrayUtil.contains(PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, MBThreadConstants.THREAD_VIEW_TREE) %>">
-			<li class="thread-icon">
-
-				<%
-				currentURLObj.setParameter("threadView", MBThreadConstants.THREAD_VIEW_TREE);
-				%>
-
-				<liferay-ui:icon
-					image="../message_boards/thread_view_tree"
-					message="tree-view"
-					method="get"
-					url="<%= currentURLObj.toString() %>"
-				/>
-			</li>
-		</c:if>
-	</c:if>
-</ul>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
 	<div class="thread-controls">
@@ -318,75 +262,54 @@ if (portletTitleBasedNavigation) {
 	<%
 	MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 
-	List<MBMessage> messages = null;
-
-	if (treeWalker != null) {
-		messages = new ArrayList<MBMessage>();
-
-		messages.addAll(treeWalker.getMessages());
-
-		messages = ListUtil.sort(messages, new MessageCreateDateComparator(true));
-	}
-
 	AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(MBMessage.class.getName(), thread.getRootMessageId()));
 	%>
 
 	<div class="message-scroll" id="<portlet:namespace />message_0"></div>
 
-	<c:if test="<%= threadView.equals(MBThreadConstants.THREAD_VIEW_COMBINATION) && (messages.size() > 1) %>">
-		<liferay-ui:toggle-area id="toggle_id_message_boards_view_message_thread">
-			<table class="toggle_id_message_boards_view_message_thread">
-
-			<%
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, treeWalker.getRoot());
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD_FLAG, threadFlag);
-			%>
-
-			<liferay-util:include page="/message_boards/view_thread_shortcut.jsp" servletContext="<%= application %>" />
-
-			</table>
-		</liferay-ui:toggle-area>
-	</c:if>
-
 	<%
 	boolean viewableThread = false;
 	%>
 
-	<c:choose>
-		<c:when test="<%= threadView.equals(MBThreadConstants.THREAD_VIEW_TREE) %>">
+	<%
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, treeWalker.getRoot());
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.FALSE.toString());
+	%>
 
-			<%
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, treeWalker.getRoot());
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.FALSE.toString());
-			%>
+	<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
 
-			<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
-
-			<%
-			viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD));
-			%>
-
-		</c:when>
-		<c:otherwise>
-			<%@ include file="/message_boards/view_thread_flat.jspf" %>
-		</c:otherwise>
-	</c:choose>
+	<%
+	viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD));
+	%>
 
 	<c:if test="<%= !viewableThread %>">
 		<div class="alert alert-danger">
 			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+		</div>
+	</c:if>
+
+	<%
+	MBMessage rootMessage = treeWalker.getRoot();
+	%>
+
+	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, rootMessage.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
+		<portlet:renderURL var="replyURL">
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="mbCategoryId" value="<%= String.valueOf(rootMessage.getCategoryId()) %>" />
+			<portlet:param name="threadId" value="<%= String.valueOf(rootMessage.getThreadId()) %>" />
+			<portlet:param name="parentMessageId" value="<%= String.valueOf(rootMessage.getMessageId()) %>" />
+			<portlet:param name="priority" value="<%= String.valueOf(rootMessage.getPriority()) %>" />
+		</portlet:renderURL>
+
+		<div class="reply-to-main-thread-container">
+			<aui:button cssClass="btn-lg btn-primary" href="<%= replyURL.toString() %>" value="reply-to-main-thread" />
 		</div>
 	</c:if>
 </div>

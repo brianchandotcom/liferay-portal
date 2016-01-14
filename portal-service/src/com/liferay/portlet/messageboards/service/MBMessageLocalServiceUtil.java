@@ -573,6 +573,30 @@ public class MBMessageLocalServiceUtil {
 
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
+		int status, boolean includePrevAndNext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMessageDisplay(userId, message, status,
+			includePrevAndNext);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
+		int status, boolean includePrevAndNext,
+		java.util.Comparator<com.liferay.portlet.messageboards.model.MBMessage> comparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMessageDisplay(userId, message, status,
+			includePrevAndNext, comparator);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	long, MBMessage, int, boolean)}
+	*/
+	@Deprecated
+	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
 		int status, java.lang.String threadView, boolean includePrevAndNext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -580,6 +604,11 @@ public class MBMessageLocalServiceUtil {
 			includePrevAndNext);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	long, MBMessage, int, boolean, Comparator)} (
+	*/
+	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
 		long userId, com.liferay.portlet.messageboards.model.MBMessage message,
 		int status, java.lang.String threadView, boolean includePrevAndNext,
@@ -590,6 +619,19 @@ public class MBMessageLocalServiceUtil {
 			includePrevAndNext, comparator);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
+		long userId, long messageId, int status, boolean includePrevAndNext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getMessageDisplay(userId, messageId, status,
+			includePrevAndNext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	long, long, int, boolean)}
+	*/
+	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
 		long userId, long messageId, int status, java.lang.String threadView,
 		boolean includePrevAndNext)

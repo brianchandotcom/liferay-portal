@@ -17,8 +17,6 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
-
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);
@@ -26,7 +24,6 @@ long categoryId = MBUtil.getCategoryId(request, category);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 request.setAttribute("view.jsp-categoryId", categoryId);
@@ -42,73 +39,25 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<%
-PortletURL navigationURL = renderResponse.createRenderURL();
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="navItemSelected" value="message-boards-home" />
+	</liferay-util:include>
 
-navigationURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-%>
+	<liferay-portlet:renderURL varImpl="searchURL">
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
+	</liferay-portlet:renderURL>
 
-<aui:nav-bar cssClass='<%= topLink.equals("message-boards-home") ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL %>" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
+			<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
 
-		<%
-		navigationURL.setParameter("top-link", "message-boards-home");
-		navigationURL.setParameter("tag", StringPool.BLANK);
-		%>
-
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="message-boards-home"
-			selected='<%= topLink.equals("message-boards-home") %>'
-		/>
-
-		<%
-		navigationURL.setParameter("topLink", "statistics");
-		%>
-
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="statistics"
-			selected='<%= topLink.equals("statistics") %>'
-		/>
-
-		<%
-		navigationURL.setParameter("topLink", "banned-users");
-		%>
-
-		<aui:nav-item
-			href="<%= navigationURL.toString() %>"
-			label="banned-users"
-			selected='<%= topLink.equals("banned-users") %>'
-		/>
-	</aui:nav>
-
-	<c:if test='<%= topLink.equals("message-boards-home") %>'>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
-
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:choose>
-	<c:when test='<%= topLink.equals("message-boards-home") %>'>
-		<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= topLink.equals("statistics") %>'>
-		<liferay-util:include page="/message_boards_admin/statistics.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= topLink.equals("banned-users") %>'>
-		<liferay-util:include page="/message_boards_admin/banned_users.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />

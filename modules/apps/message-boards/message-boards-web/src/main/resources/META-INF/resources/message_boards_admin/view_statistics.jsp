@@ -17,14 +17,21 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
+PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+%>
+
+<aui:nav-bar markupView="lexicon">
+	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="navItemSelected" value="statistics" />
+	</liferay-util:include>
+</aui:nav-bar>
+
+<%
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
-String displayStyle = GetterUtil.getString(request.getAttribute("view.jsp-displayStyle"));
 
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
-
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 %>
 
 <div class="container-fluid-1280">
@@ -72,13 +79,13 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 </div>
 
 <%
-PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+PortalUtil.setPageSubtitle(LanguageUtil.get(request, "statistics"), request);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format("statistics", TextFormatter.O)), portletURL.toString());
 %>

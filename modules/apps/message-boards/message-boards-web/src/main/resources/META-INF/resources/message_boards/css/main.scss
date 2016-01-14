@@ -71,8 +71,22 @@
 		}
 	}
 
-	.thread-container > .message-container {
-		padding-left: 0;
+	.thread-container {
+		margin-top: 20px;
+
+		.panel-heading {
+			span.h5 {
+				margin-right: 12px;
+			}
+		}
+
+		& > .message-container {
+			padding-left: 0;
+		}
+
+		.reply-to-main-thread-container {
+			text-align: center;
+		}
 	}
 
 	.message-container {
@@ -112,12 +126,30 @@
 		}
 	}
 
+	.reply-to-message {
+		margin-bottom: 20px;
+	}
+
 	.thread-body {
 		overflow: hidden;
 		padding: 15px;
 
 		td {
 			border: 1px solid #CCC;
+		}
+	}
+
+	@include sm {
+		.social-interaction {
+			width: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
+
+			& > div {
+				float: right;
+				margin-right: 12px;
+			}
 		}
 	}
 

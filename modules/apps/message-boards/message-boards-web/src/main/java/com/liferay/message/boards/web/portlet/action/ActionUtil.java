@@ -14,11 +14,8 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -27,8 +24,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortalPreferences;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -55,12 +50,13 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String topLink = ParamUtil.getString(request, "topLink");
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (topLink.equals("banned-users") &&
+		if (mvcRenderCommandName.equals("/message_boards/view_banned_users") &&
 			!MBPermission.contains(
 				permissionChecker, themeDisplay.getScopeGroupId(),
 				ActionKeys.BAN_USER)) {
@@ -143,37 +139,13 @@ public class ActionUtil {
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		PortalPreferences preferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-		String threadView = ParamUtil.getString(request, "threadView");
-
-		if (Validator.isNotNull(threadView)) {
-			preferences.setValue(
-				MBPortletKeys.MESSAGE_BOARDS, "thread-view", threadView);
-		}
-		else {
-			threadView = preferences.getValue(
-				MBPortletKeys.MESSAGE_BOARDS, "thread-view",
-				PropsValues.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT);
-		}
-
-		if (!ArrayUtil.contains(
-				PropsValues.MESSAGE_BOARDS_THREAD_VIEWS, threadView)) {
-
-			threadView = PropsValues.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT;
-
-			preferences.setValue(
-				MBPortletKeys.MESSAGE_BOARDS, "thread-view", threadView);
-		}
-
 		boolean includePrevAndNext =
 			PropsValues.
 				MESSAGE_BOARDS_THREAD_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED;
 
 		MBMessageDisplay messageDisplay =
 			MBMessageServiceUtil.getMessageDisplay(
-				messageId, status, threadView, includePrevAndNext);
+				messageId, status, includePrevAndNext);
 
 		if (messageDisplay != null) {
 			MBMessage message = messageDisplay.getMessage();

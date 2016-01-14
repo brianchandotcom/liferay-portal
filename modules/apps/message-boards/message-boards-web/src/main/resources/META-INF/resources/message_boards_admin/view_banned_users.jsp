@@ -17,8 +17,18 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
+PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
+%>
+
+<aui:nav-bar markupView="lexicon">
+	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="navItemSelected" value="banned-users" />
+	</liferay-util:include>
+</aui:nav-bar>
+
+<%
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -29,8 +39,6 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
-
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 %>
 
 <liferay-frontend:management-bar
@@ -41,8 +49,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	<%
 	PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-	displayStyleURL.setParameter("topLink", "banned-users");
+	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
 	%>
 
 	<liferay-frontend:management-bar-buttons>
@@ -125,8 +132,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 </div>
 
 <%
-PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(topLink, StringPool.UNDERLINE, StringPool.DASH)), request);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(topLink, TextFormatter.O)), portletURL.toString());
+PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format("banned-users", TextFormatter.O)), portletURL.toString());
 %>
 
 <aui:script>

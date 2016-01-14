@@ -20,24 +20,20 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"mvc.command.name=/", "mvc.command.name=/message_boards/view",
-		"mvc.command.name=/message_boards/view_banned_users",
-		"mvc.command.name=/message_boards/view_my_posts",
-		"mvc.command.name=/message_boards/view_my_subscriptions",
-		"mvc.command.name=/message_boards/view_recent_posts",
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"mvc.command.name=/message_boards/view_statistics"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand extends BaseViewMVCRenderCommand {
+public class MBAdminViewStatisticsMVCRenderCommand
+	extends BaseViewMVCRenderCommand {
 
-	public ViewMVCRenderCommand() {
-		super("/message_boards/view.jsp");
+	public MBAdminViewStatisticsMVCRenderCommand() {
+		super("/message_boards_admin/view_statistics.jsp");
 	}
 
 }

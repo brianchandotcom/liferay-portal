@@ -598,6 +598,23 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public MBMessageDisplay getMessageDisplay(
+			long messageId, int status, boolean includePrevAndNext)
+		throws PortalException {
+
+		MBMessagePermission.check(
+			getPermissionChecker(), messageId, ActionKeys.VIEW);
+
+		return mbMessageLocalService.getMessageDisplay(
+			getGuestOrUserId(), messageId, status, includePrevAndNext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
+	 *             long, int, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public MBMessageDisplay getMessageDisplay(
 			long messageId, int status, String threadView,
 			boolean includePrevAndNext)
 		throws PortalException {

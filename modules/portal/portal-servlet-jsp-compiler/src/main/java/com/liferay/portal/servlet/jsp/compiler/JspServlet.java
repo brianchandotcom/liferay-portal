@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.jsp.compiler.internal.JspBundleClassloader;
+import com.liferay.taglib.servlet.JspFactorySwapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,7 +62,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
+import javax.servlet.jsp.JspFactory;
 
+import org.apache.jasper.runtime.JspFactoryImpl;
 import org.apache.jasper.xmlparser.ParserUtils;
 import org.apache.jasper.xmlparser.TreeNode;
 
@@ -148,6 +151,21 @@ public class JspServlet extends HttpServlet {
 
 		if (!(classLoader instanceof BundleReference)) {
 			throw new IllegalStateException();
+		}
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(classLoader);
+
+			JspFactory.setDefaultFactory(new JspFactoryImpl());
+
+			JspFactorySwapper.swap();
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		List<Bundle> bundles = new ArrayList<>();

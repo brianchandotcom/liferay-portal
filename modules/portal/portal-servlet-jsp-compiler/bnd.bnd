@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.portal.servlet.jsp.compiler.internal.JspFactoryBundleActivator
 Bundle-Name: Liferay Portal Servlet JSP Compiler
 Bundle-SymbolicName: com.liferay.portal.servlet.jsp.compiler
 Bundle-Version: 1.0.5

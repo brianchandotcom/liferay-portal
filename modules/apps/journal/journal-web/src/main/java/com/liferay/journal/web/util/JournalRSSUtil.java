@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -53,8 +54,7 @@ import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
@@ -513,7 +513,7 @@ public class JournalRSSUtil {
 		long plid = PortalUtil.getPlidFromFriendlyURL(
 			feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
 
-		PortletURL entryURL = new PortletURLImpl(
+		PortletURL entryURL = PortletURLFactoryUtil.create(
 			resourceRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		entryURL.setParameter("groupId", String.valueOf(article.getGroupId()));

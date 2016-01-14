@@ -19,6 +19,11 @@ package com.liferay.portal.kernel.javadoc;
  */
 public abstract class BaseJavadoc {
 
+	public BaseJavadoc(String servletContextName, String comment) {
+		_servletContextName = servletContextName;
+		_comment = comment;
+	}
+
 	public String getComment() {
 		return _comment;
 	}
@@ -27,15 +32,7 @@ public abstract class BaseJavadoc {
 		return _servletContextName;
 	}
 
-	public void setComment(String comment) {
-		_comment = comment;
-	}
-
-	public void setServletContextName(String servletContextName) {
-		_servletContextName = servletContextName;
-	}
-
-	private String _comment;
-	private String _servletContextName;
+	private final String _comment;
+	private final String _servletContextName;
 
 }

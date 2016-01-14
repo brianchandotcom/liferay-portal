@@ -19,18 +19,34 @@ import java.lang.reflect.Method;
 /**
  * @author Preston Crary
  */
-public abstract class JavadocMethod extends BaseJavadoc {
+public class EmptyJavadocMethod extends JavadocMethod {
 
-	public JavadocMethod(String servletContextName, String comment) {
-		super(servletContextName, comment);
+	public EmptyJavadocMethod(String servletContextName, Method method) {
+		super(servletContextName, null);
+
+		_method = method;
 	}
 
-	public abstract Method getMethod();
+	@Override
+	public Method getMethod() {
+		return _method;
+	}
 
-	public abstract String getParameterComment(int index);
+	@Override
+	public String getParameterComment(int index) {
+		return null;
+	}
 
-	public abstract String getReturnComment();
+	@Override
+	public String getReturnComment() {
+		return null;
+	}
 
-	public abstract String getThrowsComment(int index);
+	@Override
+	public String getThrowsComment(int index) {
+		return null;
+	}
+
+	private final Method _method;
 
 }

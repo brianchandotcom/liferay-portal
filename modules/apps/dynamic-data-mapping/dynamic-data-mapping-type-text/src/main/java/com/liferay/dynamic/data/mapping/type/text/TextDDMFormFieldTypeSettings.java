@@ -77,7 +77,7 @@ public interface TextDDMFormFieldTypeSettings
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",
 		properties = { "placeholder=%enter-placeholder-text" },
-		tip = "%text-that-assists-the-user-but-is-not-submitted-as-a-field-vaue",
+		tip = "%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-vaue",
 		type = "text"
 	)
 	public LocalizedValue placeholder();

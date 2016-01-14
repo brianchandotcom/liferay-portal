@@ -469,12 +469,6 @@ if (portletTitleBasedNavigation) {
 	</div>
 
 	<div class="sidenav-content">
-		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-			<liferay-ui:app-view-toolbar>
-				<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
-			</liferay-ui:app-view-toolbar>
-		</c:if>
-
 		<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
 
 		<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">

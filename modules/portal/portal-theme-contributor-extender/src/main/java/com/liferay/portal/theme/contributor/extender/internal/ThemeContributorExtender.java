@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.theme.contributor.extender;
+package com.liferay.portal.theme.contributor.extender.internal;
 
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -23,7 +23,6 @@ import java.io.Reader;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
@@ -100,7 +99,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 			return null;
 		}
 
-		BundleWebResources bundleWebResources = _scanForResources(bundle);
+		BundleWebResourcesImpl bundleWebResources = _scanForResources(bundle);
 
 		if (bundleWebResources == null) {
 			return null;
@@ -119,30 +118,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + s, t);
 	}
 
-	protected static class BundleWebResources {
-
-		public BundleWebResources(
-			Collection<String> cssResourcePaths,
-			Collection<String> jsResourcePaths) {
-
-			_cssResourcePaths = cssResourcePaths;
-			_jsResourcePaths = jsResourcePaths;
-		}
-
-		public Collection<String> getCssResourcePaths() {
-			return _cssResourcePaths;
-		}
-
-		public Collection<String> getJsResourcePaths() {
-			return _jsResourcePaths;
-		}
-
-		private final Collection<String> _cssResourcePaths;
-		private final Collection<String> _jsResourcePaths;
-
-	}
-
-	private BundleWebResources _scanForResources(Bundle bundle) {
+	private BundleWebResourcesImpl _scanForResources(Bundle bundle) {
 		final List<String> cssResourcePaths = new ArrayList<>();
 		final List<String> jsResourcePaths = new ArrayList<>();
 
@@ -184,7 +160,8 @@ public class ThemeContributorExtender extends AbstractExtender {
 			return null;
 		}
 		else {
-			return new BundleWebResources(cssResourcePaths, jsResourcePaths);
+			return new BundleWebResourcesImpl(
+				cssResourcePaths, jsResourcePaths);
 		}
 	}
 

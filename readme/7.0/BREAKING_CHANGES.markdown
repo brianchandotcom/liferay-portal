@@ -3328,16 +3328,18 @@ following behaviors based on the portlet type:
 
 - **Struts Portlet:** If you've defined a `view-action` init parameter, the
 configuration options are only displayed for that particular view when invoking
-a URL with a parameter `struts-action` with the value indicated in the
-`view-action` init parameter.
+a URL with a parameter `struts_action` with the value indicated in the
+`view-action` init parameter and also in the default view of the portlet (when
+there is no `struts_action` parameter in the request)
 
 - **Liferay MVC Portlet:** If you've defined a `view-template` init parameter,
 the configuration options are only displayed when that template is rendered by
 invoking a URL with a parameter `mvcPath` with the value indicated in the
-`view-template` init parameter.
+`view-template` init parameter. and also in the default view of the portlet
+(when there is no `mvcPath` parameter in the request)
 
 - If it's a portlet using any other framework, the configuration options are
-never displayed.
+always displayed.
 
 In order to keep the old behavior of adding the configuration options in every
 view, you need to add the init parameter

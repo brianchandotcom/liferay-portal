@@ -16,10 +16,14 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.asset.publisher.test:1.0.0,\
 	com.liferay.asset.publisher.web:1.0.0,\
 	com.liferay.asset.tag.admin.web:1.0.0,\
+	com.liferay.asset.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.asset.taglib:1.0.0,\
 	com.liferay.asset.tags.compiler.web:1.0.0,\
 	com.liferay.asset.tags.navigation.web:1.0.0,\
 	com.liferay.asset.tags.service:1.0.0,\
 	com.liferay.control.menu.api:1.0.0,\
+	com.liferay.control.menu.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.control.menu.taglib:1.0.0,\
 	com.liferay.control.menu.web:1.0.0,\
 	com.liferay.exportimport.api:1.0.0,\
 	com.liferay.exportimport.service:1.0.0,\
@@ -54,10 +58,14 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.layout.set.prototype.test:1.0.0,\
 	com.liferay.layout.set.prototype.web:1.0.0,\
 	com.liferay.layout.set.prototype:1.0.0,\
+	com.liferay.layout.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.layout.taglib:1.0.0,\
 	com.liferay.layout.type.controller.control.panel:1.0.0,\
 	com.liferay.layout.type.controller.full.page.application:1.0.0,\
 	com.liferay.layout.type.controller.node:1.0.0,\
 	com.liferay.layout.type.controller.shared.portlet:1.0.0,\
+	com.liferay.mobile.device.rules.api:1.0.0,\
+	com.liferay.nested.portlets.web:1.0.0,\
 	com.liferay.portal.portlet.configuration.icon.locator:1.0.0,\
 	com.liferay.portal.portlet.toolbar.contributor.locator:1.0.0,\
 	com.liferay.portlet.configuration.icon.close:1.0.0,\
@@ -75,9 +83,15 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portlet.configuration.icon.widget:1.0.0,\
 	com.liferay.portlet.configuration.web:1.0.0,\
 	com.liferay.portlet.css.web:1.0.0,\
+	com.liferay.portlet.display.template.web:1.0.0,\
+	com.liferay.portlet.display.template:1.0.0,\
+	com.liferay.portlet.sharing.web:1.0.0,\
 	com.liferay.product.navigation.control.panel.menu.web:1.0.0,\
 	com.liferay.product.navigation.control.panel:1.0.0,\
 	com.liferay.product.navigation.product.menu.web:1.0.0,\
+	com.liferay.product.navigation.simulation.device:1.0.0,\
+	com.liferay.product.navigation.simulation.web:1.0.0,\
+	com.liferay.product.navigation.simulation:1.0.0,\
 	com.liferay.product.navigation.site.administration.menu.web:1.0.0,\
 	com.liferay.product.navigation.site.administration:1.0.0,\
 	com.liferay.product.navigation.user.menu.web:1.0.0,\
@@ -94,6 +108,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.site.navigation.language.web:1.0.0,\
 	com.liferay.site.navigation.menu.web:1.0.0,\
 	com.liferay.site.navigation.site.map.web:1.0.0,\
+	com.liferay.site.navigation.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.site.navigation.taglib:1.0.0,\
 	com.liferay.site.teams.web:1.0.0,\
 	com.liferay.staging.bar.web:1.0.0,\
 	com.liferay.staging.configuration.web:1.0.0,\
@@ -102,6 +118,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.staging.processes.web:1.0.0,\
 	com.liferay.staging.taglib:1.0.0,\
 	com.liferay.staging.test:1.0.0,\
+	com.liferay.trash.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.trash.taglib:1.0.0,\
 	com.liferay.trash.web:1.0.0,\
 	com.liferay.xsl.content.web:1.0.0
 Liferay-Releng-Labs: false

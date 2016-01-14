@@ -32,12 +32,13 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.dynamic.data.mapping.type.date:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.key.value:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.options:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.paragraph:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.radio:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.select:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.text:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.validation:1.0.0,\
 	com.liferay.dynamic.data.mapping.validator:1.0.0,\
-	com.liferay.dynamic.data.mapping.validator:1.0.0,\
+	com.liferay.dynamic.data.mapping.web:1.0.0,\
 	com.liferay.polls.api:1.0.0,\
 	com.liferay.polls.service:1.0.0,\
 	com.liferay.polls.test:1.0.0,\

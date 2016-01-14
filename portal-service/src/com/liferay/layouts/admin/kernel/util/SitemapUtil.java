@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.util;
+package com.liferay.layouts.admin.kernel.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
@@ -27,21 +28,49 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  */
-public interface Sitemap {
+public class SitemapUtil {
 
-	public void addURLElement(
+	public static void addURLElement(
 		Element element, String url, UnicodeProperties typeSettingsProperties,
 		Date modifiedDate, String canonicalURL,
-		Map<Locale, String> alternateURLs);
+		Map<Locale, String> alternateURLs) {
 
-	public String encodeXML(String input);
+		getSitemap().addURLElement(
+			element, url, typeSettingsProperties, modifiedDate, canonicalURL,
+			alternateURLs);
+	}
 
-	public Map<Locale, String> getAlternateURLs(
+	public static String encodeXML(String input) {
+		return getSitemap().encodeXML(input);
+	}
+
+	public static Map<Locale, String> getAlternateURLs(
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout)
-		throws PortalException;
+		throws PortalException {
 
-	public String getSitemap(
+		return getSitemap().getAlternateURLs(
+			canonicalURL, themeDisplay, layout);
+	}
+
+	public static Sitemap getSitemap() {
+		PortalRuntimePermission.checkGetBeanProperty(SitemapUtil.class);
+
+		return _sitemap;
+	}
+
+	public static String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
-		throws PortalException;
+		throws PortalException {
+
+		return getSitemap().getSitemap(groupId, privateLayout, themeDisplay);
+	}
+
+	public void setSitemap(Sitemap sitemap) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_sitemap = sitemap;
+	}
+
+	private static Sitemap _sitemap;
 
 }

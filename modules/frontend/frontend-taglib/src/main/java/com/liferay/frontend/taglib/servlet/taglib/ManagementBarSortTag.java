@@ -15,12 +15,20 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.servlet.taglib.util.ManagementBarFilterItem;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +85,37 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 		_portletURL = null;
 	}
 
+	protected List<ManagementBarFilterItem> getManagementBarFilterItems() {
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		List<ManagementBarFilterItem> managementBarFilterItems =
+			new ArrayList<>();
+
+		try {
+			PortletURL orderByColURL = PortletURLUtil.clone(
+				_portletURL, liferayPortletResponse);
+
+			orderByColURL.setParameter("orderByType", _orderByType);
+
+			for (String orderColumn : _orderColumns.keySet()) {
+				orderByColURL.setParameter("orderByCol", orderColumn);
+
+				managementBarFilterItems.add(
+					new ManagementBarFilterItem(
+						_orderColumns.get(orderColumn),
+						orderByColURL.toString(), orderColumn));
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return managementBarFilterItems;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -95,7 +134,8 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-frontend:management-bar-sort:orderColumns", _orderColumns);
+			"liferay-frontend:management-bar-sort:managementBarFilterItems",
+			getManagementBarFilterItems());
 		request.setAttribute(
 			"liferay-frontend:management-bar-sort:orderByCol", _orderByCol);
 		request.setAttribute(

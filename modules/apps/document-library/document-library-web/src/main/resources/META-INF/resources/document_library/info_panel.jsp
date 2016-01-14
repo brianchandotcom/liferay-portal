@@ -133,9 +133,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 					}
 					%>
 
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="crop-image" />" class="img-rounded" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="crop-img img-rounded" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
 
-					<aui:button href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>" value="download" />
+					<div class="btn-group">
+						<aui:button cssClass="btn-sm" href="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>" value="download" />
+					</div>
 
 					<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
 
@@ -175,11 +177,71 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries)) {
 						<%= HtmlUtil.escape(TextFormatter.formatStorageSize(fileEntry.getSize(), locale)) %>
 					</p>
 
+					<c:if test="<%= Validator.isNotNull(fileVersion.getExtension()) %>">
+						<h5><strong><liferay-ui:message key="extension" /></strong></h5>
+
+						<p>
+							<%= HtmlUtil.escape(fileVersion.getExtension()) %>
+						</p>
+					</c:if>
+
 					<h5><strong><liferay-ui:message key="version" /></strong></h5>
 
 					<p>
 						<%= HtmlUtil.escape(fileVersion.getVersion()) %>
 					</p>
+
+					<%
+					long assetClassPK = 0;
+
+					if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !fileEntry.isInTrash()) {
+						assetClassPK = fileVersion.getFileVersionId();
+					}
+					else {
+						assetClassPK = fileEntry.getFileEntryId();
+					}
+					%>
+
+					<div class="lfr-asset-categories">
+						<liferay-ui:asset-categories-summary
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= assetClassPK %>"
+						/>
+					</div>
+
+					<div class="lfr-asset-tags">
+						<liferay-ui:asset-tags-summary
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= assetClassPK %>"
+							message="tags"
+						/>
+					</div>
+
+					<liferay-ui:ratings
+						className="<%= DLFileEntryConstants.getClassName() %>"
+						classPK="<%= fileEntry.getFileEntryId() %>"
+					/>
+
+					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= fileVersion.getFileVersionId() %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+
+					<%
+					AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
+					%>
+
+					<c:if test="<%= (layoutAssetEntry != null) && dlPortletInstanceSettings.isEnableRelatedAssets() && fileEntry.isSupportsSocial() %>">
+						<div class="entry-links">
+							<liferay-ui:asset-links
+								assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
+							/>
+						</div>
+					</c:if>
 				</div>
 			</liferay-ui:section>
 

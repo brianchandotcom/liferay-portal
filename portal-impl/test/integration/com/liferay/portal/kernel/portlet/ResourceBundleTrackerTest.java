@@ -102,13 +102,13 @@ public class ResourceBundleTrackerTest {
 
 	@Test
 	public void testResourceBundlesHierarchy() {
-		PortletConfig portletConfig = _genericPortlet.getPortletConfig();
-
 		ServiceRegistration<ResourceBundle> serviceRegistrationA =
 			registerResourceBundle(
 				createResourceBundle(
 					"common-key", "th_TH_TH", "th_TH_TH", "th_TH_TH"),
 				"th_TH_TH", 100);
+
+		PortletConfig portletConfig = _genericPortlet.getPortletConfig();
 
 		portletConfig.getResourceBundle(new Locale("th", "TH", "TH"));
 

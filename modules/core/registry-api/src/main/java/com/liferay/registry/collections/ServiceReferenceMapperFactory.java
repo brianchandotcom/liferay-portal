@@ -49,7 +49,7 @@ public class ServiceReferenceMapperFactory {
 	}
 
 	public static <K, S> ServiceReferenceMapper<K, S> create(
-		final String property) {
+		final String propertyKey) {
 
 		return new ServiceReferenceMapper<K, S>() {
 
@@ -57,7 +57,8 @@ public class ServiceReferenceMapperFactory {
 			public void map(
 				ServiceReference<S> serviceReference, Emitter<K> emitter) {
 
-				Object propertyValue = serviceReference.getProperty(property);
+				Object propertyValue = serviceReference.getProperty(
+					propertyKey);
 
 				if (propertyValue == null) {
 					return;

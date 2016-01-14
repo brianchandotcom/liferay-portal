@@ -581,9 +581,9 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />
-	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
-		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />
+	<bean id="com.liferay.roles.admin.kernel.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />
+	<bean id="com.liferay.roles.admin.kernel.util.RolesAdminUtil" class="com.liferay.roles.admin.kernel.util.RolesAdminUtil">
+		<property name="rolesAdmin" ref="com.liferay.roles.admin.kernel.util.RolesAdmin" />
 	</bean>
 	<bean id="com.liferay.sites.kernel.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
 	<bean id="com.liferay.sites.kernel.util.SitesUtil" class="com.liferay.sites.kernel.util.SitesUtil">

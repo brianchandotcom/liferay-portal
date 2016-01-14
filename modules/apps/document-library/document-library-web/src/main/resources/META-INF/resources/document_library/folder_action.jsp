@@ -32,8 +32,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 Folder folder = null;
 
-long folderId = 0;
-
 long repositoryId = 0;
 
 if (row != null) {
@@ -42,26 +40,26 @@ if (row != null) {
 	if (result instanceof Folder) {
 		folder = (Folder)result;
 
-		folderId = folder.getFolderId();
-
 		repositoryId = folder.getRepositoryId();
 	}
 }
 else {
 	if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
-		folder = (Folder)request.getAttribute("view.jsp-folder");
-
-		folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+		folder = (Folder)request.getAttribute("info_panel.jsp-folder");
 
 		repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 	}
 	else {
-		folder = (Folder)request.getAttribute("view_entries.jsp-folder");
-
-		folderId = GetterUtil.getLong((String)request.getAttribute("view_entries.jsp-folderId"));
+		folder = (Folder)request.getAttribute("info_panel.jsp-folder");
 
 		repositoryId = GetterUtil.getLong((String)request.getAttribute("view_entries.jsp-repositoryId"));
 	}
+}
+
+long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+if (folder != null) {
+	folderId = folder.getFolderId();
 }
 
 int status = WorkflowConstants.STATUS_APPROVED;

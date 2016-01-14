@@ -45,7 +45,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	<%
 	PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+	displayStyleURL.setParameter("mvcRenderCommandName", (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "/message_boards/view" : "/message_boards/view_category");
 
 	displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
 	%>
@@ -115,7 +115,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		%>
 
 		<portlet:renderURL var="backURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+			<portlet:param name="mvcRenderCommandName" value='<%= (parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "/message_boards/view" : "/message_boards/view_category" %>' />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 		</portlet:renderURL>
 
@@ -213,7 +213,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 						%>
 
 						<liferay-portlet:renderURL varImpl="rowURL">
-							<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+							<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
 							<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 						</liferay-portlet:renderURL>
 

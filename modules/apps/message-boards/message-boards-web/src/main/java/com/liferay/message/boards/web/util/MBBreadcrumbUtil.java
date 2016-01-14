@@ -87,6 +87,11 @@ public class MBBreadcrumbUtil {
 			return;
 		}
 
+		if (!mvcRenderCommandName.equals("/message_boards/select_category")) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view_category");
+		}
+
 		List<MBCategory> ancestorCategories = category.getAncestors();
 
 		Collections.reverse(ancestorCategories);

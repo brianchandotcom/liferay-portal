@@ -35,7 +35,7 @@ MBThread nextThread = messageDisplay.getNextThread();
 if (Validator.isNull(redirect)) {
 	PortletURL backPortletURL = renderResponse.createRenderURL();
 
-	backPortletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+	backPortletURL.setParameter("mvcRenderCommandName", (category == null) ? "/message_boards/view" : "/message_boards/view_category");
 	backPortletURL.setParameter("mbCategoryId", (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
 
 	backURL = backPortletURL.toString();
@@ -235,7 +235,7 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
 					<portlet:renderURL var="parentCategoryURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+						<portlet:param name="mvcRenderCommandName" value='<%= (category == null) ? "/message_boards/view" : "/message_boards/view_category" %>' />
 						<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
 					</portlet:renderURL>
 

@@ -54,7 +54,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"mvc.render.command.name=-",
-		"mvc.render.command.name=/message_boards/view"
+		"mvc.render.command.name=/message_boards/view",
+		"mvc.render.command.name=/message_boards/view_category"
 	},
 	service = {MBPortletToolbarContributor.class, PortletToolbarContributor.class}
 )

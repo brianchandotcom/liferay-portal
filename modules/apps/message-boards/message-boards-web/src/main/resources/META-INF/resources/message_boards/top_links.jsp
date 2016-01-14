@@ -22,20 +22,19 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 %>
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-		portletURL.setParameter("tag", StringPool.BLANK);
+		PortletURL messageBoardsHomeURL = renderResponse.createRenderURL();
+
+		messageBoardsHomeURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+		messageBoardsHomeURL.setParameter("tag", StringPool.BLANK);
 		%>
 
-		<aui:nav-item cssClass='<%= mvcRenderCommandName.equals("/message_boards/view") ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="message-boards-home" selected='<%= mvcRenderCommandName.equals("/message_boards/view") %>' />
+		<aui:nav-item cssClass='<%= (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category")) ? "active" : StringPool.BLANK %>' href="<%= messageBoardsHomeURL.toString() %>" label="message-boards-home" selected='<%= (mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category")) %>' />
 
 		<%
 		PortletURL viewRecentPostsURL = renderResponse.createRenderURL();

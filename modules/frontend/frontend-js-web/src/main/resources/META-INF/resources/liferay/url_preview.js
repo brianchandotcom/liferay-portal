@@ -27,15 +27,20 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance._id = A.guid();
 						instance._eventHandles = [];
 					},
 
 					destructor: function() {
 						var instance = this;
 
-						(new A.EventHandle(instance._eventHandles)).detach();
+						var dialog = Liferay.Util.getWindow(instance._id);
 
-						instance._getDialog().destroy();
+						if (dialog) {
+							dialog.destroy();
+						}
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					close: function() {
@@ -50,43 +55,26 @@ AUI.add(
 						instance._getDialog().show();
 					},
 
-					_afterDialogVisibilityChange: function() {
-						var instance = this;
-
-						instance._dialog = null;
-					},
-
 					_getDialog: function() {
 						var instance = this;
 
-						var dialog = instance._dialog;
+						var dialog = Liferay.Util.Window.getWindow(
+							{
+								dialog: {
+									centered: true,
+									cssClass: 'lfr-url-preview',
+									destroyOnHide: true,
+									draggable: false,
+									headerContent: instance._getHeader(),
+									toolbars: false,
+									width: instance.get('width')
+								},
+								id: instance._id,
+								uri: instance.get('url')
+							}
+						);
 
-						if (!dialog) {
-							var header = instance._getHeader();
-
-							dialog = Liferay.Util.Window.getWindow(
-								{
-									dialog: {
-										after: {
-											visibleChange: A.bind(instance._afterDialogVisibilityChange, instance)
-										},
-										centered: true,
-										cssClass: 'lfr-url-preview',
-										destroyOnHide: true,
-										draggable: false,
-										headerContent: header,
-										toolbars: false,
-										width: instance.get('width')
-									},
-									id: instance.name,
-									uri: instance.get('url')
-								}
-							);
-
-							instance._dialog = dialog;
-
-							instance._styleDialogMask();
-						}
+						dialog.get('maskNode').setStyle('opacity', 1);
 
 						return dialog;
 					},
@@ -116,14 +104,6 @@ AUI.add(
 						);
 
 						return header;
-					},
-
-					_styleDialogMask: function() {
-						var instance = this;
-
-						var dialogMask = instance._getDialog().get('maskNode');
-
-						dialogMask.setStyle('opacity', 1);
 					}
 				}
 			}

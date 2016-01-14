@@ -14,13 +14,15 @@
 
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
@@ -28,11 +30,15 @@ import javax.portlet.PortletRequest;
 /**
  * @author Sergio González
  */
-public class PermissionsPortletConfigurationIcon
+public class CategoryPermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
+	public CategoryPermissionsPortletConfigurationIcon(
+		PortletRequest portletRequest, MBCategory category) {
+
 		super(portletRequest);
+
+		_category = category;
 	}
 
 	@Override
@@ -45,10 +51,9 @@ public class PermissionsPortletConfigurationIcon
 		String url = StringPool.BLANK;
 
 		try {
-			String modelResource = "com.liferay.portlet.messageboards";
-			String modelResourceDescription = themeDisplay.getScopeGroupName();
-			String resourcePrimKey = String.valueOf(
-				themeDisplay.getScopeGroupId());
+			String modelResource = MBCategory.class.getName();
+			String modelResourceDescription = _category.getName();
+			String resourcePrimKey = String.valueOf(_category.getCategoryId());
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, modelResource, modelResourceDescription, null,
@@ -72,10 +77,14 @@ public class PermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!MBPermission.contains(
-				permissionChecker, themeDisplay.getScopeGroupId(),
-				ActionKeys.PERMISSIONS)) {
+		try {
+			if (!MBCategoryPermission.contains(
+					permissionChecker, _category, ActionKeys.PERMISSIONS)) {
 
+				return false;
+			}
+		}
+		catch (PortalException pe) {
 			return false;
 		}
 
@@ -91,5 +100,7 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	private final MBCategory _category;
 
 }

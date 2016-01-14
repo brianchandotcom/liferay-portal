@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.layoutsadmin.util.SitemapURLProvider;
-import com.liferay.portlet.layoutsadmin.util.SitemapUtil;
 
 import java.util.Locale;
 import java.util.Set;

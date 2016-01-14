@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.layoutsadmin.util;
 
+import com.liferay.layouts.admin.kernel.util.Sitemap;
+import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layouts.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;

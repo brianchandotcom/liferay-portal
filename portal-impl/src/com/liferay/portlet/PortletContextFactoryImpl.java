@@ -32,23 +32,10 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletContextFactoryImpl {
+public class PortletContextFactoryImpl implements PortletContextFactory {
 
-	public static PortletContext create(
-		Portlet portlet, ServletContext servletContext) {
-
-		return _instance._create(portlet, servletContext);
-	}
-
-	public static void destroy(Portlet portlet) {
-		_instance._destroy(portlet);
-	}
-
-	private PortletContextFactoryImpl() {
-		_pool = new ConcurrentHashMap<>();
-	}
-
-	private PortletContext _create(
+	@Override
+	public PortletContext create(
 		Portlet portlet, ServletContext servletContext) {
 
 		Map<String, PortletContext> portletContexts = _pool.get(
@@ -95,16 +82,25 @@ public class PortletContextFactoryImpl {
 		return DoPrivilegedUtil.wrap(portletContext);
 	}
 
-	private void _destroy(Portlet portlet) {
+	@Override
+	public void destroy(Portlet portlet) {
 		_pool.remove(portlet.getRootPortletId());
+	}
+
+	@Override
+	public PortletContext newUntrackedInstance(
+		Portlet portlet, ServletContext servletContext) {
+
+		PortletContext portletContext = new PortletContextImpl(
+			portlet, servletContext);
+
+		return DoPrivilegedUtil.wrap(portletContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContextFactoryImpl.class);
 
-	private static final PortletContextFactoryImpl _instance =
-		new PortletContextFactoryImpl();
-
-	private final Map<String, Map<String, PortletContext>> _pool;
+	private final Map<String, Map<String, PortletContext>> _pool =
+		new ConcurrentHashMap<>();
 
 }

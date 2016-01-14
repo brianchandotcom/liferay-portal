@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -49,7 +50,6 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.HashMap;

@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 import java.io.Serializable;
 

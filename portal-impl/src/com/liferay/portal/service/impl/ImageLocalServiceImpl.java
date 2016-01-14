@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 import java.io.File;
 import java.io.IOException;

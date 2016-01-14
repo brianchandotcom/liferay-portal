@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 /**
  * @author Amos Fong

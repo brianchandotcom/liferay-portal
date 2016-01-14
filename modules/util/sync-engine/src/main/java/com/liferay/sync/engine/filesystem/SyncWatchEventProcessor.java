@@ -191,6 +191,10 @@ public class SyncWatchEventProcessor implements Runnable {
 				@Override
 				public void run() {
 					try {
+						if (!FileUtil.checkFilePath(targetFilePath)) {
+							return;
+						}
+
 						SyncFileService.addFileSyncFile(
 							targetFilePath, parentSyncFile.getTypePK(),
 							parentSyncFile.getRepositoryId(), _syncAccountId);
@@ -817,7 +821,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncWatchEventProcessor.class);
 
 	private static final ExecutorService _executorService =
-		SyncEngine.getEventProcessorExecutorService();
+		SyncEngine.getExecutorService();
 
 	private final Map<String, List<SyncWatchEvent>>
 		_dependentSyncWatchEventsMaps = new ConcurrentHashMap<>();

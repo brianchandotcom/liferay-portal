@@ -133,7 +133,7 @@ public class BaseHandler implements Handler<Void> {
 				}
 
 				ExecutorService executorService =
-					SyncEngine.getEventProcessorExecutorService();
+					SyncEngine.getExecutorService();
 
 				executorService.execute(_event);
 			}

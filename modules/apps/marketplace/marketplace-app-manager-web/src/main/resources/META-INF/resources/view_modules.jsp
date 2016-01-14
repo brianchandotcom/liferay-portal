@@ -152,14 +152,12 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 
 				<%
 				Dictionary<String, String> headers = bundle.getHeaders();
-
-				String name = MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME));
 				%>
 
 				<h5 class="text-default">
 					<c:choose>
 						<c:when test="<%= bundle.getState() == BundleStateConstants.RESOLVED %>">
-							<%= name %>
+							<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
 						</c:when>
 						<c:otherwise>
 							<portlet:renderURL var="rowURL">
@@ -171,7 +169,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 							</portlet:renderURL>
 
 							<a href="<%= HtmlUtil.escapeHREF(rowURL) %>">
-								<%= name %>
+								<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
 							</a>
 						</c:otherwise>
 					</c:choose>

@@ -255,6 +255,13 @@ public class ReleaseManager {
 			doExecute(key, serviceTrackerMap);
 		}
 
+		@Override
+		public void keyRemoved(
+			ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap,
+			String key, UpgradeInfo upgradeInfo,
+			List<UpgradeInfo> upgradeInfos) {
+		}
+
 	}
 
 	private class UpgradeInfosRunnable implements Runnable {

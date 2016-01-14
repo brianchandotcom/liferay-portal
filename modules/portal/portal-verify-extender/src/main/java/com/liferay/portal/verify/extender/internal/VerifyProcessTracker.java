@@ -320,6 +320,13 @@ public class VerifyProcessTracker {
 			_releaseLocalService.updateRelease(release);
 		}
 
+		@Override
+		public void keyRemoved(
+			ServiceTrackerMap<String, VerifyProcess> serviceTrackerMap,
+			String key, VerifyProcess serviceVerifyProcess,
+			VerifyProcess contentVerifyProcess) {
+		}
+
 	}
 
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.wab.extender.internal;
 
+import com.liferay.osgi.util.classloader.PassThroughClassLoader;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.extender.internal.adapter.FilterExceptionAdapter;
-import com.liferay.portal.wab.extender.internal.adapter.PassThroughClassLoader;
 import com.liferay.portal.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.wab.extender.internal.adapter.ServletExceptionAdapter;
 import com.liferay.portal.wab.extender.internal.definition.FilterDefinition;

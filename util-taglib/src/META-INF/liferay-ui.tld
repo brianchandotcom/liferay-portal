@@ -4470,18 +4470,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<attribute>
-			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>total</code>]]></description>
-			<name>total</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Deprecated as of 6.2.0, replaced by the <![CDATA[<code>liferay-aui:search-container</code>]]> attribute <![CDATA[<code>totalVar</code>]]></description>
-			<name>totalVar</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 	</tag>
 	<tag>
 		<description>Creates rows in the search container for each object returned by <![CDATA[<code>liferay-ui:search-container-results</code>]]>.</description>

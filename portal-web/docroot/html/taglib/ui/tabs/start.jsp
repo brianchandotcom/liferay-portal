@@ -121,7 +121,6 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					<nav class="navbar navbar-default">
 						<div class="container-fluid">
 							<ul class="nav navbar-nav">
-
 								<c:if test="<%= names.length > 1 %>">
 									<li class="active dropdown">
 										<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
@@ -250,11 +249,10 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 		<c:otherwise>
 			<c:choose>
 				<c:when test='<%= type.equals("dropdown") %>'>
-					<c:if test="<%= names.length == 1 %>">
-							</ul>
-						</li>
-					</c:if>
-
+								<c:if test="<%= names.length == 1 %>">
+										</ul>
+									</li>
+								</c:if>
 							</ul>
 						</div>
 					</nav>

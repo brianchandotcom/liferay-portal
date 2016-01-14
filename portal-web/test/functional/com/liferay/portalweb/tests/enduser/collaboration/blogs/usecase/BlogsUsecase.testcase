@@ -1093,7 +1093,6 @@
 
 		<execute macro="ProductMenu#gotoSitesPages">
 			<var name="page" value="Public Pages" />
-			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="Page#add">

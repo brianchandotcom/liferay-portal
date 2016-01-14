@@ -4764,12 +4764,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String msg = GetterUtil.getString(mle.getCause().getMessage());
 
 			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
-				String[] errorPasswordHistories =
-					LDAPSettingsUtil.getErrorPasswordHistories(
+				String[] errorPasswordHistoryKeywords =
+					LDAPSettingsUtil.getErrorPasswordHistoryKeywords(
 						user.getCompanyId());
 
-				for (String errorPasswordHistory : errorPasswordHistories) {
-					if (msg.contains(errorPasswordHistory)) {
+				for (String errorPasswordHistoryKeyword :
+						errorPasswordHistoryKeywords) {
+
+					if (msg.contains(errorPasswordHistoryKeyword)) {
 						throw new UserPasswordException.MustNotBeRecentlyUsed(
 							userId);
 					}

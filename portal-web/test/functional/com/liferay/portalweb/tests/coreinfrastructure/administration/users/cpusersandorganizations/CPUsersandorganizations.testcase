@@ -1445,9 +1445,19 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#deleteCP">
 			<var name="orgName" value="Organization Name" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#viewNoOrganizationsFoundCP" />
 	</command>
 
 	<command name="DeleteOrganizationSite" priority="4">

@@ -25,6 +25,12 @@
 			tabSection.show();
 		}
 
+		var tabTitle = A.one('#' + event.namespace + 'dropdownTitle');
+
+		if (tabTitle) {
+			tabTitle.html(tabItem.one('a').text());
+		}
+
 		names.splice(selectedIndex, 1);
 
 		var el;

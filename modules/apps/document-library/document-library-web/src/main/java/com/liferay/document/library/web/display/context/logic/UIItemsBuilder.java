@@ -125,41 +125,7 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = _getActionURL(
-			"/document_library/edit_file_entry", Constants.CHECKIN);
-
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
-
-		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.CHECKIN,
-			"checkin",
-			getNamespace() + "showVersionDetailsDialog('" + portletURL + "');");
-
-		String javaScript =
-			"/com/liferay/document/library/web/display/context/dependencies" +
-				"/checkin_js.ftl";
-
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put(
-			"dialogTitle",
-			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
-		template.put("namespace", getNamespace());
-		template.put(
-			"randomNamespace", _request.getAttribute("randomNamespace"));
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.processTemplate(unsyncStringWriter);
-
-		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
+		menuItems.add(getJavacriptCheckinMenuItem());
 	}
 
 	public void addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
@@ -613,6 +579,50 @@ public class UIItemsBuilder {
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_ORIGINAL_FILE,
 			"view-original-file", portletURL.toString());
+	}
+
+	public JavaScriptMenuItem getJavacriptCheckinMenuItem()
+		throws PortalException {
+
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CHECKIN);
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
+
+		javascriptMenuItem.setKey(DLUIItemKeys.CHECKIN);
+		javascriptMenuItem.setLabel("checkin");
+		javascriptMenuItem.setOnClick(
+			getNamespace() + "showVersionDetailsDialog('" + portletURL + "');");
+
+		String javaScript =
+			"/com/liferay/document/library/web/display/context/dependencies" +
+				"/checkin_js.ftl";
+
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put(
+			"dialogTitle",
+			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
+		template.put("namespace", getNamespace());
+		template.put(
+			"randomNamespace", _request.getAttribute("randomNamespace"));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
+
+		return javascriptMenuItem;
 	}
 
 	public boolean isOpenInMsOfficeActionAvailable() throws PortalException {

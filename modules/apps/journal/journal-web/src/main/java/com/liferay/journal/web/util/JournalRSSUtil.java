@@ -355,13 +355,13 @@ public class JournalRSSUtil {
 
 		long id = ParamUtil.getLong(resourceRequest, "id");
 
-		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-		String feedId = ParamUtil.getString(resourceRequest, "feedId");
-
 		if (id > 0) {
 			feed = _journalFeedLocalService.getFeed(id);
 		}
 		else {
+			long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+			String feedId = ParamUtil.getString(resourceRequest, "feedId");
+
 			feed = _journalFeedLocalService.getFeed(groupId, feedId);
 		}
 
@@ -451,27 +451,23 @@ public class JournalRSSUtil {
 		syndFeed.setFeedType(
 			feed.getFeedFormat() + "_" + feed.getFeedVersion());
 
-		List<SyndLink> syndLinks = new ArrayList<>();
-
-		syndFeed.setLinks(syndLinks);
-
 		SyndLink selfSyndLink = new SyndLinkImpl();
-
-		syndLinks.add(selfSyndLink);
 
 		ResourceURL feedURL = resourceResponse.createResourceURL();
 
 		feedURL.setCacheability(ResourceURL.FULL);
-		feedURL.setParameter("p_p_resource_id", "rss");
 		feedURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
 		feedURL.setParameter("feedId", String.valueOf(feed.getFeedId()));
+		feedURL.setResourceID("rss");
 
-		String link = feedURL.toString();
-
-		selfSyndLink.setHref(link);
-
+		selfSyndLink.setHref(feedURL.toString());
 		selfSyndLink.setRel("self");
 
+		List<SyndLink> syndLinks = new ArrayList<>();
+
+		syndLinks.add(selfSyndLink);
+
+		syndFeed.setLinks(syndLinks);
 		syndFeed.setTitle(feed.getName());
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setUri(feedURL.toString());

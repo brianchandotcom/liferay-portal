@@ -1000,21 +1000,16 @@
 			<var name="siteFriendlyURLEdit" value="/russia2018" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-		</execute>
+		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<for list="Home,Arenas" param="publicPageName" >
 			<execute macro="Page#add">
-				<var name="page" value="Public Pages" />
 				<var name="pageName" value="${publicPageName}" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-		</execute>
+		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
 			<execute macro="Page#addChild">
@@ -1026,39 +1021,31 @@
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Private Pages" />
-		</execute>
+		<execute macro="ProductMenu#gotoPrivatePages" />
 
 		<for list="Accomodations,Maps" param="privatePageName" >
 			<execute macro="Page#add">
-				<var name="page" value="Private Pages" />
 				<var name="pageName" value="${privatePageName}" />
+				<var name="sitePagePrivacy" value="Private" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-		</execute>
+		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<execute macro="Page#changeLogoViaPageCP">
 			<var name="logoFile" value="Document_3.png" />
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-		</execute>
+		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<execute macro="SitePage#addJavaScript">
 			<var name="javaScript" value="alert('Welcome to Russia.');" />
-			<var name="page" value="Public Pages" />
+			<var name="sitePageName" value="Arenas" />
 		</execute>
 
 		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
-
-		<execute function="Confirm#waitForConfirmation" value1="Welcome to Russia." />
 
 		<execute macro="Page#viewCustomLogoPG" />
 
@@ -1073,15 +1060,11 @@
 
 		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
 
-		<execute function="Confirm#waitForConfirmation" value1="Welcome to Russia." />
-
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
-		</execute>
+		<execute macro="ProductMenu#gotoPublicPages" />
 
 		<execute macro="SitePage#addJavaScript">
 			<var name="javaScript" value=" " />
-			<var name="page" value="Public Pages" />
+			<var name="sitePageName" value="Arenas" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1133,11 +1116,13 @@
 			<var name="pageNameList" value="Accomodations,Maps" />
 		</execute>
 
+		<execute function="Open" locator1="http://localhost:8080/web/russia2018" />
+
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Export/Import" />
+			<var name="portlet" value="Export" />
 		</execute>
 
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 

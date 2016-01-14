@@ -412,7 +412,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return sb.toString();
 		}
 
-		Map<String, String[]> parameterMap = lastPath.getParameterMap();
+		String parameters = lastPath.getParameters();
 
 		// Only test for existing mappings for last paths that were set when the
 		// user accessed a layout directly instead of through its friendly URL
@@ -422,7 +422,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 				(ActionMapping)moduleConfig.findActionConfig(
 					lastPath.getPath());
 
-			if ((actionMapping == null) || (parameterMap == null)) {
+			if ((actionMapping == null) || parameters.isEmpty()) {
 				return sb.toString();
 			}
 		}
@@ -432,7 +432,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		lastPathSB.append(portalURL);
 		lastPathSB.append(lastPath.getContextPath());
 		lastPathSB.append(lastPath.getPath());
-		lastPathSB.append(HttpUtil.parameterMapToString(parameterMap));
+		lastPathSB.append(parameters);
 
 		return lastPathSB.toString();
 	}
@@ -652,7 +652,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 				if (lastPath == null) {
 					lastPath = new LastPath(
 						themeDisplay.getPathMain(), path,
-						request.getParameterMap());
+						HttpUtil.parameterMapToString(
+							request.getParameterMap()));
 				}
 
 				session.setAttribute(WebKeys.LAST_PATH, lastPath);

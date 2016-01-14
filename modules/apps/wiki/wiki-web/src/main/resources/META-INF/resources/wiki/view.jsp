@@ -135,7 +135,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280 panel main-content-card\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
 		<c:choose>
 			<c:when test="<%= print %>">
@@ -188,14 +188,21 @@ if (portletTitleBasedNavigation) {
 	%>
 
 	<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
-		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backLabel="<%= parentTitle %>"
-				backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
-				localizeTitle="<%= false %>"
-				title="<%= title %>"
-			/>
-		</c:if>
+		<c:choose>
+			<c:when test="<%= !portletTitleBasedNavigation %>">
+				<liferay-ui:header
+					backLabel="<%= parentTitle %>"
+					backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
+					localizeTitle="<%= false %>"
+					title="<%= title %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<div class="container-fluid">
+					<h2><%= title %></h2>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
 		<c:if test="<%= !print && !portletTitleBasedNavigation %>">
 			<div class="page-actions top-actions">
@@ -256,26 +263,7 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</c:if>
 
-		<div class="page-categorization">
-			<div class="page-categories">
-				<liferay-ui:asset-categories-summary
-					className="<%= WikiPage.class.getName() %>"
-					classPK="<%= wikiPage.getResourcePrimKey() %>"
-					portletURL="<%= PortletURLUtil.clone(categorizedPagesURL, renderResponse) %>"
-				/>
-			</div>
-
-			<div class="page-tags">
-				<liferay-ui:asset-tags-summary
-					className="<%= WikiPage.class.getName() %>"
-					classPK="<%= wikiPage.getResourcePrimKey() %>"
-					message="tags"
-					portletURL="<%= PortletURLUtil.clone(taggedPagesURL, renderResponse) %>"
-				/>
-			</div>
-		</div>
-
-		<div>
+		<div class="container-fluid">
 			<%@ include file="/wiki/view_page_content.jspf" %>
 		</div>
 
@@ -289,37 +277,8 @@ if (portletTitleBasedNavigation) {
 		</liferay-ui:custom-attributes-available>
 
 		<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
-			<c:if test="<%= !childPages.isEmpty() %>">
-				<div class="child-pages">
-					<h2><liferay-ui:message key="children-pages" /></h2>
-
-					<ul>
-
-						<%
-						PortletURL curPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
-
-						for (int i = 0; i < childPages.size(); i++) {
-							WikiPage curPage = (WikiPage)childPages.get(i);
-
-							curPageURL.setParameter("title", curPage.getTitle());
-						%>
-
-							<c:if test="<%= Validator.isNull(curPage.getRedirectTitle()) %>">
-								<li>
-									<aui:a href="<%= curPageURL.toString() %>"><%= curPage.getTitle() %></aui:a>
-								</li>
-							</c:if>
-
-						<%
-						}
-						%>
-
-					</ul>
-				</div>
-			</c:if>
-
 			<div class="page-actions">
-				<div class="article-actions">
+				<div class="article-actions container-fluid">
 					<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) && !portletTitleBasedNavigation %>">
 						<liferay-ui:icon
 							iconCssClass="icon-plus"
@@ -331,7 +290,7 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 				</div>
 
-				<div class="stats">
+				<div class="container-fluid stats">
 
 					<%
 					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
@@ -347,63 +306,113 @@ if (portletTitleBasedNavigation) {
 					</c:choose>
 				</div>
 
-				<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
-					<div style="margin-top: 20px">
+				<div class="container-fluid page-categorization">
+					<div class="page-categories">
+						<liferay-ui:asset-categories-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							portletURL="<%= PortletURLUtil.clone(categorizedPagesURL, renderResponse) %>"
+						/>
+					</div>
 
-						<%
-						List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
+					<div class="page-tags">
+						<liferay-ui:asset-tags-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							message="tags"
+							portletURL="<%= PortletURLUtil.clone(taggedPagesURL, renderResponse) %>"
+						/>
+					</div>
+				</div>
 
-						DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider = (DLCssClassFileMimeTypeProvider)request.getAttribute(WikiWebKeys.DL_CSS_CLASS_FILE_MIME_TYPE_PROVIDER);
-
-						for (FileEntry fileEntry : attachmentsFileEntries) {
-							String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
-						%>
-
-							<div class="col-md-4">
-								<liferay-frontend:horizontal-card
-									text="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
-									url="<%= rowURL %>"
-								>
-									<c:choose>
-										<c:when test="<%= dlCssClassFileMimeTypeProvider != null %>">
-											<liferay-frontend:horizontal-card-icon>
-												<span class="icon-monospaced <%= dlCssClassFileMimeTypeProvider.getCssClassFileMimeType(fileEntry.getMimeType()) %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
-											</liferay-frontend:horizontal-card-icon>
-										</c:when>
-										<c:otherwise>
-											<liferay-frontend:horizontal-card-icon>
-												<span class="file-icon-color-0 icon-monospaced"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
-											</liferay-frontend:horizontal-card-icon>
-										</c:otherwise>
-									</c:choose>
-								</liferay-frontend:horizontal-card>
-							</div>
-
-						<%
-						}
-						%>
-
+				<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
+					<div class="container-fluid page-ratings">
+						<liferay-ui:ratings
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+						/>
 					</div>
 				</c:if>
 
+				<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
+					<div class="container-fluid page-attachments" style="margin-top: 20px">
+						<h5><liferay-ui:message key="attachments" /></h5>
+						<div class="row">
+
+							<%
+							List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
+
+							DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider = (DLCssClassFileMimeTypeProvider)request.getAttribute(WikiWebKeys.DL_CSS_CLASS_FILE_MIME_TYPE_PROVIDER);
+
+							for (FileEntry fileEntry : attachmentsFileEntries) {
+								String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
+							%>
+
+								<div class="col-md-4">
+									<liferay-frontend:horizontal-card
+										text="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
+										url="<%= rowURL %>"
+									>
+										<c:choose>
+											<c:when test="<%= dlCssClassFileMimeTypeProvider != null %>">
+												<liferay-frontend:horizontal-card-icon>
+													<span class="icon-monospaced <%= dlCssClassFileMimeTypeProvider.getCssClassFileMimeType(fileEntry.getMimeType()) %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
+												</liferay-frontend:horizontal-card-icon>
+											</c:when>
+											<c:otherwise>
+												<liferay-frontend:horizontal-card-icon>
+													<span class="file-icon-color-0 icon-monospaced"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
+												</liferay-frontend:horizontal-card-icon>
+											</c:otherwise>
+										</c:choose>
+									</liferay-frontend:horizontal-card>
+								</div>
+
+							<%
+							}
+							%>
+
+						</div>
+					</div>
+				</c:if>
+
+				<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
+					<div class="container-fluid entry-links">
+						<liferay-ui:asset-links
+							assetEntryId="<%= assetEntry.getEntryId() %>"
+						/>
+					</div>
+				</c:if>
+
+				<c:if test="<%= !childPages.isEmpty() %>">
+					<div class="child-pages container-fluid">
+						<h2><liferay-ui:message key="children-pages" /></h2>
+
+						<ul>
+
+							<%
+							PortletURL curPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
+
+							for (int i = 0; i < childPages.size(); i++) {
+								WikiPage curPage = (WikiPage)childPages.get(i);
+
+								curPageURL.setParameter("title", curPage.getTitle());
+							%>
+
+							<c:if test="<%= Validator.isNull(curPage.getRedirectTitle()) %>">
+								<li>
+									<aui:a href="<%= curPageURL.toString() %>"><%= curPage.getTitle() %></aui:a>
+								</li>
+							</c:if>
+
+							<%
+							}
+							%>
+
+						</ul>
+					</div>
+				</c:if>
 			</div>
-
-			<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
-				<div class="entry-links">
-					<liferay-ui:asset-links
-						assetEntryId="<%= assetEntry.getEntryId() %>"
-					/>
-				</div>
-			</c:if>
-
-			<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
-				<div class="page-ratings">
-					<liferay-ui:ratings
-						className="<%= WikiPage.class.getName() %>"
-						classPK="<%= wikiPage.getResourcePrimKey() %>"
-					/>
-				</div>
-			</c:if>
 
 			<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
 				<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">

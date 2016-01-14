@@ -205,8 +205,9 @@ if (portletTitleBasedNavigation) {
 						</span>
 
 						<%
-						message = curParentMessage;
 						MBCategory category = null;
+
+						message = curParentMessage;
 
 						request.setAttribute("edit_message.jsp-category", category);
 						request.setAttribute("edit_message.jsp-editable", Boolean.FALSE);

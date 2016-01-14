@@ -16,6 +16,9 @@ package com.liferay.dynamic.data.mapping.validator;
 
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException.RequiredValue;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -30,14 +33,31 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
+import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
+@RunWith(PowerMockRunner.class)
 public class DDMFormValuesValidatorTest {
+
+	@Before
+	public void setUp() throws Exception {
+		setUpDDMFormEvaluator();
+	}
 
 	@Test
 	public void testValidationWithInvalidFieldName() throws Exception {
@@ -519,6 +539,31 @@ public class DDMFormValuesValidatorTest {
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		_ddmFormValuesValidator.validate(ddmFormValues);
+	}
+
+	private void setUpDDMFormEvaluator() throws Exception {
+		DDMFormEvaluator _ddFormEvaluator = Mockito.mock(
+			DDMFormEvaluator.class);
+
+		PowerMockito.field(
+			DDMFormValuesValidatorImpl.class, "_ddmFormEvaluator"
+		).set(_ddmFormValuesValidator, _ddFormEvaluator);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			new DDMFormEvaluationResult();
+
+		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
+			new ArrayList<DDMFormFieldEvaluationResult>());
+
+		Method evaluateMethod = _ddFormEvaluator.getClass().getMethod(
+			"evaluate", DDMForm.class, DDMFormValues.class, Locale.class);
+
+		PowerMockito.when(
+			_ddFormEvaluator, evaluateMethod
+		).withArguments(
+			Mockito.any(DDMForm.class), Mockito.any(DDMFormValues.class),
+			Mockito.any(Locale.class)
+		).thenReturn(ddmFormEvaluationResult);
 	}
 
 	private final DDMFormValuesValidator _ddmFormValuesValidator =

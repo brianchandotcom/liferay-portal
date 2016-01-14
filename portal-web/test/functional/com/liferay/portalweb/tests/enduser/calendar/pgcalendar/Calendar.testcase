@@ -3404,7 +3404,7 @@
 		</execute>
 	</command>
 
-	<command name="EditLanguageSelectorAndViewEvent" priority="2">
+	<command name="EditLanguageSelectorAndViewEvent" priority="3">
 		<description message="This is a use case for LPS-58649." />
 
 		<execute macro="Page#gotoPG">

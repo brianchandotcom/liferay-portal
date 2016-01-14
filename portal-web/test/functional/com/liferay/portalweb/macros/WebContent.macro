@@ -189,66 +189,65 @@
 	<command name="addPGViaWCD">
 		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
 
+		<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		
+		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+
 		<if>
-				<isset var="structureName" />
-				<then>
-					<var name="key_structureName" value="${structureName}" />
-
-					<execute function="AssertClick" locator1="WCD#ADD_STRUCTURED_WEB_CONTENT" value1="${structureName}" />
-
-					<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-					<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-
-					<var name="key_fieldName" value="${structureFieldName}" />
-
-					<if>
-						<isset var="webContentText" />
-						<then>
-							<execute function="Type" locator1="DDMField#TEXT" value1="${webContentText}" />
-						</then>
-					</if>
-
-					<execute function="Click" locator1="Button#PUBLISH" />
-
-					<execute function="SelectFrame" value1="relative=top" />
-				</then>
-			</elseif>
+			<equals arg1="${draft}" arg2="true" />
+			<then>
+				<execute function="Click" locator1="Button#SAVE_AS_DRAFT" />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+			</then>
 			<else>
-				<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
-
-				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-				<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-				<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute function="Click" locator1="Button#PUBLISH" />
+				<execute function="SelectFrame" value1="relative=top" />
 
 				<if>
-					<equals arg1="${draft}" arg2="true" />
+					<equals arg1="${webContentJavascript}" arg2="true" />
 					<then>
-						<execute function="Click" locator1="Button#SAVE_AS_DRAFT" />
-						<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+						<execute function="AssertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
 					</then>
+					<elseif>
+						<equals arg1="${pageBreak}" arg2="true" />
+						<then>
+							<execute function="AssertTextEquals#assertPartialText" locator1="Pagination#PAGES" value1="Pages" />
+						</then>
+					</elseif>
 					<else>
-						<execute function="Click" locator1="Button#PUBLISH" />
-						<execute function="SelectFrame" value1="relative=top" />
-
-						<if>
-							<equals arg1="${webContentJavascript}" arg2="true" />
-							<then>
-								<execute function="AssertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
-							</then>
-							<elseif>
-								<equals arg1="${pageBreak}" arg2="true" />
-								<then>
-									<execute function="AssertTextEquals#assertPartialText" locator1="Pagination#PAGES" value1="Pages" />
-								</then>
-							</elseif>
-							<else>
-								<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
-							</else>
-						</if>
+						<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 					</else>
 				</if>
 			</else>
 		</if>
+	</command>
+
+	<command name="addStructuredPGViaWCD">
+		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
+
+		<var name="key_structureName" value="${structureName}" />
+
+		<execute function="AssertClick" locator1="WCD#ADD_STRUCTURED_WEB_CONTENT" value1="${structureName}" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+
+		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+
+		<var name="key_fieldName" value="${structureFieldName}" />
+
+		<if>
+			<isset var="webContentText" />
+			<then>
+				<execute function="Type" locator1="DDMField#TEXT" value1="${webContentText}" />
+			</then>
+		</if>
+
+		<execute function="Click" locator1="Button#PUBLISH" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addTagPGViaWCD">

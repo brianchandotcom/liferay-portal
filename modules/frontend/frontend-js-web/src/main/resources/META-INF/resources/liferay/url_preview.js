@@ -28,7 +28,8 @@ AUI.add(
 						var instance = this;
 
 						instance._id = A.guid();
-						instance._eventHandles = [];
+
+						instance._bindUI();
 					},
 
 					destructor: function() {
@@ -55,6 +56,15 @@ AUI.add(
 						instance._getDialog().show();
 					},
 
+					_bindUI: function() {
+						var instance = this;
+
+						instance._eventHandles = [
+							instance.on('titleChange', A.bind('_onTitleChange', instance)),
+							instance.on('urlChange', A.bind('_onUrlChange', instance))
+						];
+					},
+
 					_getDialog: function() {
 						var instance = this;
 
@@ -65,7 +75,7 @@ AUI.add(
 									cssClass: 'lfr-url-preview',
 									destroyOnHide: true,
 									draggable: false,
-									headerContent: instance._getHeader(),
+									headerContent: instance._getHeader(instance.get('title')),
 									toolbars: false,
 									width: instance.get('width')
 								},
@@ -79,13 +89,13 @@ AUI.add(
 						return dialog;
 					},
 
-					_getHeader: function() {
+					_getHeader: function(title) {
 						var instance = this;
 
 						var header = Lang.sub(
 							TPL_HEADER,
 								{
-									title: instance.get('title')
+									title: title
 								}
 							);
 
@@ -104,6 +114,26 @@ AUI.add(
 						);
 
 						return header;
+					},
+
+					_onTitleChange: function(event) {
+						var instance = this;
+
+						var dialog = Liferay.Util.getWindow(instance._id);
+
+						if (dialog) {
+							dialog.set('headerContent', instance._getHeader(event.newVal));
+						}
+					},
+
+					_onUrlChange: function(event) {
+						var instance = this;
+
+						var dialog = Liferay.Util.getWindow(instance._id);
+
+						if (dialog) {
+							dialog.iframe.set('uri', event.newVal);
+						}
 					}
 				}
 			}

@@ -157,7 +157,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 			serviceRegistration.unregister();
 		}
 
-		for (ServiceTracker serviceTracker : serviceTrackers) {
+		for (ServiceTracker<Object, Object> serviceTracker : serviceTrackers) {
 			serviceTracker.close();
 		}
 	}

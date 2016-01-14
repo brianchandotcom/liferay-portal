@@ -45,6 +45,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		ActionUtil.getFileEntries(resourceRequest);
 		ActionUtil.getFolders(resourceRequest);
+		ActionUtil.getFileShortcuts(resourceRequest);
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			getPortletRequestDispatcher(

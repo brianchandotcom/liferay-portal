@@ -63,10 +63,10 @@ else {
 	else {
 		if (request.getAttribute("info_panel.jsp-fileEntry") != null) {
 			fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
+		}
 
-			if (request.getAttribute("info_panel.jsp-fileShortcut") != null) {
-				fileShortcut = (FileShortcut)request.getAttribute("info_panel.jsp-fileShortcut");
-			}
+		if (request.getAttribute("info_panel.jsp-fileShortcut") != null) {
+			fileShortcut = (FileShortcut)request.getAttribute("info_panel.jsp-fileShortcut");
 		}
 	}
 }

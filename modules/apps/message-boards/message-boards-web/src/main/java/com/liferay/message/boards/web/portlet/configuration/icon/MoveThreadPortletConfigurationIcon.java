@@ -15,10 +15,8 @@
 package com.liferay.message.boards.web.portlet.configuration.icon;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -36,8 +34,12 @@ import javax.portlet.PortletURL;
 public class MoveThreadPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public MoveThreadPortletConfigurationIcon(PortletRequest portletRequest) {
+	public MoveThreadPortletConfigurationIcon(
+		PortletRequest portletRequest, MBMessageDisplay messageDisplay) {
+
 		super(portletRequest);
+
+		_messageDisplay = messageDisplay;
 	}
 
 	@Override
@@ -47,44 +49,32 @@ public class MoveThreadPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		try {
-			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-				PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/move_thread");
-			portletURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(portletRequest));
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/message_boards/move_thread");
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
+		MBCategory category = _messageDisplay.getCategory();
 
-			MBCategory category = messageDisplay.getCategory();
+		portletURL.setParameter(
+			"mbCategoryId", String.valueOf(getCategoryId(category)));
 
-			portletURL.setParameter(
-				"mbCategoryId", String.valueOf(getCategoryId(category)));
+		MBThread thread = _messageDisplay.getThread();
 
-			MBThread thread = messageDisplay.getThread();
+		portletURL.setParameter(
+			"threadId", String.valueOf(thread.getThreadId()));
 
-			portletURL.setParameter(
-				"threadId", String.valueOf(thread.getThreadId()));
-
-			return portletURL.toString();
-		}
-		catch (PortalException pe) {
-		}
-
-		return StringPool.BLANK;
+		return portletURL.toString();
 	}
 
 	@Override
 	public boolean isShow() {
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
-
-			MBCategory category = messageDisplay.getCategory();
+			MBCategory category = _messageDisplay.getCategory();
 
 			if (MBCategoryPermission.contains(
 					themeDisplay.getPermissionChecker(),
@@ -109,5 +99,7 @@ public class MoveThreadPortletConfigurationIcon
 
 		return categoryId;
 	}
+
+	private final MBMessageDisplay _messageDisplay;
 
 }

@@ -379,11 +379,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_TEMPLATE</td>
-	<td>//a[@role='menuitem' and contains(.,'New')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NEXT</td>
 	<td>//button[contains(.,'Next')]</td>
 	<td></td>

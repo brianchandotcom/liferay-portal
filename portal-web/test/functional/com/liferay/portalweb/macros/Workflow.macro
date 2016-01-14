@@ -650,9 +650,16 @@
 
 	<command name="viewAssignedToMyRolesTasksCP">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<var name="key_workflowAssetType" value="${workflowAssetType}" />
+
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />

@@ -262,9 +262,9 @@ public class LDAPAuth implements Authenticator {
 		if (ldapContext == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No LDAP server configuration available with " +
-						"ldapServerId: " + ldapServerId + ", companyId: " +
-						companyId);
+					"No LDAP server configuration available for " +
+						"LDAP server " + ldapServerId + " and company " +
+							companyId);
 			}
 
 			return FAILURE;
@@ -302,14 +302,15 @@ public class LDAPAuth implements Authenticator {
 
 			if (!enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("No results from search filter:" + filter);
+					_log.debug(
+						"No results found with search filter: " + filter);
 				}
 
 				return DNE;
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Results found by Search filter: " + filter);
+				_log.debug("Found results with search filter: " + filter);
 			}
 
 			SearchResult result = enu.nextElement();
@@ -339,11 +340,11 @@ public class LDAPAuth implements Authenticator {
 					_systemLDAPConfigurationProvider.getConfiguration(
 						companyId);
 
-				for (String errorUserLockout :
+				for (String errorUserLockoutKeyword :
 						systemLDAPConfiguration.
 							errorUserLockoutKeywords()) {
 
-					if (errorMessage.contains(errorUserLockout)) {
+					if (errorMessage.contains(errorUserLockoutKeyword)) {
 						throw new UserLockoutException.LDAPLockout(
 							fullUserDN, errorMessage);
 					}
@@ -361,12 +362,20 @@ public class LDAPAuth implements Authenticator {
 
 			if (!ldapAuthResult.isAuthenticated()) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"LDAP authentication failed for :" + fullUserDN +
-							" on LDAP server: " + ldapServerId +
-							", companyId: " + companyId +
-							", ldapContext: " + ldapContext +
-							", reason: " + errorMessage);
+					StringBundler sb = new StringBundler(10);
+
+					sb.append("Uanble to authenticate with ");
+					sb.append(fullUserDN);
+					sb.append(" on LDAP server ");
+					sb.append(ldapServerId);
+					sb.append(", company ");
+					sb.append(companyId);
+					sb.append(", and LDAP context ");
+					sb.append(ldapContext);
+					sb.append(": ");
+					sb.append(errorMessage);
+
+					_log.debug(sb.toString());
 				}
 
 				return FAILURE;
@@ -435,7 +444,7 @@ public class LDAPAuth implements Authenticator {
 
 		if (preferredLDAPServerResult == SUCCESS) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Preferred LDAP server successfully found");
+				_log.debug("Found preferred LDAP server");
 			}
 
 			if (ldapImportConfiguration.importUserPasswordEnabled()) {
@@ -463,7 +472,7 @@ public class LDAPAuth implements Authenticator {
 					ldapServerConfiguration.ldapServerId()) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("Bypassing preferred ldap server id");
+					_log.debug("Bypassing preferred LDAP server");
 				}
 
 				continue;
@@ -627,7 +636,7 @@ public class LDAPAuth implements Authenticator {
 
 		if (user == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get user with userId: " + userId);
+				_log.debug("Unable to get user " + userId);
 			}
 
 			return -1;
@@ -635,7 +644,7 @@ public class LDAPAuth implements Authenticator {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Using LDAP server ID " + user.getLdapServerId() +
+				"Using LDAP server " + user.getLdapServerId() +
 					" to authenticate user " + userId);
 		}
 

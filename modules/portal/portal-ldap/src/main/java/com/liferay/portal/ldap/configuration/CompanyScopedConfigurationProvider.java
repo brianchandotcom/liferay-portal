@@ -60,9 +60,9 @@ public abstract class CompanyScopedConfigurationProvider
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Deleted configuration: " + getMetatypeId() +
-						" for companyId: " + companyId +
-						" deleted properties: " + properties);
+					"Deleted configuration " + getMetatypeId() +
+						" for company " + companyId + " with properties: " +
+							properties);
 			}
 		}
 		catch (IOException ioe) {
@@ -259,9 +259,9 @@ public abstract class CompanyScopedConfigurationProvider
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Updated configuration: " + getMetatypeId() +
-						" for companyId: " + companyId +
-						" new properties: " + properties);
+					"Updated configuration " + getMetatypeId() +
+						" for company " + companyId + " with properties: " +
+							properties);
 			}
 		}
 		catch (IOException ioe) {

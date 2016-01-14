@@ -88,9 +88,9 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		if (_log.isDebugEnabled()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Exporting userId: " + userId + " to userGroup: " +
-						userGroupId + " operation: " +
-						userOperation.name());
+					"Exporting user " + userId + " to user group " +
+						userGroupId + " with user operation " +
+							userOperation.name());
 			}
 		}
 	}

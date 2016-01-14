@@ -353,106 +353,104 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 					<liferay-ui:section>
-						<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
-							<%
-							boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
-							boolean showNonApprovedDocuments = false;
+						<%
+						boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
+						boolean showNonApprovedDocuments = false;
 
-							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-								showNonApprovedDocuments = true;
-							}
+						if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+							showNonApprovedDocuments = true;
+						}
 
-							PortletURL viewFileEntryURL = renderResponse.createRenderURL();
+						PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
-							viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
-							viewFileEntryURL.setParameter("redirect", currentURL);
-							viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+						viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
+						viewFileEntryURL.setParameter("redirect", currentURL);
+						viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
-							RowChecker rowChecker = null;
+						RowChecker rowChecker = null;
 
-							if (comparableFileEntry) {
-								rowChecker = new RowChecker(renderResponse);
+						if (comparableFileEntry) {
+							rowChecker = new RowChecker(renderResponse);
 
-								rowChecker.setAllRowIds(null);
-							}
+							rowChecker.setAllRowIds(null);
+						}
 
-							int status = WorkflowConstants.STATUS_APPROVED;
+						int status = WorkflowConstants.STATUS_APPROVED;
 
-							if (showNonApprovedDocuments) {
-								status = WorkflowConstants.STATUS_ANY;
-							}
+						if (showNonApprovedDocuments) {
+							status = WorkflowConstants.STATUS_ANY;
+						}
 
-							List fileVersions = fileEntry.getFileVersions(status);
-							%>
+						List fileVersions = fileEntry.getFileVersions(status);
+						%>
 
-							<liferay-ui:search-container
-								iteratorURL="<%= viewFileEntryURL %>"
-								rowChecker="<%= rowChecker %>"
-								total="<%= fileVersions.size() %>"
+						<liferay-ui:search-container
+							iteratorURL="<%= viewFileEntryURL %>"
+							rowChecker="<%= rowChecker %>"
+							total="<%= fileVersions.size() %>"
+						>
+							<liferay-ui:search-container-results
+								results="<%= ListUtil.subList(fileVersions, searchContainer.getStart(), searchContainer.getEnd()) %>"
+							/>
+
+							<liferay-ui:search-container-row
+								className="com.liferay.portal.kernel.repository.model.FileVersion"
+								keyProperty="fileVersionId"
+								modelVar="curFileVersion"
 							>
-								<liferay-ui:search-container-results
-									results="<%= ListUtil.subList(fileVersions, searchContainer.getStart(), searchContainer.getEnd()) %>"
-								/>
 
-								<liferay-ui:search-container-row
-									className="com.liferay.portal.kernel.repository.model.FileVersion"
-									keyProperty="fileVersionId"
-									modelVar="curFileVersion"
-								>
+								<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+									<h4><liferay-ui:message arguments="<%= curFileVersion.getVersion() %>" key="version-x" /></h4>
 
-									<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-										<h4><liferay-ui:message arguments="<%= curFileVersion.getVersion() %>" key="version-x" /></h4>
+									<small class="text-muted">
 
-										<small class="text-muted">
+										<% Date modifiedDate = curFileVersion.getModifiedDate(); %>
 
-											<% Date modifiedDate = curFileVersion.getModifiedDate(); %>
+										<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" />
+									</small>
 
-											<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" />
-										</small>
+									<p class='<%= Validator.isNull(curFileVersion.getChangeLog()) ? "text-muted" : StringPool.BLANK %>'>
+										<c:choose>
+											<c:when test="<%= Validator.isNull(curFileVersion.getChangeLog()) %>">
+												<liferay-ui:message key="no-change-log" />
+											</c:when>
+											<c:otherwise>
+												<%= curFileVersion.getChangeLog() %>
+											</c:otherwise>
+										</c:choose>
+									</p>
+								</liferay-ui:search-container-column-text>
 
-										<p class='<%= Validator.isNull(curFileVersion.getChangeLog()) ? "text-muted" : StringPool.BLANK %>'>
-											<c:choose>
-												<c:when test="<%= Validator.isNull(curFileVersion.getChangeLog()) %>">
-													<liferay-ui:message key="no-change-log" />
-												</c:when>
-												<c:otherwise>
-													<%= curFileVersion.getChangeLog() %>
-												</c:otherwise>
-											</c:choose>
-										</p>
-									</liferay-ui:search-container-column-text>
+								<liferay-ui:search-container-column-jsp path="/document_library/file_entry_history_action.jsp" />
+							</liferay-ui:search-container-row>
 
-									<liferay-ui:search-container-column-jsp path="/document_library/file_entry_history_action.jsp" />
-								</liferay-ui:search-container-row>
+							<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+						</liferay-ui:search-container>
 
-								<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
-							</liferay-ui:search-container>
+						<%
+						if (comparableFileEntry && !fileVersions.isEmpty()) {
+							FileVersion curFileVersion = (FileVersion)fileVersions.get(0);
+						%>
 
-							<%
-							if (comparableFileEntry && !fileVersions.isEmpty()) {
-								FileVersion curFileVersion = (FileVersion)fileVersions.get(0);
-							%>
+							<portlet:renderURL var="compareVersionsURL">
+								<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
+							</portlet:renderURL>
 
-								<portlet:renderURL var="compareVersionsURL">
-									<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
-								</portlet:renderURL>
+							<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
+								<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
+								<aui:input name="sourceFileVersionId" type="hidden" value="<%= curFileVersion.getFileVersionId() %>" />
+								<aui:input name="targetFileVersionId" type="hidden" value="<%= fileVersion.getFileVersionId() %>" />
 
-								<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
-									<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
-									<aui:input name="sourceFileVersionId" type="hidden" value="<%= curFileVersion.getFileVersionId() %>" />
-									<aui:input name="targetFileVersionId" type="hidden" value="<%= fileVersion.getFileVersionId() %>" />
+								<aui:button-row>
+									<aui:button cssClass="btn-lg" type="submit" value="compare-versions" />
+								</aui:button-row>
+							</aui:form>
 
-									<aui:button-row>
-										<aui:button cssClass="btn-lg" type="submit" value="compare-versions" />
-									</aui:button-row>
-								</aui:form>
+						<%
+						}
+						%>
 
-							<%
-							}
-							%>
-
-						</liferay-ui:panel>
 					</liferay-ui:section>
 				</c:if>
 			</liferay-ui:tabs>

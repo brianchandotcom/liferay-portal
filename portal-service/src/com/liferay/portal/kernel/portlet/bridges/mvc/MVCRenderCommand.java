@@ -86,6 +86,9 @@ public interface MVCRenderCommand extends MVCCommand {
 	public static final String MVC_PATH_SKIP_DISPATCH =
 		MVCRenderCommand.class.getName() + "#MVC_PATH_SKIP_DISPATCH";
 
+	public static final String PORTLET_CONTEXT_OVERRIDE_PREFIX =
+		"portlet.context.override";
+
 	/**
 	 * Invoked by {@link MVCPortlet} to handle the render phase of the portlet.
 	 *

@@ -42,6 +42,12 @@ public interface ElasticsearchConfiguration {
 	)
 	public String additionalIndexConfigurations();
 
+	@Meta.AD(
+		description = "Custom mappings for LiferayDocumentType, in JSON format (Elasticsearch Put Mapping API)",
+		required = false
+	)
+	public String additionalTypeMappings();
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean bootstrapMlockAll();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.service.permission;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
@@ -52,12 +53,15 @@ public class CalendarPermission {
 		PermissionChecker permissionChecker, Calendar calendar,
 		String actionId) {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, calendar.getGroupId(), Calendar.class.getName(),
-			calendar.getCalendarId(), CalendarPortletKeys.CALENDAR, actionId);
+		if (!actionId.equals(CalendarActionKeys.VIEW_BOOKING_DETAILS)) {
+			Boolean hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, calendar.getGroupId(),
+				Calendar.class.getName(), calendar.getCalendarId(),
+				CalendarPortletKeys.CALENDAR, actionId);
 
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
+			}
 		}
 
 		if (permissionChecker.hasOwnerPermission(

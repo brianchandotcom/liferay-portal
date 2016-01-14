@@ -490,7 +490,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		}
 
 		taskContextMap.put("className", className);
-
 		taskContextMap.put("companyIds", companyIds);
 
 		try {

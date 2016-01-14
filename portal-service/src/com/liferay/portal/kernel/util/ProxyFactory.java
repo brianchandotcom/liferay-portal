@@ -122,8 +122,8 @@ public class ProxyFactory {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					_interfaceClassName + " has not been registered. Not " +
-						"invoking " + method.getName());
+					"Skipping " + method.getName() + " because " +
+						_interfaceClassName + " is not registered");
 			}
 
 			Class<?> returnType = method.getReturnType();

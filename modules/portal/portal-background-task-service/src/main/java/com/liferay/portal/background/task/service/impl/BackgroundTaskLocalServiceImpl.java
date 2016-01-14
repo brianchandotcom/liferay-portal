@@ -596,7 +596,6 @@ public class BackgroundTaskLocalServiceImpl
 
 		backgroundTask.setGroupId(groupId);
 		backgroundTask.setUserId(userId);
-
 		backgroundTask.setName(name);
 
 		if (ArrayUtil.isNotEmpty(servletContextNames)) {

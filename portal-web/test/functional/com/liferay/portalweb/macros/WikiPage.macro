@@ -356,37 +356,7 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${creoleSource}" arg2="true" />
-			<then>
-				<execute function="Select#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
-
-				<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
-			</then>
-			<elseif>
-				<equals arg1="${htmlSource}" arg2="true" />
-				<then>
-					<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="HTML" />
-
-					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
-
-					<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${welcomeToLiferay}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${mediawikiSource}" arg2="true" />
-				<then>
-					<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="MediaWiki" />
-
-					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
-
-					<execute function="Type" locator1="Wiki#BODY_FIELD_MEDIAWIKI" value1="${wikiPageMediaWikiContent}" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
-			</else>
-		</if>
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 
 		<if>
 			<equals arg1="${viewCKEditorResizer}" arg2="true" />

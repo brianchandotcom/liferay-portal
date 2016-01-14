@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -42,13 +40,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.AuthTokenUtil;
-import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -56,7 +52,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.admin.util.PortalProductMenuApplicationType;
 import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
@@ -207,6 +202,7 @@ public class PortletURLImpl
 		return _parametersIncludedInPath;
 	}
 
+	@Override
 	public long getPlid() {
 		return _plid;
 	}
@@ -790,83 +786,11 @@ public class PortletURLImpl
 	}
 
 	protected void addPortalAuthToken(StringBundler sb, Key key) {
-		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED ||
-			!_lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-
-			return;
-		}
-
-		Portlet portlet = getPortlet();
-
-		if (portlet == null) {
-			return;
-		}
-
-		String strutsAction = getParameter("struts_action");
-
-		if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
-				portlet.getCompanyId(), _portletId, strutsAction)) {
-
-			return;
-		}
-
-		sb.append("p_auth");
-		sb.append(StringPool.EQUAL);
-		sb.append(processValue(key, AuthTokenUtil.getToken(_request)));
-		sb.append(StringPool.AMPERSAND);
+		AuthTokenUtil.addCSRFToken(_request, this);
 	}
 
 	protected void addPortletAuthToken(StringBundler sb, Key key) {
-		if (!PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
-			return;
-		}
-
-		Portlet portlet = getPortlet();
-
-		if (portlet == null) {
-			return;
-		}
-
-		if (!portlet.isAddDefaultResource()) {
-			return;
-		}
-
-		String strutsAction = getParameter("struts_action");
-
-		if (AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
-				portlet.getCompanyId(), _portletId, strutsAction)) {
-
-			return;
-		}
-
-		try {
-			LayoutTypePortlet targetLayoutTypePortlet =
-				(LayoutTypePortlet)getLayout().getLayoutType();
-
-			if (targetLayoutTypePortlet.hasPortletId(_portletId)) {
-				return;
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
-			}
-		}
-
-		String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(
-			PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
-			PortletProvider.Action.VIEW);
-
-		if (_portletId.equals(controlPanelMenuPortletId)) {
-			return;
-		}
-
-		sb.append("p_p_auth");
-		sb.append(StringPool.EQUAL);
-		sb.append(
-			processValue(
-				key, AuthTokenUtil.getToken(_request, _plid, _portletId)));
-		sb.append(StringPool.AMPERSAND);
+		AuthTokenUtil.addPortletInvocationToken(_request, this);
 	}
 
 	protected void clearCache() {

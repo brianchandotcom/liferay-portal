@@ -36,9 +36,8 @@ public class SyncFileComparator implements Comparator<SyncFile> {
 
 				return 0;
 			}
-			else {
-				return -1;
-			}
+
+			return -1;
 		}
 		else if (event2.equals(SyncFile.EVENT_DELETE) ||
 				 event2.equals(SyncFile.EVENT_TRASH)) {

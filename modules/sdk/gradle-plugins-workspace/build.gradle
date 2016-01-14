@@ -9,6 +9,14 @@ jarSources {
 		exclude ".gradle"
 		exclude "build"
 
+		filesMatching("build.gradle") {
+			filter {
+				String line ->
+
+				line.replace "latest.release", project.version
+			}
+		}
+
 		from "samples"
 	}
 }

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"auth.token.ignore.mvc.action=1",
-		"javax.portlet.name=" + TestMVCActionCommand.TEST_PORTLET,
+		"javax.portlet.name=" + TestMVCActionCommand.TEST_PORTLET_ID,
 		"mvc.command.name=" + TestMVCActionCommand.TEST_MVC_COMMAND_NAME,
 		"portlet.add.default.resource.check.whitelist.mvc.action=1",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
@@ -42,7 +42,7 @@ public class TestMVCActionCommand implements MVCActionCommand {
 	public static final String TEST_MVC_COMMAND_NAME =
 		"TEST_MVC_ACTION_COMMAND_NAME";
 
-	public static final String TEST_PORTLET = PortletKeys.PORTAL;
+	public static final String TEST_PORTLET_ID = PortletKeys.PORTAL;
 
 	@Override
 	public boolean processAction(

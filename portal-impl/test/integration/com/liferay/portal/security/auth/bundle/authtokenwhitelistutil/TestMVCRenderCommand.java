@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + TestMVCRenderCommand.TEST_PORTLET,
+		"javax.portlet.name=" + TestMVCRenderCommand.TEST_PORTLET_ID,
 		"mvc.command.name=" + TestMVCRenderCommand.TEST_MVC_COMMAND_NAME,
 		"portlet.add.default.resource.check.whitelist.mvc.action=1",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
@@ -41,7 +41,7 @@ public class TestMVCRenderCommand implements MVCRenderCommand {
 	public static final String TEST_MVC_COMMAND_NAME =
 		"TEST_MVC_RENDER_COMMAND_NAME";
 
-	public static final String TEST_PORTLET = PortletKeys.PORTAL;
+	public static final String TEST_PORTLET_ID = PortletKeys.PORTAL;
 
 	@Override
 	public String render(

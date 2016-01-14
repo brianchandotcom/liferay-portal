@@ -210,13 +210,13 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletCSRFWhitelistedForMVCActionCommand() {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCActionCommand.TEST_PORTLET);
+			TestMVCActionCommand.TEST_PORTLET_ID);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		String namespace = PortalUtil.getPortletNamespace(
-			TestMVCActionCommand.TEST_PORTLET);
+			TestMVCActionCommand.TEST_PORTLET_ID);
 
 		mockHttpServletRequest.setParameter(
 			namespace + ActionRequest.ACTION_NAME,
@@ -230,13 +230,13 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletInvocationWhitelistedForMVCActionCommand() {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCActionCommand.TEST_PORTLET);
+			TestMVCActionCommand.TEST_PORTLET_ID);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		String namespace = PortalUtil.getPortletNamespace(
-			TestMVCActionCommand.TEST_PORTLET);
+			TestMVCActionCommand.TEST_PORTLET_ID);
 
 		mockHttpServletRequest.setParameter(
 			namespace + ActionRequest.ACTION_NAME,
@@ -256,13 +256,13 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletInvocationWhitelistedForMVCRenderCommand() {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCRenderCommand.TEST_PORTLET);
+			TestMVCRenderCommand.TEST_PORTLET_ID);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		String namespace = PortalUtil.getPortletNamespace(
-			TestMVCRenderCommand.TEST_PORTLET);
+			TestMVCRenderCommand.TEST_PORTLET_ID);
 
 		mockHttpServletRequest.setParameter(
 			namespace + "mvcRenderCommandName",
@@ -282,13 +282,13 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletInvocationWhitelistedForMVCResourceCommand() {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCResourceCommand.TEST_PORTLET);
+			TestMVCResourceCommand.TEST_PORTLET_ID);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setParameter(
-			"p_p_id", TestMVCResourceCommand.TEST_PORTLET);
+			"p_p_id", TestMVCResourceCommand.TEST_PORTLET_ID);
 
 		mockHttpServletRequest.setParameter(
 			"p_p_resource_id", TestMVCResourceCommand.TEST_MVC_COMMAND_NAME);
@@ -307,7 +307,7 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLCSRFWhitelistedForMVCActionCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET, 0,
+			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET_ID, 0,
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameter(
@@ -322,7 +322,7 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLInvocationWhitelistedForMVCActionCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET, 0,
+			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET_ID, 0,
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameter(
@@ -337,7 +337,7 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLInvocationWhitelistedForMVCRenderCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCRenderCommand.TEST_PORTLET, 0,
+			new MockHttpServletRequest(), TestMVCRenderCommand.TEST_PORTLET_ID, 0,
 			PortletRequest.RENDER_PHASE);
 
 		liferayPortletURL.setParameter(
@@ -351,7 +351,7 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLInvocationWhitelistedForMVCResourceCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCResourceCommand.TEST_PORTLET,
+			new MockHttpServletRequest(), TestMVCResourceCommand.TEST_PORTLET_ID,
 			0, PortletRequest.RESOURCE_PHASE);
 
 		liferayPortletURL.setResourceID(

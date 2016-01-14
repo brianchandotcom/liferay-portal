@@ -21,11 +21,11 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 /**
  * @author Juergen Kappler
  */
+@ExtendedObjectClassDefinition(category = "web-experience-management")
 @Meta.OCD(
 	id = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
 	localization = "content/Language", name = "%rss.web.cache.configuration.name"
 )
-@ExtendedObjectClassDefinition(category = "web-experience-management")
 public interface RSSWebCacheConfiguration {
 
 	@Meta.AD(deflt = "20", required = false)

@@ -14,11 +14,11 @@
 
 package com.liferay.configuration.admin.web.model;
 
-import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +33,8 @@ import org.osgi.service.cm.Configuration;
  * @author Raymond Augé
  */
 public class ConfigurationModel
-	implements com.liferay.portal.metatype.definitions.ExtendedObjectClassDefinition {
+	implements
+		com.liferay.portal.metatype.definitions.ExtendedObjectClassDefinition {
 
 	public ConfigurationModel(
 		com.liferay.portal.metatype.definitions.ExtendedObjectClassDefinition
@@ -158,8 +159,9 @@ public class ConfigurationModel
 
 	private final String _bundleLocation;
 	private final Configuration _configuration;
-	private final com.liferay.portal.metatype.definitions.ExtendedObjectClassDefinition
-		_extendedObjectClassDefinition;
+	private final
+		com.liferay.portal.metatype.definitions.ExtendedObjectClassDefinition
+			_extendedObjectClassDefinition;
 	private final boolean _factory;
 
 }

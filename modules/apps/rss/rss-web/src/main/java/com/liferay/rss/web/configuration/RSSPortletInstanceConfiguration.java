@@ -21,14 +21,14 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 /**
  * @author Juergen Kappler
  */
+@ExtendedObjectClassDefinition(
+	category = "web-experience-management",
+	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
+)
 @Meta.OCD(
 	id = "com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration",
 	localization = "content/Language",
 	name = "%rss.portlet.instance.configuration.name"
-)
-@ExtendedObjectClassDefinition(
-	category = "web-experience-management",
-	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 public interface RSSPortletInstanceConfiguration {
 

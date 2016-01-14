@@ -14,7 +14,6 @@
 
 package com.liferay.configuration.admin.web.portlet.action;
 
-import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.AttributeDefinitionUtil;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;

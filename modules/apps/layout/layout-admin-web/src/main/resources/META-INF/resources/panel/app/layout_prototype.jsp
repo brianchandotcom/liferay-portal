@@ -22,6 +22,7 @@ Layout selLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScope
 PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, PortletRequest.RENDER_PHASE);
 
 editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+editLayoutURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
 editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
 editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
@@ -29,20 +30,29 @@ Map<String, Object> data = new HashMap<String, Object>();
 
 data.put("url", selLayout.getFriendlyURL(locale));
 data.put("uuid", selLayout.getUuid());
+
+boolean selected = false;
+
+if ((selLayout.getPlid() == plid) || Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, themeDisplay.getPpid())) {
+	selected = true;
+}
 %>
 
-<div class="tree-container">
-	<div class="tree-node">
-		<div class="tree-node-content">
-			<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
+<div class="tree-container tree-pages">
+	<li class="tree-node">
+		<div class="tree-node-content <%= selected ? "tree-node-selected" : StringPool.BLANK %>">
+			<span class="tree-label">
+				<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
 
-			<liferay-ui:icon
-				icon="cog"
-				label="<%= false %>"
-				markupView="lexicon"
-				message='<%= LanguageUtil.format(request, "edit-x", selLayout.getName(locale)) %>'
-				url="<%= editLayoutURL.toString() %>"
-			/>
+				<liferay-ui:icon
+					cssClass="layout-tree-edit"
+					icon="cog"
+					label="<%= false %>"
+					markupView="lexicon"
+					message='<%= LanguageUtil.format(request, "edit-x", selLayout.getName(locale)) %>'
+					url="<%= editLayoutURL.toString() %>"
+				/>
+			</span>
 		</div>
-	</div>
+	</li>
 </div>

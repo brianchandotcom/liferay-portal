@@ -57,7 +57,7 @@
 <!--PARENT_SITE-->
 <tr>
 	<td>PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX</td>
-	<td>//input[contains(@id,'membershipRestriction')]</td>
+	<td>//input[contains(@id,'membershipRestriction') and contains(@class,'toggle-switch')]</td>
 	<td></td>
 </tr>
 <tr>

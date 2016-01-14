@@ -46,7 +46,7 @@ public class LDAPSettingsUtil {
 		return _ldapSettings.getContactMappings(ldapServerId, companyId);
 	}
 
-	public static String[] getErrorPasswordHistories(long companyId) {
+	public static String[] getErrorPasswordHistoryKeywords(long companyId) {
 		return _ldapSettings.getErrorPasswordHistoryKeywords(companyId);
 	}
 

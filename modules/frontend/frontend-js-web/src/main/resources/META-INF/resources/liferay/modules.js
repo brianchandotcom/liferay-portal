@@ -762,7 +762,8 @@
 					'liferay-url-preview': {
 						path: 'url_preview.js',
 						requires: [
-							'aui-component'
+							'aui-base',
+							'liferay-util-window'
 						]
 					},
 					'liferay-util-window': {

@@ -3,7 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_HEADER = '<a href="#"><span class="glyphicon glyphicon-chevron-left icon-monospaced"></span></a> <span class="url-preview-title">{title}</span>';
+		var TPL_HEADER = '<a href="javascript:;">' + Liferay.Util.getLexiconIconTpl('angle-left') + '</a>' +
+			'&nbsp; <span class="url-preview-title">{title}</span>';
 
 		var UrlPreview = A.Component.create(
 			{
@@ -21,7 +22,11 @@ AUI.add(
 					}
 				},
 
+				EXTENDS: A.Base,
+
 				NAME: 'liferayurlpreview',
+
+				NS: 'liferayurlpreview',
 
 				prototype: {
 					initializer: function() {
@@ -29,7 +34,16 @@ AUI.add(
 
 						instance._id = A.guid();
 
-						instance._bindUI();
+						instance.bindUI();
+					},
+
+					bindUI: function() {
+						var instance = this;
+
+						instance._eventHandles = [
+							instance.on('titleChange', A.bind('_onTitleChange', instance)),
+							instance.on('urlChange', A.bind('_onUrlChange', instance))
+						];
 					},
 
 					destructor: function() {
@@ -54,15 +68,6 @@ AUI.add(
 						var instance = this;
 
 						instance._getDialog().show();
-					},
-
-					_bindUI: function() {
-						var instance = this;
-
-						instance._eventHandles = [
-							instance.on('titleChange', A.bind('_onTitleChange', instance)),
-							instance.on('urlChange', A.bind('_onUrlChange', instance))
-						];
 					},
 
 					_getDialog: function() {
@@ -143,6 +148,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component']
+		requires: ['aui-base', 'liferay-util-window']
 	}
 );

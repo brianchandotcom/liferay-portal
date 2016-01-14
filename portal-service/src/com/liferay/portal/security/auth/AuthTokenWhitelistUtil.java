@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthTokenWhitelistUtil {
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static AuthTokenWhitelist getAuthTokenWhitelist() {
@@ -46,7 +46,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletCSRFWhitelist() {
@@ -63,7 +63,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletCSRFWhitelistActions() {
@@ -80,7 +80,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletInvocationWhitelist() {
@@ -97,7 +97,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletInvocationWhitelistActions() {
@@ -255,7 +255,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> resetOriginCSRFWhitelist() {
@@ -272,7 +272,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> resetPortletCSRFWhitelist() {
@@ -289,7 +289,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> resetPortletInvocationWhitelist() {
@@ -306,7 +306,7 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<String> resetPortletInvocationWhitelistActions() {

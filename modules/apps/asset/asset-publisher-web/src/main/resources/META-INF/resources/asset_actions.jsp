@@ -43,6 +43,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 
 	editPortletURL = assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP, redirectURL);
 
+	editPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
 	editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 }
 %>

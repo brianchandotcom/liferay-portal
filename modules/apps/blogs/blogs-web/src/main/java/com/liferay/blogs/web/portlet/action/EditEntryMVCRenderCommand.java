@@ -71,6 +71,6 @@ public class EditEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
 		return "/blogs/edit_entry.jsp";
 	}
 
-	private volatile BlogsItemSelectorHelper _blogsItemSelectorHelper;
+	private BlogsItemSelectorHelper _blogsItemSelectorHelper;
 
 }

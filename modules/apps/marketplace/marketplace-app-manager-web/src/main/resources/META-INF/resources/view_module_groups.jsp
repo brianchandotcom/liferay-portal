@@ -42,6 +42,8 @@ portletURL.setParameter("app", app);
 portletURL.setParameter("state", state);
 portletURL.setParameter("orderByType", orderByType);
 
+renderResponse.setTitle(appDisplay.getTitle());
+
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
 %>
 

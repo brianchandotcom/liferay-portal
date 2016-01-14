@@ -4,3 +4,6 @@ Fragment-Host: com.liferay.portal.template.freemarker
 Bundle-Version: 1.0.0
 Import-Package: com.liferay.trash.taglib.servlet.taglib
 Include-Resource: @lib/com.liferay.trash.taglib.jar!/META-INF/resources/liferay-trash.tld
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../marketplace/web-content-management/bnd.bnd

@@ -297,6 +297,7 @@ public class TemplateContextHelper {
 			contextObjects.put("colorScheme", themeDisplay.getColorScheme());
 			contextObjects.put(
 				"portletDisplay", themeDisplay.getPortletDisplay());
+			contextObjects.put("bodyCssClass", StringPool.BLANK);
 
 			// Navigation items
 

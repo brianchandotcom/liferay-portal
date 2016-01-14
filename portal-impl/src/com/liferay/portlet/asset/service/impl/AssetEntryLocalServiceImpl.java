@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -535,21 +534,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			new int[] {status}, andSearch, start, end);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
-	 *             String, String, int, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public Hits search(
-		long companyId, long[] groupIds, long userId, String className,
-		String keywords, int start, int end) {
-
-		return search(
-			companyId, groupIds, userId, className, keywords,
-			WorkflowConstants.STATUS_ANY, start, end);
-	}
-
 	@Override
 	public Hits search(
 		long companyId, long[] groupIds, long userId, String className,
@@ -558,25 +542,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return search(
 			companyId, groupIds, userId, className, 0, keywords, status, start,
 			end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
-	 *             String, String, String, String, String, String, int, boolean,
-	 *             int, int)}
-	 */
-	@Deprecated
-	@Override
-	public Hits search(
-		long companyId, long[] groupIds, long userId, String className,
-		String userName, String title, String description,
-		String assetCategoryIds, String assetTagNames, boolean andSearch,
-		int start, int end) {
-
-		return search(
-			companyId, groupIds, userId, className, userName, title,
-			description, assetCategoryIds, assetTagNames,
-			WorkflowConstants.STATUS_ANY, andSearch, start, end);
 	}
 
 	@Override
@@ -590,21 +555,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			companyId, groupIds, userId, className, 0, userName, title,
 			description, assetCategoryIds, assetTagNames, status, andSearch,
 			start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
-	 *             String, String, int, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public Hits search(
-		long companyId, long[] groupIds, String className, String keywords,
-		int start, int end) {
-
-		return search(
-			companyId, groupIds, 0, className, keywords,
-			WorkflowConstants.STATUS_ANY, start, end);
 	}
 
 	@Override
@@ -833,61 +783,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			userId, groupId, null, null, className, classPK, null, 0,
 			categoryIds, tagNames, true, null, null, null, null, null, null,
 			null, null, null, 0, 0, (Double)null);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
-	 *             String, long, String, long, long[], String[], boolean, Date,
-	 *             Date, Date, String, String, String, String, String, String,
-	 *             int, int, Integer, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AssetEntry updateEntry(
-			long userId, long groupId, String className, long classPK,
-			String classUuid, long classTypeId, long[] categoryIds,
-			String[] tagNames, boolean visible, Date startDate, Date endDate,
-			Date publishDate, Date expirationDate, String mimeType,
-			String title, String description, String summary, String url,
-			String layoutUuid, int height, int width, Integer priority,
-			boolean sync)
-		throws PortalException {
-
-		return updateEntry(
-			userId, groupId, className, classPK, classUuid, classTypeId,
-			categoryIds, tagNames, visible, startDate, endDate, expirationDate,
-			mimeType, title, description, summary, url, layoutUuid, height,
-			width, priority, sync);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, long,
-	 *             Date, Date, String, long, String, long, long[], String[],
-	 *             boolean, Date, Date, Date, String, String, String, String,
-	 *             String, String, int, int, Integer, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AssetEntry updateEntry(
-			long userId, long groupId, String className, long classPK,
-			String classUuid, long classTypeId, long[] categoryIds,
-			String[] tagNames, boolean visible, Date startDate, Date endDate,
-			Date expirationDate, String mimeType, String title,
-			String description, String summary, String url, String layoutUuid,
-			int height, int width, Integer priority, boolean sync)
-		throws PortalException {
-
-		Double priorityDouble = null;
-
-		if (priority != null) {
-			priorityDouble = priority.doubleValue();
-		}
-
-		return updateEntry(
-			userId, groupId, null, null, className, classPK, classUuid,
-			classTypeId, categoryIds, tagNames, visible, startDate, endDate,
-			expirationDate, mimeType, title, description, summary, url,
-			layoutUuid, height, width, priorityDouble);
 	}
 
 	@Override

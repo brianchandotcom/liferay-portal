@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.control.menu.web;
+package com.liferay.layout.admin.web.control.menu;
 
 import com.liferay.control.menu.BaseControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -71,14 +71,19 @@ public class ManageLayoutControlMenuEntry
 
 	@Override
 	public String getURL(HttpServletRequest request) {
-		String portletId = PortletProviderUtil.getPortletId(
-			Layout.class.getName(), PortletProvider.Action.EDIT);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		String portletId = LayoutAdminPortletKeys.GROUP_PAGES;
+
+		if (group.isLayoutPrototype()) {
+			portletId = LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE;
+		}
 
 		PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
 			request, portletId, PortletRequest.RENDER_PHASE);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 

@@ -1595,8 +1595,8 @@
 			<var name="searchTerm" value="Organization Name Edit" />
 		</execute>
 
-		<execute macro="Organization#viewEditSiteCP">
-			<var name="orgNameEdit" value="Organization Name Edit" />
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="Organization Name Edit" />
 			<var name="orgType" value="Regular Organization" />
 		</execute>
 	</command>

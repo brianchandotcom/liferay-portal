@@ -605,26 +605,6 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_NAME" value1="${orgName}" />
 	</command>
 
-	<command name="viewEditSiteCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${orgNameEdit}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
-
-		<var name="key_orgName" value="${orgNameEdit}" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgNameEdit}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
-		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<var name="key_orgType" value="${orgType}" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#TITLE" value1="Edit ${orgNameEdit}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
-		<execute function="AssertTextEquals#assertValue" locator1="UsersAndOrganizationsEditOrganization#DETAILS_TYPE" value1="${orgType}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_NAME" value1="${orgNameEdit}" />
-	</command>
-
 	<command name="viewMembersNotFoundCP">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This organization does not have any users." />
 	</command>

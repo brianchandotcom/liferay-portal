@@ -59,7 +59,7 @@ public interface VelocityEngineConfiguration {
 	@Meta.AD(deflt = "", required = false)
 	public String[] restrictedPackages();
 
-	@Meta.AD(deflt = "serviceLocator|", required = false)
+	@Meta.AD(deflt = "serviceLocator|utilLocator", required = false)
 	public String[] restrictedVariables();
 
 	@Meta.AD(deflt = "VM_global_library.vm|VM_liferay.vm", required = false)

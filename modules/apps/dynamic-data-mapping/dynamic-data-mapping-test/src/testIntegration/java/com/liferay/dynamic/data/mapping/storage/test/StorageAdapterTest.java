@@ -15,9 +15,12 @@
 package com.liferay.dynamic.data.mapping.storage.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException.RequiredValue;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -127,6 +130,60 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		validate(structure.getStructureId(), fields);
 	}
 
+	@Test
+	public void testCreateWithInvalidDDMFieldValue() throws Exception {
+		DDMStructure structure = addStructure(
+			_CLASS_NAME_ID, "Default Structure");
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"text", false, false, false);
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setExpression("text.contains(\"test\")");
+		ddmFormFieldValidation.setErrorMessage(
+			"custom validation error message");
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"text", "text value");
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		try {
+			_jsonStorageAdapter.create(
+				TestPropsValues.getCompanyId(), structure.getStructureId(),
+				ddmFormValues,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+			Assert.fail();
+		}
+		catch (StorageException se)
+		{
+			Assert.assertTrue(
+				se.getCause() instanceof DDMFormEvaluationException);
+
+			String message = se.getMessage();
+
+			Assert.assertTrue(
+				message.contains("custom validation error message"));
+		}
+		catch (Exception ex)
+		{
+			Assert.fail();
+		}
+	}
+
 	@Test(expected = RequiredValue.class)
 	public void testCreateWithInvalidDDMFormValues() throws Exception {
 		DDMStructure structure = addStructure(
@@ -141,6 +198,42 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
+
+		_jsonStorageAdapter.create(
+			TestPropsValues.getCompanyId(), structure.getStructureId(),
+			ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
+	@Test
+	public void testCreateWithValidDDMFieldValue() throws Exception {
+		DDMStructure structure = addStructure(
+			_CLASS_NAME_ID, "Default Structure");
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"text", false, false, false);
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setExpression("!text.isEmpty()");
+		ddmFormFieldValidation.setErrorMessage(
+			"custom validation error message");
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"text", "not empty");
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		_jsonStorageAdapter.create(
 			TestPropsValues.getCompanyId(), structure.getStructureId(),

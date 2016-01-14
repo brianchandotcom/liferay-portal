@@ -19,7 +19,6 @@ import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -47,8 +46,7 @@ public class TestMVCActionCommand implements MVCActionCommand {
 
 	@Override
 	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		return false;
 	}

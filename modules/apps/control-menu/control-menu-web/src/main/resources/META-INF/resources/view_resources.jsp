@@ -18,6 +18,7 @@
 
 <%
 int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelNumItems", "10"));
+
 int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 
 String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelDisplayStyle", "descriptive"));
@@ -169,25 +170,25 @@ if (Validator.isNotNull(keywords)) {
 
 					boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
 
-					Map<String, Object> dataItem = new HashMap<String, Object>();
+					Map<String, Object> itemData = new HashMap<String, Object>();
 
-					dataItem.put("class-name", assetEntry.getClassName());
-					dataItem.put("class-pk", assetEntry.getClassPK());
+					itemData.put("class-name", assetEntry.getClassName());
+					itemData.put("class-pk", assetEntry.getClassPK());
 
 					if (hasAddToPagePermission) {
-						dataItem.put("draggable", true);
+						itemData.put("draggable", true);
 					}
 
-					dataItem.put("instanceable", true);
-					dataItem.put("portlet-id", portletId);
-					dataItem.put("title", title);
+					itemData.put("instanceable", true);
+					itemData.put("portlet-id", portletId);
+					itemData.put("title", title);
 
 					String thumbnailPath = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
 				%>
 
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("icon") %>'>
-							<li class="col-md-6 col-sm-6 col-xs-6 drag-content-item lfr-content-item" <%= AUIUtil.buildData(dataItem) %>>
+							<li class="col-md-6 col-sm-6 col-xs-6 drag-content-item lfr-content-item" <%= AUIUtil.buildData(itemData) %>>
 								<c:choose>
 									<c:when test="<%= Validator.isNotNull(thumbnailPath) %>">
 										<liferay-frontend:vertical-card
@@ -205,7 +206,7 @@ if (Validator.isNotNull(keywords)) {
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="drag-content-item entry-display-style lfr-content-item list-group-item" <%= AUIUtil.buildData(dataItem) %>>
+							<li class="drag-content-item entry-display-style lfr-content-item list-group-item" <%= AUIUtil.buildData(itemData) %>>
 								<div class=" list-group-item-field">
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(thumbnailPath) %>">

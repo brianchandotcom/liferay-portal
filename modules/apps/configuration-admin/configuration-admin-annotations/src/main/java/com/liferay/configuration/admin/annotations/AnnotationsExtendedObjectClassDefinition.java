@@ -15,8 +15,7 @@
 package com.liferay.configuration.admin.annotations;
 
 import com.liferay.configuration.admin.ExtendedAttributeDefinition;
-import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
-import com.liferay.portal.metatype.annotations.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +34,7 @@ import org.osgi.service.metatype.ObjectClassDefinition;
  * @author Iván Zaera
  */
 public class AnnotationsExtendedObjectClassDefinition
-	implements ExtendedObjectClassDefinition {
+	implements com.liferay.configuration.admin.ExtendedObjectClassDefinition {
 
 	public AnnotationsExtendedObjectClassDefinition(
 		Bundle bundle, ObjectClassDefinition objectClassDefinition) {
@@ -125,22 +124,25 @@ public class AnnotationsExtendedObjectClassDefinition
 	}
 
 	protected void processConfigurationAdminFields() {
-		ConfigurationAdmin configurationAdmin =
-			_configurationBeanClass.getAnnotation(ConfigurationAdmin.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition =
+			_configurationBeanClass.getAnnotation(
+				ExtendedObjectClassDefinition.class);
 
-		if (configurationAdmin != null) {
+		if (extendedObjectClassDefinition != null) {
 			Map<String, String> map = new HashMap<>();
 
-			map.put("category", configurationAdmin.category());
+			map.put("category", extendedObjectClassDefinition.category());
 			map.put(
 				"factoryInstanceLabelAttribute",
-				configurationAdmin.factoryInstanceLabelAttribute());
+				extendedObjectClassDefinition.factoryInstanceLabelAttribute());
 
-			ConfigurationAdmin.Scope scope = configurationAdmin.scope();
+			ExtendedObjectClassDefinition.Scope scope =
+				extendedObjectClassDefinition.scope();
 
 			map.put("scope", scope.toString());
 
-			_extensionAttributes.put(ConfigurationAdmin.XML_NAMESPACE, map);
+			_extensionAttributes.put(
+				ExtendedObjectClassDefinition.XML_NAMESPACE, map);
 		}
 	}
 

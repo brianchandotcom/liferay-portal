@@ -27,10 +27,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @XMLAttribute(
-	embedIn = "*", namespace = ConfigurationAdmin.XML_NAMESPACE,
-	prefix = ConfigurationAdmin.XML_ATTRIBUTE_PREFIX
+	embedIn = "*", namespace = ExtendedObjectClassDefinition.XML_NAMESPACE,
+	prefix = ExtendedObjectClassDefinition.XML_ATTRIBUTE_PREFIX
 )
-public @interface ConfigurationAdmin {
+public @interface ExtendedObjectClassDefinition {
 
 	public static final String XML_ATTRIBUTE_PREFIX = "cf";
 

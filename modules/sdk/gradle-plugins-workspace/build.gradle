@@ -3,3 +3,12 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.74"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.0"
 }
+
+jarSources {
+	into("samples") {
+		exclude ".gradle"
+		exclude "build"
+
+		from "samples"
+	}
+}

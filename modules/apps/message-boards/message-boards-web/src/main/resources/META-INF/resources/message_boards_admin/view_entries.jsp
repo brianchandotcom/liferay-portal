@@ -67,9 +67,13 @@ else if (entriesNavigation.equals("recent")) {
 	<%
 	PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-	displayStyleURL.setParameter("mvcRenderCommandName", (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "/message_boards/view" : "/message_boards/view_category");
-
-	displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
+	if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+	}
+	else {
+		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
+		displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
+	}
 	%>
 
 	<liferay-frontend:management-bar-buttons>
@@ -138,8 +142,15 @@ else if (entriesNavigation.equals("recent")) {
 		%>
 
 		<portlet:renderURL var="backURL">
-			<portlet:param name="mvcRenderCommandName" value='<%= (parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "/message_boards/view" : "/message_boards/view_category" %>' />
-			<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+			<c:choose>
+				<c:when test="<%= parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+				</c:when>
+				<c:otherwise>
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
+					<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+				</c:otherwise>
+			</c:choose>
 		</portlet:renderURL>
 
 		<%

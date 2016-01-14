@@ -159,7 +159,7 @@ if (portletTitleBasedNavigation) {
 		var nameEl = document.getElementById('<portlet:namespace />categoryName');
 
 		if (categoryId == 0) {
-			nameEl.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
+			nameEl.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view" /></portlet:renderURL>';
 		}
 		else {
 			nameEl.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;

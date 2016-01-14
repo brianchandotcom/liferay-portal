@@ -78,18 +78,18 @@ public class DeleteCategoryPortletConfigurationIcon
 			long parentCategoryId = getCategoryId(
 				_category.getParentCategory());
 
-			String mvcRenderCommandName = "/message_boards/view_category";
-
 			if (parentCategoryId ==
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				mvcRenderCommandName = "/message_boards/view";
+				parentCategoryURL.setParameter(
+					"mvcRenderCommandName", "/message_boards/view");
 			}
-
-			parentCategoryURL.setParameter(
-				"mvcRenderCommandName", mvcRenderCommandName);
-			parentCategoryURL.setParameter(
-				"mbCategoryId", String.valueOf(parentCategoryId));
+			else {
+				parentCategoryURL.setParameter(
+					"mvcRenderCommandName", "/message_boards/view_category");
+				parentCategoryURL.setParameter(
+					"mbCategoryId", String.valueOf(parentCategoryId));
+			}
 
 			deleteURL.setParameter("redirect", parentCategoryURL.toString());
 

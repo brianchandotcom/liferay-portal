@@ -23,8 +23,13 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ? "/message_boards/view" : "/message_boards/view_category");
-portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
+if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+	portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+}
+else {
+	portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
+	portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
+}
 
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());

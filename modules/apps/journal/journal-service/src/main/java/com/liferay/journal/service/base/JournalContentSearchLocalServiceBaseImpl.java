@@ -558,6 +558,6 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	protected com.liferay.portal.service.PortletPreferencesLocalService portletPreferencesLocalService;
 	@ServiceReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

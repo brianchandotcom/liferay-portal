@@ -78,10 +78,10 @@ List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames()
 		id="customFields"
 		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= new CustomFieldChecker(renderRequest, renderResponse) %>"
+		total="<%= attributeNames.size() %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= attributeNames %>"
-			total="<%= attributeNames.size() %>"
 		/>
 
 		<liferay-ui:search-container-row

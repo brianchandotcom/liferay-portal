@@ -483,10 +483,10 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 	<liferay-ui:search-container
 		headerNames="name,type,null"
 		id="parentGroupSearchContainer"
+		total="<%= parentGroups.size() %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= parentGroups %>"
-			total="<%= parentGroups.size() %>"
 		/>
 
 		<liferay-ui:search-container-row

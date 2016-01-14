@@ -34,13 +34,9 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+int entriesTotal = 0;
 
 long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
-if (groupThreadsUserId > 0) {
-	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
-}
 
 Calendar calendar = Calendar.getInstance();
 
@@ -48,13 +44,17 @@ int offset = GetterUtil.getInteger(recentPostsDateOffset);
 
 calendar.add(Calendar.DATE, -offset);
 
-int entriesTotal = 0;
-
 if (entriesNavigation.equals("all")) {
 	entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
 }
 else if (entriesNavigation.equals("recent")) {
 	entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+}
+
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+if (groupThreadsUserId > 0) {
+	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
 }
 %>
 

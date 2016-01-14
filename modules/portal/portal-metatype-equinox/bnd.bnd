@@ -1,7 +1,7 @@
-Bundle-Name: Liferay Configuration Admin Equinox
-Bundle-SymbolicName: com.liferay.configuration.admin.equinox
+Bundle-Name: Liferay Metatype Definitons Equinox
+Bundle-SymbolicName: com.liferay.portal.metatype.definitions.equinox
 Bundle-Version: 1.0.0
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Configuration Framework
+Liferay-Releng-Module-Group-Title: Metatype
 -include: ../../../../marketplace/platform/bnd.bnd

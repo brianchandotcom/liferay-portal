@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.configuration.admin.equinox;
+package com.liferay.portal.metatype.definitions.annotations;
 
 import com.liferay.portal.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.metatype.definitions.ExtendedMetaTypeService;
 
 import org.osgi.framework.Bundle;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.MetaTypeService;
 
 /**
  * @author Iván Zaera
  */
-//@Component(service = ExtendedMetaTypeService.class)
-public class EquinoxExtendedMetaTypeService implements ExtendedMetaTypeService {
+@Component(service = ExtendedMetaTypeService.class)
+public class AnnotationsExtendedMetaTypeService
+	implements ExtendedMetaTypeService {
 
 	@Override
 	public ExtendedMetaTypeInformation getMetaTypeInformation(Bundle bundle) {
-		return new EquinoxExtendedMetaTypeInformation(
-			_metaTypeService.getMetaTypeInformation(bundle));
+		return new AnnotationsExtendedMetaTypeInformation(
+			bundle, _metaTypeService.getMetaTypeInformation(bundle));
 	}
 
 	@Reference(unbind = "-")

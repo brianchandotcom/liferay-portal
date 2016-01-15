@@ -28,7 +28,6 @@ if (!ArrayUtil.contains(tabNames, tabs3)) {
 PortletURL serverURL = renderResponse.createRenderURL();
 
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
-serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
 %>

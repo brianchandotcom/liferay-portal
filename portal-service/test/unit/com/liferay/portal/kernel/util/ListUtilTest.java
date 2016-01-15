@@ -268,13 +268,6 @@ public class ListUtilTest {
 		Assert.assertTrue(ListUtil.isNull(list));
 		Assert.assertFalse(ListUtil.isNotNull(list));
 	}
-	@Test
-	public void testIsNullWhenNullList() {
-		List<String> list = null;
-
-		Assert.assertTrue(ListUtil.isNull(list));
-		Assert.assertFalse(ListUtil.isNotNull(list));
-	}
 
 	@Test
 	public void testIsNullWhenNotAllValuesAreEmptyString() {
@@ -282,6 +275,14 @@ public class ListUtilTest {
 
 		list.add(StringPool.BLANK);
 		list.add(StringPool.BLANK);
+
+		Assert.assertTrue(ListUtil.isNull(list));
+		Assert.assertFalse(ListUtil.isNotNull(list));
+	}
+
+	@Test
+	public void testIsNullWhenNullList() {
+		List<String> list = null;
 
 		Assert.assertTrue(ListUtil.isNull(list));
 		Assert.assertFalse(ListUtil.isNotNull(list));

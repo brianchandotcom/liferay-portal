@@ -28,6 +28,7 @@ import com.liferay.gradle.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaPlugin;
@@ -41,47 +42,83 @@ public class LiferayOSGiExtension extends LiferayExtension {
 
 	public LiferayOSGiExtension(Project project) {
 		super(project);
+
+		_bundleDefaultInstructions.put(
+			Constants.BUNDLE_SYMBOLICNAME, project.getName());
+		_bundleDefaultInstructions.put(
+			Constants.BUNDLE_VENDOR, "Liferay, Inc.");
+		_bundleDefaultInstructions.put(Constants.DONOTCOPY, "(.touch)");
+		_bundleDefaultInstructions.put(Constants.DSANNOTATIONS, "*");
+		_bundleDefaultInstructions.put(Constants.METATYPE, "*");
+		_bundleDefaultInstructions.put(
+			Constants.PLUGIN, StringUtil.merge(_BND_PLUGIN_CLASS_NAMES, ","));
+		_bundleDefaultInstructions.put(Constants.SOURCES, "false");
+
+		_bundleDefaultInstructions.put(
+			"Git-Descriptor",
+			"${system-allow-fail;git describe --dirty --always}");
+		_bundleDefaultInstructions.put(
+			"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
+
+		_bundleDefaultInstructions.put(
+			"Javac-Debug",
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					CompileOptions compileOptions = _getCompileOptions();
+
+					return _getOnOffValue(compileOptions.isDebug());
+				}
+
+			});
+
+		_bundleDefaultInstructions.put(
+			"Javac-Deprecation",
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					CompileOptions compileOptions = _getCompileOptions();
+
+					return _getOnOffValue(compileOptions.isDeprecation());
+				}
+
+			});
+
+		_bundleDefaultInstructions.put(
+			"Javac-Encoding",
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					CompileOptions compileOptions = _getCompileOptions();
+
+					String encoding = compileOptions.getEncoding();
+
+					if (Validator.isNull(encoding)) {
+						encoding = System.getProperty("file.encoding");
+					}
+
+					return encoding;
+				}
+
+			});
+
+		_bundleDefaultInstructions.put("-jsp", "*.jsp,*.jspf");
+		_bundleDefaultInstructions.put("-sass", "*");
+	}
+
+	public LiferayOSGiExtension bundleDefaultInstructions(
+		Map<String, ?> bundleDefaultInstructions) {
+
+		_bundleDefaultInstructions.putAll(bundleDefaultInstructions);
+
+		return this;
 	}
 
 	public Map<String, String> getBundleDefaultInstructions() {
-		Map<String, String> map = new HashMap<>();
-
-		map.put(Constants.BUNDLE_SYMBOLICNAME, project.getName());
-		map.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
-		map.put(Constants.DONOTCOPY, "(.touch)");
-		map.put(Constants.DSANNOTATIONS, "*");
-		map.put(Constants.METATYPE, "*");
-		map.put(
-			Constants.PLUGIN, StringUtil.merge(_BND_PLUGIN_CLASS_NAMES, ","));
-		map.put(Constants.SOURCES, "false");
-
-		map.put(
-			"Git-Descriptor",
-			"${system-allow-fail;git describe --dirty --always}");
-		map.put("Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
-
-		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-			project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
-
-		CompileOptions compileOptions = javaCompile.getOptions();
-
-		map.put("Javac-Debug", _getOnOffValue(compileOptions.isDebug()));
-		map.put(
-			"Javac-Deprecation",
-			_getOnOffValue(compileOptions.isDeprecation()));
-
-		String encoding = compileOptions.getEncoding();
-
-		if (Validator.isNull(encoding)) {
-			encoding = System.getProperty("file.encoding");
-		}
-
-		map.put("Javac-Encoding", encoding);
-
-		map.put("-jsp", "*.jsp,*.jspf");
-		map.put("-sass", "*");
-
-		return map;
+		return GradleUtil.toStringMap(_bundleDefaultInstructions);
 	}
 
 	public boolean isAutoUpdateXml() {
@@ -90,6 +127,21 @@ public class LiferayOSGiExtension extends LiferayExtension {
 
 	public void setAutoUpdateXml(boolean autoUpdateXml) {
 		_autoUpdateXml = autoUpdateXml;
+	}
+
+	public void setBundleDefaultInstructions(
+		Map<String, ?> bundleDefaultInstructions) {
+
+		_bundleDefaultInstructions.clear();
+
+		bundleDefaultInstructions(bundleDefaultInstructions);
+	}
+
+	private CompileOptions _getCompileOptions() {
+		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+			project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+		return javaCompile.getOptions();
 	}
 
 	private String _getOnOffValue(boolean b) {
@@ -107,5 +159,7 @@ public class LiferayOSGiExtension extends LiferayExtension {
 	};
 
 	private boolean _autoUpdateXml = true;
+	private final Map<String, Object> _bundleDefaultInstructions =
+		new HashMap<>();
 
 }

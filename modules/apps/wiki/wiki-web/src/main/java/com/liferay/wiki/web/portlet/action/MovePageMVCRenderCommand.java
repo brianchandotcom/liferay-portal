@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageTitleException;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -49,8 +52,13 @@ public class MovePageMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getNode(renderRequest);
-			ActionUtil.getPage(renderRequest);
+			WikiNode node = ActionUtil.getNode(renderRequest);
+
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+
+			WikiPage page = ActionUtil.getPage(renderRequest);
+
+			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

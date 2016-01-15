@@ -653,6 +653,10 @@
 		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" />
 	</command>
 
+	<command name="clickPublish">
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
+	</command>
+
 	<command name="configureReminders">
 		<if>
 			<condition function="IsElementPresent" locator1="CalendarEditEvent#REMINDERS_PANEL_COLLAPSED" />
@@ -1000,6 +1004,7 @@
 			<then>
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
 				<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="You are about to make changes that will only affect your calendar (${calendarName})." />
+
 				<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
 			</then>
 		</if>
@@ -1161,7 +1166,21 @@
 	</command>
 
 	<command name="publish">
+		<execute macro="CalendarEvent#clickPublish" />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+	</command>
+
+	<command name="publishRepeating">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
+
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
+
+		<var method="StringUtil#replace('${saveOption}', ' ', '_')" name="saveOptionPath" />
+
+		<var method="StringUtil#upperCase('${saveOptionPath}')" name="saveOptionPath" />
+
+		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
@@ -1199,6 +1218,20 @@
 		</if>
 
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
+	</command>
+
+	<command name="saveEventUserInvite">
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
+
+		<execute function="AssertClick" locator1="CalendarEditEvent#SAVE_CHANGES_BUTTON" value1="Save changes." />
+	</command>
+
+	<command name="saveEventUserInviteCancel">
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
+
+		<execute function="AssertClick" locator1="CalendarEditEvent#DO_NOT_CHANGE_THE_EVENT_BUTTON" value1="Do not change the event." />
 	</command>
 
 	<command name="selectCalendar">
@@ -1865,6 +1898,10 @@
 	<command name="viewTimesViaDetails">
 		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="${startDateTime}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="${endDateTime}" />
+	</command>
+
+	<command name="viewTitle">
+		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
 	</command>
 
 	<command name="viewTitleViaDetails">

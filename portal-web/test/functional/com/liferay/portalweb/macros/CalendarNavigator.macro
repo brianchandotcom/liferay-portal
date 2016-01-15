@@ -128,9 +128,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
-
-		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
+		<execute macro="CalendarScheduler#gotoEditViaDialogBox" />
 	</command>
 
 	<command name="gotoEventDetails">
@@ -225,6 +223,10 @@
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
+	</command>
+
+	<command name="gotoToday">
+		<execute function="AssertClick" locator1="Calendar#VIEW_TODAY_BUTTON" value1="Today" />
 	</command>
 
 	<command name="gotoView">

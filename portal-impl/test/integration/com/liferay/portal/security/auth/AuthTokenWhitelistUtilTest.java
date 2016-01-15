@@ -243,6 +243,7 @@ public class AuthTokenWhitelistUtilTest {
 			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		themeDisplay.setLifecycleAction(true);
 
 		mockHttpServletRequest.setAttribute(
@@ -269,6 +270,7 @@ public class AuthTokenWhitelistUtilTest {
 			TestMVCRenderCommand.TEST_MVC_COMMAND_NAME);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		themeDisplay.setLifecycleRender(true);
 
 		mockHttpServletRequest.setAttribute(
@@ -289,7 +291,6 @@ public class AuthTokenWhitelistUtilTest {
 
 		mockHttpServletRequest.setParameter(
 			"p_p_id", TestMVCResourceCommand.TEST_PORTLET_ID);
-
 		mockHttpServletRequest.setParameter(
 			"p_p_resource_id", TestMVCResourceCommand.TEST_MVC_COMMAND_NAME);
 
@@ -307,8 +308,8 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLCSRFWhitelistedForMVCActionCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET_ID, 0,
-			PortletRequest.ACTION_PHASE);
+			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET_ID,
+			0, PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME,
@@ -322,8 +323,8 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLInvocationWhitelistedForMVCActionCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET_ID, 0,
-			PortletRequest.ACTION_PHASE);
+			new MockHttpServletRequest(), TestMVCActionCommand.TEST_PORTLET_ID,
+			0, PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME,
@@ -337,8 +338,8 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLInvocationWhitelistedForMVCRenderCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCRenderCommand.TEST_PORTLET_ID, 0,
-			PortletRequest.RENDER_PHASE);
+			new MockHttpServletRequest(), TestMVCRenderCommand.TEST_PORTLET_ID,
+			0, PortletRequest.RENDER_PHASE);
 
 		liferayPortletURL.setParameter(
 			"mvcRenderCommandName", TestMVCRenderCommand.TEST_MVC_COMMAND_NAME);
@@ -351,8 +352,9 @@ public class AuthTokenWhitelistUtilTest {
 	@Test
 	public void testIsPortletURLInvocationWhitelistedForMVCResourceCommand() {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			new MockHttpServletRequest(), TestMVCResourceCommand.TEST_PORTLET_ID,
-			0, PortletRequest.RESOURCE_PHASE);
+			new MockHttpServletRequest(),
+			TestMVCResourceCommand.TEST_PORTLET_ID, 0,
+			PortletRequest.RESOURCE_PHASE);
 
 		liferayPortletURL.setResourceID(
 			TestMVCResourceCommand.TEST_MVC_COMMAND_NAME);

@@ -16,7 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;

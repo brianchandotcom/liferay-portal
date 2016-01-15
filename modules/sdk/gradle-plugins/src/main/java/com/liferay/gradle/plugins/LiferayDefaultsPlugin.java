@@ -18,16 +18,17 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
@@ -42,6 +43,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -51,6 +53,7 @@ import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 
+import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
@@ -70,6 +73,7 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
@@ -375,6 +379,30 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		basePluginConvention.setLibsDirName(dirName);
 	}
 
+	protected void configureBundleDefaultInstructions(
+		Project project, boolean publishing) {
+
+		LiferayOSGiExtension liferayOSGiExtension = GradleUtil.getExtension(
+			project, LiferayOSGiExtension.class);
+
+		Map<String, Object> bundleDefaultInstructions = new HashMap<>();
+
+		bundleDefaultInstructions.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
+		bundleDefaultInstructions.put(Constants.DONOTCOPY, "(.touch)");
+		bundleDefaultInstructions.put(Constants.SOURCES, "false");
+
+		if (publishing) {
+			bundleDefaultInstructions.put(
+				"Git-Descriptor",
+				"${system-allow-fail;git describe --dirty --always}");
+			bundleDefaultInstructions.put(
+				"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
+		}
+
+		liferayOSGiExtension.bundleDefaultInstructions(
+			bundleDefaultInstructions);
+	}
+
 	protected void configureConfigurations(Project project) {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -420,6 +448,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Project project, LiferayPlugin liferayPlugin) {
 
 		final File portalRootDir = getPortalRootDir(project);
+		final boolean publishing = isPublishing(project);
 		boolean testProject = isTestProject(project);
 
 		applyPlugins(project);
@@ -469,6 +498,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
+					configureBundleDefaultInstructions(project, publishing);
 					configureTaskJavadoc(project);
 				}
 
@@ -878,7 +908,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		test.jvmArgs(_TEST_JVM_ARGS);
 
-		configureTestLogging(test);
+		configureTaskTestIgnoreFailures(test);
+		configureTaskTestLogging(test);
+	}
+
+	protected void configureTaskTestIgnoreFailures(Test test) {
+		test.setIgnoreFailures(true);
 	}
 
 	protected void configureTaskTestIntegration(Project project) {
@@ -887,7 +922,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		test.jvmArgs(_TEST_INTEGRATION_JVM_ARGS);
 
-		configureTestLogging(test);
+		configureTaskTestIgnoreFailures(test);
+		configureTaskTestLogging(test);
 
 		File resultsDir = project.file("test-results/integration");
 
@@ -898,6 +934,14 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		JUnitXmlReport jUnitXmlReport = testTaskReports.getJunitXml();
 
 		jUnitXmlReport.setDestination(resultsDir);
+	}
+
+	protected void configureTaskTestLogging(Test test) {
+		TestLoggingContainer testLoggingContainer = test.getTestLogging();
+
+		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
+		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
+		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
 	}
 
 	protected void configureTaskUploadArchives(Project project) {
@@ -916,14 +960,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			taskContainer.withType(PublishNodeModuleTask.class);
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
-	}
-
-	protected void configureTestLogging(Test test) {
-		TestLoggingContainer testLoggingContainer = test.getTestLogging();
-
-		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
-		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
-		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
 	}
 
 	protected String getBundleInstruction(Project project, String key) {
@@ -972,6 +1008,22 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				return null;
 			}
 		}
+	}
+
+	protected boolean isPublishing(Project project) {
+		Gradle gradle = project.getGradle();
+
+		StartParameter startParameter = gradle.getStartParameter();
+
+		List<String> taskNames = startParameter.getTaskNames();
+
+		if (taskNames.contains(MavenPlugin.INSTALL_TASK_NAME) ||
+			taskNames.contains(BasePlugin.UPLOAD_ARCHIVES_TASK_NAME)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isTestProject(Project project) {

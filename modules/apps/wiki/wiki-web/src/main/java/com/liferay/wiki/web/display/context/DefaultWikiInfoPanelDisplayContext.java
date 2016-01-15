@@ -15,8 +15,11 @@
 package com.liferay.wiki.web.display.context;
 
 import com.liferay.wiki.display.context.WikiInfoPanelDisplayContext;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.web.display.context.util.WikiInfoPanelRequestHelper;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +38,56 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
+	public WikiNode getFirstNode() {
+		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
+
+		if (nodes.size() == 0) {
+			return null;
+		}
+
+		return nodes.get(0);
+	}
+
+	@Override
+	public int getNodesCount() {
+		return WikiNodeLocalServiceUtil.getNodesCount(
+			_wikiInfoPanelRequestHelper.getScopeGroupId());
+	}
+
+	@Override
+	public int getSelectedNodesCount() {
+		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
+
+		return nodes.size();
+	}
+
+	@Override
 	public UUID getUuid() {
 		return _UUID;
+	}
+
+	@Override
+	public boolean isMultipleSelection() {
+		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
+
+		if (nodes.size() > 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isShowNodeDetails() {
+		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
+
+		if (nodes.size() == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private static final UUID _UUID = UUID.fromString(

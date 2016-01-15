@@ -24,6 +24,7 @@ page import="com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfigurat
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
+page import="com.liferay.wiki.display.context.WikiInfoPanelDisplayContext" %><%@
 page import="com.liferay.wiki.display.context.WikiListPagesDisplayContext" %><%@
 page import="com.liferay.wiki.exception.DuplicateNodeNameException" %><%@
 page import="com.liferay.wiki.exception.DuplicatePageException" %><%@

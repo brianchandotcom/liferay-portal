@@ -58,8 +58,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		resourceRequest.setAttribute(
 			BookmarksWebKeys.BOOKMARKS_FOLDERS, folders);
 
-		ActionUtil.getFolders(resourceRequest);
-
 		PortletRequestDispatcher portletRequestDispatcher =
 			getPortletRequestDispatcher(
 				resourceRequest, "/bookmarks/info_panel.jsp");

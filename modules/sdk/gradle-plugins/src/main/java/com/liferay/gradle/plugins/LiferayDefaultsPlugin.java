@@ -878,7 +878,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		test.jvmArgs(_TEST_JVM_ARGS);
 
-		configureTestLogging(test);
+		configureTaskTestLogging(test);
 	}
 
 	protected void configureTaskTestIntegration(Project project) {
@@ -887,7 +887,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		test.jvmArgs(_TEST_INTEGRATION_JVM_ARGS);
 
-		configureTestLogging(test);
+		configureTaskTestLogging(test);
 
 		File resultsDir = project.file("test-results/integration");
 
@@ -898,6 +898,14 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		JUnitXmlReport jUnitXmlReport = testTaskReports.getJunitXml();
 
 		jUnitXmlReport.setDestination(resultsDir);
+	}
+
+	protected void configureTaskTestLogging(Test test) {
+		TestLoggingContainer testLoggingContainer = test.getTestLogging();
+
+		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
+		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
+		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
 	}
 
 	protected void configureTaskUploadArchives(Project project) {
@@ -916,14 +924,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			taskContainer.withType(PublishNodeModuleTask.class);
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
-	}
-
-	protected void configureTestLogging(Test test) {
-		TestLoggingContainer testLoggingContainer = test.getTestLogging();
-
-		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
-		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
-		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
 	}
 
 	protected String getBundleInstruction(Project project, String key) {

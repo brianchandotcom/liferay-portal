@@ -23,24 +23,24 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">
 	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
-		<div class="control-menu-level-1">
-			<header class="header-toolbar header-toolbar-default" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
+		<ul class="control-menu-nav control-menu-level-1 control-menu-nav-level-1" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
-				<%
-				for (int i = 0; i < controlMenuCategories.size(); i++) {
-					ControlMenuCategory controlMenuCategory = controlMenuCategories.get(i);
+			<%
+			for (int i = 0; i < controlMenuCategories.size(); i++) {
+				ControlMenuCategory controlMenuCategory = controlMenuCategories.get(i);
 
-					String cssClass = "toolbar-group";
+				String cssClass = "site";
 
-					if (i == (controlMenuCategories.size() - 2)) {
-						cssClass += "-right";
-					}
-					else if (i == (controlMenuCategories.size() - 1)) {
-						cssClass += "-expand-text text-center";
-					}
-				%>
+				if (i == (controlMenuCategories.size() - 2)) {
+					cssClass = "tool";
+				}
+				else if (i == (controlMenuCategories.size() - 1)) {
+					cssClass = "user";
+				}
+			%>
 
-					<div class="<%= cssClass %>">
+				<li class="control-menu-nav-item <%= cssClass %>-controls-group">
+					<ul class="control-menu-nav">
 
 						<%
 						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
@@ -65,14 +65,14 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 						}
 						%>
 
-					</div>
+					</ul>
+				</li>
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</header>
-		</div>
+		</ul>
 
 		<div class="control-menu-body">
 

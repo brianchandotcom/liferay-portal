@@ -88,7 +88,7 @@ if (layout != null) {
 
 	<c:if test="<%= liveGroup != null %>">
 		<ul class="control-menu-nav">
-			<li class="dropdown staging-options-toggle visible-xs">
+			<li class="control-menu-nav-item dropdown staging-options-toggle visible-xs">
 				<a class="control-menu-icon dropdown-toggle" data-toggle="dropdown" value="staging">
 					<span class="control-menu-icon-label">
 						<c:choose>
@@ -145,7 +145,7 @@ if (layout != null) {
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
-						<li class="active hidden-xs staging-link">
+						<li class="active control-menu-nav-item  hidden-xs staging-link">
 							<a class="control-menu-icon" id="stagingLink" value="staging">
 								<aui:icon image="staging" label="staging" markupView="lexicon" />
 							</a>
@@ -153,7 +153,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<li class="hidden-xs staging-link">
+					<li class="control-menu-nav-item hidden-xs staging-link">
 						<a class="control-menu-icon" href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging">
 							<aui:icon image="staging" label="staging" markupView="lexicon" />
 						</a>
@@ -161,13 +161,13 @@ if (layout != null) {
 				</c:otherwise>
 			</c:choose>
 
-			<li class="hidden-xs staging-divider">
+			<li class="control-menu-nav-item hidden-xs staging-divider">
 				<span> / </span>
 			</li>
 
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">
-					<li class="hidden-xs live-link">
+					<li class="control-menu-nav-item hidden-xs live-link">
 						<a class="control-menu-icon" href="<%= StagingUtil.getRemoteSiteURL(group, layout.isPrivateLayout()) %>" value="go-to-remote-live">
 							<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
 						</a>
@@ -175,7 +175,7 @@ if (layout != null) {
 				</c:when>
 				<c:when test="<%= group.isStagingGroup() %>">
 					<c:if test="<%= Validator.isNotNull(liveFriendlyURL) %>">
-						<li class="hidden-xs live-link">
+						<li class="control-menu-nav-item hidden-xs live-link">
 							<a class="control-menu-icon" href="<%= liveFriendlyURL %>" value="live">
 								<aui:icon image="live" label="live" markupView="lexicon" />
 							</a>
@@ -183,7 +183,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<li class="active hidden-xs live-link">
+					<li class="active control-menu-nav-item  hidden-xs live-link">
 						<a class="control-menu-icon taglib-icon" id="liveLink" value="live">
 							<aui:icon image="live" label="live" markupView="lexicon" />
 						</a>
@@ -191,7 +191,7 @@ if (layout != null) {
 				</c:otherwise>
 			</c:choose>
 
-			<li class="staging-bar">
+			<li class="control-menu-nav-item staging-bar">
 				<div class="control-menu-level-2">
 					<div class="container-fluid-1280">
 						<div class="control-menu-level-2-heading visible-xs">
@@ -222,7 +222,7 @@ if (layout != null) {
 											<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 										</c:if>
 
-										<li class="control-menu-nav-item" id="<portlet:namespace />layoutRevisionDetails">
+										<li id="<portlet:namespace />layoutRevisionDetails">
 											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 											<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
@@ -238,7 +238,7 @@ if (layout != null) {
 											<liferay-staging:menu cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
 										</c:if>
 
-										<li class="control-menu-nav-item">
+										<li>
 											<c:choose>
 												<c:when test="<%= liveLayout == null %>">
 													<span class="last-publication-branch">
@@ -261,7 +261,7 @@ if (layout != null) {
 							</c:if>
 
 							<c:if test="<%= !group.isStagedRemotely() && !group.isStagingGroup() %>">
-								<li class="control-menu-nav-item">
+								<li>
 									<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
 										<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
 									</div>

@@ -555,11 +555,14 @@ public class ServiceBuilder {
 					"The package-path attribute is required");
 			}
 
+			String apiPackagePath = packagePath;
+
 			_outputPath =
 				_implDirName + "/" + StringUtil.replace(packagePath, ".", "/");
 
 			_serviceOutputPath =
-				_apiDirName + "/" + StringUtil.replace(packagePath, ".", "/");
+				_apiDirName + "/" +
+					StringUtil.replace(apiPackagePath, ".", "/");
 
 			if (Validator.isNotNull(_testDirName)) {
 				_testOutputPath =
@@ -568,6 +571,8 @@ public class ServiceBuilder {
 			}
 
 			_packagePath = packagePath;
+
+			_apiPackagePath = apiPackagePath;
 
 			_autoImportDefaultReferences = GetterUtil.getBoolean(
 				rootElement.attributeValue("auto-import-default-references"),
@@ -605,6 +610,8 @@ public class ServiceBuilder {
 				_testOutputPath += "/" + _portletPackageName;
 
 				_packagePath += "." + _portletPackageName;
+
+				_apiPackagePath += "." + _portletPackageName;
 			}
 			else {
 				_portletShortName = namespaceElement.getText();
@@ -5090,7 +5097,7 @@ public class ServiceBuilder {
 
 		_ejbList.add(
 			new Entity(
-				_packagePath, _portletName, _portletShortName, ejbName,
+				_packagePath, _apiPackagePath, _portletName, _portletShortName, ejbName,
 				humanName, table, alias, uuid, uuidAccessor, localService,
 				remoteService, persistenceClass, finderClass, dataSource,
 				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
@@ -5261,6 +5268,7 @@ public class ServiceBuilder {
 		"public void set.*" + Pattern.quote("("));
 
 	private String _apiDirName;
+	private String _apiPackagePath;
 	private String _author;
 	private boolean _autoImportDefaultReferences;
 	private boolean _autoNamespaceTables;

@@ -1154,7 +1154,7 @@
 		</execute>
 
 		<execute macro="MessageboardsPortlet#configureScopePG">
-			<var name="scopeName" value="Staging Test Page" />
+			<var name="scopeName" value="Staging Test Page (Create New)" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

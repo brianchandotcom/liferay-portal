@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portal.kernel.verify.model;
 
 /**
  * @author Miguel Pastor

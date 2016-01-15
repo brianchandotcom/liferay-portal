@@ -5,7 +5,4 @@
 	<category name="category.hidden">
 		<portlet id="136" />
 	</category>
-	<category name="category.sample">
-		<portlet id="47" />
-	</category>
 </display>

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Hello World Web
+Bundle-SymbolicName: com.liferay.hello.world.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources

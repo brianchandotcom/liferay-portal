@@ -3,16 +3,6 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>47</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>hello_world</struts-path>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-hello-world</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>90</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>portal</struts-path>

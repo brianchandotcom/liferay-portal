@@ -524,6 +524,28 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public Group checkScopeGroup(Layout layout, long userId)
+		throws PortalException {
+
+		if (layout.hasScopeGroup()) {
+			return layout.getScopeGroup();
+		}
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getDefault(), String.valueOf(layout.getPlid()));
+
+		Group scopeGroup = groupLocalService.addGroup(
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			Layout.class.getName(), layout.getPlid(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, 0, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
+			null);
+
+		return scopeGroup;
+	}
+
 	/**
 	 * Creates systems groups and other related data needed by the system on the
 	 * very first startup. Also takes care of creating the Control Panel groups

@@ -122,11 +122,11 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 <liferay-ui:search-container
 	emptyResultsMessage="no-users-were-found"
 	iteratorURL="<%= portletURL %>"
+	total="<%= searchResults.size() %>"
 >
 
 	<liferay-ui:search-container-results
 		results="<%= ListUtil.subList(searchResults, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= searchResults.size() %>"
 	/>
 
 	<liferay-ui:search-container-row

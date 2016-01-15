@@ -33,7 +33,7 @@
 		</responseFlow>
 	</transport>
 	<service name="Plugin_Microblogs_MicroblogsEntryService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.microblogs.liferay.com" xmlns:cmp-ns="http://model.microblogs.liferay.com" qname="ns:ArrayOf_tns2_MicroblogsEntrySoap" type="java:com.liferay.microblogs.model.MicroblogsEntrySoap[]" innerType="cmp-ns:MicroblogsEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.microblogs.liferay.com" xmlns:cmp-ns="http://model.microblogs.liferay.com" qname="ns:ArrayOf_tns15_MicroblogsEntrySoap" type="java:com.liferay.microblogs.model.MicroblogsEntrySoap[]" innerType="cmp-ns:MicroblogsEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.microblogs.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.microblogs.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.microblogs.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -60,11 +60,11 @@
 		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getMicroblogsEntriesCount" qname="operNS:getMicroblogsEntriesCount" returnQName="getMicroblogsEntriesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="assetTagName" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getMicroblogsEntries" qname="operNS:getMicroblogsEntries" returnQName="getMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns2_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getMicroblogsEntries" qname="operNS:getMicroblogsEntries" returnQName="getMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns15_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getMicroblogsEntries" qname="operNS:getMicroblogsEntries" returnQName="getMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns2_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getMicroblogsEntries" qname="operNS:getMicroblogsEntries" returnQName="getMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns15_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="assetTagName" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
@@ -79,12 +79,12 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="microblogsEntryUserId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getUserMicroblogsEntries" qname="operNS:getUserMicroblogsEntries" returnQName="getUserMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns2_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getUserMicroblogsEntries" qname="operNS:getUserMicroblogsEntries" returnQName="getUserMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns15_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="microblogsEntryUserId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getUserMicroblogsEntries" qname="operNS:getUserMicroblogsEntries" returnQName="getUserMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns2_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.microblogs.liferay.com" xmlns:rtns="urn:http.service.microblogs.liferay.com" xmlns:tns2="http://model.microblogs.liferay.com" name="getUserMicroblogsEntries" qname="operNS:getUserMicroblogsEntries" returnQName="getUserMicroblogsEntriesReturn" returnType="rtns:ArrayOf_tns15_MicroblogsEntrySoap" returnItemType="tns2:MicroblogsEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="microblogsEntryUserId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>

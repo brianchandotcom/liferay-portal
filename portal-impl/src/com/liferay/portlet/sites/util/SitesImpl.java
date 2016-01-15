@@ -1243,18 +1243,6 @@ public class SitesImpl implements Sites {
 		doMergeLayoutPrototypeLayout(group, layout);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #mergeLayoutPrototypeLayout(Group, Layout)}
-	 */
-	@Deprecated
-	@Override
-	public void mergeLayoutProtypeLayout(Group group, Layout layout)
-		throws Exception {
-
-		mergeLayoutPrototypeLayout(group, layout);
-	}
-
 	@Override
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
@@ -1363,18 +1351,6 @@ public class SitesImpl implements Sites {
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layoutSet.getLayoutSetId()), owner);
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #mergeLayoutSetPrototypeLayouts(Group, LayoutSet)}
-	 */
-	@Deprecated
-	@Override
-	public void mergeLayoutSetProtypeLayouts(Group group, LayoutSet layoutSet)
-		throws Exception {
-
-		mergeLayoutSetPrototypeLayouts(group, layoutSet);
 	}
 
 	@Override

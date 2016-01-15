@@ -74,10 +74,10 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 			<liferay-ui:search-container
 				emptyResultsMessage="no-groups-were-found"
 				iteratorURL="<%= configurationRenderURL %>"
+				total="<%= selectedGroups.size() %>"
 			>
 				<liferay-ui:search-container-results
 					results="<%= selectedGroups %>"
-					total="<%= selectedGroups.size() %>"
 				/>
 
 				<liferay-ui:search-container-row

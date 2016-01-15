@@ -1910,15 +1910,30 @@ public class ServiceBuilder {
 		}
 
 		for (String exception : exceptions) {
-			String dirName = StringPool.BLANK;
-
-			if (_osgiModule) {
-				dirName = "exception/";
-			}
+			File oldExceptionFile = new File(
+				_serviceOutputPath + "/" + exception + "Exception.java");
 
 			File exceptionFile = new File(
-				_serviceOutputPath + "/" + dirName + exception +
+				_serviceOutputPath + "/exception/" + exception +
 					"Exception.java");
+
+			if (oldExceptionFile.exists()) {
+				exceptionFile.delete();
+
+				Files.createDirectories(
+					Paths.get(_serviceOutputPath, "exception"));
+
+				Files.move(
+					oldExceptionFile.toPath(), exceptionFile.toPath());
+
+				String content = _read(exceptionFile);
+
+				content = StringUtil.replace(
+					content, "package " + _packagePath,
+					"package " + _packagePath + ".exception");
+
+				_write(exceptionFile, content);
+			}
 
 			if (!exceptionFile.exists()) {
 				Map<String, Object> context = _getContext();

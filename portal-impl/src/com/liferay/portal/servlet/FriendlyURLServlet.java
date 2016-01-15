@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -349,7 +348,12 @@ public class FriendlyURLServlet extends HttpServlet {
 						layoutFriendlyURLCompositeFriendlyURL.substring(0, pos);
 				}
 
-				if (isI18nRedirect(request, group.getGroupId()) ||
+				String i18nLanguageId = (String)request.getAttribute(
+					WebKeys.I18N_LANGUAGE_ID);
+
+				if (((i18nLanguageId != null) &&
+					 !LanguageUtil.isAvailableLocale(
+						 group.getGroupId(), i18nLanguageId)) ||
 					!StringUtil.equalsIgnoreCase(
 						layoutFriendlyURLCompositeFriendlyURL,
 						layout.getFriendlyURL(locale))) {
@@ -386,30 +390,6 @@ public class FriendlyURLServlet extends HttpServlet {
 			requestContext);
 
 		return new Object[] {actualURL, Boolean.FALSE};
-	}
-
-	protected boolean isI18nRedirect(HttpServletRequest request, long groupId) {
-		String i18nPath = (String)request.getAttribute(WebKeys.I18N_PATH);
-
-		if (Validator.isNull(i18nPath)) {
-			return false;
-		}
-
-		int pos = i18nPath.indexOf(StringPool.SLASH);
-
-		String i18nLanguageId = i18nPath.substring(pos + 1);
-
-		Locale i18nLocale = LanguageUtil.getLocale(i18nLanguageId);
-
-		if (i18nLocale == null) {
-			i18nLocale = LocaleUtil.fromLanguageId(i18nLanguageId, true, false);
-		}
-
-		if (LanguageUtil.isAvailableLocale(groupId, i18nLocale)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	protected Locale setAlternativeLayoutFriendlyURL(

@@ -1211,7 +1211,6 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	/**
 	* Returns all the layouts within scope of the group
 	*
-	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @return the layouts within scope of the group
 	*/

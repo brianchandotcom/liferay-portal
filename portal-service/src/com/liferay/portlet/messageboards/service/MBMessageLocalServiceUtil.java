@@ -591,8 +591,8 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, MBMessage, int, boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int, boolean)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
@@ -605,8 +605,8 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, MBMessage, int, boolean, Comparator)} (
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int, boolean, Comparator)} (
 	*/
 	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(
@@ -628,8 +628,8 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, long, int, boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	long, int, boolean)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(

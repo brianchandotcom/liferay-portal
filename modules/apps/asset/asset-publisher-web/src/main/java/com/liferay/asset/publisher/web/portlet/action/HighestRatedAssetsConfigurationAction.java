@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class HighestRatedAssetsConfigurationAction
 	extends AssetPublisherConfigurationAction {
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setAssetTagLocalService(
 		AssetTagLocalService assetTagLocalService) {
@@ -44,11 +45,13 @@ public class HighestRatedAssetsConfigurationAction
 		this.assetTagLocalService = assetTagLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
@@ -56,6 +59,7 @@ public class HighestRatedAssetsConfigurationAction
 		this.layoutLocalService = layoutLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {

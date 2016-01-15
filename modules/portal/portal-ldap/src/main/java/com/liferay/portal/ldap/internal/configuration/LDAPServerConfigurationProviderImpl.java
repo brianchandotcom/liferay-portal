@@ -380,6 +380,7 @@ public class LDAPServerConfigurationProviderImpl
 		}
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {

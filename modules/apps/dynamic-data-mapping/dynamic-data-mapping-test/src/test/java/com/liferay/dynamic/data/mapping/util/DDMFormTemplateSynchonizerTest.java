@@ -159,6 +159,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 			DDMFormJSONSerializerUtil.serialize(ddmForm));
 	}
 
+	@Override
 	protected DDMTemplate createTemplate(
 		long templateId, String name, String mode, String script) {
 

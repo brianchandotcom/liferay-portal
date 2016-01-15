@@ -65,6 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PortletDisplayTemplatePortlet extends DDMPortlet {
 
+	@Override
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -72,6 +73,7 @@ public class PortletDisplayTemplatePortlet extends DDMPortlet {
 			DDMWebConfiguration.class, properties);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -79,6 +81,7 @@ public class PortletDisplayTemplatePortlet extends DDMPortlet {
 		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {

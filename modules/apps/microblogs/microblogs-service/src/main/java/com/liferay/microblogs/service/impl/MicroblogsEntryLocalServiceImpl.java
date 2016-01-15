@@ -57,6 +57,7 @@ import java.util.concurrent.Callable;
 public class MicroblogsEntryLocalServiceImpl
 	extends MicroblogsEntryLocalServiceBaseImpl {
 
+	@Override
 	public MicroblogsEntry addMicroblogsEntry(
 			long userId, long creatorClassNameId, long creatorClassPK,
 			String content, int type, long parentMicroblogsEntryId,
@@ -107,6 +108,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntry;
 	}
 
+	@Override
 	public MicroblogsEntry addMicroblogsEntry(
 			long userId, String content, int type, long parentMicroblogsEntryId,
 			int socialRelationType, ServiceContext serviceContext)
@@ -185,6 +187,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntry;
 	}
 
+	@Override
 	public void deleteMicroblogsEntries(
 			long creatorClassNameId, long creatorClassPK)
 		throws PortalException {
@@ -227,6 +230,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntry;
 	}
 
+	@Override
 	public void deleteUserMicroblogsEntries(long userId)
 		throws PortalException {
 
@@ -238,6 +242,7 @@ public class MicroblogsEntryLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<MicroblogsEntry> getCompanyMicroblogsEntries(
 		long companyId, int start, int end) {
 
@@ -245,10 +250,12 @@ public class MicroblogsEntryLocalServiceImpl
 			companyId, start, end);
 	}
 
+	@Override
 	public int getCompanyMicroblogsEntriesCount(long companyId) {
 		return microblogsEntryPersistence.countByCompanyId(companyId);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, int type, int start, int end,
 		OrderByComparator obc) {
@@ -257,6 +264,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, type, start, end, obc);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, int start, int end) {
 
@@ -264,6 +272,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK, start, end);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
 		int end) {
@@ -272,6 +281,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK, type, start, end);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, String assetTagName,
 		boolean andOperator, int start, int end) {
@@ -281,6 +291,7 @@ public class MicroblogsEntryLocalServiceImpl
 			start, end);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, String assetTagName, int start, int end) {
 
@@ -288,6 +299,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, assetTagName, start, end);
 	}
 
+	@Override
 	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, long creatorClassPK) {
 
@@ -295,6 +307,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK);
 	}
 
+	@Override
 	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, long creatorClassPK, int type) {
 
@@ -302,6 +315,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK, type);
 	}
 
+	@Override
 	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, long creatorClassPK, String assetTagName,
 		boolean andOperator) {
@@ -310,6 +324,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK, assetTagName, andOperator);
 	}
 
+	@Override
 	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, String assetTagName) {
 
@@ -324,6 +339,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntryPersistence.findByPrimaryKey(microblogsEntryId);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getParentMicroblogsEntryMicroblogsEntries(
 		int type, long parentMicroblogsEntryId, int start, int end) {
 
@@ -332,6 +348,7 @@ public class MicroblogsEntryLocalServiceImpl
 			new EntryCreateDateComparator(true));
 	}
 
+	@Override
 	public List<MicroblogsEntry> getParentMicroblogsEntryMicroblogsEntries(
 		int type, long parentMicroblogsEntryId, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
@@ -340,6 +357,7 @@ public class MicroblogsEntryLocalServiceImpl
 			type, parentMicroblogsEntryId, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getParentMicroblogsEntryMicroblogsEntriesCount(
 		int type, long parentMicroblogsEntryId) {
 
@@ -347,26 +365,31 @@ public class MicroblogsEntryLocalServiceImpl
 			type, parentMicroblogsEntryId);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getUserMicroblogsEntries(
 		long userId, int start, int end) {
 
 		return microblogsEntryPersistence.findByUserId(userId, start, end);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getUserMicroblogsEntries(
 		long userId, int type, int start, int end) {
 
 		return microblogsEntryPersistence.findByU_T(userId, type, start, end);
 	}
 
+	@Override
 	public int getUserMicroblogsEntriesCount(long userId) {
 		return microblogsEntryPersistence.countByUserId(userId);
 	}
 
+	@Override
 	public int getUserMicroblogsEntriesCount(long userId, int type) {
 		return microblogsEntryPersistence.countByU_T(userId, type);
 	}
 
+	@Override
 	public void updateAsset(
 			MicroblogsEntry microblogsEntry, long[] assetCategoryIds,
 			String[] assetTagNames)
@@ -382,6 +405,7 @@ public class MicroblogsEntryLocalServiceImpl
 			assetTagNames);
 	}
 
+	@Override
 	public MicroblogsEntry updateMicroblogsEntry(
 			long microblogsEntryId, String content, int socialRelationType,
 			ServiceContext serviceContext)

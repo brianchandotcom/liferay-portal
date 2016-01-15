@@ -40,6 +40,7 @@ public class LDAPExportConfigurationProviderImpl
 		return LDAPExportConfiguration.class;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {

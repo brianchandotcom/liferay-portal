@@ -67,21 +67,25 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		this.dlAppLocalService = dlAppLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
@@ -89,6 +93,7 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.layoutLocalService = layoutLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutPrototypeLocalService(
 		LayoutPrototypeLocalService layoutPrototypeLocalService) {
@@ -96,6 +101,7 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutPrototypeService(
 		LayoutPrototypeService layoutPrototypeService) {
@@ -103,6 +109,7 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.layoutPrototypeService = layoutPrototypeService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
@@ -110,11 +117,13 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.layoutRevisionLocalService = layoutRevisionLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutSetLocalService(
 		LayoutSetLocalService layoutSetLocalService) {
@@ -122,11 +131,13 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.layoutSetLocalService = layoutSetLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutSetService(LayoutSetService layoutSetService) {
 		this.layoutSetService = layoutSetService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setMDRActionLocalService(
 		MDRActionLocalService mdrActionLocalService) {
@@ -134,11 +145,13 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.mdrActionLocalService = mdrActionLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setMDRActionService(MDRActionService mdrActionService) {
 		this.mdrActionService = mdrActionService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setMDRRuleGroupInstanceLocalService(
 		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
@@ -147,6 +160,7 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 			mdrRuleGroupInstanceLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setMDRRuleGroupInstanceService(
 		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
@@ -154,6 +168,7 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
@@ -161,6 +176,7 @@ public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 		this.portletLocalService = portletLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setThemeLocalService(ThemeLocalService themeLocalService) {
 		this.themeLocalService = themeLocalService;

@@ -1974,6 +1974,7 @@ public abstract class BaseWebDriverImpl
 	public void setDefaultTimeout() {
 	}
 
+	@Override
 	public void setDefaultTimeoutImplicit() {
 		WebDriverHelper.setDefaultTimeoutImplicit(this);
 	}
@@ -2002,6 +2003,7 @@ public abstract class BaseWebDriverImpl
 	public void setTimeout(String timeout) {
 	}
 
+	@Override
 	public void setTimeoutImplicit(String timeout) {
 		WebDriverHelper.setTimeoutImplicit(this, timeout);
 	}

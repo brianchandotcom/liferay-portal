@@ -35,11 +35,13 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteTemplateSettingsPortletDataHandler
 	extends LayoutSetPrototypePortletDataHandler {
 
+	@Override
 	@Activate
 	protected void activate() {
 		super.activate();
 	}
 
+	@Override
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {

@@ -61,11 +61,13 @@ import org.osgi.service.component.annotations.Reference;
 public class StrutsPortletToolbarContributorLocator
 	extends BasePortletToolbarContributorLocator {
 
+	@Override
 	@Activate
 	protected void activate() {
 		super.activate();
 	}
 
+	@Override
 	@Deactivate
 	protected void deactivate() {
 		super.deactivate();

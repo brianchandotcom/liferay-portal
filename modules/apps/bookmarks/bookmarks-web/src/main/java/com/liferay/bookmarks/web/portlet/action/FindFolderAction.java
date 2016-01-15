@@ -50,7 +50,7 @@ public class FindFolderAction extends FindStrutsAction {
 	protected String getStrutsAction(
 		HttpServletRequest request, String portletId) {
 
-		return "/bookmarks/view";
+		return "/bookmarks/view_folder";
 	}
 
 	@Override

@@ -82,7 +82,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				%>
 
 				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_folder" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</liferay-portlet:renderURL>

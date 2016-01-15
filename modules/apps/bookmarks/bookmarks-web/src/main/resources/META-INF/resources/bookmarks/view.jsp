@@ -64,9 +64,15 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+}
+else {
+	portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view_folder");
+	portletURL.setParameter("folderId", String.valueOf(folderId));
+}
+
 portletURL.setParameter("navigation", navigation);
-portletURL.setParameter("folderId", String.valueOf(folderId));
 
 SearchContainer bookmarksSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-bookmarks-in-this-folder");
 

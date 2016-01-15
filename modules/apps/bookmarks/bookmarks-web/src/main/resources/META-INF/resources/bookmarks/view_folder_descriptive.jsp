@@ -25,7 +25,7 @@ folder = folder.toEscapedModel();
 
 PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-rowURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+rowURL.setParameter("mvcRenderCommandName", "/bookmarks/view_folder");
 rowURL.setParameter("redirect", currentURL);
 rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>

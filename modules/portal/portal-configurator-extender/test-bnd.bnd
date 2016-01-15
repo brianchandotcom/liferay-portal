@@ -9,4 +9,4 @@ Include-Resource:\
 	@lib/biz.aQute.bndlib.jar!/aQute/lib/filter/*,\
 	@lib/org.apache.felix.utils.jar,\
 	@lib/portal-service.jar,\
-	@test-lib/com.liferay.registry.api-1.0.0.jar
+	@test-lib/com.liferay.registry.api.jar

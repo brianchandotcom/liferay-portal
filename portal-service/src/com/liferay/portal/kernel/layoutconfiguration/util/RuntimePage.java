@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.layoutconfiguration.util;
+package com.liferay.portal.kernel.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;

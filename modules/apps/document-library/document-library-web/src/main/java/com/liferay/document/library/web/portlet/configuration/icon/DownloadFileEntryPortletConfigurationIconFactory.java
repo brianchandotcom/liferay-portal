@@ -12,44 +12,46 @@
  * details.
  */
 
-package com.liferay.message.boards.web.portlet.configuration.icon;
+package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-		"path=/message_boards/view_message"
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"path=/document_library/view_file_entry"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class DeleteThreadPortletConfigurationIconFactory
+public class DownloadFileEntryPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
 		try {
-			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
-				portletRequest);
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
-			return new DeleteThreadPortletConfigurationIcon(
-				portletRequest, messageDisplay);
+			FileVersion fileVersion = ActionUtil.getFileVersion(
+				portletRequest, fileEntry);
+
+			return new DownloadFileEntryPortletConfigurationIcon(
+				portletRequest, fileEntry, fileVersion);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 		}
 
 		return null;
@@ -57,7 +59,7 @@ public class DeleteThreadPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 105;
+		return 108.0;
 	}
 
 }

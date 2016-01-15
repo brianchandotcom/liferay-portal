@@ -12,64 +12,51 @@
  * details.
  */
 
-package com.liferay.message.boards.web.portlet.configuration.icon;
+package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class ThreadLockPortletConfigurationIcon
+public class CancelCheckoutFileEntryPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public ThreadLockPortletConfigurationIcon(
-		PortletRequest portletRequest, MBThread thread) {
+	public CancelCheckoutFileEntryPortletConfigurationIcon(
+		PortletRequest portletRequest, FileEntry fileEntry) {
 
 		super(portletRequest);
 
-		_thread = thread;
+		_fileEntry = fileEntry;
 	}
 
 	@Override
 	public String getMessage() {
-		if (_thread.isLocked()) {
-			return "unlock";
-		}
-
-		return "lock";
+		return "cancel-checkout[document]";
 	}
 
 	@Override
 	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/message_boards/edit_message");
-
-		if (_thread.isLocked()) {
-			portletURL.setParameter(Constants.CMD, Constants.UNLOCK);
-		}
-		else {
-			portletURL.setParameter(Constants.CMD, Constants.LOCK);
-		}
-
+			ActionRequest.ACTION_NAME, "/document_library/edit_file_entry");
+		portletURL.setParameter(Constants.CMD, Constants.CANCEL_CHECKOUT);
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
-			"redirect", PortalUtil.getCurrentURL(portletRequest));
-		portletURL.setParameter(
-			"threadId", String.valueOf(_thread.getThreadId()));
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 		return portletURL.toString();
 	}
@@ -77,10 +64,13 @@ public class ThreadLockPortletConfigurationIcon
 	@Override
 	public boolean isShow() {
 		try {
-			return MBCategoryPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), _thread.getCategoryId(),
-				ActionKeys.LOCK_THREAD);
+			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
+				new FileEntryDisplayContextHelper(
+					themeDisplay.getPermissionChecker(), _fileEntry);
+
+			return
+				fileEntryDisplayContextHelper.
+					isCancelCheckoutDocumentActionAvailable();
 		}
 		catch (PortalException pe) {
 		}
@@ -88,6 +78,11 @@ public class ThreadLockPortletConfigurationIcon
 		return false;
 	}
 
-	private final MBThread _thread;
+	@Override
+	public boolean isToolTip() {
+		return false;
+	}
+
+	private final FileEntry _fileEntry;
 
 }

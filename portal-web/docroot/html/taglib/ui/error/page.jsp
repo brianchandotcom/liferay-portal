@@ -69,7 +69,7 @@ if (bodyContent != null) {
 		<c:if test="<%= !SessionErrors.isEmpty(portletRequest) %>">
 			<liferay-ui:alert
 				message='<%= LanguageUtil.get(request, "your-request-failed-to-complete") %>'
-				timeout="5000"
+				timeout="0"
 				title='<%= LanguageUtil.get(request, "danger") %>'
 				type="danger"
 			/>

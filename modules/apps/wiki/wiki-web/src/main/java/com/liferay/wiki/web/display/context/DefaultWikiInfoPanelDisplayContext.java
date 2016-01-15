@@ -41,7 +41,7 @@ public class DefaultWikiInfoPanelDisplayContext
 	public WikiNode getFirstNode() {
 		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
 
-		if (nodes.size() == 0) {
+		if (nodes.isEmpty()) {
 			return null;
 		}
 

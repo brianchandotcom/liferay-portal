@@ -13,7 +13,7 @@ if (!project.parent) {
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 
-	testIntegrationCompile group: "com.liferay.arquillian", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Alpha1-SNAPSHOT"
+	testIntegrationCompile group: "com.liferay.arquillian", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Alpha1-20150126.151531-9"
 	testIntegrationCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "4.4.0"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "4.4.0"

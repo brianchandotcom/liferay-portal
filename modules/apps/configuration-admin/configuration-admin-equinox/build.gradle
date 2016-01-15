@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.metatype", version: "1.4.200-SNAPSHOT"
+	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.metatype", version: "1.4.200-20150831.175616-1"
 	compile project(":apps:configuration-admin:configuration-admin-api")
 }
 

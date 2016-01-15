@@ -6,4 +6,7 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /notifications-web
+-include: ../../../../marketplace/collaboration/bnd.bnd

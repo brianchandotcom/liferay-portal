@@ -14,4 +14,7 @@ Include-Resource:\
 	@lib/ph-commons.jar,\
 	@lib/ph-css.jar,\
 	@lib/slf4j-api.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Main-Class: com.liferay.rtl.css.RTLConverter
+-include: ../../../marketplace/platform/bnd.bnd

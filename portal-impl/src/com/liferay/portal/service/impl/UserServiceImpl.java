@@ -14,9 +14,9 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.RequiredUserException;
-import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.UserFieldException;
+import com.liferay.portal.exception.RequiredUserException;
+import com.liferay.portal.exception.UserEmailAddressException;
+import com.liferay.portal.exception.UserFieldException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -14,9 +14,9 @@
 
 package com.liferay.staging.bar.web.portlet;
 
-import com.liferay.portal.LayoutBranchNameException;
-import com.liferay.portal.LayoutSetBranchNameException;
-import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.exception.LayoutBranchNameException;
+import com.liferay.portal.exception.LayoutSetBranchNameException;
+import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;

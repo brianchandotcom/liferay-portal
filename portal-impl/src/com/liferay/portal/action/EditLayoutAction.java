@@ -14,8 +14,8 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.LayoutTypeException;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.exception.LayoutTypeException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;

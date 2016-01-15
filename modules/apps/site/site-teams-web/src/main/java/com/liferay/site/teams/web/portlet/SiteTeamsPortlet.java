@@ -14,10 +14,10 @@
 
 package com.liferay.site.teams.web.portlet;
 
-import com.liferay.portal.DuplicateTeamException;
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchTeamException;
-import com.liferay.portal.TeamNameException;
+import com.liferay.portal.exception.DuplicateTeamException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchTeamException;
+import com.liferay.portal.exception.TeamNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;

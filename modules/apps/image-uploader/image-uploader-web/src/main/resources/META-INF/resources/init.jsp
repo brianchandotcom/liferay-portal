@@ -44,9 +44,9 @@ page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portlet.documentlibrary.FileExtensionException" %><%@
-page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
-page import="com.liferay.portlet.documentlibrary.NoSuchFileException" %>
+page import="com.liferay.portlet.documentlibrary.exception.FileExtensionException" %><%@
+page import="com.liferay.portlet.documentlibrary.exception.FileSizeException" %><%@
+page import="com.liferay.portlet.documentlibrary.exception.NoSuchFileException" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %>
 

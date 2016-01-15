@@ -15,8 +15,8 @@
 package com.liferay.layout.prototype.web.portlet;
 
 import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
-import com.liferay.portal.NoSuchLayoutPrototypeException;
-import com.liferay.portal.RequiredLayoutPrototypeException;
+import com.liferay.portal.exception.NoSuchLayoutPrototypeException;
+import com.liferay.portal.exception.RequiredLayoutPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;

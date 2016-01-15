@@ -16,7 +16,7 @@ package com.liferay.journal.model.listener;
 
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ModelListener;

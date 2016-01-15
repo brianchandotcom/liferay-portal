@@ -93,7 +93,7 @@ public class GroupFinderUtil {
 
 	public static com.liferay.portal.model.Group findByC_GK(long companyId,
 		java.lang.String groupKey)
-		throws com.liferay.portal.NoSuchGroupException {
+		throws com.liferay.portal.exception.NoSuchGroupException {
 		return getFinder().findByC_GK(companyId, groupKey);
 	}
 

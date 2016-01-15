@@ -14,7 +14,7 @@
 
 package com.liferay.portal.test.randomizerbumpers;
 
-import com.liferay.portal.LayoutFriendlyURLException;
+import com.liferay.portal.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;

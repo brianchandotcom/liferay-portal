@@ -14,10 +14,10 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.DuplicateRoleException;
-import com.liferay.portal.NoSuchRoleException;
-import com.liferay.portal.RequiredRoleException;
-import com.liferay.portal.RoleNameException;
+import com.liferay.portal.exception.DuplicateRoleException;
+import com.liferay.portal.exception.NoSuchRoleException;
+import com.liferay.portal.exception.RequiredRoleException;
+import com.liferay.portal.exception.RoleNameException;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.ldap.internal.exportimport;
 
-import com.liferay.portal.NoSuchRoleException;
-import com.liferay.portal.NoSuchUserGroupException;
+import com.liferay.portal.exception.NoSuchRoleException;
+import com.liferay.portal.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.internal.portlet.action;
 
-import com.liferay.portal.UserEmailAddressException;
+import com.liferay.portal.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;

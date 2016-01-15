@@ -14,8 +14,8 @@
 
 package com.liferay.portal.ldap.internal.authenticator;
 
-import com.liferay.portal.PasswordExpiredException;
-import com.liferay.portal.UserLockoutException;
+import com.liferay.portal.exception.PasswordExpiredException;
+import com.liferay.portal.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.ldap.LDAPFilterException;
 import com.liferay.portal.kernel.log.Log;

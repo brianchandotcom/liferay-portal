@@ -14,12 +14,12 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.LayoutFriendlyURLException;
-import com.liferay.portal.LayoutFriendlyURLsException;
-import com.liferay.portal.LayoutNameException;
-import com.liferay.portal.LayoutParentLayoutIdException;
-import com.liferay.portal.LayoutTypeException;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.LayoutFriendlyURLException;
+import com.liferay.portal.exception.LayoutFriendlyURLsException;
+import com.liferay.portal.exception.LayoutNameException;
+import com.liferay.portal.exception.LayoutParentLayoutIdException;
+import com.liferay.portal.exception.LayoutTypeException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

@@ -30,7 +30,7 @@ public interface AssetCategoryFinder {
 
 	public com.liferay.portlet.asset.model.AssetCategory findByG_N(
 		long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.NoSuchCategoryException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_N_P(
 		long groupId, java.lang.String name,

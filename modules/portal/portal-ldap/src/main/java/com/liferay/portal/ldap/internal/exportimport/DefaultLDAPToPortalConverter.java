@@ -14,8 +14,8 @@
 
 package com.liferay.portal.ldap.internal.exportimport;
 
-import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.UserScreenNameException;
+import com.liferay.portal.exception.UserEmailAddressException;
+import com.liferay.portal.exception.UserScreenNameException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

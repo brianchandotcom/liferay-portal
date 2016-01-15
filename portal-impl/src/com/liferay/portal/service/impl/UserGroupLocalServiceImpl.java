@@ -14,9 +14,9 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.DuplicateUserGroupException;
-import com.liferay.portal.RequiredUserGroupException;
-import com.liferay.portal.UserGroupNameException;
+import com.liferay.portal.exception.DuplicateUserGroupException;
+import com.liferay.portal.exception.RequiredUserGroupException;
+import com.liferay.portal.exception.UserGroupNameException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

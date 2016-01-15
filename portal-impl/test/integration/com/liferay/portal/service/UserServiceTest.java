@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.UserEmailAddressException;
+import com.liferay.portal.exception.NoSuchUserException;
+import com.liferay.portal.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;

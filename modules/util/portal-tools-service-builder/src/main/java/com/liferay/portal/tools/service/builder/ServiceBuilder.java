@@ -1923,8 +1923,7 @@ public class ServiceBuilder {
 				Files.createDirectories(
 					Paths.get(_serviceOutputPath, "exception"));
 
-				Files.move(
-					oldExceptionFile.toPath(), exceptionFile.toPath());
+				Files.move(oldExceptionFile.toPath(), exceptionFile.toPath());
 
 				String content = _read(exceptionFile);
 

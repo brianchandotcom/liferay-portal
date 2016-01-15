@@ -14,7 +14,7 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;

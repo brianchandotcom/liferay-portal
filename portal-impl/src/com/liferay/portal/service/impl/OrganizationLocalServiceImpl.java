@@ -14,11 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.DuplicateOrganizationException;
-import com.liferay.portal.OrganizationNameException;
-import com.liferay.portal.OrganizationParentException;
-import com.liferay.portal.OrganizationTypeException;
-import com.liferay.portal.RequiredOrganizationException;
+import com.liferay.portal.exception.DuplicateOrganizationException;
+import com.liferay.portal.exception.OrganizationNameException;
+import com.liferay.portal.exception.OrganizationParentException;
+import com.liferay.portal.exception.OrganizationTypeException;
+import com.liferay.portal.exception.RequiredOrganizationException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

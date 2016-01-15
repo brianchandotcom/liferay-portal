@@ -27,8 +27,8 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.EntryImageNameException;
-import com.liferay.portlet.blogs.EntryImageSizeException;
+import com.liferay.portlet.blogs.exception.EntryImageNameException;
+import com.liferay.portlet.blogs.exception.EntryImageSizeException;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.PortletRequest;

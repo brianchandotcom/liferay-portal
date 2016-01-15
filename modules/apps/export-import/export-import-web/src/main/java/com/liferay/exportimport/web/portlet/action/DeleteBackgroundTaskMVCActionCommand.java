@@ -15,7 +15,7 @@
 package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
-import com.liferay.portal.NoSuchBackgroundTaskException;
+import com.liferay.portal.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;

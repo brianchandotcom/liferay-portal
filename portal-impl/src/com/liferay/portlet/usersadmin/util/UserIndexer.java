@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.usersadmin.util;
 
-import com.liferay.portal.NoSuchContactException;
+import com.liferay.portal.exception.NoSuchContactException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;

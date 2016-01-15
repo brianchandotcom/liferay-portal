@@ -14,9 +14,9 @@
 
 package com.liferay.portal.struts;
 
-import com.liferay.portal.LayoutPermissionException;
-import com.liferay.portal.PortletActiveException;
-import com.liferay.portal.UserActiveException;
+import com.liferay.portal.exception.LayoutPermissionException;
+import com.liferay.portal.exception.PortletActiveException;
+import com.liferay.portal.exception.UserActiveException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;

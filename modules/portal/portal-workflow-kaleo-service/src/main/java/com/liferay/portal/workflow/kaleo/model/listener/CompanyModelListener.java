@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.model.listener;
 
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ModelListener;

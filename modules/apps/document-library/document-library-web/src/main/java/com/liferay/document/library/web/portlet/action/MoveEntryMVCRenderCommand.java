@@ -18,7 +18,6 @@ import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,12 +65,6 @@ public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
-
-			FileVersion fileVersion = ActionUtil.getFileVersion(
-				renderRequest, fileEntry);
-
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
 			List<FileShortcut> fileShortcuts = ActionUtil.getFileShortcuts(
 				renderRequest);

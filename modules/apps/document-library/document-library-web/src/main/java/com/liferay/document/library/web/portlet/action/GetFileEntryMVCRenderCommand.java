@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -47,8 +49,12 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 			FileVersion fileVersion = ActionUtil.getFileVersion(
 				renderRequest, fileEntry);
 
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+			String version = ParamUtil.getString(renderRequest, "version");
+
+			if (Validator.isNotNull(version)) {
+				renderRequest.setAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryException ||

@@ -127,13 +127,13 @@ public class MBThreadLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		long categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
 		long threadId = 0;
+		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
 
 		if (parentMessage != null) {
 			categoryId = parentMessage.getCategoryId();
-			parentMessageId = parentMessage.getMessageId();
 			threadId = parentMessage.getThreadId();
+			parentMessageId = parentMessage.getMessageId();
 		}
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =

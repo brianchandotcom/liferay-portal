@@ -295,7 +295,7 @@
 		<execute macro="UserBar#gotoProfile" />
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Profile" />
+			<var name="page" value="My Profile" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoAddPage" />

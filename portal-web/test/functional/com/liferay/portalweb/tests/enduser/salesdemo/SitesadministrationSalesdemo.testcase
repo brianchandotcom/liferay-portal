@@ -164,7 +164,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Video" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -197,7 +197,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="home" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">

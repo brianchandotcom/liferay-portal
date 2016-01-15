@@ -307,7 +307,7 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContent#addPGViaWCD">
+		<execute macro="WebContent#addStructuredPGViaWCD">
 			<var name="structureFieldName" value="Text" />
 			<var name="structureName" value="WC Structure Name" />
 			<var name="webContentText" value="WC WebContent Text" />

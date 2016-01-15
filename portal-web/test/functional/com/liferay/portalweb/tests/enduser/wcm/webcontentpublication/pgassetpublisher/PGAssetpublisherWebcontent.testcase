@@ -675,8 +675,7 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="WebContent#addPGViaAP">
-			<var name="saveAsDraft" value="true" />
+		<execute macro="WebContent#addDraftPGViaAP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC Webcontent Title" />
 		</execute>

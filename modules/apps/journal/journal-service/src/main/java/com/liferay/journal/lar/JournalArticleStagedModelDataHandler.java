@@ -73,7 +73,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(
+	immediate = true,
+	service = {
+		JournalArticleStagedModelDataHandler.class, StagedModelDataHandler.class
+	}
+)
 public class JournalArticleStagedModelDataHandler
 	extends BaseStagedModelDataHandler<JournalArticle> {
 

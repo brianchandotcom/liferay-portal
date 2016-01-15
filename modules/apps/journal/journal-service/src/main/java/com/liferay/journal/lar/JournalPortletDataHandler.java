@@ -46,8 +46,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
@@ -411,14 +409,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					Property workflowStatusProperty =
 						PropertyFactoryUtil.forName("status");
 
-					StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-							getStagedModelDataHandler(
-								JournalArticle.class.getName());
-
 					versionArticleDynamicQuery.add(
 						workflowStatusProperty.in(
-							stagedModelDataHandler.getExportableStatuses()));
+							_journalArticleStagedModelDataHandler.
+								getExportableStatuses()));
 
 					Property versionProperty = PropertyFactoryUtil.forName(
 						"version");
@@ -565,6 +559,15 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(unbind = "-")
+	protected void setJournalArticleStagedModelDataHandler(
+		JournalArticleStagedModelDataHandler
+			journalArticleStagedModelDataHandler) {
+
+		_journalArticleStagedModelDataHandler =
+			journalArticleStagedModelDataHandler;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}
@@ -591,6 +594,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleStagedModelDataHandler
+		_journalArticleStagedModelDataHandler;
 	private JournalContent _journalContent;
 	private JournalFeedLocalService _journalFeedLocalService;
 	private JournalFolderLocalService _journalFolderLocalService;

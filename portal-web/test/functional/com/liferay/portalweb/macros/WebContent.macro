@@ -7,6 +7,7 @@
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+
 				<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 			</else>
 		</if>

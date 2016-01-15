@@ -53,7 +53,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 		</aui:nav>
 
-		<c:if test="<%= tabs3.equals("update-categories") %>">
+		<c:if test='<%= tabs3.equals("update-categories") %>'>
 			<aui:nav-bar-search>
 				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-categories") %>' />
 			</aui:nav-bar-search>
@@ -165,7 +165,7 @@ serverURL.setParameter("tabs3", tabs3);
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon"/>
+				<liferay-ui:search-iterator markupView="lexicon" />
 			</liferay-ui:search-container>
 
 			<aui:button-row>

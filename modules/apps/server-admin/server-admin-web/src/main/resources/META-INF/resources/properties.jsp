@@ -166,6 +166,6 @@ serverURL.setParameter("tabs3", tabs3);
 			</c:if>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon"/>
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>

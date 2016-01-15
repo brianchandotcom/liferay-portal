@@ -32,6 +32,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 		<c:otherwise>
 
 				<liferay-ui:panel-container extended="<%= true %>" id="convertPanelContainer" persistState="<%= true %>">
+
 			<%
 			int i = 0;
 
@@ -109,6 +110,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 				i++;
 			}
 			%>
+
 				</liferay-ui:panel-container>
 
 		</c:otherwise>

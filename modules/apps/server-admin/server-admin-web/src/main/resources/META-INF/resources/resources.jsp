@@ -44,7 +44,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 				<%= numberFormat.format(hours) %>:<%= numberFormat.format(minutes) %>:<%= numberFormat.format(seconds) %>
 			</div>
-			<div class="text-center meter-wrapper">
+			<div class="meter-wrapper text-center">
 				<portlet:resourceURL id="/server_admin/view_chart" var="totalMemoryChartURL">
 					<portlet:param name="type" value="total" />
 					<portlet:param name="totalMemory" value="<%= String.valueOf(totalMemory) %>" />

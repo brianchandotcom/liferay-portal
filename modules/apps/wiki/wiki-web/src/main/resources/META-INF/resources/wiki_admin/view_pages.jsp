@@ -80,7 +80,7 @@ else {
 <liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
-	checkBoxDisabled="<%= pages.isEmpty() %>"
+	disabled="<%= pages.isEmpty() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="wikiPages"
 >

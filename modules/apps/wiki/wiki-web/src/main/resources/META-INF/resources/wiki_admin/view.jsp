@@ -73,7 +73,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 %>
 
 <liferay-frontend:management-bar
-	checkBoxDisabled="<%= nodesCount == 0 %>"
+	disabled="<%= nodesCount == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="wikiNodes"
 >

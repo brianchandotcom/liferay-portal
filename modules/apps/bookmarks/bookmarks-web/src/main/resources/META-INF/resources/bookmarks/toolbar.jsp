@@ -28,7 +28,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 %>
 
 <liferay-frontend:management-bar
-	checkBoxDisabled="<%= total == 0 %>"
+	disabled="<%= total == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="<%= searchContainerId %>"
 >

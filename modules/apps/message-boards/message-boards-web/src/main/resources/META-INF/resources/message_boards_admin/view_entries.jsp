@@ -59,7 +59,7 @@ if (groupThreadsUserId > 0) {
 %>
 
 <liferay-frontend:management-bar
-	checkBoxDisabled="<%= entriesTotal == 0 %>"
+	disabled="<%= entriesTotal == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbEntries"
 >

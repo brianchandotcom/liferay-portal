@@ -44,7 +44,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 %>
 
 <liferay-frontend:management-bar
-	checkBoxDisabled="<%= totalBannedUsers == 0 %>"
+	disabled="<%= totalBannedUsers == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbBanUsers"
 >

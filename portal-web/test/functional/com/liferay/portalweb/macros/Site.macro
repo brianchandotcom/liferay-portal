@@ -578,7 +578,10 @@
 	</command>
 
 	<command name="editFriendlyURLCP">
-		<execute function="AssertClick" locator1="NavListItem#SITE_URL" value1="Site URL" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Site URL" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
 
 		<execute function="Pause" locator1="5000" />
@@ -590,6 +593,9 @@
 			<equals arg1="${friendlyURLInvalid}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+				<execute function="AssertClick" locator1="SiteSettingsSiteURL#SITE_URL_LABEL" value1="Site URL" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The friendly URL has too many slashes." />
 				<execute function="AssertTextEquals" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 			</then>

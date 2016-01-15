@@ -82,7 +82,9 @@
 	</command>
 
 	<command name="addViaSiteCP">
-		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_CATEGORIZATION" value1="Categorization" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
 
 		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 		<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />

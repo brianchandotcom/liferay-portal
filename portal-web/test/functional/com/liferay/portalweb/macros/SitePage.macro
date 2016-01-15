@@ -1,14 +1,16 @@
 <definition>
 	<command name="addJavaScript">
-		<var name="key_page" value="${page}" />
+		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
+
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="JavaScript" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of every page." />
+		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of the page." />
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />

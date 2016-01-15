@@ -878,7 +878,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		test.jvmArgs(_TEST_JVM_ARGS);
 
+		configureTaskTestIgnoreFailures(test);
 		configureTaskTestLogging(test);
+	}
+
+	protected void configureTaskTestIgnoreFailures(Test test) {
+		test.setIgnoreFailures(true);
 	}
 
 	protected void configureTaskTestIntegration(Project project) {
@@ -887,6 +892,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		test.jvmArgs(_TEST_INTEGRATION_JVM_ARGS);
 
+		configureTaskTestIgnoreFailures(test);
 		configureTaskTestLogging(test);
 
 		File resultsDir = project.file("test-results/integration");

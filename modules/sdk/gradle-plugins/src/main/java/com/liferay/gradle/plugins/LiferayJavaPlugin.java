@@ -561,7 +561,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		test.setForkEvery(1L);
 
 		configureTaskTestDefaultCharacterEncoding(test);
-		configureTaskTestIgnoreFailures(test);
 		configureTaskTestJvmArgs(test);
 
 		project.afterEvaluate(
@@ -579,10 +578,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.name());
 	}
 
-	protected void configureTaskTestIgnoreFailures(Test test) {
-		test.setIgnoreFailures(true);
-	}
-
 	protected void configureTaskTestIncludes(Test test) {
 		Set<String> includes = test.getIncludes();
 
@@ -596,7 +591,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
 
 		configureTaskTestDefaultCharacterEncoding(test);
-		configureTaskTestIgnoreFailures(test);
 	}
 
 	protected void configureTaskTestJvmArgs(Test test) {

@@ -48,7 +48,9 @@ import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -292,6 +294,27 @@ public class ActionUtil {
 		}
 
 		return node;
+	}
+
+	public static List<WikiNode> getNodes(PortletRequest portletRequest)
+		throws PortalException {
+
+		long[] nodeIds = ParamUtil.getLongValues(
+			portletRequest, "rowIdsWikiNode");
+
+		if (nodeIds.length == 0) {
+			return Collections.emptyList();
+		}
+
+		List<WikiNode> nodes = new ArrayList<>();
+
+		for (long nodeId : nodeIds) {
+			if (nodeId != 0) {
+				nodes.add(WikiNodeServiceUtil.getNode(nodeId));
+			}
+		}
+
+		return nodes;
 	}
 
 	public static WikiPage getPage(PortletRequest portletRequest)

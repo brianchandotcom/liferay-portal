@@ -45,6 +45,8 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		resourceRequest.setAttribute(
+			WikiWebKeys.WIKI_NODES, ActionUtil.getNodes(resourceRequest));
 		PortletRequestDispatcher portletRequestDispatcher =
 			getPortletRequestDispatcher(
 				resourceRequest, "/wiki_admin/info_panel.jsp");

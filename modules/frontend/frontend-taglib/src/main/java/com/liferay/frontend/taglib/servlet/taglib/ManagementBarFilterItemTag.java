@@ -74,14 +74,14 @@ public class ManagementBarFilterItemTag extends IncludeTag {
 			(ManagementBarNavigationTag)findAncestorWithClass(
 				this, ManagementBarNavigationTag.class);
 
-		List<FilterNavigationItem> filterNavigationItems =
-			managementBarNavigationTag.getFilterNavigationItems();
+		List<ManagementBarFilterItem> managementBarFilterItems =
+			managementBarNavigationTag.getManagementBarFilterItems();
 
-		if (filterNavigationItems != null) {
-			FilterNavigationItem filterNavigationItem =
-				new FilterNavigationItem(_active, _id, _label, _url);
+		if (managementBarFilterItems != null) {
+			ManagementBarFilterItem managementBarFilterItem =
+				new ManagementBarFilterItem(_active, _id, _label, _url);
 
-			filterNavigationItems.add(filterNavigationItem);
+			managementBarFilterItems.add(managementBarFilterItem);
 		}
 	}
 

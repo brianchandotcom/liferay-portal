@@ -16,5 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.frontend.taglib.servlet.taglib.FilterNavigationItem" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.ListUtil" %>

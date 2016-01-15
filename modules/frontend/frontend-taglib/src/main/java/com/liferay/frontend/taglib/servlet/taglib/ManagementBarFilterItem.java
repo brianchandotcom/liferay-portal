@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.util.StringPool;
 /**
  * @author Eudaldo Alonso
  */
-public class FilterNavigationItem {
+public class ManagementBarFilterItem {
 
-	public FilterNavigationItem(boolean active, String label, String url) {
+	public ManagementBarFilterItem(boolean active, String label, String url) {
 		_active = active;
 		_label = label;
 		_url = url;
@@ -29,7 +29,7 @@ public class FilterNavigationItem {
 		_id = null;
 	}
 
-	public FilterNavigationItem(
+	public ManagementBarFilterItem(
 		boolean active, String id, String label, String url) {
 
 		_active = active;
@@ -38,7 +38,7 @@ public class FilterNavigationItem {
 		_url = url;
 	}
 
-	public FilterNavigationItem(String label, String url) {
+	public ManagementBarFilterItem(String label, String url) {
 		_label = label;
 		_url = url;
 
@@ -46,7 +46,7 @@ public class FilterNavigationItem {
 		_id = StringPool.BLANK;
 	}
 
-	public FilterNavigationItem(String id, String label, String url) {
+	public ManagementBarFilterItem(String id, String label, String url) {
 		_id = id;
 		_label = label;
 		_url = url;

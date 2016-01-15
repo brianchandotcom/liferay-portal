@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
-import com.liferay.frontend.taglib.servlet.taglib.util.ManagementBarFilterItem;
+import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -250,16 +250,10 @@ public class JournalDisplayContext {
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			new ArrayList<>();
 
-		String parameterName = "status";
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
-
 		managementBarFilterItems.add(
-			getManagementBarFilterItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_ANY));
+			getManagementBarFilterItem(WorkflowConstants.STATUS_ANY));
 		managementBarFilterItems.add(
-			getManagementBarFilterItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_DRAFT));
+			getManagementBarFilterItem(WorkflowConstants.STATUS_DRAFT));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -272,24 +266,17 @@ public class JournalDisplayContext {
 
 		if (workflowDefinitionLinksCount > 0) {
 			managementBarFilterItems.add(
-				getManagementBarFilterItem(
-					parameterName, portletURL,
-					WorkflowConstants.STATUS_PENDING));
+				getManagementBarFilterItem(WorkflowConstants.STATUS_PENDING));
 			managementBarFilterItems.add(
-				getManagementBarFilterItem(
-					parameterName, portletURL,
-					WorkflowConstants.STATUS_DENIED));
+				getManagementBarFilterItem(WorkflowConstants.STATUS_DENIED));
 		}
 
 		managementBarFilterItems.add(
-			getManagementBarFilterItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_SCHEDULED));
+			getManagementBarFilterItem(WorkflowConstants.STATUS_SCHEDULED));
 		managementBarFilterItems.add(
-			getManagementBarFilterItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_APPROVED));
+			getManagementBarFilterItem(WorkflowConstants.STATUS_APPROVED));
 		managementBarFilterItems.add(
-			getManagementBarFilterItem(
-				parameterName, portletURL, WorkflowConstants.STATUS_EXPIRED));
+			getManagementBarFilterItem(WorkflowConstants.STATUS_EXPIRED));
 
 		return managementBarFilterItems;
 	}
@@ -717,13 +704,23 @@ public class JournalDisplayContext {
 		return displayStyle;
 	}
 
-	protected ManagementBarFilterItem getManagementBarFilterItem(
-		String parameterName, PortletURL portletURL, int status) {
+	protected ManagementBarFilterItem getManagementBarFilterItem(int status)
+		throws PortalException, PortletException {
 
-		portletURL.setParameter(parameterName, String.valueOf(status));
+		PortletURL portletURL = PortletURLUtil.clone(
+			getPortletURL(), _liferayPortletResponse);
+
+		portletURL.setParameter("status", String.valueOf(status));
+
+		boolean active = false;
+
+		if (status == getStatus()) {
+			active = true;
+		}
 
 		return new ManagementBarFilterItem(
-			WorkflowConstants.getStatusLabel(status), portletURL.toString());
+			active, WorkflowConstants.getStatusLabel(status),
+			portletURL.toString());
 	}
 
 	private JournalArticle _article;

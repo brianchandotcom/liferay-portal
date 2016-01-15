@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.frontend.taglib.servlet.taglib.util.ManagementBarFilterItem;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
@@ -106,8 +105,9 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 				managementBarFilterItems.add(
 					new ManagementBarFilterItem(
+						_orderByCol.equals(orderColumn),
 						_orderColumns.get(orderColumn),
-						orderByColURL.toString(), orderColumn));
+						orderByColURL.toString()));
 			}
 		}
 		catch (Exception e) {

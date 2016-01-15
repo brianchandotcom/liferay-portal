@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.frontend.taglib.servlet.taglib.util.ManagementBarFilterItem;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;

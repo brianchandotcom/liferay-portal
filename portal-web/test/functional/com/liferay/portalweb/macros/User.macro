@@ -704,8 +704,9 @@
 	</command>
 
 	<command name="assignOrgRoleCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -727,8 +728,9 @@
 	</command>
 
 	<command name="assignRegularRoleCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -753,8 +755,9 @@
 	</command>
 
 	<command name="assignSiteRoleCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1070,8 +1073,9 @@
 	</command>
 
 	<command name="editDisplaySettingsCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1607,7 +1611,7 @@
 	</command>
 
 	<command name="searchCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchToken}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 	</command>
@@ -1681,8 +1685,9 @@
 	<command name="unassignRegularRoleCP">
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 

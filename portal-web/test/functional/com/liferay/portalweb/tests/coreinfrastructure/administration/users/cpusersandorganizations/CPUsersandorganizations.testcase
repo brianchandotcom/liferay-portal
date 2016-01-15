@@ -1535,7 +1535,7 @@
 		</execute>
 
 		<execute macro="User#searchCP">
-			<var name="searchToken" value="usersn" />
+			<var name="searchTerm" value="usersn" />
 		</execute>
 
 		<execute macro="User#viewNoUsersFoundCP" />
@@ -2031,7 +2031,7 @@
 		</execute>
 
 		<execute macro="User#searchCP">
-			<var name="searchToken" value="usersn" />
+			<var name="searchTerm" value="usersn" />
 		</execute>
 
 		<execute macro="Organization#viewAssignMemberCP">
@@ -2041,7 +2041,7 @@
 		</execute>
 
 		<execute macro="User#searchCP">
-			<var name="searchToken" value="test" />
+			<var name="searchTerm" value="test" />
 		</execute>
 
 		<execute macro="Organization#viewMembersNotFoundCP" />

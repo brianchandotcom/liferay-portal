@@ -29,6 +29,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationService;
+import com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationFinder;
 import com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 
@@ -148,6 +149,25 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	public void setExportImportConfigurationPersistence(
 		ExportImportConfigurationPersistence exportImportConfigurationPersistence) {
 		this.exportImportConfigurationPersistence = exportImportConfigurationPersistence;
+	}
+
+	/**
+	 * Returns the export import configuration finder.
+	 *
+	 * @return the export import configuration finder
+	 */
+	public ExportImportConfigurationFinder getExportImportConfigurationFinder() {
+		return exportImportConfigurationFinder;
+	}
+
+	/**
+	 * Sets the export import configuration finder.
+	 *
+	 * @param exportImportConfigurationFinder the export import configuration finder
+	 */
+	public void setExportImportConfigurationFinder(
+		ExportImportConfigurationFinder exportImportConfigurationFinder) {
+		this.exportImportConfigurationFinder = exportImportConfigurationFinder;
 	}
 
 	/**
@@ -472,6 +492,8 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	protected ExportImportConfigurationService exportImportConfigurationService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)
 	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
+	@BeanReference(type = ExportImportConfigurationFinder.class)
+	protected ExportImportConfigurationFinder exportImportConfigurationFinder;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingLocalService.class)
 	protected com.liferay.portlet.exportimport.service.StagingLocalService stagingLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingService.class)

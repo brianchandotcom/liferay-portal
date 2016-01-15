@@ -245,6 +245,27 @@ public class ExportImportConfigurationLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> getExportImportConfigurations(
+		long companyId, long groupId, java.lang.String keywords, int type,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getExportImportConfigurations(companyId, groupId, keywords,
+			type, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> getExportImportConfigurations(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int type, boolean andSearch, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.exportimport.model.ExportImportConfiguration> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getExportImportConfigurations(companyId, groupId, name,
+			description, type, andSearch, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portlet.exportimport.model.ExportImportConfiguration> getExportImportConfigurations(
 		long groupId, int type) {
 		return getService().getExportImportConfigurations(groupId, type);
 	}
@@ -286,6 +307,23 @@ public class ExportImportConfigurationLocalServiceUtil {
 	*/
 	public static int getExportImportConfigurationsCount() {
 		return getService().getExportImportConfigurationsCount();
+	}
+
+	public static int getExportImportConfigurationsCount(long companyId,
+		long groupId, java.lang.String keywords, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getExportImportConfigurationsCount(companyId, groupId,
+			keywords, type);
+	}
+
+	public static int getExportImportConfigurationsCount(long companyId,
+		long groupId, java.lang.String name, java.lang.String description,
+		int type, boolean andSearch)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getExportImportConfigurationsCount(companyId, groupId,
+			name, description, type, andSearch);
 	}
 
 	public static int getExportImportConfigurationsCount(long groupId) {

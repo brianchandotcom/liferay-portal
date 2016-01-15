@@ -87,6 +87,7 @@ import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
+import com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationFinder;
 import com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
@@ -1405,6 +1406,25 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setExportImportConfigurationPersistence(
 		ExportImportConfigurationPersistence exportImportConfigurationPersistence) {
 		this.exportImportConfigurationPersistence = exportImportConfigurationPersistence;
+	}
+
+	/**
+	 * Returns the export import configuration finder.
+	 *
+	 * @return the export import configuration finder
+	 */
+	public ExportImportConfigurationFinder getExportImportConfigurationFinder() {
+		return exportImportConfigurationFinder;
+	}
+
+	/**
+	 * Sets the export import configuration finder.
+	 *
+	 * @param exportImportConfigurationFinder the export import configuration finder
+	 */
+	public void setExportImportConfigurationFinder(
+		ExportImportConfigurationFinder exportImportConfigurationFinder) {
+		this.exportImportConfigurationFinder = exportImportConfigurationFinder;
 	}
 
 	/**
@@ -2737,6 +2757,8 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)
 	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
+	@BeanReference(type = ExportImportConfigurationFinder.class)
+	protected ExportImportConfigurationFinder exportImportConfigurationFinder;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingLocalService.class)
 	protected com.liferay.portlet.exportimport.service.StagingLocalService stagingLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityLocalService.class)

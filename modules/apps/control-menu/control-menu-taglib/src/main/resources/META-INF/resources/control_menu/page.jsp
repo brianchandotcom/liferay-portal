@@ -26,20 +26,10 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 		<ul class="control-menu-nav control-menu-level-1 control-menu-nav-level-1" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 			<%
-			for (int i = 0; i < controlMenuCategories.size(); i++) {
-				ControlMenuCategory controlMenuCategory = controlMenuCategories.get(i);
-
-				String cssClass = "site";
-
-				if (i == (controlMenuCategories.size() - 2)) {
-					cssClass = "tool";
-				}
-				else if (i == (controlMenuCategories.size() - 1)) {
-					cssClass = "user";
-				}
+			for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
 			%>
 
-				<li class="control-menu-nav-item <%= cssClass %>-controls-group">
+				<li class="control-menu-nav-item <%= controlMenuCategory.getKey() %>-controls-group">
 					<ul class="control-menu-nav">
 
 						<%

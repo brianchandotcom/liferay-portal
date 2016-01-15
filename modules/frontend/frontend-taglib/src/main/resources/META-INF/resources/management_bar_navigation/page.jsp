@@ -21,27 +21,7 @@ List<ManagementBarFilterItem> managementBarFilterItems = (List<ManagementBarFilt
 String label = (String)request.getAttribute("liferay-frontend:management-bar-navigation:label");
 %>
 
-<c:if test="<%= ListUtil.isNotEmpty(managementBarFilterItems) %>">
-	<li class="dropdown">
-		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter" data-toggle="dropdown" href="javascript:;">
-			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" /></span>
-			<span class="icon-sort"></span>
-		</a>
-
-		<ul class="dropdown-menu" data-qa-id="filterValues">
-
-			<%
-			for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems) {
-			%>
-
-				<li class="<%= managementBarFilterItem.isActive() ? "active" : StringPool.BLANK %>">
-					<aui:a href="<%= managementBarFilterItem.getUrl() %>" id="<%= Validator.isNotNull(managementBarFilterItem.getId()) ? managementBarFilterItem.getId() : StringPool.BLANK %>" label="<%= managementBarFilterItem.getLabel() %>" />
-				</li>
-
-			<%
-			}
-			%>
-
-		</ul>
-	</li>
-</c:if>
+<liferay-frontend:management-bar-filter
+	managementBarFilterItems="<%= managementBarFilterItems %>"
+	value="<%= label %>"
+/>

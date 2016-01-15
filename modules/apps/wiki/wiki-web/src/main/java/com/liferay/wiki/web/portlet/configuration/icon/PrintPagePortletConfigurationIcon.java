@@ -61,15 +61,13 @@ public class PrintPagePortletConfigurationIcon
 			printPageURL.setParameter("viewMode", Constants.PRINT);
 			printPageURL.setWindowState(LiferayWindowState.POP_UP);
 
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("window.open('");
 			sb.append(printPageURL.toString());
-			sb.append("', '', ");
-			sb.append("'directories=0,height=480,left=80,location=1,");
+			sb.append("', '', 'directories=0,height=480,left=80,location=1,");
 			sb.append("menubar=1,resizable=1,scrollbars=yes,status=0,");
-			sb.append("toolbar=0,top=180,width=640'");
-			sb.append(")");
+			sb.append("toolbar=0,top=180,width=640');");
 
 			return sb.toString();
 		}

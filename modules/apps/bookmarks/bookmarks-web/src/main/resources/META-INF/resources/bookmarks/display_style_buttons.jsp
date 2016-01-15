@@ -36,10 +36,17 @@ String keywords = ParamUtil.getString(request, "keywords");
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
 if (Validator.isNull(keywords)) {
-	displayStyleURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+	if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		displayStyleURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+	}
+	else {
+		displayStyleURL.setParameter("mvcRenderCommandName", "/bookmarks/view_folder");
+		displayStyleURL.setParameter("folderId", String.valueOf(folderId));
+	}
 }
 else {
 	displayStyleURL.setParameter("mvcPath", "/bookmarks/search.jsp");
+	displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 }
 
 displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
@@ -51,8 +58,6 @@ if (curEntry > 0) {
 if (deltaEntry > 0) {
 	displayStyleURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
 }
-
-displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 %>
 
 <liferay-frontend:management-bar-display-buttons

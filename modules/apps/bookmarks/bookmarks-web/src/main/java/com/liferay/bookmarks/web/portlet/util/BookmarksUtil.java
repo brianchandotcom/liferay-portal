@@ -102,6 +102,11 @@ public class BookmarksUtil {
 			return;
 		}
 
+		if (!mvcRenderCommandName.equals("/bookmarks/select_folder")) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/bookmarks/view_folder");
+		}
+
 		List<BookmarksFolder> ancestorFolders = folder.getAncestors();
 
 		Collections.reverse(ancestorFolders);

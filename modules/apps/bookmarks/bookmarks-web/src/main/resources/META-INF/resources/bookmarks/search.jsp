@@ -168,7 +168,7 @@ if (portletTitleBasedNavigation) {
 						%>
 
 						<liferay-portlet:renderURL var="rowURL">
-							<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+							<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_folder" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</liferay-portlet:renderURL>

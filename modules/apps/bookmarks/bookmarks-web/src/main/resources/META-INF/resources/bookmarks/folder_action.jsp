@@ -101,8 +101,15 @@ if (row == null) {
 
 	<c:if test="<%= (folder != null) && BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+			<c:choose>
+				<c:when test="<%= folder.getParentFolderId() == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+				</c:when>
+				<c:otherwise>
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_folder" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+				</c:otherwise>
+			</c:choose>
 		</portlet:renderURL>
 
 		<portlet:actionURL name="/bookmarks/edit_folder" var="deleteURL">

@@ -1765,7 +1765,7 @@ public class HookHotDeployListener
 				servletContextName, screenNameValidatorClassName,
 				ScreenNameValidator.class, screenNameValidator);
 		}
-		
+
 		for (String tokenWhitelistName : _TOKEN_WHITELIST_NAMES) {
 			if (containsKey(portalProperties, tokenWhitelistName)) {
 				initTokensWhitelists(servletContextName, portalProperties);
@@ -2086,13 +2086,6 @@ public class HookHotDeployListener
 				strutsActionImpl);
 		}
 	}
-
-	private static final String[] _TOKEN_WHITELIST_NAMES = {
-		AUTH_TOKEN_IGNORE_ACTIONS, AUTH_TOKEN_IGNORE_ORIGINS,
-		AUTH_TOKEN_IGNORE_PORTLETS,
-		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
-		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS
-	};
 
 	protected void initTokensWhitelists(
 			String servletContextName, Properties portalProperties)
@@ -2419,6 +2412,13 @@ public class HookHotDeployListener
 		"phone.number.format.international.regexp",
 		"phone.number.format.usa.regexp", "social.activity.sets.selector",
 		"theme.shortcut.icon"
+	};
+
+	private static final String[] _TOKEN_WHITELIST_NAMES = {
+		AUTH_TOKEN_IGNORE_ACTIONS, AUTH_TOKEN_IGNORE_ORIGINS,
+		AUTH_TOKEN_IGNORE_PORTLETS,
+		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
+		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

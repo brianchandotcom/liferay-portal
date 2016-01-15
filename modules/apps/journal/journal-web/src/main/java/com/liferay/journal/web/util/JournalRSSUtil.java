@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -53,8 +54,7 @@ import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
@@ -355,13 +355,13 @@ public class JournalRSSUtil {
 
 		long id = ParamUtil.getLong(resourceRequest, "id");
 
-		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-		String feedId = ParamUtil.getString(resourceRequest, "feedId");
-
 		if (id > 0) {
 			feed = _journalFeedLocalService.getFeed(id);
 		}
 		else {
+			long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+			String feedId = ParamUtil.getString(resourceRequest, "feedId");
+
 			feed = _journalFeedLocalService.getFeed(groupId, feedId);
 		}
 
@@ -451,27 +451,23 @@ public class JournalRSSUtil {
 		syndFeed.setFeedType(
 			feed.getFeedFormat() + "_" + feed.getFeedVersion());
 
-		List<SyndLink> syndLinks = new ArrayList<>();
-
-		syndFeed.setLinks(syndLinks);
-
 		SyndLink selfSyndLink = new SyndLinkImpl();
-
-		syndLinks.add(selfSyndLink);
 
 		ResourceURL feedURL = resourceResponse.createResourceURL();
 
 		feedURL.setCacheability(ResourceURL.FULL);
-		feedURL.setParameter("p_p_resource_id", "rss");
 		feedURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
 		feedURL.setParameter("feedId", String.valueOf(feed.getFeedId()));
+		feedURL.setResourceID("rss");
 
-		String link = feedURL.toString();
-
-		selfSyndLink.setHref(link);
-
+		selfSyndLink.setHref(feedURL.toString());
 		selfSyndLink.setRel("self");
 
+		List<SyndLink> syndLinks = new ArrayList<>();
+
+		syndLinks.add(selfSyndLink);
+
+		syndFeed.setLinks(syndLinks);
 		syndFeed.setTitle(feed.getName());
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setUri(feedURL.toString());
@@ -513,7 +509,7 @@ public class JournalRSSUtil {
 		long plid = PortalUtil.getPlidFromFriendlyURL(
 			feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
 
-		PortletURL entryURL = new PortletURLImpl(
+		PortletURL entryURL = PortletURLFactoryUtil.create(
 			resourceRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		entryURL.setParameter("groupId", String.valueOf(article.getGroupId()));

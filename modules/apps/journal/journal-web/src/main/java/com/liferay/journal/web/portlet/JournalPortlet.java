@@ -62,7 +62,6 @@ import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.portlet.action.ActionUtil;
-import com.liferay.journal.web.util.JournalRSSUtil;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,13 +70,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -102,7 +99,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
@@ -488,22 +484,6 @@ public class JournalPortlet extends MVCPortlet {
 					"/compare_versions_diff_html.jsp");
 
 			portletRequestDispatcher.include(resourceRequest, resourceResponse);
-		}
-		else if (resourceID.equals("rss")) {
-			try {
-				byte[] xml = _journalRSSUtil.getRSS(
-					resourceRequest, resourceResponse);
-
-				ServletResponseUtil.sendFile(
-					request, response, null, xml, ContentTypes.TEXT_XML_UTF8);
-			}
-			catch (Exception e) {
-				try {
-					PortalUtil.sendError(e, request, response);
-				}
-				catch (ServletException se) {
-				}
-			}
 		}
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
@@ -1111,24 +1091,23 @@ public class JournalPortlet extends MVCPortlet {
 		String referringPortletResource = ParamUtil.getString(
 			actionRequest, "referringPortletResource");
 
-		PortletURLImpl portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, JournalPortletKeys.JOURNAL, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
-		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
-			"referringPortletResource", referringPortletResource, false);
+			"referringPortletResource", referringPortletResource);
 		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(article.getResourcePrimKey()),
-			false);
+			"resourcePrimKey", String.valueOf(article.getResourcePrimKey()));
 		portletURL.setParameter(
-			"groupId", String.valueOf(article.getGroupId()), false);
+			"groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter(
-			"folderId", String.valueOf(article.getFolderId()), false);
-		portletURL.setParameter("articleId", article.getArticleId(), false);
+			"folderId", String.valueOf(article.getFolderId()));
+		portletURL.setParameter("articleId", article.getArticleId());
 		portletURL.setParameter(
-			"version", String.valueOf(article.getVersion()), false);
+			"version", String.valueOf(article.getVersion()));
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
@@ -1325,11 +1304,6 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected void setJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
-		_journalRSSUtil = journalRSSUtil;
-	}
-
-	@Reference
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -1386,10 +1360,6 @@ public class JournalPortlet extends MVCPortlet {
 		_journalFolderService = null;
 	}
 
-	protected void unsetJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
-		_journalRSSUtil = null;
-	}
-
 	protected void unsetLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -1431,7 +1401,6 @@ public class JournalPortlet extends MVCPortlet {
 	private JournalConverter _journalConverter;
 	private JournalFeedService _journalFeedService;
 	private JournalFolderService _journalFolderService;
-	private JournalRSSUtil _journalRSSUtil;
 	private volatile JournalWebConfiguration _journalWebConfiguration;
 	private LayoutLocalService _layoutLocalService;
 	private TrashEntryService _trashEntryService;

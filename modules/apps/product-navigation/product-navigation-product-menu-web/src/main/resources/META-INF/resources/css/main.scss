@@ -200,8 +200,7 @@ body {
 
 	.staging-links {
 		font-size: 12px;
-		padding: 16px;
-		padding-bottom: 4px;
+		padding: 16px 22px 4px 16px;
 	}
 }
 
@@ -256,8 +255,10 @@ body {
 	}
 
 	.layout-set-tabs {
-		font-size: 0.9em;
+		display: table;
+		font-size: 1em;
 		padding: 0 0 2em 0;
+		width: 100%;
 
 		.layout-set-tree-add, .layout-set-tree-edit {
 			opacity: 0;
@@ -268,22 +269,49 @@ body {
 		}
 
 		.layout-set-tab {
-			padding: 0 10px 4px 0;
+			a {
+				&:hover {
+					text-decoration: none;
+				}
 
-			.layout-set-link {
-				padding-right: 5px;
+				@include ellipsis(87px);
 			}
+
+			display: table-cell;
+			margin-right: 10px;
+			padding-bottom: 4px;
+		}
+
+		.layout-set-tab:not(.selected-layout-set) {
+			&:first-child {
+				padding-left: 0;
+			}
+
+			.pages-options {
+				display: none;
+			}
+
+			margin-right: 0;
+			padding-left: 10px;
+			width: 97px;
 		}
 
 		.lexicon-icon {
-			height: 12px;
-			width: 12px;
+			height: 16px;
+			width: 16px;
+		}
+
+		.selected-layout-set {
+			border-bottom: 1px solid;
+
+			a {
+				max-width: 108px;
+			}
 		}
 
 		.selected-layout-set, .layout-set-tab:hover {
-			border-bottom: 1px solid;
-
 			.layout-set-tree-add, .layout-set-tree-edit {
+				margin-left: 10px;
 				opacity: 1;
 			}
 		}

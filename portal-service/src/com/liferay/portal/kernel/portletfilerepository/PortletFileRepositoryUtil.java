@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portletfilerepository;
+package com.liferay.portal.kernel.portletfilerepository;
 
 import aQute.bnd.annotation.ProviderType;
 

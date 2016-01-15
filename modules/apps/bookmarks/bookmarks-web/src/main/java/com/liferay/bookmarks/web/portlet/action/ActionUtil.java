@@ -14,7 +14,6 @@
 
 package com.liferay.bookmarks.web.portlet.action;
 
-import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.exception.NoSuchEntryException;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
@@ -41,7 +40,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getEntries(HttpServletRequest request) throws Exception {
+	public static List<BookmarksEntry> getEntries(HttpServletRequest request)
+		throws Exception {
+
 		long[] entryIds = ParamUtil.getLongValues(
 			request, "rowIdsBookmarksEntry");
 
@@ -53,19 +54,21 @@ public class ActionUtil {
 			entries.add(entry);
 		}
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRIES, entries);
+		return entries;
 	}
 
-	public static void getEntries(PortletRequest portletRequest)
+	public static List<BookmarksEntry> getEntries(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getEntries(request);
+		return getEntries(request);
 	}
 
-	public static void getEntry(HttpServletRequest request) throws Exception {
+	public static BookmarksEntry getEntry(HttpServletRequest request)
+		throws Exception {
+
 		long entryId = ParamUtil.getLong(request, "entryId");
 
 		BookmarksEntry entry = null;
@@ -78,19 +81,21 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
+		return entry;
 	}
 
-	public static void getEntry(PortletRequest portletRequest)
+	public static BookmarksEntry getEntry(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getEntry(request);
+		return getEntry(request);
 	}
 
-	public static void getFolder(HttpServletRequest request) throws Exception {
+	public static BookmarksFolder getFolder(HttpServletRequest request)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -113,19 +118,21 @@ public class ActionUtil {
 				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
 		}
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_FOLDER, folder);
+		return folder;
 	}
 
-	public static void getFolder(PortletRequest portletRequest)
+	public static BookmarksFolder getFolder(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFolder(request);
+		return getFolder(request);
 	}
 
-	public static void getFolders(HttpServletRequest request) throws Exception {
+	public static List<BookmarksFolder> getFolders(HttpServletRequest request)
+		throws Exception {
+
 		long[] folderIds = ParamUtil.getLongValues(
 			request, "rowIdsBookmarksFolder");
 
@@ -143,16 +150,17 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(BookmarksWebKeys.BOOKMARKS_FOLDERS, folders);
+		return folders;
 	}
 
-	public static void getFolders(PortletRequest portletRequest)
+	public static List<BookmarksFolder> getFolders(
+			PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getFolders(request);
+		return getFolders(request);
 	}
 
 }

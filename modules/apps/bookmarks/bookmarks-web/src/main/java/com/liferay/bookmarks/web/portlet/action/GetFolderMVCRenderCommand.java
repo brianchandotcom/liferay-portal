@@ -14,7 +14,9 @@
 
 package com.liferay.bookmarks.web.portlet.action;
 
+import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -34,7 +36,10 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getFolder(renderRequest);
+			BookmarksFolder folder = ActionUtil.getFolder(renderRequest);
+
+			renderRequest.setAttribute(
+				BookmarksWebKeys.BOOKMARKS_FOLDER, folder);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFolderException ||

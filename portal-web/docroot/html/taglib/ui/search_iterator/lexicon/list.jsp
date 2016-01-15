@@ -38,7 +38,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 %>
 
 <table class="table table-list">
-	<c:if test="<%= headerNames != null %>">
+	<c:if test="<%= searchContainer.hasNotNullHeaderNames() %>">
 		<thead>
 			<tr>
 

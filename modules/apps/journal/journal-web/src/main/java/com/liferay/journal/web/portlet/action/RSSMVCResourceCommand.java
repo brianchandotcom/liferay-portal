@@ -16,12 +16,13 @@ package com.liferay.journal.web.portlet.action;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.web.util.JournalRSSUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.util.PortalUtil;
 
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -45,23 +46,39 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		if (!(resourceResponse instanceof MimeResponse)) {
+			return false;
+		}
+
+		if (!PortalUtil.isRSSFeedsEnabled()) {
+			try {
+				PortalUtil.sendRSSFeedsDisabledError(
+					resourceRequest, resourceResponse);
+			}
+			catch (Exception e) {
+			}
+
+			return false;
+		}
+
+		MimeResponse mimeResponse = (MimeResponse)resourceResponse;
 
 		try {
 			byte[] xml = _journalRSSUtil.getRSS(
 				resourceRequest, resourceResponse);
 
 			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, null, xml,
+				resourceRequest, mimeResponse, null, xml,
 				ContentTypes.TEXT_XML_UTF8);
-
-			return false;
 		}
 		catch (Exception e) {
-			_log.error(e);
-
-			return true;
+			throw new PortletException(e);
 		}
+
+		return true;
 	}
 
 	@Reference
@@ -72,9 +89,6 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 	protected void unsetJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
 		_journalRSSUtil = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RSSMVCResourceCommand.class);
 
 	private JournalRSSUtil _journalRSSUtil;
 

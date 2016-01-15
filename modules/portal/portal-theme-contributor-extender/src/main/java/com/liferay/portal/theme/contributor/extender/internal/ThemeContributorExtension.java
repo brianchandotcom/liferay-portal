@@ -16,13 +16,13 @@ package com.liferay.portal.theme.contributor.extender.internal;
 
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
+import com.liferay.portal.theme.contributor.extender.BundleWebResources;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.ServletContext;
 
-import com.liferay.portal.theme.contributor.extender.BundleWebResources;
 import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;

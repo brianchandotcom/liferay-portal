@@ -136,9 +136,9 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 			</div>
 
 			<aui:button-row>
-				<aui:button type="submit" value="export" />
+				<aui:button cssClass="btn-lg" type="submit" value="export" />
 
-				<aui:button href="<%= portletURL.toString() %>" type="cancel" />
+				<aui:button cssClass="btn-lg" href="<%= portletURL.toString() %>" type="cancel" />
 			</aui:button-row>
 		</aui:form>
 	</div>

@@ -158,8 +158,9 @@ else {
 
 				<liferay-ui:icon
 					cssClass="submit-link"
-					iconCssClass="icon-random"
+					icon="workflow"
 					id="reviewTaskIcon"
+					markupView="lexicon"
 					message="workflow"
 					method="get"
 					url="<%= portletURL.toString() %>"

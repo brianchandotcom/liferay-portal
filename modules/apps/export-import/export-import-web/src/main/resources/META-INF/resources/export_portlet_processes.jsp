@@ -107,8 +107,9 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				%>
 
 				<liferay-ui:icon
-					iconCssClass="icon-download"
+					icon="download"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="<%= sb.toString() %>"
 					method="get"
 					url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"

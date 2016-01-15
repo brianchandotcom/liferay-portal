@@ -22,15 +22,17 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getPanelCategory();
 %>
 
-<liferay-ui:icon
-	cssClass="icon-sites"
-	icon="sites"
-	id="manageSitesLink"
-	label="<%= false %>"
-	markupView="lexicon"
-	message='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'
-	url="javascript:;"
-/>
+<div class="icon-sites">
+	<liferay-ui:icon
+		icon="sites"
+		id="manageSitesLink"
+		label="<%= false %>"
+		linkCssClass="icon-monospaced"
+		markupView="lexicon"
+		message='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'
+		url="javascript:;"
+	/>
+</div>
 
 <div class="hide">
 	<div id="<portlet:namespace/>siteSelectorContent">

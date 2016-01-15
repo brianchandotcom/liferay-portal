@@ -286,6 +286,20 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long pageId)
+		throws RemoteException {
+		try {
+			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(pageId);
+
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,

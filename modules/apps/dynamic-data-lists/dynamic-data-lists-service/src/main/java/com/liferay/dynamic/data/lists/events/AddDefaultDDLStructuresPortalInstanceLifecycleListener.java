@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class AddDefaultDDLStructuresAction extends SimpleAction {
+public class AddDefaultDDLStructuresPortalInstanceLifecycleListener extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -87,7 +87,7 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
-			AddDefaultDDLStructuresAction.class.getClassLoader(),
+			AddDefaultDDLStructuresPortalInstanceLifecycleListener.class.getClassLoader(),
 			"com/liferay/dynamic/data/lists/events/dependencies" +
 				"/default-dynamic-data-lists-structures.xml",
 			serviceContext);

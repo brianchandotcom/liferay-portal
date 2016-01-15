@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(immediate = true)
-public class AddDefaultSharedFormLayoutAction extends SimpleAction {
+public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

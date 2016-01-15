@@ -33,137 +33,139 @@ serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<div class="server-admin-tab-wrapper">
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
 
-		<%
-		for (String tabName : tabNames) {
+			<%
+			for (String tabName : tabNames) {
 
-			serverURL.setParameter("tabs3", tabName);
-		%>
+				serverURL.setParameter("tabs3", tabName);
+			%>
 
-			<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs3.equals(tabName) %>" />
+				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs3.equals(tabName) %>" />
 
-		<%
-		}
+			<%
+			}
 
-		serverURL.setParameter("tabs3", tabs3);
-		%>
+			serverURL.setParameter("tabs3", tabs3);
+			%>
 
-	</aui:nav>
+		</aui:nav>
 
-	<aui:nav-bar-search>
-		<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
-	</aui:nav-bar-search>
-</aui:nav-bar>
+		<aui:nav-bar-search>
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+		</aui:nav-bar-search>
+	</aui:nav-bar>
 
-<%
-Map<String, String> filteredProperties = new TreeMap<String, String>();
+	<%
+	Map<String, String> filteredProperties = new TreeMap<String, String>();
 
-Properties properties = null;
+	Properties properties = null;
 
-if (tabs3.equals("portal-properties")) {
-	properties = PropsUtil.getProperties();
-}
-else {
-	properties = System.getProperties();
-}
-
-for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-	String property = (String)entry.getKey();
-	String value = StringPool.BLANK;
-
-	if (ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
-		value = StringPool.EIGHT_STARS;
+	if (tabs3.equals("portal-properties")) {
+		properties = PropsUtil.getProperties();
 	}
 	else {
-		value = (String)entry.getValue();
+		properties = System.getProperties();
 	}
 
-	if (Validator.isNull(keywords) || property.contains(keywords) || value.contains(keywords)) {
-		filteredProperties.put(property, value);
-	}
-}
-
-List filteredPropertiesList = ListUtil.fromCollection(filteredProperties.entrySet());
-
-PortletPreferences serverPortletPreferences = PrefsPropsUtil.getPreferences();
-
-Map<String, String[]> serverPortletPreferencesMap = serverPortletPreferences.getMap();
-
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
-
-Map<String, String[]> companyPortletPreferencesMap = companyPortletPreferences.getMap();
-%>
-
-<liferay-ui:search-container
-	emptyResultsMessage='<%= tabs3.equals("portal-properties") ? "no-portal-properties-were-found-that-matched-the-keywords" : "no-system-properties-were-found-that-matched-the-keywords" %>'
-	iteratorURL="<%= serverURL %>"
-	total="<%= filteredPropertiesList.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(filteredPropertiesList, searchContainer.getStart(), searchContainer.getEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="java.util.Map.Entry"
-		modelVar="entry"
-	>
-
-		<%
+	for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 		String property = (String)entry.getKey();
-		String value = (String)entry.getValue();
+		String value = StringPool.BLANK;
 
-		boolean overriddenPropertyValue = false;
-
-		if (tabs3.equals("portal-properties")) {
-			if (serverPortletPreferencesMap.containsKey(property)) {
-				value = serverPortletPreferences.getValue(property, StringPool.BLANK);
-
-				overriddenPropertyValue = true;
-			}
-
-			if (companyPortletPreferencesMap.containsKey(property)) {
-				value = companyPortletPreferences.getValue(property, StringPool.BLANK);
-
-				overriddenPropertyValue = true;
-			}
+		if (ArrayUtil.contains(PropsValues.ADMIN_OBFUSCATED_PROPERTIES, property)) {
+			value = StringPool.EIGHT_STARS;
 		}
-		%>
+		else {
+			value = (String)entry.getValue();
+		}
 
-		<liferay-ui:search-container-column-text
-			name="property"
-			value="<%= HtmlUtil.escape(StringUtil.shorten(property, 80)) %>"
+		if (Validator.isNull(keywords) || property.contains(keywords) || value.contains(keywords)) {
+			filteredProperties.put(property, value);
+		}
+	}
+
+	List filteredPropertiesList = ListUtil.fromCollection(filteredProperties.entrySet());
+
+	PortletPreferences serverPortletPreferences = PrefsPropsUtil.getPreferences();
+
+	Map<String, String[]> serverPortletPreferencesMap = serverPortletPreferences.getMap();
+
+	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+	Map<String, String[]> companyPortletPreferencesMap = companyPortletPreferences.getMap();
+	%>
+
+	<liferay-ui:search-container
+		emptyResultsMessage='<%= tabs3.equals("portal-properties") ? "no-portal-properties-were-found-that-matched-the-keywords" : "no-system-properties-were-found-that-matched-the-keywords" %>'
+		iteratorURL="<%= serverURL %>"
+		total="<%= filteredPropertiesList.size() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= ListUtil.subList(filteredPropertiesList, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="value"
+		<liferay-ui:search-container-row
+			className="java.util.Map.Entry"
+			modelVar="entry"
 		>
-			<c:if test="<%= Validator.isNotNull(value) %>">
-				<c:choose>
-					<c:when test="<%= value.length() > 80 %>">
-						<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(value) %>');">
-							<%= HtmlUtil.escape(StringUtil.shorten(value, 80)) %>
-						</span>
-					</c:when>
-					<c:otherwise>
-						<%= HtmlUtil.escape(value) %>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
-		</liferay-ui:search-container-column-text>
 
-		<c:if test='<%= tabs3.equals("portal-properties") %>'>
+			<%
+			String property = (String)entry.getKey();
+			String value = (String)entry.getValue();
+
+			boolean overriddenPropertyValue = false;
+
+			if (tabs3.equals("portal-properties")) {
+				if (serverPortletPreferencesMap.containsKey(property)) {
+					value = serverPortletPreferences.getValue(property, StringPool.BLANK);
+
+					overriddenPropertyValue = true;
+				}
+
+				if (companyPortletPreferencesMap.containsKey(property)) {
+					value = companyPortletPreferences.getValue(property, StringPool.BLANK);
+
+					overriddenPropertyValue = true;
+				}
+			}
+			%>
+
 			<liferay-ui:search-container-column-text
-				name="source"
-			>
-				<liferay-ui:icon
-					iconCssClass='<%= overriddenPropertyValue ? "icon-hdd" : "icon-file-alt" %>'
-					message='<%= LanguageUtil.get(request, overriddenPropertyValue ? "the-value-of-this-property-was-overridden-using-the-control-panel-and-is-stored-in-the-database" : "the-value-of-this-property-is-read-from-a-portal.properties-file-or-one-of-its-extension-files") %>'
-				/>
-			</liferay-ui:search-container-column-text>
-		</c:if>
-	</liferay-ui:search-container-row>
+				name="property"
+				value="<%= HtmlUtil.escape(StringUtil.shorten(property, 80)) %>"
+			/>
 
-	<liferay-ui:search-iterator markupView="lexicon"/>
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-text
+				name="value"
+			>
+				<c:if test="<%= Validator.isNotNull(value) %>">
+					<c:choose>
+						<c:when test="<%= value.length() > 80 %>">
+							<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(value) %>');">
+								<%= HtmlUtil.escape(StringUtil.shorten(value, 80)) %>
+							</span>
+						</c:when>
+						<c:otherwise>
+							<%= HtmlUtil.escape(value) %>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+			</liferay-ui:search-container-column-text>
+
+			<c:if test='<%= tabs3.equals("portal-properties") %>'>
+				<liferay-ui:search-container-column-text
+					name="source"
+				>
+					<liferay-ui:icon
+						iconCssClass='<%= overriddenPropertyValue ? "icon-hdd" : "icon-file-alt" %>'
+						message='<%= LanguageUtil.get(request, overriddenPropertyValue ? "the-value-of-this-property-was-overridden-using-the-control-panel-and-is-stored-in-the-database" : "the-value-of-this-property-is-read-from-a-portal.properties-file-or-one-of-its-extension-files") %>'
+					/>
+				</liferay-ui:search-container-column-text>
+			</c:if>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon"/>
+	</liferay-ui:search-container>
+</div>

@@ -22,7 +22,6 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 PortletURL portletURL = PortletURLFactoryUtil.create(request, ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU, plid, RenderRequest.RENDER_PHASE);
 
 portletURL.setParameter("mvcPath", "/portlet/product_menu.jsp");
-
 portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 %>
 

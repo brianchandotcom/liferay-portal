@@ -127,7 +127,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 			}
 		}
 
-		// Custom Context Contributors
+		// Custom template context contributors
 
 		for (TemplateContextContributor templateContextContributor :
 				_templateContextContributors) {

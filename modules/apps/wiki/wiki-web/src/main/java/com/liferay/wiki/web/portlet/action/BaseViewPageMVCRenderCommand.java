@@ -83,13 +83,9 @@ public abstract class BaseViewPageMVCRenderCommand implements MVCRenderCommand {
 	protected void getNode(RenderRequest renderRequest) throws Exception {
 		WikiNode node = ActionUtil.getNode(renderRequest);
 
-		if (node != null) {
-			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
-
-			return;
+		if (node == null) {
+			node = ActionUtil.getFirstVisibleNode(renderRequest);
 		}
-
-		node = ActionUtil.getFirstVisibleNode(renderRequest);
 
 		renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 	}

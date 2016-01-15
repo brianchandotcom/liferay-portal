@@ -50,7 +50,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			final WikiNode node = ActionUtil.getNode(renderRequest);
+			WikiNode node = ActionUtil.getNode(renderRequest);
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.ldap.internal.authenticator;
 
+import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.portal.exception.PasswordExpiredException;
 import com.liferay.portal.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,7 +43,6 @@ import com.liferay.portal.security.ldap.LDAPUserImporter;
 import com.liferay.portal.security.ldap.PortalLDAP;
 import com.liferay.portal.security.pwd.PasswordEncryptor;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portlet.admin.util.Omniadmin;
 
 import java.util.HashMap;
 import java.util.Hashtable;

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.admin.util;
 
+import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

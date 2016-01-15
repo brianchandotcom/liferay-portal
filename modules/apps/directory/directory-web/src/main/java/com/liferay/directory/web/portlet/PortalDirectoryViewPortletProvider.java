@@ -14,10 +14,10 @@
 
 package com.liferay.directory.web.portlet;
 
+import com.liferay.admin.kernel.util.PortalDirectoryApplicationType;
 import com.liferay.directory.web.constants.DirectoryPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portlet.admin.util.PortalDirectoryApplicationType;
 
 import org.osgi.service.component.annotations.Component;
 

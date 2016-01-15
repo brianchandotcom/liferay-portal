@@ -67,7 +67,7 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
-	public boolean isMultipleSelection() {
+	public boolean isMultipleNodeSelection() {
 		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
 
 		if (nodes.size() > 1) {
@@ -79,7 +79,7 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
-	public boolean isShowNodeDetails() {
+	public boolean isSingleNodeSelection() {
 		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
 
 		if (nodes.size() == 1) {

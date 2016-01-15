@@ -27,8 +27,8 @@ public interface WikiInfoPanelDisplayContext extends WikiDisplayContext {
 
 	public int getSelectedNodesCount();
 
-	public boolean isMultipleSelection();
+	public boolean isMultipleNodeSelection();
 
-	public boolean isShowNodeDetails();
+	public boolean isSingleNodeSelection();
 
 }

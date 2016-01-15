@@ -167,6 +167,8 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
+		<execute function="AssertVisible" locator1="NavBar#USERS" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="Button#ADD" />

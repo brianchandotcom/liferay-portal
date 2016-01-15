@@ -461,6 +461,7 @@ public class JournalRSSUtil {
 		feedURL.setResourceID("rss");
 
 		selfSyndLink.setHref(feedURL.toString());
+
 		selfSyndLink.setRel("self");
 
 		List<SyndLink> syndLinks = new ArrayList<>();
@@ -468,8 +469,9 @@ public class JournalRSSUtil {
 		syndLinks.add(selfSyndLink);
 
 		syndFeed.setLinks(syndLinks);
-		syndFeed.setTitle(feed.getName());
+
 		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(feed.getName());
 		syndFeed.setUri(feedURL.toString());
 
 		try {

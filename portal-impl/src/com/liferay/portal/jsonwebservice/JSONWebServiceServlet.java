@@ -16,7 +16,6 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -75,50 +74,41 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		ServletContext servletContext = session.getServletContext();
 
-		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
+		String contextPath =
+			PortalContextLoaderListener.getPortalServletContextPath();
 
-		try {
-			AccessControlThreadLocal.setRemoteAccess(true);
-
-			String contextPath =
-				PortalContextLoaderListener.getPortalServletContextPath();
-
-			if (contextPath.isEmpty()) {
-				contextPath = StringPool.SLASH;
-			}
-
-			String proxyPath = PortalUtil.getPathProxy();
-
-			if (servletContext.getContext(contextPath) != null) {
-				if (Validator.isNotNull(proxyPath) &&
-					apiPath.startsWith(proxyPath)) {
-
-					apiPath = apiPath.substring(proxyPath.length());
-				}
-
-				if (!contextPath.equals(StringPool.SLASH) &&
-					apiPath.startsWith(contextPath)) {
-
-					apiPath = apiPath.substring(contextPath.length());
-				}
-
-				RequestDispatcher requestDispatcher =
-					request.getRequestDispatcher(apiPath);
-
-				requestDispatcher.forward(request, response);
-			}
-			else {
-				String servletContextPath = servletContext.getContextPath();
-
-				String redirectPath =
-					PortalUtil.getPathContext() + "/api/jsonws?contextPath=" +
-						HttpUtil.encodeURL(servletContextPath);
-
-				response.sendRedirect(redirectPath);
-			}
+		if (contextPath.isEmpty()) {
+			contextPath = StringPool.SLASH;
 		}
-		finally {
-			AccessControlThreadLocal.setRemoteAccess(remoteAccess);
+
+		String proxyPath = PortalUtil.getPathProxy();
+
+		if (servletContext.getContext(contextPath) != null) {
+			if (Validator.isNotNull(proxyPath) &&
+				apiPath.startsWith(proxyPath)) {
+
+				apiPath = apiPath.substring(proxyPath.length());
+			}
+
+			if (!contextPath.equals(StringPool.SLASH) &&
+				apiPath.startsWith(contextPath)) {
+
+				apiPath = apiPath.substring(contextPath.length());
+			}
+
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+				apiPath);
+
+			requestDispatcher.forward(request, response);
+		}
+		else {
+			String servletContextPath = servletContext.getContextPath();
+
+			String redirectPath =
+				PortalUtil.getPathContext() + "/api/jsonws?contextPath=" +
+					HttpUtil.encodeURL(servletContextPath);
+
+			response.sendRedirect(redirectPath);
 		}
 	}
 

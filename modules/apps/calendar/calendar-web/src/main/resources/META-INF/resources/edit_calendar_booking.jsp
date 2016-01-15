@@ -185,13 +185,13 @@ for (long otherCalendarId : otherCalendarIds) {
 	}
 }
 
-Iterator<Calendar> itr = manageableCalendars.iterator();
+Iterator<Calendar> iterator = manageableCalendars.iterator();
 
-while (itr.hasNext()) {
-	Calendar curCalendar = itr.next();
+while (iterator.hasNext()) {
+	Calendar curCalendar = iterator.next();
 
 	if (!CalendarServiceUtil.isManageableFromGroup(curCalendar.getCalendarId(), themeDisplay.getScopeGroupId())) {
-		itr.remove();
+		iterator.remove();
 	}
 }
 %>

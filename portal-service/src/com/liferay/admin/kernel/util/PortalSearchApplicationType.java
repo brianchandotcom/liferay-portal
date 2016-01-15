@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.admin.util;
+package com.liferay.admin.kernel.util;
 
 /**
  * @author Eudaldo Alonso
  */
-public class PortalUserPersonalBarApplicationType {
+public class PortalSearchApplicationType {
 
-	public interface UserPersonalBar {
+	public interface Search {
 
 		public static final String CLASS_NAME =
-			"com.liferay.portlet.admin.util." +
-				"PortalUserPersonalBarApplicationType$UserPersonalBar";
+			"com.liferay.admin.kernel.util.PortalSearchApplicationType$Search";
 
 	}
 

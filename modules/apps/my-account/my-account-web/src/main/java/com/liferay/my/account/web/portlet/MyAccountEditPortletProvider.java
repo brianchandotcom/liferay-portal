@@ -14,12 +14,12 @@
 
 package com.liferay.my.account.web.portlet;
 
+import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 
 import org.osgi.service.component.annotations.Component;
 

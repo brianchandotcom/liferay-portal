@@ -14,9 +14,9 @@
 
 package com.liferay.product.navigation.user.personal.bar.web.portlet;
 
+import com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType;
 import com.liferay.product.navigation.user.personal.bar.web.contants.ProductNavigationUserPersonalBarPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

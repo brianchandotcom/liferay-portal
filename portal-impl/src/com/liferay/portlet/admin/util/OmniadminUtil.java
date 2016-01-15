@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.admin.util;
 
+import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.portal.model.User;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

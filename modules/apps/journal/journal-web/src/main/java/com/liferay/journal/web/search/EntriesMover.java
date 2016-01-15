@@ -14,12 +14,12 @@
 
 package com.liferay.journal.web.search;
 
+import com.liferay.admin.kernel.util.PortalProductMenuApplicationType;
 import com.liferay.portal.kernel.dao.search.RowMover;
 import com.liferay.portal.kernel.dao.search.RowMoverDropTarget;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portlet.admin.util.PortalProductMenuApplicationType;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 

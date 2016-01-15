@@ -80,8 +80,14 @@ public class BookmarksUtil {
 			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+		if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/bookmarks/view_folder");
+			portletURL.setParameter("folderId", String.valueOf(folderId));
+		}
 
 		return portletURL.toString();
 	}

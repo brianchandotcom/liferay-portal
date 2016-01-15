@@ -149,7 +149,8 @@ public class BookmarksFolderAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/view_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);

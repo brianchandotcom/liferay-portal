@@ -60,7 +60,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
-		"mvc.render.command.name=-", "mvc.render.command.name=/bookmarks/view"
+		"mvc.render.command.name=-", "mvc.render.command.name=/bookmarks/view",
+		"mvc.render.command.name=/bookmarks/view_folder"
 	},
 	service = {
 		BookmarksPortletToolbarContributor.class,

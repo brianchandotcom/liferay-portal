@@ -54,12 +54,18 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 			PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getOriginCSRFWhitelist() {
 		return _originCSRFWhitelist;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getPortletCSRFWhitelist() {

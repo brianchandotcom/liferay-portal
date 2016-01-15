@@ -22,7 +22,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 
 <div class="sidebar-header">
 	<c:choose>
-		<c:when test="<%= wikiInfoPanelDisplayContext.isShowNodeDetails() %>">
+		<c:when test="<%= wikiInfoPanelDisplayContext.isSingleNodeSelection() %>">
 
 			<%
 			WikiNode node = wikiInfoPanelDisplayContext.getFirstNode();
@@ -36,7 +36,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 				<liferay-ui:message key="wiki" />
 			</p>
 		</c:when>
-		<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleSelection() %>">
+		<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleNodeSelection() %>">
 			<h4><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
 		</c:when>
 		<c:otherwise>
@@ -49,7 +49,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 	<liferay-ui:section>
 		<div class="sidebar-body">
 			<c:choose>
-				<c:when test="<%= wikiInfoPanelDisplayContext.isShowNodeDetails() %>">
+				<c:when test="<%= wikiInfoPanelDisplayContext.isSingleNodeSelection() %>">
 
 					<%
 					WikiNode node = wikiInfoPanelDisplayContext.getFirstNode();
@@ -92,7 +92,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 						<%= dateFormatDateTime.format(node.getModifiedDate()) %>
 					</p>
 				</c:when>
-				<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleSelection() %>">
+				<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleNodeSelection() %>">
 					<h5><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h5>
 				</c:when>
 				<c:otherwise>

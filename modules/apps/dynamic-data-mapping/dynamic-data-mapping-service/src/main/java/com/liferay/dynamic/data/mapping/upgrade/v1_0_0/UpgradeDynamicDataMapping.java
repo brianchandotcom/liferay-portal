@@ -101,6 +101,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -284,6 +286,27 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
+	protected String createNewDDMFormFieldName(
+			String fieldName, Set<String> existingFieldNames)
+		throws Exception {
+
+		String newFieldName = fieldName.replaceAll(
+			_INVALID_FIELD_NAME_CHARS_REGEX, StringPool.BLANK);
+
+		if (Validator.isNotNull(newFieldName) &&
+			!existingFieldNames.contains(newFieldName)) {
+
+			return newFieldName;
+		}
+
+		throw new UpgradeException(
+			String.format(
+				"Unable to automatically update field name \"%s\" because it " +
+					"only contains invalid characters or the updated value " +
+						"\"%s\" conflicts with a previous field name.",
+				fieldName, newFieldName));
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgradeStructuresAndAddStructureVersionsAndLayouts();
@@ -410,17 +433,64 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return _structureClassNameIds.get(classPK);
 	}
 
-	protected String toJSON(DDMForm ddmForm) {
-		String jsonData = DDMFormJSONSerializerUtil.serialize(ddmForm);
+	protected boolean isInvalidFieldName(String fieldName) {
+		Matcher matcher = _invalidFieldNameCharsPattern.matcher(fieldName);
 
-		return updateFieldNames(jsonData);
+		return matcher.find();
+	}
+
+	protected void populateStructureInvalidDDMFormFieldNamesMap(
+		long structureId, DDMForm ddmForm) {
+
+		Map<String, String> ddmFormFieldNamesMap = new HashMap<>();
+
+		Map<String, DDMFormField> ddmFormFieldMap = ddmForm.getDDMFormFieldsMap(
+			true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldMap.values()) {
+			String oldName = (String)ddmFormField.getProperty("oldName");
+
+			if (oldName == null) {
+				continue;
+			}
+
+			ddmFormFieldNamesMap.put(oldName, ddmFormField.getName());
+		}
+
+		_structureInvalidDDMFormFieldNamesMap.put(
+			structureId, ddmFormFieldNamesMap);
+	}
+
+	protected String renameInvalidDDMFormFieldNames(
+		long structureId, String string) {
+
+		Map<String, String> ddmFormFieldNamesMap =
+			_structureInvalidDDMFormFieldNamesMap.get(structureId);
+
+		if ((ddmFormFieldNamesMap == null) || ddmFormFieldNamesMap.isEmpty()) {
+			return string;
+		}
+
+		Set<String> oldFieldNames = ddmFormFieldNamesMap.keySet();
+
+		String[] oldSub = oldFieldNames.toArray(
+			new String[oldFieldNames.size()]);
+
+		String[] newSub = new String[oldFieldNames.size()];
+
+		for (int i = 0; i < oldSub.length; i++) {
+			newSub[i] = ddmFormFieldNamesMap.get(oldSub[i]);
+		}
+
+		return StringUtil.replace(string, oldSub, newSub);
+	}
+
+	protected String toJSON(DDMForm ddmForm) {
+		return DDMFormJSONSerializerUtil.serialize(ddmForm);
 	}
 
 	protected String toJSON(DDMFormValues ddmFormValues) {
-		String jsonData = DDMFormValuesJSONSerializerUtil.serialize(
-			ddmFormValues);
-
-		return updateFieldNames(jsonData);
+		return DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
 	}
 
 	protected void transformFieldTypeDDMFormFields(
@@ -443,7 +513,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ddmFormValuesTransformer.transform();
 	}
 
-	protected void updateContent(DDMForm ddmForm, long contentId)
+	protected void updateContent(
+			long structureId, long contentId, DDMForm ddmForm)
 		throws Exception {
 
 		PreparedStatement ps = null;
@@ -464,7 +535,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMFormValues ddmFormValues = getDDMFormValues(
 					companyId, ddmForm, xml);
 
-				updateContent(contentId, toJSON(ddmFormValues));
+				String content = toJSON(ddmFormValues);
+
+				content = renameInvalidDDMFormFieldNames(structureId, content);
+
+				updateContent(contentId, content);
 			}
 		}
 		finally {
@@ -492,30 +567,24 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected DDMForm updateDDMFormFields(DDMForm ddmForm) {
+	protected DDMForm updateDDMFormFields(DDMForm ddmForm) throws Exception {
 		DDMForm copyDDMForm = new DDMForm(ddmForm);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			copyDDMForm.getDDMFormFieldsMap(true);
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			String fieldName = ddmFormField.getName();
+
+			if (isInvalidFieldName(fieldName)) {
+				String newFieldName = createNewDDMFormFieldName(
+					fieldName, ddmFormFieldsMap.keySet());
+
+				ddmFormField.setName(newFieldName);
+				ddmFormField.setProperty("oldName", fieldName);
+			}
+
 			String dataType = ddmFormField.getDataType();
-
-			String name = ddmFormField.getName();
-			String newName = name.replaceAll(
-				_FIELD_NAME_REGEX, StringPool.BLANK);
-
-			if (Validator.isNull(newName)) {
-				newName = StringUtil.randomString();
-			}
-
-			if (!name.equals(newName)) {
-				ddmFormField.getProperties().put("oldName", name);
-			}
-
-			_ddmFormFieldNameMap.put(name, newName);
-
-			ddmFormField.setName(newName);
 
 			if (Validator.equals(dataType, "file-upload")) {
 				ddmFormField.setDataType("document-library");
@@ -528,16 +597,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		return copyDDMForm;
-	}
-
-	protected String updateFieldNames(String value) {
-		for (Map.Entry<String, String> entry :
-				_ddmFormFieldNameMap.entrySet()) {
-
-			value = value.replaceAll(entry.getKey(), entry.getValue());
-		}
-
-		return value;
 	}
 
 	protected void updateStructureStorageType() throws Exception {
@@ -770,6 +829,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				ddmForm = updateDDMFormFields(ddmForm);
 
+				populateStructureInvalidDDMFormFieldNamesMap(
+					structureId, ddmForm);
+
 				String definition = toJSON(ddmForm);
 
 				upgradeStructureDefinition(structureId, definition);
@@ -906,20 +968,20 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// Template content
 
+				String updatedScript = renameInvalidDDMFormFieldNames(
+					classPK, script);
+
 				if (language.equals("xsd")) {
 					DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-						script);
+						updatedScript);
 
 					ddmForm = updateDDMFormFields(ddmForm);
 
-					script = toJSON(ddmForm);
-
-					upgradeTemplateScript(templateId, script);
+					updatedScript = toJSON(ddmForm);
 				}
-				else {
-					script = updateFieldNames(script);
 
-					updateTemplateScript(templateId, script);
+				if (!script.equals(updatedScript)) {
+					updateTemplateScript(templateId, updatedScript);
 				}
 
 				// Template version
@@ -927,7 +989,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				addTemplateVersion(
 					increment(), groupId, companyId, userId, userName,
 					modifiedDate, classNameId, classPK, templateId, name,
-					description, language, script,
+					description, language, updatedScript,
 					WorkflowConstants.STATUS_APPROVED, userId, userName,
 					modifiedDate);
 			}
@@ -1012,7 +1074,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(structureId);
 
-				updateContent(ddmForm, classPK);
+				updateContent(structureId, classPK, ddmForm);
 			}
 
 			updateStructureStorageType();
@@ -1023,12 +1085,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	private static final String _FIELD_NAME_REGEX =
-		"([[\\p{Space}]|[\\p{Punct}]&&[^_]])+";
+	private static final String _INVALID_FIELD_NAME_CHARS_REGEX =
+		"([\\p{Punct}&&[^_]]|\\p{Space})+";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDynamicDataMapping.class);
 
+	private static final Pattern _invalidFieldNameCharsPattern =
+		Pattern.compile(_INVALID_FIELD_NAME_CHARS_REGEX);
 	private static final Map<String, String> _structureModelResourceNames =
 		new HashMap<>();
 	private static final Map<String, String> _templateModelResourceNames =
@@ -1070,7 +1134,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;
-	private final Map<String, String> _ddmFormFieldNameMap = new HashMap<>();
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLFileVersionLocalService _dlFileVersionLocalService;
@@ -1079,6 +1142,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final Map<Long, Long> _structureClassNameIds = new HashMap<>();
+	private final Map<Long, Map<String, String>>
+		_structureInvalidDDMFormFieldNamesMap = new HashMap<>();
 	private final Map<Long, Long> _templateResourceClassNameIds =
 		new HashMap<>();
 

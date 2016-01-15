@@ -62,12 +62,13 @@ public class MBThreadLocalServiceTest {
 	@Test
 	public void testAttachmentsWhenSplittingThread() throws Exception {
 		MBMessage rootMessage = addMessage(null, true);
+
 		MBMessage splitMessage = addMessage(rootMessage, true);
+
 		MBMessage childMessage = addMessage(splitMessage, true);
 
 		Assert.assertEquals(
 			rootMessage.getThreadId(), splitMessage.getThreadId());
-
 		Assert.assertEquals(1, rootMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());
@@ -91,7 +92,6 @@ public class MBThreadLocalServiceTest {
 
 		Assert.assertNotEquals(
 			rootMessage.getThreadId(), splitMessage.getThreadId());
-
 		Assert.assertEquals(1, rootMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());

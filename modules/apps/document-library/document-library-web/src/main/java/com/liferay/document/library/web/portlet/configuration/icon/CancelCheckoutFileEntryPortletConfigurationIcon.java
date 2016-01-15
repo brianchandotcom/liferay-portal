@@ -68,9 +68,8 @@ public class CancelCheckoutFileEntryPortletConfigurationIcon
 				new FileEntryDisplayContextHelper(
 					themeDisplay.getPermissionChecker(), _fileEntry);
 
-			return
-				fileEntryDisplayContextHelper.
-					isCancelCheckoutDocumentActionAvailable();
+			return fileEntryDisplayContextHelper.
+				isCancelCheckoutDocumentActionAvailable();
 		}
 		catch (PortalException pe) {
 		}

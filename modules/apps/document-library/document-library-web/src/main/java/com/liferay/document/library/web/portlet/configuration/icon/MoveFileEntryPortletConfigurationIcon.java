@@ -45,11 +45,11 @@ public class MoveFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL moveURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		moveURL.setParameter(
+		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/move_entry");
 
 		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
@@ -61,12 +61,12 @@ public class MoveFileEntryPortletConfigurationIcon
 		redirectURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
-		moveURL.setParameter("redirect", redirectURL.toString());
+		portletURL.setParameter("redirect", redirectURL.toString());
 
-		moveURL.setParameter(
+		portletURL.setParameter(
 			"rowIdsFileEntry", String.valueOf(_fileEntry.getFileEntryId()));
 
-		return moveURL.toString();
+		return portletURL.toString();
 	}
 
 	@Override

@@ -42,10 +42,9 @@ public class MoveThreadPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		MBMessageDisplay messageDisplay = null;
-
 		try {
-			messageDisplay = ActionUtil.getMessageDisplay(portletRequest);
+			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
+				portletRequest);
 
 			return new MoveThreadPortletConfigurationIcon(
 				portletRequest, messageDisplay);

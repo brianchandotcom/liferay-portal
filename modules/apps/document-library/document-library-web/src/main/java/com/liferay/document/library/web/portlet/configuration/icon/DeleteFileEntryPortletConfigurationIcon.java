@@ -52,34 +52,34 @@ public class DeleteFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL deleteURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		deleteURL.setParameter(
+		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/document_library/edit_file_entry");
 
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			deleteURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
+			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
 		}
 		else {
-			deleteURL.setParameter(Constants.CMD, Constants.DELETE);
+			portletURL.setParameter(Constants.CMD, Constants.DELETE);
 		}
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
+		redirectURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");
-		portletURL.setParameter(
+		redirectURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
-		deleteURL.setParameter("redirect", portletURL.toString());
-		deleteURL.setParameter(
+		portletURL.setParameter("redirect", redirectURL.toString());
+		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		return deleteURL.toString();
+		return portletURL.toString();
 	}
 
 	@Override

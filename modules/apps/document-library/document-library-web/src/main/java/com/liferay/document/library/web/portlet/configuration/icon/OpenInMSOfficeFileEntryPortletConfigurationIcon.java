@@ -63,6 +63,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			sb.append(portletDisplay.getNamespace());
+
 			sb.append("openDocument('");
 			sb.append(webDavURL);
 			sb.append("');");

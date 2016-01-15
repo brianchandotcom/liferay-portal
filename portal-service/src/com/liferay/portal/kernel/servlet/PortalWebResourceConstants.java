@@ -46,6 +46,9 @@ public class PortalWebResourceConstants {
 
 	public static final String RESOURCE_TYPE_THEME_CLASSIC = "theme_classic";
 
+	public static final String RESOURCE_TYPE_THEME_CONTRIBUTOR =
+		"theme_contributor";
+
 	public static final String RESOURCE_TYPE_THEMES = "themes";
 
 }

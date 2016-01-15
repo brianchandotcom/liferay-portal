@@ -489,6 +489,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			friendlyURLMap, serviceContext);
 	}
 
+	@Override
 	public Group checkScopeGroup(Layout layout, long userId)
 		throws PortalException {
 

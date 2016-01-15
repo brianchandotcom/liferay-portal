@@ -1401,14 +1401,6 @@ public class HookHotDeployListener
 		if (portalProperties.containsKey(PropsKeys.AUTH_PUBLIC_PATHS)) {
 			initAuthPublicPaths(servletContextName, portalProperties);
 		}
-		
-		for (String tokenWhitelistName : _TOKEN_WHITELIST_NAMES) {
-			if (containsKey(portalProperties, tokenWhitelistName)) {
-				initTokensWhitelists(servletContextName, portalProperties);
-
-				break;
-			}
-		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
 			String authTokenClassName = portalProperties.getProperty(
@@ -1772,6 +1764,14 @@ public class HookHotDeployListener
 			registerService(
 				servletContextName, screenNameValidatorClassName,
 				ScreenNameValidator.class, screenNameValidator);
+		}
+		
+		for (String tokenWhitelistName : _TOKEN_WHITELIST_NAMES) {
+			if (containsKey(portalProperties, tokenWhitelistName)) {
+				initTokensWhitelists(servletContextName, portalProperties);
+
+				break;
+			}
 		}
 
 		Set<String> liferayFilterClassNames =

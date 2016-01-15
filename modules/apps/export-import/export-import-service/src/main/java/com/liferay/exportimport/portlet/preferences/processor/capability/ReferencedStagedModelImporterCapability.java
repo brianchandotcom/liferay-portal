@@ -64,7 +64,7 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 
 		List<Element> referenceElements = referencesElement.elements();
 
-		long oldScopeGroupId = portletDataContext.getScopeGroupId();
+		long originalScopeGroupId = portletDataContext.getScopeGroupId();
 
 		for (Element referenceElement : referenceElements) {
 			try {
@@ -120,7 +120,7 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 					portletDataContext, className, classPK);
 			}
 			finally {
-				portletDataContext.setScopeGroupId(oldScopeGroupId);
+				portletDataContext.setScopeGroupId(originalScopeGroupId);
 			}
 		}
 

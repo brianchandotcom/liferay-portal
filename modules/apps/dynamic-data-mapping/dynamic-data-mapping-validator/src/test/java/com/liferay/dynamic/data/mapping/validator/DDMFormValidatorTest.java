@@ -224,6 +224,17 @@ public class DDMFormValidatorTest {
 		_ddmFormValidator.validate(ddmForm);
 	}
 
+	@Test(expected = MustSetValidCharactersForFieldName.class)
+	public void testSpaceInFieldName() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(
+			new DDMFormField("text with space", DDMFormFieldType.TEXT));
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
 	@Test
 	public void testSpecialCharactersInFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(

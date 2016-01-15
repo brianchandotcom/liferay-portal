@@ -14,8 +14,12 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.framework.Bundle;
 
@@ -80,6 +84,11 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		}
 
 		return state;
+	}
+
+	@Override
+	public String getStoreURL(PortletRequest portletRequest) {
+		return StringPool.BLANK;
 	}
 
 	@Override

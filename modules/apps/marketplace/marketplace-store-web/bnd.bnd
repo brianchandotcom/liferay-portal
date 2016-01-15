@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Marketplace Store Web
 Bundle-SymbolicName: com.liferay.marketplace.store.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.marketplace.store.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\

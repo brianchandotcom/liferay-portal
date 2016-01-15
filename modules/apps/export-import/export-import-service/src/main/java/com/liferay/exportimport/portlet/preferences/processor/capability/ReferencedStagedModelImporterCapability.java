@@ -134,7 +134,7 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-				ReferencedStagedModelImporterCapability.class);
+		ReferencedStagedModelImporterCapability.class);
 
 	private LayoutLocalService _layoutLocalService;
 

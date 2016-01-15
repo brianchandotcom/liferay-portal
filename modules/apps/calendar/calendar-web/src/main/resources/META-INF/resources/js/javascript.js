@@ -1113,6 +1113,11 @@ AUI.add(
 						value: 0
 					},
 
+					manageable: {
+						setter: A.DataType.Boolean.parse,
+						value: true
+					},
+
 					permissions: {
 						lazyAdd: false,
 						setter: function(val) {

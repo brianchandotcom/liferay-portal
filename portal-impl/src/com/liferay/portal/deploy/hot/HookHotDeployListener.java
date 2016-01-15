@@ -1401,18 +1401,13 @@ public class HookHotDeployListener
 		if (portalProperties.containsKey(PropsKeys.AUTH_PUBLIC_PATHS)) {
 			initAuthPublicPaths(servletContextName, portalProperties);
 		}
+		
+		for (String tokenWhitelistName : _TOKEN_WHITELIST_NAMES) {
+			if (containsKey(portalProperties, tokenWhitelistName)) {
+				initTokensWhitelists(servletContextName, portalProperties);
 
-		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_ACTIONS) ||
-			containsKey(portalProperties, AUTH_TOKEN_IGNORE_ORIGINS) ||
-			containsKey(portalProperties, AUTH_TOKEN_IGNORE_PORTLETS) ||
-			containsKey(
-				portalProperties,
-				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST) ||
-			containsKey(
-				portalProperties,
-				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS)) {
-
-			initTokensWhitelists(servletContextName, portalProperties);
+				break;
+			}
 		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
@@ -2092,18 +2087,18 @@ public class HookHotDeployListener
 		}
 	}
 
+	private static final String[] _TOKEN_WHITELIST_NAMES = {
+		AUTH_TOKEN_IGNORE_ACTIONS, AUTH_TOKEN_IGNORE_ORIGINS,
+		AUTH_TOKEN_IGNORE_PORTLETS,
+		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
+		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS
+	};
+
 	protected void initTokensWhitelists(
 			String servletContextName, Properties portalProperties)
 		throws Exception {
 
-		String[] tokenWhitelistNames = {
-			AUTH_TOKEN_IGNORE_ACTIONS, AUTH_TOKEN_IGNORE_ORIGINS,
-			AUTH_TOKEN_IGNORE_PORTLETS,
-			PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
-			PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS
-		};
-
-		for (String tokenWhitelistName : tokenWhitelistNames) {
+		for (String tokenWhitelistName : _TOKEN_WHITELIST_NAMES) {
 			String propertyValue = portalProperties.getProperty(
 				tokenWhitelistName);
 
@@ -2111,12 +2106,10 @@ public class HookHotDeployListener
 				continue;
 			}
 
-			String[] tokenWhitelistEntries = StringUtil.split(propertyValue);
-
 			registerService(
 				servletContextName, tokenWhitelistName + propertyValue,
 				Object.class, new Object(), tokenWhitelistName,
-				tokenWhitelistEntries);
+				StringUtil.split(propertyValue));
 		}
 	}
 

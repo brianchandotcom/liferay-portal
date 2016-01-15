@@ -33,8 +33,9 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 
 		<div class="pull-right staging-links">
 			<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
-				<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" /> |
+				<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" />
 			</span>
+			<span class="links-separator"> |</span>
 
 			<%
 			data.put("qa-id", "live");
@@ -48,7 +49,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isDisplaySiteLink() %>">
 		<aui:a
-			cssClass="list-group-heading"
+			cssClass="goto-link list-group-heading"
 			href="<%= siteAdministrationPanelCategoryDisplayContext.getGroupURL() %>"
 			label='<%= LanguageUtil.get(resourceBundle, "go-to-site") %>'
 		/>

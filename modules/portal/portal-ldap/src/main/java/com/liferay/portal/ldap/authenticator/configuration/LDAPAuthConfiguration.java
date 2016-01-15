@@ -33,8 +33,8 @@ import com.liferay.portal.ldap.configuration.CompanyScopedConfiguration;
 )
 public interface LDAPAuthConfiguration extends CompanyScopedConfiguration {
 
-	@Override
 	@Meta.AD(deflt = "0", required = false)
+	@Override
 	public long companyId();
 
 	@Meta.AD(deflt = "false", required = false)

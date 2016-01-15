@@ -53,20 +53,20 @@ public class SetupArquillianTask
 			});
 	}
 
-	@Override
 	@Input
+	@Override
 	public int getJmxRemotePort() {
 		return GradleUtil.toInteger(_jmxRemotePort);
 	}
 
-	@Override
 	@Input
+	@Override
 	public String getManagerPassword() {
 		return GradleUtil.toString(_managerPassword);
 	}
 
-	@Override
 	@Input
+	@Override
 	public String getManagerUserName() {
 		return GradleUtil.toString(_managerUserName);
 	}

@@ -66,7 +66,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@Override
 	@DDMFormField(
 		label = "%title",
 		properties = {
@@ -75,22 +74,23 @@ public interface ParagraphDDMFormFieldTypeSettings
 		},
 		required = true, tip = "%enter-title", type = "key-value"
 	)
+	@Override
 	public LocalizedValue label();
 
-	@Override
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public LocalizedValue predefinedValue();
 
-	@Override
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public boolean repeatable();
 
-	@Override
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public boolean required();
 
-	@Override
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public boolean showLabel();
 
 	@DDMFormField(
@@ -100,15 +100,15 @@ public interface ParagraphDDMFormFieldTypeSettings
 	)
 	public String text();
 
-	@Override
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public LocalizedValue tip();
 
-	@Override
 	@DDMFormField(
 		dataType = "ddm-validation", type = "validation",
 		visibilityExpression = "false"
 	)
+	@Override
 	public DDMFormFieldValidation validation();
 
 }

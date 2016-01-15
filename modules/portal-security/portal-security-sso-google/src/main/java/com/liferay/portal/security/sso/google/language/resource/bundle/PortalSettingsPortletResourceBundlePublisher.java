@@ -34,14 +34,14 @@ import org.osgi.service.component.annotations.Reference;
 public class PortalSettingsPortletResourceBundlePublisher
 	extends BaseResourceBundlePublisher {
 
-	@Override
 	@Activate
+	@Override
 	protected void activate(BundleContext bundleContext) throws IOException {
 		super.activate(bundleContext);
 	}
 
-	@Override
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}
@@ -51,8 +51,8 @@ public class PortalSettingsPortletResourceBundlePublisher
 		return PortalSettingsPortletKeys.PORTAL_SETTINGS;
 	}
 
-	@Override
 	@Modified
+	@Override
 	protected void modified(BundleContext bundleContext) throws IOException {
 		super.modified(bundleContext);
 	}

@@ -36,8 +36,8 @@ public class AudioItemSelectorCriterionHandler
 		return AudioItemSelectorCriterion.class;
 	}
 
-	@Override
 	@Activate
+	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
 	}

@@ -34,8 +34,8 @@ import org.junit.Before;
 public class DDMFormXSDDeserializerTest
 	extends BaseDDMFormDeserializerTestCase {
 
-	@Override
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

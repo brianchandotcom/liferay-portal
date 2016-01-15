@@ -65,9 +65,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PortletDisplayTemplatePortlet extends DDMPortlet {
 
-	@Override
 	@Activate
 	@Modified
+	@Override
 	protected void activate(Map<String, Object> properties) {
 		this.ddmWebConfiguration = Configurable.createConfigurable(
 			DDMWebConfiguration.class, properties);

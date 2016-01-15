@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.admin.util;
-
-import com.liferay.portal.model.User;
+package com.liferay.admin.kernel.util;
 
 /**
- * @author Michael C. Han
+ * @author Eudaldo Alonso
  */
-public interface Omniadmin {
+public class PortalUserPersonalBarApplicationType {
 
-	public boolean isOmniadmin(long userId);
+	public interface UserPersonalBar {
 
-	public boolean isOmniadmin(User user);
+		public static final String CLASS_NAME =
+			"com.liferay.admin.kernel.util." +
+				"PortalUserPersonalBarApplicationType$UserPersonalBar";
+
+	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.admin.util;
+package com.liferay.admin.kernel.util;
 
 /**
  * @author Eudaldo Alonso
@@ -22,7 +22,7 @@ public class PortalMyAccountApplicationType {
 	public interface MyAccount {
 
 		public static final String CLASS_NAME =
-			"com.liferay.portlet.admin.util." +
+			"com.liferay.admin.kernel.util." +
 				"PortalMyAccountApplicationType$MyAccount";
 
 	}

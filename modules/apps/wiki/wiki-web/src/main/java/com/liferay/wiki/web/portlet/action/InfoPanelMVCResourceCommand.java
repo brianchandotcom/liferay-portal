@@ -16,6 +16,7 @@ package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 
@@ -46,6 +47,13 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		resourceRequest.setAttribute(
 			WikiWebKeys.WIKI_NODES, ActionUtil.getNodes(resourceRequest));
+		resourceRequest.setAttribute(
+			WikiWebKeys.WIKI_PAGES, ActionUtil.getPages(resourceRequest));
+
+		if (ParamUtil.getLong(resourceRequest, "nodeId") != 0) {
+			resourceRequest.setAttribute(
+				WikiWebKeys.WIKI_NODE, ActionUtil.getNode(resourceRequest));
+		}
 
 		include(
 			resourceRequest, resourceResponse, "/wiki_admin/info_panel.jsp");

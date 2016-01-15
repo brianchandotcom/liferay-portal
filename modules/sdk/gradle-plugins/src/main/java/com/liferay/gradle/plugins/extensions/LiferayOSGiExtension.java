@@ -45,20 +45,10 @@ public class LiferayOSGiExtension extends LiferayExtension {
 
 		_bundleDefaultInstructions.put(
 			Constants.BUNDLE_SYMBOLICNAME, project.getName());
-		_bundleDefaultInstructions.put(
-			Constants.BUNDLE_VENDOR, "Liferay, Inc.");
-		_bundleDefaultInstructions.put(Constants.DONOTCOPY, "(.touch)");
 		_bundleDefaultInstructions.put(Constants.DSANNOTATIONS, "*");
 		_bundleDefaultInstructions.put(Constants.METATYPE, "*");
 		_bundleDefaultInstructions.put(
 			Constants.PLUGIN, StringUtil.merge(_BND_PLUGIN_CLASS_NAMES, ","));
-		_bundleDefaultInstructions.put(Constants.SOURCES, "false");
-
-		_bundleDefaultInstructions.put(
-			"Git-Descriptor",
-			"${system-allow-fail;git describe --dirty --always}");
-		_bundleDefaultInstructions.put(
-			"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
 
 		_bundleDefaultInstructions.put(
 			"Javac-Debug",

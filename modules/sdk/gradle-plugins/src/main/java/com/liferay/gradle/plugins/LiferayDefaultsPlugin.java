@@ -18,6 +18,7 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
@@ -375,6 +376,25 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		basePluginConvention.setLibsDirName(dirName);
 	}
 
+	protected void configureBundleDefaultInstructions(Project project) {
+		LiferayOSGiExtension liferayOSGiExtension = GradleUtil.getExtension(
+			project, LiferayOSGiExtension.class);
+
+		Map<String, Object> bundleDefaultInstructions = new HashMap<>();
+
+		bundleDefaultInstructions.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
+		bundleDefaultInstructions.put(Constants.DONOTCOPY, "(.touch)");
+		bundleDefaultInstructions.put(Constants.SOURCES, "false");
+		bundleDefaultInstructions.put(
+			"Git-Descriptor",
+			"${system-allow-fail;git describe --dirty --always}");
+		bundleDefaultInstructions.put(
+			"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
+
+		liferayOSGiExtension.bundleDefaultInstructions(
+			bundleDefaultInstructions);
+	}
+
 	protected void configureConfigurations(Project project) {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -469,6 +489,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				@Override
 				public void execute(BundlePlugin bundlePlugin) {
 					addTaskCopyLibs(project);
+					configureBundleDefaultInstructions(project);
 					configureTaskJavadoc(project);
 				}
 

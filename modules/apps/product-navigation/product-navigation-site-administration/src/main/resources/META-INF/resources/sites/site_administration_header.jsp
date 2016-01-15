@@ -22,15 +22,17 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getPanelCategory();
 %>
 
-<liferay-ui:icon
-	cssClass="icon-sites"
-	icon="sites"
-	id="manageSitesLink"
-	label="<%= false %>"
-	markupView="lexicon"
-	message='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'
-	url="javascript:;"
-/>
+<div class="icon-sites">
+	<liferay-ui:icon
+		icon="sites"
+		id="manageSitesLink"
+		label="<%= false %>"
+		linkCssClass="icon-monospaced"
+		markupView="lexicon"
+		message='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'
+		url="javascript:;"
+	/>
+</div>
 
 <div class="hide">
 	<div id="<portlet:namespace/>siteSelectorContent">
@@ -44,7 +46,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 	</div>
 </div>
 
-<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon" : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %> >
+<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %>" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %> >
 	<div>
 		<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
 			<c:choose>
@@ -70,6 +72,9 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 		<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
 			<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
 		</c:if>
+
+		<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+		<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 	</div>
 </div>
 

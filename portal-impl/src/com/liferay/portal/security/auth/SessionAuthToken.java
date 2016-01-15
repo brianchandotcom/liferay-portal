@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -35,7 +33,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
-import com.liferay.portlet.admin.util.PortalProductMenuApplicationType;
 
 import javax.portlet.PortletRequest;
 
@@ -116,14 +113,6 @@ public class SessionAuthToken implements AuthToken {
 			if (_log.isDebugEnabled()) {
 				_log.debug(e.getMessage(), e);
 			}
-		}
-
-		String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(
-			PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
-			PortletProvider.Action.VIEW);
-
-		if (portletId.equals(controlPanelMenuPortletId)) {
-			return;
 		}
 
 		liferayPortletURL.setParameter(

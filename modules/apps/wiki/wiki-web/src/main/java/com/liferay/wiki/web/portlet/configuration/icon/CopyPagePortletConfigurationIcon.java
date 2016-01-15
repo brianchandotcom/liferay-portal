@@ -47,21 +47,21 @@ public class CopyPagePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL copyURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, WikiPortletKeys.WIKI_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		copyURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		copyURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		copyURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
-		copyURL.setParameter("title", StringPool.BLANK);
-		copyURL.setParameter("editTitle", "1");
-		copyURL.setParameter(
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("title", StringPool.BLANK);
+		portletURL.setParameter("editTitle", "1");
+		portletURL.setParameter(
 			"templateNodeId", String.valueOf(_page.getNodeId()));
-		copyURL.setParameter(
+		portletURL.setParameter(
 			"templateTitle", HtmlUtil.unescape(_page.getTitle()));
 
-		return copyURL.toString();
+		return portletURL.toString();
 	}
 
 	@Override

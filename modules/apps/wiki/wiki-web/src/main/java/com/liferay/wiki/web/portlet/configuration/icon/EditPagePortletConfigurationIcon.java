@@ -47,16 +47,16 @@ public class EditPagePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, WikiPortletKeys.WIKI_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		editPageURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		editPageURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
-		editPageURL.setParameter("title", _page.getTitle());
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("title", _page.getTitle());
 
-		return editPageURL.toString();
+		return portletURL.toString();
 	}
 
 	@Override

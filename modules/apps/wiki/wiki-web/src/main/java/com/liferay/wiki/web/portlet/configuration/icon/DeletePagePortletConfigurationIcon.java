@@ -73,15 +73,16 @@ public class DeletePagePortletConfigurationIcon
 				"version", String.valueOf(_page.getVersion()));
 		}
 
-		PortletURL viewPagesURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, WikiPortletKeys.WIKI_ADMIN,
 			PortletRequest.ACTION_PHASE);
 
-		viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
-		viewPagesURL.setParameter("navigation", "all-pages");
-		viewPagesURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		redirectURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
+		redirectURL.setParameter("navigation", "all-pages");
+		redirectURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
 
-		portletURL.setParameter("redirect", viewPagesURL.toString());
+		portletURL.setParameter("redirect", redirectURL.toString());
+
 		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 

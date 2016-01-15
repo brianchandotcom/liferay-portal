@@ -48,19 +48,19 @@ public class AddChildPagePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletURL addChildPageURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, WikiPortletKeys.WIKI_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		addChildPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		addChildPageURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		addChildPageURL.setParameter(
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
 			"nodeId", String.valueOf(_node.getNodeId()));
-		addChildPageURL.setParameter("title", StringPool.BLANK);
-		addChildPageURL.setParameter("editTitle", "1");
-		addChildPageURL.setParameter("parentTitle", _page.getTitle());
+		portletURL.setParameter("title", StringPool.BLANK);
+		portletURL.setParameter("editTitle", "1");
+		portletURL.setParameter("parentTitle", _page.getTitle());
 
-		return addChildPageURL.toString();
+		return portletURL.toString();
 	}
 
 	@Override

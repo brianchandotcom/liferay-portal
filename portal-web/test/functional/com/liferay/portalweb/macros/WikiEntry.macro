@@ -4,7 +4,7 @@
 	</command>
 
 	<command name="addPageContent">
-		<execute function="Type#typeAlloyEditor" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="addPageTitle">
@@ -46,20 +46,14 @@
 	</command>
 
 	<command name="selectPageFormat">
-		<var name="key_panelHeading" value="Configuration" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="Panel#PANEL_HEADING_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
 
 		<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
 	</command>
 
 	<command name="viewPageContentBody">
-		<execute function="AssertTextEquals" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
+		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 	</command>
 </definition>

@@ -255,8 +255,9 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 									</liferay-util:buffer>
 
 									<liferay-ui:icon
-										iconCssClass="icon-calendar"
+										icon="calendar"
 										label="<%= true %>"
+										markupView="lexicon"
 										message='<%= LanguageUtil.get(request, "date-range") + selectedLabelsHTML %>'
 									/>
 								</li>

@@ -29,10 +29,6 @@ public class HorizontalCardTag extends CardTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public void setIcon(String icon) {
-		_icon = icon;
-	}
-
 	public void setIconHTML(String iconHTML) {
 		_iconHTML = iconHTML;
 	}
@@ -50,7 +46,6 @@ public class HorizontalCardTag extends CardTag {
 
 	@Override
 	protected void cleanUp() {
-		_icon = null;
 		_iconHTML = null;
 		_text = null;
 	}
@@ -64,12 +59,10 @@ public class HorizontalCardTag extends CardTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		request.setAttribute("liferay-frontend:card:icon", _icon);
 		request.setAttribute("liferay-frontend:card:iconHTML", _iconHTML);
 		request.setAttribute("liferay-frontend:card:text", _text);
 	}
 
-	private String _icon;
 	private String _iconHTML;
 	private String _text;
 

@@ -478,13 +478,15 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								<liferay-frontend:horizontal-card
 									actionJsp="/document_library/folder_action.jsp"
 									actionJspServletContext="<%= application %>"
-									icon='<%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close-alt" %>'
-									imageCSSClass="icon-monospaced"
 									resultRow="<%= row %>"
 									rowChecker="<%= entriesChecker %>"
 									text="<%= HtmlUtil.escape(curFolder.getName()) %>"
 									url="<%= rowURL.toString() %>"
-								/>
+								>
+									<liferay-frontend:horizontal-card-icon>
+										<span class="icon-monospaced <%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close-alt" %>"></span>
+									</liferay-frontend:horizontal-card-icon>
+								</liferay-frontend:horizontal-card>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>

@@ -219,6 +219,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		Assert.assertTrue(ArrayUtil.containsAll(array1, array2));
 	}
 
+	@Override
 	protected void doVerify() throws VerifyException {
 		super.doVerify();
 

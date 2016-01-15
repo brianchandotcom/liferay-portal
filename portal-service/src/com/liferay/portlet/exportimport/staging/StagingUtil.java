@@ -60,7 +60,8 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getRemoteSiteURL(Group, boolean)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getRemoteSiteURL(Group,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static String buildRemoteURL(

@@ -30,10 +30,6 @@ public class VelocityBeanHandler implements InvocationHandler {
 		_classLoader = classLoader;
 	}
 
-	public ClassLoader getClassLoader() {
-		return _classLoader;
-	}
-
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {

@@ -1196,6 +1196,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			<#else>
 				@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 			</#if>
+
 			protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 		</#if>
 	</#if>

@@ -54,14 +54,15 @@ public class CalendarServiceTest {
 	@Sync
 	@Test
 	public void testIsManageableFromGroup() throws Exception {
-		User adminUser = UserTestUtil.addOmniAdminUser();
-
-		Group notStagedGroup = GroupTestUtil.addGroup();
 		Group liveGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.enableLocalStaging(liveGroup);
 
+		Group notStagedGroup = GroupTestUtil.addGroup();
+
 		Group stagingGroup = liveGroup.getStagingGroup();
+
+		User adminUser = UserTestUtil.addOmniAdminUser();
 
 		try (ContextUserReplace contextUserReplacer = new ContextUserReplace(
 				adminUser)) {
@@ -107,10 +108,9 @@ public class CalendarServiceTest {
 					stagingGroup.getGroupId()));
 		}
 		finally {
-			UserLocalServiceUtil.deleteUser(adminUser);
-
 			GroupLocalServiceUtil.deleteGroup(liveGroup);
 			GroupLocalServiceUtil.deleteGroup(notStagedGroup);
+			UserLocalServiceUtil.deleteUser(adminUser);
 		}
 	}
 

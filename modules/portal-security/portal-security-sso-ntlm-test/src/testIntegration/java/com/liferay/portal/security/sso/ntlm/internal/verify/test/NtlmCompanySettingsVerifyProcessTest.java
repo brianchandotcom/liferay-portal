@@ -46,6 +46,7 @@ public class NtlmCompanySettingsVerifyProcessTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Override
 	protected void doVerify(
 		PortletPreferences portletPreferences, Settings settings) {
 

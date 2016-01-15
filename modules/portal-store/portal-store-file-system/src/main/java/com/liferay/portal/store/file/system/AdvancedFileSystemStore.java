@@ -337,6 +337,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		return _advancedFileSystemStoreConfiguration.rootDir();
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {

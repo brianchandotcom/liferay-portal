@@ -31,8 +31,8 @@ import java.util.Dictionary;
 import org.osgi.service.component.annotations.Component;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 @Component(immediate = true)
 public class ConfigurationDescriptionFactoryImpl
 	implements ConfigurationDescriptionFactory {

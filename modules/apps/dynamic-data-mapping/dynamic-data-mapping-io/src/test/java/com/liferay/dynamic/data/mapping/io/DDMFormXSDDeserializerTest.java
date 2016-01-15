@@ -35,6 +35,7 @@ public class DDMFormXSDDeserializerTest
 	extends BaseDDMFormDeserializerTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

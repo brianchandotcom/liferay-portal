@@ -48,6 +48,7 @@ public class LayoutPrototypePagePanelApp extends BaseJSPPanelApp {
 		return LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE + ")",
 		unbind = "-"

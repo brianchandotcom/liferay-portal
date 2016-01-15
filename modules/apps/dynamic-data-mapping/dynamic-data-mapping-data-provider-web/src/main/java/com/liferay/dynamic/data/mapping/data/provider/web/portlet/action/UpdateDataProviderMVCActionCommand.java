@@ -81,6 +81,7 @@ public class UpdateDataProviderMVCActionCommand
 		super.setDDMDataProviderInstanceService(ddmDataProviderInstanceService);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMDataProviderTracker(
 		DDMDataProviderTracker ddmDataProviderTracker) {

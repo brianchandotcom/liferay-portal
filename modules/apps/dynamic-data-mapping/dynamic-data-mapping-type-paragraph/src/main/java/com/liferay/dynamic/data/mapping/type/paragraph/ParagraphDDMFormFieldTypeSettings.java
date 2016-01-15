@@ -74,18 +74,23 @@ public interface ParagraphDDMFormFieldTypeSettings
 		},
 		required = true, tip = "%enter-title", type = "key-value"
 	)
+	@Override
 	public LocalizedValue label();
 
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public LocalizedValue predefinedValue();
 
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public boolean repeatable();
 
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public boolean required();
 
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public boolean showLabel();
 
 	@DDMFormField(
@@ -96,12 +101,14 @@ public interface ParagraphDDMFormFieldTypeSettings
 	public String text();
 
 	@DDMFormField(visibilityExpression = "false")
+	@Override
 	public LocalizedValue tip();
 
 	@DDMFormField(
 		dataType = "ddm-validation", type = "validation",
 		visibilityExpression = "false"
 	)
+	@Override
 	public DDMFormFieldValidation validation();
 
 }

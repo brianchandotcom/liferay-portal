@@ -227,6 +227,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		indexWriter.deleteEntityDocuments(searchContext, className);
 	}
 
+	@Override
 	public int getReindexTaskCount(long groupId, boolean completed)
 		throws SearchException {
 
@@ -454,6 +455,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		indexWriter.partiallyUpdateDocuments(searchContext, documents);
 	}
 
+	@Override
 	public BackgroundTask reindex(
 			long userId, String jobName, long[] companyIds,
 			Map<String, Serializable> taskContextMap)
@@ -476,6 +478,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		}
 	}
 
+	@Override
 	public BackgroundTask reindex(
 			long userId, String jobName, long[] companyIds, String className,
 			Map<String, Serializable> taskContextMap)

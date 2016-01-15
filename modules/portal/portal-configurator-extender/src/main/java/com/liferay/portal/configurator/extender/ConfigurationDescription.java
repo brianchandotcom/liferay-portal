@@ -15,7 +15,7 @@
 package com.liferay.portal.configurator.extender;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 public abstract class ConfigurationDescription {
 }

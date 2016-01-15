@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 
+	@Override
 	public MicroblogsEntry addMicroblogsEntry(
 			long userId, String content, int type, long parentMicroblogsEntryId,
 			int socialRelationType, ServiceContext serviceContext)
@@ -43,6 +44,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
 	public MicroblogsEntry deleteMicroblogsEntry(long microblogsEntryId)
 		throws PortalException {
 
@@ -53,6 +55,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			microblogsEntryId);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(int start, int end)
 		throws PortalException {
 
@@ -60,6 +63,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			getGuestOrUserId(), start, end);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 			String assetTagName, int start, int end)
 		throws PortalException {
@@ -68,10 +72,12 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			getGuestOrUserId(), assetTagName, start, end);
 	}
 
+	@Override
 	public int getMicroblogsEntriesCount() throws PortalException {
 		return microblogsEntryFinder.countByUserId(getGuestOrUserId());
 	}
 
+	@Override
 	public int getMicroblogsEntriesCount(String assetTagName)
 		throws PortalException {
 
@@ -79,6 +85,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			getGuestOrUserId(), assetTagName);
 	}
 
+	@Override
 	public MicroblogsEntry getMicroblogsEntry(long microblogsEntryId)
 		throws PortalException {
 
@@ -89,6 +96,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			microblogsEntryId);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getUserMicroblogsEntries(
 			long microblogsEntryUserId, int start, int end)
 		throws PortalException {
@@ -97,6 +105,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			getGuestOrUserId(), microblogsEntryUserId, start, end);
 	}
 
+	@Override
 	public List<MicroblogsEntry> getUserMicroblogsEntries(
 			long microblogsEntryUserId, int type, int start, int end)
 		throws PortalException {
@@ -105,6 +114,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			getGuestOrUserId(), type, microblogsEntryUserId, start, end);
 	}
 
+	@Override
 	public int getUserMicroblogsEntriesCount(long microblogsEntryUserId)
 		throws PortalException {
 
@@ -112,6 +122,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			getGuestOrUserId(), microblogsEntryUserId);
 	}
 
+	@Override
 	public int getUserMicroblogsEntriesCount(
 			long microblogsEntryUserId, int type)
 		throws PortalException {
@@ -120,6 +131,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			getGuestOrUserId(), type, microblogsEntryUserId);
 	}
 
+	@Override
 	public MicroblogsEntry updateMicroblogsEntry(
 			long microblogsEntryId, String content, int socialRelationType,
 			ServiceContext serviceContext)

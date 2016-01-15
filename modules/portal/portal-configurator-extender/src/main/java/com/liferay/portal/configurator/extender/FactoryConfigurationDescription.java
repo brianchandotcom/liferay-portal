@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.Supplier;
 import java.util.Dictionary;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 public final class FactoryConfigurationDescription
 	extends ConfigurationDescription {
 

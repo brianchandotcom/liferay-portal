@@ -638,8 +638,8 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, MBMessage, int, boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int, boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -652,8 +652,8 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, MBMessage, int, boolean, Comparator)} (
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	MBMessage, int, boolean, Comparator)} (
 	*/
 	@Deprecated
 	@Override
@@ -675,8 +675,8 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, long, int, boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
+	long, int, boolean)}
 	*/
 	@Deprecated
 	@Override

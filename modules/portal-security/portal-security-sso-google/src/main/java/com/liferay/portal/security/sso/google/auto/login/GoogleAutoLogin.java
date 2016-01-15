@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
-* @author Sergio González
-*/
+ * @author Sergio González
+ */
 @Component(immediate = true, service = AutoLogin.class)
 public class GoogleAutoLogin extends BaseAutoLogin {
 

@@ -1386,6 +1386,7 @@ public abstract class BaseMobileDriverImpl
 	public void setDefaultTimeout() {
 	}
 
+	@Override
 	public void setDefaultTimeoutImplicit() {
 		WebDriverHelper.setDefaultTimeoutImplicit(this);
 	}

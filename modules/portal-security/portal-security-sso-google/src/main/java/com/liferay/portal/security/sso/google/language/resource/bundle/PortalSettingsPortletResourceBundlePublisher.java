@@ -35,24 +35,29 @@ public class PortalSettingsPortletResourceBundlePublisher
 	extends BaseResourceBundlePublisher {
 
 	@Activate
+	@Override
 	protected void activate(BundleContext bundleContext) throws IOException {
 		super.activate(bundleContext);
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}
 
+	@Override
 	protected String getPortletName() {
 		return PortalSettingsPortletKeys.PORTAL_SETTINGS;
 	}
 
 	@Modified
+	@Override
 	protected void modified(BundleContext bundleContext) throws IOException {
 		super.modified(bundleContext);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLanguageUtil(LanguageUtil languageUtil) {
 		super.setLanguageUtil(languageUtil);

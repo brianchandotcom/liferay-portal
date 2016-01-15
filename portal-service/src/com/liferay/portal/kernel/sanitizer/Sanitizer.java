@@ -44,21 +44,22 @@ public interface Sanitizer {
 	 * Returns the sanitized content as a byte array. Implementations may modify
 	 * the input byte array.
 	 *
-	 * @param  companyId the primary key of the portal instance
-	 * @param  groupId the primary key of the site's group
-	 * @param  userId the user who changed the content
-	 * @param  className the class name of the content model implementation
-	 * @param  classPK the primary key of the content to sanitize,
-	 *         <code>0</code> if not available
-	 * @param  contentType the content type. For more information, see {@link
-	 *         com.liferay.portal.kernel.util.ContentTypes}.
-	 * @param  modes ways in which to run the sanitizer, such as {@link
-	 *         #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
-	 * @param  bytes the content to be sanitized
-	 * @param  options a map of options for the sanitizer
-	 * @return the sanitized content
-	 * @throws SanitizerException if a sanitizer exception occurred
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long, String, long, String, String[], String, Map)}
+	 * @param      companyId the primary key of the portal instance
+	 * @param      groupId the primary key of the site's group
+	 * @param      userId the user who changed the content
+	 * @param      className the class name of the content model implementation
+	 * @param      classPK the primary key of the content to sanitize,
+	 *             <code>0</code> if not available
+	 * @param      contentType the content type. For more information, see
+	 *             {@link com.liferay.portal.kernel.util.ContentTypes}.
+	 * @param      modes ways in which to run the sanitizer, such as {@link
+	 *             #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
+	 * @param      bytes the content to be sanitized
+	 * @param      options a map of options for the sanitizer
+	 * @return     the sanitized content
+	 * @throws     SanitizerException if a sanitizer exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String[], String, Map)}
 	 */
 	@Deprecated
 	public byte[] sanitize(
@@ -71,21 +72,22 @@ public interface Sanitizer {
 	 * Sanitizes the input stream content, assigning the results to the output
 	 * stream.
 	 *
-	 * @param  companyId the primary key of the portal instance
-	 * @param  groupId the primary key of the site's group
-	 * @param  userId the user who changed the content
-	 * @param  className the class name of the content model implementation
-	 * @param  classPK the primary key of the content to sanitize,
-	 *         <code>0</code> if not available
-	 * @param  contentType the content type. For more information, see {@link
-	 *         com.liferay.portal.kernel.util.ContentTypes}.
-	 * @param  modes ways in which to run the sanitizer, such as {@link
-	 *         #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
-	 * @param  inputStream the content to be sanitized
-	 * @param  outputStream the result of the sanitizing process
-	 * @param  options a map of options for the sanitizer
-	 * @throws SanitizerException if a sanitizer exception occurred
-	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long, String, long, String, String[], String, Map)}
+	 * @param      companyId the primary key of the portal instance
+	 * @param      groupId the primary key of the site's group
+	 * @param      userId the user who changed the content
+	 * @param      className the class name of the content model implementation
+	 * @param      classPK the primary key of the content to sanitize,
+	 *             <code>0</code> if not available
+	 * @param      contentType the content type. For more information, see
+	 *             {@link com.liferay.portal.kernel.util.ContentTypes}.
+	 * @param      modes ways in which to run the sanitizer, such as {@link
+	 *             #MODE_ALL}, {@link #MODE_BAD_WORDS}, and/or {@link #MODE_XSS}
+	 * @param      inputStream the content to be sanitized
+	 * @param      outputStream the result of the sanitizing process
+	 * @param      options a map of options for the sanitizer
+	 * @throws     SanitizerException if a sanitizer exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String[], String, Map)}
 	 */
 	@Deprecated
 	public void sanitize(

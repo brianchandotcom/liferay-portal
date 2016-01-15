@@ -35,8 +35,8 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 public class ConfiguratorExtension implements Extension {
 
 	public ConfiguratorExtension(

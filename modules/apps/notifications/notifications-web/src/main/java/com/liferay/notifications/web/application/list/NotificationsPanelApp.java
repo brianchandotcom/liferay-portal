@@ -65,6 +65,7 @@ public class NotificationsPanelApp extends BasePanelApp {
 		super.setPortlet(portlet);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setUserNotificationEventLocalService(
 		UserNotificationEventLocalService userNotificationEventLocalService) {

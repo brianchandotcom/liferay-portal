@@ -178,8 +178,8 @@ public interface MBMessageService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, int, boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long, int,
+	boolean)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

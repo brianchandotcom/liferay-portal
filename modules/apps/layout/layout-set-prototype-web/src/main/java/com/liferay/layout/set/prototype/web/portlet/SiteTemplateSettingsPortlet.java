@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteTemplateSettingsPortlet extends LayoutSetPrototypePortlet {
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutSetPrototypeService(
 		LayoutSetPrototypeService layoutSetPrototypeService) {

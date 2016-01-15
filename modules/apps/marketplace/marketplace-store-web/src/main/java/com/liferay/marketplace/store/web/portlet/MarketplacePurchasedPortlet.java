@@ -59,11 +59,13 @@ public class MarketplacePurchasedPortlet extends MarketplaceStorePortlet {
 		return MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setAppLocalService(AppLocalService appLocalService) {
 		super.setAppLocalService(appLocalService);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setAppService(AppService appService) {
 		super.setAppService(appService);

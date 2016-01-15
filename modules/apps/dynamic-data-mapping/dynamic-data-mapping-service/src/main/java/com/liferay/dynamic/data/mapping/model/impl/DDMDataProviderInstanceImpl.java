@@ -35,6 +35,7 @@ import java.util.List;
 public class DDMDataProviderInstanceImpl
 	extends DDMDataProviderInstanceBaseImpl {
 
+	@Override
 	public List<KeyValuePair> getData() throws PortalException {
 		DDMDataProvider ddmDataProvider =
 			DDMDataProviderTrackerUtil.getDDMDataProvider(getType());

@@ -62,14 +62,14 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-				label="<%= label %>"
+			label="<%= label %>"
 		>
 			<portlet:renderURL var="viewDocumentsHomeURL">
 				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 				<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:management-bar-navigation-item active='<%= ((navigation.equals("home")) && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>' label="all" url="<%= viewDocumentsHomeURL.toString() %>" />
+			<liferay-frontend:management-bar-filter-item active='<%= ((navigation.equals("home")) && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>' label="all" url="<%= viewDocumentsHomeURL.toString() %>" />
 
 			<portlet:renderURL var="viewRecentDocumentsURL">
 				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
@@ -77,7 +77,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 				<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("recent") %>' label="recent" url="<%= viewRecentDocumentsURL.toString() %>" />
+			<liferay-frontend:management-bar-filter-item active='<%= navigation.equals("recent") %>' label="recent" url="<%= viewRecentDocumentsURL.toString() %>" />
 
 			<c:if test="<%= themeDisplay.isSignedIn() %>">
 				<portlet:renderURL var="viewMyDocumentsURL">
@@ -86,10 +86,10 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 					<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 				</portlet:renderURL>
 
-				<liferay-frontend:management-bar-navigation-item active='<%= navigation.equals("mine") %>' label="mine" url="<%= viewMyDocumentsURL.toString() %>" />
+				<liferay-frontend:management-bar-filter-item active='<%= navigation.equals("mine") %>' label="mine" url="<%= viewMyDocumentsURL.toString() %>" />
 			</c:if>
 
-			<liferay-frontend:management-bar-navigation-item active="<%= fileEntryTypeId != -1 %>" id="fileEntryTypes" label="document-types" url="javascript:;" />
+			<liferay-frontend:management-bar-filter-item active="<%= fileEntryTypeId != -1 %>" id="fileEntryTypes" label="document-types" url="javascript:;" />
 		</liferay-frontend:management-bar-navigation>
 
 		<c:if test='<%= !search && !navigation.equals("recent") %>'>

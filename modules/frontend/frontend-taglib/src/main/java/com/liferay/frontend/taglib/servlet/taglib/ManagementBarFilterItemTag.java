@@ -25,7 +25,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Eudaldo Alonso
  */
-public class ManagementBarNavigationItemTag extends IncludeTag {
+public class ManagementBarFilterItemTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {

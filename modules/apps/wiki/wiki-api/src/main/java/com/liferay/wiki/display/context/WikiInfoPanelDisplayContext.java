@@ -14,8 +14,21 @@
 
 package com.liferay.wiki.display.context;
 
+import com.liferay.wiki.model.WikiNode;
+
 /**
  * @author Adolfo Pérez
  */
 public interface WikiInfoPanelDisplayContext extends WikiDisplayContext {
+
+	public WikiNode getFirstNode();
+
+	public int getNodesCount();
+
+	public int getSelectedNodesCount();
+
+	public boolean isMultipleSelection();
+
+	public boolean isShowNodeDetails();
+
 }

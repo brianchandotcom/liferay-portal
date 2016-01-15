@@ -1,9 +1,9 @@
 package ${packagePath}.model.impl;
 
-import ${packagePath}.model.${entity.name};
+import ${apiPackagePath}.model.${entity.name};
 
 <#if entity.hasLocalService() && entity.hasColumns()>
-	import ${packagePath}.service.${entity.name}LocalServiceUtil;
+	import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 
 	import com.liferay.portal.kernel.exception.PortalException;
 	import com.liferay.portal.kernel.util.StringBundler;
@@ -25,7 +25,7 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author ${author}
  * @see ${entity.name}Impl
- * @see ${packagePath}.model.${entity.name}
+ * @see ${apiPackagePath}.model.${entity.name}
 <#if classDeprecated>
  * @deprecated ${classDeprecatedComment}
 </#if>

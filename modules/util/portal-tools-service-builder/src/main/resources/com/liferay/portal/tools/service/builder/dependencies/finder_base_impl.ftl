@@ -1,7 +1,7 @@
 package ${packagePath}.service.persistence.impl;
 
-import ${packagePath}.model.${entity.name};
-import ${packagePath}.service.persistence.${entity.name}Persistence;
+import ${apiPackagePath}.model.${entity.name};
+import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;

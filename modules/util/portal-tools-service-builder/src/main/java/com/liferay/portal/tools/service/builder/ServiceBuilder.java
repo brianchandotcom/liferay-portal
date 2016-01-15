@@ -555,7 +555,12 @@ public class ServiceBuilder {
 					"The package-path attribute is required");
 			}
 
-			String apiPackagePath = packagePath;
+			String apiPackagePath =	rootElement.attributeValue(
+				"api-package-path");
+
+			if (Validator.isNull(apiPackagePath)) {
+				apiPackagePath = packagePath;
+			}
 
 			_outputPath =
 				_implDirName + "/" + StringUtil.replace(packagePath, ".", "/");
@@ -2284,6 +2289,13 @@ public class ServiceBuilder {
 			"<import class=\"" + _packagePath + ".model.");
 
 		if (firstImport == -1) {
+			firstImport = newContent.indexOf(
+				"<import class=\"" + _apiPackagePath + ".model.");
+			lastImport = newContent.lastIndexOf(
+				"<import class=\"" + _apiPackagePath + ".model.");
+		}
+
+		if (firstImport == -1) {
 			int x = newContent.indexOf("<class");
 
 			if (x != -1) {
@@ -2458,6 +2470,13 @@ public class ServiceBuilder {
 			"<model name=\"" + _packagePath + ".model.");
 		int lastModel = newContent.lastIndexOf(
 			"<model name=\"" + _packagePath + ".model.");
+
+		if (firstModel == -1) {
+			firstModel = newContent.indexOf(
+				"<model name=\"" + _apiPackagePath + ".model.");
+			lastModel = newContent.lastIndexOf(
+				"<model name=\"" + _apiPackagePath + ".model.");
+		}
 
 		if (firstModel == -1) {
 			int x = newContent.indexOf("</model-hints>");
@@ -3211,6 +3230,14 @@ public class ServiceBuilder {
 		int lastSession = newContent.lastIndexOf(
 			"<bean id=\"" + _packagePath + ".service.", y);
 
+		if (firstSession == -1) {
+			firstSession = newContent.indexOf(
+				"<bean id=\"" + _apiPackagePath + ".service.", x);
+
+			lastSession = newContent.lastIndexOf(
+				"<bean id=\"" + _apiPackagePath + ".service.", y);
+		}
+
 		if ((firstSession == -1) || (firstSession > y)) {
 			x = newContent.indexOf("</beans>");
 
@@ -3877,6 +3904,7 @@ public class ServiceBuilder {
 		context.put("propsUtil", _propsUtil);
 		context.put("serviceBuilder", this);
 		context.put("serviceOutputPath", _serviceOutputPath);
+		context.put("apiPackagePath", _apiPackagePath);
 		context.put("springFileName", _springFileName);
 		context.put("sqlDir", _sqlDirName);
 		context.put("sqlFileName", _sqlFileName);
@@ -4121,7 +4149,7 @@ public class ServiceBuilder {
 			}
 			else if (colType.equals("String")) {
 				int maxLength = getMaxLength(
-					_packagePath + ".model." + entity.getName(), colName);
+					_apiPackagePath + ".model." + entity.getName(), colName);
 
 				if (col.isLocalized() && (maxLength < 4000)) {
 					maxLength = 4000;
@@ -4690,11 +4718,11 @@ public class ServiceBuilder {
 			sb.append(
 				"package " + _packagePath + ".service.persistence.impl;\n\n");
 			sb.append(
-				"import " + _packagePath + ".service.persistence." + ejbName +
-					"Finder;\n");
+				"import " + _apiPackagePath +
+					".service.persistence." + ejbName + "Finder;\n");
 			sb.append(
-				"import " + _packagePath + ".service.persistence." + ejbName +
-					"Util;");
+				"import " + _apiPackagePath +
+					".service.persistence." + ejbName + "Util;");
 
 			content = StringUtil.replace(
 				content, "package " + _packagePath + ".service.persistence;",
@@ -5093,7 +5121,7 @@ public class ServiceBuilder {
 		}
 
 		boolean resourceActionModel = _resourceActionModels.contains(
-			_packagePath + ".model." + ejbName);
+			_apiPackagePath + ".model." + ejbName);
 
 		_ejbList.add(
 			new Entity(

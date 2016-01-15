@@ -1,4 +1,4 @@
-package ${packagePath}.service;
+package ${apiPackagePath}.service;
 
 import aQute.bnd.annotation.ProviderType;
 

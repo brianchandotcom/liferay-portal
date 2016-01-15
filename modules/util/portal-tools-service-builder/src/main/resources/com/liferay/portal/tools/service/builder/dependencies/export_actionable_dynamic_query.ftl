@@ -1,7 +1,7 @@
-package ${packagePath}.service.persistence;
+package ${apiPackagePath}.service.persistence;
 
-import ${packagePath}.model.${entity.name};
-import ${packagePath}.service.${entity.name}LocalServiceUtil;
+import ${apiPackagePath}.model.${entity.name};
+import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,7 +22,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 /**
  * @author ${author}
- * @deprecated As of 7.0.0, replaced by {@link ${packagePath}.service.${entity.name}LocalServiceUtil#getExportActionableDynamicQuery(PortletDataContext)}
+ * @deprecated As of 7.0.0, replaced by {@link ${apiPackagePath}.service.${entity.name}LocalServiceUtil#getExportActionableDynamicQuery(PortletDataContext)}
  * @generated
  */
 @Deprecated

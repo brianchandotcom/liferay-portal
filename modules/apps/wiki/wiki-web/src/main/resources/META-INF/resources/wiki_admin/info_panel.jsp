@@ -17,7 +17,7 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <div class="sidebar-header">
-	<h4><%= LanguageUtil.get(request, "wikis") %></h4>
+	<h4><liferay-ui:message key="wikis" /></h4>
 </div>
 
 <aui:nav-bar>

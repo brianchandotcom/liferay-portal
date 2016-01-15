@@ -75,11 +75,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		ServletContext servletContext = session.getServletContext();
 
-		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
-
-		try {
-			AccessControlThreadLocal.setRemoteAccess(true);
-
 			String contextPath =
 				PortalContextLoaderListener.getPortalServletContextPath();
 
@@ -116,10 +111,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 				response.sendRedirect(redirectPath);
 			}
-		}
-		finally {
-			AccessControlThreadLocal.setRemoteAccess(remoteAccess);
-		}
 	}
 
 	@Override

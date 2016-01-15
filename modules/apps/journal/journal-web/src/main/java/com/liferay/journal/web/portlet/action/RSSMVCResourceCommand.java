@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
+	immediate = true,
 	property = {
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,

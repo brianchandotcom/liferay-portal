@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins</artifactId>
-  <version>1.0.81</version>
+  <version>1.0.82</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -19,9 +19,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:liferay/liferay-plugins.git</connection>
-    <developerConnection>scm:git:git@github.com:liferay/liferay-plugins.git</developerConnection>
-    <url>http://github.com/liferay/liferay-plugins</url>
+    <connection>scm:git:git@github.com:liferay/liferay-portal.git</connection>
+    <developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
+    <url>http://github.com/liferay/liferay-portal</url>
   </scm>
   <dependencies>
     <dependency>

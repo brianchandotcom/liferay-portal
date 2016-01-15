@@ -235,8 +235,8 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(
-	long, int, boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long, int,
+	boolean)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessageDisplay getMessageDisplay(

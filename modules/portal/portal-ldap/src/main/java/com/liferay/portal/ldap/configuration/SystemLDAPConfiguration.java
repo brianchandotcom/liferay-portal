@@ -32,8 +32,8 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 
-	@Override
 	@Meta.AD(deflt = "0", required = false)
+	@Override
 	public long companyId();
 
 	@Meta.AD(

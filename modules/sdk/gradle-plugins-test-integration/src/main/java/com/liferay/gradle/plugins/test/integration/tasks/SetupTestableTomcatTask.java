@@ -68,20 +68,20 @@ public class SetupTestableTomcatTask
 		return GradleUtil.toFile(getProject(), _dir);
 	}
 
-	@Override
 	@Input
+	@Override
 	public int getJmxRemotePort() {
 		return GradleUtil.toInteger(_jmxRemotePort);
 	}
 
-	@Override
 	@Input
+	@Override
 	public String getManagerPassword() {
 		return GradleUtil.toString(_managerPassword);
 	}
 
-	@Override
 	@Input
+	@Override
 	public String getManagerUserName() {
 		return GradleUtil.toString(_managerUserName);
 	}

@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteTemplateSettingsPortletDataHandler
 	extends LayoutSetPrototypePortletDataHandler {
 
-	@Override
 	@Activate
+	@Override
 	protected void activate() {
 		super.activate();
 	}

@@ -116,10 +116,10 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		}
 
 		synchronized (_jsResourceUrls) {
-			for (String cssResourcePath :
-					bundleWebResources.getCssResourcePaths()) {
+			for (String jsResourcePath :
+					bundleWebResources.getJsResourcePaths()) {
 
-				_jsResourceUrls.add(servletContextPath + cssResourcePath);
+				_jsResourceUrls.add(servletContextPath + jsResourcePath);
 			}
 		}
 	}
@@ -138,10 +138,10 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		}
 
 		synchronized (_jsResourceUrls) {
-			for (String cssResourcePath :
-					bundleWebResources.getCssResourcePaths()) {
+			for (String jsResourcePath :
+					bundleWebResources.getJsResourcePaths()) {
 
-				_jsResourceUrls.remove(servletContextPath + cssResourcePath);
+				_jsResourceUrls.remove(servletContextPath + jsResourcePath);
 			}
 		}
 	}

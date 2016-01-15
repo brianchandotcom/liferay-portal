@@ -161,7 +161,7 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.bookmarks.liferay.com" />
 	</service>
 	<service name="Plugin_Bookmarks_BookmarksFolderService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.bookmarks.liferay.com" xmlns:cmp-ns="http://model.bookmarks.liferay.com" qname="ns:ArrayOf_tns2_BookmarksFolderSoap" type="java:com.liferay.bookmarks.model.BookmarksFolderSoap[]" innerType="cmp-ns:BookmarksFolderSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.bookmarks.liferay.com" xmlns:cmp-ns="http://model.bookmarks.liferay.com" qname="ns:ArrayOf_tns15_BookmarksFolderSoap" type="java:com.liferay.bookmarks.model.BookmarksFolderSoap[]" innerType="cmp-ns:BookmarksFolderSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.bookmarks.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.bookmarks.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.bookmarks.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -211,20 +211,20 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns15_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns15_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns15_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.liferay.com" xmlns:rtns="urn:http.service.bookmarks.liferay.com" xmlns:tns2="http://model.bookmarks.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns15_BookmarksFolderSoap" returnItemType="tns2:BookmarksFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>

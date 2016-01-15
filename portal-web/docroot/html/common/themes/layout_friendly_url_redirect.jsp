@@ -25,7 +25,7 @@ String alternativeLayoutFriendlyURL = (String)SessionMessages.get(request, "alte
 
 	<liferay-util:buffer var="redirectedLink">
 		<aui:a href="<%= PortalUtil.getCurrentCompleteURL(request) %>">
-			<%= PortalUtil.getCurrentCompleteURL(request) %>
+			<%= HtmlUtil.escape(PortalUtil.getCurrentCompleteURL(request)) %>
 		</aui:a>
 	</liferay-util:buffer>
 

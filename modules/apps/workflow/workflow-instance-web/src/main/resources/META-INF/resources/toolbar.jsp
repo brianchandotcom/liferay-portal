@@ -30,27 +30,12 @@
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+		<portlet:renderURL var="viewURL" />
+
 		<liferay-frontend:management-bar-navigation
-			label="<%= null %>"
-		>
-			<portlet:renderURL var="viewAllURL">
-				<portlet:param name="navigation" value="all" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-navigation-item active="<%= workflowInstanceViewDisplayContext.isNavigationAll() %>" label="all" url="<%= viewAllURL.toString() %>" />
-
-			<portlet:renderURL var="viewPendingsURL">
-				<portlet:param name="navigation" value="pending" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-navigation-item active="<%= workflowInstanceViewDisplayContext.isNavigationPending() %>" label="pending" url="<%= viewPendingsURL.toString() %>" />
-
-			<portlet:renderURL var="viewCompletedURL">
-				<portlet:param name="navigation" value="completed" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-navigation-item active="<%= workflowInstanceViewDisplayContext.isNavigationCompleted() %>" label="completed" url="<%= viewCompletedURL.toString() %>" />
-		</liferay-frontend:management-bar-navigation>
+			navigationKeys='<%= new String[] {"all", "pending", "completed"} %>'
+			portletURL="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>"
+		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= workflowInstanceViewDisplayContext.getOrderByCol() %>"

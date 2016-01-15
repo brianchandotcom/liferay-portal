@@ -38,6 +38,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@

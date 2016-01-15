@@ -54,8 +54,7 @@ public class AddChildPagePortletConfigurationIcon
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
 		portletURL.setParameter("title", StringPool.BLANK);
 		portletURL.setParameter("editTitle", "1");
 		portletURL.setParameter("parentTitle", _page.getTitle());

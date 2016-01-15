@@ -31,6 +31,10 @@ public interface WikiDisplayContextFactory extends DisplayContextFactory {
 		HttpServletRequest request, HttpServletResponse response,
 		WikiPage wikiPage);
 
+	public WikiInfoPanelDisplayContext getWikiInfoPanelDisplayContext(
+		WikiInfoPanelDisplayContext parentWikiInfoPanelDisplayContext,
+		HttpServletRequest request, HttpServletResponse response);
+
 	public WikiListPagesDisplayContext getWikiListPagesDisplayContext(
 		WikiListPagesDisplayContext parentWikiListPagesDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,

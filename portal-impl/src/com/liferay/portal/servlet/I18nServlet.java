@@ -150,9 +150,9 @@ public class I18nServlet extends HttpServlet {
 
 		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId, true, false);
 
-		String i18nLanguageCode = locale.getLanguage();
+		String i18nLanguageCode = i18nLanguageId;
 
-		if (Validator.isNull(locale.getCountry())) {
+		if ((locale == null) || Validator.isNull(locale.getCountry())) {
 
 			// Locales must contain the country code
 

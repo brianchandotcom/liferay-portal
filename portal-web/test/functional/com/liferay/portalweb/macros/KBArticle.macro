@@ -181,8 +181,8 @@
 	</command>
 
 	<command name="configureEmailCP">
-		<execute function="AssertClick" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 

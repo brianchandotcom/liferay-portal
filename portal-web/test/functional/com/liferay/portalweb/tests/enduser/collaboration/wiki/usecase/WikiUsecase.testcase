@@ -234,6 +234,8 @@
 	</command>
 
 	<command name="DeleteDeleteWikiFrontpage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -429,6 +431,8 @@
 	</command>
 
 	<command name="RestoreDeleteWikiFrontpage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

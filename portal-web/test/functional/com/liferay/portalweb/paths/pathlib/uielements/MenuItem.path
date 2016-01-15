@@ -305,7 +305,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//div[contains(@class,'dropdown') and contains(@class,'open')]//a[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'dropdown') and contains(@class,'open')]//a[contains(.,'Edit')] | //div[@class='open']/ul[contains(@class,'dropdown-menu')]//a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

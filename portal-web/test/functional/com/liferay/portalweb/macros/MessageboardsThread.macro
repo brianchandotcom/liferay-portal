@@ -1080,16 +1080,6 @@
 	<command name="viewReplyCP">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_ADMIN_THREAD" value1="${threadSubject}" />
-		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_ADMIN_FLAG" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_ADMIN_STARTED_BY" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_ADMIN_POSTS" value1="${postsNumber}" />
-		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_ADMIN_VIEWS" value1="${threadSubject}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_ADMIN_LAST_POST" value1="${userName}" />
-		<execute function="AssertElementPresent" locator1="MessageBoards#VERTICAL_ELLIPSIS" value1="${threadSubject}" />
-
-		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
-
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />

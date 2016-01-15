@@ -712,6 +712,8 @@
 	</command>
 
 	<command name="CancelAddPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>

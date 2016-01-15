@@ -39,7 +39,7 @@ import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.io.Serializable;
 

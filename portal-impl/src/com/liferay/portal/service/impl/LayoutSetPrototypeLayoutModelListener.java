@@ -26,7 +26,7 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutSetPrototypeUtil;
-import com.liferay.portlet.sites.util.Sites;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Date;
 

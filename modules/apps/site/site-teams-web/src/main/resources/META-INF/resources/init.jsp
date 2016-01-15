@@ -67,9 +67,9 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.site.teams.web.search.TeamDisplayTerms" %><%@
-page import="com.liferay.site.teams.web.search.TeamSearch" %>
+page import="com.liferay.site.teams.web.search.TeamSearch" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@

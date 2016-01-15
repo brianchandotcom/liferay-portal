@@ -23,11 +23,11 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebConfiguration",
+	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration",
 	localization = "content/Language",
 	name = "%site.navigation.breadcrumb.web.configuration.name"
 )
-public interface SiteNavigationBreadcrumbWebConfiguration {
+public interface SiteNavigationBreadcrumbWebTemplateConfiguration {
 
 	@Meta.AD(deflt = "breadcrumb-horizontal-ftl", required = false)
 	public String ddmTemplateKeyDefault();

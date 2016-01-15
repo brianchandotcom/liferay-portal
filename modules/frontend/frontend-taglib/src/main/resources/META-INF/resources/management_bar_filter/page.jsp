@@ -25,7 +25,14 @@ String value = (String)request.getAttribute("liferay-frontend:management-bar-fil
 <c:if test="<%= managementBarFilterItems.size() > 0 %>">
 	<li class="dropdown">
 		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= label %>" data-toggle="dropdown" href="javascript:;">
-			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" />: <liferay-ui:message key="<%= value %>" /></span>
+			<span class="management-bar-item-title">
+				<c:if test="<%= Validator.isNotNull(label) %>">
+					<liferay-ui:message key="<%= label %>" />:
+				</c:if>
+
+				<liferay-ui:message key="<%= value %>" />
+			</span>
+
 			<span class="icon-sort"></span>
 		</a>
 

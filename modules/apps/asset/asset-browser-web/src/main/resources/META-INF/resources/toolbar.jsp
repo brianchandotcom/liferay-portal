@@ -20,6 +20,11 @@
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
 
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
+
+if (groupId == 0) {
+	groupId = themeDisplay.getScopeGroupId();
+}
+
 String typeSelection = ParamUtil.getString(request, "typeSelection");
 long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
 

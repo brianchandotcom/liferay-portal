@@ -2,7 +2,6 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
-	alloyUI
 	lexicon
 }
 
@@ -13,13 +12,15 @@ task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
-String alloyUIVersion = "3.0.3-deprecated.6"
+String alloyUIVersion = "3.0.3-deprecated.8"
 String lexiconVersion = "0.1.28"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
+File thirdPartyDir = file("../../../../portal-web/third-party")
 
 buildAlloyUITheme {
 	File alloyThemeDestinationDir = new File(themeDestinationDir, "images/aui")
+	FileTree alloyZipFileTree = fileTree(dir: thirdPartyDir, include: "alloy-${alloyUIVersion}*.zip")
 
 	doFirst {
 		delete alloyThemeDestinationDir
@@ -31,16 +32,18 @@ buildAlloyUITheme {
 	filesMatching "**/build/aui-skin-deprecated/images/", new StripPathSegmentsAction(3)
 
 	from {
-		zipTree(configurations.alloyUI.singleFile)
+		zipTree(alloyZipFileTree.singleFile)
 	}
 
-	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.gif"
-	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.jpg"
-	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-*/assets/skins/sam/**.png"
-	include "META-INF/resources/webjars/alloy-ui/${alloyUIVersion}/build/aui-skin-deprecated/images/"
+	include "build/aui-*/assets/skins/sam/**.gif", "build/aui-*/assets/skins/sam/**.jpg", "build/aui-*/assets/skins/sam/**.png"
+	include "build/aui-skin-deprecated/images/**"
 
 	includeEmptyDirs = false
 	into alloyThemeDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, alloyZipFileTree.singleFile, alloyThemeDestinationDir)
+	}
 }
 
 buildCSS {
@@ -155,8 +158,6 @@ classes {
 }
 
 dependencies {
-	alloyUI group: "org.webjars.bower", name: "alloy-ui", transitive: false, version: alloyUIVersion
-
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"

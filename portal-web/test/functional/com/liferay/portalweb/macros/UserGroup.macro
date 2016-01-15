@@ -50,6 +50,10 @@
 			</elseif>
 			<else>
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+				<execute function="Refresh" />
+
+				<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 			</else>
 		</if>
 	</command>
@@ -163,10 +167,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="Click" locator1="Button#ADD_USER" />
+		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertElementPresent" locator1="Button#ADD" />
-		<execute function="AssertVisible" locator1="Button#ADD" />
+		<execute function="AssertElementPresent#assertVisible" locator1="Button#ADD" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -185,6 +188,8 @@
 		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="Button#ADD" value1="Add" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute function="Refresh" />
 
 		<execute function="AssertTextEquals" locator1="UserGroupsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
@@ -207,6 +212,8 @@
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute function="Refresh" />
 
 		<execute function="AssertElementNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 	</command>

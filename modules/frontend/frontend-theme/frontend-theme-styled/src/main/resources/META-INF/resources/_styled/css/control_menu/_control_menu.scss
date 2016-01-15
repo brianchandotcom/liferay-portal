@@ -1,20 +1,20 @@
 .control-menu-level-1 {
 	background-color: $control-menu-level-1-bg;
 	color: $control-menu-level-1-color;
+}
 
-	li {
-		position: relative;
+.control-menu-nav-level-1 {
+	@include display(flex);
+	@include flex-wrap(wrap);
+	@include justify-content(space-between);
 
-		&.active:after {
-			background-color: $control-menu-level-1-active-border;
-			bottom: 0;
-			content: "";
-			height: $control-menu-level-1-active-border-width;
-			left: 0;
-			position: absolute;
-			right: 0;
-		}
+	> .control-menu-nav-item {
+		@include align-self(center);
 	}
+}
+
+.control-menu .lexicon-icon {
+	@include transform(none);
 }
 
 .control-menu-level-2 {

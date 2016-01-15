@@ -101,8 +101,8 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	<portlet:resourceURL id="/wiki/info_panel" var="sidebarPanelURL" />
 
 	<liferay-frontend:sidebar-panel
-			resourceURL="<%= sidebarPanelURL %>"
-			searchContainerId="wikiNodes"
+		resourceURL="<%= sidebarPanelURL %>"
+		searchContainerId="wikiNodes"
 	>
 		<liferay-util:include page="/wiki_admin/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>

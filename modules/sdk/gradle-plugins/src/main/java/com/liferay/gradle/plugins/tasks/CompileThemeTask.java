@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.ArrayUtil;
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;

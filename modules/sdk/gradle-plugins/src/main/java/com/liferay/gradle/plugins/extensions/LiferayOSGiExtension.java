@@ -22,7 +22,7 @@ import com.liferay.ant.bnd.bower.BowerAnalyzerPlugin;
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
 import com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin;
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 

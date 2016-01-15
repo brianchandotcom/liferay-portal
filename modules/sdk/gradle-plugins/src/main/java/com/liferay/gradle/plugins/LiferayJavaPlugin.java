@@ -34,9 +34,9 @@ import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 

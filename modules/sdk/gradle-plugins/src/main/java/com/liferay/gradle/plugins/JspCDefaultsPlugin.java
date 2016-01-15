@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 
 import java.io.File;
 

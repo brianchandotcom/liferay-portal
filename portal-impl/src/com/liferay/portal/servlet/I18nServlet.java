@@ -157,14 +157,12 @@ public class I18nServlet extends HttpServlet {
 			// Locales must contain the country code
 
 			locale = LanguageUtil.getLocale(i18nLanguageCode);
+		}
 
-			if (locale == null) {
-				i18nLanguageId = null;
-				i18nLanguageCode = null;
-			}
-			else {
-				i18nLanguageId = LocaleUtil.toLanguageId(locale);
-			}
+		if (locale != null) {
+			i18nLanguageId = LocaleUtil.toLanguageId(locale);
+
+			i18nLanguageCode = locale.getLanguage();
 		}
 
 		if (!PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE &&

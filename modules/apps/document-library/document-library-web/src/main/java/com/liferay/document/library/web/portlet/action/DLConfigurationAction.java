@@ -53,6 +53,7 @@ public class DLConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
+	@Override
 	protected void validate(ActionRequest actionRequest) throws Exception {
 		validateDisplayStyleViews(actionRequest);
 

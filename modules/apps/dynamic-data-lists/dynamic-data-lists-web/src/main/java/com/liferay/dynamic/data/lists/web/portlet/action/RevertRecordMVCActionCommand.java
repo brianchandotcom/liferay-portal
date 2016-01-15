@@ -57,6 +57,7 @@ public class RevertRecordMVCActionCommand extends AddRecordMVCActionCommand {
 		_ddlRecordService.revertRecord(recordId, version, serviceContext);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;

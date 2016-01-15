@@ -40,6 +40,7 @@ public class LDAPImportConfigurationProviderImpl
 		return LDAPImportConfiguration.class;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {

@@ -26,6 +26,7 @@ public class DDLFormRecordImpl implements DDLFormRecord {
 		_record = record;
 	}
 
+	@Override
 	public DDLRecord getDDLRecord() {
 		return _record;
 	}

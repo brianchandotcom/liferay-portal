@@ -65,6 +65,7 @@ public class UpdateTemplateMVCActionCommand
 		setRedirectAttribute(actionRequest, template);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMTemplateService(
 		DDMTemplateService ddmTemplateService) {

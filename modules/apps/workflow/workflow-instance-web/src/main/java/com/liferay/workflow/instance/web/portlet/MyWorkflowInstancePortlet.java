@@ -57,6 +57,7 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
 
+	@Override
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

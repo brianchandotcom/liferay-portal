@@ -36,6 +36,7 @@ public class VideoItemSelectorCriterionHandler
 		return VideoItemSelectorCriterion.class;
 	}
 
+	@Override
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);

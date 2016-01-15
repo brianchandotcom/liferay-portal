@@ -93,6 +93,7 @@ public class CMISAtomPubRepositoryFactory
 		super.setDLFolderLocalService(dlFolderLocalService);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLockManager(LockManager lockManager) {
 		super.setLockManager(lockManager);

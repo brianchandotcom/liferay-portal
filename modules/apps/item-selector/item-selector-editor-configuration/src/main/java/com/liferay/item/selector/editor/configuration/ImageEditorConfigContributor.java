@@ -75,6 +75,7 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 		_itemSelector = itemSelector;
 	}
 
+	@Override
 	protected ItemSelector getItemSelector() {
 		return _itemSelector;
 	}

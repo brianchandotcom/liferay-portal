@@ -74,6 +74,7 @@ public abstract class BasePanelApp implements PanelApp {
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 	}
 
+	@Override
 	public Portlet getPortlet() {
 		return _portlet;
 	}

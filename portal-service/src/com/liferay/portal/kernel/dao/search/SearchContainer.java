@@ -366,18 +366,6 @@ public class SearchContainer<R> {
 		return _totalVar;
 	}
 
-	public boolean hasNotNullHeaderNames() {
-		if (_headerNames != null) {
-			for (String headerName : _headerNames) {
-				if (Validator.isNotNull(headerName)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	public boolean hasResults() {
 		return !_results.isEmpty();
 	}

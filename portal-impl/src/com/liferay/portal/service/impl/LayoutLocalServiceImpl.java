@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutFriendlyURL;
@@ -487,28 +486,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			descriptionMap, new HashMap<Locale, String>(),
 			new HashMap<Locale, String>(), type, StringPool.BLANK, hidden,
 			friendlyURLMap, serviceContext);
-	}
-
-	@Override
-	public Group checkScopeGroup(Layout layout, long userId)
-		throws PortalException {
-
-		if (layout.hasScopeGroup()) {
-			return layout.getScopeGroup();
-		}
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), String.valueOf(layout.getPlid()));
-
-		Group scopeGroup = groupLocalService.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			Layout.class.getName(), layout.getPlid(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, 0, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
-			null);
-
-		return scopeGroup;
 	}
 
 	/**

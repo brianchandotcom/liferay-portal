@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.journal.events;
+package com.liferay.journal.lifecycle;
 
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
-import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 
@@ -36,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true)
-public class CheckJournalContentSearchAction extends SimpleAction {
+public class AddDefaultJournalStructuresPortalInstanceLifecycleListener extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -67,15 +71,28 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		if (JournalServiceConfigurationValues.SYNC_CONTENT_SEARCH_ON_STARTUP) {
-			try {
-				_journalContentSearchLocalService.checkContentSearches(
-					companyId);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
+		Group group = _groupLocalService.getCompanyGroup(companyId);
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		serviceContext.setUserId(defaultUserId);
+
+		Class<?> clazz = getClass();
+
+		_defaultDDMStructureHelper.addDDMStructures(
+			defaultUserId, group.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			clazz.getClassLoader(),
+			"com/liferay/journal/upgrade/v1_0_0/dependencies" +
+				"/basic-web-content-structure.xml",
+			serviceContext);
 	}
 
 	@Reference(unbind = "-")
@@ -86,10 +103,20 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 	}
 
 	@Reference(unbind = "-")
-	protected void setJournalContentSearchLocalService(
-		JournalContentSearchLocalService journalContentSearchLocalService) {
+	protected void setDefaultDDMStructureHelper(
+		DefaultDDMStructureHelper defaultDDMStructureHelper) {
 
-		_journalContentSearchLocalService = journalContentSearchLocalService;
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -97,10 +124,14 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CheckJournalContentSearchAction.class);
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
 
 	private CompanyLocalService _companyLocalService;
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private GroupLocalService _groupLocalService;
+	private UserLocalService _userLocalService;
 
 }

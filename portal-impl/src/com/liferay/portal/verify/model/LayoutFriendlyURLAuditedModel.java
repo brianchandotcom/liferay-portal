@@ -14,6 +14,8 @@
 
 package com.liferay.portal.verify.model;
 
+import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
+
 /**
  * @author Miguel Pastor
  */

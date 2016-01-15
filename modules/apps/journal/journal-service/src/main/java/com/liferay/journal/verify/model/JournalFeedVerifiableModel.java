@@ -15,8 +15,8 @@
 package com.liferay.journal.verify.model;
 
 import com.liferay.journal.model.JournalFeed;
-import com.liferay.portal.verify.model.VerifiableResourcedModel;
-import com.liferay.portal.verify.model.VerifiableUUIDModel;
+import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
+import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Brian Wing Shun Chan

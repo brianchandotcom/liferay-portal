@@ -15,7 +15,7 @@
 package com.liferay.journal.verify.model;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.verify.model.VerifiableResourcedModel;
+import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan

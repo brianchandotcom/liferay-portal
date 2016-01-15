@@ -30,13 +30,15 @@ data.put("panelURL", addURL);
 data.put("qa-id", "add");
 %>
 
-<liferay-ui:icon
-	data="<%= data %>"
-	icon="plus"
-	id="addPanel"
-	label="<%= false %>"
-	linkCssClass="control-menu-icon"
-	markupView="lexicon"
-	message="add"
-	url="javascript:;"
-/>
+<li class="control-menu-nav-item">
+	<liferay-ui:icon
+		data="<%= data %>"
+		icon="plus"
+		id="addPanel"
+		label="<%= false %>"
+		linkCssClass="control-menu-icon"
+		markupView="lexicon"
+		message="add"
+		url="javascript:;"
+	/>
+</li>

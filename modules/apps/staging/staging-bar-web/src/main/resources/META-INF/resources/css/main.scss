@@ -3,43 +3,33 @@
 
 .control-menu-nav {
 	.staging-bar {
-		position: static;
+		position: absolute;
+
+		@media screen and (min-width: 768px) {
+			position: static;
+		}
 	}
 }
 
 .control-menu-nav {
+	@include align-items(center);
 	@include display(flex);
 
 	font-size: 16px;
 	list-style: none;
 	margin-bottom: 0;
 	padding-left: 0;
-
-	> li {
-		@include align-self(center);
-
-		display: block;
-		float: left;
-		margin-left: 16px;
-	}
 }
+
+.control-menu-nav-item {
+	display: inline-block;
+}
+
 
 .control-menu .staging-links {
 	display:inline-block;
 	line-height: 25px;
 	position: static;
-
-	&:nth-last-of-type(2) {
-		@include flex(0 1 auto);
-
-		+ .edit-layout-link {
-			@include flex(1);
-		}
-	}
-}
-
-.control-menu-level-1 .toolbar-group-expand-text {
-	overflow: visible;
 }
 
 .control-menu-level-2 {
@@ -63,6 +53,7 @@
 }
 
 .control-menu-nav-level-2 {
+	@include display(flex);
 	@include flex-wrap(wrap);
 	@include justify-content(space-between);
 
@@ -82,19 +73,6 @@
 			padding: 10px 0;
 			text-align: left;
 			width: 100%;
-		}
-	}
-
-	.control-menu-nav {
-		@include media-query(0, $screen-xs-max) {
-			display: block;
-		}
-
-		li {
-			@include media-query(0, $screen-xs-max) {
-				margin-left: 0;
-				width: 100%;
-			}
 		}
 	}
 }

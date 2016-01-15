@@ -28,7 +28,7 @@ data.put("panelURL", simulationPanelURL);
 data.put("qa-id", "simulation");
 %>
 
-<div class="toolbar-group-content">
+<li class="control-menu-nav-item">
 	<liferay-ui:icon
 		cssClass="hidden-xs"
 		data="<%= data %>"
@@ -40,7 +40,7 @@ data.put("qa-id", "simulation");
 		message="simulation"
 		url="javascript:;"
 	/>
-</div>
+</li>
 
 <aui:script position="auto" use="liferay-control-menu">
 	var ControlMenu = Liferay.ControlMenu;

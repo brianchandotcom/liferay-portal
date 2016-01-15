@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.display.context;
+package com.liferay.image.gallery.display.kernel.display.context;
 
-import com.liferay.portal.kernel.display.context.DisplayContext;
+import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
 
 /**
  * @author Iván Zaera
  */
-public interface IGDisplayContext extends DisplayContext {
+public class IGUIItemKeys extends DLUIItemKeys {
 }

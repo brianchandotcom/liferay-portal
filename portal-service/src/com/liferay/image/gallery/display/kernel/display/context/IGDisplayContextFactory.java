@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.display.context;
+package com.liferay.image.gallery.display.kernel.display.context;
 
 import com.liferay.portal.kernel.display.context.DisplayContextFactory;
 import com.liferay.portal.kernel.repository.model.FileShortcut;

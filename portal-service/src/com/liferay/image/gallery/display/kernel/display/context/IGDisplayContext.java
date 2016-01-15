@@ -12,26 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.display.context;
+package com.liferay.image.gallery.display.kernel.display.context;
 
-import com.liferay.portal.kernel.display.context.BaseDisplayContext;
-
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.portal.kernel.display.context.DisplayContext;
 
 /**
  * @author Iván Zaera
  */
-public abstract class BaseIGDisplayContext<T extends IGDisplayContext>
-	extends BaseDisplayContext<T> implements IGDisplayContext {
-
-	public BaseIGDisplayContext(
-		UUID uuid, T parentIGDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
-
-		super(uuid, parentIGDisplayContext, request, response);
-	}
-
+public interface IGDisplayContext extends DisplayContext {
 }

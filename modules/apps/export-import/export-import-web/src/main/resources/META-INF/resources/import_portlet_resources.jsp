@@ -274,17 +274,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 				<liferay-staging:deletions cmd="<%= Constants.IMPORT %>" />
 
 				<aui:fieldset cssClass="options-group" label="permissions">
-					<ul class="lfr-tree list-unstyled">
-						<li class="tree-item">
-							<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
-
-							<ul id="<portlet:namespace />permissionsUl">
-								<li class="tree-item">
-									<aui:input label="permissions-assigned-to-roles" name="permissionsAssignedToRoles" type="checkbox" value="<%= true %>" />
-								</li>
-							</ul>
-						</li>
-					</ul>
+					<aui:input helpMessage="export-import-portlet-permissions-help" label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
 				</aui:fieldset>
 			</c:if>
 

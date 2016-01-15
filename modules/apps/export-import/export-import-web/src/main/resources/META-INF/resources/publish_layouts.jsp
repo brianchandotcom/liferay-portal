@@ -361,7 +361,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							</c:if>
 
 							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
-								<%@ include file="/permissions.jspf" %>
+								<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" />
 							</aui:fieldset>
 
 							<c:if test="<%= !localPublishing %>">

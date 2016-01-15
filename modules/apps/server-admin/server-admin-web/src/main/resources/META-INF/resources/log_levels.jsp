@@ -21,15 +21,15 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 String[] tabNames = new String[] {"update-categories", "add-category"};
 
-if (!ArrayUtil.contains(tabNames, tabs3)) {
-	tabs3 = tabNames[0];
+if (!ArrayUtil.contains(tabNames, tabs2)) {
+	tabs2 = tabNames[0];
 }
 
 PortletURL serverURL = renderResponse.createRenderURL();
 
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
+serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
-serverURL.setParameter("tabs3", tabs3);
 %>
 
 <div class="server-admin-tab-wrapper">
@@ -39,20 +39,20 @@ serverURL.setParameter("tabs3", tabs3);
 			<%
 			for (String tabName : tabNames) {
 
-				serverURL.setParameter("tabs3", tabName);
+				serverURL.setParameter("tabs2", tabName);
 			%>
 
-				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs3.equals(tabName) %>" />
+				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs2.equals(tabName) %>" />
 
 			<%
 			}
 
-			serverURL.setParameter("tabs3", tabs3);
+			serverURL.setParameter("tabs2", tabs2);
 			%>
 
 		</aui:nav>
 
-		<c:if test='<%= tabs3.equals("update-categories") %>'>
+		<c:if test='<%= tabs2.equals("update-categories") %>'>
 			<aui:nav-bar-search>
 				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-categories") %>' />
 			</aui:nav-bar-search>
@@ -60,7 +60,7 @@ serverURL.setParameter("tabs3", tabs3);
 	</aui:nav-bar>
 
 	<c:choose>
-		<c:when test='<%= tabs3.equals("add-category") %>'>
+		<c:when test='<%= tabs2.equals("add-category") %>'>
 			<aui:fieldset>
 				<aui:input cssClass="lfr-input-text-container" label="" name="loggerName" type="text" />
 

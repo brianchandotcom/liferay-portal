@@ -20,8 +20,8 @@
 PortletURL serverURL = renderResponse.createRenderURL();
 
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
+serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
-serverURL.setParameter("tabs3", tabs3);
 %>
 
 <c:choose>
@@ -37,10 +37,10 @@ serverURL.setParameter("tabs3", tabs3);
 
 			for (String navTabName : navTabsNames) {
 
-				serverURL.setParameter("tabs2", navTabName);
+				serverURL.setParameter("tabs1", navTabName);
 			%>
 
-				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= navTabName %>" selected="<%= tabs2.equals(navTabName) %>" />
+				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= navTabName %>" selected="<%= tabs1.equals(navTabName) %>" />
 
 			<%
 			}
@@ -51,31 +51,31 @@ serverURL.setParameter("tabs3", tabs3);
 
 		<div class="container-fluid-1280">
 			<c:choose>
-				<c:when test='<%= tabs2.equals("log-levels") %>'>
+				<c:when test='<%= tabs1.equals("log-levels") %>'>
 					<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("properties") %>'>
+				<c:when test='<%= tabs1.equals("properties") %>'>
 					<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("captcha") %>'>
+				<c:when test='<%= tabs1.equals("captcha") %>'>
 					<liferay-util:include page="/captcha.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("data-migration") %>'>
+				<c:when test='<%= tabs1.equals("data-migration") %>'>
 					<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("file-uploads") %>'>
+				<c:when test='<%= tabs1.equals("file-uploads") %>'>
 					<liferay-util:include page="/file_uploads.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("mail") %>'>
+				<c:when test='<%= tabs1.equals("mail") %>'>
 					<liferay-util:include page="/mail.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("external-services") %>'>
+				<c:when test='<%= tabs1.equals("external-services") %>'>
 					<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("script") %>'>
+				<c:when test='<%= tabs1.equals("script") %>'>
 					<liferay-util:include page="/script.jsp" servletContext="<%= application %>" />
 				</c:when>
-				<c:when test='<%= tabs2.equals("shutdown") %>'>
+				<c:when test='<%= tabs1.equals("shutdown") %>'>
 					<liferay-util:include page="/shutdown.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>

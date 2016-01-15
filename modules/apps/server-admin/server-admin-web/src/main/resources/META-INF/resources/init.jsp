@@ -106,8 +106,8 @@ String currentURL = currentURLObj.toString();
 %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "resources");
-String tabs3 = ParamUtil.getString(request, "tabs3");
+String tabs1 = ParamUtil.getString(request, "tabs1", "resources");
+String tabs2 = ParamUtil.getString(request, "tabs2");
 
 NumberFormat numberFormat = NumberFormat.getInstance();
 

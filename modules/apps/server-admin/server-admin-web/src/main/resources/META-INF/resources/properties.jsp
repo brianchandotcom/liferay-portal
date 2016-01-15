@@ -21,15 +21,15 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 String[] tabNames = new String[] {"system-properties", "portal-properties"};
 
-if (!ArrayUtil.contains(tabNames, tabs3)) {
-	tabs3 = tabNames[0];
+if (!ArrayUtil.contains(tabNames, tabs2)) {
+	tabs2 = tabNames[0];
 }
 
 PortletURL serverURL = renderResponse.createRenderURL();
 
 serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
+serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
-serverURL.setParameter("tabs3", tabs3);
 %>
 
 <div class="server-admin-tab-wrapper">
@@ -39,15 +39,15 @@ serverURL.setParameter("tabs3", tabs3);
 			<%
 			for (String tabName : tabNames) {
 
-				serverURL.setParameter("tabs3", tabName);
+				serverURL.setParameter("tabs2", tabName);
 			%>
 
-				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs3.equals(tabName) %>" />
+				<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabName %>" selected="<%= tabs2.equals(tabName) %>" />
 
 			<%
 			}
 
-			serverURL.setParameter("tabs3", tabs3);
+			serverURL.setParameter("tabs2", tabs2);
 			%>
 
 		</aui:nav>
@@ -62,7 +62,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 	Properties properties = null;
 
-	if (tabs3.equals("portal-properties")) {
+	if (tabs2.equals("portal-properties")) {
 		properties = PropsUtil.getProperties();
 	}
 	else {
@@ -97,7 +97,7 @@ serverURL.setParameter("tabs3", tabs3);
 	%>
 
 	<liferay-ui:search-container
-		emptyResultsMessage='<%= tabs3.equals("portal-properties") ? "no-portal-properties-were-found-that-matched-the-keywords" : "no-system-properties-were-found-that-matched-the-keywords" %>'
+		emptyResultsMessage='<%= tabs2.equals("portal-properties") ? "no-portal-properties-were-found-that-matched-the-keywords" : "no-system-properties-were-found-that-matched-the-keywords" %>'
 		iteratorURL="<%= serverURL %>"
 		total="<%= filteredPropertiesList.size() %>"
 	>
@@ -116,7 +116,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 			boolean overriddenPropertyValue = false;
 
-			if (tabs3.equals("portal-properties")) {
+			if (tabs2.equals("portal-properties")) {
 				if (serverPortletPreferencesMap.containsKey(property)) {
 					value = serverPortletPreferences.getValue(property, StringPool.BLANK);
 
@@ -153,7 +153,7 @@ serverURL.setParameter("tabs3", tabs3);
 				</c:if>
 			</liferay-ui:search-container-column-text>
 
-			<c:if test='<%= tabs3.equals("portal-properties") %>'>
+			<c:if test='<%= tabs2.equals("portal-properties") %>'>
 				<liferay-ui:search-container-column-text
 					name="source"
 				>

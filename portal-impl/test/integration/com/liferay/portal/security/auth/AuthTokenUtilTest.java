@@ -87,16 +87,22 @@ public class AuthTokenUtilTest {
 
 	@Test
 	public void testIsValidPortletInvocationToken() {
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		request.setParameter("p_p_auth", "VALID_PORTLET_INVOCATION_TOKEN");
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter(
+			"p_p_auth", "VALID_PORTLET_INVOCATION_TOKEN");
 
 		Assert.assertTrue(
-			AuthTokenUtil.isValidPortletInvocationToken(request, null, null));
+			AuthTokenUtil.isValidPortletInvocationToken(
+				mockHttpServletRequest, null, null));
 
-		request.setParameter("p_p_auth", "INVALID_PORTLET_INVOCATION_TOKEN");
+		mockHttpServletRequest.setParameter(
+			"p_p_auth", "INVALID_PORTLET_INVOCATION_TOKEN");
 
 		Assert.assertFalse(
-			AuthTokenUtil.isValidPortletInvocationToken(request, null, null));
+			AuthTokenUtil.isValidPortletInvocationToken(
+			mockHttpServletRequest, null, null));
 	}
 
 }

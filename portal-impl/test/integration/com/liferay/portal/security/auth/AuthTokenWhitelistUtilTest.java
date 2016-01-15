@@ -60,7 +60,7 @@ public class AuthTokenWhitelistUtilTest {
 			new SyntheticBundleRule("bundle.authtokenwhitelistutil"));
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test
@@ -74,7 +74,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test
@@ -91,7 +91,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test
@@ -106,7 +106,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test
@@ -123,7 +123,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test
@@ -139,7 +139,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test
@@ -157,7 +157,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test
@@ -173,7 +173,7 @@ public class AuthTokenWhitelistUtilTest {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	@Test

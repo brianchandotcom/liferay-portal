@@ -51,20 +51,22 @@ public class PrintPagePortletConfigurationIcon
 	@Override
 	public String getOnClick() {
 		try {
-			PortletURL printPageURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			printPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
-			printPageURL.setParameter("nodeName", _node.getName());
-			printPageURL.setParameter("title", _page.getTitle());
-			printPageURL.setParameter("viewMode", Constants.PRINT);
-			printPageURL.setWindowState(LiferayWindowState.POP_UP);
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("window.open('");
-			sb.append(printPageURL.toString());
+
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
+			portletURL.setParameter("nodeName", _node.getName());
+			portletURL.setParameter("title", _page.getTitle());
+			portletURL.setParameter("viewMode", Constants.PRINT);
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			sb.append(portletURL.toString());
+
 			sb.append("', '', 'directories=0,height=480,left=80,location=1,");
 			sb.append("menubar=1,resizable=1,scrollbars=yes,status=0,");
 			sb.append("toolbar=0,top=180,width=640');");

@@ -209,9 +209,6 @@ public class AuthTokenWhitelistUtilTest {
 
 	@Test
 	public void testIsPortletCSRFWhitelistedForMVCActionCommand() {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCActionCommand.TEST_PORTLET_ID);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -222,6 +219,9 @@ public class AuthTokenWhitelistUtilTest {
 			namespace + ActionRequest.ACTION_NAME,
 			TestMVCActionCommand.TEST_MVC_COMMAND_NAME);
 
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCActionCommand.TEST_PORTLET_ID);
+
 		Assert.assertTrue(
 			AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
 				mockHttpServletRequest, portlet));
@@ -229,9 +229,6 @@ public class AuthTokenWhitelistUtilTest {
 
 	@Test
 	public void testIsPortletInvocationWhitelistedForMVCActionCommand() {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCActionCommand.TEST_PORTLET_ID);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -249,6 +246,9 @@ public class AuthTokenWhitelistUtilTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCActionCommand.TEST_PORTLET_ID);
+
 		Assert.assertTrue(
 			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
 				mockHttpServletRequest, portlet));
@@ -256,9 +256,6 @@ public class AuthTokenWhitelistUtilTest {
 
 	@Test
 	public void testIsPortletInvocationWhitelistedForMVCRenderCommand() {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCRenderCommand.TEST_PORTLET_ID);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -276,6 +273,9 @@ public class AuthTokenWhitelistUtilTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCRenderCommand.TEST_PORTLET_ID);
+
 		Assert.assertTrue(
 			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
 				mockHttpServletRequest, portlet));
@@ -283,9 +283,6 @@ public class AuthTokenWhitelistUtilTest {
 
 	@Test
 	public void testIsPortletInvocationWhitelistedForMVCResourceCommand() {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestMVCResourceCommand.TEST_PORTLET_ID);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -299,6 +296,9 @@ public class AuthTokenWhitelistUtilTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			TestMVCResourceCommand.TEST_PORTLET_ID);
 
 		Assert.assertTrue(
 			AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(

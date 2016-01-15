@@ -1,8 +1,0 @@
-dependencies {
-	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.metatype", version: "1.4.200-SNAPSHOT"
-	compile project(":apps:configuration-admin:configuration-admin-api")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

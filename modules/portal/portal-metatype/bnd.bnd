@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Portal Metatype
+Bundle-SymbolicName: com.liferay.portal.metatype
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.metatype.annotations,\
+	com.liferay.portal.metatype.definitions
+Include-Resource:\
+	classes,\
+	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Metatype Ext
+-include: ../../../marketplace/platform/bnd.bnd

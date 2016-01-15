@@ -16,12 +16,12 @@ package com.liferay.portal.js.loader.modules.extender;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Raymond Augé
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.js.loader.modules.extender.LoaderModulesServlet",
 	localization = "content/Language", name = "%details.configuration.name"

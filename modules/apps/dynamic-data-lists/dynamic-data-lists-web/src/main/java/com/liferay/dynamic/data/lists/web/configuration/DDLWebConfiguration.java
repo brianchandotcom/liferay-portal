@@ -16,12 +16,12 @@ package com.liferay.dynamic.data.lists.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Lino Alves
  */
-@ConfigurationAdmin(category = "productivity")
+@ExtendedObjectClassDefinition(category = "productivity")
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration",
 	localization = "content/Language", name = "%ddl.web.configuration.name"

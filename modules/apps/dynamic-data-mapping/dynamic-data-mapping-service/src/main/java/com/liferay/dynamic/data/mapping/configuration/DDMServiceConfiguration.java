@@ -16,13 +16,13 @@ package com.liferay.dynamic.data.mapping.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Lino Alves
  */
-@ConfigurationAdmin(
-	category = "productivity", scope = ConfigurationAdmin.Scope.GROUP
+@ExtendedObjectClassDefinition(
+	category = "productivity", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration",

@@ -1,7 +1,0 @@
-dependencies {
-	compile project(":apps:configuration-admin:configuration-admin-api")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

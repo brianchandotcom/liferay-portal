@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":portal:portal-metatype")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

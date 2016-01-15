@@ -14,8 +14,6 @@
 
 package com.liferay.configuration.admin.web.util;
 
-import com.liferay.configuration.admin.ExtendedAttributeDefinition;
-import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -23,6 +21,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
+import com.liferay.portal.metatype.definitions.ExtendedObjectClassDefinition;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

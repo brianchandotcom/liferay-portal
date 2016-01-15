@@ -16,12 +16,12 @@ package com.liferay.portal.store.s3.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Manuel de la Peña
  */
-@ConfigurationAdmin(category = "platform")
+@ExtendedObjectClassDefinition(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
 	localization = "content/Language", name = "%s3.store.configuration.name"

@@ -9,7 +9,7 @@ dependencies {
 	compile group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", transitive: false, version: "1.2.3"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile project(":apps:configuration-admin:configuration-admin-api")
+	compile project(":portal:portal-metatype")
 
 	provided group: "org.freemarker", name: "freemarker", version: "2.3.23"
 

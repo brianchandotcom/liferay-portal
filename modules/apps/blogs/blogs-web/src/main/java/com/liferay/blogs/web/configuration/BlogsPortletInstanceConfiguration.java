@@ -16,14 +16,14 @@ package com.liferay.blogs.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Sergio González
  */
-@ConfigurationAdmin(
+@ExtendedObjectClassDefinition(
 	category = "collaboration",
-	scope = ConfigurationAdmin.Scope.PORTLET_INSTANCE
+	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
 	id = "com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration",

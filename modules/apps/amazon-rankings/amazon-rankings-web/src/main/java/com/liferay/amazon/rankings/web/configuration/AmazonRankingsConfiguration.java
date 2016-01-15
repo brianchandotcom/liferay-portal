@@ -16,12 +16,12 @@ package com.liferay.amazon.rankings.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Jorge Ferrer
  */
-@ConfigurationAdmin(category = "other")
+@ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
 	id = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
 	localization = "content/Language",

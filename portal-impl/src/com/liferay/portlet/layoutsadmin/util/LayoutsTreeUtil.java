@@ -244,7 +244,7 @@ public class LayoutsTreeUtil {
 			layoutTreeNodes.add(layoutTreeNode);
 		}
 
-		return new LayoutTreeNodes(layoutTreeNodes, layoutTreeNodes.size());
+		return new LayoutTreeNodes(layoutTreeNodes, layouts.size());
 	}
 
 	private static int _getLoadedLayoutsCount(

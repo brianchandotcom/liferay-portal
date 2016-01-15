@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -83,7 +84,7 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 								portletDataContext.getGroupId(),
 								portletDataContext.isPrivateLayout());
 
-						Group scopeGroup = _layoutLocalService.checkScopeGroup(
+						Group scopeGroup = _groupLocalService.checkScopeGroup(
 							scopeLayout, portletDataContext.getUserId(null));
 
 						portletDataContext.setScopeGroupId(
@@ -127,6 +128,11 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -136,6 +142,7 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReferencedStagedModelImporterCapability.class);
 
+	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 
 }

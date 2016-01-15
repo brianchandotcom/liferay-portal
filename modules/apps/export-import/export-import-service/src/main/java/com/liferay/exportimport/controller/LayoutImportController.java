@@ -1112,7 +1112,7 @@ public class LayoutImportController implements ImportController {
 						scopeLayoutUuid, portletDataContext.getGroupId(),
 						portletDataContext.isPrivateLayout());
 
-				scopeGroup = _layoutLocalService.checkScopeGroup(
+				scopeGroup = _groupLocalService.checkScopeGroup(
 					scopeLayout, portletDataContext.getUserId(null));
 
 				Group group = scopeLayout.getGroup();

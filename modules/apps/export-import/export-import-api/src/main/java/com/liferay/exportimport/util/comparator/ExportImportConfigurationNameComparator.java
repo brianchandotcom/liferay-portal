@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.util;
+package com.liferay.exportimport.util.comparator;
 
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;

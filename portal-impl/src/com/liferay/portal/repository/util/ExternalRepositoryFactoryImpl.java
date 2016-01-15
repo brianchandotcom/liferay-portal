@@ -15,9 +15,9 @@
 package com.liferay.portal.repository.util;
 
 import com.liferay.portal.kernel.repository.BaseRepository;
+import com.liferay.portal.kernel.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 
 /**
  * @author Adolfo Pérez

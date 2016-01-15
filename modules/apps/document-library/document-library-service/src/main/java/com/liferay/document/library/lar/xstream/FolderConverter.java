@@ -15,8 +15,8 @@
 package com.liferay.document.library.lar.xstream;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.repository.proxy.FolderProxyBean;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.repository.proxy.FolderProxyBean;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.exportimport.xstream.BaseXStreamConverter;

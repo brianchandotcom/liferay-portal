@@ -42,8 +42,8 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #sanitize(long, long, long, String, long, String, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String)}
 	 */
 	@Deprecated
 	public static byte[] sanitize(
@@ -57,8 +57,8 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #sanitize(long, long, long, String, long, String, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String)}
 	 */
 	@Deprecated
 	public static void sanitize(
@@ -83,8 +83,8 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #sanitize(long, long, long, String, long, String, String, String, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String, String, Map)}
 	 */
 	@Deprecated
 	public static byte[] sanitize(
@@ -99,8 +99,8 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #sanitize(long, long, long, String, long, String, String, String, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String, String, Map)}
 	 */
 	@Deprecated
 	public static void sanitize(
@@ -127,8 +127,8 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #sanitize(long, long, long, String, long, String, String[], String, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String[], String, Map)}
 	 */
 	@Deprecated
 	public static byte[] sanitize(
@@ -149,8 +149,8 @@ public class SanitizerUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #sanitize(long, long, long, String, long, String, String[], String, Map)}
+	 * @deprecated As of 7.0.0, replaced by {@link #sanitize(long, long, long,
+	 *             String, long, String, String[], String, Map)}
 	 */
 	@Deprecated
 	public static void sanitize(

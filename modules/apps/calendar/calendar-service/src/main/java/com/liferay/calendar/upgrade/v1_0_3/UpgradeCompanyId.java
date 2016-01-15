@@ -15,8 +15,8 @@
 package com.liferay.calendar.upgrade.v1_0_3;
 
 /**
-* @author Inácio Nery
-*/
+ * @author Inácio Nery
+ */
 public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 

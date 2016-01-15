@@ -79,7 +79,8 @@ public class AuthTokenUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout, Portlet)}
+	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout,
+	 *             Portlet)}
 	 */
 	@Deprecated
 	public static boolean isValidPortletInvocationToken(

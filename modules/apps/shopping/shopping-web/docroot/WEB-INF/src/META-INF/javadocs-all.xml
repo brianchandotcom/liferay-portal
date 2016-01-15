@@ -961,6 +961,12 @@
 			</param>
 		</method>
 		<method>
+			<name>getActive</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+		</method>
+		<method>
 			<name>getCode</name>
 			<return>
 				<comment><![CDATA[]]></comment>

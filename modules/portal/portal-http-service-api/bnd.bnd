@@ -1,7 +1,7 @@
 Bundle-Description: Includes Http Service packages from the OSGi Compendium specification.
 Bundle-Name: Liferay Portal Http Service API
 Bundle-SymbolicName: com.liferay.portal.http.service.api
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1
 Export-Package:\
 	org.osgi.service.http,\
 	org.osgi.service.http.context,\

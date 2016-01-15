@@ -143,12 +143,12 @@
 				<if>
 					<equals arg1="${siteLimitMembership}" arg2="Yes" />
 					<then>
-						<execute function="Check" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+						<execute function="Check#checkToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
 					</then>
 					<elseif>
 						<equals arg1="${siteLimitMembership}" arg2="No" />
 						<then>
-							<execute function="Uncheck" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+							<execute function="Uncheck#uncheckToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
 						</then>
 					</elseif>
 				</if>
@@ -671,8 +671,11 @@
 	<command name="inactivateCP">
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="SitesEditSite#ACTIVE_LABEL" value1="Active" />
-		<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ACTIVE" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
@@ -791,12 +794,12 @@
 		<if>
 			<equals arg1="${allowManualMembershipManagement}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
+				<execute function="Check#checkToggleSwitch" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
 			</then>
 			<elseif>
 				<equals arg1="${allowManualMembershipManagement}" arg2="false" />
 				<then>
-					<execute function="Uncheck" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
 				</then>
 			</elseif>
 		</if>

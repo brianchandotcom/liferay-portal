@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -116,6 +117,14 @@ public class ShoppingItemFinderImpl
 	public int countByKeywords(
 		long groupId, long[] categoryIds, String keywords) {
 
+		return countByKeywords(groupId, categoryIds, keywords, null);
+	}
+
+	@Override
+	public int countByKeywords(
+		long groupId, long[] categoryIds, String keywords,
+		OrderByComparator<ShoppingItem> obc) {
+
 		Session session = null;
 
 		try {
@@ -145,9 +154,11 @@ public class ShoppingItemFinderImpl
 			query.append("ShoppingItem.description LIKE ? OR ");
 			query.append("ShoppingItem.properties LIKE ?))");
 
+			String sql = CustomSQLUtil.replaceOrderBy(query.toString(), obc);
+
 			keywords = '%' + keywords + '%';
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -317,6 +328,14 @@ public class ShoppingItemFinderImpl
 	public List<ShoppingItem> findByKeywords(
 		long groupId, long[] categoryIds, String keywords, int start, int end) {
 
+		return findByKeywords(groupId, categoryIds, keywords, start, end, null);
+	}
+
+	@Override
+	public List<ShoppingItem> findByKeywords(
+		long groupId, long[] categoryIds, String keywords, int start, int end,
+		OrderByComparator<ShoppingItem> obc) {
+
 		Session session = null;
 
 		try {
@@ -346,9 +365,11 @@ public class ShoppingItemFinderImpl
 			query.append("ShoppingItem.description LIKE ? OR ");
 			query.append("ShoppingItem.properties LIKE ?))");
 
+			String sql = CustomSQLUtil.replaceOrderBy(query.toString(), obc);
+
 			keywords = '%' + keywords + '%';
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("ShoppingItem", ShoppingItemImpl.class);
 

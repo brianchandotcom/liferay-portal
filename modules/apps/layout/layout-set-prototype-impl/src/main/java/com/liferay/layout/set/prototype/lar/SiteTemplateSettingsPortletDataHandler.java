@@ -16,6 +16,7 @@ package com.liferay.layout.set.prototype.lar;
 
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import org.osgi.service.component.annotations.Activate;

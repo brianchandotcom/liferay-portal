@@ -194,7 +194,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			panelAppRegistry, panelCategoryRegistry);
 
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
@@ -230,19 +230,18 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
+		this.panelAppRegistry = panelAppRegistry;
 	}
 
 	@Reference(unbind = "-")
 	protected void setPanelCategoryRegistry(
 		PanelCategoryRegistry panelCategoryRegistry) {
 
-		_panelCategoryRegistry = panelCategoryRegistry;
+		this.panelCategoryRegistry = panelCategoryRegistry;
 	}
 
 	protected LayoutSetPrototypeService layoutSetPrototypeService;
-
-	private PanelAppRegistry _panelAppRegistry;
-	private PanelCategoryRegistry _panelCategoryRegistry;
+	protected PanelAppRegistry panelAppRegistry;
+	protected PanelCategoryRegistry panelCategoryRegistry;
 
 }

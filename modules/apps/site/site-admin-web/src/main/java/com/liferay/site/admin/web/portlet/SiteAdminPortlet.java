@@ -304,7 +304,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			panelAppRegistry, panelCategoryRegistry);
 
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
@@ -498,14 +498,14 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
+		this.panelAppRegistry = panelAppRegistry;
 	}
 
 	@Reference(unbind = "-")
 	protected void setPanelCategoryRegistry(
 		PanelCategoryRegistry panelCategoryRegistry) {
 
-		_panelCategoryRegistry = panelCategoryRegistry;
+		this.panelCategoryRegistry = panelCategoryRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -894,6 +894,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected LayoutSetService layoutSetService;
 	protected MembershipRequestLocalService membershipRequestLocalService;
 	protected MembershipRequestService membershipRequestService;
+	protected PanelAppRegistry panelAppRegistry;
+	protected PanelCategoryRegistry panelCategoryRegistry;
 	protected RoleLocalService roleLocalService;
 	protected TeamLocalService teamLocalService;
 	protected UserLocalService userLocalService;
@@ -904,9 +906,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	private static final TransactionAttribute _transactionAttribute =
 		TransactionAttribute.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	private PanelAppRegistry _panelAppRegistry;
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	private class GroupCallable implements Callable<Group> {
 

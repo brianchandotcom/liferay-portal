@@ -15,10 +15,14 @@
 package com.liferay.microblogs.web.portlet;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
+import com.liferay.microblogs.service.MicroblogsEntryLocalService;
+import com.liferay.microblogs.service.MicroblogsEntryService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -46,4 +50,29 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MicroblogsStatusUpdatePortlet extends MicroblogsPortlet {
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		this.assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryLocalService(
+		MicroblogsEntryLocalService microblogsEntryLocalService) {
+
+		this.microblogsEntryLocalService = microblogsEntryLocalService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryService(
+		MicroblogsEntryService microblogsEntryService) {
+
+		this.microblogsEntryService = microblogsEntryService;
+	}
+
 }

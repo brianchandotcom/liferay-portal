@@ -21,6 +21,8 @@ import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutRevisionLocalService;
 import com.liferay.portlet.asset.service.AssetTagLocalService;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,6 +38,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MostViewedAssetsConfigurationAction
 	extends AssetPublisherConfigurationAction {
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 	@Override
 	@Reference(unbind = "-")

@@ -14,6 +14,8 @@
 
 package com.liferay.site.admin.web.portlet;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.LayoutLocalService;
@@ -117,6 +119,20 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 		MembershipRequestService membershipRequestService) {
 
 		this.membershipRequestService = membershipRequestService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		this.panelAppRegistry = panelAppRegistry;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		this.panelCategoryRegistry = panelCategoryRegistry;
 	}
 
 	@Override

@@ -26,10 +26,11 @@ import javax.portlet.RenderResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  */
-public class UserRoleChecker extends EmptyOnClickRowChecker {
+public class SetUserRoleChecker extends EmptyOnClickRowChecker {
 
-	public UserRoleChecker(RenderResponse renderResponse, Role role) {
+	public SetUserRoleChecker(RenderResponse renderResponse, Role role) {
 		super(renderResponse);
 
 		_role = role;
@@ -56,8 +57,6 @@ public class UserRoleChecker extends EmptyOnClickRowChecker {
 
 		try {
 			if (isChecked(user) ||
-				RoleMembershipPolicyUtil.isRoleRequired(
-					user.getUserId(), _role.getRoleId()) ||
 				!RoleMembershipPolicyUtil.isRoleAllowed(
 					user.getUserId(), _role.getRoleId())) {
 
@@ -72,7 +71,7 @@ public class UserRoleChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserRoleChecker.class);
+		SetUserRoleChecker.class);
 
 	private final Role _role;
 

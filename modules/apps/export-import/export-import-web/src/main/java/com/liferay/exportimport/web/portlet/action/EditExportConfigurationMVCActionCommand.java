@@ -256,11 +256,11 @@ public class EditExportConfigurationMVCActionCommand
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditExportConfigurationMVCActionCommand.class);
-
 	protected ExportImportConfigurationService exportImportConfigurationService;
 	protected ExportImportService exportImportService;
 	protected TrashEntryService trashEntryService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditExportConfigurationMVCActionCommand.class);
 
 }

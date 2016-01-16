@@ -86,8 +86,10 @@ public class ShoppingItemFinderImpl
 
 			qPos.add(groupId);
 
-			for (long categoryId : categoryIds) {
-				qPos.add(categoryId);
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
+				for (long categoryId : categoryIds) {
+					qPos.add(categoryId);
+				}
 			}
 
 			qPos.add(true);
@@ -166,8 +168,10 @@ public class ShoppingItemFinderImpl
 
 			qPos.add(groupId);
 
-			for (long categoryId : categoryIds) {
-				qPos.add(categoryId);
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
+				for (long categoryId : categoryIds) {
+					qPos.add(categoryId);
+				}
 			}
 
 			qPos.add(keywords);
@@ -232,8 +236,10 @@ public class ShoppingItemFinderImpl
 
 			qPos.add(groupId);
 
-			for (long categoryId : categoryIds) {
-				qPos.add(categoryId);
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
+				for (long categoryId : categoryIds) {
+					qPos.add(categoryId);
+				}
 			}
 
 			qPos.add(true);
@@ -306,8 +312,10 @@ public class ShoppingItemFinderImpl
 
 			qPos.add(groupId);
 
-			for (long categoryId : categoryIds) {
-				qPos.add(categoryId);
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
+				for (long categoryId : categoryIds) {
+					qPos.add(categoryId);
+				}
 			}
 
 			qPos.add(true);
@@ -377,8 +385,10 @@ public class ShoppingItemFinderImpl
 
 			qPos.add(groupId);
 
-			for (long categoryId : categoryIds) {
-				qPos.add(categoryId);
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
+				for (long categoryId : categoryIds) {
+					qPos.add(categoryId);
+				}
 			}
 
 			qPos.add(keywords);
@@ -438,8 +448,10 @@ public class ShoppingItemFinderImpl
 
 			qPos.add(groupId);
 
-			for (long categoryId : categoryIds) {
-				qPos.add(categoryId);
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
+				for (long categoryId : categoryIds) {
+					qPos.add(categoryId);
+				}
 			}
 
 			qPos.add(true);

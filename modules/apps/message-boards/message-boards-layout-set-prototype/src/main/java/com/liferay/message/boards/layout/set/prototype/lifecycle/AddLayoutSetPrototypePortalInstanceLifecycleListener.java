@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.layout.set.prototype.action;
+package com.liferay.message.boards.layout.set.prototype.lifecycle;
 
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
@@ -43,8 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = AddLayoutSetPrototypeAction.class)
-public class AddLayoutSetPrototypeAction {
+@Component(immediate = true, service = AddLayoutSetPrototypePortalInstanceLifecycleListener.class)
+public class AddLayoutSetPrototypePortalInstanceLifecycleListener {
 
 	@Activate
 	protected void activate() throws Exception {
@@ -75,7 +75,7 @@ public class AddLayoutSetPrototypeAction {
 				"layout-set-prototype-community-site-title",
 				"layout-set-prototype-community-site-description",
 				layoutSetPrototypes,
-				AddLayoutSetPrototypeAction.class.getClassLoader());
+				AddLayoutSetPrototypePortalInstanceLifecycleListener.class.getClassLoader());
 
 		if (layoutSet == null) {
 			return;

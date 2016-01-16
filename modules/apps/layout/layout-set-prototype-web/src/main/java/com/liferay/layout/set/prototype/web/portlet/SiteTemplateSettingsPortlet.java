@@ -14,6 +14,8 @@
 
 package com.liferay.layout.set.prototype.web.portlet;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.service.LayoutSetPrototypeService;
 

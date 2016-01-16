@@ -27,10 +27,10 @@ String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-di
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
 
-EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+EmptyOnClickRowChecker rowChecker = new UnsetUserRoleChecker(renderResponse, role);
 
 if (tabs3.equals("available")) {
-	rowChecker = new UserRoleChecker(renderResponse, role);
+	rowChecker = new SetUserRoleChecker(renderResponse, role);
 }
 %>
 

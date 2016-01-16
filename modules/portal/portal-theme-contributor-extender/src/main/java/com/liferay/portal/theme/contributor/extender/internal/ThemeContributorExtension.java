@@ -57,7 +57,7 @@ public class ThemeContributorExtension implements Extension {
 
 		Filter filter = bundleContext.createFilter(
 			"(&(objectClass=" + ServletContext.class.getName() +
-			")(osgi.web.symbolicname=" + _bundle.getSymbolicName() + "))");
+				")(osgi.web.symbolicname=" + _bundle.getSymbolicName() + "))");
 
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext, filter,
@@ -66,13 +66,13 @@ public class ThemeContributorExtension implements Extension {
 
 			@Override
 			public Collection<ServiceRegistration<?>> addingService(
-				ServiceReference<ServletContext> reference) {
-
-				ServletContext servletContext = bundleContext.getService(
-					reference);
+				ServiceReference<ServletContext> serviceReference) {
 
 				Collection<ServiceRegistration<?>> serviceRegistrations =
 					new ArrayList<>();
+
+				ServletContext servletContext = bundleContext.getService(
+					serviceReference);
 
 				serviceRegistrations.add(
 					bundleContext.registerService(
@@ -93,17 +93,17 @@ public class ThemeContributorExtension implements Extension {
 
 			@Override
 			public void modifiedService(
-				ServiceReference<ServletContext> reference,
+				ServiceReference<ServletContext> serviceReference,
 				Collection<ServiceRegistration<?>> service) {
 
-				removedService(reference, service);
+				removedService(serviceReference, service);
 
-				addingService(reference);
+				addingService(serviceReference);
 			}
 
 			@Override
 			public void removedService(
-				ServiceReference<ServletContext> reference,
+				ServiceReference<ServletContext> serviceReference,
 				Collection<ServiceRegistration<?>> serviceRegistrations) {
 
 				for (ServiceRegistration<?> serviceRegistration :
@@ -112,7 +112,7 @@ public class ThemeContributorExtension implements Extension {
 					serviceRegistration.unregister();
 				}
 
-				bundleContext.ungetService(reference);
+				bundleContext.ungetService(serviceReference);
 			}
 
 		});

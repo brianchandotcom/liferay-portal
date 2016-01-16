@@ -55,14 +55,13 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		long themeLastModified = PortalWebResourcesUtil.getLastModified(
 			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
 
-		PrintWriter printWriter = response.getWriter();
-
 		PortalResourceUrlRenderedFactory.PortalResourceUrlRenderer
 			portalResourceUrlRenderer = PortalResourceUrlRenderedFactory.create(
-				themeDisplay.isThemeCssFastLoad(), "css", themeLastModified);
+				themeDisplay.isThemeCssFastLoad(), "css",
+				themeLastModified);
 
 		portalResourceUrlRenderer.render(
-			request, printWriter, _cssResourceUrls,
+			request, response.getWriter(), _cssResourceUrls,
 			new PortalResourceUrlRenderedFactory.LinkRenderer() {
 
 				@Override
@@ -78,7 +77,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 			themeDisplay.isThemeJsFastLoad(), "js", themeLastModified);
 
 		portalResourceUrlRenderer.render(
-			request, printWriter, _jsResourceUrls,
+			request, response.getWriter(), _jsResourceUrls,
 			new PortalResourceUrlRenderedFactory.LinkRenderer() {
 
 				@Override

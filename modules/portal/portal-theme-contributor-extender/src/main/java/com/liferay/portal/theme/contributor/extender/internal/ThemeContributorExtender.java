@@ -77,7 +77,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 
 			if (entryURL != null) {
 				try (Reader reader =
-					new InputStreamReader(entryURL.openStream())) {
+						new InputStreamReader(entryURL.openStream())) {
 
 					JSONTokener jsonTokener = new JSONTokener(reader);
 
@@ -129,16 +129,15 @@ public class ThemeContributorExtender extends AbstractExtender {
 
 		if (cssEntries != null) {
 			while (cssEntries.hasMoreElements()) {
-				URL entry = cssEntries.nextElement();
+				URL url = cssEntries.nextElement();
 
-				String path = entry.getFile();
+				String path = url.getFile();
 
 				path = path.replace("/META-INF/resources", "");
 
-				int lastIndexOfSlash = path.lastIndexOf('/');
+				int index = path.lastIndexOf('/');
 
-				if (!StringPool.UNDERLINE.equals(
-						path.charAt(lastIndexOfSlash + 1)) &&
+				if (!StringPool.UNDERLINE.equals(path.charAt(index + 1)) &&
 					!path.endsWith("_rtl.css")) {
 
 					cssResourcePaths.add(path);
@@ -148,9 +147,9 @@ public class ThemeContributorExtender extends AbstractExtender {
 
 		if (jsEntries != null) {
 			while (jsEntries.hasMoreElements()) {
-				URL entry = jsEntries.nextElement();
+				URL url = jsEntries.nextElement();
 
-				String path = entry.getFile();
+				String path = url.getFile();
 
 				jsResourcePaths.add(path.replace("/META-INF/resources", ""));
 			}

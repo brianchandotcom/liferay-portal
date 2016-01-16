@@ -110,7 +110,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	<portlet:param name="struts_action" value="/shopping/cart" />
 </portlet:actionURL>
 
-<aui:form action="<%= cartURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCart();" %>'>
+<aui:form action="<%= cartURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCart();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="itemIds" type="hidden" />
@@ -393,88 +393,89 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	}
 	%>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 
-	<aui:fieldset>
+			<%
+			double subtotal = ShoppingUtil.calculateSubtotal(items);
+			double actualSubtotal = ShoppingUtil.calculateActualSubtotal(items);
+			double discountSubtotal = ShoppingUtil.calculateDiscountSubtotal(items);
+			%>
 
-		<%
-		double subtotal = ShoppingUtil.calculateSubtotal(items);
-		double actualSubtotal = ShoppingUtil.calculateActualSubtotal(items);
-		double discountSubtotal = ShoppingUtil.calculateDiscountSubtotal(items);
-		%>
+				<c:choose>
+					<c:when test="<%= subtotal == actualSubtotal %>">
+						<aui:input name="subtotal" type="resource" value="<%= currencyFormat.format(subtotal) %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:field-wrapper label="subtotal">
+							<div class="alert alert-success">
+								<strike><%= currencyFormat.format(subtotal) %></strike> <%= currencyFormat.format(actualSubtotal) %>
+							</div>
+						</aui:field-wrapper>
+					</c:otherwise>
+				</c:choose>
+
+			<c:if test="<%= subtotal != actualSubtotal %>">
+				<aui:field-wrapper label="you-save">
+					<div class="alert alert-danger">
+						<%= currencyFormat.format(discountSubtotal) %> (<%= percentFormat.format(ShoppingUtil.calculateDiscountPercent(items)) %>)
+					</div>
+				</aui:field-wrapper>
+			</c:if>
 
 			<c:choose>
-				<c:when test="<%= subtotal == actualSubtotal %>">
-					<aui:input name="subtotal" type="resource" value="<%= currencyFormat.format(subtotal) %>" />
+				<c:when test="<%= !shoppingGroupServiceOverriddenConfiguration.useAlternativeShipping() %>">
+					<aui:input name="shipping" type="resource" value="<%= currencyFormat.format(ShoppingUtil.calculateShipping(items)) %>" />
 				</c:when>
 				<c:otherwise>
-					<aui:field-wrapper label="subtotal">
-						<div class="alert alert-success">
-							<strike><%= currencyFormat.format(subtotal) %></strike> <%= currencyFormat.format(actualSubtotal) %>
-						</div>
-					</aui:field-wrapper>
+					<aui:select label="shipping" name="alternativeShipping">
+
+						<%
+						String[][] alternativeShipping = shoppingGroupServiceOverriddenConfiguration.getAlternativeShipping();
+
+						for (int i = 0; i < 10; i++) {
+							String altShippingName = alternativeShipping[0][i];
+							String altShippingDelta = alternativeShipping[1][i];
+
+							if (Validator.isNotNull(altShippingName) && Validator.isNotNull(altShippingDelta)) {
+						%>
+
+								<aui:option label='<%= LanguageUtil.get(request, altShippingName) + "(" + currencyFormat.format(ShoppingUtil.calculateAlternativeShipping(items, i)) + ")" %>' selected="<%= i == cart.getAltShipping() %>" value="<%= i %>" />
+
+						<%
+							}
+						}
+						%>
+
+					</aui:select>
 				</c:otherwise>
 			</c:choose>
 
-		<c:if test="<%= subtotal != actualSubtotal %>">
-			<aui:field-wrapper label="you-save">
-				<div class="alert alert-danger">
-					<%= currencyFormat.format(discountSubtotal) %> (<%= percentFormat.format(ShoppingUtil.calculateDiscountPercent(items)) %>)
-				</div>
-			</aui:field-wrapper>
-		</c:if>
+			<%
+			double insurance = ShoppingUtil.calculateInsurance(items);
+			%>
 
-		<c:choose>
-			<c:when test="<%= !shoppingGroupServiceOverriddenConfiguration.useAlternativeShipping() %>">
-				<aui:input name="shipping" type="resource" value="<%= currencyFormat.format(ShoppingUtil.calculateShipping(items)) %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:select label="shipping" name="alternativeShipping">
-
-					<%
-					String[][] alternativeShipping = shoppingGroupServiceOverriddenConfiguration.getAlternativeShipping();
-
-					for (int i = 0; i < 10; i++) {
-						String altShippingName = alternativeShipping[0][i];
-						String altShippingDelta = alternativeShipping[1][i];
-
-						if (Validator.isNotNull(altShippingName) && Validator.isNotNull(altShippingDelta)) {
-					%>
-
-							<aui:option label='<%= LanguageUtil.get(request, altShippingName) + "(" + currencyFormat.format(ShoppingUtil.calculateAlternativeShipping(items, i)) + ")" %>' selected="<%= i == cart.getAltShipping() %>" value="<%= i %>" />
-
-					<%
-						}
-					}
-					%>
-
+			<c:if test="<%= insurance > 0 %>">
+				<aui:select label="insurance" name="insure">
+					<aui:option label="none" selected="<%= !cart.isInsure() %>" value="0" />
+					<aui:option label="<%= currencyFormat.format(insurance) %>" selected="<%= cart.isInsure() %>" value="1" />
 				</aui:select>
-			</c:otherwise>
-		</c:choose>
+			</c:if>
 
-		<%
-		double insurance = ShoppingUtil.calculateInsurance(items);
-		%>
+			<aui:input label="coupon-code" name="couponCodes" size="30" style="text-transform: uppercase;" type="text" value="<%= cart.getCouponCodes() %>" />
 
-		<c:if test="<%= insurance > 0 %>">
-			<aui:select label="insurance" name="insure">
-				<aui:option label="none" selected="<%= !cart.isInsure() %>" value="0" />
-				<aui:option label="<%= currencyFormat.format(insurance) %>" selected="<%= cart.isInsure() %>" value="1" />
-			</aui:select>
-		</c:if>
+			<c:if test="<%= coupon != null %>">
+				<aui:a href="javascript:;" label='<%= "(" + LanguageUtil.get(request, "description") + ")" %>' onClick='<%= renderResponse.getNamespace() + "viewCoupon();" %>' style="font-size: xx-small;" />
 
-		<aui:input label="coupon-code" name="couponCodes" size="30" style="text-transform: uppercase;" type="text" value="<%= cart.getCouponCodes() %>" />
-
-		<c:if test="<%= coupon != null %>">
-			<aui:a href="javascript:;" label='<%= "(" + LanguageUtil.get(request, "description") + ")" %>' onClick='<%= renderResponse.getNamespace() + "viewCoupon();" %>' style="font-size: xx-small;" />
-
-			<aui:field-wrapper label="coupon-discount">
-				<div class="alert alert-danger">
-					<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, coupon)) %>
-				</div>
-			</aui:field-wrapper>
-		</c:if>
-	</aui:fieldset>
+				<aui:field-wrapper label="coupon-discount">
+					<div class="alert alert-danger">
+						<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, coupon)) %>
+					</div>
+				</aui:field-wrapper>
+			</c:if>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<%
 	String[] ccTypes = shoppingGroupServiceOverriddenConfiguration.getCcTypes();

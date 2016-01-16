@@ -117,7 +117,7 @@
 	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.findC_ByG_C">
 		<![CDATA[
 			SELECT
-				DISTINCT categoryId AS modelCategoryId, '' AS modelItemId, 1 AS modelCategory, ShoppingCategory.createDate as createDate, ShoppingCategory.modifiedDate as modifiedDate
+				DISTINCT categoryId AS modelCategoryId, '' AS modelItemId, 1 AS modelCategory, ShoppingCategory.createDate as createDate, ShoppingCategory.modifiedDate as modifiedDate, ShoppingCategory.name as name
 			FROM
 				ShoppingCategory
 			WHERE
@@ -128,7 +128,7 @@
 	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.findI_ByG_C">
 		<![CDATA[
 			SELECT
-				DISTINCT '' AS modelCategoryId, itemId AS modelItemId, 0 AS modelCategory, ShoppingItem.createDate as createDate, ShoppingItem.modifiedDate as modifiedDate
+				DISTINCT '' AS modelCategoryId, itemId AS modelItemId, 0 AS modelCategory, ShoppingItem.createDate as createDate, ShoppingItem.modifiedDate as modifiedDate, ShoppingItem.name as name
 			FROM
 				ShoppingItem
 			WHERE

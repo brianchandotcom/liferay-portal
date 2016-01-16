@@ -200,6 +200,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 			if (_viewPageURL != null) {
 				String viewPageURL = _viewPageURL.toString();
+
 				int index = viewPageURL.indexOf(StringPool.POUND);
 
 				if (index != -1) {

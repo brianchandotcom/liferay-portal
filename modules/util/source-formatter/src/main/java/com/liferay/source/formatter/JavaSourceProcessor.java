@@ -300,6 +300,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkReferenceMethodsFromSuperClass(
+			String fileName, String content, String className,
+			String packagePath)
+		throws Exception {
+
+		String moduleSuperClassContent = getModuleSuperClassContent(
+			content, className, packagePath);
+
+		if (Validator.isNull(moduleSuperClassContent) ||
+			!moduleSuperClassContent.contains("@Component") ||
+			!moduleSuperClassContent.contains("@Reference")) {
+
+			return;
+		}
+
+		Matcher matcher = _referenceMethodPattern.matcher(
+			moduleSuperClassContent);
+
+		while (matcher.find()) {
+			String referenceMethodModifierAndName = matcher.group(2);
+
+			if (!content.contains(referenceMethodModifierAndName)) {
+				processErrorMessage(
+					fileName,
+					"LPS-62150: Missing method " + matcher.group(4) + ": " +
+						fileName);
+			}
+		}
+	}
+
 	protected void checkRegexPattern(
 		String regexPattern, String fileName, int lineCount) {
 
@@ -930,7 +960,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource && isModulesFile(absolutePath)) {
 			newContent = formatModulesFile(
-				fileName, absolutePath, packagePath, newContent);
+				fileName, absolutePath, className, packagePath, newContent);
 		}
 
 		// LPS-48156
@@ -2301,8 +2331,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatModulesFile(
-		String fileName, String absolutePath, String packagePath,
-		String content) {
+			String fileName, String absolutePath, String className,
+			String packagePath, String content)
+		throws Exception {
 
 		// LPS-56706 and LPS-57722
 
@@ -2349,7 +2380,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-59076
 
 		if (content.contains("@Component")) {
-			content = formatOSGIComponents(fileName, absolutePath, content);
+			content = formatOSGIComponents(
+				fileName, absolutePath, content, className, packagePath);
 		}
 
 		if (!absolutePath.contains("/modules/core/") &&
@@ -2376,7 +2408,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatOSGIComponents(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content,
+			String className, String packagePath)
+		throws Exception {
 
 		String moduleServicePackagePath = null;
 
@@ -2474,6 +2508,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return StringUtil.replace(content, match, replacement);
 			}
 		}
+
+		checkReferenceMethodsFromSuperClass(
+			fileName, content, className, packagePath);
 
 		return content;
 	}
@@ -3882,7 +3919,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private Pattern _referenceMethodPattern = Pattern.compile(
-		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
+		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?)\\()" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private List<String> _secureDeserializationExclusionFiles;
 	private List<String> _secureRandomExclusionFiles;

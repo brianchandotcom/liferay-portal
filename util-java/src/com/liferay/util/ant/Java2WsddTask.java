@@ -127,7 +127,7 @@ public class Java2WsddTask {
 		// Get content
 
 		File deployFile = new File(
-			tempDir + "/" + StringUtil.replace(packagePath, ".", "/") +
+			tempDir + "/" + StringUtil.replace(packagePath, '.', '/') +
 				"/deploy.wsdd");
 
 		String deployContent = new String(
@@ -140,7 +140,7 @@ public class Java2WsddTask {
 		deployContent = _format(deployContent);
 
 		File undeployFile = new File(
-			tempDir + "/" + StringUtil.replace(packagePath, ".", "/") +
+			tempDir + "/" + StringUtil.replace(packagePath, '.', '/') +
 				"/undeploy.wsdd");
 
 		String undeployContent = new String(

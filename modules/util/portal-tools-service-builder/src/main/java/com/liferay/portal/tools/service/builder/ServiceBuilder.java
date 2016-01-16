@@ -559,19 +559,19 @@ public class ServiceBuilder {
 				rootElement.attributeValue("api-package-path"), packagePath);
 
 			_outputPath =
-				_implDirName + "/" + StringUtil.replace(packagePath, ".", "/");
+				_implDirName + "/" + StringUtil.replace(packagePath, '.', '/');
 
 			_oldServiceOutputPath =
 				_apiDirName + "/" + StringUtil.replace(packagePath, '.', '/');
 
 			_serviceOutputPath =
 				_apiDirName + "/" +
-					StringUtil.replace(_apiPackagePath, ".", "/");
+					StringUtil.replace(_apiPackagePath, '.', '/');
 
 			if (Validator.isNotNull(_testDirName)) {
 				_testOutputPath =
 					_testDirName + "/" +
-						StringUtil.replace(packagePath, ".", "/");
+						StringUtil.replace(packagePath, '.', '/');
 			}
 
 			_packagePath = packagePath;
@@ -1074,7 +1074,7 @@ public class ServiceBuilder {
 			return entity;
 		}
 
-		String refPackageDirName = StringUtil.replace(refPackage, ".", "/");
+		String refPackageDirName = StringUtil.replace(refPackage, '.', '/');
 
 		String refFileName =
 			_implDirName + "/" + refPackageDirName + "/service.xml";
@@ -3080,7 +3080,7 @@ public class ServiceBuilder {
 		}
 
 		File file = new File(
-			_implDirName + "/" + StringUtil.replace(_propsUtil, ".", "/") +
+			_implDirName + "/" + StringUtil.replace(_propsUtil, '.', '/') +
 				".java");
 
 		Map<String, Object> context = _getContext();

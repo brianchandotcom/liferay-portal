@@ -420,7 +420,7 @@ public class Logger {
 
 		String htmlFileName =
 			_TEST_BASE_DIR_NAME + "/test/functional-generated/" +
-				StringUtil.replace(primaryTestSuiteName, ".", "/") + ".html";
+				StringUtil.replace(primaryTestSuiteName, '.', '/') + ".html";
 
 		if (_loggerStarted) {
 			return;

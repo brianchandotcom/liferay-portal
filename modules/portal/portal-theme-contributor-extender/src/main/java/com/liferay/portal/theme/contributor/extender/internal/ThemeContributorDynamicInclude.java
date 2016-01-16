@@ -55,13 +55,12 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		long themeLastModified = PortalWebResourcesUtil.getLastModified(
 			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
 
-		PortalResourceURLRenderedFactory.PortalResourceURLRenderer
-			portalResourceURLRenderer = PortalResourceURLRenderedFactory.create(
-				themeDisplay.isThemeCssFastLoad(), "css", themeLastModified);
+		PortalResourceURLRenderer portalResourceURLRenderer = _create(
+			themeDisplay.isThemeCssFastLoad(), "css", themeLastModified);
 
 		portalResourceURLRenderer.render(
 			request, response.getWriter(), _cssResourceURLs,
-			new PortalResourceURLRenderedFactory.LinkRenderer() {
+			new LinkRenderer() {
 
 				@Override
 				public void render(PrintWriter printWriter, String href) {
@@ -72,12 +71,12 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 			});
 
-		portalResourceURLRenderer = PortalResourceURLRenderedFactory.create(
+		portalResourceURLRenderer = _create(
 			themeDisplay.isThemeJsFastLoad(), "js", themeLastModified);
 
 		portalResourceURLRenderer.render(
 			request, response.getWriter(), _jsResourceURLs,
-			new PortalResourceURLRenderedFactory.LinkRenderer() {
+			new LinkRenderer() {
 
 				@Override
 				public void render(PrintWriter printWriter, String href) {
@@ -143,108 +142,104 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		}
 	}
 
+	private static PortalResourceURLRenderer _create(
+		boolean combo, final String minifierType,
+		final long themeLastModified) {
+
+		if (combo) {
+			return new ComboPortalResourceURLRenderer(
+				minifierType, themeLastModified);
+		}
+		else {
+			return new SimplePortalResourceURLRenderer(themeLastModified);
+		}
+	}
+
 	private final Collection<String> _cssResourceURLs =
 		new CopyOnWriteArrayList<>();
 	private final Collection<String> _jsResourceURLs =
 		new CopyOnWriteArrayList<>();
 
-	private static class PortalResourceURLRenderedFactory {
+	private static class ComboPortalResourceURLRenderer
+		implements PortalResourceURLRenderer {
 
-		public static PortalResourceURLRenderer create(
-			boolean combo, final String minifierType,
-			final long themeLastModified) {
+		public ComboPortalResourceURLRenderer(
+			String minifierType, long themeLastModified) {
 
-			if (combo) {
-				return new ComboPortalResourceURLRenderer(
-					minifierType, themeLastModified);
+			_minifierType = minifierType;
+			_themeLastModified = themeLastModified;
+		}
+
+		@Override
+		public void render(
+			HttpServletRequest request, PrintWriter printWriter,
+			Collection<String> resourceURLs, LinkRenderer linkRenderer) {
+
+			if (resourceURLs.isEmpty()) {
+				return;
 			}
-			else {
-				return new SimplePortalResourceURLRenderer(themeLastModified);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(
+				PortalUtil.getStaticResourceURL(
+					request, "/combo", "minifierType=" + _minifierType,
+					_themeLastModified));
+
+			for (String resourceURL : resourceURLs) {
+				sb.append("&");
+				sb.append(resourceURL);
+			}
+
+			linkRenderer.render(printWriter, sb.toString());
+		}
+
+		private final String _minifierType;
+		private final long _themeLastModified;
+
+	}
+
+	private static class SimplePortalResourceURLRenderer
+		implements PortalResourceURLRenderer {
+
+		public SimplePortalResourceURLRenderer(long themeLastModified) {
+			_themeLastModified = themeLastModified;
+		}
+
+		@Override
+		public void render(
+			HttpServletRequest request, PrintWriter printWriter,
+			Collection<String> resourceURLs, LinkRenderer linkRenderer) {
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			for (String resourceURL : resourceURLs) {
+				String staticResourceURL = PortalUtil.getStaticResourceURL(
+					request,
+					themeDisplay.getPortalURL() +
+						themeDisplay.getPathContext() + resourceURL,
+					_themeLastModified);
+
+				linkRenderer.render(printWriter, staticResourceURL);
 			}
 		}
 
-		public interface LinkRenderer {
+		private final long _themeLastModified;
 
-			public void render(PrintWriter printWriter, String href);
+	}
 
-		}
+	private interface LinkRenderer {
 
-		public interface PortalResourceURLRenderer {
+		public void render(PrintWriter printWriter, String href);
 
-			public void render(
-				HttpServletRequest request, PrintWriter printWriter,
-				Collection<String> resourceURLs, LinkRenderer linkRenderer);
+	}
 
-		}
+	private interface PortalResourceURLRenderer {
 
-		private static class ComboPortalResourceURLRenderer
-			implements PortalResourceURLRenderer {
-
-			public ComboPortalResourceURLRenderer(
-				String minifierType, long themeLastModified) {
-
-				_minifierType = minifierType;
-				_themeLastModified = themeLastModified;
-			}
-
-			@Override
-			public void render(
-				HttpServletRequest request, PrintWriter printWriter,
-				Collection<String> resourceURLs, LinkRenderer linkRenderer) {
-
-				if (resourceURLs.isEmpty()) {
-					return;
-				}
-
-				StringBundler sb = new StringBundler();
-
-				sb.append(
-					PortalUtil.getStaticResourceURL(
-						request, "/combo", "minifierType=" + _minifierType,
-						_themeLastModified));
-
-				for (String resourceURL : resourceURLs) {
-					sb.append("&");
-					sb.append(resourceURL);
-				}
-
-				linkRenderer.render(printWriter, sb.toString());
-			}
-
-			private final String _minifierType;
-			private final long _themeLastModified;
-
-		}
-
-		private static class SimplePortalResourceURLRenderer
-			implements PortalResourceURLRenderer {
-
-			public SimplePortalResourceURLRenderer(long themeLastModified) {
-				_themeLastModified = themeLastModified;
-			}
-
-			@Override
-			public void render(
-				HttpServletRequest request, PrintWriter printWriter,
-				Collection<String> resourceURLs, LinkRenderer linkRenderer) {
-
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				for (String resourceURL : resourceURLs) {
-					String staticResourceURL = PortalUtil.getStaticResourceURL(
-						request,
-						themeDisplay.getPortalURL() +
-							themeDisplay.getPathContext() + resourceURL,
-						_themeLastModified);
-
-					linkRenderer.render(printWriter, staticResourceURL);
-				}
-			}
-
-			private final long _themeLastModified;
-
-		}
+		public void render(
+			HttpServletRequest request, PrintWriter printWriter,
+			Collection<String> resourceURLs, LinkRenderer linkRenderer);
 
 	}
 

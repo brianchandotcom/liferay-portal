@@ -1234,6 +1234,8 @@ ${output.content}</echo>
 			<test-action>
 				<database-test-run-test database.type="mysql">
 					<test-action>
+						<ant dir="portal-web" target="compile-tomcat" />
+
 						<run-poshi-validation />
 
 						<if>

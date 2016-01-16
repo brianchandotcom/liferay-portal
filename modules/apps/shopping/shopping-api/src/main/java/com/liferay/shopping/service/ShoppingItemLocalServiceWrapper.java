@@ -412,10 +412,27 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
+		long groupId, long[] categoryIds, java.lang.String keywords, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return _shoppingItemLocalService.search(groupId, categoryIds, keywords,
+			start, end, obc);
+	}
+
+	@Override
 	public int searchCount(long groupId, long[] categoryIds,
 		java.lang.String keywords) {
 		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
 			keywords);
+	}
+
+	@Override
+	public int searchCount(long groupId, long[] categoryIds,
+		java.lang.String keywords,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return _shoppingItemLocalService.searchCount(groupId, categoryIds,
+			keywords, obc);
 	}
 
 	@Override

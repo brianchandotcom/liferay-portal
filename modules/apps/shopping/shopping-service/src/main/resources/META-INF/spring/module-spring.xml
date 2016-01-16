@@ -6,6 +6,7 @@
 	<bean id="com.liferay.shopping.service.ShoppingCategoryLocalService" class="com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl" />
 	<bean id="com.liferay.shopping.service.ShoppingCategoryService" class="com.liferay.shopping.service.impl.ShoppingCategoryServiceImpl" />
 	<bean id="com.liferay.shopping.service.persistence.ShoppingCategoryPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCategoryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingCategoryFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.shopping.service.ShoppingCouponLocalService" class="com.liferay.shopping.service.impl.ShoppingCouponLocalServiceImpl" />
 	<bean id="com.liferay.shopping.service.ShoppingCouponService" class="com.liferay.shopping.service.impl.ShoppingCouponServiceImpl" />
 	<bean id="com.liferay.shopping.service.persistence.ShoppingCouponPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCouponPersistenceImpl" parent="basePersistence" />

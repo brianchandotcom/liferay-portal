@@ -376,9 +376,23 @@ public class ShoppingItemLocalServiceUtil {
 		return getService().search(groupId, categoryIds, keywords, start, end);
 	}
 
+	public static java.util.List<com.liferay.shopping.model.ShoppingItem> search(
+		long groupId, long[] categoryIds, java.lang.String keywords, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return getService()
+				   .search(groupId, categoryIds, keywords, start, end, obc);
+	}
+
 	public static int searchCount(long groupId, long[] categoryIds,
 		java.lang.String keywords) {
 		return getService().searchCount(groupId, categoryIds, keywords);
+	}
+
+	public static int searchCount(long groupId, long[] categoryIds,
+		java.lang.String keywords,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc) {
+		return getService().searchCount(groupId, categoryIds, keywords, obc);
 	}
 
 	public static com.liferay.shopping.model.ShoppingItem updateItem(

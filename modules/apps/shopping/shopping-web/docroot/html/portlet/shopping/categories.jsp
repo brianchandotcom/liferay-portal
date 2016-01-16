@@ -33,6 +33,33 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 SearchContainer categoriesSearch = new SearchContainer(renderRequest, portletURL, null, "no-results-were-found");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+
+categoriesSearch.setOrderByCol(orderByCol);
+
+boolean orderByAsc = false;
+
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator orderByComparator = null;
+
+if (orderByCol.equals("name")) {
+	if (Validator.isNull(keywords)) {
+		orderByComparator = new CategoryItemNameComparator(orderByAsc);
+	}
+	else {
+		orderByComparator = new ItemNameComparator(orderByAsc);
+	}
+}
+
+categoriesSearch.setOrderByComparator(orderByComparator);
+
+categoriesSearch.setOrderByType(orderByType);
+
 int categoriesAndItemsCount = 0;
 
 if (Validator.isNull(keywords)) {
@@ -47,10 +74,10 @@ categoriesSearch.setTotal(categoriesAndItemsCount);
 List results = null;
 
 if (Validator.isNull(keywords)) {
-    results = ShoppingCategoryServiceUtil.getCategoriesAndItems(scopeGroupId, categoryId, categoriesSearch.getStart(), categoriesSearch.getEnd(), categoriesSearch.getOrderByComparator());
+	results = ShoppingCategoryServiceUtil.getCategoriesAndItems(scopeGroupId, categoryId, categoriesSearch.getStart(), categoriesSearch.getEnd(), categoriesSearch.getOrderByComparator());
 }
 else {
-    results = ShoppingItemLocalServiceUtil.search(scopeGroupId, null, keywords, categoriesSearch.getStart(), categoriesSearch.getEnd());
+	results = ShoppingItemLocalServiceUtil.search(scopeGroupId, null, keywords, categoriesSearch.getStart(), categoriesSearch.getEnd(), categoriesSearch.getOrderByComparator());
 }
 
 categoriesSearch.setResults(results);
@@ -66,6 +93,13 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= categoriesSearch.getOrderByCol() %>"
+			orderByType="<%= categoriesSearch.getOrderByType() %>"
+			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>

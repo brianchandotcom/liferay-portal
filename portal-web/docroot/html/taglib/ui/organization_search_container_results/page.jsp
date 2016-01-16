@@ -18,8 +18,8 @@
 
 <%
 LinkedHashMap<String, Object> organizationParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:organization-search-container-results:organizationParams");
-long parentOrganizationId = GetterUtil.getLong(request.getAttribute("liferay-ui:organization-search-container-results:parentOrganizationId"));
 SearchContainer organizationSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:organization-search-container-results:searchContainer");
+long parentOrganizationId = GetterUtil.getLong(request.getAttribute("liferay-ui:organization-search-container-results:parentOrganizationId"));
 OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttribute("liferay-ui:organization-search-container-results:searchTerms");
 boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:organization-search-container-results:useIndexer"));
 

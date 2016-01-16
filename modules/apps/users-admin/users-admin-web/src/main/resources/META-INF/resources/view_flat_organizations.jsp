@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String usersListView = (String)request.getAttribute("view.jsp-usersListView");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 

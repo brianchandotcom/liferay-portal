@@ -20,6 +20,7 @@
 
 <%
 SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", currentURLObj);
+
 UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);

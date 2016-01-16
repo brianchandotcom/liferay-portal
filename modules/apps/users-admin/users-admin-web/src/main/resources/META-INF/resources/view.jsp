@@ -30,8 +30,8 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
-portletURL.setParameter("usersListView", usersListView);
 portletURL.setParameter("toolbarItem", toolbarItem);
+portletURL.setParameter("usersListView", usersListView);
 
 if (Validator.isNotNull(viewUsersRedirect)) {
 	portletURL.setParameter("viewUsersRedirect", viewUsersRedirect);
@@ -39,9 +39,9 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 String portletURLString = portletURL.toString();
 
-request.setAttribute("view.jsp-usersListView", usersListView);
-
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+request.setAttribute("view.jsp-usersListView", usersListView);
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-activate-user-because-that-would-exceed-the-maximum-number-of-users-allowed" />

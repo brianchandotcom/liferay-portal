@@ -123,14 +123,14 @@ public class EditExportConfigurationMVCActionCommand
 
 			if (moveToTrash) {
 				ExportImportConfiguration exportImportConfiguration =
-					_exportImportConfigurationService.
+					exportImportConfigurationService.
 						moveExportImportConfigurationToTrash(
 							deleteExportImportConfigurationId);
 
 				trashedModels.add(exportImportConfiguration);
 			}
 			else {
-				_exportImportConfigurationService.
+				exportImportConfigurationService.
 					deleteExportImportConfiguration(
 						deleteExportImportConfigurationId);
 			}
@@ -163,7 +163,7 @@ public class EditExportConfigurationMVCActionCommand
 				long exportImportConfigurationId = ParamUtil.getLong(
 					actionRequest, "exportImportConfigurationId");
 
-				_exportImportService.exportLayoutsAsFileInBackground(
+				exportImportService.exportLayoutsAsFileInBackground(
 					exportImportConfigurationId);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
@@ -204,7 +204,7 @@ public class EditExportConfigurationMVCActionCommand
 		long exportImportConfigurationId = MapUtil.getLong(
 			taskContextMap, "exportImportConfigurationId");
 
-		_exportImportService.exportLayoutsAsFileInBackground(
+		exportImportService.exportLayoutsAsFileInBackground(
 			exportImportConfigurationId);
 	}
 
@@ -215,7 +215,7 @@ public class EditExportConfigurationMVCActionCommand
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			_trashEntryService.restoreEntry(restoreTrashEntryId);
+			trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
@@ -223,19 +223,20 @@ public class EditExportConfigurationMVCActionCommand
 	protected void setExportImportConfigurationService(
 		ExportImportConfigurationService exportImportConfigurationService) {
 
-		_exportImportConfigurationService = exportImportConfigurationService;
+		this.exportImportConfigurationService =
+			exportImportConfigurationService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setExportImportService(
 		ExportImportService exportImportService) {
 
-		_exportImportService = exportImportService;
+		this.exportImportService = exportImportService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
+		this.trashEntryService = trashEntryService;
 	}
 
 	protected ExportImportConfiguration updateExportConfiguration(
@@ -258,8 +259,8 @@ public class EditExportConfigurationMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditExportConfigurationMVCActionCommand.class);
 
-	private ExportImportConfigurationService _exportImportConfigurationService;
-	private ExportImportService _exportImportService;
-	private TrashEntryService _trashEntryService;
+	protected ExportImportConfigurationService exportImportConfigurationService;
+	protected ExportImportService exportImportService;
+	protected TrashEntryService trashEntryService;
 
 }

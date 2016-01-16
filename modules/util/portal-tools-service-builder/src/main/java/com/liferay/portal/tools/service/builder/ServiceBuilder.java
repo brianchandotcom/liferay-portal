@@ -1928,8 +1928,15 @@ public class ServiceBuilder {
 				String content = _read(exceptionFile);
 
 				content = StringUtil.replace(
-					content, "package " + _packagePath,
-					"package " + _packagePath + ".exception");
+					content,
+					new String[] {
+						"package " + _packagePath,
+						"com.liferay.portal.NoSuchModelException"
+					},
+					new String[] {
+						"package " + _packagePath + ".exception",
+						"com.liferay.portal.exception.NoSuchModelException"
+					});
 
 				_write(exceptionFile, content);
 			}

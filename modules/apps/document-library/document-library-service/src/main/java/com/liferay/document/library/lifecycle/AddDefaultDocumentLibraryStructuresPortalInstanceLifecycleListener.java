@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.events;
+package com.liferay.document.library.lifecycle;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -71,9 +71,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true, service = AddDefaultDocumentLibraryStructuresAction.class
+	immediate = true, service = AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener.class
 )
-public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
+public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -131,7 +131,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 
 		String definition =
 			_defaultDDMStructureHelper.getDynamicDDMStructureDefinition(
-				AddDefaultDocumentLibraryStructuresAction.class.
+				AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener.class.
 					getClassLoader(),
 				"com/liferay/document/library/events/dependencies" +
 					"/document-library-structures.xml",
@@ -356,7 +356,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-			AddDefaultDocumentLibraryStructuresAction.class.getClassLoader(),
+			AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener.class.getClassLoader(),
 			"com/liferay/document/library/events/dependencies" +
 				"/document-library-structures.xml",
 			serviceContext);

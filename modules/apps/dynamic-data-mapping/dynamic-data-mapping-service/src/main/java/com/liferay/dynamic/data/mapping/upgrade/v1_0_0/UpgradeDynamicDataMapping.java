@@ -303,7 +303,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			String.format(
 				"Unable to automatically update field name \"%s\" because it " +
 					"only contains invalid characters or the updated value " +
-						"\"%s\" conflicts with a previous field name.",
+						"\"%s\" conflicts with a previous field name",
 				fieldName, newFieldName));
 	}
 

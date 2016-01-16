@@ -230,7 +230,7 @@ public class DDMFormValidatorTest {
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		ddmForm.addDDMFormField(
-			new DDMFormField("text with space", DDMFormFieldType.TEXT));
+			new DDMFormField("Text with Space", DDMFormFieldType.TEXT));
 
 		_ddmFormValidator.validate(ddmForm);
 	}

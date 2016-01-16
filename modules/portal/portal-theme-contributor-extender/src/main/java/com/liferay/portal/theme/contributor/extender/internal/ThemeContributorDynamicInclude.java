@@ -55,14 +55,13 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		long themeLastModified = PortalWebResourcesUtil.getLastModified(
 			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
 
-		PortalResourceUrlRenderedFactory.PortalResourceUrlRenderer
-			portalResourceUrlRenderer = PortalResourceUrlRenderedFactory.create(
-				themeDisplay.isThemeCssFastLoad(), "css",
-				themeLastModified);
+		PortalResourceURLRenderedFactory.PortalResourceURLRenderer
+			portalResourceURLRenderer = PortalResourceURLRenderedFactory.create(
+				themeDisplay.isThemeCssFastLoad(), "css", themeLastModified);
 
-		portalResourceUrlRenderer.render(
-			request, response.getWriter(), _cssResourceUrls,
-			new PortalResourceUrlRenderedFactory.LinkRenderer() {
+		portalResourceURLRenderer.render(
+			request, response.getWriter(), _cssResourceURLs,
+			new PortalResourceURLRenderedFactory.LinkRenderer() {
 
 				@Override
 				public void render(PrintWriter printWriter, String href) {
@@ -73,12 +72,12 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 			});
 
-		portalResourceUrlRenderer = PortalResourceUrlRenderedFactory.create(
+		portalResourceURLRenderer = PortalResourceURLRenderedFactory.create(
 			themeDisplay.isThemeJsFastLoad(), "js", themeLastModified);
 
-		portalResourceUrlRenderer.render(
-			request, response.getWriter(), _jsResourceUrls,
-			new PortalResourceUrlRenderedFactory.LinkRenderer() {
+		portalResourceURLRenderer.render(
+			request, response.getWriter(), _jsResourceURLs,
+			new PortalResourceURLRenderedFactory.LinkRenderer() {
 
 				@Override
 				public void render(PrintWriter printWriter, String href) {
@@ -105,19 +104,19 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 		String servletContextPath = bundleWebResources.getServletContextPath();
 
-		synchronized (_cssResourceUrls) {
+		synchronized (_cssResourceURLs) {
 			for (String cssResourcePath :
 					bundleWebResources.getCssResourcePaths()) {
 
-				_cssResourceUrls.add(servletContextPath + cssResourcePath);
+				_cssResourceURLs.add(servletContextPath + cssResourcePath);
 			}
 		}
 
-		synchronized (_jsResourceUrls) {
+		synchronized (_jsResourceURLs) {
 			for (String jsResourcePath :
 					bundleWebResources.getJsResourcePaths()) {
 
-				_jsResourceUrls.add(servletContextPath + jsResourcePath);
+				_jsResourceURLs.add(servletContextPath + jsResourcePath);
 			}
 		}
 	}
@@ -127,40 +126,40 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 		String servletContextPath = bundleWebResources.getServletContextPath();
 
-		synchronized (_cssResourceUrls) {
+		synchronized (_cssResourceURLs) {
 			for (String cssResourcePath :
 					bundleWebResources.getCssResourcePaths()) {
 
-				_cssResourceUrls.remove(servletContextPath + cssResourcePath);
+				_cssResourceURLs.remove(servletContextPath + cssResourcePath);
 			}
 		}
 
-		synchronized (_jsResourceUrls) {
+		synchronized (_jsResourceURLs) {
 			for (String jsResourcePath :
 					bundleWebResources.getJsResourcePaths()) {
 
-				_jsResourceUrls.remove(servletContextPath + jsResourcePath);
+				_jsResourceURLs.remove(servletContextPath + jsResourcePath);
 			}
 		}
 	}
 
-	private final Collection<String> _cssResourceUrls =
+	private final Collection<String> _cssResourceURLs =
 		new CopyOnWriteArrayList<>();
-	private final Collection<String> _jsResourceUrls =
+	private final Collection<String> _jsResourceURLs =
 		new CopyOnWriteArrayList<>();
 
-	private static class PortalResourceUrlRenderedFactory {
+	private static class PortalResourceURLRenderedFactory {
 
-		public static PortalResourceUrlRenderer create(
+		public static PortalResourceURLRenderer create(
 			boolean combo, final String minifierType,
 			final long themeLastModified) {
 
 			if (combo) {
-				return new ComboPortalResourceUrlRenderer(
+				return new ComboPortalResourceURLRenderer(
 					minifierType, themeLastModified);
 			}
 			else {
-				return new SimplePortalResourceUrlRenderer(themeLastModified);
+				return new SimplePortalResourceURLRenderer(themeLastModified);
 			}
 		}
 
@@ -170,18 +169,18 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 		}
 
-		public interface PortalResourceUrlRenderer {
+		public interface PortalResourceURLRenderer {
 
 			public void render(
 				HttpServletRequest request, PrintWriter printWriter,
-				Collection<String> resourceUrls, LinkRenderer linkRenderer);
+				Collection<String> resourceURLs, LinkRenderer linkRenderer);
 
 		}
 
-		private static class ComboPortalResourceUrlRenderer
-			implements PortalResourceUrlRenderer {
+		private static class ComboPortalResourceURLRenderer
+			implements PortalResourceURLRenderer {
 
-			public ComboPortalResourceUrlRenderer(
+			public ComboPortalResourceURLRenderer(
 				String minifierType, long themeLastModified) {
 
 				_minifierType = minifierType;
@@ -191,9 +190,9 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 			@Override
 			public void render(
 				HttpServletRequest request, PrintWriter printWriter,
-				Collection<String> resourceUrls, LinkRenderer linkRenderer) {
+				Collection<String> resourceURLs, LinkRenderer linkRenderer) {
 
-				if (resourceUrls.isEmpty()) {
+				if (resourceURLs.isEmpty()) {
 					return;
 				}
 
@@ -204,9 +203,9 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 						request, "/combo", "minifierType=" + _minifierType,
 						_themeLastModified));
 
-				for (String resourceUrl : resourceUrls) {
+				for (String resourceURL : resourceURLs) {
 					sb.append("&");
-					sb.append(resourceUrl);
+					sb.append(resourceURL);
 				}
 
 				linkRenderer.render(printWriter, sb.toString());
@@ -217,29 +216,29 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 		}
 
-		private static class SimplePortalResourceUrlRenderer
-			implements PortalResourceUrlRenderer {
+		private static class SimplePortalResourceURLRenderer
+			implements PortalResourceURLRenderer {
 
-			public SimplePortalResourceUrlRenderer(long themeLastModified) {
+			public SimplePortalResourceURLRenderer(long themeLastModified) {
 				_themeLastModified = themeLastModified;
 			}
 
 			@Override
 			public void render(
 				HttpServletRequest request, PrintWriter printWriter,
-				Collection<String> resourceUrls, LinkRenderer linkRenderer) {
+				Collection<String> resourceURLs, LinkRenderer linkRenderer) {
 
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-				String basePath =
-					themeDisplay.getPortalURL() + themeDisplay.getPathContext();
+				for (String resourceURL : resourceURLs) {
+					String staticResourceURL = PortalUtil.getStaticResourceURL(
+						request,
+						themeDisplay.getPortalURL() +
+							themeDisplay.getPathContext() + resourceURL,
+						_themeLastModified);
 
-				for (String resourcePath : resourceUrls) {
-					String resourceUrl = PortalUtil.getStaticResourceURL(
-						request, basePath + resourcePath, _themeLastModified);
-
-					linkRenderer.render(printWriter, resourceUrl);
+					linkRenderer.render(printWriter, staticResourceURL);
 				}
 			}
 

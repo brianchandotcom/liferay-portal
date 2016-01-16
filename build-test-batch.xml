@@ -1263,8 +1263,6 @@ ${output.content}</echo>
 
 		<gradle-execute dir="modules" task="buildCSS" />
 
-		<ant dir="portal-web" target="build-css" inheritAll="false" />
-
 		<record action="stop" name="${project.dir}/sass-compiler-log" />
 
 		<fail message="The Sass compiler is not using Ruby.">

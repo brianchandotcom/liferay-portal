@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -48,8 +49,12 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Gergely Mathe
@@ -143,6 +148,14 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 	}
 
+	protected boolean containsDateFieldType(String content) {
+		if (StringUtil.contains(content, _TYPE_ATTRIBUTE_DDM_DATE)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected String convertStaticContentToDynamic(String content)
 		throws Exception {
 
@@ -195,8 +208,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateBasicWebContentStructure();
-		updateJournalArticlesDateFieldValues();
+		updateJournalArticles();
 
 		addDDMTemplateLinks();
 	}
@@ -221,6 +233,26 @@ public class UpgradeJournal extends UpgradeProcess {
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("structure");
+	}
+
+	protected Map<String, String> getInvalidDDMFormFieldNamesMap(
+		String content) {
+
+		Map<String, String> invalidDDMFormFieldNamesMap = new HashMap<>();
+
+		Matcher matcher = _nameAttributePattern.matcher(content);
+
+		while (matcher.find()) {
+			String oldFieldName = matcher.group(1);
+			String newFieldName = oldFieldName.replaceAll(
+				_INVALID_FIELD_NAME_CHARS_REGEX, StringPool.BLANK);
+
+			if (!oldFieldName.equals(newFieldName)) {
+				invalidDDMFormFieldNamesMap.put(oldFieldName, newFieldName);
+			}
+		}
+
+		return invalidDDMFormFieldNamesMap;
 	}
 
 	protected void transformDateFieldValue(Element dynamicContentElement) {
@@ -267,6 +299,10 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected String transformDateFieldValues(String content) throws Exception {
+		if (!containsDateFieldType(content)) {
+			return content;
+		}
+
 		Document document = SAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
@@ -279,12 +315,18 @@ public class UpgradeJournal extends UpgradeProcess {
 		return XMLUtil.formatXML(document);
 	}
 
-	protected void updateBasicWebContentStructure() throws Exception {
-		List<Company> companies = _companyLocalService.getCompanies();
+	protected String transformFieldNames(String content) {
+		Map<String, String> invalidDDMFormFieldNamesMap =
+			getInvalidDDMFormFieldNamesMap(content);
 
-		for (Company company : companies) {
-			updateJournalArticles(company.getCompanyId());
+		for (Map.Entry<String, String> entry :
+				invalidDDMFormFieldNamesMap.entrySet()) {
+
+			content = StringUtil.replace(
+				content, entry.getKey(), entry.getValue());
 		}
+
+		return content;
 	}
 
 	protected void updateJournalArticle(
@@ -301,7 +343,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			ps.setString(1, ddmStructureKey);
 			ps.setString(2, ddmTemplateKey);
-			ps.setString(3, convertStaticContentToDynamic(content));
+			ps.setString(3, content);
 			ps.setLong(4, id);
 
 			ps.executeUpdate();
@@ -311,57 +353,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 	}
 
-	protected void updateJournalArticles(long companyId) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select id_, content from JournalArticle where companyId = " +
-					companyId + " and ddmStructureKey is null or " +
-						"ddmStructureKey like ''");
-
-			String name = addBasicWebContentStructureAndTemplate(companyId);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long id = rs.getLong("id_");
-				String content = rs.getString("content");
-
-				updateJournalArticle(id, name, name, content);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-	}
-
-	protected void updateJournalArticlesDateFieldValues() throws Exception {
-		PreparedStatement ps = null;
-
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select id_, content from JournalArticle where content like " +
-					"'%type=_ddm-date_%'");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long id = rs.getLong("id_");
-				String content = rs.getString("content");
-
-				updateJournalArticlesDateFieldValues(id, content);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-	}
-
-	protected void updateJournalArticlesDateFieldValues(long id, String content)
+	protected void updateJournalArticleContent(long id, String content)
 		throws Exception {
 
 		PreparedStatement ps = null;
@@ -370,7 +362,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps = connection.prepareStatement(
 				"update JournalArticle set content = ? where id_ = ?");
 
-			ps.setString(1, transformDateFieldValues(content));
+			ps.setString(1, content);
 			ps.setLong(2, id);
 
 			ps.executeUpdate();
@@ -380,6 +372,59 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 	}
 
+	protected void updateJournalArticles() throws Exception {
+		List<Company> companies = _companyLocalService.getCompanies();
+
+		for (Company company : companies) {
+			updateJournalArticles(company.getCompanyId());
+		}
+	}
+
+	protected void updateJournalArticles(long companyId) throws Exception {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select id_, content, ddmStructureKey from " +
+					"JournalArticle where companyId = " + companyId);
+
+			String name = addBasicWebContentStructureAndTemplate(companyId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+				String content = rs.getString("content");
+				String ddmStructureKey = rs.getString("ddmStructureKey");
+
+				if (Validator.isNull(ddmStructureKey)) {
+					content = convertStaticContentToDynamic(content);
+
+					updateJournalArticle(id, name, name, content);
+
+					continue;
+				}
+
+				String updatedContent = transformDateFieldValues(content);
+
+				updatedContent = transformFieldNames(updatedContent);
+
+				if (!content.equals(updatedContent)) {
+					updateJournalArticleContent(id, updatedContent);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+	}
+
+	private static final String _INVALID_FIELD_NAME_CHARS_REGEX =
+		"([\\p{Punct}&&[^_]]|\\p{Space})+";
+
+	private static final String _TYPE_ATTRIBUTE_DDM_DATE = "type=\"ddm-date\"";
+
 	private static final DateFormat _dateFormat =
 		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 
@@ -387,6 +432,8 @@ public class UpgradeJournal extends UpgradeProcess {
 	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final GroupLocalService _groupLocalService;
+	private final Pattern _nameAttributePattern = Pattern.compile(
+		"name=\"([^\"]+)\"");
 	private final UserLocalService _userLocalService;
 
 }

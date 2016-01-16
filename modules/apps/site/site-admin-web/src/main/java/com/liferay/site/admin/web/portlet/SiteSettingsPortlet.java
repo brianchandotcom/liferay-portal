@@ -121,6 +121,20 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 
 	@Override
 	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		this.panelAppRegistry = panelAppRegistry;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		this.panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	@Override
+	@Reference(unbind = "-")
 	protected void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
 	}

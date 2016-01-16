@@ -58,4 +58,18 @@ public class SiteTemplateSettingsPortlet extends LayoutSetPrototypePortlet {
 		this.layoutSetPrototypeService = layoutSetPrototypeService;
 	}
 
+	@Override
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		this.panelAppRegistry = panelAppRegistry;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		this.panelCategoryRegistry = panelCategoryRegistry;
+	}
+
 }

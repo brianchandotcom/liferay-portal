@@ -63,6 +63,22 @@ public class RevertRecordMVCActionCommand extends AddRecordMVCActionCommand {
 		_ddlRecordService = ddlRecordService;
 	}
 
+	@Override
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		this.ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setDDMFormValuesJSONDeserializer(
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+
+		this.ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+	}
+
 	private DDLRecordService _ddlRecordService;
 
 }

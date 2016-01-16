@@ -46,4 +46,29 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MicroblogsStatusUpdatePortlet extends MicroblogsPortlet {
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		this.assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryLocalService(
+		MicroblogsEntryLocalService microblogsEntryLocalService) {
+
+		this.microblogsEntryLocalService = microblogsEntryLocalService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setMicroblogsEntryService(
+		MicroblogsEntryService microblogsEntryService) {
+
+		this.microblogsEntryService = microblogsEntryService;
+	}
+
 }

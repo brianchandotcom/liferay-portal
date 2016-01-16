@@ -983,6 +983,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1023,6 +1025,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
 		</execute>
@@ -1036,6 +1040,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
@@ -1118,6 +1124,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1158,6 +1166,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
 		</execute>
@@ -1171,6 +1181,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
@@ -1460,6 +1472,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1500,6 +1514,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
 		</execute>
@@ -1513,6 +1529,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
@@ -1702,6 +1720,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1756,6 +1776,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
@@ -1930,6 +1952,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Workflow Configuration" />
 		</execute>
@@ -2014,6 +2038,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
 		</execute>
@@ -2027,6 +2053,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
@@ -2042,6 +2070,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
@@ -2079,6 +2109,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
 		</execute>
@@ -2092,6 +2124,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesUsers">
 			<var name="portlet" value="Site Memberships" />
@@ -2756,6 +2790,8 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />

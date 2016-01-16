@@ -139,7 +139,7 @@
 <!--SITE_PAGES_VARIATION_MENULIST-->
 <tr>
 	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>
-	<td>//ul//a[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td>xpath=(//ul//a[contains(.,'${key_sitePagesVariationName}')])[1]</td>
 	<td></td>
 </tr>
 <tr>

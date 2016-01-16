@@ -136,8 +136,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="userfn" />
 
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
@@ -644,6 +642,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="userFirstName" value="userfn1" />
@@ -654,6 +654,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />

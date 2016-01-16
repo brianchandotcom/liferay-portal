@@ -235,12 +235,12 @@
 </tr>
 <tr>
 	<td>DEACTIVATE</td>
-	<td>//button[contains(.,'Deactivate')]</td>
+	<td>//*[@data-qa-id='deactivateButton'] | //button[contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//button[contains(.,'Delete')]</td>
+	<td>//*[@data-qa-id='deleteButton'] | //button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

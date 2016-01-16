@@ -87,8 +87,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${adminScreenName}" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
@@ -825,8 +823,6 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${adminScreenName}" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${adminScreenName}" />
@@ -1012,8 +1008,6 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
-
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
 
 		<var name="key_userScreenName" value="${adminScreenName}" />
 

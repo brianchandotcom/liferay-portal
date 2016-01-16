@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
 
 String redirect = ParamUtil.getString(request, "redirect");
 String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
@@ -25,12 +25,13 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_APPROVED);
 
-String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_TREE);
+String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_FLAT_USERS);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
 portletURL.setParameter("usersListView", usersListView);
+portletURL.setParameter("toolbarItem", toolbarItem);
 
 if (Validator.isNotNull(viewUsersRedirect)) {
 	portletURL.setParameter("viewUsersRedirect", viewUsersRedirect);
@@ -47,7 +48,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
 <liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
 
-<aui:form action="<%= portletURLString %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
+<%@ include file="/toolbar.jspf" %>
+
+<aui:form action="<%= portletURLString %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
@@ -85,18 +88,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	%>
 
 	<c:choose>
-		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-			<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
-
-			<%
-			boolean organizationContextView = false;
-			%>
-
-			<%@ include file="/view_flat_users.jspf" %>
-		</c:when>
-		<c:otherwise>
+		<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 
 			<%
 			request.setAttribute("view.jsp-backURL", backURL);
@@ -113,7 +105,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			%>
 
 			<liferay-util:include page="/view_tree.jsp" servletContext="<%= application %>" />
-		</c:otherwise>
+		</c:when>
+		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+			<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
+
+			<%
+			boolean organizationContextView = false;
+			%>
+
+			<%@ include file="/view_flat_users.jspf" %>
+		</c:when>
 	</c:choose>
 </aui:form>
 

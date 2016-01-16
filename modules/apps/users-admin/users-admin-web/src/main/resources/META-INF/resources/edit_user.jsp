@@ -151,22 +151,17 @@ if (selUser != null) {
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-	<aui:nav-bar>
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="toolbarItem" value='<%= (selUser == null) ? "add" : "view" %>' />
-		</liferay-util:include>
-	</aui:nav-bar>
-
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
 
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		escapeXml="<%= false %>"
-		localizeTitle="<%= (selUser == null) %>"
-		title='<%= (selUser == null) ? "add-user" : LanguageUtil.format(request, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false) %>'
-	/>
+	<%
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
+	%>
+
 </c:if>
 
 <portlet:actionURL name="/users_admin/edit_user" var="editUserActionURL" />
@@ -176,7 +171,7 @@ if (selUser != null) {
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editUserActionURL %>" method="post" name="fm">
+<aui:form action="<%= editUserActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= editUserRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

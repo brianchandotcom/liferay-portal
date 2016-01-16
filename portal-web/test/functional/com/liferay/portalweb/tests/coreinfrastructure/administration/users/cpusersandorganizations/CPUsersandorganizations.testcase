@@ -101,6 +101,18 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
 		<execute macro="Suborganization#addCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
@@ -111,6 +123,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#viewSubOrganizationCP">
 			<var name="orgName" value="Organization Name" />
@@ -148,6 +162,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="userFirstName" value="userfn" />
@@ -158,6 +174,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#gotoCP">
 			<var name="orgName" value="Organization Name" />
@@ -187,6 +205,13 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
+		</execute>
+
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
@@ -207,6 +232,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addCommentCP">
 			<var name="orgComment" value="This is a test comment!" />
 			<var name="orgName" value="Organization Name" />
@@ -216,6 +243,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#viewCommentCP">
 			<var name="orgComment" value="This is a test comment!" />
@@ -236,6 +265,13 @@
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
 		</execute>
 
 		<execute macro="Organization#viewCP">
@@ -268,6 +304,13 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="searchTerm" value="Organization Name 1" />
+		</execute>
+
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name 1" />
 			<var name="orgType" value="Regular Organization" />
@@ -286,6 +329,13 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name 2" />
+			<var name="searchTerm" value="Organization Name 2" />
+		</execute>
+
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name 2" />
 			<var name="orgType" value="Regular Organization" />
@@ -302,6 +352,13 @@
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name 3" />
+			<var name="searchTerm" value="Organization Name 3" />
 		</execute>
 
 		<execute macro="Organization#viewCP">
@@ -323,6 +380,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
@@ -352,6 +411,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
@@ -391,6 +452,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
 		</execute>
@@ -428,6 +491,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
 		</execute>
@@ -435,6 +500,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#manageMembershipOptionsInSites">
 			<var name="allowManualMembershipManagement" value="true" />
@@ -444,6 +511,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
@@ -491,6 +560,18 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchTerm" value="Organization Name" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
 		<execute macro="Suborganization#addCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
@@ -506,7 +587,6 @@
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
 			<var name="suborgName" value="Suborganization Name" />
-			<var name="suborgSearchName" value="Suborganization" />
 			<var name="suborgType" value="Regular Organization" />
 		</execute>
 	</command>
@@ -1365,9 +1445,19 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#deleteCP">
 			<var name="orgName" value="Organization Name" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#viewNoOrganizationsFoundCP" />
 	</command>
 
 	<command name="DeleteOrganizationSite" priority="4">
@@ -1383,6 +1473,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
@@ -1437,6 +1529,16 @@
 		<execute macro="User#deleteCP">
 			<var name="userFirstName" value="userfn" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="usersn" />
+		</execute>
+
+		<execute macro="User#viewNoUsersFoundCP" />
 	</command>
 
 	<command name="EditOrganizationSite" priority="5">
@@ -1454,6 +1556,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
@@ -1473,6 +1577,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#editSiteCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgNameEdit" value="Organization Name Edit" />
@@ -1482,8 +1588,15 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Organization#viewEditSiteCP">
-			<var name="orgNameEdit" value="Organization Name Edit" />
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name Edit" />
+			<var name="searchTerm" value="Organization Name Edit" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="Organization Name Edit" />
 			<var name="orgType" value="Regular Organization" />
 		</execute>
 	</command>
@@ -1513,6 +1626,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name" />
 		</execute>
@@ -1520,6 +1635,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#manageMembershipOptionsInSites">
 			<var name="allowManualMembershipManagement" value="true" />
@@ -1529,6 +1646,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
@@ -1719,6 +1838,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="userFirstName" value="userfn" />
@@ -1760,9 +1881,10 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#searchCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
 			<var name="searchTerm" value="Organization Name" />
 		</execute>
 	</command>
@@ -1888,6 +2010,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="userFirstName" value="userfn" />
@@ -1899,13 +2023,15 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#gotoCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="searchToken" value="Organization Name" />
 		</execute>
 
 		<execute macro="User#searchCP">
-			<var name="searchToken" value="usersn" />
+			<var name="searchTerm" value="usersn" />
 		</execute>
 
 		<execute macro="Organization#viewAssignMemberCP">
@@ -1915,7 +2041,7 @@
 		</execute>
 
 		<execute macro="User#searchCP">
-			<var name="searchToken" value="test" />
+			<var name="searchTerm" value="test" />
 		</execute>
 
 		<execute macro="Organization#viewMembersNotFoundCP" />
@@ -1961,6 +2087,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name 1" />

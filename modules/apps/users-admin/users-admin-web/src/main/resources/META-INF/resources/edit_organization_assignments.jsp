@@ -39,17 +39,16 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= organization.getName() %>"
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(organization.getName());
+%>
 
 <liferay-ui:membership-policy-error />
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
@@ -114,7 +113,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 
 		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

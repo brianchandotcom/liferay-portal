@@ -36,19 +36,10 @@ else if (parentOrganizationId > 0) {
 
 	UsersAdminUtil.addPortletBreadcrumbEntries(parentOrganization, request, renderResponse);
 }
-%>
 
-<aui:nav-bar>
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="toolbarItem" value='<%= (organization == null) ? "add" : "view" %>' />
-	</liferay-util:include>
-</aui:nav-bar>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
 
-<div id="breadcrumb">
-	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-</div>
-
-<%
 String headerTitle = null;
 
 if (organization != null) {
@@ -60,13 +51,13 @@ else if (Validator.isNotNull(type)) {
 else {
 	headerTitle = LanguageUtil.get(request, "add-organization");
 }
+
+renderResponse.setTitle(headerTitle);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	localizeTitle="<%= (organization == null) %>"
-	title="<%= headerTitle %>"
-/>
+<div id="breadcrumb">
+	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+</div>
 
 <portlet:actionURL name="/users_admin/edit_organization" var="editOrganizationActionURL" />
 
@@ -75,7 +66,7 @@ else {
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editOrganizationActionURL %>" method="post" name="fm">
+<aui:form action="<%= editOrganizationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= editOrganizationRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

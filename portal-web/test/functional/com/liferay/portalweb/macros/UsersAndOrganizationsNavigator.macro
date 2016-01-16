@@ -1,0 +1,19 @@
+<definition>
+	<command name="gotoOrganizations">
+		<if>
+			<condition function="IsElementPresent" locator1="NavBar#ORGANIZATIONS" />
+			<then>
+				<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoUsers">
+		<if>
+			<condition function="IsElementPresent" locator1="NavBar#USERS" />
+			<then>
+				<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
+			</then>
+		</if>
+	</command>
+</definition>

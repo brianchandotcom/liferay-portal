@@ -36,13 +36,11 @@ portletURL.setParameter("eventName", eventName);
 if (Validator.isNotNull(target)) {
 	portletURL.setParameter("target", target);
 }
+
+renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectOrganizationFm">
-	<liferay-ui:header
-		title="organizations"
-	/>
-
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectOrganizationFm">
 	<liferay-ui:search-container
 		searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 		var="organizationSearchContainer"
@@ -130,7 +128,7 @@ if (Validator.isNotNull(target)) {
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

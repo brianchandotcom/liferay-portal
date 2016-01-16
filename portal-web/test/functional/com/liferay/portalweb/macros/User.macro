@@ -3,8 +3,6 @@
 	<var name="userEmailAddress" value="test@liferay.com" />
 
 	<command name="activateCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
 		<execute function="Type" locator1="AdvancedSearch#FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
@@ -17,7 +15,9 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName}" />
@@ -83,8 +83,9 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -208,8 +209,6 @@
 	</command>
 
 	<command name="addPersonalSiteCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
@@ -281,8 +280,9 @@
 	</command>
 
 	<command name="addReservedEmailAddressCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -295,8 +295,9 @@
 	</command>
 
 	<command name="addReservedScreenNameCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -309,8 +310,9 @@
 	</command>
 
 	<command name="addScreenNameNumberSiteIdCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
 		<execute function="Paste" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${siteID}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -372,7 +374,6 @@
 	</command>
 
 	<command name="advancedSearchCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
 		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
 
 		<if>
@@ -703,10 +704,9 @@
 	</command>
 
 	<command name="assignOrgRoleCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -728,10 +728,9 @@
 	</command>
 
 	<command name="assignRegularRoleCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -756,10 +755,9 @@
 	</command>
 
 	<command name="assignSiteRoleCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -781,8 +779,6 @@
 	</command>
 
 	<command name="attemptImpersonateCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
@@ -923,13 +919,9 @@
 	</command>
 
 	<command name="deactivateCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userFirstName}" />
 
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userFirstName}" />
-
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<if>
 			<equals arg1="${deactivateType}" arg2="Actions" />
@@ -961,9 +953,14 @@
 			<elseif>
 				<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 				<then>
-					<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+					<execute function="Click" locator1="Checkbox#SELECT_ALL" />
 
-					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+					<if>
+						<condition function="IsElementPresent" locator1="Button#DEACTIVATE" />
+						<then>
+							<execute function="ClickNoError" locator1="Button#DEACTIVATE" />
+						</then>
+					</if>
 
 					<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 
@@ -972,13 +969,10 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
-		<execute function="AssertElementNotPresent" locator1="Button#DEACTIVATE" value1="Deactivate" />
+		<execute function="AssertTextEquals" locator1="Card#GENERIC_HORIZONTAL_DETAILS" value1="No users were found." />
 	</command>
 
 	<command name="deleteCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<if>
 			<condition function="IsElementPresent" locator1="Select#USER_STATUS" />
 			<then>
@@ -986,16 +980,17 @@
 				<if>
 					<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 					<then>
-						<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+						<execute function="Click" locator1="Checkbox#SELECT_ALL" />
+
 						<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+
 						<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
+
 						<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 					</then>
 				</if>
 			</then>
 		</if>
-
-		<execute function="AssertElementNotPresent" locator1="Button#DELETE" value1="Delete" />
 	</command>
 
 	<command name="deleteProfilePictureViaMyAccount">
@@ -1078,10 +1073,9 @@
 	</command>
 
 	<command name="editDisplaySettingsCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1105,11 +1099,9 @@
 	</command>
 
 	<command name="editPasswordCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Pause" locator1="5000" />
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
@@ -1153,8 +1145,6 @@
 	</command>
 
 	<command name="editPasswordInvalidCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
@@ -1206,8 +1196,6 @@
 	</command>
 
 	<command name="editUserDisplaySettingsCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
@@ -1255,9 +1243,9 @@
 	</command>
 
 	<command name="editUserGenderCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
@@ -1269,8 +1257,6 @@
 	</command>
 
 	<command name="editUserMiddleNameCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
@@ -1284,8 +1270,6 @@
 	</command>
 
 	<command name="editUserOrganizationCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
@@ -1312,8 +1296,6 @@
 	</command>
 
 	<command name="editUserSiteCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Pause" locator1="1000" />
@@ -1399,16 +1381,12 @@
 	</command>
 
 	<command name="gotoEditCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="impersonateCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
@@ -1633,9 +1611,9 @@
 	</command>
 
 	<command name="searchCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchToken}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
 
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 	</command>
 
 	<command name="signInPG">
@@ -1705,11 +1683,11 @@
 	</command>
 
 	<command name="unassignRegularRoleCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1727,11 +1705,9 @@
 	</command>
 
 	<command name="unlockUserAccount">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
+		<execute function="Pause" locator1="1000" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
@@ -1743,8 +1719,6 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<if>
 			<equals arg1="${userEmailAddressVariation}" arg2="At" />
 			<then>
@@ -1824,6 +1798,10 @@
 		<execute function="AssertElementPresent" locator1="Checkbox#REMEMBER_ME" />
 
 		<execute function="AssertTextEquals" locator1="Button#SIGN_IN" value1="Sign In" />
+	</command>
+
+	<command name="viewNoUsersFoundCP">
+		<execute function="AssertTextEquals" locator1="Card#GENERIC_HORIZONTAL_DETAILS" value1="No users were found." />
 	</command>
 
 	<command name="viewUserInfomationOrganizationSitesCP">

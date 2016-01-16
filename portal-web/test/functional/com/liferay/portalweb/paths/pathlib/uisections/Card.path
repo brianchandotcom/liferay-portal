@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_HORIZONTAL_DETAILS</td>
+	<td>//div[contains(@class,'card-horizontal')]//div[@class='card-dm-details']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPECIFIC_CHECKBOX</td>
 	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//input[@type='checkbox']</td>
 	<td></td>

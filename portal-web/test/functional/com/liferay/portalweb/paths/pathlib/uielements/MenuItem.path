@@ -389,6 +389,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCATION</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Location')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCK_THREAD</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Lock Thread')]</td>
 	<td></td>
@@ -561,6 +566,11 @@
 <tr>
 	<td>PUBLISH_TO_REMOTE_LIVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Publish to Remote Live')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REGULAR_ORGANIZATION</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[text()='Regular Organization']</td>
 	<td></td>
 </tr>
 <tr>
@@ -775,7 +785,7 @@
 </tr>
 <tr>
 	<td>USER</td>
-	<td>//li[contains(@class,'open')]//a[@title='User']</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[text()='User']</td>
 	<td></td>
 </tr>
 <tr>

@@ -40,6 +40,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 
 <portlet:renderURL var="redirectURL">
 	<portlet:param name="struts_action" value="/shopping/cart" />
+	<portlet:param name="tabs1" value="cart" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:renderURL>
 

@@ -251,15 +251,16 @@ public class SyncWatchEventProcessor implements Runnable {
 				}
 			}
 			catch (Exception e) {
-				Throwable throwable = e.getCause();
+				if (_logger.isTraceEnabled()) {
+					Throwable throwable = e.getCause();
 
-				String message = throwable.getMessage();
+					String message = throwable.getMessage();
 
-				if (!message.contains(
-						"Unique index or primary key violation") &&
-					_logger.isTraceEnabled()) {
+					if (!message.contains(
+							"Unique index or primary key violation")) {
 
-					_logger.trace(e.getMessage(), e);
+						_logger.trace(e.getMessage(), e);
+					}
 				}
 			}
 

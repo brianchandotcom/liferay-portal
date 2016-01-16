@@ -84,7 +84,6 @@
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
 			<arg value="sass.compiler.class.name=${sass.compiler.class.name}" />
-			<arg value="sass.dir=/html/portlet" />
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.generate.source.map=${sass.generate.source.map}" />
 			<arg value="sass.portal.common.dir=${sass.portal.common.dir}" />
@@ -224,7 +223,7 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean,clean-css,clean-tlds">
+	<target name="clean" depends="build-common-web.clean,clean-tlds">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/portal/aui" />
@@ -232,12 +231,6 @@
 		<delete dir="docroot/WEB-INF/lib" />
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
-	</target>
-
-	<target name="clean-css">
-		<delete includeemptydirs="true">
-			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-		</delete>
 	</target>
 
 	<target name="clean-tlds">

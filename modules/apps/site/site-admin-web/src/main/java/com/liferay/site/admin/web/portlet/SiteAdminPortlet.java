@@ -894,6 +894,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected LayoutSetService layoutSetService;
 	protected MembershipRequestLocalService membershipRequestLocalService;
 	protected MembershipRequestService membershipRequestService;
+	protected PanelAppRegistry panelAppRegistry;
+	protected PanelCategoryRegistry panelCategoryRegistry;
 	protected RoleLocalService roleLocalService;
 	protected TeamLocalService teamLocalService;
 	protected UserLocalService userLocalService;
@@ -904,9 +906,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	private static final TransactionAttribute _transactionAttribute =
 		TransactionAttribute.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	protected PanelAppRegistry panelAppRegistry;
-	protected PanelCategoryRegistry panelCategoryRegistry;
 
 	private class GroupCallable implements Callable<Group> {
 

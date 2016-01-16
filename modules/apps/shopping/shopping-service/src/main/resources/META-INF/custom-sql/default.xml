@@ -1,6 +1,50 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.countC_ByG_C">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				ShoppingCategory
+			WHERE
+				(ShoppingCategory.groupId = ?) AND
+				(ShoppingCategory.parentCategoryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.countI_ByG_C">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				ShoppingItem
+			WHERE
+				(ShoppingItem.groupId = ?) AND
+				(ShoppingItem.categoryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.findC_ByG_C">
+		<![CDATA[
+			SELECT
+				DISTINCT categoryId AS modelCategoryId, '' AS modelItemId, 1 AS modelCategory, ShoppingCategory.createDate as createDate, ShoppingCategory.modifiedDate as modifiedDate, ShoppingCategory.name as name
+			FROM
+				ShoppingCategory
+			WHERE
+				(ShoppingCategory.groupId = ?) AND
+				(ShoppingCategory.parentCategoryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.findI_ByG_C">
+		<![CDATA[
+			SELECT
+				DISTINCT '' AS modelCategoryId, itemId AS modelItemId, 0 AS modelCategory, ShoppingItem.createDate as createDate, ShoppingItem.modifiedDate as modifiedDate, ShoppingItem.name as name
+			FROM
+				ShoppingItem
+			WHERE
+				(ShoppingItem.groupId = ?) AND
+				(ShoppingItem.categoryId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.shopping.service.persistence.ShoppingItemFinder.countByG_C">
 		<![CDATA[
 			SELECT
@@ -90,50 +134,6 @@
 				)
 			ORDER BY
 				createDate ASC
-		]]>
-	</sql>
-	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.countC_ByG_C">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				ShoppingCategory
-			WHERE
-				(ShoppingCategory.groupId = ?) AND
-				(ShoppingCategory.parentCategoryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.countI_ByG_C">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				ShoppingItem
-			WHERE
-				(ShoppingItem.groupId = ?) AND
-				(ShoppingItem.categoryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.findC_ByG_C">
-		<![CDATA[
-			SELECT
-				DISTINCT categoryId AS modelCategoryId, '' AS modelItemId, 1 AS modelCategory, ShoppingCategory.createDate as createDate, ShoppingCategory.modifiedDate as modifiedDate, ShoppingCategory.name as name
-			FROM
-				ShoppingCategory
-			WHERE
-				(ShoppingCategory.groupId = ?) AND
-				(ShoppingCategory.parentCategoryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder.findI_ByG_C">
-		<![CDATA[
-			SELECT
-				DISTINCT '' AS modelCategoryId, itemId AS modelItemId, 0 AS modelCategory, ShoppingItem.createDate as createDate, ShoppingItem.modifiedDate as modifiedDate, ShoppingItem.name as name
-			FROM
-				ShoppingItem
-			WHERE
-				(ShoppingItem.groupId = ?) AND
-				(ShoppingItem.categoryId = ?)
 		]]>
 	</sql>
 </custom-sql>

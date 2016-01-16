@@ -67,9 +67,9 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 		emptyResultsMessage="there-are-no-saved-publish-templates"
 		iteratorURL="<%= portletURL %>"
 		orderByCol="name"
+		orderByComparator="<%= new ExportImportConfigurationNameComparator(true) %>"
 		orderByType="asc"
 		searchTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
-		total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, exportImportConfigurationType) %>"
 	>
 
 		<liferay-ui:search-container-results>

@@ -42,6 +42,14 @@ public class SiteTemplateSettingsPortletDataHandler
 	}
 
 	@Override
+	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeLocalService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		this.layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	@Override
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {

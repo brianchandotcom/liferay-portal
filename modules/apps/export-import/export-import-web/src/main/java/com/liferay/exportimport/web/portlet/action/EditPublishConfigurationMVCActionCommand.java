@@ -190,6 +190,29 @@ public class EditPublishConfigurationMVCActionCommand
 			exportImportConfigurationLocalService;
 	}
 
+	@Override
+	@Reference(unbind = "-")
+	protected void setExportImportConfigurationService(
+		ExportImportConfigurationService exportImportConfigurationService) {
+
+		this.exportImportConfigurationService =
+			exportImportConfigurationService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setExportImportService(
+		ExportImportService exportImportService) {
+
+		this.exportImportService = exportImportService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		this.trashEntryService = trashEntryService;
+	}
+
 	protected ExportImportConfiguration updatePublishConfiguration(
 			ActionRequest actionRequest)
 		throws Exception {

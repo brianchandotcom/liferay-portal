@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.layout.prototype.action;
+package com.liferay.asset.publisher.layout.prototype.lifecycle;
 
 import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Juergen Kappler
  */
-@Component(immediate = true, service = AddLayoutPrototypeAction.class)
-public class AddLayoutPrototypeAction {
+@Component(immediate = true, service = AddLayoutPrototypePortalInstanceLifecycleListener.class)
+public class AddLayoutPrototypePortalInstanceLifecycleListener {
 
 	@Activate
 	protected void activate() throws Exception {
@@ -70,7 +70,7 @@ public class AddLayoutPrototypeAction {
 		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
 			companyId, defaultUserId, "layout-prototype-web-content-title",
 			"layout-prototype-web-content-description", "2_columns_ii",
-			layoutPrototypes, AddLayoutPrototypeAction.class.getClassLoader());
+			layoutPrototypes, AddLayoutPrototypePortalInstanceLifecycleListener.class.getClassLoader());
 
 		if (layout == null) {
 			return;

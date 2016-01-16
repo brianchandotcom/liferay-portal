@@ -42,21 +42,6 @@ public class GroupServiceUtil {
 	 */
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, String,
-	String, int, String, boolean, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Group addGroup(
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addGroup(name, description, type, friendlyURL, site,
-			active, serviceContext);
-	}
-
-	/**
 	* Adds a group.
 	*
 	* @param parentGroupId the primary key of the parent group
@@ -123,39 +108,6 @@ public class GroupServiceUtil {
 				   .addGroup(parentGroupId, liveGroupId, nameMap,
 			descriptionMap, type, manualMembership, membershipRestriction,
 			friendlyURL, site, inheritContent, active, serviceContext);
-	}
-
-	/**
-	* Adds the group using the group default live group ID.
-	*
-	* @param parentGroupId the primary key of the parent group
-	* @param name the entity's name
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param type the group's type. For more information see {@link
-	GroupConstants}.
-	* @param friendlyURL the group's friendlyURL
-	* @param site whether the group is to be associated with a main site
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the group, and can set whether the group is for
-	staging
-	* @return the group
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, Map,
-	Map, int, boolean, int, String, boolean, boolean,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addGroup(parentGroupId, name, description, type,
-			friendlyURL, site, active, serviceContext);
 	}
 
 	/**
@@ -300,26 +252,6 @@ public class GroupServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the site groups for which the user has control
-	* panel access.
-	*
-	* @param portlets the portlets to manage
-	* @param max the upper bound of the range of groups to consider (not
-	inclusive)
-	* @return the range of site groups for which the user has Control Panel
-	access
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getManageableSiteGroups(Collection, int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.Group> getManageableSites(
-		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getManageableSites(portlets, max);
-	}
-
-	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
@@ -393,133 +325,6 @@ public class GroupServiceUtil {
 		long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserOrganizationsGroups(userId, start, end);
-	}
-
-	/**
-	* Returns the guest or current user's groups &quot;sites&quot; associated
-	* with the group entity class names, including the Control Panel group if
-	* the user is permitted to view the Control Panel.
-	*
-	* <ul>
-	* <li>
-	* Class name &quot;User&quot; includes the user's layout set
-	* group.
-	* </li>
-	* <li>
-	* Class name &quot;Organization&quot; includes the user's
-	* immediate organization groups and inherited organization groups.
-	* </li>
-	* <li>
-	* Class name &quot;Group&quot; includes the user's immediate
-	* organization groups and site groups.
-	* </li>
-	* <li>
-	* A <code>classNames</code>
-	* value of <code>null</code> includes the user's layout set group,
-	* organization groups, inherited organization groups, and site groups.
-	* </li>
-	* </ul>
-	*
-	* @param classNames the group entity class names (optionally
-	<code>null</code>). For more information see {@link
-	#getUserSitesGroups(String[], int)}.
-	* @param max the maximum number of groups to return
-	* @return the user's groups &quot;sites&quot;
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(String[],
-	int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		java.lang.String[] classNames, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserPlaces(classNames, max);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
-	String[], int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		long userId, java.lang.String[] classNames,
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getUserPlaces(userId, classNames, includeControlPanel, max);
-	}
-
-	/**
-	* Returns the user's groups &quot;sites&quot; associated with the group
-	* entity class names, including the Control Panel group if the user is
-	* permitted to view the Control Panel.
-	*
-	* <ul>
-	* <li>
-	* Class name &quot;User&quot; includes the user's layout set
-	* group.
-	* </li>
-	* <li>
-	* Class name &quot;Organization&quot; includes the user's
-	* immediate organization groups and inherited organization groups.
-	* </li>
-	* <li>
-	* Class name &quot;Group&quot; includes the user's immediate
-	* organization groups and site groups.
-	* </li>
-	* <li>
-	* A <code>classNames</code>
-	* value of <code>null</code> includes the user's layout set group,
-	* organization groups, inherited organization groups, and site groups.
-	* </li>
-	* </ul>
-	*
-	* @param userId the primary key of the user
-	* @param classNames the group entity class names (optionally
-	<code>null</code>). For more information see {@link
-	#getUserSitesGroups(long, String[], int)}.
-	* @param max the maximum number of groups to return
-	* @return the user's groups &quot;sites&quot;
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
-	String[], int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		long userId, java.lang.String[] classNames, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserPlaces(userId, classNames, max);
-	}
-
-	/**
-	* Returns the number of the guest or current user's groups
-	* &quot;sites&quot; associated with the group entity class names, including
-	* the Control Panel group if the user is permitted to view the Control
-	* Panel.
-	*
-	* @return the number of user's groups &quot;sites&quot;
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
-	*/
-	@Deprecated
-	public static int getUserPlacesCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserPlacesCount();
-	}
-
-	/**
-	* Returns the guest or current user's layout set group, organization
-	* groups, inherited organization groups, and site groups.
-	*
-	* @return the user's layout set group, organization groups, and
-	inherited organization groups, and site groups
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.Group> getUserSites()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserSites();
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups()

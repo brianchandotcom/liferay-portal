@@ -323,17 +323,6 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().getRow(tableId, classPK);
 	}
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,
-	String, int, int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
-		java.lang.String className, java.lang.String tableName, int start,
-		int end) {
-		return getService().getRows(className, tableName, start, end);
-	}
-
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
 		long companyId, java.lang.String className, java.lang.String tableName,
 		int start, int end) {
@@ -350,16 +339,6 @@ public class ExpandoRowLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
 		long tableId, int start, int end) {
 		return getService().getRows(tableId, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #getRowsCount(long, String,
-	String)}
-	*/
-	@Deprecated
-	public static int getRowsCount(java.lang.String className,
-		java.lang.String tableName) {
-		return getService().getRowsCount(className, tableName);
 	}
 
 	public static int getRowsCount(long companyId, java.lang.String className,

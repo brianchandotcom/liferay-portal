@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.layout.prototype.action;
+package com.liferay.wiki.layout.prototype.lifecycle;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Juergen Kappler
  */
-@Component(immediate = true, service = AddLayoutPrototypeAction.class)
-public class AddLayoutPrototypeAction {
+@Component(immediate = true, service = AddLayoutPrototypePortalInstanceLifecycleListener.class)
+public class AddLayoutPrototypePortalInstanceLifecycleListener {
 
 	@Activate
 	protected void activate() throws Exception {
@@ -65,7 +65,7 @@ public class AddLayoutPrototypeAction {
 		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
 			companyId, defaultUserId, "layout-prototype-wiki-title",
 			"layout-prototype-wiki-description", "2_columns_iii",
-			layoutPrototypes, AddLayoutPrototypeAction.class.getClassLoader());
+			layoutPrototypes, AddLayoutPrototypePortalInstanceLifecycleListener.class.getClassLoader());
 
 		if (layout == null) {
 			return;

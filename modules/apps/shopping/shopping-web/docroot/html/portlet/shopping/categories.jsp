@@ -31,7 +31,7 @@ portletURL.setParameter("struts_action", "/shopping/view");
 portletURL.setParameter("tabs1", "categories");
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
-SearchContainer categoriesSearch = new SearchContainer(renderRequest, portletURL, null, null);
+SearchContainer categoriesSearch = new SearchContainer(renderRequest, portletURL, null, "no-results-were-found");
 
 int categoriesAndItemsCount = 0;
 

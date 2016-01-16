@@ -347,7 +347,7 @@ public class FileUtil {
 		}
 
 		if ((extension != null) && !extension.isEmpty()) {
-			int x = fileName.lastIndexOf(".");
+			int x = fileName.lastIndexOf('.');
 
 			if ((x == -1) ||
 				!extension.equalsIgnoreCase(fileName.substring(x + 1))) {
@@ -360,7 +360,7 @@ public class FileUtil {
 			int x = fileName.length() - 1;
 
 			if ((extension != null) && !extension.isEmpty()) {
-				x = fileName.lastIndexOf(".");
+				x = fileName.lastIndexOf('.');
 			}
 
 			int y = x - (fileName.length() - 255);

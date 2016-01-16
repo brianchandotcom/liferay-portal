@@ -860,7 +860,7 @@ public class PoshiRunnerValidation {
 		validateHasChildElements(element, filePath);
 		validateHasNoAttributes(element, filePath);
 
-		String fileName = filePath.substring(filePath.lastIndexOf(".") + 1);
+		String fileName = filePath.substring(filePath.lastIndexOf('.') + 1);
 
 		List<Element> childElements = element.elements();
 

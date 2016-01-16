@@ -209,7 +209,7 @@ public class JenkinsPerformanceDataUtil {
 
 			sb.append("testReport/");
 
-			int x = _className.lastIndexOf(".");
+			int x = _className.lastIndexOf('.');
 
 			sb.append(_className.substring(0, x));
 			sb.append("/");

@@ -111,7 +111,7 @@ public class PoshiRunnerGetterUtil {
 
 	public static String getClassNameFromFilePath(String filePath) {
 		int x = filePath.lastIndexOf("/");
-		int y = filePath.lastIndexOf(".");
+		int y = filePath.lastIndexOf('.');
 
 		if ((x == -1) && OSDetector.isWindows()) {
 			x = filePath.lastIndexOf("\\");
@@ -178,7 +178,7 @@ public class PoshiRunnerGetterUtil {
 	}
 
 	public static String getFileExtensionFromFilePath(String filePath) {
-		int x = filePath.lastIndexOf(".");
+		int x = filePath.lastIndexOf('.');
 
 		return filePath.substring(x + 1);
 	}

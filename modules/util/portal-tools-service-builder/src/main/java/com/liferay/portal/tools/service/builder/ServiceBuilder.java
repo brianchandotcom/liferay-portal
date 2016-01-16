@@ -538,7 +538,7 @@ public class ServiceBuilder {
 			_badColumnNames = _readLines(_tplBadColumnNames);
 
 			_beanLocatorUtilShortName = _beanLocatorUtil.substring(
-				_beanLocatorUtil.lastIndexOf(".") + 1);
+				_beanLocatorUtil.lastIndexOf('.') + 1);
 
 			SAXReader saxReader = _getSAXReader();
 
@@ -1037,7 +1037,7 @@ public class ServiceBuilder {
 			return entity;
 		}
 
-		int pos = name.lastIndexOf(".");
+		int pos = name.lastIndexOf('.');
 
 		if (pos == -1) {
 			pos = _ejbList.indexOf(new Entity(name));
@@ -3085,7 +3085,7 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = _getContext();
 
-		int index = _propsUtil.lastIndexOf(".");
+		int index = _propsUtil.lastIndexOf('.');
 
 		context.put(
 			"servicePropsUtilClassName", _propsUtil.substring(index + 1));

@@ -67,7 +67,7 @@ public class Java2WsddTask {
 
 		String wsdlFileName = tempDir + "/service.wsdl";
 
-		int pos = className.lastIndexOf(".");
+		int pos = className.lastIndexOf('.');
 
 		String packagePath = className.substring(0, pos);
 
@@ -86,7 +86,7 @@ public class Java2WsddTask {
 		String location = "http://localhost/services/" + serviceName;
 
 		String mappingPackage = packagePath.substring(
-			0, packagePath.lastIndexOf(".")) + ".ws";
+			0, packagePath.lastIndexOf('.')) + ".ws";
 
 		Project project = AntUtil.getProject();
 

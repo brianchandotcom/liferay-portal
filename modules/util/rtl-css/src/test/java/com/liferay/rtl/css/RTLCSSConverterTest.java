@@ -451,7 +451,7 @@ public class RTLCSSConverterTest {
 	}
 
 	protected String getRtlCustomFileName(String fileName) {
-		int pos = fileName.lastIndexOf(".");
+		int pos = fileName.lastIndexOf('.');
 
 		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
 	}

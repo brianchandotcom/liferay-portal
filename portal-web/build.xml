@@ -445,14 +445,6 @@ ${oversize.files.jsp}</fail>
 		</if>
 	</target>
 
-	<target name="node-execute">
-		<ant antfile="build-node.xml" dir="${sdk.dir}" target="node-execute" inheritAll="false" />
-	</target>
-
-	<target name="npm-execute">
-		<ant antfile="build-node.xml" dir="${sdk.dir}" target="npm-execute" inheritAll="false" />
-	</target>
-
 	<target name="update-gradle-cache">
 		<gradle-execute forcedcacheenabled="false" task="updateGradleCache">
 			<arg value="--build-file=build-test.gradle" />

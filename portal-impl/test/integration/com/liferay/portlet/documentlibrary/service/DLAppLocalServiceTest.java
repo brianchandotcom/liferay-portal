@@ -45,7 +45,7 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;

@@ -109,7 +109,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public MBDiscussion findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the first message boards discussion in the ordered set where uuid = &#63;.
@@ -131,7 +131,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public MBDiscussion findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the last message boards discussion in the ordered set where uuid = &#63;.
@@ -155,7 +155,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public MBDiscussion[] findByUuid_PrevAndNext(long discussionId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Removes all the message boards discussions where uuid = &#63; from the database.
@@ -181,7 +181,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
 	public MBDiscussion findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the message boards discussion where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +211,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @return the message boards discussion that was removed
 	*/
 	public MBDiscussion removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the number of message boards discussions where uuid = &#63; and groupId = &#63;.
@@ -298,7 +298,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public MBDiscussion findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the first message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +324,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public MBDiscussion findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +351,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public MBDiscussion[] findByUuid_C_PrevAndNext(long discussionId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Removes all the message boards discussions where uuid = &#63; and companyId = &#63; from the database.
@@ -439,7 +439,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public MBDiscussion findByClassNameId_First(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the first message boards discussion in the ordered set where classNameId = &#63;.
@@ -461,7 +461,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	*/
 	public MBDiscussion findByClassNameId_Last(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the last message boards discussion in the ordered set where classNameId = &#63;.
@@ -485,7 +485,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	public MBDiscussion[] findByClassNameId_PrevAndNext(long discussionId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Removes all the message boards discussions where classNameId = &#63; from the database.
@@ -510,7 +510,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
 	public MBDiscussion findByThreadId(long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the message boards discussion where threadId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -536,7 +536,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @return the message boards discussion that was removed
 	*/
 	public MBDiscussion removeByThreadId(long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the number of message boards discussions where threadId = &#63;.
@@ -555,7 +555,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
 	public MBDiscussion findByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -585,7 +585,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @return the message boards discussion that was removed
 	*/
 	public MBDiscussion removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the number of message boards discussions where classNameId = &#63; and classPK = &#63;.
@@ -626,7 +626,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
 	public MBDiscussion remove(long discussionId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	public MBDiscussion updateImpl(MBDiscussion mbDiscussion);
 
@@ -638,7 +638,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
 	public MBDiscussion findByPrimaryKey(long discussionId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException;
 
 	/**
 	* Returns the message boards discussion with the primary key or returns <code>null</code> if it could not be found.

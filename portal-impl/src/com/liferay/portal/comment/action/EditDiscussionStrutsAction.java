@@ -41,10 +41,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.messageboards.DiscussionMaxCommentsException;
-import com.liferay.portlet.messageboards.MessageBodyException;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
-import com.liferay.portlet.messageboards.RequiredMessageException;
+import com.liferay.portlet.messageboards.exception.DiscussionMaxCommentsException;
+import com.liferay.portlet.messageboards.exception.MessageBodyException;
+import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
+import com.liferay.portlet.messageboards.exception.RequiredMessageException;
 
 import java.io.IOException;
 

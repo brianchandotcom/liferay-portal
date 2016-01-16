@@ -16,7 +16,7 @@ package com.liferay.portal.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.NoSuchLayoutFriendlyURLException;
+import com.liferay.portal.exception.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -5430,7 +5430,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the layout friendly u r l with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the layout friendly u r l
 	 * @return the layout friendly u r l

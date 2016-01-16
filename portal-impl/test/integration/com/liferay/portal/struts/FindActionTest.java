@@ -14,7 +14,7 @@
 
 package com.liferay.portal.struts;
 
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

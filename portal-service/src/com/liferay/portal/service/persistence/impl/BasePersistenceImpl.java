@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;

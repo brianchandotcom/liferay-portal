@@ -184,7 +184,7 @@ public class ContactUtil {
 	*/
 	public static Contact findByCompanyId_First(long companyId,
 		OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -212,7 +212,7 @@ public class ContactUtil {
 	*/
 	public static Contact findByCompanyId_Last(long companyId,
 		OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -241,7 +241,7 @@ public class ContactUtil {
 	*/
 	public static Contact[] findByCompanyId_PrevAndNext(long contactId,
 		long companyId, OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(contactId, companyId,
 			orderByComparator);
@@ -344,7 +344,7 @@ public class ContactUtil {
 	*/
 	public static Contact findByAccountId_First(long accountId,
 		OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByAccountId_First(accountId, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class ContactUtil {
 	*/
 	public static Contact findByAccountId_Last(long accountId,
 		OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByAccountId_Last(accountId, orderByComparator);
 	}
@@ -401,7 +401,7 @@ public class ContactUtil {
 	*/
 	public static Contact[] findByAccountId_PrevAndNext(long contactId,
 		long accountId, OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByAccountId_PrevAndNext(contactId, accountId,
 			orderByComparator);
@@ -510,7 +510,7 @@ public class ContactUtil {
 	*/
 	public static Contact findByC_C_First(long classNameId, long classPK,
 		OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -540,7 +540,7 @@ public class ContactUtil {
 	*/
 	public static Contact findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -572,7 +572,7 @@ public class ContactUtil {
 	public static Contact[] findByC_C_PrevAndNext(long contactId,
 		long classNameId, long classPK,
 		OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(contactId, classNameId, classPK,
 			orderByComparator);
@@ -635,7 +635,7 @@ public class ContactUtil {
 	* @throws NoSuchContactException if a contact with the primary key could not be found
 	*/
 	public static Contact remove(long contactId)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence().remove(contactId);
 	}
 
@@ -651,7 +651,7 @@ public class ContactUtil {
 	* @throws NoSuchContactException if a contact with the primary key could not be found
 	*/
 	public static Contact findByPrimaryKey(long contactId)
-		throws com.liferay.portal.NoSuchContactException {
+		throws com.liferay.portal.exception.NoSuchContactException {
 		return getPersistence().findByPrimaryKey(contactId);
 	}
 

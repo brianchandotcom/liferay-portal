@@ -38,7 +38,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.social.NoSuchActivitySettingException;
+import com.liferay.portlet.social.exception.NoSuchActivitySettingException;
 import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.model.impl.SocialActivitySettingImpl;
 import com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl;
@@ -3023,7 +3023,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	}
 
 	/**
-	 * Returns the social activity setting with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the social activity setting with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the social activity setting
 	 * @return the social activity setting

@@ -53,7 +53,7 @@ import com.liferay.portal.service.persistence.impl.PersistenceNestedSetsTreeMana
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
-import com.liferay.portlet.asset.NoSuchCategoryException;
+import com.liferay.portlet.asset.exception.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
@@ -11283,7 +11283,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	/**
-	 * Returns the asset category with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the asset category with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the asset category
 	 * @return the asset category

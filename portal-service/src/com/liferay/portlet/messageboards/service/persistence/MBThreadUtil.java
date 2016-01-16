@@ -185,7 +185,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -211,7 +211,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,7 +238,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread[] findByUuid_PrevAndNext(long threadId,
 		java.lang.String uuid, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(threadId, uuid, orderByComparator);
 	}
@@ -271,7 +271,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
 	public static MBThread findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -307,7 +307,7 @@ public class MBThreadUtil {
 	* @return the message boards thread that was removed
 	*/
 	public static MBThread removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -407,7 +407,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -437,7 +437,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -469,7 +469,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByUuid_C_PrevAndNext(long threadId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(threadId, uuid, companyId,
 			orderByComparator);
@@ -573,7 +573,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByGroupId_First(long groupId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -599,7 +599,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByGroupId_Last(long groupId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -626,7 +626,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread[] findByGroupId_PrevAndNext(long threadId,
 		long groupId, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(threadId, groupId,
 			orderByComparator);
@@ -689,7 +689,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread[] filterFindByGroupId_PrevAndNext(long threadId,
 		long groupId, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(threadId, groupId,
 			orderByComparator);
@@ -732,7 +732,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
 	public static MBThread findByRootMessageId(long rootMessageId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().findByRootMessageId(rootMessageId);
 	}
 
@@ -766,7 +766,7 @@ public class MBThreadUtil {
 	* @return the message boards thread that was removed
 	*/
 	public static MBThread removeByRootMessageId(long rootMessageId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().removeByRootMessageId(rootMessageId);
 	}
 
@@ -863,7 +863,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_C_First(long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_First(groupId, categoryId, orderByComparator);
 	}
@@ -893,7 +893,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_C_Last(long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, categoryId, orderByComparator);
 	}
@@ -924,7 +924,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread[] findByG_C_PrevAndNext(long threadId, long groupId,
 		long categoryId, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(threadId, groupId, categoryId,
 			orderByComparator);
@@ -993,7 +993,7 @@ public class MBThreadUtil {
 	public static MBThread[] filterFindByG_C_PrevAndNext(long threadId,
 		long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_C_PrevAndNext(threadId, groupId, categoryId,
 			orderByComparator);
@@ -1266,7 +1266,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_NotC_First(long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_First(groupId, categoryId, orderByComparator);
 	}
@@ -1296,7 +1296,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_NotC_Last(long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_Last(groupId, categoryId, orderByComparator);
 	}
@@ -1328,7 +1328,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByG_NotC_PrevAndNext(long threadId,
 		long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_PrevAndNext(threadId, groupId, categoryId,
 			orderByComparator);
@@ -1400,7 +1400,7 @@ public class MBThreadUtil {
 	public static MBThread[] filterFindByG_NotC_PrevAndNext(long threadId,
 		long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_NotC_PrevAndNext(threadId, groupId,
 			categoryId, orderByComparator);
@@ -1521,7 +1521,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_S_First(long groupId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
 	}
@@ -1551,7 +1551,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_S_Last(long groupId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -1582,7 +1582,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread[] findByG_S_PrevAndNext(long threadId, long groupId,
 		int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(threadId, groupId, status,
 			orderByComparator);
@@ -1650,7 +1650,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread[] filterFindByG_S_PrevAndNext(long threadId,
 		long groupId, int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_S_PrevAndNext(threadId, groupId, status,
 			orderByComparator);
@@ -1772,7 +1772,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByC_P_First(long categoryId, double priority,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByC_P_First(categoryId, priority, orderByComparator);
 	}
@@ -1802,7 +1802,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByC_P_Last(long categoryId, double priority,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByC_P_Last(categoryId, priority, orderByComparator);
 	}
@@ -1834,7 +1834,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByC_P_PrevAndNext(long threadId,
 		long categoryId, double priority,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByC_P_PrevAndNext(threadId, categoryId, priority,
 			orderByComparator);
@@ -1947,7 +1947,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByL_P_First(java.util.Date lastPostDate,
 		double priority, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByL_P_First(lastPostDate, priority, orderByComparator);
 	}
@@ -1977,7 +1977,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByL_P_Last(java.util.Date lastPostDate,
 		double priority, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByL_P_Last(lastPostDate, priority, orderByComparator);
 	}
@@ -2009,7 +2009,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByL_P_PrevAndNext(long threadId,
 		java.util.Date lastPostDate, double priority,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByL_P_PrevAndNext(threadId, lastPostDate, priority,
 			orderByComparator);
@@ -2129,7 +2129,7 @@ public class MBThreadUtil {
 	public static MBThread findByG_C_L_First(long groupId, long categoryId,
 		java.util.Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_L_First(groupId, categoryId, lastPostDate,
 			orderByComparator);
@@ -2165,7 +2165,7 @@ public class MBThreadUtil {
 	public static MBThread findByG_C_L_Last(long groupId, long categoryId,
 		java.util.Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_L_Last(groupId, categoryId, lastPostDate,
 			orderByComparator);
@@ -2202,7 +2202,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByG_C_L_PrevAndNext(long threadId,
 		long groupId, long categoryId, java.util.Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_L_PrevAndNext(threadId, groupId, categoryId,
 			lastPostDate, orderByComparator);
@@ -2280,7 +2280,7 @@ public class MBThreadUtil {
 	public static MBThread[] filterFindByG_C_L_PrevAndNext(long threadId,
 		long groupId, long categoryId, java.util.Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_C_L_PrevAndNext(threadId, groupId,
 			categoryId, lastPostDate, orderByComparator);
@@ -2417,7 +2417,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_C_S_First(long groupId, long categoryId,
 		int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_S_First(groupId, categoryId, status,
 			orderByComparator);
@@ -2451,7 +2451,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_C_S_Last(long groupId, long categoryId,
 		int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_S_Last(groupId, categoryId, status,
 			orderByComparator);
@@ -2487,7 +2487,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByG_C_S_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_S_PrevAndNext(threadId, groupId, categoryId,
 			status, orderByComparator);
@@ -2563,7 +2563,7 @@ public class MBThreadUtil {
 	public static MBThread[] filterFindByG_C_S_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_C_S_PrevAndNext(threadId, groupId,
 			categoryId, status, orderByComparator);
@@ -2862,7 +2862,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_C_NotS_First(long groupId, long categoryId,
 		int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_NotS_First(groupId, categoryId, status,
 			orderByComparator);
@@ -2896,7 +2896,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_C_NotS_Last(long groupId, long categoryId,
 		int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_NotS_Last(groupId, categoryId, status,
 			orderByComparator);
@@ -2932,7 +2932,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByG_C_NotS_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_NotS_PrevAndNext(threadId, groupId, categoryId,
 			status, orderByComparator);
@@ -3008,7 +3008,7 @@ public class MBThreadUtil {
 	public static MBThread[] filterFindByG_C_NotS_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_C_NotS_PrevAndNext(threadId, groupId,
 			categoryId, status, orderByComparator);
@@ -3313,7 +3313,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_NotC_S_First(long groupId, long categoryId,
 		int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_S_First(groupId, categoryId, status,
 			orderByComparator);
@@ -3347,7 +3347,7 @@ public class MBThreadUtil {
 	*/
 	public static MBThread findByG_NotC_S_Last(long groupId, long categoryId,
 		int status, OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_S_Last(groupId, categoryId, status,
 			orderByComparator);
@@ -3383,7 +3383,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByG_NotC_S_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_S_PrevAndNext(threadId, groupId, categoryId,
 			status, orderByComparator);
@@ -3459,7 +3459,7 @@ public class MBThreadUtil {
 	public static MBThread[] filterFindByG_NotC_S_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_NotC_S_PrevAndNext(threadId, groupId,
 			categoryId, status, orderByComparator);
@@ -3596,7 +3596,7 @@ public class MBThreadUtil {
 	public static MBThread findByG_NotC_NotS_First(long groupId,
 		long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_NotS_First(groupId, categoryId, status,
 			orderByComparator);
@@ -3632,7 +3632,7 @@ public class MBThreadUtil {
 	public static MBThread findByG_NotC_NotS_Last(long groupId,
 		long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_NotS_Last(groupId, categoryId, status,
 			orderByComparator);
@@ -3669,7 +3669,7 @@ public class MBThreadUtil {
 	public static MBThread[] findByG_NotC_NotS_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_NotC_NotS_PrevAndNext(threadId, groupId,
 			categoryId, status, orderByComparator);
@@ -3747,7 +3747,7 @@ public class MBThreadUtil {
 	public static MBThread[] filterFindByG_NotC_NotS_PrevAndNext(
 		long threadId, long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .filterFindByG_NotC_NotS_PrevAndNext(threadId, groupId,
 			categoryId, status, orderByComparator);
@@ -3828,7 +3828,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a message boards thread with the primary key could not be found
 	*/
 	public static MBThread remove(long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().remove(threadId);
 	}
 
@@ -3844,7 +3844,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a message boards thread with the primary key could not be found
 	*/
 	public static MBThread findByPrimaryKey(long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchThreadException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence().findByPrimaryKey(threadId);
 	}
 

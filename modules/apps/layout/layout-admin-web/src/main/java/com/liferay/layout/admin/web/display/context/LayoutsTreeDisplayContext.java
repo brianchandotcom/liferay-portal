@@ -16,7 +16,7 @@ package com.liferay.layout.admin.web.display.context;
 
 import com.liferay.application.list.util.LatentGroupManagerUtil;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
-import com.liferay.portal.NoSuchLayoutSetBranchException;
+import com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;

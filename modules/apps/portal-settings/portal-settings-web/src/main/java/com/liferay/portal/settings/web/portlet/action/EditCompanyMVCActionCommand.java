@@ -14,21 +14,21 @@
 
 package com.liferay.portal.settings.web.portlet.action;
 
-import com.liferay.portal.AccountNameException;
-import com.liferay.portal.AddressCityException;
-import com.liferay.portal.AddressStreetException;
-import com.liferay.portal.AddressZipException;
-import com.liferay.portal.CompanyMxException;
-import com.liferay.portal.CompanyVirtualHostException;
-import com.liferay.portal.CompanyWebIdException;
-import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchCountryException;
-import com.liferay.portal.NoSuchListTypeException;
-import com.liferay.portal.NoSuchRegionException;
-import com.liferay.portal.PhoneNumberException;
-import com.liferay.portal.PhoneNumberExtensionException;
-import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.exception.AccountNameException;
+import com.liferay.portal.exception.AddressCityException;
+import com.liferay.portal.exception.AddressStreetException;
+import com.liferay.portal.exception.AddressZipException;
+import com.liferay.portal.exception.CompanyMxException;
+import com.liferay.portal.exception.CompanyVirtualHostException;
+import com.liferay.portal.exception.CompanyWebIdException;
+import com.liferay.portal.exception.EmailAddressException;
+import com.liferay.portal.exception.NoSuchCountryException;
+import com.liferay.portal.exception.NoSuchListTypeException;
+import com.liferay.portal.exception.NoSuchRegionException;
+import com.liferay.portal.exception.PhoneNumberException;
+import com.liferay.portal.exception.PhoneNumberExtensionException;
+import com.liferay.portal.exception.WebsiteURLException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;

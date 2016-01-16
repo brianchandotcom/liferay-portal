@@ -190,7 +190,7 @@ public class BookmarksEntryUtil {
 	* @param resourceBlockId the resource block ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByResourceBlockId_First(
 		long resourceBlockId,
@@ -222,7 +222,7 @@ public class BookmarksEntryUtil {
 	* @param resourceBlockId the resource block ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByResourceBlockId_Last(
 		long resourceBlockId,
@@ -255,7 +255,7 @@ public class BookmarksEntryUtil {
 	* @param resourceBlockId the resource block ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByResourceBlockId_PrevAndNext(
 		long entryId, long resourceBlockId,
@@ -359,7 +359,7 @@ public class BookmarksEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByUuid_First(java.lang.String uuid,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -385,7 +385,7 @@ public class BookmarksEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -412,7 +412,7 @@ public class BookmarksEntryUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByUuid_PrevAndNext(long entryId,
 		java.lang.String uuid,
@@ -442,12 +442,12 @@ public class BookmarksEntryUtil {
 	}
 
 	/**
-	* Returns the bookmarks entry where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.bookmarks.NoSuchEntryException} if it could not be found.
+	* Returns the bookmarks entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByUUID_G(java.lang.String uuid,
 		long groupId)
@@ -586,7 +586,7 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -616,7 +616,7 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -647,7 +647,7 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByUuid_C_PrevAndNext(long entryId,
 		java.lang.String uuid, long companyId,
@@ -754,7 +754,7 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByCompanyId_First(long companyId,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -782,7 +782,7 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByCompanyId_Last(long companyId,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -811,7 +811,7 @@ public class BookmarksEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByCompanyId_PrevAndNext(long entryId,
 		long companyId, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -920,7 +920,7 @@ public class BookmarksEntryUtil {
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_F_First(long groupId, long folderId,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -950,7 +950,7 @@ public class BookmarksEntryUtil {
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_F_Last(long groupId, long folderId,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -981,7 +981,7 @@ public class BookmarksEntryUtil {
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_F_PrevAndNext(long entryId,
 		long groupId, long folderId,
@@ -1052,7 +1052,7 @@ public class BookmarksEntryUtil {
 	* @param folderId the folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_F_PrevAndNext(long entryId,
 		long groupId, long folderId,
@@ -1327,7 +1327,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_S_First(long groupId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -1357,7 +1357,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_S_Last(long groupId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -1388,7 +1388,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_S_PrevAndNext(long entryId,
 		long groupId, int status,
@@ -1458,7 +1458,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_S_PrevAndNext(long entryId,
 		long groupId, int status,
@@ -1581,7 +1581,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_NotS_First(long groupId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -1611,7 +1611,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_NotS_Last(long groupId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -1642,7 +1642,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_NotS_PrevAndNext(long entryId,
 		long groupId, int status,
@@ -1713,7 +1713,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_NotS_PrevAndNext(
 		long entryId, long groupId, int status,
@@ -1837,7 +1837,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByC_NotS_First(long companyId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -1867,7 +1867,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByC_NotS_Last(long companyId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator)
@@ -1898,7 +1898,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByC_NotS_PrevAndNext(long entryId,
 		long companyId, int status,
@@ -2018,7 +2018,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_U_S_First(long groupId, long userId,
 		int status, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -2051,7 +2051,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_U_S_Last(long groupId, long userId,
 		int status, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -2084,7 +2084,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_U_S_PrevAndNext(long entryId,
 		long groupId, long userId, int status,
@@ -2160,7 +2160,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_U_S_PrevAndNext(long entryId,
 		long groupId, long userId, int status,
@@ -2295,7 +2295,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_U_NotS_First(long groupId,
 		long userId, int status,
@@ -2331,7 +2331,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_U_NotS_Last(long groupId, long userId,
 		int status, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -2367,7 +2367,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_U_NotS_PrevAndNext(long entryId,
 		long groupId, long userId, int status,
@@ -2443,7 +2443,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_U_NotS_PrevAndNext(
 		long entryId, long groupId, long userId, int status,
@@ -2579,7 +2579,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_F_S_First(long groupId, long folderId,
 		int status, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -2614,7 +2614,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_F_S_Last(long groupId, long folderId,
 		int status, OrderByComparator<BookmarksEntry> orderByComparator)
@@ -2649,7 +2649,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_F_S_PrevAndNext(long entryId,
 		long groupId, long folderId, int status,
@@ -2725,7 +2725,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_F_S_PrevAndNext(long entryId,
 		long groupId, long folderId, int status,
@@ -3026,7 +3026,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_F_NotS_First(long groupId,
 		long folderId, int status,
@@ -3062,7 +3062,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_F_NotS_Last(long groupId,
 		long folderId, int status,
@@ -3099,7 +3099,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_F_NotS_PrevAndNext(long entryId,
 		long groupId, long folderId, int status,
@@ -3175,7 +3175,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_F_NotS_PrevAndNext(
 		long entryId, long groupId, long folderId, int status,
@@ -3482,7 +3482,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_U_F_S_First(long groupId, long userId,
 		long folderId, int status,
@@ -3520,7 +3520,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	* @throws NoSuchEntryException if a matching bookmarks entry could not be found
 	*/
 	public static BookmarksEntry findByG_U_F_S_Last(long groupId, long userId,
 		long folderId, int status,
@@ -3559,7 +3559,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] findByG_U_F_S_PrevAndNext(long entryId,
 		long groupId, long userId, long folderId, int status,
@@ -3641,7 +3641,7 @@ public class BookmarksEntryUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry[] filterFindByG_U_F_S_PrevAndNext(
 		long entryId, long groupId, long userId, long folderId, int status,
@@ -3907,7 +3907,7 @@ public class BookmarksEntryUtil {
 	*
 	* @param entryId the primary key of the bookmarks entry
 	* @return the bookmarks entry that was removed
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry remove(long entryId)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {
@@ -3919,11 +3919,11 @@ public class BookmarksEntryUtil {
 	}
 
 	/**
-	* Returns the bookmarks entry with the primary key or throws a {@link com.liferay.bookmarks.NoSuchEntryException} if it could not be found.
+	* Returns the bookmarks entry with the primary key or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param entryId the primary key of the bookmarks entry
 	* @return the bookmarks entry
-	* @throws com.liferay.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	* @throws NoSuchEntryException if a bookmarks entry with the primary key could not be found
 	*/
 	public static BookmarksEntry findByPrimaryKey(long entryId)
 		throws com.liferay.bookmarks.exception.NoSuchEntryException {

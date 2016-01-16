@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.messageboards.NoSuchStatsUserException;
+import com.liferay.portlet.messageboards.exception.NoSuchStatsUserException;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBStatsUserPersistence;

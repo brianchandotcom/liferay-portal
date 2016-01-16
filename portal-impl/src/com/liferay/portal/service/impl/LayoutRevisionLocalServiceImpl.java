@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchLayoutRevisionException;
-import com.liferay.portal.NoSuchPortletPreferencesException;
+import com.liferay.portal.exception.NoSuchLayoutRevisionException;
+import com.liferay.portal.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;

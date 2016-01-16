@@ -33,7 +33,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.exception.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashEntryConstants;
 import com.liferay.portlet.trash.util.TrashUtil;

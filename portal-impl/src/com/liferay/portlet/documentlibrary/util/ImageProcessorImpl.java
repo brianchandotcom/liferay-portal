@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;

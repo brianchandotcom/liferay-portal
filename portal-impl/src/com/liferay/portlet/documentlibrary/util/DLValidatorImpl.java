@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.FileExtensionException;
-import com.liferay.portlet.documentlibrary.FileNameException;
-import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.FolderNameException;
-import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
-import com.liferay.portlet.documentlibrary.SourceFileNameException;
+import com.liferay.portlet.documentlibrary.exception.FileExtensionException;
+import com.liferay.portlet.documentlibrary.exception.FileNameException;
+import com.liferay.portlet.documentlibrary.exception.FileSizeException;
+import com.liferay.portlet.documentlibrary.exception.FolderNameException;
+import com.liferay.portlet.documentlibrary.exception.InvalidFileVersionException;
+import com.liferay.portlet.documentlibrary.exception.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
 import java.io.File;

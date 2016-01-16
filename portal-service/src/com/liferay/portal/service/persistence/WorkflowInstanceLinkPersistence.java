@@ -124,7 +124,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	public WorkflowInstanceLink findByG_C_C_C_First(long groupId,
 		long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Returns the first workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -154,7 +154,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	public WorkflowInstanceLink findByG_C_C_C_Last(long groupId,
 		long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -186,7 +186,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 		long workflowInstanceLinkId, long groupId, long companyId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Removes all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -242,7 +242,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
 	*/
 	public WorkflowInstanceLink remove(long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException;
 
 	public WorkflowInstanceLink updateImpl(
 		WorkflowInstanceLink workflowInstanceLink);
@@ -255,7 +255,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
 	*/
 	public WorkflowInstanceLink findByPrimaryKey(long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.

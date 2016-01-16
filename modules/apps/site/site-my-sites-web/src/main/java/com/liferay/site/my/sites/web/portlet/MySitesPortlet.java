@@ -14,7 +14,7 @@
 
 package com.liferay.site.my.sites.web.portlet;
 
-import com.liferay.portal.MembershipRequestCommentsException;
+import com.liferay.portal.exception.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;

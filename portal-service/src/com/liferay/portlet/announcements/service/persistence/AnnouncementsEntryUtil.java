@@ -189,7 +189,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByUuid_First(java.lang.String uuid,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -215,7 +215,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -243,7 +243,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] findByUuid_PrevAndNext(long entryId,
 		java.lang.String uuid,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
 	}
@@ -308,7 +308,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] filterFindByUuid_PrevAndNext(
 		long entryId, java.lang.String uuid,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByUuid_PrevAndNext(entryId, uuid,
 			orderByComparator);
@@ -429,7 +429,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -460,7 +460,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -492,7 +492,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] findByUuid_C_PrevAndNext(long entryId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(entryId, uuid, companyId,
 			orderByComparator);
@@ -563,7 +563,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(
 		long entryId, java.lang.String uuid, long companyId,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByUuid_C_PrevAndNext(entryId, uuid, companyId,
 			orderByComparator);
@@ -679,7 +679,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByUserId_First(long userId,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -705,7 +705,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByUserId_Last(long userId,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -732,7 +732,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry[] findByUserId_PrevAndNext(long entryId,
 		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(entryId, userId, orderByComparator);
 	}
@@ -796,7 +796,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] filterFindByUserId_PrevAndNext(
 		long entryId, long userId,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByUserId_PrevAndNext(entryId, userId,
 			orderByComparator);
@@ -918,7 +918,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByC_C_First(long classNameId,
 		long classPK, OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -948,7 +948,7 @@ public class AnnouncementsEntryUtil {
 	*/
 	public static AnnouncementsEntry findByC_C_Last(long classNameId,
 		long classPK, OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -980,7 +980,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] findByC_C_PrevAndNext(long entryId,
 		long classNameId, long classPK,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(entryId, classNameId, classPK,
 			orderByComparator);
@@ -1051,7 +1051,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] filterFindByC_C_PrevAndNext(
 		long entryId, long classNameId, long classPK,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByC_C_PrevAndNext(entryId, classNameId, classPK,
 			orderByComparator);
@@ -1183,7 +1183,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry findByC_C_A_First(long classNameId,
 		long classPK, boolean alert,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_A_First(classNameId, classPK, alert,
 			orderByComparator);
@@ -1219,7 +1219,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry findByC_C_A_Last(long classNameId,
 		long classPK, boolean alert,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_A_Last(classNameId, classPK, alert,
 			orderByComparator);
@@ -1256,7 +1256,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] findByC_C_A_PrevAndNext(long entryId,
 		long classNameId, long classPK, boolean alert,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_A_PrevAndNext(entryId, classNameId, classPK,
 			alert, orderByComparator);
@@ -1332,7 +1332,7 @@ public class AnnouncementsEntryUtil {
 	public static AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(
 		long entryId, long classNameId, long classPK, boolean alert,
 		OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByC_C_A_PrevAndNext(entryId, classNameId,
 			classPK, alert, orderByComparator);
@@ -1412,7 +1412,7 @@ public class AnnouncementsEntryUtil {
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public static AnnouncementsEntry remove(long entryId)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence().remove(entryId);
 	}
 
@@ -1429,7 +1429,7 @@ public class AnnouncementsEntryUtil {
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public static AnnouncementsEntry findByPrimaryKey(long entryId)
-		throws com.liferay.portlet.announcements.NoSuchEntryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(entryId);
 	}
 

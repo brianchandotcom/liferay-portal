@@ -37,7 +37,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.expando.NoSuchRowException;
+import com.liferay.portlet.expando.exception.NoSuchRowException;
 import com.liferay.portlet.expando.model.ExpandoRow;
 import com.liferay.portlet.expando.model.impl.ExpandoRowImpl;
 import com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl;
@@ -1650,7 +1650,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	}
 
 	/**
-	 * Returns the expando row with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the expando row with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the expando row
 	 * @return the expando row

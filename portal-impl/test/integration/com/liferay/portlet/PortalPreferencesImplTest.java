@@ -14,7 +14,7 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.NoSuchPreferencesException;
+import com.liferay.portal.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;

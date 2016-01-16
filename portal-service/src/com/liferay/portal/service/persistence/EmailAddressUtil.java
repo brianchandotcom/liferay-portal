@@ -185,7 +185,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByUuid_First(java.lang.String uuid,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -211,7 +211,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,7 +238,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress[] findByUuid_PrevAndNext(long emailAddressId,
 		java.lang.String uuid, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(emailAddressId, uuid,
 			orderByComparator);
@@ -349,7 +349,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -379,7 +379,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -411,7 +411,7 @@ public class EmailAddressUtil {
 	public static EmailAddress[] findByUuid_C_PrevAndNext(long emailAddressId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(emailAddressId, uuid, companyId,
 			orderByComparator);
@@ -516,7 +516,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByCompanyId_First(long companyId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -544,7 +544,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByCompanyId_Last(long companyId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -574,7 +574,7 @@ public class EmailAddressUtil {
 	public static EmailAddress[] findByCompanyId_PrevAndNext(
 		long emailAddressId, long companyId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(emailAddressId, companyId,
 			orderByComparator);
@@ -677,7 +677,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByUserId_First(long userId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -703,7 +703,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByUserId_Last(long userId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -730,7 +730,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress[] findByUserId_PrevAndNext(long emailAddressId,
 		long userId, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(emailAddressId, userId,
 			orderByComparator);
@@ -841,7 +841,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByC_C_First(long companyId,
 		long classNameId, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_First(companyId, classNameId, orderByComparator);
 	}
@@ -871,7 +871,7 @@ public class EmailAddressUtil {
 	*/
 	public static EmailAddress findByC_C_Last(long companyId, long classNameId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_Last(companyId, classNameId, orderByComparator);
 	}
@@ -903,7 +903,7 @@ public class EmailAddressUtil {
 	public static EmailAddress[] findByC_C_PrevAndNext(long emailAddressId,
 		long companyId, long classNameId,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(emailAddressId, companyId,
 			classNameId, orderByComparator);
@@ -1024,7 +1024,7 @@ public class EmailAddressUtil {
 	public static EmailAddress findByC_C_C_First(long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_C_First(companyId, classNameId, classPK,
 			orderByComparator);
@@ -1060,7 +1060,7 @@ public class EmailAddressUtil {
 	public static EmailAddress findByC_C_C_Last(long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_C_Last(companyId, classNameId, classPK,
 			orderByComparator);
@@ -1097,7 +1097,7 @@ public class EmailAddressUtil {
 	public static EmailAddress[] findByC_C_C_PrevAndNext(long emailAddressId,
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_C_PrevAndNext(emailAddressId, companyId,
 			classNameId, classPK, orderByComparator);
@@ -1229,7 +1229,7 @@ public class EmailAddressUtil {
 	public static EmailAddress findByC_C_C_P_First(long companyId,
 		long classNameId, long classPK, boolean primary,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_C_P_First(companyId, classNameId, classPK,
 			primary, orderByComparator);
@@ -1267,7 +1267,7 @@ public class EmailAddressUtil {
 	public static EmailAddress findByC_C_C_P_Last(long companyId,
 		long classNameId, long classPK, boolean primary,
 		OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_C_P_Last(companyId, classNameId, classPK,
 			primary, orderByComparator);
@@ -1306,7 +1306,7 @@ public class EmailAddressUtil {
 	public static EmailAddress[] findByC_C_C_P_PrevAndNext(
 		long emailAddressId, long companyId, long classNameId, long classPK,
 		boolean primary, OrderByComparator<EmailAddress> orderByComparator)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence()
 				   .findByC_C_C_P_PrevAndNext(emailAddressId, companyId,
 			classNameId, classPK, primary, orderByComparator);
@@ -1377,7 +1377,7 @@ public class EmailAddressUtil {
 	* @throws NoSuchEmailAddressException if a email address with the primary key could not be found
 	*/
 	public static EmailAddress remove(long emailAddressId)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence().remove(emailAddressId);
 	}
 
@@ -1393,7 +1393,7 @@ public class EmailAddressUtil {
 	* @throws NoSuchEmailAddressException if a email address with the primary key could not be found
 	*/
 	public static EmailAddress findByPrimaryKey(long emailAddressId)
-		throws com.liferay.portal.NoSuchEmailAddressException {
+		throws com.liferay.portal.exception.NoSuchEmailAddressException {
 		return getPersistence().findByPrimaryKey(emailAddressId);
 	}
 

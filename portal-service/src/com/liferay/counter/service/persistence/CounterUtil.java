@@ -143,7 +143,7 @@ public class CounterUtil {
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
 	public static Counter remove(java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException {
+		throws com.liferay.counter.exception.NoSuchCounterException {
 		return getPersistence().remove(name);
 	}
 
@@ -159,7 +159,7 @@ public class CounterUtil {
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
 	public static Counter findByPrimaryKey(java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException {
+		throws com.liferay.counter.exception.NoSuchCounterException {
 		return getPersistence().findByPrimaryKey(name);
 	}
 

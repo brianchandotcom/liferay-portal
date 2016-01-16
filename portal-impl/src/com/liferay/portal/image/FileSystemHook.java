@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
 
 import java.io.File;
 import java.io.FileInputStream;

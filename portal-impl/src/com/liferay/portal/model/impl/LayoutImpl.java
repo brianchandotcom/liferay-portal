@@ -14,8 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.LayoutFriendlyURLException;
-import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.exception.LayoutFriendlyURLException;
+import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;

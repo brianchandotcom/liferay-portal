@@ -105,7 +105,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	* @throws NoSuchArticleImageException if a matching journal article image could not be found
 	*/
 	public JournalArticleImage findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleImage> orderByComparator)
@@ -127,7 +127,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	* @throws NoSuchArticleImageException if a matching journal article image could not be found
 	*/
 	public JournalArticleImage findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleImage> orderByComparator)
@@ -150,7 +150,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	* @throws NoSuchArticleImageException if a journal article image with the primary key could not be found
 	*/
 	public JournalArticleImage[] findByGroupId_PrevAndNext(
 		long articleImageId, long groupId,
@@ -238,7 +238,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param tempImage the temp image
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	* @throws NoSuchArticleImageException if a matching journal article image could not be found
 	*/
 	public JournalArticleImage findByTempImage_First(boolean tempImage,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleImage> orderByComparator)
@@ -260,7 +260,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param tempImage the temp image
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	* @throws NoSuchArticleImageException if a matching journal article image could not be found
 	*/
 	public JournalArticleImage findByTempImage_Last(boolean tempImage,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticleImage> orderByComparator)
@@ -283,7 +283,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param tempImage the temp image
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	* @throws NoSuchArticleImageException if a journal article image with the primary key could not be found
 	*/
 	public JournalArticleImage[] findByTempImage_PrevAndNext(
 		long articleImageId, boolean tempImage,
@@ -381,7 +381,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	* @throws NoSuchArticleImageException if a matching journal article image could not be found
 	*/
 	public JournalArticleImage findByG_A_V_First(long groupId,
 		java.lang.String articleId, double version,
@@ -409,7 +409,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	* @throws NoSuchArticleImageException if a matching journal article image could not be found
 	*/
 	public JournalArticleImage findByG_A_V_Last(long groupId,
 		java.lang.String articleId, double version,
@@ -438,7 +438,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	* @throws NoSuchArticleImageException if a journal article image with the primary key could not be found
 	*/
 	public JournalArticleImage[] findByG_A_V_PrevAndNext(long articleImageId,
 		long groupId, java.lang.String articleId, double version,
@@ -467,7 +467,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 		double version);
 
 	/**
-	* Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or throws a {@link com.liferay.journal.NoSuchArticleImageException} if it could not be found.
+	* Returns the journal article image where groupId = &#63; and articleId = &#63; and version = &#63; and elInstanceId = &#63; and elName = &#63; and languageId = &#63; or throws a {@link NoSuchArticleImageException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param articleId the article ID
@@ -476,7 +476,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	* @param elName the el name
 	* @param languageId the language ID
 	* @return the matching journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a matching journal article image could not be found
+	* @throws NoSuchArticleImageException if a matching journal article image could not be found
 	*/
 	public JournalArticleImage findByG_A_V_E_E_L(long groupId,
 		java.lang.String articleId, double version,
@@ -577,7 +577,7 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 	*
 	* @param articleImageId the primary key of the journal article image
 	* @return the journal article image that was removed
-	* @throws com.liferay.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	* @throws NoSuchArticleImageException if a journal article image with the primary key could not be found
 	*/
 	public JournalArticleImage remove(long articleImageId)
 		throws com.liferay.journal.exception.NoSuchArticleImageException;
@@ -586,11 +586,11 @@ public interface JournalArticleImagePersistence extends BasePersistence<JournalA
 		JournalArticleImage journalArticleImage);
 
 	/**
-	* Returns the journal article image with the primary key or throws a {@link com.liferay.journal.NoSuchArticleImageException} if it could not be found.
+	* Returns the journal article image with the primary key or throws a {@link NoSuchArticleImageException} if it could not be found.
 	*
 	* @param articleImageId the primary key of the journal article image
 	* @return the journal article image
-	* @throws com.liferay.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
+	* @throws NoSuchArticleImageException if a journal article image with the primary key could not be found
 	*/
 	public JournalArticleImage findByPrimaryKey(long articleImageId)
 		throws com.liferay.journal.exception.NoSuchArticleImageException;

@@ -107,7 +107,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public PortletPreferences findByPlid_First(long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the first portlet preferences in the ordered set where plid = &#63;.
@@ -129,7 +129,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public PortletPreferences findByPlid_Last(long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the last portlet preferences in the ordered set where plid = &#63;.
@@ -153,7 +153,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences[] findByPlid_PrevAndNext(
 		long portletPreferencesId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Removes all the portlet preferenceses where plid = &#63; from the database.
@@ -241,7 +241,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByPortletId_First(
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the first portlet preferences in the ordered set where portletId = &#63;.
@@ -264,7 +264,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public PortletPreferences findByPortletId_Last(java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the last portlet preferences in the ordered set where portletId = &#63;.
@@ -289,7 +289,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences[] findByPortletId_PrevAndNext(
 		long portletPreferencesId, java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Removes all the portlet preferenceses where portletId = &#63; from the database.
@@ -382,7 +382,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_P_First(int ownerType,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
@@ -408,7 +408,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_P_Last(int ownerType,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the last portlet preferences in the ordered set where ownerType = &#63; and portletId = &#63;.
@@ -435,7 +435,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences[] findByO_P_PrevAndNext(
 		long portletPreferencesId, int ownerType, java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Removes all the portlet preferenceses where ownerType = &#63; and portletId = &#63; from the database.
@@ -530,7 +530,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByP_P_First(long plid,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the first portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
@@ -556,7 +556,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByP_P_Last(long plid,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the last portlet preferences in the ordered set where plid = &#63; and portletId = &#63;.
@@ -583,7 +583,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences[] findByP_P_PrevAndNext(
 		long portletPreferencesId, long plid, java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Removes all the portlet preferenceses where plid = &#63; and portletId = &#63; from the database.
@@ -683,7 +683,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_O_P_First(long ownerId, int ownerType,
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
@@ -711,7 +711,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_O_P_Last(long ownerId, int ownerType,
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and plid = &#63;.
@@ -740,7 +740,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences[] findByO_O_P_PrevAndNext(
 		long portletPreferencesId, long ownerId, int ownerType, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; from the database.
@@ -842,7 +842,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_O_PI_First(long ownerId, int ownerType,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -870,7 +870,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_O_PI_Last(long ownerId, int ownerType,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the last portlet preferences in the ordered set where ownerId = &#63; and ownerType = &#63; and portletId = &#63;.
@@ -900,7 +900,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 		long portletPreferencesId, long ownerId, int ownerType,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Removes all the portlet preferenceses where ownerId = &#63; and ownerType = &#63; and portletId = &#63; from the database.
@@ -1004,7 +1004,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_P_P_First(int ownerType, long plid,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the first portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -1032,7 +1032,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	public PortletPreferences findByO_P_P_Last(int ownerType, long plid,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the last portlet preferences in the ordered set where ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -1062,7 +1062,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 		long portletPreferencesId, int ownerType, long plid,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletPreferences> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Removes all the portlet preferenceses where ownerType = &#63; and plid = &#63; and portletId = &#63; from the database.
@@ -1096,7 +1096,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public PortletPreferences findByO_O_P_P(long ownerId, int ownerType,
 		long plid, java.lang.String portletId)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the portlet preferences where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1134,7 +1134,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	*/
 	public PortletPreferences removeByO_O_P_P(long ownerId, int ownerType,
 		long plid, java.lang.String portletId)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the number of portlet preferenceses where ownerId = &#63; and ownerType = &#63; and plid = &#63; and portletId = &#63;.
@@ -1179,7 +1179,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	*/
 	public PortletPreferences remove(long portletPreferencesId)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	public PortletPreferences updateImpl(PortletPreferences portletPreferences);
 
@@ -1191,7 +1191,7 @@ public interface PortletPreferencesPersistence extends BasePersistence<PortletPr
 	* @throws NoSuchPortletPreferencesException if a portlet preferences with the primary key could not be found
 	*/
 	public PortletPreferences findByPrimaryKey(long portletPreferencesId)
-		throws com.liferay.portal.NoSuchPortletPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPortletPreferencesException;
 
 	/**
 	* Returns the portlet preferences with the primary key or returns <code>null</code> if it could not be found.

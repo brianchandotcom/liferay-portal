@@ -14,16 +14,16 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.DuplicateGroupException;
-import com.liferay.portal.GroupFriendlyURLException;
-import com.liferay.portal.GroupInheritContentException;
-import com.liferay.portal.GroupKeyException;
-import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchLayoutSetException;
-import com.liferay.portal.PendingBackgroundTaskException;
-import com.liferay.portal.RequiredGroupException;
+import com.liferay.portal.exception.DuplicateGroupException;
+import com.liferay.portal.exception.GroupFriendlyURLException;
+import com.liferay.portal.exception.GroupInheritContentException;
+import com.liferay.portal.exception.GroupKeyException;
+import com.liferay.portal.exception.GroupParentException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchLayoutSetException;
+import com.liferay.portal.exception.PendingBackgroundTaskException;
+import com.liferay.portal.exception.RequiredGroupException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;

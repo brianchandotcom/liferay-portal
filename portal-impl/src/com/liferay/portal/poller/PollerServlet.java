@@ -14,7 +14,7 @@
 
 package com.liferay.portal.poller;
 
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

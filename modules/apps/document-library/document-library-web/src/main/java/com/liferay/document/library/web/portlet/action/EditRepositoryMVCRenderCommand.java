@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.NoSuchRepositoryException;
+import com.liferay.portal.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;

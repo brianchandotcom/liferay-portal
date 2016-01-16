@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.RoleNameException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.RoleNameException;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;

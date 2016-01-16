@@ -189,7 +189,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByPortletId_First(
 		java.lang.String portletId,
@@ -219,7 +219,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByPortletId_Last(
 		java.lang.String portletId,
@@ -250,7 +250,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByPortletId_PrevAndNext(
 		long contentSearchId, java.lang.String portletId,
@@ -357,7 +357,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByArticleId_First(
 		java.lang.String articleId,
@@ -387,7 +387,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByArticleId_Last(
 		java.lang.String articleId,
@@ -418,7 +418,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByArticleId_PrevAndNext(
 		long contentSearchId, java.lang.String articleId,
@@ -531,7 +531,7 @@ public class JournalContentSearchUtil {
 	* @param privateLayout the private layout
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_First(long groupId,
 		boolean privateLayout,
@@ -563,7 +563,7 @@ public class JournalContentSearchUtil {
 	* @param privateLayout the private layout
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_Last(long groupId,
 		boolean privateLayout,
@@ -596,7 +596,7 @@ public class JournalContentSearchUtil {
 	* @param privateLayout the private layout
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByG_P_PrevAndNext(
 		long contentSearchId, long groupId, boolean privateLayout,
@@ -710,7 +710,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_A_First(long groupId,
 		java.lang.String articleId,
@@ -742,7 +742,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_A_Last(long groupId,
 		java.lang.String articleId,
@@ -775,7 +775,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByG_A_PrevAndNext(
 		long contentSearchId, long groupId, java.lang.String articleId,
@@ -896,7 +896,7 @@ public class JournalContentSearchUtil {
 	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_First(long groupId,
 		boolean privateLayout, long layoutId,
@@ -932,7 +932,7 @@ public class JournalContentSearchUtil {
 	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_Last(long groupId,
 		boolean privateLayout, long layoutId,
@@ -969,7 +969,7 @@ public class JournalContentSearchUtil {
 	* @param layoutId the layout ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByG_P_L_PrevAndNext(
 		long contentSearchId, long groupId, boolean privateLayout,
@@ -1094,7 +1094,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_A_First(long groupId,
 		boolean privateLayout, java.lang.String articleId,
@@ -1130,7 +1130,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_A_Last(long groupId,
 		boolean privateLayout, java.lang.String articleId,
@@ -1167,7 +1167,7 @@ public class JournalContentSearchUtil {
 	* @param articleId the article ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByG_P_A_PrevAndNext(
 		long contentSearchId, long groupId, boolean privateLayout,
@@ -1303,7 +1303,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_P_First(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String portletId,
@@ -1341,7 +1341,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_P_Last(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String portletId,
@@ -1380,7 +1380,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch[] findByG_P_L_P_PrevAndNext(
 		long contentSearchId, long groupId, boolean privateLayout,
@@ -1422,7 +1422,7 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
-	* Returns the journal content search where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or throws a {@link com.liferay.journal.NoSuchContentSearchException} if it could not be found.
+	* Returns the journal content search where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; and portletId = &#63; and articleId = &#63; or throws a {@link NoSuchContentSearchException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -1430,7 +1430,7 @@ public class JournalContentSearchUtil {
 	* @param portletId the portlet ID
 	* @param articleId the article ID
 	* @return the matching journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	* @throws NoSuchContentSearchException if a matching journal content search could not be found
 	*/
 	public static JournalContentSearch findByG_P_L_P_A(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String portletId,
@@ -1548,7 +1548,7 @@ public class JournalContentSearchUtil {
 	*
 	* @param contentSearchId the primary key of the journal content search
 	* @return the journal content search that was removed
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch remove(long contentSearchId)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {
@@ -1561,11 +1561,11 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
-	* Returns the journal content search with the primary key or throws a {@link com.liferay.journal.NoSuchContentSearchException} if it could not be found.
+	* Returns the journal content search with the primary key or throws a {@link NoSuchContentSearchException} if it could not be found.
 	*
 	* @param contentSearchId the primary key of the journal content search
 	* @return the journal content search
-	* @throws com.liferay.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	* @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
 	*/
 	public static JournalContentSearch findByPrimaryKey(long contentSearchId)
 		throws com.liferay.journal.exception.NoSuchContentSearchException {

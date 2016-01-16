@@ -24,7 +24,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
+import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;

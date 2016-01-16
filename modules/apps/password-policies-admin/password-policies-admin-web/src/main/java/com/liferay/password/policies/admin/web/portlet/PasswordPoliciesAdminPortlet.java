@@ -15,10 +15,10 @@
 package com.liferay.password.policies.admin.web.portlet;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
-import com.liferay.portal.DuplicatePasswordPolicyException;
-import com.liferay.portal.NoSuchPasswordPolicyException;
-import com.liferay.portal.PasswordPolicyNameException;
-import com.liferay.portal.RequiredPasswordPolicyException;
+import com.liferay.portal.exception.DuplicatePasswordPolicyException;
+import com.liferay.portal.exception.NoSuchPasswordPolicyException;
+import com.liferay.portal.exception.PasswordPolicyNameException;
+import com.liferay.portal.exception.RequiredPasswordPolicyException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;

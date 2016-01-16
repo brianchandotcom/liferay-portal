@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;

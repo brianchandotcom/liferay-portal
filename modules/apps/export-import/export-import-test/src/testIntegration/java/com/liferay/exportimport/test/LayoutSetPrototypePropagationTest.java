@@ -20,7 +20,7 @@ import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.LayoutParentLayoutIdException;
+import com.liferay.portal.exception.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;

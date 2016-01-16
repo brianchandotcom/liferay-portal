@@ -279,7 +279,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	 * @throws NoSuchTaskException if a matching kaleo task could not be found
 	 */
 	@Override
 	public KaleoTask findByCompanyId_First(long companyId,
@@ -330,7 +330,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	 * @throws NoSuchTaskException if a matching kaleo task could not be found
 	 */
 	@Override
 	public KaleoTask findByCompanyId_Last(long companyId,
@@ -387,7 +387,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	 */
 	@Override
 	public KaleoTask[] findByCompanyId_PrevAndNext(long kaleoTaskId,
@@ -788,7 +788,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	 * @throws NoSuchTaskException if a matching kaleo task could not be found
 	 */
 	@Override
 	public KaleoTask findByKaleoDefinitionId_First(long kaleoDefinitionId,
@@ -839,7 +839,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	 * @throws NoSuchTaskException if a matching kaleo task could not be found
 	 */
 	@Override
 	public KaleoTask findByKaleoDefinitionId_Last(long kaleoDefinitionId,
@@ -897,7 +897,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	 */
 	@Override
 	public KaleoTask[] findByKaleoDefinitionId_PrevAndNext(long kaleoTaskId,
@@ -1112,11 +1112,11 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns the kaleo task where kaleoNodeId = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTaskException} if it could not be found.
+	 * Returns the kaleo task where kaleoNodeId = &#63; or throws a {@link NoSuchTaskException} if it could not be found.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
 	 * @return the matching kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	 * @throws NoSuchTaskException if a matching kaleo task could not be found
 	 */
 	@Override
 	public KaleoTask findByKaleoNodeId(long kaleoNodeId)
@@ -1460,7 +1460,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 *
 	 * @param kaleoTaskId the primary key of the kaleo task
 	 * @return the kaleo task that was removed
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	 */
 	@Override
 	public KaleoTask remove(long kaleoTaskId) throws NoSuchTaskException {
@@ -1472,7 +1472,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	 *
 	 * @param primaryKey the primary key of the kaleo task
 	 * @return the kaleo task that was removed
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	 */
 	@Override
 	public KaleoTask remove(Serializable primaryKey) throws NoSuchTaskException {
@@ -1670,11 +1670,11 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	}
 
 	/**
-	 * Returns the kaleo task with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the kaleo task with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the kaleo task
 	 * @return the kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	 */
 	@Override
 	public KaleoTask findByPrimaryKey(Serializable primaryKey)
@@ -1694,11 +1694,11 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 	}
 
 	/**
-	 * Returns the kaleo task with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTaskException} if it could not be found.
+	 * Returns the kaleo task with the primary key or throws a {@link NoSuchTaskException} if it could not be found.
 	 *
 	 * @param kaleoTaskId the primary key of the kaleo task
 	 * @return the kaleo task
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	 */
 	@Override
 	public KaleoTask findByPrimaryKey(long kaleoTaskId)

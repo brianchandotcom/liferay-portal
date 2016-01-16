@@ -109,7 +109,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public AnnouncementsEntry findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63;.
@@ -131,7 +131,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public AnnouncementsEntry findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63;.
@@ -155,7 +155,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] findByUuid_PrevAndNext(long entryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where uuid = &#63;.
@@ -210,7 +210,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(long entryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where uuid = &#63; from the database.
@@ -311,7 +311,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -337,7 +337,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -364,7 +364,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] findByUuid_C_PrevAndNext(long entryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -423,7 +423,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(long entryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where uuid = &#63; and companyId = &#63; from the database.
@@ -520,7 +520,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public AnnouncementsEntry findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where userId = &#63;.
@@ -542,7 +542,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public AnnouncementsEntry findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where userId = &#63;.
@@ -566,7 +566,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] findByUserId_PrevAndNext(long entryId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where userId = &#63;.
@@ -620,7 +620,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] filterFindByUserId_PrevAndNext(long entryId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where userId = &#63; from the database.
@@ -720,7 +720,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public AnnouncementsEntry findByC_C_First(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -744,7 +744,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*/
 	public AnnouncementsEntry findByC_C_Last(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -770,7 +770,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] findByC_C_PrevAndNext(long entryId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
@@ -829,7 +829,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] filterFindByC_C_PrevAndNext(long entryId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where classNameId = &#63; and classPK = &#63; from the database.
@@ -938,7 +938,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry findByC_C_A_First(long classNameId, long classPK,
 		boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -966,7 +966,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry findByC_C_A_Last(long classNameId, long classPK,
 		boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -995,7 +995,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] findByC_C_A_PrevAndNext(long entryId,
 		long classNameId, long classPK, boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1058,7 +1058,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	public AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(long entryId,
 		long classNameId, long classPK, boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63; from the database.
@@ -1120,7 +1120,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public AnnouncementsEntry remove(long entryId)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	public AnnouncementsEntry updateImpl(AnnouncementsEntry announcementsEntry);
 
@@ -1132,7 +1132,7 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	*/
 	public AnnouncementsEntry findByPrimaryKey(long entryId)
-		throws com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 	/**
 	* Returns the announcements entry with the primary key or returns <code>null</code> if it could not be found.

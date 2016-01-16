@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Projection;

@@ -50,7 +50,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
-import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.exception.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashEntryConstants;
 

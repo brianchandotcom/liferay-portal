@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchPortletItemException;
-import com.liferay.portal.PortletItemNameException;
+import com.liferay.portal.exception.NoSuchPortletItemException;
+import com.liferay.portal.exception.PortletItemNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletItem;

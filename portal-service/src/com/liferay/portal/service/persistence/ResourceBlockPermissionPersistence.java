@@ -109,7 +109,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	public ResourceBlockPermission findByResourceBlockId_First(
 		long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
@@ -133,7 +133,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	public ResourceBlockPermission findByResourceBlockId_Last(
 		long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
@@ -158,7 +158,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	public ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
 		long resourceBlockPermissionId, long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Removes all the resource block permissions where resourceBlockId = &#63; from the database.
@@ -244,7 +244,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public ResourceBlockPermission findByRoleId_First(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Returns the first resource block permission in the ordered set where roleId = &#63;.
@@ -266,7 +266,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public ResourceBlockPermission findByRoleId_Last(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Returns the last resource block permission in the ordered set where roleId = &#63;.
@@ -290,7 +290,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	public ResourceBlockPermission[] findByRoleId_PrevAndNext(
 		long resourceBlockPermissionId, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Removes all the resource block permissions where roleId = &#63; from the database.
@@ -316,7 +316,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @throws NoSuchResourceBlockPermissionException if a matching resource block permission could not be found
 	*/
 	public ResourceBlockPermission findByR_R(long resourceBlockId, long roleId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Returns the resource block permission where resourceBlockId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -346,7 +346,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @return the resource block permission that was removed
 	*/
 	public ResourceBlockPermission removeByR_R(long resourceBlockId, long roleId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Returns the number of resource block permissions where resourceBlockId = &#63; and roleId = &#63;.
@@ -388,7 +388,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	* @throws NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	*/
 	public ResourceBlockPermission remove(long resourceBlockPermissionId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	public ResourceBlockPermission updateImpl(
 		ResourceBlockPermission resourceBlockPermission);
@@ -402,7 +402,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public ResourceBlockPermission findByPrimaryKey(
 		long resourceBlockPermissionId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException;
 
 	/**
 	* Returns the resource block permission with the primary key or returns <code>null</code> if it could not be found.

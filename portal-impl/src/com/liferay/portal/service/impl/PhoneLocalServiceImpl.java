@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.PhoneNumberException;
-import com.liferay.portal.PhoneNumberExtensionException;
+import com.liferay.portal.exception.PhoneNumberException;
+import com.liferay.portal.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;

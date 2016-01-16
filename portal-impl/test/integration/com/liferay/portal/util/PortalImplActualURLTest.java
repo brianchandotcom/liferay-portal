@@ -14,7 +14,7 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

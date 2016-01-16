@@ -116,7 +116,7 @@ public class VirtualHostUtil {
 	* @throws NoSuchVirtualHostException if a matching virtual host could not be found
 	*/
 	public static VirtualHost findByHostname(java.lang.String hostname)
-		throws com.liferay.portal.NoSuchVirtualHostException {
+		throws com.liferay.portal.exception.NoSuchVirtualHostException {
 		return getPersistence().findByHostname(hostname);
 	}
 
@@ -149,7 +149,7 @@ public class VirtualHostUtil {
 	* @return the virtual host that was removed
 	*/
 	public static VirtualHost removeByHostname(java.lang.String hostname)
-		throws com.liferay.portal.NoSuchVirtualHostException {
+		throws com.liferay.portal.exception.NoSuchVirtualHostException {
 		return getPersistence().removeByHostname(hostname);
 	}
 
@@ -172,7 +172,7 @@ public class VirtualHostUtil {
 	* @throws NoSuchVirtualHostException if a matching virtual host could not be found
 	*/
 	public static VirtualHost findByC_L(long companyId, long layoutSetId)
-		throws com.liferay.portal.NoSuchVirtualHostException {
+		throws com.liferay.portal.exception.NoSuchVirtualHostException {
 		return getPersistence().findByC_L(companyId, layoutSetId);
 	}
 
@@ -209,7 +209,7 @@ public class VirtualHostUtil {
 	* @return the virtual host that was removed
 	*/
 	public static VirtualHost removeByC_L(long companyId, long layoutSetId)
-		throws com.liferay.portal.NoSuchVirtualHostException {
+		throws com.liferay.portal.exception.NoSuchVirtualHostException {
 		return getPersistence().removeByC_L(companyId, layoutSetId);
 	}
 
@@ -260,7 +260,7 @@ public class VirtualHostUtil {
 	* @throws NoSuchVirtualHostException if a virtual host with the primary key could not be found
 	*/
 	public static VirtualHost remove(long virtualHostId)
-		throws com.liferay.portal.NoSuchVirtualHostException {
+		throws com.liferay.portal.exception.NoSuchVirtualHostException {
 		return getPersistence().remove(virtualHostId);
 	}
 
@@ -276,7 +276,7 @@ public class VirtualHostUtil {
 	* @throws NoSuchVirtualHostException if a virtual host with the primary key could not be found
 	*/
 	public static VirtualHost findByPrimaryKey(long virtualHostId)
-		throws com.liferay.portal.NoSuchVirtualHostException {
+		throws com.liferay.portal.exception.NoSuchVirtualHostException {
 		return getPersistence().findByPrimaryKey(virtualHostId);
 	}
 

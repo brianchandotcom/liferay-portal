@@ -30,8 +30,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
 page import="com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys" %><%@
-page import="com.liferay.portal.NoSuchLayoutSetPrototypeException" %><%@
-page import="com.liferay.portal.RequiredLayoutSetPrototypeException" %><%@
+page import="com.liferay.portal.exception.NoSuchLayoutSetPrototypeException" %><%@
+page import="com.liferay.portal.exception.RequiredLayoutSetPrototypeException" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

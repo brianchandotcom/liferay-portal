@@ -35,7 +35,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.portal.PortletPreferencesException;
+import com.liferay.portal.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;

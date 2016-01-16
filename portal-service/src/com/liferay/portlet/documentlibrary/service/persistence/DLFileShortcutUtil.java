@@ -187,7 +187,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -241,7 +241,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByUuid_PrevAndNext(long fileShortcutId,
 		java.lang.String uuid,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(fileShortcutId, uuid,
 			orderByComparator);
@@ -276,7 +276,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -314,7 +314,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut removeByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -415,7 +415,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -445,7 +445,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -477,7 +477,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByUuid_C_PrevAndNext(
 		long fileShortcutId, java.lang.String uuid, long companyId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(fileShortcutId, uuid, companyId,
 			orderByComparator);
@@ -583,7 +583,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByCompanyId_First(long companyId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -611,7 +611,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByCompanyId_Last(long companyId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -641,7 +641,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByCompanyId_PrevAndNext(
 		long fileShortcutId, long companyId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(fileShortcutId, companyId,
 			orderByComparator);
@@ -746,7 +746,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByToFileEntryId_First(long toFileEntryId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByToFileEntryId_First(toFileEntryId, orderByComparator);
 	}
@@ -774,7 +774,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByToFileEntryId_Last(long toFileEntryId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByToFileEntryId_Last(toFileEntryId, orderByComparator);
 	}
@@ -804,7 +804,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByToFileEntryId_PrevAndNext(
 		long fileShortcutId, long toFileEntryId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByToFileEntryId_PrevAndNext(fileShortcutId,
 			toFileEntryId, orderByComparator);
@@ -913,7 +913,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByG_F_First(long groupId, long folderId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_First(groupId, folderId, orderByComparator);
 	}
@@ -943,7 +943,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByG_F_Last(long groupId, long folderId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_Last(groupId, folderId, orderByComparator);
 	}
@@ -975,7 +975,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByG_F_PrevAndNext(long fileShortcutId,
 		long groupId, long folderId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_PrevAndNext(fileShortcutId, groupId, folderId,
 			orderByComparator);
@@ -1046,7 +1046,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] filterFindByG_F_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .filterFindByG_F_PrevAndNext(fileShortcutId, groupId,
 			folderId, orderByComparator);
@@ -1169,7 +1169,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByC_NotS_First(long companyId, int status,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -1199,7 +1199,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByC_NotS_Last(long companyId, int status,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -1231,7 +1231,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByC_NotS_PrevAndNext(
 		long fileShortcutId, long companyId, int status,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(fileShortcutId, companyId, status,
 			orderByComparator);
@@ -1351,7 +1351,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByG_F_A_First(long groupId, long folderId,
 		boolean active, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_A_First(groupId, folderId, active,
 			orderByComparator);
@@ -1386,7 +1386,7 @@ public class DLFileShortcutUtil {
 	*/
 	public static DLFileShortcut findByG_F_A_Last(long groupId, long folderId,
 		boolean active, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_A_Last(groupId, folderId, active,
 			orderByComparator);
@@ -1422,7 +1422,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByG_F_A_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_A_PrevAndNext(fileShortcutId, groupId, folderId,
 			active, orderByComparator);
@@ -1498,7 +1498,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] filterFindByG_F_A_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .filterFindByG_F_A_PrevAndNext(fileShortcutId, groupId,
 			folderId, active, orderByComparator);
@@ -1639,7 +1639,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut findByG_F_A_S_First(long groupId,
 		long folderId, boolean active, int status,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_A_S_First(groupId, folderId, active, status,
 			orderByComparator);
@@ -1677,7 +1677,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut findByG_F_A_S_Last(long groupId,
 		long folderId, boolean active, int status,
 		OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_A_S_Last(groupId, folderId, active, status,
 			orderByComparator);
@@ -1716,7 +1716,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] findByG_F_A_S_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
 		int status, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .findByG_F_A_S_PrevAndNext(fileShortcutId, groupId,
 			folderId, active, status, orderByComparator);
@@ -1798,7 +1798,7 @@ public class DLFileShortcutUtil {
 	public static DLFileShortcut[] filterFindByG_F_A_S_PrevAndNext(
 		long fileShortcutId, long groupId, long folderId, boolean active,
 		int status, OrderByComparator<DLFileShortcut> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence()
 				   .filterFindByG_F_A_S_PrevAndNext(fileShortcutId, groupId,
 			folderId, active, status, orderByComparator);
@@ -1882,7 +1882,7 @@ public class DLFileShortcutUtil {
 	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
 	public static DLFileShortcut remove(long fileShortcutId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence().remove(fileShortcutId);
 	}
 
@@ -1898,7 +1898,7 @@ public class DLFileShortcutUtil {
 	* @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
 	*/
 	public static DLFileShortcut findByPrimaryKey(long fileShortcutId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileShortcutException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException {
 		return getPersistence().findByPrimaryKey(fileShortcutId);
 	}
 

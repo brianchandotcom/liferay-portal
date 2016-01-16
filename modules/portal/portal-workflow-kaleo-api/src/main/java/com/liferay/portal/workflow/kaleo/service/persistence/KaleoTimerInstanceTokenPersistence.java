@@ -105,7 +105,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
+	* @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
 	*/
 	public KaleoTimerInstanceToken findByKaleoInstanceId_First(
 		long kaleoInstanceId,
@@ -129,7 +129,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
+	* @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
 	*/
 	public KaleoTimerInstanceToken findByKaleoInstanceId_Last(
 		long kaleoInstanceId,
@@ -154,7 +154,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
+	* @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
 	*/
 	public KaleoTimerInstanceToken[] findByKaleoInstanceId_PrevAndNext(
 		long kaleoTimerInstanceTokenId, long kaleoInstanceId,
@@ -177,12 +177,12 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	public int countByKaleoInstanceId(long kaleoInstanceId);
 
 	/**
-	* Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException} if it could not be found.
+	* Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or throws a {@link NoSuchTimerInstanceTokenException} if it could not be found.
 	*
 	* @param kaleoInstanceTokenId the kaleo instance token ID
 	* @param kaleoTimerId the kaleo timer ID
 	* @return the matching kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
+	* @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
 	*/
 	public KaleoTimerInstanceToken findByKITI_KTI(long kaleoInstanceTokenId,
 		long kaleoTimerId)
@@ -300,7 +300,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
+	* @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
 	*/
 	public KaleoTimerInstanceToken findByKITI_C_First(
 		long kaleoInstanceTokenId, boolean completed,
@@ -326,7 +326,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
+	* @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
 	*/
 	public KaleoTimerInstanceToken findByKITI_C_Last(
 		long kaleoInstanceTokenId, boolean completed,
@@ -353,7 +353,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
+	* @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
 	*/
 	public KaleoTimerInstanceToken[] findByKITI_C_PrevAndNext(
 		long kaleoTimerInstanceTokenId, long kaleoInstanceTokenId,
@@ -457,7 +457,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
+	* @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
 	*/
 	public KaleoTimerInstanceToken findByKITI_C_B_First(
 		long kaleoInstanceTokenId, boolean completed, boolean blocking,
@@ -485,7 +485,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
+	* @throws NoSuchTimerInstanceTokenException if a matching kaleo timer instance token could not be found
 	*/
 	public KaleoTimerInstanceToken findByKITI_C_B_Last(
 		long kaleoInstanceTokenId, boolean completed, boolean blocking,
@@ -514,7 +514,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
+	* @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
 	*/
 	public KaleoTimerInstanceToken[] findByKITI_C_B_PrevAndNext(
 		long kaleoTimerInstanceTokenId, long kaleoInstanceTokenId,
@@ -571,7 +571,7 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 	*
 	* @param kaleoTimerInstanceTokenId the primary key of the kaleo timer instance token
 	* @return the kaleo timer instance token that was removed
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
+	* @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
 	*/
 	public KaleoTimerInstanceToken remove(long kaleoTimerInstanceTokenId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerInstanceTokenException;
@@ -580,11 +580,11 @@ public interface KaleoTimerInstanceTokenPersistence extends BasePersistence<Kale
 		KaleoTimerInstanceToken kaleoTimerInstanceToken);
 
 	/**
-	* Returns the kaleo timer instance token with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException} if it could not be found.
+	* Returns the kaleo timer instance token with the primary key or throws a {@link NoSuchTimerInstanceTokenException} if it could not be found.
 	*
 	* @param kaleoTimerInstanceTokenId the primary key of the kaleo timer instance token
 	* @return the kaleo timer instance token
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
+	* @throws NoSuchTimerInstanceTokenException if a kaleo timer instance token with the primary key could not be found
 	*/
 	public KaleoTimerInstanceToken findByPrimaryKey(
 		long kaleoTimerInstanceTokenId)

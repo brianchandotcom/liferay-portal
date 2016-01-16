@@ -184,7 +184,7 @@ public class KaleoTaskUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	* @throws NoSuchTaskException if a matching kaleo task could not be found
 	*/
 	public static KaleoTask findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoTask> orderByComparator)
@@ -212,7 +212,7 @@ public class KaleoTaskUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	* @throws NoSuchTaskException if a matching kaleo task could not be found
 	*/
 	public static KaleoTask findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoTask> orderByComparator)
@@ -241,7 +241,7 @@ public class KaleoTaskUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public static KaleoTask[] findByCompanyId_PrevAndNext(long kaleoTaskId,
 		long companyId, OrderByComparator<KaleoTask> orderByComparator)
@@ -349,7 +349,7 @@ public class KaleoTaskUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	* @throws NoSuchTaskException if a matching kaleo task could not be found
 	*/
 	public static KaleoTask findByKaleoDefinitionId_First(
 		long kaleoDefinitionId, OrderByComparator<KaleoTask> orderByComparator)
@@ -379,7 +379,7 @@ public class KaleoTaskUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	* @throws NoSuchTaskException if a matching kaleo task could not be found
 	*/
 	public static KaleoTask findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId, OrderByComparator<KaleoTask> orderByComparator)
@@ -410,7 +410,7 @@ public class KaleoTaskUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public static KaleoTask[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoTaskId, long kaleoDefinitionId,
@@ -441,11 +441,11 @@ public class KaleoTaskUtil {
 	}
 
 	/**
-	* Returns the kaleo task where kaleoNodeId = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTaskException} if it could not be found.
+	* Returns the kaleo task where kaleoNodeId = &#63; or throws a {@link NoSuchTaskException} if it could not be found.
 	*
 	* @param kaleoNodeId the kaleo node ID
 	* @return the matching kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a matching kaleo task could not be found
+	* @throws NoSuchTaskException if a matching kaleo task could not be found
 	*/
 	public static KaleoTask findByKaleoNodeId(long kaleoNodeId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
@@ -529,7 +529,7 @@ public class KaleoTaskUtil {
 	*
 	* @param kaleoTaskId the primary key of the kaleo task
 	* @return the kaleo task that was removed
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public static KaleoTask remove(long kaleoTaskId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
@@ -541,11 +541,11 @@ public class KaleoTaskUtil {
 	}
 
 	/**
-	* Returns the kaleo task with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTaskException} if it could not be found.
+	* Returns the kaleo task with the primary key or throws a {@link NoSuchTaskException} if it could not be found.
 	*
 	* @param kaleoTaskId the primary key of the kaleo task
 	* @return the kaleo task
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskException if a kaleo task with the primary key could not be found
+	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public static KaleoTask findByPrimaryKey(long kaleoTaskId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {

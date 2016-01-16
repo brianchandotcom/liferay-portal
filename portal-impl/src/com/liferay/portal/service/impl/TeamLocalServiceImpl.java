@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.DuplicateTeamException;
-import com.liferay.portal.TeamNameException;
+import com.liferay.portal.exception.DuplicateTeamException;
+import com.liferay.portal.exception.TeamNameException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;

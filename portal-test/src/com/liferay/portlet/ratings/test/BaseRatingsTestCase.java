@@ -21,7 +21,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.ratings.NoSuchStatsException;
+import com.liferay.portlet.ratings.exception.NoSuchStatsException;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;

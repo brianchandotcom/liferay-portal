@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet.filters.cache;
 
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

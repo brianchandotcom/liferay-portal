@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.usersadmin.search;
 
-import com.liferay.portal.NoSuchCountryException;
-import com.liferay.portal.NoSuchRegionException;
+import com.liferay.portal.exception.NoSuchCountryException;
+import com.liferay.portal.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

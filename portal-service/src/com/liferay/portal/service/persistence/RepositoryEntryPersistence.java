@@ -107,7 +107,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public RepositoryEntry findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the first repository entry in the ordered set where uuid = &#63;.
@@ -129,7 +129,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public RepositoryEntry findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the last repository entry in the ordered set where uuid = &#63;.
@@ -153,7 +153,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	public RepositoryEntry[] findByUuid_PrevAndNext(long repositoryEntryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Removes all the repository entries where uuid = &#63; from the database.
@@ -179,7 +179,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
 	public RepositoryEntry findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the repository entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -209,7 +209,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	* @return the repository entry that was removed
 	*/
 	public RepositoryEntry removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the number of repository entries where uuid = &#63; and groupId = &#63;.
@@ -296,7 +296,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	public RepositoryEntry findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the first repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -322,7 +322,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	public RepositoryEntry findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the last repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -349,7 +349,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	public RepositoryEntry[] findByUuid_C_PrevAndNext(long repositoryEntryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Removes all the repository entries where uuid = &#63; and companyId = &#63; from the database.
@@ -437,7 +437,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public RepositoryEntry findByRepositoryId_First(long repositoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the first repository entry in the ordered set where repositoryId = &#63;.
@@ -459,7 +459,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public RepositoryEntry findByRepositoryId_Last(long repositoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the last repository entry in the ordered set where repositoryId = &#63;.
@@ -483,7 +483,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	public RepositoryEntry[] findByRepositoryId_PrevAndNext(
 		long repositoryEntryId, long repositoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Removes all the repository entries where repositoryId = &#63; from the database.
@@ -510,7 +510,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public RepositoryEntry findByR_M(long repositoryId,
 		java.lang.String mappedId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the repository entry where repositoryId = &#63; and mappedId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -542,7 +542,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public RepositoryEntry removeByR_M(long repositoryId,
 		java.lang.String mappedId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the number of repository entries where repositoryId = &#63; and mappedId = &#63;.
@@ -583,7 +583,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
 	public RepositoryEntry remove(long repositoryEntryId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	public RepositoryEntry updateImpl(RepositoryEntry repositoryEntry);
 
@@ -595,7 +595,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
 	public RepositoryEntry findByPrimaryKey(long repositoryEntryId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException;
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException;
 
 	/**
 	* Returns the repository entry with the primary key or returns <code>null</code> if it could not be found.

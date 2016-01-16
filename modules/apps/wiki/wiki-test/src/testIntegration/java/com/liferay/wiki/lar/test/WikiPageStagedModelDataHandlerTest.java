@@ -15,7 +15,7 @@
 package com.liferay.wiki.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -32,8 +32,8 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;

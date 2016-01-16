@@ -20,8 +20,8 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.DuplicateOpenIdException" %><%@
-page import="com.liferay.portal.UserEmailAddressException" %><%@
+<%@ page import="com.liferay.portal.exception.DuplicateOpenIdException" %><%@
+page import="com.liferay.portal.exception.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@

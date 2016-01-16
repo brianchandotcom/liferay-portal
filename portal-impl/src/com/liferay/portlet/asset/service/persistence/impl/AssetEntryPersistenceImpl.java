@@ -43,7 +43,7 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
-import com.liferay.portlet.asset.NoSuchEntryException;
+import com.liferay.portlet.asset.exception.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
@@ -4226,7 +4226,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	/**
-	 * Returns the asset entry with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the asset entry with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the asset entry
 	 * @return the asset entry

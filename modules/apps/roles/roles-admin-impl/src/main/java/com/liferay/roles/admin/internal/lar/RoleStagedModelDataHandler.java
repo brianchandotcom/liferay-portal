@@ -15,7 +15,7 @@
 package com.liferay.roles.admin.internal.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.NoSuchResourceActionException;
+import com.liferay.portal.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;

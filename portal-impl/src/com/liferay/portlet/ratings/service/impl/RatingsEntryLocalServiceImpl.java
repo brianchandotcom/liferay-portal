@@ -25,7 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
-import com.liferay.portlet.ratings.EntryScoreException;
+import com.liferay.portlet.ratings.exception.EntryScoreException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.base.RatingsEntryLocalServiceBaseImpl;

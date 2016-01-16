@@ -104,7 +104,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
@@ -126,7 +126,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
@@ -149,7 +149,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
+	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction[] findByCompanyId_PrevAndNext(long kaleoActionId,
 		long companyId,
@@ -237,7 +237,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByKaleoDefinitionId_First(long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
@@ -259,7 +259,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByKaleoDefinitionId_Last(long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
@@ -282,7 +282,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
+	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoActionId, long kaleoDefinitionId,
@@ -375,7 +375,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByKCN_KCPK_First(java.lang.String kaleoClassName,
 		long kaleoClassPK,
@@ -401,7 +401,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByKCN_KCPK_Last(java.lang.String kaleoClassName,
 		long kaleoClassPK,
@@ -428,7 +428,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
+	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction[] findByKCN_KCPK_PrevAndNext(long kaleoActionId,
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -534,7 +534,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param executionType the execution type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByKCN_KCPK_ET_First(
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -564,7 +564,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param executionType the execution type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	* @throws NoSuchActionException if a matching kaleo action could not be found
 	*/
 	public KaleoAction findByKCN_KCPK_ET_Last(java.lang.String kaleoClassName,
 		long kaleoClassPK, java.lang.String executionType,
@@ -594,7 +594,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @param executionType the execution type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
+	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction[] findByKCN_KCPK_ET_PrevAndNext(long kaleoActionId,
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -650,7 +650,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	*
 	* @param kaleoActionId the primary key of the kaleo action
 	* @return the kaleo action that was removed
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
+	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction remove(long kaleoActionId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
@@ -658,11 +658,11 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	public KaleoAction updateImpl(KaleoAction kaleoAction);
 
 	/**
-	* Returns the kaleo action with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchActionException} if it could not be found.
+	* Returns the kaleo action with the primary key or throws a {@link NoSuchActionException} if it could not be found.
 	*
 	* @param kaleoActionId the primary key of the kaleo action
 	* @return the kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
+	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction findByPrimaryKey(long kaleoActionId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;

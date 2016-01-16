@@ -43,7 +43,7 @@ public interface UserGroupFinder {
 
 	public com.liferay.portal.model.UserGroup findByC_N(long companyId,
 		java.lang.String name)
-		throws com.liferay.portal.NoSuchUserGroupException;
+		throws com.liferay.portal.exception.NoSuchUserGroupException;
 
 	public java.util.List<com.liferay.portal.model.UserGroup> findByC_N_D(
 		long companyId, java.lang.String name, java.lang.String description,

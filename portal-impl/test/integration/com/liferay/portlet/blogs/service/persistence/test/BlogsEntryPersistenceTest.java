@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.blogs.NoSuchEntryException;
+import com.liferay.portlet.blogs.exception.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;

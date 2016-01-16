@@ -14,7 +14,7 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.LayoutFriendlyURLException;
+import com.liferay.portal.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

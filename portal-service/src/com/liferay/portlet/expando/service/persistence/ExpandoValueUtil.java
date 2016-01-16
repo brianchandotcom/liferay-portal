@@ -187,7 +187,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByTableId_First(long tableId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByTableId_First(tableId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByTableId_Last(long tableId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue[] findByTableId_PrevAndNext(long valueId,
 		long tableId, OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByTableId_PrevAndNext(valueId, tableId,
 			orderByComparator);
@@ -343,7 +343,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByColumnId_First(long columnId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByColumnId_First(columnId, orderByComparator);
 	}
 
@@ -370,7 +370,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByColumnId_Last(long columnId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByColumnId_Last(columnId, orderByComparator);
 	}
 
@@ -397,7 +397,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue[] findByColumnId_PrevAndNext(long valueId,
 		long columnId, OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByColumnId_PrevAndNext(valueId, columnId,
 			orderByComparator);
@@ -498,7 +498,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByRowId_First(long rowId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByRowId_First(rowId, orderByComparator);
 	}
 
@@ -524,7 +524,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByRowId_Last(long rowId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByRowId_Last(rowId, orderByComparator);
 	}
 
@@ -551,7 +551,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue[] findByRowId_PrevAndNext(long valueId,
 		long rowId, OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByRowId_PrevAndNext(valueId, rowId, orderByComparator);
 	}
@@ -658,7 +658,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_C_First(long tableId, long columnId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_First(tableId, columnId, orderByComparator);
 	}
@@ -688,7 +688,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_C_Last(long tableId, long columnId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_Last(tableId, columnId, orderByComparator);
 	}
@@ -720,7 +720,7 @@ public class ExpandoValueUtil {
 	public static ExpandoValue[] findByT_C_PrevAndNext(long valueId,
 		long tableId, long columnId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_PrevAndNext(valueId, tableId, columnId,
 			orderByComparator);
@@ -830,7 +830,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_R_First(long tableId, long rowId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_R_First(tableId, rowId, orderByComparator);
 	}
@@ -860,7 +860,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_R_Last(long tableId, long rowId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByT_R_Last(tableId, rowId, orderByComparator);
 	}
 
@@ -891,7 +891,7 @@ public class ExpandoValueUtil {
 	public static ExpandoValue[] findByT_R_PrevAndNext(long valueId,
 		long tableId, long rowId,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_R_PrevAndNext(valueId, tableId, rowId,
 			orderByComparator);
@@ -1001,7 +1001,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_CPK_First(long tableId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_First(tableId, classPK, orderByComparator);
 	}
@@ -1031,7 +1031,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_CPK_Last(long tableId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_Last(tableId, classPK, orderByComparator);
 	}
@@ -1063,7 +1063,7 @@ public class ExpandoValueUtil {
 	public static ExpandoValue[] findByT_CPK_PrevAndNext(long valueId,
 		long tableId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_PrevAndNext(valueId, tableId, classPK,
 			orderByComparator);
@@ -1099,7 +1099,7 @@ public class ExpandoValueUtil {
 	* @throws NoSuchValueException if a matching expando value could not be found
 	*/
 	public static ExpandoValue findByC_R(long columnId, long rowId)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByC_R(columnId, rowId);
 	}
 
@@ -1135,7 +1135,7 @@ public class ExpandoValueUtil {
 	* @return the expando value that was removed
 	*/
 	public static ExpandoValue removeByC_R(long columnId, long rowId)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().removeByC_R(columnId, rowId);
 	}
 
@@ -1234,7 +1234,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByC_C_First(long classNameId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1264,7 +1264,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1296,7 +1296,7 @@ public class ExpandoValueUtil {
 	public static ExpandoValue[] findByC_C_PrevAndNext(long valueId,
 		long classNameId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(valueId, classNameId, classPK,
 			orderByComparator);
@@ -1333,7 +1333,8 @@ public class ExpandoValueUtil {
 	* @throws NoSuchValueException if a matching expando value could not be found
 	*/
 	public static ExpandoValue findByT_C_C(long tableId, long columnId,
-		long classPK) throws com.liferay.portlet.expando.NoSuchValueException {
+		long classPK)
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByT_C_C(tableId, columnId, classPK);
 	}
 
@@ -1374,7 +1375,8 @@ public class ExpandoValueUtil {
 	* @return the expando value that was removed
 	*/
 	public static ExpandoValue removeByT_C_C(long tableId, long columnId,
-		long classPK) throws com.liferay.portlet.expando.NoSuchValueException {
+		long classPK)
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().removeByT_C_C(tableId, columnId, classPK);
 	}
 
@@ -1482,7 +1484,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_C_D_First(long tableId, long columnId,
 		java.lang.String data, OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_First(tableId, columnId, data, orderByComparator);
 	}
@@ -1515,7 +1517,7 @@ public class ExpandoValueUtil {
 	*/
 	public static ExpandoValue findByT_C_D_Last(long tableId, long columnId,
 		java.lang.String data, OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_Last(tableId, columnId, data, orderByComparator);
 	}
@@ -1549,7 +1551,7 @@ public class ExpandoValueUtil {
 	public static ExpandoValue[] findByT_C_D_PrevAndNext(long valueId,
 		long tableId, long columnId, java.lang.String data,
 		OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_PrevAndNext(valueId, tableId, columnId, data,
 			orderByComparator);
@@ -1616,7 +1618,7 @@ public class ExpandoValueUtil {
 	* @throws NoSuchValueException if a expando value with the primary key could not be found
 	*/
 	public static ExpandoValue remove(long valueId)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().remove(valueId);
 	}
 
@@ -1632,7 +1634,7 @@ public class ExpandoValueUtil {
 	* @throws NoSuchValueException if a expando value with the primary key could not be found
 	*/
 	public static ExpandoValue findByPrimaryKey(long valueId)
-		throws com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.exception.NoSuchValueException {
 		return getPersistence().findByPrimaryKey(valueId);
 	}
 

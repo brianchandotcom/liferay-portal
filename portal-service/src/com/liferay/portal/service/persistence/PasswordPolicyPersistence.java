@@ -107,7 +107,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*/
 	public PasswordPolicy findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the first password policy in the ordered set where uuid = &#63;.
@@ -129,7 +129,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*/
 	public PasswordPolicy findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the last password policy in the ordered set where uuid = &#63;.
@@ -153,7 +153,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy[] findByUuid_PrevAndNext(long passwordPolicyId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns all the password policies that the user has permission to view where uuid = &#63;.
@@ -208,7 +208,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy[] filterFindByUuid_PrevAndNext(
 		long passwordPolicyId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Removes all the password policies where uuid = &#63; from the database.
@@ -309,7 +309,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the first password policy in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -335,7 +335,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the last password policy in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -362,7 +362,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy[] findByUuid_C_PrevAndNext(long passwordPolicyId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns all the password policies that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -421,7 +421,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy[] filterFindByUuid_C_PrevAndNext(
 		long passwordPolicyId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Removes all the password policies where uuid = &#63; and companyId = &#63; from the database.
@@ -518,7 +518,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*/
 	public PasswordPolicy findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the first password policy in the ordered set where companyId = &#63;.
@@ -540,7 +540,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	*/
 	public PasswordPolicy findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the last password policy in the ordered set where companyId = &#63;.
@@ -564,7 +564,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy[] findByCompanyId_PrevAndNext(long passwordPolicyId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns all the password policies that the user has permission to view where companyId = &#63;.
@@ -618,7 +618,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	public PasswordPolicy[] filterFindByCompanyId_PrevAndNext(
 		long passwordPolicyId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicy> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Removes all the password policies where companyId = &#63; from the database.
@@ -652,7 +652,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
 	public PasswordPolicy findByC_DP(long companyId, boolean defaultPolicy)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the password policy where companyId = &#63; and defaultPolicy = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -682,7 +682,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @return the password policy that was removed
 	*/
 	public PasswordPolicy removeByC_DP(long companyId, boolean defaultPolicy)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the number of password policies where companyId = &#63; and defaultPolicy = &#63;.
@@ -702,7 +702,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a matching password policy could not be found
 	*/
 	public PasswordPolicy findByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the password policy where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -732,7 +732,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @return the password policy that was removed
 	*/
 	public PasswordPolicy removeByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the number of password policies where companyId = &#63; and name = &#63;.
@@ -773,7 +773,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public PasswordPolicy remove(long passwordPolicyId)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	public PasswordPolicy updateImpl(PasswordPolicy passwordPolicy);
 
@@ -785,7 +785,7 @@ public interface PasswordPolicyPersistence extends BasePersistence<PasswordPolic
 	* @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
 	*/
 	public PasswordPolicy findByPrimaryKey(long passwordPolicyId)
-		throws com.liferay.portal.NoSuchPasswordPolicyException;
+		throws com.liferay.portal.exception.NoSuchPasswordPolicyException;
 
 	/**
 	* Returns the password policy with the primary key or returns <code>null</code> if it could not be found.

@@ -24,7 +24,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.BannedUserException;
+import com.liferay.portlet.messageboards.exception.BannedUserException;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.base.MBBanLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;

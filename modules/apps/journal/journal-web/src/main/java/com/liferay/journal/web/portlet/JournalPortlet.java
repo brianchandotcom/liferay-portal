@@ -99,10 +99,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.asset.AssetCategoryException;
-import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
-import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.asset.exception.AssetCategoryException;
+import com.liferay.portlet.asset.exception.AssetTagException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.FileSizeException;
 import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 

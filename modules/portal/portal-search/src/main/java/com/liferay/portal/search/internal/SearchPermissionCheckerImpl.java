@@ -16,7 +16,7 @@ package com.liferay.portal.search.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.NoSuchResourceException;
+import com.liferay.portal.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;

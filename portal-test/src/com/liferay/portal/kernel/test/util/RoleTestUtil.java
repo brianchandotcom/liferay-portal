@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.test.util;
 
-import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.model.Role;

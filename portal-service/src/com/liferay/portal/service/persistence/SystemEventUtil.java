@@ -186,7 +186,7 @@ public class SystemEventUtil {
 	*/
 	public static SystemEvent findByGroupId_First(long groupId,
 		OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class SystemEventUtil {
 	*/
 	public static SystemEvent findByGroupId_Last(long groupId,
 		OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class SystemEventUtil {
 	*/
 	public static SystemEvent[] findByGroupId_PrevAndNext(long systemEventId,
 		long groupId, OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(systemEventId, groupId,
 			orderByComparator);
@@ -351,7 +351,7 @@ public class SystemEventUtil {
 	*/
 	public static SystemEvent findByG_S_First(long groupId,
 		long systemEventSetKey, OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_S_First(groupId, systemEventSetKey,
 			orderByComparator);
@@ -383,7 +383,7 @@ public class SystemEventUtil {
 	*/
 	public static SystemEvent findByG_S_Last(long groupId,
 		long systemEventSetKey, OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, systemEventSetKey, orderByComparator);
 	}
@@ -416,7 +416,7 @@ public class SystemEventUtil {
 	public static SystemEvent[] findByG_S_PrevAndNext(long systemEventId,
 		long groupId, long systemEventSetKey,
 		OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(systemEventId, groupId,
 			systemEventSetKey, orderByComparator);
@@ -536,7 +536,7 @@ public class SystemEventUtil {
 	*/
 	public static SystemEvent findByG_C_C_First(long groupId, long classNameId,
 		long classPK, OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_C_C_First(groupId, classNameId, classPK,
 			orderByComparator);
@@ -571,7 +571,7 @@ public class SystemEventUtil {
 	*/
 	public static SystemEvent findByG_C_C_Last(long groupId, long classNameId,
 		long classPK, OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_C_C_Last(groupId, classNameId, classPK,
 			orderByComparator);
@@ -607,7 +607,7 @@ public class SystemEventUtil {
 	public static SystemEvent[] findByG_C_C_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_C_C_PrevAndNext(systemEventId, groupId,
 			classNameId, classPK, orderByComparator);
@@ -738,7 +738,7 @@ public class SystemEventUtil {
 	public static SystemEvent findByG_C_C_T_First(long groupId,
 		long classNameId, long classPK, int type,
 		OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_C_C_T_First(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -776,7 +776,7 @@ public class SystemEventUtil {
 	public static SystemEvent findByG_C_C_T_Last(long groupId,
 		long classNameId, long classPK, int type,
 		OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_C_C_T_Last(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -815,7 +815,7 @@ public class SystemEventUtil {
 	public static SystemEvent[] findByG_C_C_T_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK, int type,
 		OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence()
 				   .findByG_C_C_T_PrevAndNext(systemEventId, groupId,
 			classNameId, classPK, type, orderByComparator);
@@ -885,7 +885,7 @@ public class SystemEventUtil {
 	* @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	*/
 	public static SystemEvent remove(long systemEventId)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence().remove(systemEventId);
 	}
 
@@ -901,7 +901,7 @@ public class SystemEventUtil {
 	* @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	*/
 	public static SystemEvent findByPrimaryKey(long systemEventId)
-		throws com.liferay.portal.NoSuchSystemEventException {
+		throws com.liferay.portal.exception.NoSuchSystemEventException {
 		return getPersistence().findByPrimaryKey(systemEventId);
 	}
 

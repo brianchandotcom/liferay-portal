@@ -109,7 +109,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where uuid = &#63;.
@@ -131,7 +131,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where uuid = &#63;.
@@ -155,7 +155,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByUuid_PrevAndNext(long messageId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where uuid = &#63; from the database.
@@ -181,7 +181,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @throws NoSuchMessageException if a matching message-boards message could not be found
 	*/
 	public MBMessage findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the message-boards message where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +211,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @return the message-boards message that was removed
 	*/
 	public MBMessage removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the number of message-boards messages where uuid = &#63; and groupId = &#63;.
@@ -297,7 +297,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -321,7 +321,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -347,7 +347,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByUuid_C_PrevAndNext(long messageId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where uuid = &#63; and companyId = &#63; from the database.
@@ -435,7 +435,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63;.
@@ -457,7 +457,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63;.
@@ -480,7 +480,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage[] findByGroupId_PrevAndNext(long messageId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63;.
@@ -534,7 +534,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByGroupId_PrevAndNext(long messageId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; from the database.
@@ -628,7 +628,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where companyId = &#63;.
@@ -650,7 +650,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where companyId = &#63;.
@@ -674,7 +674,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByCompanyId_PrevAndNext(long messageId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where companyId = &#63; from the database.
@@ -760,7 +760,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63;.
@@ -782,7 +782,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63;.
@@ -805,7 +805,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage[] findByUserId_PrevAndNext(long messageId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where userId = &#63; from the database.
@@ -891,7 +891,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByThreadId_First(long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63;.
@@ -913,7 +913,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByThreadId_Last(long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63;.
@@ -937,7 +937,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByThreadId_PrevAndNext(long messageId,
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where threadId = &#63; from the database.
@@ -1023,7 +1023,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByThreadReplies_First(long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63;.
@@ -1045,7 +1045,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByThreadReplies_Last(long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63;.
@@ -1069,7 +1069,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByThreadReplies_PrevAndNext(long messageId,
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where threadId = &#63; from the database.
@@ -1160,7 +1160,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_U_First(long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and userId = &#63;.
@@ -1184,7 +1184,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_U_Last(long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and userId = &#63;.
@@ -1210,7 +1210,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_U_PrevAndNext(long messageId, long groupId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and userId = &#63;.
@@ -1268,7 +1268,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_U_PrevAndNext(long messageId,
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and userId = &#63; from the database.
@@ -1370,7 +1370,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_C_First(long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -1394,7 +1394,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_C_Last(long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63;.
@@ -1420,7 +1420,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_C_PrevAndNext(long messageId, long groupId,
 		long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63;.
@@ -1479,7 +1479,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_C_PrevAndNext(long messageId,
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and categoryId = &#63; from the database.
@@ -1581,7 +1581,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_S_First(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and status = &#63;.
@@ -1605,7 +1605,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_S_Last(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and status = &#63;.
@@ -1631,7 +1631,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_S_PrevAndNext(long messageId, long groupId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and status = &#63;.
@@ -1689,7 +1689,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_S_PrevAndNext(long messageId,
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and status = &#63; from the database.
@@ -1791,7 +1791,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByC_S_First(long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where companyId = &#63; and status = &#63;.
@@ -1815,7 +1815,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByC_S_Last(long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where companyId = &#63; and status = &#63;.
@@ -1841,7 +1841,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByC_S_PrevAndNext(long messageId, long companyId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where companyId = &#63; and status = &#63; from the database.
@@ -1934,7 +1934,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByU_C_First(long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -1958,7 +1958,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByU_C_Last(long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -1984,7 +1984,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByU_C_PrevAndNext(long messageId, long userId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages where userId = &#63; and classNameId = any &#63;.
@@ -2153,7 +2153,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByC_C_First(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -2177,7 +2177,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByC_C_Last(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -2203,7 +2203,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByC_C_PrevAndNext(long messageId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where classNameId = &#63; and classPK = &#63; from the database.
@@ -2297,7 +2297,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByT_P_First(long threadId, long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and parentMessageId = &#63;.
@@ -2321,7 +2321,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByT_P_Last(long threadId, long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and parentMessageId = &#63;.
@@ -2347,7 +2347,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByT_P_PrevAndNext(long messageId, long threadId,
 		long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where threadId = &#63; and parentMessageId = &#63; from the database.
@@ -2440,7 +2440,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByT_A_First(long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and answer = &#63;.
@@ -2464,7 +2464,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByT_A_Last(long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and answer = &#63;.
@@ -2490,7 +2490,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByT_A_PrevAndNext(long messageId, long threadId,
 		boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where threadId = &#63; and answer = &#63; from the database.
@@ -2583,7 +2583,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByT_S_First(long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2607,7 +2607,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByT_S_Last(long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2633,7 +2633,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByT_S_PrevAndNext(long messageId, long threadId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where threadId = &#63; and status = &#63; from the database.
@@ -2726,7 +2726,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByTR_S_First(long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2750,7 +2750,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByTR_S_Last(long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where threadId = &#63; and status = &#63;.
@@ -2776,7 +2776,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByTR_S_PrevAndNext(long messageId, long threadId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where threadId = &#63; and status = &#63; from the database.
@@ -2875,7 +2875,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_U_S_First(long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2901,7 +2901,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	*/
 	public MBMessage findByG_U_S_Last(long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2929,7 +2929,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_U_S_PrevAndNext(long messageId, long groupId,
 		long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and userId = &#63; and status = &#63;.
@@ -2992,7 +2992,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_U_S_PrevAndNext(long messageId,
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and userId = &#63; and status = &#63; from the database.
@@ -3104,7 +3104,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_T_First(long groupId, long categoryId,
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -3132,7 +3132,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_T_Last(long groupId, long categoryId,
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -3161,7 +3161,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_C_T_PrevAndNext(long messageId, long groupId,
 		long categoryId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and threadId = &#63;.
@@ -3224,7 +3224,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_C_T_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; from the database.
@@ -3336,7 +3336,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_S_First(long groupId, long categoryId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -3364,7 +3364,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_S_Last(long groupId, long categoryId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -3393,7 +3393,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_C_S_PrevAndNext(long messageId, long groupId,
 		long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -3456,7 +3456,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_C_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and categoryId = &#63; and status = &#63; from the database.
@@ -3568,7 +3568,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByU_C_C_First(long userId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3596,7 +3596,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByU_C_C_Last(long userId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3625,7 +3625,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByU_C_C_PrevAndNext(long messageId, long userId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -3727,7 +3727,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByU_C_S_First(long userId, long classNameId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
@@ -3755,7 +3755,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByU_C_S_Last(long userId, long classNameId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and status = &#63;.
@@ -3784,7 +3784,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByU_C_S_PrevAndNext(long messageId, long userId,
 		long classNameId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages where userId = &#63; and classNameId = any &#63; and status = &#63;.
@@ -3968,7 +3968,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByC_C_S_First(long classNameId, long classPK,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -3996,7 +3996,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByC_C_S_Last(long classNameId, long classPK,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -4025,7 +4025,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByC_C_S_PrevAndNext(long messageId,
 		long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63; from the database.
@@ -4132,7 +4132,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_T_A_First(long groupId, long categoryId,
 		long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -4162,7 +4162,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_T_A_Last(long groupId, long categoryId,
 		long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -4193,7 +4193,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_C_T_A_PrevAndNext(long messageId, long groupId,
 		long categoryId, long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
@@ -4260,7 +4260,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_C_T_A_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63; from the database.
@@ -4383,7 +4383,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_T_S_First(long groupId, long categoryId,
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -4413,7 +4413,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByG_C_T_S_Last(long groupId, long categoryId,
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -4444,7 +4444,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByG_C_T_S_PrevAndNext(long messageId, long groupId,
 		long categoryId, long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns all the message-boards messages that the user has permission to view where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63;.
@@ -4511,7 +4511,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] filterFindByG_C_T_S_PrevAndNext(long messageId,
 		long groupId, long categoryId, long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; and status = &#63; from the database.
@@ -4634,7 +4634,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByU_C_C_S_First(long userId, long classNameId,
 		long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the first message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -4664,7 +4664,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage findByU_C_C_S_Last(long userId, long classNameId,
 		long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the last message-boards message in the ordered set where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -4695,7 +4695,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public MBMessage[] findByU_C_C_S_PrevAndNext(long messageId, long userId,
 		long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Removes all the message-boards messages where userId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63; from the database.
@@ -4750,7 +4750,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	*/
 	public MBMessage remove(long messageId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	public MBMessage updateImpl(MBMessage mbMessage);
 
@@ -4762,7 +4762,7 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
 	*/
 	public MBMessage findByPrimaryKey(long messageId)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 
 	/**
 	* Returns the message-boards message with the primary key or returns <code>null</code> if it could not be found.

@@ -51,8 +51,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 

@@ -189,7 +189,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static AnnouncementsFlag findByEntryId_First(long entryId,
 		OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchFlagException {
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException {
 		return getPersistence().findByEntryId_First(entryId, orderByComparator);
 	}
 
@@ -215,7 +215,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static AnnouncementsFlag findByEntryId_Last(long entryId,
 		OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchFlagException {
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException {
 		return getPersistence().findByEntryId_Last(entryId, orderByComparator);
 	}
 
@@ -242,7 +242,7 @@ public class AnnouncementsFlagUtil {
 	*/
 	public static AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
 		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchFlagException {
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException {
 		return getPersistence()
 				   .findByEntryId_PrevAndNext(flagId, entryId, orderByComparator);
 	}
@@ -276,7 +276,8 @@ public class AnnouncementsFlagUtil {
 	* @throws NoSuchFlagException if a matching announcements flag could not be found
 	*/
 	public static AnnouncementsFlag findByU_E_V(long userId, long entryId,
-		int value) throws com.liferay.portlet.announcements.NoSuchFlagException {
+		int value)
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException {
 		return getPersistence().findByU_E_V(userId, entryId, value);
 	}
 
@@ -317,7 +318,8 @@ public class AnnouncementsFlagUtil {
 	* @return the announcements flag that was removed
 	*/
 	public static AnnouncementsFlag removeByU_E_V(long userId, long entryId,
-		int value) throws com.liferay.portlet.announcements.NoSuchFlagException {
+		int value)
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException {
 		return getPersistence().removeByU_E_V(userId, entryId, value);
 	}
 
@@ -369,7 +371,7 @@ public class AnnouncementsFlagUtil {
 	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
 	public static AnnouncementsFlag remove(long flagId)
-		throws com.liferay.portlet.announcements.NoSuchFlagException {
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException {
 		return getPersistence().remove(flagId);
 	}
 
@@ -386,7 +388,7 @@ public class AnnouncementsFlagUtil {
 	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
 	public static AnnouncementsFlag findByPrimaryKey(long flagId)
-		throws com.liferay.portlet.announcements.NoSuchFlagException {
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException {
 		return getPersistence().findByPrimaryKey(flagId);
 	}
 

@@ -45,7 +45,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.NoSuchThreadException;
+import com.liferay.portlet.messageboards.exception.NoSuchThreadException;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
@@ -13459,7 +13459,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
-	 * Returns the message boards thread with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the message boards thread with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the message boards thread
 	 * @return the message boards thread

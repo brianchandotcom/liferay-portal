@@ -27,9 +27,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
-page import="com.liferay.portal.NoSuchUserException" %><%@
-page import="com.liferay.portal.NoSuchUserGroupException" %><%@
+<%@ page import="com.liferay.portal.exception.NoSuchOrganizationException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserGroupException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

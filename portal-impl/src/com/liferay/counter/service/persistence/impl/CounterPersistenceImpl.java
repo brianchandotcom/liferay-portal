@@ -16,7 +16,7 @@ package com.liferay.counter.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.counter.NoSuchCounterException;
+import com.liferay.counter.exception.NoSuchCounterException;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.counter.model.impl.CounterModelImpl;
@@ -318,7 +318,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	}
 
 	/**
-	 * Returns the counter with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the counter with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the counter
 	 * @return the counter

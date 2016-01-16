@@ -186,7 +186,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry findByUuid_First(java.lang.String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class RepositoryEntryUtil {
 	public static RepositoryEntry[] findByUuid_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid,
 		OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(repositoryEntryId, uuid,
 			orderByComparator);
@@ -274,7 +274,8 @@ public class RepositoryEntryUtil {
 	* @throws NoSuchRepositoryEntryException if a matching repository entry could not be found
 	*/
 	public static RepositoryEntry findByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.portal.NoSuchRepositoryEntryException {
+		long groupId)
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -311,7 +312,8 @@ public class RepositoryEntryUtil {
 	* @return the repository entry that was removed
 	*/
 	public static RepositoryEntry removeByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.portal.NoSuchRepositoryEntryException {
+		long groupId)
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -412,7 +414,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -442,7 +444,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -474,7 +476,7 @@ public class RepositoryEntryUtil {
 	public static RepositoryEntry[] findByUuid_C_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid, long companyId,
 		OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(repositoryEntryId, uuid,
 			companyId, orderByComparator);
@@ -581,7 +583,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry findByRepositoryId_First(long repositoryId,
 		OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_First(repositoryId, orderByComparator);
 	}
@@ -609,7 +611,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry findByRepositoryId_Last(long repositoryId,
 		OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_Last(repositoryId, orderByComparator);
 	}
@@ -639,7 +641,7 @@ public class RepositoryEntryUtil {
 	public static RepositoryEntry[] findByRepositoryId_PrevAndNext(
 		long repositoryEntryId, long repositoryId,
 		OrderByComparator<RepositoryEntry> orderByComparator)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_PrevAndNext(repositoryEntryId,
 			repositoryId, orderByComparator);
@@ -674,7 +676,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry findByR_M(long repositoryId,
 		java.lang.String mappedId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByR_M(repositoryId, mappedId);
 	}
 
@@ -713,7 +715,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static RepositoryEntry removeByR_M(long repositoryId,
 		java.lang.String mappedId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().removeByR_M(repositoryId, mappedId);
 	}
 
@@ -764,7 +766,7 @@ public class RepositoryEntryUtil {
 	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
 	public static RepositoryEntry remove(long repositoryEntryId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().remove(repositoryEntryId);
 	}
 
@@ -780,7 +782,7 @@ public class RepositoryEntryUtil {
 	* @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
 	*/
 	public static RepositoryEntry findByPrimaryKey(long repositoryEntryId)
-		throws com.liferay.portal.NoSuchRepositoryEntryException {
+		throws com.liferay.portal.exception.NoSuchRepositoryEntryException {
 		return getPersistence().findByPrimaryKey(repositoryEntryId);
 	}
 

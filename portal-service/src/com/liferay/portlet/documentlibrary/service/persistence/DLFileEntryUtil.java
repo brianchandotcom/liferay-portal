@@ -186,7 +186,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry[] findByUuid_PrevAndNext(long fileEntryId,
 		java.lang.String uuid, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(fileEntryId, uuid, orderByComparator);
 	}
@@ -272,7 +272,7 @@ public class DLFileEntryUtil {
 	* @throws NoSuchFileEntryException if a matching document library file entry could not be found
 	*/
 	public static DLFileEntry findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -308,7 +308,7 @@ public class DLFileEntryUtil {
 	* @return the document library file entry that was removed
 	*/
 	public static DLFileEntry removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -409,7 +409,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -439,7 +439,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -471,7 +471,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByUuid_C_PrevAndNext(long fileEntryId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(fileEntryId, uuid, companyId,
 			orderByComparator);
@@ -576,7 +576,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByGroupId_First(long groupId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -602,7 +602,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByGroupId_Last(long groupId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -629,7 +629,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry[] findByGroupId_PrevAndNext(long fileEntryId,
 		long groupId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(fileEntryId, groupId,
 			orderByComparator);
@@ -693,7 +693,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] filterFindByGroupId_PrevAndNext(
 		long fileEntryId, long groupId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(fileEntryId, groupId,
 			orderByComparator);
@@ -806,7 +806,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByCompanyId_First(long companyId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -834,7 +834,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByCompanyId_Last(long companyId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -863,7 +863,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry[] findByCompanyId_PrevAndNext(long fileEntryId,
 		long companyId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(fileEntryId, companyId,
 			orderByComparator);
@@ -967,7 +967,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByRepositoryId_First(long repositoryId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByRepositoryId_First(repositoryId, orderByComparator);
 	}
@@ -995,7 +995,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByRepositoryId_Last(long repositoryId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByRepositoryId_Last(repositoryId, orderByComparator);
 	}
@@ -1025,7 +1025,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByRepositoryId_PrevAndNext(
 		long fileEntryId, long repositoryId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByRepositoryId_PrevAndNext(fileEntryId, repositoryId,
 			orderByComparator);
@@ -1128,7 +1128,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByMimeType_First(java.lang.String mimeType,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByMimeType_First(mimeType, orderByComparator);
 	}
 
@@ -1155,7 +1155,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByMimeType_Last(java.lang.String mimeType,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByMimeType_Last(mimeType, orderByComparator);
 	}
 
@@ -1183,7 +1183,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByMimeType_PrevAndNext(long fileEntryId,
 		java.lang.String mimeType,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByMimeType_PrevAndNext(fileEntryId, mimeType,
 			orderByComparator);
@@ -1290,7 +1290,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByFileEntryTypeId_First(
 		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByFileEntryTypeId_First(fileEntryTypeId,
 			orderByComparator);
@@ -1320,7 +1320,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByFileEntryTypeId_Last(long fileEntryTypeId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByFileEntryTypeId_Last(fileEntryTypeId,
 			orderByComparator);
@@ -1352,7 +1352,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByFileEntryTypeId_PrevAndNext(
 		long fileEntryId, long fileEntryTypeId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByFileEntryTypeId_PrevAndNext(fileEntryId,
 			fileEntryTypeId, orderByComparator);
@@ -1460,7 +1460,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_U_First(long groupId, long userId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -1490,7 +1490,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_U_Last(long groupId, long userId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -1522,7 +1522,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByG_U_PrevAndNext(long fileEntryId,
 		long groupId, long userId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(fileEntryId, groupId, userId,
 			orderByComparator);
@@ -1591,7 +1591,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] filterFindByG_U_PrevAndNext(long fileEntryId,
 		long groupId, long userId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .filterFindByG_U_PrevAndNext(fileEntryId, groupId, userId,
 			orderByComparator);
@@ -1712,7 +1712,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_F_First(long groupId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_F_First(groupId, folderId, orderByComparator);
 	}
@@ -1742,7 +1742,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_F_Last(long groupId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_F_Last(groupId, folderId, orderByComparator);
 	}
@@ -1774,7 +1774,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByG_F_PrevAndNext(long fileEntryId,
 		long groupId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_F_PrevAndNext(fileEntryId, groupId, folderId,
 			orderByComparator);
@@ -1844,7 +1844,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] filterFindByG_F_PrevAndNext(long fileEntryId,
 		long groupId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .filterFindByG_F_PrevAndNext(fileEntryId, groupId, folderId,
 			orderByComparator);
@@ -2116,7 +2116,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByR_F_First(long repositoryId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByR_F_First(repositoryId, folderId, orderByComparator);
 	}
@@ -2146,7 +2146,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByR_F_Last(long repositoryId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByR_F_Last(repositoryId, folderId, orderByComparator);
 	}
@@ -2178,7 +2178,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByR_F_PrevAndNext(long fileEntryId,
 		long repositoryId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByR_F_PrevAndNext(fileEntryId, repositoryId, folderId,
 			orderByComparator);
@@ -2291,7 +2291,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByF_N_First(long folderId,
 		java.lang.String name, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByF_N_First(folderId, name, orderByComparator);
 	}
@@ -2321,7 +2321,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByF_N_Last(long folderId,
 		java.lang.String name, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByF_N_Last(folderId, name, orderByComparator);
 	}
 
@@ -2352,7 +2352,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByF_N_PrevAndNext(long fileEntryId,
 		long folderId, java.lang.String name,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByF_N_PrevAndNext(fileEntryId, folderId, name,
 			orderByComparator);
@@ -2472,7 +2472,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_U_F_First(long groupId, long userId,
 		long folderId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_U_F_First(groupId, userId, folderId,
 			orderByComparator);
@@ -2506,7 +2506,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_U_F_Last(long groupId, long userId,
 		long folderId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_U_F_Last(groupId, userId, folderId,
 			orderByComparator);
@@ -2542,7 +2542,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByG_U_F_PrevAndNext(long fileEntryId,
 		long groupId, long userId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_U_F_PrevAndNext(fileEntryId, groupId, userId,
 			folderId, orderByComparator);
@@ -2618,7 +2618,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] filterFindByG_U_F_PrevAndNext(
 		long fileEntryId, long groupId, long userId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .filterFindByG_U_F_PrevAndNext(fileEntryId, groupId, userId,
 			folderId, orderByComparator);
@@ -2837,7 +2837,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_F_N(long groupId, long folderId,
 		java.lang.String name)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByG_F_N(groupId, folderId, name);
 	}
 
@@ -2879,7 +2879,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry removeByG_F_N(long groupId, long folderId,
 		java.lang.String name)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().removeByG_F_N(groupId, folderId, name);
 	}
 
@@ -2907,7 +2907,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_F_FN(long groupId, long folderId,
 		java.lang.String fileName)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByG_F_FN(groupId, folderId, fileName);
 	}
 
@@ -2949,7 +2949,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry removeByG_F_FN(long groupId, long folderId,
 		java.lang.String fileName)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().removeByG_F_FN(groupId, folderId, fileName);
 	}
 
@@ -2977,7 +2977,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_F_T(long groupId, long folderId,
 		java.lang.String title)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByG_F_T(groupId, folderId, title);
 	}
 
@@ -3019,7 +3019,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry removeByG_F_T(long groupId, long folderId,
 		java.lang.String title)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().removeByG_F_T(groupId, folderId, title);
 	}
 
@@ -3129,7 +3129,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_F_F_First(long groupId, long folderId,
 		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_F_F_First(groupId, folderId, fileEntryTypeId,
 			orderByComparator);
@@ -3163,7 +3163,7 @@ public class DLFileEntryUtil {
 	*/
 	public static DLFileEntry findByG_F_F_Last(long groupId, long folderId,
 		long fileEntryTypeId, OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_F_F_Last(groupId, folderId, fileEntryTypeId,
 			orderByComparator);
@@ -3199,7 +3199,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] findByG_F_F_PrevAndNext(long fileEntryId,
 		long groupId, long folderId, long fileEntryTypeId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .findByG_F_F_PrevAndNext(fileEntryId, groupId, folderId,
 			fileEntryTypeId, orderByComparator);
@@ -3277,7 +3277,7 @@ public class DLFileEntryUtil {
 	public static DLFileEntry[] filterFindByG_F_F_PrevAndNext(
 		long fileEntryId, long groupId, long folderId, long fileEntryTypeId,
 		OrderByComparator<DLFileEntry> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence()
 				   .filterFindByG_F_F_PrevAndNext(fileEntryId, groupId,
 			folderId, fileEntryTypeId, orderByComparator);
@@ -3528,7 +3528,7 @@ public class DLFileEntryUtil {
 	* @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	*/
 	public static DLFileEntry remove(long fileEntryId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().remove(fileEntryId);
 	}
 
@@ -3544,7 +3544,7 @@ public class DLFileEntryUtil {
 	* @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
 	*/
 	public static DLFileEntry findByPrimaryKey(long fileEntryId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException {
 		return getPersistence().findByPrimaryKey(fileEntryId);
 	}
 

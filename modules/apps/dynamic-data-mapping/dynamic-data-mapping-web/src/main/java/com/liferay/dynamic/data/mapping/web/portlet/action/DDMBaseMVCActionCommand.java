@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.web.portlet.action;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.portal.PortletPreferencesException;
+import com.liferay.portal.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;

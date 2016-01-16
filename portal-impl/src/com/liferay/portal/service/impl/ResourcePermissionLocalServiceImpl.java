@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchResourcePermissionException;
+import com.liferay.portal.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;

@@ -14,9 +14,9 @@
 
 package com.liferay.site.memberships.web.portlet;
 
-import com.liferay.portal.MembershipRequestCommentsException;
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.exception.MembershipRequestCommentsException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;

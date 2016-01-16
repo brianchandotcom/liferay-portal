@@ -47,7 +47,7 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @throws NoSuchPreferencesException if a matching portal preferences could not be found
 	*/
 	public PortalPreferences findByO_O(long ownerId, int ownerType)
-		throws com.liferay.portal.NoSuchPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPreferencesException;
 
 	/**
 	* Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -77,7 +77,7 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @return the portal preferences that was removed
 	*/
 	public PortalPreferences removeByO_O(long ownerId, int ownerType)
-		throws com.liferay.portal.NoSuchPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPreferencesException;
 
 	/**
 	* Returns the number of portal preferenceses where ownerId = &#63; and ownerType = &#63;.
@@ -119,7 +119,7 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
 	*/
 	public PortalPreferences remove(long portalPreferencesId)
-		throws com.liferay.portal.NoSuchPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPreferencesException;
 
 	public PortalPreferences updateImpl(PortalPreferences portalPreferences);
 
@@ -131,7 +131,7 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
 	*/
 	public PortalPreferences findByPrimaryKey(long portalPreferencesId)
-		throws com.liferay.portal.NoSuchPreferencesException;
+		throws com.liferay.portal.exception.NoSuchPreferencesException;
 
 	/**
 	* Returns the portal preferences with the primary key or returns <code>null</code> if it could not be found.

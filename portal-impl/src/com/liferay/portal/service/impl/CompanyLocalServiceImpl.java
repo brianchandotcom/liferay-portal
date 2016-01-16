@@ -14,13 +14,13 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.AccountNameException;
-import com.liferay.portal.CompanyMxException;
-import com.liferay.portal.CompanyVirtualHostException;
-import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchVirtualHostException;
-import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.exception.AccountNameException;
+import com.liferay.portal.exception.CompanyMxException;
+import com.liferay.portal.exception.CompanyVirtualHostException;
+import com.liferay.portal.exception.CompanyWebIdException;
+import com.liferay.portal.exception.NoSuchVirtualHostException;
+import com.liferay.portal.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

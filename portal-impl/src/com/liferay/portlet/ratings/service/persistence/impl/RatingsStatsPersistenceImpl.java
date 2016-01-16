@@ -36,7 +36,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.ratings.NoSuchStatsException;
+import com.liferay.portlet.ratings.exception.NoSuchStatsException;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.model.impl.RatingsStatsImpl;
 import com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl;
@@ -620,7 +620,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	}
 
 	/**
-	 * Returns the ratings stats with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the ratings stats with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the ratings stats
 	 * @return the ratings stats

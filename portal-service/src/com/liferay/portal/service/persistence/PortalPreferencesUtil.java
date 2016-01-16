@@ -117,7 +117,7 @@ public class PortalPreferencesUtil {
 	* @throws NoSuchPreferencesException if a matching portal preferences could not be found
 	*/
 	public static PortalPreferences findByO_O(long ownerId, int ownerType)
-		throws com.liferay.portal.NoSuchPreferencesException {
+		throws com.liferay.portal.exception.NoSuchPreferencesException {
 		return getPersistence().findByO_O(ownerId, ownerType);
 	}
 
@@ -153,7 +153,7 @@ public class PortalPreferencesUtil {
 	* @return the portal preferences that was removed
 	*/
 	public static PortalPreferences removeByO_O(long ownerId, int ownerType)
-		throws com.liferay.portal.NoSuchPreferencesException {
+		throws com.liferay.portal.exception.NoSuchPreferencesException {
 		return getPersistence().removeByO_O(ownerId, ownerType);
 	}
 
@@ -204,7 +204,7 @@ public class PortalPreferencesUtil {
 	* @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
 	*/
 	public static PortalPreferences remove(long portalPreferencesId)
-		throws com.liferay.portal.NoSuchPreferencesException {
+		throws com.liferay.portal.exception.NoSuchPreferencesException {
 		return getPersistence().remove(portalPreferencesId);
 	}
 
@@ -221,7 +221,7 @@ public class PortalPreferencesUtil {
 	* @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
 	*/
 	public static PortalPreferences findByPrimaryKey(long portalPreferencesId)
-		throws com.liferay.portal.NoSuchPreferencesException {
+		throws com.liferay.portal.exception.NoSuchPreferencesException {
 		return getPersistence().findByPrimaryKey(portalPreferencesId);
 	}
 

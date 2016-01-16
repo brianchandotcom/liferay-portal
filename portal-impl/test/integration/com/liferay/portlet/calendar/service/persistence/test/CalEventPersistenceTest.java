@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.calendar.NoSuchEventException;
+import com.liferay.portlet.calendar.exception.NoSuchEventException;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 import com.liferay.portlet.calendar.service.persistence.CalEventPersistence;

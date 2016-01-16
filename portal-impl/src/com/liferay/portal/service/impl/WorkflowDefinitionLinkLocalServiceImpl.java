@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
+import com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.util.CharPool;

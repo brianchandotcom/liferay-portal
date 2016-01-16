@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;

@@ -187,7 +187,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry findByGroupId_First(long groupId,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry findByGroupId_Last(long groupId,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry[] findByGroupId_PrevAndNext(long entryId,
 		long groupId, OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(entryId, groupId,
 			orderByComparator);
@@ -343,7 +343,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry findByCompanyId_First(long companyId,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -371,7 +371,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry findByCompanyId_Last(long companyId,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -400,7 +400,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry[] findByCompanyId_PrevAndNext(long entryId,
 		long companyId, OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(entryId, companyId,
 			orderByComparator);
@@ -513,7 +513,7 @@ public class TrashEntryUtil {
 	public static TrashEntry findByG_LtCD_First(long groupId,
 		java.util.Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_First(groupId, createDate, orderByComparator);
 	}
@@ -545,7 +545,7 @@ public class TrashEntryUtil {
 	public static TrashEntry findByG_LtCD_Last(long groupId,
 		java.util.Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_Last(groupId, createDate, orderByComparator);
 	}
@@ -578,7 +578,7 @@ public class TrashEntryUtil {
 	public static TrashEntry[] findByG_LtCD_PrevAndNext(long entryId,
 		long groupId, java.util.Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_PrevAndNext(entryId, groupId, createDate,
 			orderByComparator);
@@ -689,7 +689,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry findByG_C_First(long groupId, long classNameId,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -719,7 +719,7 @@ public class TrashEntryUtil {
 	*/
 	public static TrashEntry findByG_C_Last(long groupId, long classNameId,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -751,7 +751,7 @@ public class TrashEntryUtil {
 	public static TrashEntry[] findByG_C_PrevAndNext(long entryId,
 		long groupId, long classNameId,
 		OrderByComparator<TrashEntry> orderByComparator)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(entryId, groupId, classNameId,
 			orderByComparator);
@@ -787,7 +787,7 @@ public class TrashEntryUtil {
 	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
 	public static TrashEntry findByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -824,7 +824,7 @@ public class TrashEntryUtil {
 	* @return the trash entry that was removed
 	*/
 	public static TrashEntry removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -875,7 +875,7 @@ public class TrashEntryUtil {
 	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
 	public static TrashEntry remove(long entryId)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence().remove(entryId);
 	}
 
@@ -891,7 +891,7 @@ public class TrashEntryUtil {
 	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
 	public static TrashEntry findByPrimaryKey(long entryId)
-		throws com.liferay.portlet.trash.NoSuchEntryException {
+		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(entryId);
 	}
 

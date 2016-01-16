@@ -37,7 +37,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.expando.NoSuchTableException;
+import com.liferay.portlet.expando.exception.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.impl.ExpandoTableImpl;
 import com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl;
@@ -1244,7 +1244,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	}
 
 	/**
-	 * Returns the expando table with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the expando table with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the expando table
 	 * @return the expando table

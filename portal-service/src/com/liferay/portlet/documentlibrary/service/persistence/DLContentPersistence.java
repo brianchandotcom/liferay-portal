@@ -114,7 +114,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public DLContent findByC_R_First(long companyId, long repositoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
@@ -138,7 +138,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public DLContent findByC_R_Last(long companyId, long repositoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63;.
@@ -164,7 +164,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public DLContent[] findByC_R_PrevAndNext(long contentId, long companyId,
 		long repositoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; from the database.
@@ -264,7 +264,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public DLContent findByC_R_P_First(long companyId, long repositoryId,
 		java.lang.String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -292,7 +292,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public DLContent findByC_R_P_Last(long companyId, long repositoryId,
 		java.lang.String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path = &#63;.
@@ -321,7 +321,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public DLContent[] findByC_R_P_PrevAndNext(long contentId, long companyId,
 		long repositoryId, java.lang.String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63; from the database.
@@ -425,7 +425,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public DLContent findByC_R_LikeP_First(long companyId, long repositoryId,
 		java.lang.String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the first document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -453,7 +453,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public DLContent findByC_R_LikeP_Last(long companyId, long repositoryId,
 		java.lang.String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the last document library content in the ordered set where companyId = &#63; and repositoryId = &#63; and path LIKE &#63;.
@@ -482,7 +482,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	public DLContent[] findByC_R_LikeP_PrevAndNext(long contentId,
 		long companyId, long repositoryId, java.lang.String path,
 		com.liferay.portal.kernel.util.OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; and path LIKE &#63; from the database.
@@ -517,7 +517,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public DLContent findByC_R_P_V(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -556,7 +556,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	*/
 	public DLContent removeByC_R_P_V(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the number of document library contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63;.
@@ -600,7 +600,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a document library content with the primary key could not be found
 	*/
 	public DLContent remove(long contentId)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	public DLContent updateImpl(DLContent dlContent);
 
@@ -612,7 +612,7 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws NoSuchContentException if a document library content with the primary key could not be found
 	*/
 	public DLContent findByPrimaryKey(long contentId)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 
 	/**
 	* Returns the document library content with the primary key or returns <code>null</code> if it could not be found.

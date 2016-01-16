@@ -185,7 +185,7 @@ public class LayoutSetUtil {
 	*/
 	public static LayoutSet findByGroupId_First(long groupId,
 		OrderByComparator<LayoutSet> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -211,7 +211,7 @@ public class LayoutSetUtil {
 	*/
 	public static LayoutSet findByGroupId_Last(long groupId,
 		OrderByComparator<LayoutSet> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -238,7 +238,7 @@ public class LayoutSetUtil {
 	*/
 	public static LayoutSet[] findByGroupId_PrevAndNext(long layoutSetId,
 		long groupId, OrderByComparator<LayoutSet> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(layoutSetId, groupId,
 			orderByComparator);
@@ -349,7 +349,7 @@ public class LayoutSetUtil {
 	public static LayoutSet findByLayoutSetPrototypeUuid_First(
 		java.lang.String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -381,7 +381,7 @@ public class LayoutSetUtil {
 	public static LayoutSet findByLayoutSetPrototypeUuid_Last(
 		java.lang.String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -414,7 +414,7 @@ public class LayoutSetUtil {
 	public static LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
 		long layoutSetId, java.lang.String layoutSetPrototypeUuid,
 		OrderByComparator<LayoutSet> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_PrevAndNext(layoutSetId,
 			layoutSetPrototypeUuid, orderByComparator);
@@ -451,7 +451,7 @@ public class LayoutSetUtil {
 	* @throws NoSuchLayoutSetException if a matching layout set could not be found
 	*/
 	public static LayoutSet findByG_P(long groupId, boolean privateLayout)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence().findByG_P(groupId, privateLayout);
 	}
 
@@ -488,7 +488,7 @@ public class LayoutSetUtil {
 	* @return the layout set that was removed
 	*/
 	public static LayoutSet removeByG_P(long groupId, boolean privateLayout)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence().removeByG_P(groupId, privateLayout);
 	}
 
@@ -539,7 +539,7 @@ public class LayoutSetUtil {
 	* @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	*/
 	public static LayoutSet remove(long layoutSetId)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence().remove(layoutSetId);
 	}
 
@@ -555,7 +555,7 @@ public class LayoutSetUtil {
 	* @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
 	*/
 	public static LayoutSet findByPrimaryKey(long layoutSetId)
-		throws com.liferay.portal.NoSuchLayoutSetException {
+		throws com.liferay.portal.exception.NoSuchLayoutSetException {
 		return getPersistence().findByPrimaryKey(layoutSetId);
 	}
 

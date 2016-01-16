@@ -29,7 +29,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;

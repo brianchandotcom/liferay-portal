@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileShortcutException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

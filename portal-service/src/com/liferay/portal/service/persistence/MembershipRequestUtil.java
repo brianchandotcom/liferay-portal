@@ -188,7 +188,7 @@ public class MembershipRequestUtil {
 	*/
 	public static MembershipRequest findByGroupId_First(long groupId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -214,7 +214,7 @@ public class MembershipRequestUtil {
 	*/
 	public static MembershipRequest findByGroupId_Last(long groupId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -242,7 +242,7 @@ public class MembershipRequestUtil {
 	public static MembershipRequest[] findByGroupId_PrevAndNext(
 		long membershipRequestId, long groupId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(membershipRequestId, groupId,
 			orderByComparator);
@@ -345,7 +345,7 @@ public class MembershipRequestUtil {
 	*/
 	public static MembershipRequest findByUserId_First(long userId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -371,7 +371,7 @@ public class MembershipRequestUtil {
 	*/
 	public static MembershipRequest findByUserId_Last(long userId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -399,7 +399,7 @@ public class MembershipRequestUtil {
 	public static MembershipRequest[] findByUserId_PrevAndNext(
 		long membershipRequestId, long userId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(membershipRequestId, userId,
 			orderByComparator);
@@ -509,7 +509,7 @@ public class MembershipRequestUtil {
 	*/
 	public static MembershipRequest findByG_S_First(long groupId,
 		long statusId, OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByG_S_First(groupId, statusId, orderByComparator);
 	}
@@ -539,7 +539,7 @@ public class MembershipRequestUtil {
 	*/
 	public static MembershipRequest findByG_S_Last(long groupId, long statusId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, statusId, orderByComparator);
 	}
@@ -571,7 +571,7 @@ public class MembershipRequestUtil {
 	public static MembershipRequest[] findByG_S_PrevAndNext(
 		long membershipRequestId, long groupId, long statusId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(membershipRequestId, groupId,
 			statusId, orderByComparator);
@@ -692,7 +692,7 @@ public class MembershipRequestUtil {
 	public static MembershipRequest findByG_U_S_First(long groupId,
 		long userId, long statusId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByG_U_S_First(groupId, userId, statusId,
 			orderByComparator);
@@ -727,7 +727,7 @@ public class MembershipRequestUtil {
 	*/
 	public static MembershipRequest findByG_U_S_Last(long groupId, long userId,
 		long statusId, OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByG_U_S_Last(groupId, userId, statusId,
 			orderByComparator);
@@ -764,7 +764,7 @@ public class MembershipRequestUtil {
 	public static MembershipRequest[] findByG_U_S_PrevAndNext(
 		long membershipRequestId, long groupId, long userId, long statusId,
 		OrderByComparator<MembershipRequest> orderByComparator)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence()
 				   .findByG_U_S_PrevAndNext(membershipRequestId, groupId,
 			userId, statusId, orderByComparator);
@@ -829,7 +829,7 @@ public class MembershipRequestUtil {
 	* @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
 	*/
 	public static MembershipRequest remove(long membershipRequestId)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence().remove(membershipRequestId);
 	}
 
@@ -846,7 +846,7 @@ public class MembershipRequestUtil {
 	* @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
 	*/
 	public static MembershipRequest findByPrimaryKey(long membershipRequestId)
-		throws com.liferay.portal.NoSuchMembershipRequestException {
+		throws com.liferay.portal.exception.NoSuchMembershipRequestException {
 		return getPersistence().findByPrimaryKey(membershipRequestId);
 	}
 

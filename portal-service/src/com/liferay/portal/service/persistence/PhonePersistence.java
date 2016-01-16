@@ -107,7 +107,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the first phone in the ordered set where uuid = &#63;.
@@ -129,7 +129,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the last phone in the ordered set where uuid = &#63;.
@@ -152,7 +152,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone[] findByUuid_PrevAndNext(long phoneId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Removes all the phones where uuid = &#63; from the database.
@@ -244,7 +244,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the first phone in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -268,7 +268,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the last phone in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -294,7 +294,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone[] findByUuid_C_PrevAndNext(long phoneId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Removes all the phones where uuid = &#63; and companyId = &#63; from the database.
@@ -382,7 +382,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the first phone in the ordered set where companyId = &#63;.
@@ -404,7 +404,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the last phone in the ordered set where companyId = &#63;.
@@ -427,7 +427,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone[] findByCompanyId_PrevAndNext(long phoneId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Removes all the phones where companyId = &#63; from the database.
@@ -510,7 +510,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the first phone in the ordered set where userId = &#63;.
@@ -532,7 +532,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the last phone in the ordered set where userId = &#63;.
@@ -555,7 +555,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone[] findByUserId_PrevAndNext(long phoneId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Removes all the phones where userId = &#63; from the database.
@@ -646,7 +646,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByC_C_First(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the first phone in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -670,7 +670,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	*/
 	public Phone findByC_C_Last(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the last phone in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -696,7 +696,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone[] findByC_C_PrevAndNext(long phoneId, long companyId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Removes all the phones where companyId = &#63; and classNameId = &#63; from the database.
@@ -796,7 +796,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone findByC_C_C_First(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the first phone in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -824,7 +824,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone findByC_C_C_Last(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the last phone in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -853,7 +853,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone[] findByC_C_C_PrevAndNext(long phoneId, long companyId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Removes all the phones where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -960,7 +960,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone findByC_C_C_P_First(long companyId, long classNameId,
 		long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the first phone in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -990,7 +990,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone findByC_C_C_P_Last(long companyId, long classNameId,
 		long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the last phone in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1021,7 +1021,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	public Phone[] findByC_C_C_P_PrevAndNext(long phoneId, long companyId,
 		long classNameId, long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Removes all the phones where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63; from the database.
@@ -1076,7 +1076,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	* @throws NoSuchPhoneException if a phone with the primary key could not be found
 	*/
 	public Phone remove(long phoneId)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	public Phone updateImpl(Phone phone);
 
@@ -1088,7 +1088,7 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	* @throws NoSuchPhoneException if a phone with the primary key could not be found
 	*/
 	public Phone findByPrimaryKey(long phoneId)
-		throws com.liferay.portal.NoSuchPhoneException;
+		throws com.liferay.portal.exception.NoSuchPhoneException;
 
 	/**
 	* Returns the phone with the primary key or returns <code>null</code> if it could not be found.

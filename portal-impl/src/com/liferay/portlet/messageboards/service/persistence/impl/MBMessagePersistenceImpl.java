@@ -52,7 +52,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.NoSuchMessageException;
+import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
@@ -19789,7 +19789,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	/**
-	 * Returns the message-boards message with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the message-boards message with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the message-boards message
 	 * @return the message-boards message

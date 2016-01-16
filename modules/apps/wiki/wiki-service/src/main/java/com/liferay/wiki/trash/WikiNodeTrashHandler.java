@@ -26,7 +26,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.exception.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.wiki.constants.WikiPortletKeys;

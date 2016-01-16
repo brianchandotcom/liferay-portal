@@ -109,7 +109,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*/
 	public AssetCategoryProperty findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the first asset category property in the ordered set where companyId = &#63;.
@@ -131,7 +131,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*/
 	public AssetCategoryProperty findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the last asset category property in the ordered set where companyId = &#63;.
@@ -155,7 +155,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	public AssetCategoryProperty[] findByCompanyId_PrevAndNext(
 		long categoryPropertyId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Removes all the asset category properties where companyId = &#63; from the database.
@@ -242,7 +242,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*/
 	public AssetCategoryProperty findByCategoryId_First(long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the first asset category property in the ordered set where categoryId = &#63;.
@@ -264,7 +264,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*/
 	public AssetCategoryProperty findByCategoryId_Last(long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the last asset category property in the ordered set where categoryId = &#63;.
@@ -288,7 +288,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	public AssetCategoryProperty[] findByCategoryId_PrevAndNext(
 		long categoryPropertyId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Removes all the asset category properties where categoryId = &#63; from the database.
@@ -381,7 +381,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	public AssetCategoryProperty findByC_K_First(long companyId,
 		java.lang.String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the first asset category property in the ordered set where companyId = &#63; and key = &#63;.
@@ -407,7 +407,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	public AssetCategoryProperty findByC_K_Last(long companyId,
 		java.lang.String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the last asset category property in the ordered set where companyId = &#63; and key = &#63;.
@@ -434,7 +434,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	public AssetCategoryProperty[] findByC_K_PrevAndNext(
 		long categoryPropertyId, long companyId, java.lang.String key,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Removes all the asset category properties where companyId = &#63; and key = &#63; from the database.
@@ -463,7 +463,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*/
 	public AssetCategoryProperty findByCA_K(long categoryId,
 		java.lang.String key)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the asset category property where categoryId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -495,7 +495,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	*/
 	public AssetCategoryProperty removeByCA_K(long categoryId,
 		java.lang.String key)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the number of asset category properties where categoryId = &#63; and key = &#63;.
@@ -537,7 +537,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
 	*/
 	public AssetCategoryProperty remove(long categoryPropertyId)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	public AssetCategoryProperty updateImpl(
 		AssetCategoryProperty assetCategoryProperty);
@@ -550,7 +550,7 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @throws NoSuchCategoryPropertyException if a asset category property with the primary key could not be found
 	*/
 	public AssetCategoryProperty findByPrimaryKey(long categoryPropertyId)
-		throws com.liferay.portlet.asset.NoSuchCategoryPropertyException;
+		throws com.liferay.portlet.asset.exception.NoSuchCategoryPropertyException;
 
 	/**
 	* Returns the asset category property with the primary key or returns <code>null</code> if it could not be found.

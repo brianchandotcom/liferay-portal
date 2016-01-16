@@ -14,10 +14,10 @@
 
 package com.liferay.user.groups.admin.web.portlet;
 
-import com.liferay.portal.DuplicateUserGroupException;
-import com.liferay.portal.NoSuchUserGroupException;
-import com.liferay.portal.RequiredUserGroupException;
-import com.liferay.portal.UserGroupNameException;
+import com.liferay.portal.exception.DuplicateUserGroupException;
+import com.liferay.portal.exception.NoSuchUserGroupException;
+import com.liferay.portal.exception.RequiredUserGroupException;
+import com.liferay.portal.exception.UserGroupNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;

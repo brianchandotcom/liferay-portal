@@ -22,7 +22,7 @@ import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
-import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;

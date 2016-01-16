@@ -186,7 +186,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion[] findByUuid_PrevAndNext(long discussionId,
 		java.lang.String uuid, OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(discussionId, uuid, orderByComparator);
 	}
@@ -272,7 +272,7 @@ public class MBDiscussionUtil {
 	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
 	public static MBDiscussion findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -309,7 +309,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion removeByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -410,7 +410,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -440,7 +440,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -472,7 +472,7 @@ public class MBDiscussionUtil {
 	public static MBDiscussion[] findByUuid_C_PrevAndNext(long discussionId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(discussionId, uuid, companyId,
 			orderByComparator);
@@ -577,7 +577,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion findByClassNameId_First(long classNameId,
 		OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -605,7 +605,7 @@ public class MBDiscussionUtil {
 	*/
 	public static MBDiscussion findByClassNameId_Last(long classNameId,
 		OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -635,7 +635,7 @@ public class MBDiscussionUtil {
 	public static MBDiscussion[] findByClassNameId_PrevAndNext(
 		long discussionId, long classNameId,
 		OrderByComparator<MBDiscussion> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(discussionId, classNameId,
 			orderByComparator);
@@ -668,7 +668,7 @@ public class MBDiscussionUtil {
 	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
 	public static MBDiscussion findByThreadId(long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().findByThreadId(threadId);
 	}
 
@@ -701,7 +701,7 @@ public class MBDiscussionUtil {
 	* @return the message boards discussion that was removed
 	*/
 	public static MBDiscussion removeByThreadId(long threadId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().removeByThreadId(threadId);
 	}
 
@@ -724,7 +724,7 @@ public class MBDiscussionUtil {
 	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
 	public static MBDiscussion findByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -761,7 +761,7 @@ public class MBDiscussionUtil {
 	* @return the message boards discussion that was removed
 	*/
 	public static MBDiscussion removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -812,7 +812,7 @@ public class MBDiscussionUtil {
 	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
 	public static MBDiscussion remove(long discussionId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().remove(discussionId);
 	}
 
@@ -828,7 +828,7 @@ public class MBDiscussionUtil {
 	* @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
 	*/
 	public static MBDiscussion findByPrimaryKey(long discussionId)
-		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchDiscussionException {
 		return getPersistence().findByPrimaryKey(discussionId);
 	}
 

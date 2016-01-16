@@ -14,11 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.RequiredLayoutException;
-import com.liferay.portal.SitemapChangeFrequencyException;
-import com.liferay.portal.SitemapIncludeException;
-import com.liferay.portal.SitemapPagePriorityException;
+import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.exception.RequiredLayoutException;
+import com.liferay.portal.exception.SitemapChangeFrequencyException;
+import com.liferay.portal.exception.SitemapIncludeException;
+import com.liferay.portal.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

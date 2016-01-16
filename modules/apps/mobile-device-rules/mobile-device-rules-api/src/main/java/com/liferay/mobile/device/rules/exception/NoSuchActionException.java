@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 
 /**
  * @author Edward C. Han

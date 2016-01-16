@@ -60,7 +60,7 @@ public interface GroupFinder {
 
 	public com.liferay.portal.model.Group findByC_GK(long companyId,
 		java.lang.String groupKey)
-		throws com.liferay.portal.NoSuchGroupException;
+		throws com.liferay.portal.exception.NoSuchGroupException;
 
 	public java.util.List<com.liferay.portal.model.Group> findByC_C_PG_N_D(
 		long companyId, long[] classNameIds, long parentGroupId,

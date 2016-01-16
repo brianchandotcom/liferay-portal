@@ -15,15 +15,15 @@
 package com.liferay.login.web.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.CookieNotSupportedException;
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.PasswordExpiredException;
-import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.UserIdException;
-import com.liferay.portal.UserLockoutException;
-import com.liferay.portal.UserPasswordException;
-import com.liferay.portal.UserScreenNameException;
+import com.liferay.portal.exception.CompanyMaxUsersException;
+import com.liferay.portal.exception.NoSuchUserException;
+import com.liferay.portal.exception.PasswordExpiredException;
+import com.liferay.portal.exception.UserEmailAddressException;
+import com.liferay.portal.exception.UserIdException;
+import com.liferay.portal.exception.UserLockoutException;
+import com.liferay.portal.exception.UserPasswordException;
+import com.liferay.portal.exception.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;

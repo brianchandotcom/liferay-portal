@@ -14,16 +14,16 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.ImageTypeException;
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchImageException;
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.RSSFeedException;
 import com.liferay.portal.comment.action.EditDiscussionStrutsAction;
 import com.liferay.portal.comment.action.GetCommentsStrutsAction;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.exception.ImageTypeException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchImageException;
+import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchUserException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -199,10 +199,10 @@ import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.documentlibrary.ImageSizeException;
+import com.liferay.portlet.documentlibrary.exception.ImageSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.expando.ValueDataException;
+import com.liferay.portlet.expando.exception.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;

@@ -189,7 +189,7 @@ public class DLFileEntryMetadataUtil {
 	*/
 	public static DLFileEntryMetadata findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -215,7 +215,7 @@ public class DLFileEntryMetadataUtil {
 	*/
 	public static DLFileEntryMetadata findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -243,7 +243,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata[] findByUuid_PrevAndNext(
 		long fileEntryMetadataId, java.lang.String uuid,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(fileEntryMetadataId, uuid,
 			orderByComparator);
@@ -355,7 +355,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -386,7 +386,7 @@ public class DLFileEntryMetadataUtil {
 	*/
 	public static DLFileEntryMetadata findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -419,7 +419,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata[] findByUuid_C_PrevAndNext(
 		long fileEntryMetadataId, java.lang.String uuid, long companyId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(fileEntryMetadataId, uuid,
 			companyId, orderByComparator);
@@ -527,7 +527,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata findByFileEntryId_First(
 		long fileEntryId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByFileEntryId_First(fileEntryId, orderByComparator);
 	}
@@ -556,7 +556,7 @@ public class DLFileEntryMetadataUtil {
 	*/
 	public static DLFileEntryMetadata findByFileEntryId_Last(long fileEntryId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByFileEntryId_Last(fileEntryId, orderByComparator);
 	}
@@ -587,7 +587,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata[] findByFileEntryId_PrevAndNext(
 		long fileEntryMetadataId, long fileEntryId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByFileEntryId_PrevAndNext(fileEntryMetadataId,
 			fileEntryId, orderByComparator);
@@ -695,7 +695,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata findByFileVersionId_First(
 		long fileVersionId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByFileVersionId_First(fileVersionId, orderByComparator);
 	}
@@ -725,7 +725,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata findByFileVersionId_Last(
 		long fileVersionId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByFileVersionId_Last(fileVersionId, orderByComparator);
 	}
@@ -756,7 +756,7 @@ public class DLFileEntryMetadataUtil {
 	public static DLFileEntryMetadata[] findByFileVersionId_PrevAndNext(
 		long fileEntryMetadataId, long fileVersionId,
 		OrderByComparator<DLFileEntryMetadata> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence()
 				   .findByFileVersionId_PrevAndNext(fileEntryMetadataId,
 			fileVersionId, orderByComparator);
@@ -791,7 +791,7 @@ public class DLFileEntryMetadataUtil {
 	*/
 	public static DLFileEntryMetadata findByD_F(long DDMStructureId,
 		long fileVersionId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().findByD_F(DDMStructureId, fileVersionId);
 	}
 
@@ -830,7 +830,7 @@ public class DLFileEntryMetadataUtil {
 	*/
 	public static DLFileEntryMetadata removeByD_F(long DDMStructureId,
 		long fileVersionId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().removeByD_F(DDMStructureId, fileVersionId);
 	}
 
@@ -882,7 +882,7 @@ public class DLFileEntryMetadataUtil {
 	* @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	*/
 	public static DLFileEntryMetadata remove(long fileEntryMetadataId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().remove(fileEntryMetadataId);
 	}
 
@@ -899,7 +899,7 @@ public class DLFileEntryMetadataUtil {
 	* @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
 	*/
 	public static DLFileEntryMetadata findByPrimaryKey(long fileEntryMetadataId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryMetadataException {
 		return getPersistence().findByPrimaryKey(fileEntryMetadataId);
 	}
 

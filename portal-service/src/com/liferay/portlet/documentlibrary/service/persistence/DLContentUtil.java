@@ -193,7 +193,7 @@ public class DLContentUtil {
 	*/
 	public static DLContent findByC_R_First(long companyId, long repositoryId,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_First(companyId, repositoryId, orderByComparator);
 	}
@@ -223,7 +223,7 @@ public class DLContentUtil {
 	*/
 	public static DLContent findByC_R_Last(long companyId, long repositoryId,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_Last(companyId, repositoryId, orderByComparator);
 	}
@@ -255,7 +255,7 @@ public class DLContentUtil {
 	public static DLContent[] findByC_R_PrevAndNext(long contentId,
 		long companyId, long repositoryId,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_PrevAndNext(contentId, companyId, repositoryId,
 			orderByComparator);
@@ -376,7 +376,7 @@ public class DLContentUtil {
 	public static DLContent findByC_R_P_First(long companyId,
 		long repositoryId, java.lang.String path,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_P_First(companyId, repositoryId, path,
 			orderByComparator);
@@ -411,7 +411,7 @@ public class DLContentUtil {
 	*/
 	public static DLContent findByC_R_P_Last(long companyId, long repositoryId,
 		java.lang.String path, OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_P_Last(companyId, repositoryId, path,
 			orderByComparator);
@@ -448,7 +448,7 @@ public class DLContentUtil {
 	public static DLContent[] findByC_R_P_PrevAndNext(long contentId,
 		long companyId, long repositoryId, java.lang.String path,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_P_PrevAndNext(contentId, companyId, repositoryId,
 			path, orderByComparator);
@@ -573,7 +573,7 @@ public class DLContentUtil {
 	public static DLContent findByC_R_LikeP_First(long companyId,
 		long repositoryId, java.lang.String path,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_LikeP_First(companyId, repositoryId, path,
 			orderByComparator);
@@ -609,7 +609,7 @@ public class DLContentUtil {
 	public static DLContent findByC_R_LikeP_Last(long companyId,
 		long repositoryId, java.lang.String path,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_LikeP_Last(companyId, repositoryId, path,
 			orderByComparator);
@@ -646,7 +646,7 @@ public class DLContentUtil {
 	public static DLContent[] findByC_R_LikeP_PrevAndNext(long contentId,
 		long companyId, long repositoryId, java.lang.String path,
 		OrderByComparator<DLContent> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_LikeP_PrevAndNext(contentId, companyId,
 			repositoryId, path, orderByComparator);
@@ -689,7 +689,7 @@ public class DLContentUtil {
 	*/
 	public static DLContent findByC_R_P_V(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByC_R_P_V(companyId, repositoryId, path, version);
 	}
@@ -738,7 +738,7 @@ public class DLContentUtil {
 	*/
 	public static DLContent removeByC_R_P_V(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence()
 				   .removeByC_R_P_V(companyId, repositoryId, path, version);
 	}
@@ -794,7 +794,7 @@ public class DLContentUtil {
 	* @throws NoSuchContentException if a document library content with the primary key could not be found
 	*/
 	public static DLContent remove(long contentId)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence().remove(contentId);
 	}
 
@@ -810,7 +810,7 @@ public class DLContentUtil {
 	* @throws NoSuchContentException if a document library content with the primary key could not be found
 	*/
 	public static DLContent findByPrimaryKey(long contentId)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getPersistence().findByPrimaryKey(contentId);
 	}
 

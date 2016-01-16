@@ -14,9 +14,9 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.DuplicatePasswordPolicyException;
-import com.liferay.portal.PasswordPolicyNameException;
-import com.liferay.portal.RequiredPasswordPolicyException;
+import com.liferay.portal.exception.DuplicatePasswordPolicyException;
+import com.liferay.portal.exception.PasswordPolicyNameException;
+import com.liferay.portal.exception.RequiredPasswordPolicyException;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;

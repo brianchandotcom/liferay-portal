@@ -184,7 +184,7 @@ public class JournalFeedUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByUuid_First(java.lang.String uuid,
 		OrderByComparator<JournalFeed> orderByComparator)
@@ -210,7 +210,7 @@ public class JournalFeedUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<JournalFeed> orderByComparator)
@@ -237,7 +237,7 @@ public class JournalFeedUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
 	public static JournalFeed[] findByUuid_PrevAndNext(long id,
 		java.lang.String uuid, OrderByComparator<JournalFeed> orderByComparator)
@@ -266,12 +266,12 @@ public class JournalFeedUtil {
 	}
 
 	/**
-	* Returns the journal feed where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.journal.NoSuchFeedException} if it could not be found.
+	* Returns the journal feed where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchFeedException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.journal.exception.NoSuchFeedException {
@@ -407,7 +407,7 @@ public class JournalFeedUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<JournalFeed> orderByComparator)
@@ -437,7 +437,7 @@ public class JournalFeedUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<JournalFeed> orderByComparator)
@@ -468,7 +468,7 @@ public class JournalFeedUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
 	public static JournalFeed[] findByUuid_C_PrevAndNext(long id,
 		java.lang.String uuid, long companyId,
@@ -574,7 +574,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByGroupId_First(long groupId,
 		OrderByComparator<JournalFeed> orderByComparator)
@@ -600,7 +600,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByGroupId_Last(long groupId,
 		OrderByComparator<JournalFeed> orderByComparator)
@@ -627,7 +627,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
 	public static JournalFeed[] findByGroupId_PrevAndNext(long id,
 		long groupId, OrderByComparator<JournalFeed> orderByComparator)
@@ -689,7 +689,7 @@ public class JournalFeedUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
 	public static JournalFeed[] filterFindByGroupId_PrevAndNext(long id,
 		long groupId, OrderByComparator<JournalFeed> orderByComparator)
@@ -729,12 +729,12 @@ public class JournalFeedUtil {
 	}
 
 	/**
-	* Returns the journal feed where groupId = &#63; and feedId = &#63; or throws a {@link com.liferay.journal.NoSuchFeedException} if it could not be found.
+	* Returns the journal feed where groupId = &#63; and feedId = &#63; or throws a {@link NoSuchFeedException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param feedId the feed ID
 	* @return the matching journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a matching journal feed could not be found
+	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public static JournalFeed findByG_F(long groupId, java.lang.String feedId)
 		throws com.liferay.journal.exception.NoSuchFeedException {
@@ -821,7 +821,7 @@ public class JournalFeedUtil {
 	*
 	* @param id the primary key of the journal feed
 	* @return the journal feed that was removed
-	* @throws com.liferay.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
 	public static JournalFeed remove(long id)
 		throws com.liferay.journal.exception.NoSuchFeedException {
@@ -833,11 +833,11 @@ public class JournalFeedUtil {
 	}
 
 	/**
-	* Returns the journal feed with the primary key or throws a {@link com.liferay.journal.NoSuchFeedException} if it could not be found.
+	* Returns the journal feed with the primary key or throws a {@link NoSuchFeedException} if it could not be found.
 	*
 	* @param id the primary key of the journal feed
 	* @return the journal feed
-	* @throws com.liferay.journal.NoSuchFeedException if a journal feed with the primary key could not be found
+	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
 	public static JournalFeed findByPrimaryKey(long id)
 		throws com.liferay.journal.exception.NoSuchFeedException {

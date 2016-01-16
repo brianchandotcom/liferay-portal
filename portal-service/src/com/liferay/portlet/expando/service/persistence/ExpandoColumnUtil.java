@@ -187,7 +187,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static ExpandoColumn findByTableId_First(long tableId,
 		OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence().findByTableId_First(tableId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static ExpandoColumn findByTableId_Last(long tableId,
 		OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence().findByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class ExpandoColumnUtil {
 	*/
 	public static ExpandoColumn[] findByTableId_PrevAndNext(long columnId,
 		long tableId, OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence()
 				   .findByTableId_PrevAndNext(columnId, tableId,
 			orderByComparator);
@@ -304,7 +304,7 @@ public class ExpandoColumnUtil {
 	public static ExpandoColumn[] filterFindByTableId_PrevAndNext(
 		long columnId, long tableId,
 		OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence()
 				   .filterFindByTableId_PrevAndNext(columnId, tableId,
 			orderByComparator);
@@ -427,7 +427,7 @@ public class ExpandoColumnUtil {
 	* @throws NoSuchColumnException if a matching expando column could not be found
 	*/
 	public static ExpandoColumn findByT_N(long tableId, java.lang.String name)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence().findByT_N(tableId, name);
 	}
 
@@ -463,7 +463,7 @@ public class ExpandoColumnUtil {
 	* @return the expando column that was removed
 	*/
 	public static ExpandoColumn removeByT_N(long tableId, java.lang.String name)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence().removeByT_N(tableId, name);
 	}
 
@@ -547,7 +547,7 @@ public class ExpandoColumnUtil {
 	* @throws NoSuchColumnException if a expando column with the primary key could not be found
 	*/
 	public static ExpandoColumn remove(long columnId)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence().remove(columnId);
 	}
 
@@ -563,7 +563,7 @@ public class ExpandoColumnUtil {
 	* @throws NoSuchColumnException if a expando column with the primary key could not be found
 	*/
 	public static ExpandoColumn findByPrimaryKey(long columnId)
-		throws com.liferay.portlet.expando.NoSuchColumnException {
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException {
 		return getPersistence().findByPrimaryKey(columnId);
 	}
 

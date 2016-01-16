@@ -185,7 +185,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static AssetTagStats findByTagId_First(long tagId,
 		OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence().findByTagId_First(tagId, orderByComparator);
 	}
 
@@ -211,7 +211,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static AssetTagStats findByTagId_Last(long tagId,
 		OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence().findByTagId_Last(tagId, orderByComparator);
 	}
 
@@ -238,7 +238,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static AssetTagStats[] findByTagId_PrevAndNext(long tagStatsId,
 		long tagId, OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByTagId_PrevAndNext(tagStatsId, tagId, orderByComparator);
 	}
@@ -340,7 +340,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static AssetTagStats findByClassNameId_First(long classNameId,
 		OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -368,7 +368,7 @@ public class AssetTagStatsUtil {
 	*/
 	public static AssetTagStats findByClassNameId_Last(long classNameId,
 		OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -398,7 +398,7 @@ public class AssetTagStatsUtil {
 	public static AssetTagStats[] findByClassNameId_PrevAndNext(
 		long tagStatsId, long classNameId,
 		OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(tagStatsId, classNameId,
 			orderByComparator);
@@ -432,7 +432,7 @@ public class AssetTagStatsUtil {
 	* @throws NoSuchTagStatsException if a matching asset tag stats could not be found
 	*/
 	public static AssetTagStats findByT_C(long tagId, long classNameId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence().findByT_C(tagId, classNameId);
 	}
 
@@ -468,7 +468,7 @@ public class AssetTagStatsUtil {
 	* @return the asset tag stats that was removed
 	*/
 	public static AssetTagStats removeByT_C(long tagId, long classNameId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence().removeByT_C(tagId, classNameId);
 	}
 
@@ -519,7 +519,7 @@ public class AssetTagStatsUtil {
 	* @throws NoSuchTagStatsException if a asset tag stats with the primary key could not be found
 	*/
 	public static AssetTagStats remove(long tagStatsId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence().remove(tagStatsId);
 	}
 
@@ -535,7 +535,7 @@ public class AssetTagStatsUtil {
 	* @throws NoSuchTagStatsException if a asset tag stats with the primary key could not be found
 	*/
 	public static AssetTagStats findByPrimaryKey(long tagStatsId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException {
 		return getPersistence().findByPrimaryKey(tagStatsId);
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;

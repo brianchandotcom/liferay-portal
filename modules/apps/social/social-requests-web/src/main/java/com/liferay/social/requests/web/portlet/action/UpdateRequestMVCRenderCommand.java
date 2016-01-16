@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.social.NoSuchRequestException;
+import com.liferay.portlet.social.exception.NoSuchRequestException;
 import com.liferay.portlet.social.service.SocialRequestService;
 import com.liferay.social.requests.web.constants.SocialRequestsPortletKeys;
 

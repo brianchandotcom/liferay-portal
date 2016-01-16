@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.sites.util;
 
-import com.liferay.portal.RequiredLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.exception.RequiredLayoutException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;

@@ -118,7 +118,7 @@ public class RatingsStatsUtil {
 	* @throws NoSuchStatsException if a matching ratings stats could not be found
 	*/
 	public static RatingsStats findByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.ratings.NoSuchStatsException {
+		throws com.liferay.portlet.ratings.exception.NoSuchStatsException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -155,7 +155,7 @@ public class RatingsStatsUtil {
 	* @return the ratings stats that was removed
 	*/
 	public static RatingsStats removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.ratings.NoSuchStatsException {
+		throws com.liferay.portlet.ratings.exception.NoSuchStatsException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -206,7 +206,7 @@ public class RatingsStatsUtil {
 	* @throws NoSuchStatsException if a ratings stats with the primary key could not be found
 	*/
 	public static RatingsStats remove(long statsId)
-		throws com.liferay.portlet.ratings.NoSuchStatsException {
+		throws com.liferay.portlet.ratings.exception.NoSuchStatsException {
 		return getPersistence().remove(statsId);
 	}
 
@@ -222,7 +222,7 @@ public class RatingsStatsUtil {
 	* @throws NoSuchStatsException if a ratings stats with the primary key could not be found
 	*/
 	public static RatingsStats findByPrimaryKey(long statsId)
-		throws com.liferay.portlet.ratings.NoSuchStatsException {
+		throws com.liferay.portlet.ratings.exception.NoSuchStatsException {
 		return getPersistence().findByPrimaryKey(statsId);
 	}
 

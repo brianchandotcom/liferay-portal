@@ -280,7 +280,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a matching meetups entry could not be found
+	 * @throws NoSuchMeetupsEntryException if a matching meetups entry could not be found
 	 */
 	@Override
 	public MeetupsEntry findByCompanyId_First(long companyId,
@@ -331,7 +331,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a matching meetups entry could not be found
+	 * @throws NoSuchMeetupsEntryException if a matching meetups entry could not be found
 	 */
 	@Override
 	public MeetupsEntry findByCompanyId_Last(long companyId,
@@ -389,7 +389,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
+	 * @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	 */
 	@Override
 	public MeetupsEntry[] findByCompanyId_PrevAndNext(long meetupsEntryId,
@@ -783,7 +783,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a matching meetups entry could not be found
+	 * @throws NoSuchMeetupsEntryException if a matching meetups entry could not be found
 	 */
 	@Override
 	public MeetupsEntry findByUserId_First(long userId,
@@ -833,7 +833,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a matching meetups entry could not be found
+	 * @throws NoSuchMeetupsEntryException if a matching meetups entry could not be found
 	 */
 	@Override
 	public MeetupsEntry findByUserId_Last(long userId,
@@ -890,7 +890,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
+	 * @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	 */
 	@Override
 	public MeetupsEntry[] findByUserId_PrevAndNext(long meetupsEntryId,
@@ -1196,7 +1196,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 *
 	 * @param meetupsEntryId the primary key of the meetups entry
 	 * @return the meetups entry that was removed
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
+	 * @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	 */
 	@Override
 	public MeetupsEntry remove(long meetupsEntryId)
@@ -1209,7 +1209,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 *
 	 * @param primaryKey the primary key of the meetups entry
 	 * @return the meetups entry that was removed
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
+	 * @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	 */
 	@Override
 	public MeetupsEntry remove(Serializable primaryKey)
@@ -1407,11 +1407,11 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	}
 
 	/**
-	 * Returns the meetups entry with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the meetups entry with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the meetups entry
 	 * @return the meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
+	 * @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	 */
 	@Override
 	public MeetupsEntry findByPrimaryKey(Serializable primaryKey)
@@ -1431,11 +1431,11 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	}
 
 	/**
-	 * Returns the meetups entry with the primary key or throws a {@link com.liferay.social.networking.NoSuchMeetupsEntryException} if it could not be found.
+	 * Returns the meetups entry with the primary key or throws a {@link NoSuchMeetupsEntryException} if it could not be found.
 	 *
 	 * @param meetupsEntryId the primary key of the meetups entry
 	 * @return the meetups entry
-	 * @throws com.liferay.social.networking.NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
+	 * @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	 */
 	@Override
 	public MeetupsEntry findByPrimaryKey(long meetupsEntryId)

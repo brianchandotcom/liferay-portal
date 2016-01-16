@@ -41,7 +41,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.messageboards.NoSuchBanException;
+import com.liferay.portlet.messageboards.exception.NoSuchBanException;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.impl.MBBanImpl;
 import com.liferay.portlet.messageboards.model.impl.MBBanModelImpl;
@@ -3634,7 +3634,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	}
 
 	/**
-	 * Returns the message boards ban with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the message boards ban with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the message boards ban
 	 * @return the message boards ban

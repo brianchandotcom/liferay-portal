@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
+<portlet:defineObjects />
+
 <%
 renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>

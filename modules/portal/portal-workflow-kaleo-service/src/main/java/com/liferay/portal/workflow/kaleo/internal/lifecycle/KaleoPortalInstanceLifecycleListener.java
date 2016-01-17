@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.service.wrapper;
+package com.liferay.portal.workflow.kaleo.internal.lifecycle;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,14 +29,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class KaleoCompanyLocalServiceWrapper
+public class KaleoPortalInstanceLifecycleListener
 	extends CompanyLocalServiceWrapper {
 
-	public KaleoCompanyLocalServiceWrapper() {
+	public KaleoPortalInstanceLifecycleListener() {
 		super(null);
 	}
 
-	public KaleoCompanyLocalServiceWrapper(
+	public KaleoPortalInstanceLifecycleListener(
 		CompanyLocalService companyLocalService) {
 
 		super(companyLocalService);

@@ -73,6 +73,26 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return curSelPlid;
 	}
 
+	public PortletURL getEmptyLayoutSetURL(boolean privateLayout) {
+		PortletURL emptyLayoutSetURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		emptyLayoutSetURL.setParameter("mvcPath", "/empty_layout_set.jsp");
+
+		emptyLayoutSetURL.setParameter(
+			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+
+		Group liveGroup = getLiveGroup();
+
+		emptyLayoutSetURL.setParameter(
+			"groupId", String.valueOf(liveGroup.getGroupId()));
+		emptyLayoutSetURL.setParameter(
+			"privateLayout", String.valueOf(privateLayout));
+
+		return emptyLayoutSetURL;
+	}
+
 	public String getJSSafeEditLayoutTitle() {
 		String value = UnicodeLanguageUtil.format(
 			getHttpServletRequest(), "edit-x", "{label}", false);
@@ -161,7 +181,9 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		Group selGroup = getSelGroup();
 
 		if (!selGroup.hasPrivateLayouts()) {
-			return null;
+			PortletURL portletURL = getEmptyLayoutSetURL(true);
+
+			return portletURL.toString();
 		}
 
 		return selGroup.getDisplayURL(themeDisplay, true);
@@ -171,7 +193,9 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		Group selGroup = getSelGroup();
 
 		if (!selGroup.hasPublicLayouts()) {
-			return null;
+			PortletURL portletURL = getEmptyLayoutSetURL(false);
+
+			return portletURL.toString();
 		}
 
 		return selGroup.getDisplayURL(themeDisplay, false);

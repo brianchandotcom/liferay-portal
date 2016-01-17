@@ -217,10 +217,24 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return true;
 	}
 
+	public boolean isShowPrivateLayoutsTree() throws PortalException {
+		Group selGroup = getSelGroup();
+
+		if (!selGroup.hasPrivateLayouts() && !isShowAddRootLayoutButton()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isShowPublicLayoutsTree() throws PortalException {
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
+			return false;
+		}
+
+		if (!selGroup.hasPublicLayouts() && !isShowAddRootLayoutButton()) {
 			return false;
 		}
 

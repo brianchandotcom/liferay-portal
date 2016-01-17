@@ -23,7 +23,9 @@ public interface WikiInfoPanelDisplayContext extends WikiDisplayContext {
 
 	public WikiNode getFirstNode();
 
-	public int getNodesCount();
+	public String getItemNameLabel();
+
+	public int getItemsCount();
 
 	public int getSelectedNodesCount();
 

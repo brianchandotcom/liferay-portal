@@ -17,6 +17,7 @@ package com.liferay.wiki.web.display.context;
 import com.liferay.wiki.display.context.WikiInfoPanelDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.display.context.util.WikiInfoPanelRequestHelper;
 
 import java.util.List;
@@ -49,9 +50,24 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
-	public int getNodesCount() {
-		return WikiNodeLocalServiceUtil.getNodesCount(
-			_wikiInfoPanelRequestHelper.getScopeGroupId());
+	public String getItemNameLabel() {
+		if (_wikiInfoPanelRequestHelper.getNodeId() == 0) {
+			return "wikis";
+		}
+
+		return "pages";
+	}
+
+	@Override
+	public int getItemsCount() {
+		WikiNode node = _wikiInfoPanelRequestHelper.getNode();
+
+		if (node == null) {
+			return WikiNodeLocalServiceUtil.getNodesCount(
+				_wikiInfoPanelRequestHelper.getScopeGroupId());
+		}
+
+		return WikiPageLocalServiceUtil.getPagesCount(node.getNodeId());
 	}
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.layout.prototype.action;
+package com.liferay.blogs.layout.prototype.lifecycle;
 
 import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
@@ -37,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = AddLayoutPrototypeAction.class)
-public class AddLayoutPrototypeAction {
+@Component(immediate = true, service = AddLayoutPrototypePortalInstanceLifecycleListener.class)
+public class AddLayoutPrototypePortalInstanceLifecycleListener {
 
 	@Activate
 	protected void activate() throws Exception {
@@ -66,7 +66,7 @@ public class AddLayoutPrototypeAction {
 		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
 			companyId, defaultUserId, "layout-prototype-blog-title",
 			"layout-prototype-blog-description", "2_columns_iii",
-			layoutPrototypes, AddLayoutPrototypeAction.class.getClassLoader());
+			layoutPrototypes, AddLayoutPrototypePortalInstanceLifecycleListener.class.getClassLoader());
 
 		if (layout == null) {
 			return;

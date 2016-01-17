@@ -47,10 +47,10 @@ import org.osgi.service.component.annotations.Reference;
 public class PanelAppRegistry {
 
 	public PanelApp getFirstPanelApp(
-		PanelCategory parentPanelCategory, PermissionChecker permissionChecker,
+		String parentPanelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
 
-		List<PanelApp> panelApps = getPanelApps(parentPanelCategory);
+		List<PanelApp> panelApps = getPanelApps(parentPanelCategoryKey);
 
 		for (PanelApp panelApp : panelApps) {
 			try {

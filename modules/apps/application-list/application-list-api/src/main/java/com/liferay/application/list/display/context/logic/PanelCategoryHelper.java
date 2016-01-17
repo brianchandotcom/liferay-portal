@@ -38,12 +38,6 @@ public class PanelCategoryHelper {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	public boolean containsPortlet(
-		String portletId, PanelCategory panelCategory) {
-
-		return containsPortlet(portletId, panelCategory.getKey());
-	}
-
 	public boolean containsPortlet(String portletId, String panelCategoryKey) {
 		for (PanelCategory curPanelCategory :
 				_panelCategoryRegistry.getChildPanelCategories(
@@ -53,12 +47,39 @@ public class PanelCategoryHelper {
 				return true;
 			}
 
-			if (containsPortlet(portletId, curPanelCategory)) {
+			if (containsPortlet(portletId, curPanelCategory.getKey())) {
 				return true;
 			}
 		}
 
 		return hasPortlet(portletId, panelCategoryKey);
+	}
+
+	public boolean containsPortlet(
+		String portletId, String panelCategoryKey,
+		PermissionChecker permissionChecker, Group group) {
+
+		for (PanelCategory curPanelCategory :
+				_panelCategoryRegistry.getChildPanelCategories(
+					panelCategoryKey, permissionChecker, group)) {
+
+			if (hasPortlet(
+					portletId, curPanelCategory.getKey(), permissionChecker,
+					group)) {
+
+				return true;
+			}
+
+			if (containsPortlet(
+					portletId, curPanelCategory.getKey(), permissionChecker,
+					group)) {
+
+				return true;
+			}
+		}
+
+		return hasPortlet(
+			portletId, panelCategoryKey, permissionChecker, group);
 	}
 
 	public String getFirstPortletId(
@@ -117,6 +138,22 @@ public class PanelCategoryHelper {
 	private boolean hasPortlet(String portletId, String panelCategoryKey) {
 		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			panelCategoryKey);
+
+		for (PanelApp panelApp : panelApps) {
+			if (portletId.equals(panelApp.getPortletId())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean hasPortlet(
+		String portletId, String panelCategoryKey,
+		PermissionChecker permissionChecker, Group group) {
+
+		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			panelCategoryKey, permissionChecker, group);
 
 		for (PanelApp panelApp : panelApps) {
 			if (portletId.equals(panelApp.getPortletId())) {

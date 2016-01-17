@@ -82,17 +82,24 @@ public class PanelCategoryHelper {
 		String panelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
 
+		PanelApp panelApp = _panelAppRegistry.getFirstPanelApp(
+			panelCategoryKey, permissionChecker, group);
+
+		if (panelApp != null) {
+			return panelApp.getPortletId();
+		}
+
 		List<PanelCategory> panelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
 				panelCategoryKey, permissionChecker, group);
 
-		if (panelCategories.isEmpty()) {
+		if (!panelCategories.isEmpty()) {
 			return null;
 		}
 
 		for (PanelCategory panelCategory : panelCategories) {
-			PanelApp panelApp = _panelAppRegistry.getFirstPanelApp(
-				panelCategory, permissionChecker, group);
+			panelApp = _panelAppRegistry.getFirstPanelApp(
+				panelCategory.getKey(), permissionChecker, group);
 
 			if (panelApp != null) {
 				return panelApp.getPortletId();

@@ -14,15 +14,12 @@
 
 package com.liferay.wiki.web.display.context;
 
-import com.liferay.portal.model.BaseModel;
 import com.liferay.wiki.display.context.WikiInfoPanelDisplayContext;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.display.context.util.WikiInfoPanelRequestHelper;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -97,14 +94,6 @@ public class DefaultWikiInfoPanelDisplayContext
 		}
 	}
 
-	protected List<?> getSelectedItems() {
-		if (_wikiInfoPanelRequestHelper.getNodeId() != 0) {
-			return _wikiInfoPanelRequestHelper.getPages();
-		}
-
-		return _wikiInfoPanelRequestHelper.getNodes();
-	}
-
 	@Override
 	public boolean isSingleNodeSelection() {
 		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
@@ -115,6 +104,14 @@ public class DefaultWikiInfoPanelDisplayContext
 		else {
 			return false;
 		}
+	}
+
+	protected List<?> getSelectedItems() {
+		if (_wikiInfoPanelRequestHelper.getNodeId() != 0) {
+			return _wikiInfoPanelRequestHelper.getPages();
+		}
+
+		return _wikiInfoPanelRequestHelper.getNodes();
 	}
 
 	private static final UUID _UUID = UUID.fromString(

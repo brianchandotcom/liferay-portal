@@ -147,6 +147,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = checkCompany(webId, mx);
 
+		company = companyPersistence.fetchByPrimaryKey(company.getCompanyId());
+
 		company.setMx(mx);
 		company.setSystem(system);
 		company.setMaxUsers(maxUsers);
@@ -156,7 +158,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Virtual host
 
-		updateVirtualHostname(company.getCompanyId(), virtualHostname);
+		company = updateVirtualHostname(
+			company.getCompanyId(), virtualHostname);
 
 		return company;
 	}
@@ -240,7 +243,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Virtual host
 
 			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				updateVirtualHostname(companyId, _DEFAULT_VIRTUAL_HOST);
+				company = updateVirtualHostname(
+					companyId, _DEFAULT_VIRTUAL_HOST);
 			}
 
 			// Demo settings
@@ -409,13 +413,17 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			portletLocalService.checkPortlets(companyId);
 
-			Registry registry = RegistryUtil.getRegistry();
+			synchronized (_companyServiceRegistrations) {
+				if (!_companyServiceRegistrations.containsKey(companyId)) {
+					Registry registry = RegistryUtil.getRegistry();
 
-			ServiceRegistration<Company> serviceRegistration =
-				registry.registerService(Company.class, company);
+					ServiceRegistration<Company> serviceRegistration =
+						registry.registerService(Company.class, company);
 
-			_companyServiceRegistrations.put(
-				company.getCompanyId(), serviceRegistration);
+					_companyServiceRegistrations.put(
+						company.getCompanyId(), serviceRegistration);
+				}
+			}
 		}
 		finally {
 			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);
@@ -838,7 +846,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Virtual host
 
-		updateVirtualHostname(companyId, virtualHostname);
+		company = updateVirtualHostname(companyId, virtualHostname);
 
 		return company;
 	}
@@ -909,7 +917,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Virtual host
 
-		updateVirtualHostname(companyId, virtualHostname);
+		company = updateVirtualHostname(companyId, virtualHostname);
 
 		return company;
 	}
@@ -1361,23 +1369,23 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			public Void call() throws Exception {
 				PortalInstances.removeCompany(companyId);
 
+				SearchEngineHelperUtil.removeCompany(companyId);
+
+				synchronized (_companyServiceRegistrations) {
+					ServiceRegistration<Company> serviceRegistration =
+						_companyServiceRegistrations.remove(companyId);
+
+					if (serviceRegistration != null) {
+						serviceRegistration.unregister();
+					}
+				}
+
 				return null;
 			}
 
 		};
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
-
-		// Search indices
-
-		SearchEngineHelperUtil.removeCompany(companyId);
-
-		ServiceRegistration<Company> serviceRegistration =
-			_companyServiceRegistrations.remove(companyId);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 
 		return company;
 	}
@@ -1417,7 +1425,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		accountPersistence.update(account);
 	}
 
-	protected void updateVirtualHostname(long companyId, String virtualHostname)
+	protected Company updateVirtualHostname(
+			long companyId, String virtualHostname)
 		throws CompanyVirtualHostException {
 
 		if (Validator.isNotNull(virtualHostname)) {
@@ -1444,6 +1453,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				virtualHostPersistence.remove(virtualHost);
 			}
 		}
+
+		return companyPersistence.fetchByPrimaryKey(companyId);
 	}
 
 	protected void validateLanguageIds(String languageIds)

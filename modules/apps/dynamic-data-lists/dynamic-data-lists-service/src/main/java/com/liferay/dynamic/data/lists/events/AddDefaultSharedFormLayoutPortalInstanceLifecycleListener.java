@@ -14,11 +14,9 @@
 
 package com.liferay.dynamic.data.lists.events;
 
-import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
@@ -26,19 +24,15 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,33 +40,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(immediate = true)
-public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener extends SimpleAction {
+public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
+	implements PortalInstanceLifecycleListener {
 
 	@Override
-	public void run(String[] ids) throws ActionException {
-		try {
-			doRun(GetterUtil.getLong(ids[0]));
+	public void portalInstanceRegistered(Company company) throws Exception {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			company.getCompanyId(), "/forms");
+
+		if (group == null) {
+			group = addFormsGroup(company.getCompanyId());
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
-		}
-	}
 
-	@Activate
-	protected void activate() throws ActionException {
-		Long companyId = CompanyThreadLocal.getCompanyId();
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			group.getGroupId(), false, "/shared");
 
-		try {
-			List<Company> companies = _companyLocalService.getCompanies();
-
-			for (Company company : companies) {
-				CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
-				run(new String[] {String.valueOf(company.getCompanyId())});
-			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
+		if (layout == null) {
+			addSharedLayout(company.getCompanyId(), group.getGroupId());
 		}
 	}
 
@@ -116,29 +100,6 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener extends S
 			serviceContext);
 	}
 
-	protected void doRun(long companyId) throws Exception {
-		Group group = _groupLocalService.fetchFriendlyURLGroup(
-			companyId, "/forms");
-
-		if (group == null) {
-			group = addFormsGroup(companyId);
-		}
-
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			group.getGroupId(), false, "/shared");
-
-		if (layout == null) {
-			addSharedLayout(companyId, group.getGroupId());
-		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
@@ -161,7 +122,6 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener extends S
 		_userLocalService = userLocalService;
 	}
 
-	private CompanyLocalService _companyLocalService;
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private UserLocalService _userLocalService;

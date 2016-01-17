@@ -17,22 +17,15 @@ package com.liferay.dynamic.data.lists.events;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,64 +33,34 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class AddDefaultDDLStructuresPortalInstanceLifecycleListener extends SimpleAction {
+public class AddDefaultDDLStructuresPortalInstanceLifecycleListener
+	implements PortalInstanceLifecycleListener {
 
 	@Override
-	public void run(String[] ids) throws ActionException {
-		try {
-			doRun(GetterUtil.getLong(ids[0]));
-		}
-		catch (Exception e) {
-			throw new ActionException(e);
-		}
-	}
-
-	@Activate
-	protected void activate() throws ActionException {
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			List<Company> companies = _companyLocalService.getCompanies();
-
-			for (Company company : companies) {
-				CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
-				run(new String[] {String.valueOf(company.getCompanyId())});
-			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
-		}
-	}
-
-	protected void doRun(long companyId) throws Exception {
+	public void portalInstanceRegistered(Company company) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setAddGroupPermissions(true);
 
-		Group group = _groupLocalService.getCompanyGroup(companyId);
+		Group group = _groupLocalService.getCompanyGroup(
+			company.getCompanyId());
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+		long defaultUserId = _userLocalService.getDefaultUserId(
+			company.getCompanyId());
 
 		serviceContext.setUserId(defaultUserId);
 
 		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
-			AddDefaultDDLStructuresPortalInstanceLifecycleListener.class.getClassLoader(),
+			AddDefaultDDLStructuresPortalInstanceLifecycleListener.class.
+				getClassLoader(),
 			"com/liferay/dynamic/data/lists/events/dependencies" +
 				"/default-dynamic-data-lists-structures.xml",
 			serviceContext);
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -127,7 +90,6 @@ public class AddDefaultDDLStructuresPortalInstanceLifecycleListener extends Simp
 		_userLocalService = userLocalService;
 	}
 
-	private CompanyLocalService _companyLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private GroupLocalService _groupLocalService;
 	private UserLocalService _userLocalService;

@@ -21,25 +21,20 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 boolean search = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:empty-result-message:search"));
 %>
 
-<c:if test="<%= Validator.isNotNull(message) %>">
-	<div class="card-horizontal main-content-card taglib-empty-result-message">
-		<div class="card-row card-row-padded">
-			<c:choose>
-				<c:when test="<%= search %>">
-					<div class="taglib-empty-search-result-message-header"></div>
-				</c:when>
-				<c:otherwise>
-					<div class="taglib-empty-result-message-header"></div>
-				</c:otherwise>
-			</c:choose>
+<div class="card-horizontal main-content-card taglib-empty-result-message">
+	<div class="card-row card-row-padded">
+		<c:choose>
+			<c:when test="<%= search %>">
+				<div class="taglib-empty-search-result-message-header"></div>
+			</c:when>
+			<c:otherwise>
+				<div class="taglib-empty-result-message-header"></div>
+			</c:otherwise>
+		</c:choose>
 
-			<div class="card-footer">
-				<div class="card-dm-details">
-					<p class="text-center text-muted">
+		<div class="card-footer">
+			<div class="card-dm-details">
+				<p class="text-center text-muted">
+					<c:if test="<%= Validator.isNotNull(message) %>">
 						<liferay-ui:message key="<%= message %>" />
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</c:if>
+					</c:if>

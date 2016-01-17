@@ -38,8 +38,13 @@ public class EmptyResultMessageTag extends IncludeTag {
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
+	protected String getEndPage() {
+		return _END_PAGE;
+	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
 	}
 
 	@Override
@@ -50,8 +55,11 @@ public class EmptyResultMessageTag extends IncludeTag {
 			"liferay-ui:empty-result-message:search", String.valueOf(_search));
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/empty_result_message/page.jsp";
+	private static final String _END_PAGE =
+		"/html/taglib/ui/empty_result_message/end.jsp";
+
+	private static final String _START_PAGE =
+		"/html/taglib/ui/empty_result_message/start.jsp";
 
 	private String _message;
 	private boolean _search;

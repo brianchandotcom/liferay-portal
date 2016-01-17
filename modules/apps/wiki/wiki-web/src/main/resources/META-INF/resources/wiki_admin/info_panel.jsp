@@ -40,7 +40,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 			<h4><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
 		</c:when>
 		<c:otherwise>
-			<h4><liferay-ui:message key="wikis" /></h4>
+			<h4><liferay-ui:message key="<%= wikiInfoPanelDisplayContext.getItemNameLabel() %>" /></h4>
 		</c:otherwise>
 	</c:choose>
 </div>
@@ -99,7 +99,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 					<h5><liferay-ui:message key="num-of-items" /></h5>
 
 					<p>
-						<%= wikiInfoPanelDisplayContext.getNodesCount() %>
+						<%= wikiInfoPanelDisplayContext.getItemsCount() %>
 					</p>
 				</c:otherwise>
 			</c:choose>

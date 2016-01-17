@@ -112,6 +112,11 @@ else {
 			resourceURL="<%= sidebarPanelURL %>"
 			searchContainerId="wikiPages"
 	>
+
+		<%
+		request.setAttribute(WikiWebKeys.WIKI_NODE, node);
+		%>
+
 		<liferay-util:include page="/wiki_admin/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 

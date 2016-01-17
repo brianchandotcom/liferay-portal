@@ -36,8 +36,8 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 				<liferay-ui:message key="wiki" />
 			</p>
 		</c:when>
-		<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleNodeSelection() %>">
-			<h4><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
+		<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleItemSelection() %>">
+			<h4><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedItemsCount() %>" key="x-items-are-selected" /></h4>
 		</c:when>
 		<c:otherwise>
 			<h4><liferay-ui:message key="<%= wikiInfoPanelDisplayContext.getItemNameLabel() %>" /></h4>
@@ -92,8 +92,8 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 						<%= dateFormatDateTime.format(node.getModifiedDate()) %>
 					</p>
 				</c:when>
-				<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleNodeSelection() %>">
-					<h5><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h5>
+				<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleItemSelection() %>">
+					<h5><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedItemsCount() %>" key="x-items-are-selected" /></h5>
 				</c:when>
 				<c:otherwise>
 					<h5><liferay-ui:message key="num-of-items" /></h5>

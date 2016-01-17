@@ -19,22 +19,17 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -48,57 +43,28 @@ import javax.portlet.PortletURL;
 /**
  * @author Eudaldo Alonso
  */
-public class LayoutsAdminDisplayContext {
+public class LayoutsAdminDisplayContext extends BaseLayoutDisplayContext {
 
 	public LayoutsAdminDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
+		super(liferayPortletRequest, liferayPortletResponse);
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
-		boolean privateLayout = ParamUtil.getBoolean(
-			liferayPortletRequest, "privateLayout");
-
-		Layout selLayout = getSelLayout();
-
-		if (selLayout != null) {
-			privateLayout = selLayout.isPrivateLayout();
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		if (liveGroup.isUser() && !isPublicLayoutsModifiable() &&
-			isPrivateLayoutsModifiable() && !privateLayout) {
-
-			privateLayout = true;
-		}
-
-		Group selGroup = getSelGroup();
-
-		if (selGroup.isLayoutSetPrototype()) {
-			privateLayout = true;
-		}
-
-		_privateLayout = privateLayout;
-
-		_liferayPortletRequest.setAttribute(
+		this.liferayPortletRequest.setAttribute(
 			com.liferay.portal.kernel.util.WebKeys.LAYOUT_DESCRIPTIONS,
 			getLayoutDescriptions());
 	}
 
 	public PortletURL getEditLayoutURL() {
-		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
+		PortletURL editLayoutURL = super.getEditLayoutURL(
+			getSelPlid(), isPrivateLayout());
 
 		editLayoutURL.setParameter("redirect", getRedirect());
-		editLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
-		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 		return editLayoutURL;
 	}
@@ -122,7 +88,7 @@ public class LayoutsAdminDisplayContext {
 
 		_layoutDescriptions = LayoutListUtil.getLayoutDescriptions(
 			getGroupId(), isPrivateLayout(), getRootNodeName(),
-			_themeDisplay.getLocale());
+			themeDisplay.getLocale());
 
 		return _layoutDescriptions;
 	}
@@ -203,32 +169,19 @@ public class LayoutsAdminDisplayContext {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_liferayPortletRequest, "redirect");
+		_redirect = ParamUtil.getString(liferayPortletRequest, "redirect");
 
 		return _redirect;
 	}
 
 	public PortletURL getRedirectURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 
 		return portletURL;
-	}
-
-	public String getRootNodeName() {
-		if (_rootNodeName != null) {
-			return _rootNodeName;
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		_rootNodeName = liveGroup.getLayoutRootNodeName(
-			isPrivateLayout(), _themeDisplay.getLocale());
-
-		return _rootNodeName;
 	}
 
 	public Group getSelGroup() {
@@ -243,40 +196,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return 0;
-	}
-
-	public Layout getSelLayout() {
-		if (_selLayout != null) {
-			return _selLayout;
-		}
-
-		if (getSelPlid() != LayoutConstants.DEFAULT_PLID) {
-			_selLayout = LayoutLocalServiceUtil.fetchLayout(getSelPlid());
-		}
-
-		return _selLayout;
-	}
-
-	public LayoutSet getSelLayoutSet() throws PortalException {
-		if (_selLayoutSet != null) {
-			return _selLayoutSet;
-		}
-
-		_selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			getGroupId(), isPrivateLayout());
-
-		return _selLayoutSet;
-	}
-
-	public Long getSelPlid() {
-		if (_selPlid != null) {
-			return _selPlid;
-		}
-
-		_selPlid = ParamUtil.getLong(
-			_liferayPortletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
-
-		return _selPlid;
 	}
 
 	public User getSelUser() {
@@ -316,16 +235,12 @@ public class LayoutsAdminDisplayContext {
 		return _userGroup;
 	}
 
-	public boolean isPrivateLayout() {
-		return _privateLayout;
-	}
-
 	protected boolean hasPowerUserRole() {
 		try {
 			User selUser = getSelUser();
 
 			return RoleLocalServiceUtil.hasUserRole(
-				selUser.getUserId(), _themeDisplay.getCompanyId(),
+				selUser.getUserId(), themeDisplay.getCompanyId(),
 				RoleConstants.POWER_USER, true);
 		}
 		catch (Exception e) {
@@ -359,18 +274,10 @@ public class LayoutsAdminDisplayContext {
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private Organization _organization;
 	private String _pagesName;
-	private final boolean _privateLayout;
 	private String _redirect;
-	private String _rootNodeName;
-	private Layout _selLayout;
-	private LayoutSet _selLayoutSet;
-	private Long _selPlid;
 	private User _selUser;
-	private final ThemeDisplay _themeDisplay;
 	private UserGroup _userGroup;
 
 }

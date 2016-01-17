@@ -1078,7 +1078,4 @@ public class GroupServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@DeleteAfterTestRun
-	private final List<Organization> _organizations = new ArrayList<>();
-
 }

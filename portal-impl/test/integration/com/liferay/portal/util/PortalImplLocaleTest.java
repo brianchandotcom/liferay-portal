@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -34,7 +36,9 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -76,6 +80,16 @@ public class PortalImplLocaleTest {
 		_group = GroupTestUtil.addGroup();
 		_layout = LayoutTestUtil.addLayout(_group);
 
+		_availableLocales = LanguageUtil.getAvailableLocales();
+
+		List<Locale> availableLocales = Arrays.asList(
+			LocaleUtil.fromLanguageId("ca_ES"), LocaleUtil.US,
+			LocaleUtil.FRANCE, LocaleUtil.GERMANY, LocaleUtil.BRAZIL,
+			LocaleUtil.SPAIN, LocaleUtil.UK);
+
+		CompanyTestUtil.resetCompanyLocales(
+			_group.getCompanyId(), availableLocales, LocaleUtil.getDefault());
+
 		GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(),
 			Arrays.asList(LocaleUtil.UK, LocaleUtil.GERMANY),
@@ -88,6 +102,10 @@ public class PortalImplLocaleTest {
 			PropsKeys.LOCALES_ENABLED);
 
 		LanguageUtil.init();
+
+		CompanyTestUtil.resetCompanyLocales(
+			TestPropsValues.getCompanyId(), _availableLocales,
+			LocaleUtil.getDefault());
 	}
 
 	@Test
@@ -174,6 +192,8 @@ public class PortalImplLocaleTest {
 
 		return mockHttpServletResponse;
 	}
+
+	private Set<Locale> _availableLocales;
 
 	@DeleteAfterTestRun
 	private Group _group;

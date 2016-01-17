@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 ShoppingCart cart = ShoppingUtil.getCart(renderRequest);
 
 Map<ShoppingCartItem, Integer> items = cart.getItems();
@@ -153,249 +151,183 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	<liferay-ui:error exception="<%= CouponStartDateException.class %>" message="the-specified-coupon-is-no-yet-available" />
 	<liferay-ui:error exception="<%= NoSuchCouponException.class %>" message="please-enter-a-valid-coupon-code" />
 
-	<%
-	SearchContainer searchContainer = new SearchContainer();
+	<liferay-ui:search-container
+		emptyResultsMessage="your-cart-is-empty"
+		total="<%= items.size() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= ListUtil.fromMapKeys(items) %>"
+		/>
 
-	List<String> headerNames = new ArrayList<String>();
+		<liferay-ui:search-container-row
+			className="com.liferay.shopping.model.ShoppingCartItem"
+			modelVar="cartItem"
+		>
 
-	headerNames.add("sku");
-	headerNames.add("description");
-	headerNames.add("quantity");
-	headerNames.add("price");
+			<%
+			Integer count = items.get(cartItem);
 
-	searchContainer.setHeaderNames(headerNames);
-	searchContainer.setEmptyResultsMessage("your-cart-is-empty");
-	searchContainer.setHover(false);
+			ShoppingItem item = cartItem.getItem();
 
-	int total = items.size();
+			item = item.toEscapedModel();
 
-	searchContainer.setTotal(total);
+			String[] fieldsArray = cartItem.getFieldsArray();
 
-	List resultRows = searchContainer.getResultRows();
+			ShoppingItemField[] itemFields = (ShoppingItemField[])ShoppingItemFieldLocalServiceUtil.getItemFields(item.getItemId()).toArray(new ShoppingItemField[0]);
+			ShoppingItemPrice[] itemPrices = (ShoppingItemPrice[])ShoppingItemPriceLocalServiceUtil.getItemPrices(item.getItemId()).toArray(new ShoppingItemPrice[0]);
 
-	int itemsCount = 0;
+			String fieldName = "item_" + item.getItemId() + "_" + index + "_count";
 
-	for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
-		ShoppingCartItem cartItem = entry.getKey();
-		Integer count = entry.getValue();
-
-		ShoppingItem item = cartItem.getItem();
-
-		item = item.toEscapedModel();
-
-		String[] fieldsArray = cartItem.getFieldsArray();
-
-		ShoppingItemField[] itemFields = (ShoppingItemField[])ShoppingItemFieldLocalServiceUtil.getItemFields(item.getItemId()).toArray(new ShoppingItemField[0]);
-		ShoppingItemPrice[] itemPrices = (ShoppingItemPrice[])ShoppingItemPriceLocalServiceUtil.getItemPrices(item.getItemId()).toArray(new ShoppingItemPrice[0]);
-
-		if (!SessionErrors.isEmpty(renderRequest)) {
-			count = Integer.valueOf(ParamUtil.getInteger(request, "item_" + item.getItemId() + "_" + itemsCount + "_count"));
-		}
-
-		ResultRow row = new ResultRow(item, item.getItemId(), itemsCount);
-
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("struts_action", "/shopping/view_item");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("itemId", String.valueOf(item.getItemId()));
-
-		// SKU and small image
-
-		StringBundler sb = new StringBundler(6);
-
-		if (item.isSmallImage()) {
-			sb.append("<br />");
-			sb.append("<img alt=\"");
-			sb.append(HtmlUtil.escapeAttribute(item.getSku()));
-			sb.append("\" src=\"");
-			sb.append(item.getShoppingItemImageURL(themeDisplay));
-			sb.append("\">");
-		}
-		else {
-			sb.append(item.getSku());
-		}
-
-		row.addText(sb.toString(), rowURL);
-
-		// Description
-
-		sb = new StringBundler();
-
-		sb.append(item.getName());
-
-		if (Validator.isNotNull(item.getDescription())) {
-			sb.append("<br />");
-			sb.append(item.getDescription());
-		}
-
-		/*Properties props = new OrderedProperties();
-
-		PropertiesUtil.load(props, item.getProperties());
-
-		Enumeration enu = props.propertyNames();
-
-		while (enu.hasMoreElements()) {
-			String propsKey = (String)enu.nextElement();
-			String propsValue = props.getProperty(propsKey, StringPool.BLANK);
-
-			sb.append("<br />");
-			sb.append(propsKey);
-			sb.append(": ");
-			sb.append(propsValue);
-		}*/
-
-		if (PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY)) {
-			sb.append("<br /><br />");
-
-			if (ShoppingUtil.isInStock(item, itemFields, fieldsArray, count)) {
-				sb.append(LanguageUtil.get(request, "availability"));
-				sb.append(": ");
-				sb.append("<div class=\"alert alert-success\">");
-				sb.append(LanguageUtil.get(request, "in-stock"));
-				sb.append("</div>");
+			if (!SessionErrors.isEmpty(renderRequest)) {
+				count = Integer.valueOf(ParamUtil.getInteger(request, fieldName));
 			}
-			else {
-				sb.append(LanguageUtil.get(request, "availability"));
-				sb.append(": ");
-				sb.append("<div class=\"alert alert-danger\">");
-				sb.append(LanguageUtil.get(request, "out-of-stock"));
-				sb.append("</div>");
+			%>
 
-				sb.append("<script type=\"text/javascript\">");
-				sb.append(renderResponse.getNamespace());
-				sb.append("itemsInStock = false;");
-				sb.append("</script>");
-			}
-		}
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="struts_action" value="/shopping/view_item" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="itemId" value="<%= String.valueOf(item.getItemId()) %>" />
+			</portlet:renderURL>
 
-		if (fieldsArray.length > 0) {
-			sb.append("<br />");
-		}
+			<liferay-ui:search-container-column-text
+				name="cart"
+			>
 
-		for (int j = 0; j < fieldsArray.length; j++) {
-			int pos = fieldsArray[j].indexOf("=");
+				<c:choose>
+					<c:when test="<%= item.isSmallImage() %>">
+						<img alt="<%= HtmlUtil.escapeAttribute(item.getSku()) %>" src="<%= item.getShoppingItemImageURL(themeDisplay) %>" />
+					</c:when>
+					<c:otherwise>
+						<%= item.getSku() %>
+					</c:otherwise>
+				</c:choose>
 
-			String fieldName = fieldsArray[j].substring(0, pos);
-			String fieldValue = fieldsArray[j].substring(pos + 1);
+				<h5><a href="<%= rowURL.toString() %>"><%= item.getName() %></a></h5>
 
-			sb.append("<br />");
-			sb.append(HtmlUtil.escape(fieldName));
-			sb.append(": ");
-			sb.append(HtmlUtil.escape(fieldValue));
-		}
+				<h6 class="default-text"><%= item.getDescription() %></h6>
 
-		if (itemPrices.length > 0) {
-			sb.append("<br />");
-		}
+				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY) %>">
+					<liferay-ui:message key="availability" />:
 
-		for (int j = 0; j < itemPrices.length; j++) {
-			ShoppingItemPrice itemPrice = itemPrices[j];
+					<c:choose>
+						<c:when test="<%= ShoppingUtil.isInStock(item, itemFields, fieldsArray, count) %>">
+							<div class="alert alert-success"><liferay-ui:message key="in-stock" /></div>
+						</c:when>
+						<c:otherwise>
+							<div class="alert alert-danger"><liferay-ui:message key="out-of-stock" /></div>
 
-			if (itemPrice.getStatus() == ShoppingItemPriceConstants.STATUS_INACTIVE) {
-				continue;
-			}
+							<script type="text/javascript">
+								<portlet:namespace />itemsInStock = false;
+							</script>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 
-			sb.append("<br />");
+				<span>
 
-			if ((itemPrice.getMinQuantity() == 0) && (itemPrice.getMaxQuantity() == 0)) {
-				sb.append(LanguageUtil.get(request, "price"));
-				sb.append(": ");
-			}
-			else if (itemPrice.getMaxQuantity() != 0) {
-				sb.append(LanguageUtil.format(request, "price-for-x-to-x-items", new Object[] {"<strong>" + Integer.valueOf(itemPrice.getMinQuantity()) + "</strong>", "<strong>" + Integer.valueOf(itemPrice.getMaxQuantity()) + "</strong>"}, false));
-			}
-			else if (itemPrice.getMaxQuantity() == 0) {
-				sb.append(LanguageUtil.format(request, "price-for-x-items-and-above", "<strong>" + Integer.valueOf(itemPrice.getMinQuantity()) + "</strong>", false));
-			}
+					<%
+					for (String field : fieldsArray) {
+						String[] values = StringUtil.split(field, '=');
+					%>
 
-			if (itemPrice.getDiscount() <= 0) {
-				sb.append(currencyFormat.format(itemPrice.getPrice()));
-			}
-			else {
-				sb.append("<strike>");
-				sb.append(currencyFormat.format(itemPrice.getPrice()));
-				sb.append("</strike> ");
-				sb.append("<div class=\"alert alert-success\">");
-				sb.append(currencyFormat.format(ShoppingUtil.calculateActualPrice(itemPrice)));
-				sb.append("</div> / ");
-				sb.append(LanguageUtil.get(request, "you-save"));
-				sb.append(": ");
-				sb.append("<div class=\"alert alert-danger\">");
-				sb.append(currencyFormat.format(ShoppingUtil.calculateDiscountPrice(itemPrice)));
-				sb.append(" (");
-				sb.append(percentFormat.format(itemPrice.getDiscount()));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-				sb.append("</div>");
-			}
-		}
+						<%= HtmlUtil.escape(values[0]) %>: <%= HtmlUtil.escape(values[1]) %>
 
-		row.addText(sb.toString(), rowURL);
+					<%
+					}
+					%>
 
-		// Quantity
+				</span>
 
-		sb.setIndex(0);
+				<span>
 
-		int maxQuantity = _getMaxQuantity(itemPrices);
+					<%
+					for (ShoppingItemPrice itemPrice : itemPrices) {
+						if (itemPrice.getStatus() == ShoppingItemPriceConstants.STATUS_INACTIVE) {
+							continue;
+						}
+					%>
 
-		if (minQuantityMultiple && (item.getMinQuantity() > 1) && (maxQuantity != 0)) {
-			sb.append("<select name=\"");
-			sb.append(renderResponse.getNamespace());
-			sb.append("item_");
-			sb.append(item.getItemId());
-			sb.append("_");
-			sb.append(itemsCount);
-			sb.append("_count\">");
+						<c:choose>
+							<c:when test="<%= (itemPrice.getMinQuantity() == 0) && (itemPrice.getMaxQuantity() == 0) %>">
+								<liferay-ui:message key="price" />:
+							</c:when>
+							<c:when test="<%= itemPrice.getMaxQuantity() != 0 %>">
+								<liferay-ui:message arguments='<%= new Object[] {"<strong>" + Integer.valueOf(itemPrice.getMinQuantity()) + "</strong>", "<strong>" + Integer.valueOf(itemPrice.getMaxQuantity()) + "</strong>"} %>' key="price-for-x-to-x-items" translateArguments="<%= false %>" />
+							</c:when>
+							<c:when test="<%= itemPrice.getMaxQuantity() == 0 %>">
+								<liferay-ui:message arguments='<%= "<strong>" + Integer.valueOf(itemPrice.getMinQuantity()) + "</strong>" %>' key="price-for-x-items-and-above" translateArguments="<%= false %>" />
+							</c:when>
+						</c:choose>
 
-			sb.append("<option value=\"0\">0</option>");
+						<c:choose>
+							<c:when test="<%= itemPrice.getDiscount() <= 0 %>">
+								<%= currencyFormat.format(itemPrice.getPrice()) %>
+							</c:when>
+							<c:otherwise>
+								<strike><%= currencyFormat.format(itemPrice.getPrice()) %></strike>
 
-			for (int j = 1; j <= (maxQuantity / item.getMinQuantity()); j++) {
-				int curQuantity = item.getMinQuantity() * j;
+								<div class="alert alert-success">
+									<%= currencyFormat.format(ShoppingUtil.calculateActualPrice(itemPrice)) %>
+								</div>
 
-				sb.append("<option ");
+								<liferay-ui:message key="you-save" />:
 
-				if (curQuantity == count.intValue()) {
-					sb.append("selected ");
-				}
+								<div class="alert alert-danger">
+									<%= currencyFormat.format(ShoppingUtil.calculateDiscountPrice(itemPrice)) %>(<%= percentFormat.format(itemPrice.getDiscount()) %>)
+								</div>
+							</c:otherwise>
+						</c:choose>
 
-				sb.append("value=\"");
-				sb.append(curQuantity);
-				sb.append("\">");
-				sb.append(curQuantity);
-				sb.append("</option>");
-			}
+					<%
+					}
+					%>
 
-			sb.append("</select>");
-		}
-		else {
-			sb.append("<input name=\"");
-			sb.append(renderResponse.getNamespace());
-			sb.append("item_");
-			sb.append(item.getItemId());
-			sb.append("_");
-			sb.append(itemsCount);
-			sb.append("_count\" size=\"2\" type=\"text\" value=\"");
-			sb.append(count);
-			sb.append("\">");
-		}
+				</span>
+			</liferay-ui:search-container-column-text>
 
-		row.addText(sb.toString());
+			<liferay-ui:search-container-column-text
+				name="quantity"
+			>
 
-		// Price
+				<%
+				int maxQuantity = _getMaxQuantity(itemPrices);
+				%>
 
-		row.addText(currencyFormat.format(ShoppingUtil.calculateActualPrice(item, count.intValue()) / count.intValue()), rowURL);
+				<c:choose>
+					<c:when test="<%= minQuantityMultiple && (item.getMinQuantity() > 1) && (maxQuantity != 0) %>">
+						<aui:select label="" name="<%= fieldName %>">
+							<aui:option label="0" />
 
-		// Add result row
+							<%
+							for (int j = 1; j <= (maxQuantity / item.getMinQuantity()); j++) {
+								int curQuantity = item.getMinQuantity() * j;
+							%>
 
-		resultRows.add(row);
+								<aui:option label="<%= curQuantity %>" selected="<%= curQuantity == count.intValue() %>" />
 
-		itemsCount++;
-	}
-	%>
+							<%
+							}
+							%>
+
+						</aui:select>
+					</c:when>
+					<c:otherwise>
+						<aui:input label="" name="<%= fieldName %>" size="2" type="text" value="<%= count %>" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="price"
+				value="<%= currencyFormat.format(ShoppingUtil.calculateActualPrice(item, count.intValue()) / count.intValue()) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+	</liferay-ui:search-container>
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 
 			<%
 			double subtotal = ShoppingUtil.calculateSubtotal(items);

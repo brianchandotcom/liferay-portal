@@ -33,7 +33,11 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	<portlet:param name="struts_action" value="/shopping/checkout" />
 </portlet:actionURL>
 
-<aui:form action="<%= checkoutSecondURL %>" method="post" name="fm">
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="tabs1" value="cart" />
+</liferay-util:include>
+
+<aui:form action="<%= checkoutSecondURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
 	<aui:input name="billingFirstName" type="hidden" value="<%= order.getBillingFirstName() %>" />
 	<aui:input name="billingLastName" type="hidden" value="<%= order.getBillingLastName() %>" />
@@ -63,10 +67,6 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	<aui:input name="ccExpYear" type="hidden" value="<%= order.getCcExpYear() %>" />
 	<aui:input name="ccVerNumber" type="hidden" value="<%= order.getCcVerNumber() %>" />
 	<aui:input name="comments" type="hidden" value="<%= order.getComments() %>" />
-
-	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="cart" />
-	</liferay-util:include>
 
 	<div class="row">
 		<div class="col-md-6">
@@ -243,7 +243,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	}
 	%>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 
 	<aui:input name="itemIds" type="hidden" value="<%= itemIds %>" />
 	<aui:input name="couponCodes" type="hidden" value="<%= cart.getCouponCodes() %>" />

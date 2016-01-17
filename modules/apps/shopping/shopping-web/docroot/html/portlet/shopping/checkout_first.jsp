@@ -55,21 +55,21 @@ if (request.getParameter("ccExpMonth") == null) {
 List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contact.getContactId());
 %>
 
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="tabs1" value="cart" />
+</liferay-util:include>
+
 <portlet:actionURL var="checkoutURL">
 	<portlet:param name="struts_action" value="/shopping/checkout" />
 </portlet:actionURL>
 
-<aui:form action="<%= checkoutURL %>" method="post" name="fm">
+<aui:form action="<%= checkoutURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-
-	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="cart" />
-	</liferay-util:include>
 
 	<aui:model-context bean="<%= order %>" model="<%= ShoppingOrder.class %>" />
 
-	<liferay-ui:panel-container extended="<%= true %>" id="shoppingCheckoutPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutBillingAddressPanel" persistState="<%= true %>" title="billing-address">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="billing-address">
 			<liferay-ui:error exception="<%= BillingCityException.class %>" message="please-enter-a-valid-city" />
 			<liferay-ui:error exception="<%= BillingCountryException.class %>" message="please-enter-a-valid-country" />
 			<liferay-ui:error exception="<%= BillingEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
@@ -106,9 +106,9 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 				<%@ include file="/html/portlet/shopping/checkout_first_billing_address.jspf" %>
 			</aui:fieldset>
-		</liferay-ui:panel>
+		</aui:fieldset>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutShippingAddressPanel" persistState="<%= true %>" title="shipping-address">
+		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="shipping-address">
 			<liferay-ui:error exception="<%= ShippingCityException.class %>" message="please-enter-a-valid-city" />
 			<liferay-ui:error exception="<%= ShippingCountryException.class %>" message="please-enter-a-valid-country" />
 			<liferay-ui:error exception="<%= ShippingEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
@@ -145,14 +145,14 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 				<%@ include file="/html/portlet/shopping/checkout_first_shipping_address.jspf" %>
 			</aui:fieldset>
-		</liferay-ui:panel>
+		</aui:fieldset>
 
 		<%
 		String[] ccTypes = shoppingGroupServiceOverriddenConfiguration.getCcTypes();
 		%>
 
 		<c:if test="<%= !shoppingGroupServiceOverriddenConfiguration.usePayPal() && (ccTypes.length > 0) %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutCreditCardPanel" persistState="<%= true %>" title="credit-card">
+			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="credit-card">
 				<liferay-ui:error exception="<%= CCExpirationException.class %>" message="please-enter-a-valid-credit-card-expiration-date" />
 				<liferay-ui:error exception="<%= CCNameException.class %>" message="please-enter-the-full-name-exactly-as-it-is-appears-on-your-credit-card" />
 				<liferay-ui:error exception="<%= CCNumberException.class %>" message="please-enter-a-valid-credit-card-number" />
@@ -230,17 +230,17 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 
 					<aui:input bean="<%= null %>" label="verification-number" name="ccVerNumber" />
 				</aui:fieldset>
-			</liferay-ui:panel>
+			</aui:fieldset>
 		</c:if>
 
 		<c:if test="<%= PropsValues.SHOPPING_ORDER_COMMENTS_ENABLED %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutCommentsPanel" persistState="<%= true %>" title="comments">
+			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="comments">
 				<aui:fieldset>
 					<aui:input label="" name="comments" />
 				</aui:fieldset>
-			</liferay-ui:panel>
+			</aui:fieldset>
 		</c:if>
-	</liferay-ui:panel-container>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" value="continue" />

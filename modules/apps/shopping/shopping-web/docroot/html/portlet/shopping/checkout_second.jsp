@@ -33,7 +33,11 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	<portlet:param name="struts_action" value="/shopping/checkout" />
 </portlet:actionURL>
 
-<aui:form action="<%= checkoutSecondURL %>" method="post" name="fm">
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="tabs1" value="cart" />
+</liferay-util:include>
+
+<aui:form action="<%= checkoutSecondURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
 	<aui:input name="billingFirstName" type="hidden" value="<%= order.getBillingFirstName() %>" />
 	<aui:input name="billingLastName" type="hidden" value="<%= order.getBillingLastName() %>" />
@@ -63,10 +67,6 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	<aui:input name="ccExpYear" type="hidden" value="<%= order.getCcExpYear() %>" />
 	<aui:input name="ccVerNumber" type="hidden" value="<%= order.getCcVerNumber() %>" />
 	<aui:input name="comments" type="hidden" value="<%= order.getComments() %>" />
-
-	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="cart" />
-	</liferay-util:include>
 
 	<div class="row">
 		<div class="col-md-6">
@@ -148,102 +148,90 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	</c:if>
 
 	<%
-	boolean showAvailability = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY);
-
 	StringBundler itemIds = new StringBundler();
-
-	SearchContainer searchContainer = new SearchContainer();
-
-	List<String> headerNames = new ArrayList<String>();
-
-	headerNames.add("sku");
-	headerNames.add("description");
-
-	if (showAvailability) {
-		headerNames.add("availability");
-	}
-
-	headerNames.add("quantity");
-	headerNames.add("price");
-	headerNames.add("total");
-
-	searchContainer.setHeaderNames(headerNames);
-	searchContainer.setHover(false);
-
-	int total = items.size();
-
-	searchContainer.setTotal(total);
-
-	List resultRows = searchContainer.getResultRows();
-
-	int i = 0;
-
-	for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
-		ShoppingCartItem cartItem = entry.getKey();
-		Integer count = entry.getValue();
-
-		ShoppingItem item = cartItem.getItem();
-		String[] fieldsArray = cartItem.getFieldsArray();
-
-		ShoppingItemField[] itemFields = (ShoppingItemField[])ShoppingItemFieldLocalServiceUtil.getItemFields(item.getItemId()).toArray(new ShoppingItemField[0]);
-
-		for (int j = 0; j < count.intValue(); j++) {
-			itemIds.append(cartItem.getCartItemId());
-			itemIds.append(",");
-		}
-
-		ResultRow row = new ResultRow(item, item.getItemId(), i);
-
-		// SKU
-
-		row.addText(HtmlUtil.escape(item.getSku()));
-
-		// Description
-
-		if (item.isFields()) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(HtmlUtil.escape(item.getName()));
-			sb.append(" (");
-			sb.append(HtmlUtil.escape(StringUtil.replace(StringUtil.merge(cartItem.getFieldsArray(), ", "), "=", ": ")));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			row.addText(sb.toString());
-		}
-		else {
-			row.addText(HtmlUtil.escape(item.getName()));
-		}
-
-		// Availability
-
-		if (ShoppingUtil.isInStock(item, itemFields, fieldsArray, count)) {
-			row.addText("<div class=\"alert alert-success\">".concat(LanguageUtil.get(request, "in-stock")).concat("</div>"));
-		}
-		else {
-			row.addText("<div class=\"alert alert-danger\">".concat(LanguageUtil.get(request, "out-of-stock")).concat("</div>"));
-		}
-
-		// Quantity
-
-		row.addText(count.toString());
-
-		// Price
-
-		row.addText(currencyFormat.format(ShoppingUtil.calculateActualPrice(item, count.intValue()) / count.intValue()));
-
-		// Total
-
-		row.addText(currencyFormat.format(ShoppingUtil.calculateActualPrice(item, count.intValue())));
-
-		// Add result row
-
-		resultRows.add(row);
-
-		i++;
-	}
 	%>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-container
+		total="<%= items.size() %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= ListUtil.fromMapKeys(items) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.shopping.model.ShoppingCartItem"
+			modelVar="cartItem"
+		>
+
+			<%
+			Integer count = items.get(cartItem);
+
+			ShoppingItem item = cartItem.getItem();
+			String[] fieldsArray = cartItem.getFieldsArray();
+
+			ShoppingItemField[] itemFields = (ShoppingItemField[])ShoppingItemFieldLocalServiceUtil.getItemFields(item.getItemId()).toArray(new ShoppingItemField[0]);
+
+			for (int j = 0; j < count.intValue(); j++) {
+				itemIds.append(cartItem.getCartItemId());
+				itemIds.append(",");
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="sku"
+				value="<%= HtmlUtil.escape(item.getSku()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="name"
+			>
+				<c:choose>
+					<c:when test="<%= item.isFields() %>">
+						<%= HtmlUtil.escape(item.getName()) %> (<%= HtmlUtil.escape(StringUtil.replace(StringUtil.merge(cartItem.getFieldsArray(), ", "), "=", ": ")) %>)
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(item.getName()) %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY) %>">
+				<liferay-ui:search-container-column-text
+					name="availability"
+				>
+					<c:choose>
+						<c:when test="<%= ShoppingUtil.isInStock(item, itemFields, fieldsArray, count) %>">
+							<div class="alert alert-success">
+								<liferay-ui:message key="in-stock" />
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="alert alert-danger">
+								<liferay-ui:message key="out-of-stock" />
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
+			</c:if>
+
+			<liferay-ui:search-container-column-text
+				name="quantity"
+				value="<%= count.toString() %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="price"
+				value="<%= currencyFormat.format(ShoppingUtil.calculateActualPrice(item, count.intValue()) / count.intValue()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="total"
+				value="<%= currencyFormat.format(ShoppingUtil.calculateActualPrice(item, count.intValue())) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
 
 	<aui:input name="itemIds" type="hidden" value="<%= itemIds %>" />
 	<aui:input name="couponCodes" type="hidden" value="<%= cart.getCouponCodes() %>" />

@@ -30,11 +30,17 @@ import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 )
 public interface ElasticsearchConfiguration {
 
-	@Meta.AD(deflt = "", required = false)
-	public String[] additionalConfigurations();
+	@Meta.AD(
+		description = "Custom settings for the local node, in YML format (elasticsearch.yml)",
+		required = false
+	)
+	public String additionalConfigurations();
 
-	@Meta.AD(deflt = "", required = false)
-	public String[] additionalIndexConfigurations();
+	@Meta.AD(
+		description = "Custom settings for the Liferay index, in JSON or YML format (Elasticsearch Create Index API)",
+		required = false
+	)
+	public String additionalIndexConfigurations();
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean bootstrapMlockAll();
@@ -57,8 +63,11 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "/https?:\\/\\/localhost(:[0-9]+)?/", required = false)
 	public String httpCORSAllowOrigin();
 
-	@Meta.AD(deflt = "", required = false)
-	public String[] httpCORSConfigurations();
+	@Meta.AD(
+		description = "Custom settings for HTTP CORS, in YML format (elasticsearch.yml)",
+		required = false
+	)
+	public String httpCORSConfigurations();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean httpCORSEnabled();

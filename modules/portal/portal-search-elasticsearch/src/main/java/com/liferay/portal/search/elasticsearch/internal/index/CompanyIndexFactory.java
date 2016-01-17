@@ -18,9 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
@@ -190,14 +188,11 @@ public class CompanyIndexFactory implements IndexFactory {
 	}
 
 	protected void loadAdditionalIndexConfigurations(Builder builder) {
-		if (ArrayUtil.isEmpty(_additionalIndexConfigurations)) {
+		if (Validator.isNull(_additionalIndexConfigurations)) {
 			return;
 		}
 
-		String source = StringUtil.merge(
-			_additionalIndexConfigurations, StringPool.NEW_LINE);
-
-		builder.loadFromSource(source);
+		builder.loadFromSource(_additionalIndexConfigurations);
 	}
 
 	protected void loadIndexConfigFile(Settings.Builder builder) {
@@ -230,7 +225,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	}
 
 	protected void setAdditionalIndexConfigurations(
-		String[] additionalIndexConfigurations) {
+		String additionalIndexConfigurations) {
 
 		_additionalIndexConfigurations = additionalIndexConfigurations;
 	}
@@ -254,7 +249,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);
 
-	private String[] _additionalIndexConfigurations;
+	private volatile String _additionalIndexConfigurations;
 	private String _indexConfigFileName;
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		new ConcurrentSkipListSet<>();

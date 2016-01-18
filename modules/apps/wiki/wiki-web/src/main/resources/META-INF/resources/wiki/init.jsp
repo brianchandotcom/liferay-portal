@@ -61,6 +61,7 @@ page import="com.liferay.wiki.web.display.context.logic.MailTemplatesHelper" %><
 page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
+page import="com.liferay.wiki.web.display.context.util.WikiSocialActivityHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
 page import="com.liferay.wiki.web.portlet.toolbar.item.WikiPortletToolbarContributor" %><%@
 page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>

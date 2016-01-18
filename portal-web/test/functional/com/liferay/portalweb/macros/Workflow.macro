@@ -199,9 +199,8 @@
 				<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 				<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-				<execute function="AssertClick" locator1="MyWorkflowTasksTask#ACTIVITIES" value1="Activities" />
 
-				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+				<execute function="AssertClick" locator1="MyWorkflowTasksTask#ACTIVITIES" value1="Activities" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#ACTIVITIES_LINE_1" value1="${workflowActivityComment}" />
 			</then>

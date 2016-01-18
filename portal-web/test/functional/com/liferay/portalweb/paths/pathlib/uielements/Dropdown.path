@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>FILTER_ORDER</td>
-	<td>//*[@data-qa-id='orderBy']</td>
+	<td>//*[@data-qa-id='filterorder-by']</td>
 	<td></td>
 </tr>
 <tr>

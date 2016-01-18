@@ -55,7 +55,7 @@ public class MoveCategoryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 102;
+		return 103;
 	}
 
 }

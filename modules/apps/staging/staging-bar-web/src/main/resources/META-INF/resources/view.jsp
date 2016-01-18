@@ -202,7 +202,7 @@ if (layout != null) {
 							</button>
 						</div>
 
-						<ul class="control-menu-nav control-menu-nav-level-2">
+						<ul class="control-menu-nav control-menu-level-2-nav">
 							<c:if test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && (stagingGroup != null) %>">
 								<c:choose>
 									<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
@@ -222,11 +222,9 @@ if (layout != null) {
 											<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 										</c:if>
 
-										<li id="<portlet:namespace />layoutRevisionDetails">
-											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+										<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-											<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
-										</li>
+										<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
 									</c:when>
 									<c:otherwise>
 										<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
@@ -261,7 +259,7 @@ if (layout != null) {
 							</c:if>
 
 							<c:if test="<%= !group.isStagedRemotely() && !group.isStagingGroup() %>">
-								<li>
+								<li class="control-menu-nav-item staging-message">
 									<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
 										<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
 									</div>

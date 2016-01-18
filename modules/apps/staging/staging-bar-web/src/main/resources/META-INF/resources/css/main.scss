@@ -1,39 +1,29 @@
 @import "bourbon";
 @import "mixins";
 
-.control-menu-nav {
-	.staging-bar {
-		position: absolute;
+.control-menu {
+	.staging-links {
+		position: static;
+	}
 
-		@media screen and (min-width: 768px) {
-			position: static;
-		}
+	.staging-message {
+		margin: 0 auto;
+		width: 61%;
 	}
 }
 
-.control-menu-nav {
-	@include align-items(center);
-	@include display(flex);
-
-	font-size: 16px;
-	list-style: none;
-	margin-bottom: 0;
-	padding-left: 0;
-}
-
-.control-menu-nav-item {
-	display: inline-block;
-}
-
-
-.control-menu .staging-links {
-	display:inline-block;
-	line-height: 25px;
-	position: static;
-}
-
 .control-menu-level-2 {
-	@include media-query(0, $screen-xs-max) {
+	padding-bottom: 5px;
+	padding-top: 5px;
+
+	@include sm() {
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 100%;
+	}
+
+	@include media-query(null, $screen-xs-max) {
 		bottom: 0;
 		display: none;
 		left: 0;
@@ -44,7 +34,7 @@
 	}
 
 	&.open {
-		@include media-query(0, $screen-xs-max) {
+		@include media-query(null, $screen-xs-max) {
 			background-color: rgba(75, 91, 101, 0.95);
 			display: block;
 			overflow: auto;
@@ -52,54 +42,42 @@
 	}
 }
 
-.control-menu-nav-level-2 {
+.control-menu-level-2-heading {
+	padding: 20px 0;
+	text-align: center;
+}
+
+.control-menu-level-2-nav {
 	@include display(flex);
 	@include flex-wrap(wrap);
 	@include justify-content(space-between);
-
-	> li {
-		margin-bottom: 5px;
-		margin-left: 0;
-		padding-bottom: 8px;
-		padding-top: 8px;
-
-		@include sm {
-			margin-bottom: 0;
-		}
-
-		@include media-query(0, $screen-xs-max) {
-			display: block;
-			float: none;
-			padding: 10px 0;
-			text-align: left;
-			width: 100%;
-		}
-	}
 }
 
-.staging-options-toggle {
-	padding: 15px 5px 15px 2px;
+.control-menu-nav {
+	.staging-bar {
+		position: absolute;
+
+		@include sm() {
+			position: static;
+		}
+	}
 }
 
 .live-link {
 	margin-right: 24px;
 }
 
-.live-link,
-.staging-link,
-.staging-options-toggle {
-	padding: 15px 5px 15px 2px;
-}
-
 .publish-btn-group {
-	@include sm {
+	@include sm() {
 		border-radius: 4px;
 		overflow: hidden;
 	}
 }
 
 .staging-ready {
-	@include sm {
-		padding-top: 70px;
-	}
+	padding-top: 55px;
+}
+
+.staging-variation-label {
+	display: block;
 }

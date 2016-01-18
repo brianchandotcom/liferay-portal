@@ -22,47 +22,49 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 %>
 
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">
-	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
-		<ul class="control-menu-nav control-menu-level-1 control-menu-nav-level-1" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
+	<div class="control-menu control-menu-level-1" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
+		<div class="container-fluid-1280">
+			<ul class="control-menu-nav control-menu-level-1-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
-			<%
-			for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
-			%>
+				<%
+				for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
+				%>
 
-				<li class="control-menu-nav-item <%= controlMenuCategory.getKey() %>-controls-group">
-					<ul class="control-menu-nav">
+					<li class="control-menu-nav-item <%= controlMenuCategory.getKey() %>-controls-group">
+						<ul class="control-menu-nav">
 
-						<%
-						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+							<%
+							List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
-						for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
-							if (controlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
-								continue;
+							for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+								if (controlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
+									continue;
+								}
+							%>
+
+								<liferay-ui:icon
+									data="<%= controlMenuEntry.getData(request) %>"
+									icon="<%= controlMenuEntry.getIconCssClass(request) %>"
+									label="<%= false %>"
+									linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+									markupView="lexicon"
+									message="<%= controlMenuEntry.getLabel(locale) %>"
+									url="<%= controlMenuEntry.getURL(request) %>"
+								/>
+
+							<%
 							}
-						%>
+							%>
 
-							<liferay-ui:icon
-								data="<%= controlMenuEntry.getData(request) %>"
-								icon="<%= controlMenuEntry.getIconCssClass(request) %>"
-								label="<%= false %>"
-								linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
-								markupView="lexicon"
-								message="<%= controlMenuEntry.getLabel(locale) %>"
-								url="<%= controlMenuEntry.getURL(request) %>"
-							/>
+						</ul>
+					</li>
 
-						<%
-						}
-						%>
+				<%
+				}
+				%>
 
-					</ul>
-				</li>
-
-			<%
-			}
-			%>
-
-		</ul>
+			</ul>
+		</div>
 
 		<div class="control-menu-body">
 

@@ -633,7 +633,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	protected void formatCustomSQLXML(String fileName, String content) {
+	protected void formatCustomSQLXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "sql", null,
+			new CustomSQLElementComparator());
+
 		Matcher matcher = _whereNotInSQLPattern.matcher(content);
 
 		if (!matcher.find()) {
@@ -1295,6 +1303,46 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 	private List<String> _xmlExclusionFiles;
+
+	private class CustomSQLElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(Element sqlElement1, Element sqlElement2) {
+			String sqlElementName1 = getElementName(sqlElement1);
+			String sqlElementName2 = getElementName(sqlElement2);
+
+			if ((sqlElementName1 == null) || (sqlElementName2 == null)) {
+				return 0;
+			}
+
+			return sqlElementName1.compareToIgnoreCase(sqlElementName2);
+		}
+
+		@Override
+		protected String getElementName(Element element) {
+			String elementName = element.attributeValue(getNameAttribute());
+
+			if (Validator.isNull(elementName)) {
+				return null;
+			}
+
+			int pos = elementName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			return elementName.substring(0, pos);
+		}
+
+		@Override
+		protected String getNameAttribute() {
+			return _NAME_ATTRIBUTE;
+		}
+
+		private static final String _NAME_ATTRIBUTE = "id";
+
+	}
 
 	private class ElementComparator implements Comparator<Element> {
 

@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.portal.kernel.security.permission;
 
 /**
- * @author Preston Crary
+ * @author Gergely Mathe
  */
-public interface UserBagFactory {
+public interface PermissionUpdateHandler {
 
-	public UserBag create(long userId) throws PortalException;
+	public void updatedPermission(String primKey);
 
 }

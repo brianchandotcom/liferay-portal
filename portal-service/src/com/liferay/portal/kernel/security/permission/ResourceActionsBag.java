@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
  * @author László Csontos
  */
-public interface ModelResourceActionsBag extends ResourceActionsBag {
+public interface ResourceActionsBag {
 
-	public Set<String> getResourceOwnerDefaultActions();
+	public Set<String> getResourceActions();
 
-	public Map<String, Double> getResourceWeights();
+	public Set<String> getResourceGroupDefaultActions();
+
+	public Set<String> getResourceGuestDefaultActions();
+
+	public Set<String> getResourceGuestUnsupportedActions();
+
+	public Set<String> getResources();
 
 }

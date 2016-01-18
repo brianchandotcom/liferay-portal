@@ -12,31 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Permission;
-import com.liferay.portal.model.Role;
-
-import java.util.List;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Pastor
  */
-public interface PermissionConverter {
+public interface BaseModelPermissionChecker {
 
-	public List<Permission> convertPermissions(long roleId)
-		throws PortalException;
-
-	public List<Permission> convertPermissions(
-			long roleId, PermissionConversionFilter permissionConversionFilter)
-		throws PortalException;
-
-	public List<Permission> convertPermissions(Role role)
-		throws PortalException;
-
-	public List<Permission> convertPermissions(
-			Role role, PermissionConversionFilter permissionConversionFilter)
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
 		throws PortalException;
 
 }

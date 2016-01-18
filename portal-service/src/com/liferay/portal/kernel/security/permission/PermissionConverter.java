@@ -12,20 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Permission;
+import com.liferay.portal.model.Role;
 
-import javax.portlet.ActionRequest;
+import java.util.List;
 
 /**
- * @author Hugo Huijser
+ * @author Michael C. Han
  */
-public interface PermissionPropagator {
+public interface PermissionConverter {
 
-	public void propagateRolePermissions(
-			ActionRequest actionRequest, String className, String primKey,
-			long[] roleIds)
+	public List<Permission> convertPermissions(long roleId)
+		throws PortalException;
+
+	public List<Permission> convertPermissions(
+			long roleId, PermissionConversionFilter permissionConversionFilter)
+		throws PortalException;
+
+	public List<Permission> convertPermissions(Role role)
+		throws PortalException;
+
+	public List<Permission> convertPermissions(
+			Role role, PermissionConversionFilter permissionConversionFilter)
 		throws PortalException;
 
 }

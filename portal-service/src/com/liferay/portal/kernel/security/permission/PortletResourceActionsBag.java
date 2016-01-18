@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.model.ResourceTypePermission;
-import com.liferay.portal.model.Role;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * @author Michael C. Han
+ * @author László Csontos
  */
-public interface PermissionConversionFilter {
+public interface PortletResourceActionsBag extends ResourceActionsBag {
 
-	public boolean accept(Role role, ResourcePermission resourcePermission);
+	public Map<String, String> getPortletRootModelResources();
 
-	public boolean accept(Role role, ResourceTypePermission resourcePermission);
+	public Set<String> getResourceLayoutManagerActions();
 
 }

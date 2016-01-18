@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
-
-import com.liferay.portal.model.User;
+package com.liferay.portal.kernel.security.permission;
 
 /**
- * @author Charles May
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public interface PermissionCheckerFactory {
+public interface ResourcePermissionChecker {
 
-	public PermissionChecker create(User user) throws Exception;
+	public Boolean checkResource(
+		PermissionChecker permissionChecker, long classPK, String actionId);
 
 }

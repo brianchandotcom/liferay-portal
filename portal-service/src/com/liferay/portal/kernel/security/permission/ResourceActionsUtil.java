@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;

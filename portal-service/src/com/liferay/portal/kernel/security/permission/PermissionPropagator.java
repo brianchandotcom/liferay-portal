@@ -12,41 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
+
+import com.liferay.portal.kernel.exception.PortalException;
+
+import javax.portlet.ActionRequest;
 
 /**
- * @author Preston Crary
+ * @author Hugo Huijser
  */
-public class RolePermissions {
+public interface PermissionPropagator {
 
-	public RolePermissions(
-		String name, int scope, String actionId, long roleId) {
-
-		_name = name;
-		_scope = scope;
-		_actionId = actionId;
-		_roleId = roleId;
-	}
-
-	public String getActionId() {
-		return _actionId;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public long getRoleId() {
-		return _roleId;
-	}
-
-	public int getScope() {
-		return _scope;
-	}
-
-	private final String _actionId;
-	private final String _name;
-	private final long _roleId;
-	private final int _scope;
+	public void propagateRolePermissions(
+			ActionRequest actionRequest, String className, String primKey,
+			long[] roleIds)
+		throws PortalException;
 
 }

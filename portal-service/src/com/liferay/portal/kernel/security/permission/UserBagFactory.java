@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
-import java.util.Map;
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author László Csontos
+ * @author Preston Crary
  */
-public interface PortletResourceActionsBag extends ResourceActionsBag {
+public interface UserBagFactory {
 
-	public Map<String, String> getPortletRootModelResources();
-
-	public Set<String> getResourceLayoutManagerActions();
+	public UserBag create(long userId) throws PortalException;
 
 }

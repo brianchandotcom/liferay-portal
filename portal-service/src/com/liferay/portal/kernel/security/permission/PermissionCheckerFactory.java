@@ -12,23 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
-import java.util.Set;
+import com.liferay.portal.model.User;
 
 /**
- * @author László Csontos
+ * @author Charles May
+ * @author Brian Wing Shun Chan
  */
-public interface ResourceActionsBag {
+public interface PermissionCheckerFactory {
 
-	public Set<String> getResourceActions();
-
-	public Set<String> getResourceGroupDefaultActions();
-
-	public Set<String> getResourceGuestDefaultActions();
-
-	public Set<String> getResourceGuestUnsupportedActions();
-
-	public Set<String> getResources();
+	public PermissionChecker create(User user) throws Exception;
 
 }

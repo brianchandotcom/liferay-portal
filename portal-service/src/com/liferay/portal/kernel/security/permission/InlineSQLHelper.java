@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
 /**
  * Provides utility methods for filtering SQL queries by the user's permissions.

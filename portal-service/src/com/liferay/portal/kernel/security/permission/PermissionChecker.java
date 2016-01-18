@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
 import aQute.bnd.annotation.ProviderType;
 

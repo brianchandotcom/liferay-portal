@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -20,31 +20,32 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 /**
  * @author Roberto Díaz
  */
-public class ResourcePermissionCheckerUtil {
+public class BaseModelPermissionCheckerUtil {
 
-	public static Boolean containsResourcePermission(
-		PermissionChecker permissionChecker, String className, long classPK,
-		String actionId) {
+	public static Boolean containsBaseModelPermission(
+		PermissionChecker permissionChecker, long groupId, String className,
+		long classPK, String actionId) {
 
-		ResourcePermissionChecker resourcePermissionChecker =
+		BaseModelPermissionChecker baseModelPermissionChecker =
 			_serviceTrackerMap.getService(className);
 
-		if (resourcePermissionChecker == null) {
+		if (baseModelPermissionChecker == null) {
 			return null;
 		}
 
-		Boolean resource = resourcePermissionChecker.checkResource(
-			permissionChecker, classPK, actionId);
-
-		if (resource != null) {
-			return resource.booleanValue();
+		try {
+			baseModelPermissionChecker.checkBaseModel(
+				permissionChecker, groupId, classPK, actionId);
+		}
+		catch (Exception e) {
+			return false;
 		}
 
-		return null;
+		return true;
 	}
 
-	private static final ServiceTrackerMap<String, ResourcePermissionChecker>
+	private static final ServiceTrackerMap<String, BaseModelPermissionChecker>
 		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			ResourcePermissionChecker.class, "resource.name");
+			BaseModelPermissionChecker.class, "model.class.name");
 
 }

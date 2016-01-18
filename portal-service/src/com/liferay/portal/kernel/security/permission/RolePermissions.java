@@ -12,14 +12,41 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
 /**
- * @author Miguel Pastor
+ * @author Preston Crary
  */
-public interface ResourcePermissionChecker {
+public class RolePermissions {
 
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId);
+	public RolePermissions(
+		String name, int scope, String actionId, long roleId) {
+
+		_name = name;
+		_scope = scope;
+		_actionId = actionId;
+		_roleId = roleId;
+	}
+
+	public String getActionId() {
+		return _actionId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public long getRoleId() {
+		return _roleId;
+	}
+
+	public int getScope() {
+		return _scope;
+	}
+
+	private final String _actionId;
+	private final String _name;
+	private final long _roleId;
+	private final int _scope;
 
 }

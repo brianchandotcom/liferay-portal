@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
- * @author Gergely Mathe
+ * @author László Csontos
  */
-public interface PermissionUpdateHandler {
+public interface ModelResourceActionsBag extends ResourceActionsBag {
 
-	public void updatedPermission(String primKey);
+	public Set<String> getResourceOwnerDefaultActions();
+
+	public Map<String, Double> getResourceWeights();
 
 }

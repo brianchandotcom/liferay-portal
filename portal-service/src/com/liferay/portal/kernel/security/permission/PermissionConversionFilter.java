@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.model.Role;
 
 /**
- * @author Miguel Pastor
+ * @author Michael C. Han
  */
-public interface BaseModelPermissionChecker {
+public interface PermissionConversionFilter {
 
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException;
+	public boolean accept(Role role, ResourcePermission resourcePermission);
+
+	public boolean accept(Role role, ResourceTypePermission resourcePermission);
 
 }

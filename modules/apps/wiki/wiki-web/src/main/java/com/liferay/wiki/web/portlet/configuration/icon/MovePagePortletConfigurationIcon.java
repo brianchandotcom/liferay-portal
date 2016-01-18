@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
@@ -34,11 +33,10 @@ public class MovePagePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public MovePagePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node, WikiPage page) {
+		PortletRequest portletRequest, WikiPage page) {
 
 		super(portletRequest);
 
-		_node = node;
 		_page = page;
 	}
 
@@ -55,7 +53,7 @@ public class MovePagePortletConfigurationIcon
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/move_page");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 
 		return portletURL.toString();
@@ -68,7 +66,7 @@ public class MovePagePortletConfigurationIcon
 					themeDisplay.getPermissionChecker(), _page,
 					ActionKeys.UPDATE) ||
 				WikiNodePermissionChecker.contains(
-					themeDisplay.getPermissionChecker(), _node.getNodeId(),
+					themeDisplay.getPermissionChecker(), _page.getNodeId(),
 					ActionKeys.ADD_PAGE)) {
 
 				return true;
@@ -80,7 +78,6 @@ public class MovePagePortletConfigurationIcon
 		return false;
 	}
 
-	private final WikiNode _node;
 	private final WikiPage _page;
 
 }

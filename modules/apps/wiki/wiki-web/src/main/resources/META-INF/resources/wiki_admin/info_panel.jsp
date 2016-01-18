@@ -63,7 +63,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 String sections = "details";
 
 if (wikiInfoPanelDisplayContext.isSinglePageSelection()) {
-	sections += ",versions";
+	sections += ",versions,activity";
 }
 %>
 
@@ -262,6 +262,51 @@ if (wikiInfoPanelDisplayContext.isSinglePageSelection()) {
 							<liferay-ui:message arguments="<%= dateFormatDateTime.format(curPage.getCreateDate()) %>" key="on-x" />
 						</small>
 					</div>
+
+				<%
+				}
+				%>
+
+			</div>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<div class="sidebar-body">
+
+				<%
+				WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
+
+				WikiPage wikiPage = wikiInfoPanelDisplayContext.getFirstPage();
+
+				List<SocialActivity> socialActivities = SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (SocialActivity socialActivity : socialActivities) {
+					JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
+
+					String path = wikiSocialActivityHelper.getSocialActivityActionJSP(socialActivity, extraDataJSONObject);
+				%>
+
+					<c:if test="<%= Validator.isNotNull(path) %>">
+						<div>
+							<ul class="list-inline list-unstyled sidebar-header-actions">
+								<li>
+
+									<%
+									request.setAttribute("info_panel.jsp-socialActivity", socialActivity);
+									request.setAttribute(WikiWebKeys.WIKI_PAGE, wikiPage);
+									%>
+
+									<liferay-util:include page="<%= path %>" servletContext="<%= application %>" />
+								</li>
+							</ul>
+						</div>
+					</c:if>
+
+					<h4><%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %></h4>
+
+					<small type="text-muted">
+						<%= dateFormatDateTime.format(socialActivity.getCreateDate()) %>
+					</small>
 
 				<%
 				}

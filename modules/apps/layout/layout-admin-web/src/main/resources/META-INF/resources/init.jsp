@@ -28,8 +28,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %><%@
-page import="com.liferay.layout.admin.web.constants.LayoutAdminWebKeys" %><%@
-page import="com.liferay.layout.admin.web.control.menu.InformationMessagesControlMenuEntry" %><%@
 page import="com.liferay.layout.admin.web.display.context.LayoutsAdminDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.display.context.LayoutsTreeDisplayContext" %><%@
 page import="com.liferay.portal.exception.ImageTypeException" %><%@
@@ -91,7 +89,6 @@ page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.model.Theme" %><%@
 page import="com.liferay.portal.model.ThemeSetting" %><%@
 page import="com.liferay.portal.model.UserGroup" %><%@
-page import="com.liferay.portal.security.auth.AuthTokenUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@

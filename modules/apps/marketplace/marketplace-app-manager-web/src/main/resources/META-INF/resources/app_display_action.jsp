@@ -25,11 +25,14 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 AppDisplay appDisplay = (AppDisplay)row.getObject();
 
 String bundleIds = _getBundleIds(appDisplay);
-
-String storeURL = appDisplay.getStoreURL(liferayPortletRequest);
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+
+	<%
+	String storeURL = appDisplay.getStoreURL(liferayPortletRequest);
+	%>
+
 	<c:if test="<%= Validator.isNotNull(storeURL) %>">
 		<liferay-ui:icon
 			message="go-to-marketplace"

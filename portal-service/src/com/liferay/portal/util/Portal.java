@@ -298,30 +298,6 @@ public interface Portal {
 	public long[] getAncestorSiteGroupIds(long groupId) throws PortalException;
 
 	/**
-	 * Returns the set of struts actions that should not be checked for an
-	 * authentication token.
-	 *
-	 * @return     the set of struts actions that should not be checked for an
-	 *             authentication token
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions}
-	 */
-	@Deprecated
-	public Set<String> getAuthTokenIgnoreActions();
-
-	/**
-	 * Returns the set of IDs of portlets that should not be checked for an
-	 * authentication token.
-	 *
-	 * @return     the set of IDs of portlets that should not be checked for an
-	 *             authentication token
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelist}
-	 */
-	@Deprecated
-	public Set<String> getAuthTokenIgnorePortlets();
-
-	/**
 	 * Returns the base model instance for the resource permission.
 	 *
 	 * @param  resourcePermission the resource permission
@@ -395,13 +371,6 @@ public interface Portal {
 			String completeURL, ThemeDisplay themeDisplay, Layout layout,
 			boolean forceLayoutFriendlyURL)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by the more general {@link
-	 *             #getCDNHost(boolean)}
-	 */
-	@Deprecated
-	public String getCDNHost();
 
 	/**
 	 * Returns the secure (HTTPS) or insecure (HTTP) content distribution
@@ -856,12 +825,6 @@ public interface Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request);
 
-	/**
-	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
-	 */
-	@Deprecated
-	public long getParentGroupId(long scopeGroupId);
-
 	public String getPathContext();
 
 	public String getPathContext(HttpServletRequest request);
@@ -903,13 +866,6 @@ public interface Portal {
 	public int getPortalLocalPort(boolean secure);
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by the more general {@link
-	 *             #getPortalPort(boolean)}
-	 */
-	@Deprecated
-	public int getPortalPort();
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getPortalServerPort(boolean)}
 	 */
@@ -940,28 +896,6 @@ public interface Portal {
 		throws PortalException;
 
 	public String getPortalWebDir();
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelist}
-	 */
-	@Deprecated
-	public Set<String> getPortletAddDefaultResourceCheckWhitelist();
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelistActions}
-	 */
-	@Deprecated
-	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getPortletBreadcrumbs(HttpServletRequest)}
-	 */
-	@Deprecated
-	public List<BreadcrumbEntry> getPortletBreadcrumbList(
-		HttpServletRequest request);
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
@@ -1257,30 +1191,10 @@ public interface Portal {
 			ResourceResponse resourceResponse)
 		throws IOException, PortletException;
 
-	/**
-	 * @deprecated As of 6.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public boolean isAllowAddPortletDefaultResource(
-			HttpServletRequest request, Portlet portlet)
-		throws PortalException;
-
 	public boolean isCDNDynamicResourcesEnabled(HttpServletRequest request)
 		throws PortalException;
 
 	public boolean isCDNDynamicResourcesEnabled(long companyId);
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(User, long)}
-	 */
-	@Deprecated
-	public boolean isCommunityAdmin(User user, long groupId) throws Exception;
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(User, long)}
-	 */
-	@Deprecated
-	public boolean isCommunityOwner(User user, long groupId) throws Exception;
 
 	public boolean isCompanyAdmin(User user) throws Exception;
 
@@ -1363,20 +1277,6 @@ public interface Portal {
 		PortalPortEventListener portalPortEventListener);
 
 	public void resetCDNHosts();
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelist}
-	 */
-	@Deprecated
-	public Set<String> resetPortletAddDefaultResourceCheckWhitelist();
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions}
-	 */
-	@Deprecated
-	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 
 	public String resetPortletParameters(String url, String portletId);
 

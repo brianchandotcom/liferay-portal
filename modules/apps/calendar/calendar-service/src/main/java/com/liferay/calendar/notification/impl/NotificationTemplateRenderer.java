@@ -58,11 +58,6 @@ public class NotificationTemplateRenderer {
 		Map<String, Serializable> attributes =
 			notificationTemplateContext.getAttributes();
 
-		String location = HtmlUtil.escape(
-			GetterUtil.getString(attributes.get("location")));
-		String title = HtmlUtil.escape(
-			GetterUtil.getString(attributes.get("title")));
-
 		return StringUtil.replace(
 			notificationTemplate,
 			new String[] {
@@ -73,9 +68,10 @@ public class NotificationTemplateRenderer {
 			},
 			new String[] {
 				GetterUtil.getString(attributes.get("endTime")),
-				GetterUtil.getString(location),
+				HtmlUtil.escape(
+					GetterUtil.getString(attributes.get("location"))),
 				GetterUtil.getString(attributes.get("startTime")),
-				GetterUtil.getString(title),
+				HtmlUtil.escape(GetterUtil.getString(attributes.get("title"))),
 				GetterUtil.getString(attributes.get("url")),
 				GetterUtil.getString(
 					notificationTemplateContext.getFromAddress()),

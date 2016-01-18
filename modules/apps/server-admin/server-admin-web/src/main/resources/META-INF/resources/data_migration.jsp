@@ -22,7 +22,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 
 <liferay-ui:error exception="<%= FileSystemStoreRootDirException.class %>" message="the-root-directories-of-the-selected-file-system-stores-are-not-valid" />
 
-<div class="server-admin-tab-wrapper">
+<div class="server-admin-tabs">
 	<c:choose>
 		<c:when test="<%= convertProcesses.isEmpty() %>">
 			<div class="alert alert-info">
@@ -30,17 +30,16 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 			</div>
 		</c:when>
 		<c:otherwise>
+			<liferay-ui:panel-container extended="<%= true %>" id="convertPanelContainer" persistState="<%= true %>">
 
-				<liferay-ui:panel-container extended="<%= true %>" id="convertPanelContainer" persistState="<%= true %>">
+				<%
+				int i = 0;
 
-			<%
-			int i = 0;
-
-			for (ConvertProcess convertProcess : convertProcesses) {
-				Class<?> clazz = convertProcess.getClass();
-				String parameterDescription = convertProcess.getParameterDescription();
-				String[] parameterNames = convertProcess.getParameterNames();
-			%>
+				for (ConvertProcess convertProcess : convertProcesses) {
+					Class<?> clazz = convertProcess.getClass();
+					String parameterDescription = convertProcess.getParameterDescription();
+					String[] parameterNames = convertProcess.getParameterNames();
+				%>
 
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id='<%= "convert" + i + "Panel" %>' markupView="lexicon" persistState="<%= true %>" title="<%= convertProcess.getDescription() %>">
 						<c:choose>
@@ -106,13 +105,12 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 						</c:choose>
 					</liferay-ui:panel>
 
-			<%
-				i++;
-			}
-			%>
+				<%
+					i++;
+				}
+				%>
 
-				</liferay-ui:panel-container>
-
+			</liferay-ui:panel-container>
 		</c:otherwise>
 	</c:choose>
 </div>

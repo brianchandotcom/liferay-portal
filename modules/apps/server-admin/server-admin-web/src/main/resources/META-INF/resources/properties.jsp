@@ -32,13 +32,12 @@ serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 %>
 
-<div class="server-admin-tab-wrapper">
+<div class="server-admin-tabs">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 
 			<%
 			for (String tabName : tabNames) {
-
 				serverURL.setParameter("tabs2", tabName);
 			%>
 

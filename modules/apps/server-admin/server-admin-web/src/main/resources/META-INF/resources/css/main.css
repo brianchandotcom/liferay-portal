@@ -1,6 +1,5 @@
 .portlet-admin {
-
-	.server-admin-tab-wrapper {
+	.server-admin-tabs {
 		margin-top: 20px;
 	}
 
@@ -28,5 +27,4 @@
 			padding-right: 15px;
 		}
 	}
-
 }

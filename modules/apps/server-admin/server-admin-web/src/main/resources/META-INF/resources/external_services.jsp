@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="server-admin-tab-wrapper">
+<div class="server-admin-tabs">
 	<aui:fieldset>
 		<liferay-ui:panel-container extended="<%= true %>" id="adminExternalServicesPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="adminImageMagickConversionPanel" markupView="lexicon" persistState="<%= true %>" title="enabling-imagemagick-provides-document-preview-functionality">

@@ -333,6 +333,7 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
 					<div class="page-attachments">
 						<h5><liferay-ui:message key="attachments" /></h5>
+
 						<div class="row">
 
 							<%
@@ -349,18 +350,9 @@ if (portletTitleBasedNavigation) {
 										text="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
 										url="<%= rowURL %>"
 									>
-										<c:choose>
-											<c:when test="<%= dlMimeTypeDisplayContext != null %>">
-												<liferay-frontend:horizontal-card-icon>
-													<span class="icon-monospaced <%= dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
-												</liferay-frontend:horizontal-card-icon>
-											</c:when>
-											<c:otherwise>
-												<liferay-frontend:horizontal-card-icon>
-													<span class="file-icon-color-0 icon-monospaced"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
-												</liferay-frontend:horizontal-card-icon>
-											</c:otherwise>
-										</c:choose>
+										<liferay-frontend:horizontal-card-icon>
+											<span class="icon-monospaced <%= (dlMimeTypeDisplayContext != null) ? dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) : "file-icon-color-0" %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
+										</liferay-frontend:horizontal-card-icon>
 									</liferay-frontend:horizontal-card>
 								</div>
 
@@ -411,6 +403,7 @@ if (portletTitleBasedNavigation) {
 									value="<%= curPage.getTitle() %>"
 								/>
 							</liferay-ui:search-container-row>
+
 							<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 						</liferay-ui:search-container>
 					</div>

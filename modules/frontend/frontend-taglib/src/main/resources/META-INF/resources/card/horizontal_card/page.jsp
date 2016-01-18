@@ -51,7 +51,7 @@
 		</div>
 
 		<c:if test="<%= Validator.isNotNull(actionJsp) %>">
-			<div class="card-col-content card-col-gutters">
+			<div class="card-col-field">
 				<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
 			</div>
 		</c:if>

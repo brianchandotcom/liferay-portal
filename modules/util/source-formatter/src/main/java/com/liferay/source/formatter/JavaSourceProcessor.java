@@ -637,6 +637,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "UTF-8: " + fileName);
 		}
 
+		if (!newContent.contains(" * @author ")) {
+			processErrorMessage(fileName, "Missing author: " + fileName);
+		}
+
 		newContent = fixDataAccessConnection(className, newContent);
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 

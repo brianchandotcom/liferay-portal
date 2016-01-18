@@ -37,7 +37,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" disabled="<%= false %>" href="javascript:;" icon="info-circle" label="info" />
 
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />

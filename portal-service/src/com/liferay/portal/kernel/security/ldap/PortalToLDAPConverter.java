@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.kernel.security.ldap;
 
-import com.liferay.portal.kernel.security.exportimport.UserOperation;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.kernel.security.exportimport.UserOperation;
 
 import java.io.Serializable;
 

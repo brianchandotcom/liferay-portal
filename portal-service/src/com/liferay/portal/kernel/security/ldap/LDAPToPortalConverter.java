@@ -12,39 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.kernel.security.ldap;
+
+import java.util.Properties;
+
+import javax.naming.directory.Attributes;
 
 /**
- * @author Michael C. Han
+ * @author Edward Han
+ * @author Brian Wing Shun Chan
  */
-public class LDAPGroup {
+public interface LDAPToPortalConverter {
 
-	public long getCompanyId() {
-		return _companyId;
-	}
+	public LDAPGroup importLDAPGroup(
+			long companyId, Attributes attributes, Properties groupMappings)
+		throws Exception;
 
-	public String getDescription() {
-		return _description;
-	}
-
-	public String getGroupName() {
-		return _groupName;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
-	}
-
-	public void setGroupName(String groupName) {
-		_groupName = groupName;
-	}
-
-	private long _companyId;
-	private String _description;
-	private String _groupName;
+	public LDAPUser importLDAPUser(
+			long companyId, Attributes attributes, Properties userMappings,
+			Properties userExpandoMappings, Properties contactMappings,
+			Properties contactExpandoMappings, String password)
+		throws Exception;
 
 }

@@ -1,6 +1,19 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.bookmarks.service.persistence.BookmarksEntryFinder.findByNoAssets">
+		<![CDATA[
+			SELECT
+				{BookmarksEntry.*}
+			FROM
+				BookmarksEntry
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = BookmarksEntry.entryId)
+			WHERE
+				(AssetEntry.classPK IS NULL)
+		]]>
+	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.countE_ByG_F">
 		<![CDATA[
 			SELECT
@@ -104,19 +117,6 @@
 				(BookmarksFolder.groupId = ?) AND
 				(BookmarksFolder.parentFolderId = ?) AND
 				(BookmarksFolder.status = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.bookmarks.service.persistence.BookmarksEntryFinder.findByNoAssets">
-		<![CDATA[
-			SELECT
-				{BookmarksEntry.*}
-			FROM
-				BookmarksEntry
-			LEFT JOIN
-				AssetEntry ON
-					(AssetEntry.classPK = BookmarksEntry.entryId)
-			WHERE
-				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
 </custom-sql>

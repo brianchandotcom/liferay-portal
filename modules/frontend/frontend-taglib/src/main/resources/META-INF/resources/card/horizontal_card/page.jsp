@@ -44,7 +44,7 @@
 
 		<div class="card-col-content card-col-gutters clamp-horizontal">
 			<div class="clamp-container">
-				<span class="h4 truncate-text">
+				<span class="h4 truncate-text" title="<%= HtmlUtil.escapeAttribute(text) %>">
 					<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(text) %>" />
 				</span>
 			</div>

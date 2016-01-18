@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.portal.kernel.security.pwd;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.PasswordPolicy;

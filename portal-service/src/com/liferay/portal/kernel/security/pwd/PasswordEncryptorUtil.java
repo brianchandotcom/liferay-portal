@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.portal.kernel.security.pwd;
 
 import com.liferay.portal.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.log.Log;

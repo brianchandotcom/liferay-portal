@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.portal.kernel.security.pwd;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.exception.PwdEncryptorException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
-public interface Toolkit {
+public interface PasswordEncryptor {
 
-	public String generate(PasswordPolicy passwordPolicy);
+	public String encrypt(String plainTextPassword, String encryptedPassword)
+		throws PwdEncryptorException;
 
-	public void validate(
-			long userId, String password1, String password2,
-			PasswordPolicy passwordPolicy)
-		throws PortalException;
+	public String encrypt(
+			String algorithm, String plainTextPassword,
+			String encryptedPassword)
+		throws PwdEncryptorException;
 
-	public void validate(
-			String password1, String password2, PasswordPolicy passwordPolicy)
-		throws PortalException;
+	public String getDefaultPasswordAlgorithmType();
+
+	public String[] getSupportedAlgorithmTypes();
 
 }

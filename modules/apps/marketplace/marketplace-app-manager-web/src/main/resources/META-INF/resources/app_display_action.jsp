@@ -30,7 +30,7 @@ String bundleIds = _getBundleIds(appDisplay);
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	String storeURL = appDisplay.getStoreURL(liferayPortletRequest);
+	String storeURL = appDisplay.getStoreURL(request);
 	%>
 
 	<c:if test="<%= Validator.isNotNull(storeURL) %>">

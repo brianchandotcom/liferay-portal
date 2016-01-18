@@ -17,7 +17,6 @@ package com.liferay.marketplace.app.manager.web.util;
 import java.util.List;
 
 import javax.portlet.MimeResponse;
-import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +43,7 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public int getState();
 
-	public String getStoreURL(PortletRequest portletRequest);
+	public String getStoreURL(HttpServletRequest request);
 
 	public String getTitle();
 

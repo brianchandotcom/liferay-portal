@@ -17,6 +17,7 @@ package com.liferay.portal.security.xml;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 

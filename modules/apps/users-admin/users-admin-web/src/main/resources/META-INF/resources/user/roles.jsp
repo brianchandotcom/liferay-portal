@@ -111,8 +111,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					{
 						dialog: {
 							constrain: true,
-							modal: true,
-							width: 600
+							modal: true
 						},
 
 						<%
@@ -327,6 +326,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
+							constrain: true,
 							modal: true
 						},
 
@@ -493,8 +493,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							{
 								dialog: {
 									constrain: true,
-									modal: true,
-									width: 600
+									modal: true
 								},
 
 								<%

@@ -5252,43 +5252,41 @@ public class ServiceBuilder {
 	}
 
 	private void _removeOldServices(Entity entity) {
-		if (!_oldServiceOutputPath.equals(_serviceOutputPath)) {
-			_removeActionableDynamicQuery(entity, _oldServiceOutputPath);
-			_removeBlobModels(entity, _oldServiceOutputPath);
-			_removeEJBPK(entity, _oldServiceOutputPath);
-			_removeExportActionableDynamicQuery(entity, _oldServiceOutputPath);
-			_removeExtendedModel(entity, _oldServiceOutputPath);
-
-			_removeFinder(entity, _oldServiceOutputPath);
-			_removeFinderUtil(entity, _oldServiceOutputPath);
-
-			_removeModel(entity, _oldServiceOutputPath);
-			_removeModelClp(entity, _oldServiceOutputPath);
-			_removeModelSoap(entity, _oldServiceOutputPath);
-			_removeModelWrapper(entity, _oldServiceOutputPath);
-
-			_removePersistence(entity, _oldServiceOutputPath);
-			_removePersistenceUtil(entity, _oldServiceOutputPath);
-
-			_removeServiceClpMessageListener(_oldServiceOutputPath);
-			_removeServiceClpSerializer(_oldServiceOutputPath);
-
-			_removeService(entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
-			_removeServiceClp(
-				entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
-			_removeServiceUtil(
-				entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
-			_removeServiceWrapper(
-				entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
-
-			_removeService(entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
-			_removeServiceClp(
-				entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
-			_removeServiceUtil(
-				entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
-			_removeServiceWrapper(
-				entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+		if (_oldServiceOutputPath.equals(_serviceOutputPath)) {
+			return;
 		}
+
+		_removeActionableDynamicQuery(entity, _oldServiceOutputPath);
+		_removeBlobModels(entity, _oldServiceOutputPath);
+		_removeEJBPK(entity, _oldServiceOutputPath);
+		_removeExportActionableDynamicQuery(entity, _oldServiceOutputPath);
+		_removeExtendedModel(entity, _oldServiceOutputPath);
+
+		_removeFinder(entity, _oldServiceOutputPath);
+		_removeFinderUtil(entity, _oldServiceOutputPath);
+
+		_removeModel(entity, _oldServiceOutputPath);
+		_removeModelClp(entity, _oldServiceOutputPath);
+		_removeModelSoap(entity, _oldServiceOutputPath);
+		_removeModelWrapper(entity, _oldServiceOutputPath);
+
+		_removePersistence(entity, _oldServiceOutputPath);
+		_removePersistenceUtil(entity, _oldServiceOutputPath);
+
+		_removeServiceClpMessageListener(_oldServiceOutputPath);
+		_removeServiceClpSerializer(_oldServiceOutputPath);
+
+		_removeService(entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+		_removeServiceClp(entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+		_removeServiceUtil(entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+		_removeServiceWrapper(
+			entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+
+		_removeService(entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+		_removeServiceClp(entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+		_removeServiceUtil(entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+		_removeServiceWrapper(
+			entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
 	}
 
 	private void _removePersistence(Entity entity, String outputPath) {

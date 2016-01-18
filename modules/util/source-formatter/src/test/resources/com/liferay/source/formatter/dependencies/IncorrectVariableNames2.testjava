@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter.dependencies;
 
+/**
+ * @author Hugo Huijser
+ */
 public class IncorrectVariableNames2 {
 
 	public String method1() {

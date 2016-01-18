@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter.dependencies;
 
+/**
+ * @author Hugo Huijser
+ */
 public class IncorrectVariableNames1 {
 
 	public static final int _TEST_1 = 1;

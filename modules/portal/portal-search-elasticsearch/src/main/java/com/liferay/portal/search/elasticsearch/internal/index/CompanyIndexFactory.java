@@ -25,6 +25,7 @@ import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfig
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch.settings.IndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -250,6 +251,30 @@ public class CompanyIndexFactory implements IndexFactory {
 		putMapping(companyId, read(name), indicesAdminClient);
 	}
 
+	protected void loadTypeMappingsContributors(
+		final long companyId, final IndicesAdminClient indicesAdminClient) {
+
+		TypeMappingsHelper typeMappingsHelper = new TypeMappingsHelper() {
+
+			@Override
+			public void addTypeMappings(String source) {
+				try {
+					putMapping(companyId, source, indicesAdminClient);
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(ioe);
+				}
+			}
+
+		};
+
+		for (IndexSettingsContributor indexSettingsContributor :
+				_indexSettingsContributors) {
+
+			indexSettingsContributor.contribute(typeMappingsHelper);
+		}
+	}
+
 	protected void putMapping(
 			long companyId, String source,
 			IndicesAdminClient indicesAdminClient)
@@ -313,6 +338,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		}
 
 		loadAdditionalTypeMappings(companyId, indicesAdminClient);
+
+		loadTypeMappingsContributors(companyId, indicesAdminClient);
 
 		loadOptionalDefaultTypeMappings(companyId, indicesAdminClient);
 	}

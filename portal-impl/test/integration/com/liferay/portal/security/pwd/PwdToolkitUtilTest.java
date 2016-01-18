@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.pwd.Toolkit;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.pwd.bundle.pwdtoolkitutil.TestToolkit;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

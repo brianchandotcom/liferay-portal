@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.security.auth;
 import com.liferay.portal.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 
 import java.io.Serializable;
 

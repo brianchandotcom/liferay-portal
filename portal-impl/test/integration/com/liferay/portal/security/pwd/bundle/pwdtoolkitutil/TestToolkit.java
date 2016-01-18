@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.pwd.bundle.pwdtoolkitutil;
 
+import com.liferay.portal.kernel.security.pwd.Toolkit;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.security.pwd.Toolkit;
 
 import java.util.concurrent.atomic.AtomicReference;
 

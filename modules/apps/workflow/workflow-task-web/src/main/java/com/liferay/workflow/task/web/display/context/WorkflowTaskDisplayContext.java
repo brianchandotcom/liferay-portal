@@ -141,6 +141,14 @@ public class WorkflowTaskDisplayContext {
 		return assetRendererFactory.getAssetEntry(assetEntryId);
 	}
 
+	public String getAssetIconCssClass(WorkflowTask workflowTask)
+		throws PortalException {
+
+		WorkflowHandler<?> workflowHandler = getWorkflowHandler(workflowTask);
+
+		return workflowHandler.getIconCssClass();
+	}
+
 	public AssetRenderer<?> getAssetRenderer() throws PortalException {
 		long assetEntryClassPK = ParamUtil.getLong(
 			_workflowTaskRequestHelper.getRequest(), "assetEntryClassPK");

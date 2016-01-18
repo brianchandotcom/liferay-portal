@@ -17,10 +17,10 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.exception.ContactNameException" %><%@
-page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
-page import="com.liferay.portal.security.auth.FullNameDefinition" %><%@
-page import="com.liferay.portal.security.auth.FullNameDefinitionFactory" %><%@
-page import="com.liferay.portal.security.auth.FullNameField" %>
+page import="com.liferay.portal.kernel.security.auth.FullNameDefinition" %><%@
+page import="com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory" %><%@
+page import="com.liferay.portal.kernel.security.auth.FullNameField" %><%@
+page import="com.liferay.portal.kernel.util.CamelCaseUtil" %>
 
 <%
 Object bean = request.getAttribute("liferay-ui:user-name-fields:bean");

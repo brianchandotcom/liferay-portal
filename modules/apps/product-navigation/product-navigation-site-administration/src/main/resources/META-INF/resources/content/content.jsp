@@ -53,7 +53,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 						<span><%= scopeLabel %></span>
 
 						<span class="nav-equal-height-heading-field">
-							<liferay-ui:icon-menu direction="down" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
+							<liferay-ui:icon-menu direction="right" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 
 								<%
 								Map<String, Object> data = new HashMap<String, Object>();
@@ -64,6 +64,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 								%>
 
 								<liferay-ui:icon
+									cssClass='<%= (curScopeGroup.getGroupId() == curSite.getGroupId()) ? "active" : StringPool.BLANK %>'
 									data="<%= data %>"
 									message="default-scope"
 									url="<%= portletURL.toString() %>"
@@ -77,6 +78,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 								%>
 
 									<liferay-ui:icon
+										cssClass='<%= (curScopeGroup.getGroupId() == scopeGroup.getGroupId()) ? "active" : StringPool.BLANK %>'
 										data="<%= data %>"
 										message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
 										url="<%= portletURL.toString() %>"

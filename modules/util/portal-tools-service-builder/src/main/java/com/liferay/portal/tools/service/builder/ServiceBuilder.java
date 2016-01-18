@@ -767,10 +767,10 @@ public class ServiceBuilder {
 
 							_createServiceHttp(entity);
 
-							_createServiceJson(entity);
+							_removeServiceJson(entity);
 
 							if (entity.hasColumns()) {
-								_createServiceJsonSerializer(entity);
+								_removeServiceJsonSerializer(entity);
 							}
 
 							_createServiceSoap(entity);
@@ -3084,30 +3084,6 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createServiceJson(Entity entity) {
-		File ejbFile = new File(
-			_outputPath + "/service/http/" + entity.getName() +
-				"ServiceJSON.java");
-
-		if (ejbFile.exists()) {
-			System.out.println("Removing deprecated " + ejbFile);
-
-			ejbFile.delete();
-		}
-	}
-
-	private void _createServiceJsonSerializer(Entity entity) {
-		File ejbFile = new File(
-			_serviceOutputPath + "/service/http/" + entity.getName() +
-				"JSONSerializer.java");
-
-		if (ejbFile.exists()) {
-			System.out.println("Removing deprecated " + ejbFile);
-
-			ejbFile.delete();
-		}
-	}
-
 	private void _createServicePropsUtil() throws Exception {
 		if (!_osgiModule) {
 			return;
@@ -5383,6 +5359,30 @@ public class ServiceBuilder {
 		_deleteFile(
 			_outputPath + "/service/impl/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceImpl.java");
+	}
+
+	private void _removeServiceJson(Entity entity) {
+		File ejbFile = new File(
+			_outputPath + "/service/http/" + entity.getName() +
+				"ServiceJSON.java");
+
+		if (ejbFile.exists()) {
+			System.out.println("Removing deprecated " + ejbFile);
+
+			ejbFile.delete();
+		}
+	}
+
+	private void _removeServiceJsonSerializer(Entity entity) {
+		File ejbFile = new File(
+			_serviceOutputPath + "/service/http/" + entity.getName() +
+				"JSONSerializer.java");
+
+		if (ejbFile.exists()) {
+			System.out.println("Removing deprecated " + ejbFile);
+
+			ejbFile.delete();
+		}
 	}
 
 	private void _removeServiceSoap(Entity entity) {

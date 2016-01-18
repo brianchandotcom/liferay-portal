@@ -12,14 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.service.wrapper;
+package com.liferay.portal.workflow.kaleo.internal.lifecycle;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portal.service.CompanyLocalServiceWrapper;
-import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,40 +24,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ServiceWrapper.class)
-public class KaleoCompanyLocalServiceWrapper
-	extends CompanyLocalServiceWrapper {
-
-	public KaleoCompanyLocalServiceWrapper() {
-		super(null);
-	}
-
-	public KaleoCompanyLocalServiceWrapper(
-		CompanyLocalService companyLocalService) {
-
-		super(companyLocalService);
-	}
+@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+public class KaleoPortalInstanceLifecycleListener
+	implements PortalInstanceLifecycleListener {
 
 	@Override
-	public Company checkCompany(String webId, String mx)
-		throws PortalException {
-
-		Company company = super.checkCompany(webId, mx);
-
-		try {
-			_portalKaleoManager.deployKaleoDefaults(company.getCompanyId());
-		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (SystemException se) {
-			throw se;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-
-		return company;
+	public void portalInstanceRegistered(Company company) throws Exception {
+		_portalKaleoManager.deployKaleoDefaults(company.getCompanyId());
 	}
 
 	@Reference(unbind = "-")

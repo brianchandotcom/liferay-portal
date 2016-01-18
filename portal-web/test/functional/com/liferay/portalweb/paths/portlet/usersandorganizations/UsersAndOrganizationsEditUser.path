@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//span[@class='user-name']</td>
+	<td>//div[@class='user-info']//span[@class='user-name']</td>
 	<td></td>
 </tr>
 <tr>

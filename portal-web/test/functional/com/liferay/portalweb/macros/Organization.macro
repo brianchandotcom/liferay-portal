@@ -413,6 +413,8 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
+		<execute function="AssertVisible" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME_GENERIC" />
+
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />

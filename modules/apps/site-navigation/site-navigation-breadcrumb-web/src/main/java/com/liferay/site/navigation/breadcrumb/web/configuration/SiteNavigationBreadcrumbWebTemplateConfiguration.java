@@ -25,7 +25,7 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 @Meta.OCD(
 	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration",
 	localization = "content/Language",
-	name = "%site.navigation.breadcrumb.web.configuration.name"
+	name = "%site.navigation.breadcrumb.web.template.configuration.name"
 )
 public interface SiteNavigationBreadcrumbWebTemplateConfiguration {
 

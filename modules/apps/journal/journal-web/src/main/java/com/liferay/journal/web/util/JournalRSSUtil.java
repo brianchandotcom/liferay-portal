@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.util;
 
+import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -356,7 +357,16 @@ public class JournalRSSUtil {
 		long id = ParamUtil.getLong(resourceRequest, "id");
 
 		if (id > 0) {
-			feed = _journalFeedLocalService.getFeed(id);
+			try {
+				feed = _journalFeedLocalService.getFeed(id);
+			}
+			catch (NoSuchFeedException nsfe) {
+
+				// Compatibility with old URLs
+
+				feed = _journalFeedLocalService.getFeed(
+					themeDisplay.getScopeGroupId(), String.valueOf(id));
+			}
 		}
 		else {
 			long groupId = ParamUtil.getLong(resourceRequest, "groupId");

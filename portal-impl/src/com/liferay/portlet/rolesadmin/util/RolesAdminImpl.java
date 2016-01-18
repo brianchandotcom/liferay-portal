@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.roles.admin.kernel.util.RolesAdmin;
 
 /**
  * @author Brian Wing Shun Chan

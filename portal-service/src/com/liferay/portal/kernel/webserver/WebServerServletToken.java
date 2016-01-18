@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.display.context;
-
-import com.liferay.portal.kernel.display.context.DisplayContext;
+package com.liferay.portal.kernel.webserver;
 
 /**
- * @author Iván Zaera
+ * @author Brian Wing Shun Chan
+ * @since  6.1, replaced com.liferay.portal.kernel.servlet.ImageServletToken
  */
-public interface IGDisplayContext extends DisplayContext {
+public interface WebServerServletToken {
+
+	public String getToken(long imageId);
+
+	public void resetToken(long imageId);
+
 }

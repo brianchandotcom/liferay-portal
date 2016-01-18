@@ -16,8 +16,8 @@ package com.liferay.journal.model.impl;
 
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 /**
  * @author Brian Wing Shun Chan

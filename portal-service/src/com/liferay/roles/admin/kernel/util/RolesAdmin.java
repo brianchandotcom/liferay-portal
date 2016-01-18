@@ -12,16 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.webserver;
+package com.liferay.roles.admin.kernel.util;
+
+import com.liferay.portal.model.Role;
 
 /**
  * @author Brian Wing Shun Chan
- * @since  6.1, replaced com.liferay.portal.kernel.servlet.ImageServletToken
  */
-public interface WebServerServletToken {
+public interface RolesAdmin {
 
-	public String getToken(long imageId);
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public String getCssClassName(Role role);
 
-	public void resetToken(long imageId);
+	public String getIconCssClass(Role role);
 
 }

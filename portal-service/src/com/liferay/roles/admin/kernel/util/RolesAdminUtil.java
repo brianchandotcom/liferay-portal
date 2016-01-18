@@ -12,39 +12,40 @@
  * details.
  */
 
-package com.liferay.portal.webserver;
+package com.liferay.roles.admin.kernel.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.Role;
 
 /**
  * @author Brian Wing Shun Chan
- * @since  6.1, replaced com.liferay.portal.kernel.servlet.ImageServletTokenUtil
  */
-public class WebServerServletTokenUtil {
+public class RolesAdminUtil {
 
-	public static String getToken(long imageId) {
-		return getWebServerServletToken().getToken(imageId);
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
+	public static String getCssClassName(Role role) {
+		return getRolesAdmin().getCssClassName(role);
 	}
 
-	public static WebServerServletToken getWebServerServletToken() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			WebServerServletTokenUtil.class);
-
-		return _webServerServletToken;
+	public static String getIconCssClass(Role role) {
+		return getRolesAdmin().getIconCssClass(role);
 	}
 
-	public static void resetToken(long imageId) {
-		getWebServerServletToken().resetToken(imageId);
+	public static RolesAdmin getRolesAdmin() {
+		PortalRuntimePermission.checkGetBeanProperty(RolesAdminUtil.class);
+
+		return _rolesAdmin;
 	}
 
-	public void setWebServerServletToken(
-		WebServerServletToken webServerServletToken) {
-
+	public void setRolesAdmin(RolesAdmin rolesAdmin) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_webServerServletToken = webServerServletToken;
+		_rolesAdmin = rolesAdmin;
 	}
 
-	private static WebServerServletToken _webServerServletToken;
+	private static RolesAdmin _rolesAdmin;
 
 }

@@ -14,14 +14,14 @@
 
 package com.liferay.document.library.web.display.context;
 
+import com.liferay.image.gallery.display.kernel.display.context.IGDisplayContextFactory;
+import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextFactory;
-import com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

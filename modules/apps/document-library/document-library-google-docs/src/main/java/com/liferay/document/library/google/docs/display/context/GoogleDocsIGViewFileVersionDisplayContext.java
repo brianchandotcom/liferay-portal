@@ -15,11 +15,11 @@
 package com.liferay.document.library.google.docs.display.context;
 
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
+import com.liferay.image.gallery.display.kernel.display.context.BaseIGViewFileVersionDisplayContext;
+import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portlet.imagegallerydisplay.display.context.BaseIGViewFileVersionDisplayContext;
-import com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext;
 
 import java.util.List;
 import java.util.UUID;

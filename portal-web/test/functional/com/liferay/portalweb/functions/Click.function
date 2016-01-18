@@ -113,7 +113,7 @@
 	<command name="clickAtSidebarClickAtWaitForScript">
 		<execute argument1="1000" selenium="pause" />
 
-		<execute argument1="//ul[@class='nav nav-add-controls'] | //ul[contains(@class,'nav nav-add-controls')] | //ul[contains(@class,'control-menu')]" selenium="waitForElementPresent" />
+		<execute argument1="//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']" selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
 

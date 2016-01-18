@@ -26,7 +26,7 @@
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_TITLE</td>
-	<td>//div[@class='entry-title']/h1[contains(.,'${key_entryTitle}')]</td>
+	<td>//span[@class='entry-title']//a[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

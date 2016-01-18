@@ -640,10 +640,6 @@
 
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="MediaWiki" />
 		</execute>
@@ -652,6 +648,10 @@
 
 		<execute macro="WikiEntry#addMediaWikiDescription">
 			<var name="wikiPageContent" value="Wiki Page Content Media Wiki" />
+		</execute>
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
@@ -771,6 +771,10 @@
 		</execute>
 
 		<execute macro="WikiEntry#cancel" />
+
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
 
 		<execute macro="WikiPage#viewPageContentBody">
 			<var name="wikiPageContent" value="Wiki Page Content" />

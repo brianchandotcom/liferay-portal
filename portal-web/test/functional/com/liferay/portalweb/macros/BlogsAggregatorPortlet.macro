@@ -45,14 +45,6 @@
 		</execute>
 	</command>
 
-	<command name="viewNoBlogsEntryViaBAPortletPG">
-		<for list="${viewNoEntryTitle}" param="entryTitle">
-			<var name="key_entryTitle" value="${entryTitle}" />
-
-			<execute function="AssertElementNotPresent" locator1="BlogsAggregator#ENTRY_TITLE" />
-		</for>
-	</command>
-
 	<command name="viewNoEntryViaBlogsAggregatorPG">
 		<execute function="AssertElementPresent" locator1="Blogs#AGGREGATOR_NO_ENTRY_MESSAGE" value1="There are no blogs." />
 	</command>

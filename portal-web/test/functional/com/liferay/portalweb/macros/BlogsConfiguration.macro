@@ -34,15 +34,13 @@
 
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="PGBlogsConfigurationScope#NAVIGATION_SCOPE" value1="Scope" />
+		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
 
-		<var name="key_scopeSelection" value="${scopeSelection}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${scopeSelection}" />
 
-		<execute function="Click#pauseClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="disableSocialBookmarkSites">

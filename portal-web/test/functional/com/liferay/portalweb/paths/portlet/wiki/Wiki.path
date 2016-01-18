@@ -166,8 +166,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALL_PAGES_TABLE_ACTIONS_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]//td/div/a[contains(@class,'dropdown-toggle')]</td>
+	<td>ALL_PAGES_TABLE_VERTICAL_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/.//td/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

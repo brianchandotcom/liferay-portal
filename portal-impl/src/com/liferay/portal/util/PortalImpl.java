@@ -6488,7 +6488,7 @@ public class PortalImpl implements Portal {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			getCompanyId(httpServletRequest), portletDisplay.getId());
 
-		if (portlet.isSystem()) {
+		if (portlet.isSystem() || !portlet.isUseDefaultTemplate()) {
 			return false;
 		}
 

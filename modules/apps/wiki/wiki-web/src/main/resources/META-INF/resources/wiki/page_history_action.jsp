@@ -19,7 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-WikiPage wikiPage = (WikiPage)row.getObject();
+WikiPage wikiPage = null;
+
+if (row != null) {
+	wikiPage = (WikiPage)row.getObject();
+}
+else {
+	wikiPage = (WikiPage)request.getAttribute("info_panel.jsp-wikiPage");
+}
 %>
 
 <c:if test="<%= (wikiPage.getStatus() == WorkflowConstants.STATUS_APPROVED) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">

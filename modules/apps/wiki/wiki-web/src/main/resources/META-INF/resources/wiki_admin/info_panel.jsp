@@ -59,7 +59,15 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 	</c:choose>
 </div>
 
-<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
+<%
+String sections = "details";
+
+if (wikiInfoPanelDisplayContext.isSinglePageSelection()) {
+	sections += ",versions";
+}
+%>
+
+<liferay-ui:tabs names="<%= sections %>" refresh="<%= false %>" type="dropdown">
 	<liferay-ui:section>
 		<div class="sidebar-body">
 			<c:choose>
@@ -221,4 +229,45 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 			</c:choose>
 		</div>
 	</liferay-ui:section>
+
+	<c:if test="<%= wikiInfoPanelDisplayContext.isSinglePageSelection() %>">
+		<liferay-ui:section>
+			<div class="sidebar-body">
+
+				<%
+				WikiPage wikiPage = wikiInfoPanelDisplayContext.getFirstPage();
+
+				List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
+
+				for (WikiPage curPage : pages) {
+				%>
+
+					<div>
+						<ul class="list-inline list-unstyled sidebar-header-actions">
+							<li>
+
+								<%
+								request.setAttribute("info_panel.jsp-wikiPage", curPage);
+								%>
+
+								<liferay-util:include page="/wiki/page_history_action.jsp" servletContext="<%= application %>" />
+							</li>
+						</ul>
+
+						<h4><liferay-ui:message arguments="<%= curPage.getVersion() %>" key="version-x" /></h4>
+
+						<small class="text-muted">
+							<liferay-ui:message arguments="<%= curPage.getUserName() %>" key="by-x" />
+							,
+							<liferay-ui:message arguments="<%= dateFormatDateTime.format(curPage.getCreateDate()) %>" key="on-x" />
+						</small>
+					</div>
+
+				<%
+				}
+				%>
+
+			</div>
+		</liferay-ui:section>
+	</c:if>
 </liferay-ui:tabs>

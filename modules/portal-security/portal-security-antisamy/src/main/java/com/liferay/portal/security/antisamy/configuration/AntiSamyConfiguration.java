@@ -40,7 +40,9 @@ public interface AntiSamyConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();
 
-	@Meta.AD(required = false)
+	@Meta.AD(
+		deflt = "com.liferay.journal.model.JournalArticle", required = false
+	)
 	public String[] whitelist();
 
 }

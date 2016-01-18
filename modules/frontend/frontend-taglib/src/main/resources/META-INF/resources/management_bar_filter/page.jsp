@@ -17,26 +17,34 @@
 <%@ include file="/management_bar_filter/init.jsp" %>
 
 <%
+boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar-filter:disabled"));
 String label = (String)request.getAttribute("liferay-frontend:management-bar-filter:label");
 List<ManagementBarFilterItem> managementBarFilterItems = (List<ManagementBarFilterItem>)request.getAttribute("liferay-frontend:management-bar-filter:managementBarFilterItems");
 String value = (String)request.getAttribute("liferay-frontend:management-bar-filter:value");
 %>
 
 <c:if test="<%= managementBarFilterItems.size() > 0 %>">
-	<li class="dropdown">
-		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= label %>" data-toggle="dropdown" href="javascript:;">
-			<span class="management-bar-item-title"><liferay-ui:message key="<%= label %>" />: <liferay-ui:message key="<%= value %>" /></span>
+	<li class="dropdown <%= disabled ? "disabled" : StringPool.BLANK %>">
+		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= Validator.isNotNull(label) ? label : StringPool.BLANK %>" data-toggle="<%= disabled ? StringPool.BLANK : "dropdown" %>" href="javascript:;">
+			<span class="management-bar-item-title">
+				<c:if test="<%= Validator.isNotNull(label) %>">
+					<liferay-ui:message key="<%= label %>" />:
+				</c:if>
+
+				<liferay-ui:message key="<%= value %>" />
+			</span>
+
 			<span class="icon-sort"></span>
 		</a>
 
-		<ul class="dropdown-menu" data-qa-id="filter<%= label %>Values">
+		<ul class="dropdown-menu" data-qa-id="filter<%= Validator.isNotNull(label) ? label : StringPool.BLANK %>Values">
 
 			<%
 			for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems) {
 			%>
 
-				<li class="<%= Validator.equals(managementBarFilterItem.getLabel(), value) ? "active" : StringPool.BLANK %>">
-					<aui:a href="<%= managementBarFilterItem.getURL() %>" label="<%= managementBarFilterItem.getLabel() %>" />
+				<li class="<%= managementBarFilterItem.isActive() ? "active" : StringPool.BLANK %>">
+					<aui:a href="<%= managementBarFilterItem.getUrl() %>" id="<%= Validator.isNotNull(managementBarFilterItem.getId()) ? managementBarFilterItem.getId() : StringPool.BLANK %>" label="<%= managementBarFilterItem.getLabel() %>" />
 				</li>
 
 			<%

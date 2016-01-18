@@ -76,29 +76,9 @@ portletURL.setParameter("tabs1", tabs1);
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			label="<%= null %>"
-		>
-			<portlet:renderURL var="viewAllURL">
-				<portlet:param name="navigation" value="all" />
-				<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationAll() %>" label="all" url="<%= viewAllURL.toString() %>" />
-
-			<portlet:renderURL var="viewPendingsURL">
-				<portlet:param name="navigation" value="pending" />
-				<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationPending() %>" label="pending" url="<%= viewPendingsURL.toString() %>" />
-
-			<portlet:renderURL var="viewCompletedURL">
-				<portlet:param name="navigation" value="completed" />
-				<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:management-bar-navigation-item active="<%= workflowTaskDisplayContext.isNavigationCompleted() %>" label="completed" url="<%= viewCompletedURL.toString() %>" />
-		</liferay-frontend:management-bar-navigation>
+			navigationKeys='<%= new String[] {"all", "pending", "completed"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= workflowTaskDisplayContext.getOrderByCol() %>"

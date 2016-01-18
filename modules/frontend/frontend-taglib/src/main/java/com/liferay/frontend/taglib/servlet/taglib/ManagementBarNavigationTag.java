@@ -39,8 +39,12 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public List<FilterNavigationItem> getFilterNavigationItems() {
-		return _filterNavigationItems;
+	public List<ManagementBarFilterItem> getManagementBarFilterItems() {
+		return _managementBarFilterItems;
+	}
+
+	public void setDisabled(boolean disabled) {
+		_disabled = disabled;
 	}
 
 	public void setLabel(String label) {
@@ -68,7 +72,8 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
-		_filterNavigationItems = new ArrayList<>();
+		_disabled = null;
+		_managementBarFilterItems = new ArrayList<>();
 		_label = null;
 		_navigationKeys = null;
 		_navigationParam = "navigation";
@@ -85,6 +90,23 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
+	protected boolean isDisabled() {
+		ManagementBarTag managementBarTag =
+			(ManagementBarTag)findAncestorWithClass(
+				this, ManagementBarTag.class);
+
+		boolean disabled = false;
+
+		if (_disabled != null) {
+			disabled = _disabled;
+		}
+		else if (managementBarTag != null) {
+			disabled = managementBarTag.isDisabled();
+		}
+
+		return disabled;
+	}
+
 	@Override
 	protected int processStartTag() throws Exception {
 		return EVAL_BODY_BUFFERED;
@@ -92,8 +114,12 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		if (_filterNavigationItems == null) {
-			_filterNavigationItems = new ArrayList<>();
+		request.setAttribute(
+			"liferay-frontend:management-bar-navigation:disabled",
+			isDisabled());
+
+		if (_managementBarFilterItems == null) {
+			_managementBarFilterItems = new ArrayList<>();
 		}
 
 		String navigationKey = ParamUtil.getString(request, _navigationParam);
@@ -102,25 +128,26 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 			for (String curNavigationKey : _navigationKeys) {
 				_portletURL.setParameter(_navigationParam, curNavigationKey);
 
-				FilterNavigationItem filterNavigationItem =
-					new FilterNavigationItem(
+				ManagementBarFilterItem managementBarFilterItem =
+					new ManagementBarFilterItem(
 						curNavigationKey.equals(navigationKey),
 						curNavigationKey, _portletURL.toString());
 
-				_filterNavigationItems.add(filterNavigationItem);
+				_managementBarFilterItems.add(managementBarFilterItem);
 			}
 		}
 
 		request.setAttribute(
-			"liferay-frontend:management-bar-navigation:filterNavigationItems",
-			_filterNavigationItems);
+			"liferay-frontend:management-bar-navigation:" +
+				"managementBarFilterItems",
+			_managementBarFilterItems);
 
 		if (Validator.isNull(_label)) {
-			FilterNavigationItem filterNavigationItem =
-				_filterNavigationItems.get(0);
+			ManagementBarFilterItem managementBarFilterItem =
+				_managementBarFilterItems.get(0);
 
 			_label = ParamUtil.getString(
-				request, _navigationParam, filterNavigationItem.getLabel());
+				request, _navigationParam, managementBarFilterItem.getLabel());
 		}
 
 		request.setAttribute(
@@ -131,9 +158,10 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 	private static final String _PAGE = "/management_bar_navigation/page.jsp";
 
-	private List<FilterNavigationItem> _filterNavigationItems =
-		new ArrayList<>();
+	private Boolean _disabled;
 	private String _label;
+	private List<ManagementBarFilterItem> _managementBarFilterItems =
+		new ArrayList<>();
 	private String[] _navigationKeys;
 	private String _navigationParam = "navigation";
 	private PortletURL _portletURL;

@@ -25,7 +25,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Eudaldo Alonso
  */
-public class ManagementBarNavigationItemTag extends IncludeTag {
+public class ManagementBarFilterItemTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
@@ -74,14 +74,14 @@ public class ManagementBarNavigationItemTag extends IncludeTag {
 			(ManagementBarNavigationTag)findAncestorWithClass(
 				this, ManagementBarNavigationTag.class);
 
-		List<FilterNavigationItem> filterNavigationItems =
-			managementBarNavigationTag.getFilterNavigationItems();
+		List<ManagementBarFilterItem> managementBarFilterItems =
+			managementBarNavigationTag.getManagementBarFilterItems();
 
-		if (filterNavigationItems != null) {
-			FilterNavigationItem filterNavigationItem =
-				new FilterNavigationItem(_active, _id, _label, _url);
+		if (managementBarFilterItems != null) {
+			ManagementBarFilterItem managementBarFilterItem =
+				new ManagementBarFilterItem(_active, _id, _label, _url);
 
-			filterNavigationItems.add(filterNavigationItem);
+			managementBarFilterItems.add(managementBarFilterItem);
 		}
 	}
 

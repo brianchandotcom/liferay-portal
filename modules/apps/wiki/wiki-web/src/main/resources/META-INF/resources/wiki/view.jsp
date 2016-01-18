@@ -198,9 +198,7 @@ if (portletTitleBasedNavigation) {
 				/>
 			</c:when>
 			<c:otherwise>
-				<div class="container-fluid">
-					<h2><%= title %></h2>
-				</div>
+				<h2><%= title %></h2>
 			</c:otherwise>
 		</c:choose>
 
@@ -263,9 +261,7 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</c:if>
 
-		<div class="container-fluid">
-			<%@ include file="/wiki/view_page_content.jspf" %>
-		</div>
+		<%@ include file="/wiki/view_page_content.jspf" %>
 
 		<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 			<liferay-ui:custom-attribute-list
@@ -278,7 +274,7 @@ if (portletTitleBasedNavigation) {
 
 		<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
 			<div class="page-actions">
-				<div class="article-actions container-fluid">
+				<div class="article-actions">
 					<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) && !portletTitleBasedNavigation %>">
 						<liferay-ui:icon
 							iconCssClass="icon-plus"
@@ -290,7 +286,7 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 				</div>
 
-				<div class="container-fluid stats">
+				<div class="stats">
 
 					<%
 					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
@@ -306,7 +302,7 @@ if (portletTitleBasedNavigation) {
 					</c:choose>
 				</div>
 
-				<div class="container-fluid page-categorization">
+				<div class="page-categorization">
 					<div class="page-categories">
 						<liferay-ui:asset-categories-summary
 							className="<%= WikiPage.class.getName() %>"
@@ -326,7 +322,7 @@ if (portletTitleBasedNavigation) {
 				</div>
 
 				<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
-					<div class="container-fluid page-ratings">
+					<div class="page-ratings">
 						<liferay-ui:ratings
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
@@ -335,7 +331,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
-					<div class="container-fluid page-attachments">
+					<div class="page-attachments">
 						<h5><liferay-ui:message key="attachments" /></h5>
 						<div class="row">
 
@@ -377,7 +373,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
-					<div class="container-fluid entry-links">
+					<div class="entry-links">
 						<liferay-ui:asset-links
 							assetEntryId="<%= assetEntry.getEntryId() %>"
 						/>
@@ -385,7 +381,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= !childPages.isEmpty() %>">
-					<div class="child-pages container-fluid">
+					<div class="child-pages">
 						<h5><liferay-ui:message key="children-pages" /></h5>
 
 						<liferay-ui:search-container

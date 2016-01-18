@@ -32,6 +32,30 @@
 	<bean id="com.liferay.portal.kernel.security.auth.LiberalScreenNameValidator" class="com.liferay.portal.kernel.security.auth.LiberalScreenNameValidator" />
 	<bean id="com.liferay.portal.kernel.security.auth.http.HttpAuthManager" class="com.liferay.portal.security.auth.http.HttpAuthManagerImpl" />
 	<bean id="com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager" class="com.liferay.portal.security.auth.session.AuthenticatedSessionManagerImpl" />
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.DummyOrganizationMembershipPolicy" class="com.liferay.portal.kernel.security.membershippolicy.DummyOrganizationMembershipPolicy" />
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.DummyRoleMembershipPolicy" class="com.liferay.portal.kernel.security.membershippolicy.DummyRoleMembershipPolicy" />
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.DummySiteMembershipPolicy" class="com.liferay.portal.kernel.security.membershippolicy.DummySiteMembershipPolicy" />
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.DummyUserGroupMembershipPolicy" class="com.liferay.portal.kernel.security.membershippolicy.DummyUserGroupMembershipPolicy" />
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
+		<property name="organizationMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactoryUtil">
+		<property name="roleMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
+		<property name="siteMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" class="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">
+		<property name="userGroupMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.xml.SAXReader" class="com.liferay.portal.xml.SAXReaderImpl">
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
@@ -76,30 +100,6 @@
 	<bean id="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" class="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" />
 	<bean id="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" class="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" />
 	<bean id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
-	<bean id="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" />
-	<bean id="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" />
-	<bean id="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" />
-	<bean id="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" />
-	<bean id="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
-		<property name="organizationMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil">
-		<property name="roleMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
-		<property name="siteMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">
-		<property name="userGroupMembershipPolicyFactory">
-			<bean class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.security.permission.InlineSQLHelperUtil" class="com.liferay.portal.security.permission.InlineSQLHelperUtil">
 		<property name="inlineSQLHelper">
 			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.xml;
+package com.liferay.portal.kernel.security.xml;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 

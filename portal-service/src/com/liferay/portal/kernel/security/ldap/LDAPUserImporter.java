@@ -12,26 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.kernel.security.ldap;
 
-import java.util.Properties;
+import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.security.exportimport.UserImporter;
 
 import javax.naming.directory.Attributes;
+import javax.naming.ldap.LdapContext;
 
 /**
- * @author Edward Han
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface LDAPToPortalConverter {
+public interface LDAPUserImporter extends UserImporter {
 
-	public LDAPGroup importLDAPGroup(
-			long companyId, Attributes attributes, Properties groupMappings)
-		throws Exception;
-
-	public LDAPUser importLDAPUser(
-			long companyId, Attributes attributes, Properties userMappings,
-			Properties userExpandoMappings, Properties contactMappings,
-			Properties contactExpandoMappings, String password)
+	public User importUser(
+			long ldapServerId, long companyId, LdapContext ldapContext,
+			Attributes attributes, String password)
 		throws Exception;
 
 }

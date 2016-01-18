@@ -1925,9 +1925,7 @@ public class ServiceBuilder {
 	}
 
 	private void _createExceptions(List<String> exceptions) throws Exception {
-		for (int i = 0; i < _ejbList.size(); i++) {
-			Entity entity = _ejbList.get(i);
-
+		for (Entity entity : _ejbList) {
 			if (!_isTargetEntity(entity)) {
 				continue;
 			}
@@ -1939,13 +1937,26 @@ public class ServiceBuilder {
 
 		for (String exception : exceptions) {
 			File oldExceptionFile = new File(
-				_serviceOutputPath + "/" + exception + "Exception.java");
+				_oldServiceOutputPath + "/" + exception + "Exception.java");
+
+			if (!oldExceptionFile.exists()) {
+				oldExceptionFile = new File(
+					_oldServiceOutputPath + "/exception/" + exception +
+						"Exception.java");
+			}
+
+			if (!oldExceptionFile.exists()) {
+				oldExceptionFile = new File(
+					_serviceOutputPath + "/" + exception + "Exception.java");
+			}
 
 			File exceptionFile = new File(
 				_serviceOutputPath + "/exception/" + exception +
 					"Exception.java");
 
-			if (oldExceptionFile.exists()) {
+			if (oldExceptionFile.exists() &&
+				!oldExceptionFile.equals(exceptionFile)) {
+
 				exceptionFile.delete();
 
 				Files.createDirectories(
@@ -1958,11 +1969,15 @@ public class ServiceBuilder {
 				content = StringUtil.replace(
 					content,
 					new String[] {
-						"package " + _packagePath,
+						"package " + _packagePath + ";",
+						"package " + _packagePath + ".exception;",
+						"package " + _apiPackagePath + ";",
 						"com.liferay.portal.NoSuchModelException"
 					},
 					new String[] {
-						"package " + _packagePath + ".exception",
+						"package " + _apiPackagePath + ".exception;",
+						"package " + _apiPackagePath + ".exception;",
+						"package " + _apiPackagePath + ".exception;",
 						"com.liferay.portal.exception.NoSuchModelException"
 					});
 

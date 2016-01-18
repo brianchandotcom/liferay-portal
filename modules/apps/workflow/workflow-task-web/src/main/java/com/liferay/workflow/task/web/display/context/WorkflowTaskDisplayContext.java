@@ -75,7 +75,6 @@ import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -88,12 +87,10 @@ public class WorkflowTaskDisplayContext {
 
 	public WorkflowTaskDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletPreferences portletPreferences) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_portletPreferences = portletPreferences;
 
 		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
@@ -1100,7 +1097,6 @@ public class WorkflowTaskDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
-	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();

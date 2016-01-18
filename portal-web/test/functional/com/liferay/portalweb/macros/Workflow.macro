@@ -203,7 +203,7 @@
 
 				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
 
-				<execute function="AssertTextEquals" locator1="MyWorkflowTasks#PREVIEW_ACTIVITY_ENTRY" value1="${workflowActivityComment}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#ACTIVITIES_LINE_1" value1="${workflowActivityComment}" />
 			</then>
 		</if>
 	</command>

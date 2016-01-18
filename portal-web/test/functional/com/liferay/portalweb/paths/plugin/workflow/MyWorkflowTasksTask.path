@@ -129,17 +129,17 @@
 </tr>
 <tr>
 	<td>ACTIVITIES_DATE_1</td>
-	<td>xpath=(//div[@class='task-activity']/div[1])[1]</td>
+	<td>xpath=(//div[@class='task-activity']//tbody/tr/td[2])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_TEXT_1_LINE_A</td>
-	<td>xpath=(//div[@class='task-activity']/div[2])[1]</td>
+	<td>ACTIVITIES_LINE_1</td>
+	<td>xpath=(//div[@class='task-activity']//tbody/tr/td[1])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_TEXT_1_LINE_B</td>
-	<td>xpath=(//div[@class='task-activity']/div[3])[1]</td>
+	<td>ACTIVITIES_LINE_2</td>
+	<td>xpath=(//div[@class='task-activity']//tbody/tr/td[1])[2]</td>
 	<td></td>
 </tr>
 <tr>

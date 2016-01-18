@@ -23,11 +23,11 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
+	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration",
 	localization = "content/Language",
 	name = "%site.navigation.menu.web.configuration.name"
 )
-public interface SiteNavigationMenuWebConfiguration {
+public interface SiteNavigationMenuWebTemplateConfiguration {
 
 	@Meta.AD(deflt = "navbar-blank-ftl", required = false)
 	public String ddmTemplateKeyDefault();

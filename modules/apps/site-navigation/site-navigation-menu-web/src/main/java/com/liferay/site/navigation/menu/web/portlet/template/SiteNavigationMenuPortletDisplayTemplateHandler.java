@@ -28,7 +28,7 @@ import com.liferay.portal.theme.NavItem;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuConfigurationValues;
-import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
+import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration;
 import com.liferay.site.navigation.menu.web.constants.SiteNavigationMenuPortletKeys;
 
 import java.util.HashMap;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Juergen Kappler
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
+	configurationPid = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name=" + SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU},
 	service = TemplateHandler.class
@@ -70,7 +70,8 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 
 	@Override
 	public String getDefaultTemplateKey() {
-		return _siteNavigationMenuWebConfiguration.ddmTemplateKeyDefault();
+		return _siteNavigationMenuWebTemplateConfiguration.
+			ddmTemplateKeyDefault();
 	}
 
 	@Override
@@ -127,8 +128,9 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_siteNavigationMenuWebConfiguration = Configurable.createConfigurable(
-			SiteNavigationMenuWebConfiguration.class, properties);
+		_siteNavigationMenuWebTemplateConfiguration =
+			Configurable.createConfigurable(
+				SiteNavigationMenuWebTemplateConfiguration.class, properties);
 	}
 
 	@Override
@@ -149,7 +151,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteNavigationMenuPortletDisplayTemplateHandler.class);
 
-	private volatile SiteNavigationMenuWebConfiguration
-		_siteNavigationMenuWebConfiguration;
+	private volatile SiteNavigationMenuWebTemplateConfiguration
+		_siteNavigationMenuWebTemplateConfiguration;
 
 }

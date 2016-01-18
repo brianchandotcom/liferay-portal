@@ -373,18 +373,20 @@ public class ActionUtil {
 	public static List<WikiPage> getPages(PortletRequest portletRequest)
 		throws PortalException {
 
-		long[] pageIds = ParamUtil.getLongValues(
+		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
+
+		String[] titles = ParamUtil.getStringValues(
 			portletRequest, "rowIdsWikiPage");
 
-		if (pageIds.length == 0) {
+		if (titles.length == 0) {
 			return Collections.emptyList();
 		}
 
 		List<WikiPage> pages = new ArrayList<>();
 
-		for (long pageId : pageIds) {
-			if (pageId != 0) {
-				pages.add(WikiPageServiceUtil.getPage(pageId));
+		for (String title : titles) {
+			if (Validator.isNotNull(title)) {
+				pages.add(WikiPageServiceUtil.getPage(nodeId, title));
 			}
 		}
 

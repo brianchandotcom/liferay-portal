@@ -42,6 +42,10 @@ public class MyWorkflowInstanceViewDisplayContext
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+
+	@Override
+	public String getHeaderTitle() {
+		return "my-submissions";
 	}
 
 	@Override

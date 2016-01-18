@@ -132,6 +132,10 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowInstance.getEndDate();
 	}
 
+	public String getHeaderTitle() {
+		return "workflow-submissions";
+	}
+
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;

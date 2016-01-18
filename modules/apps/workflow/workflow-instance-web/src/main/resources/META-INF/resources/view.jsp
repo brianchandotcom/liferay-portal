@@ -27,6 +27,10 @@ PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="<%= workflowInstanceViewDisplayContext.getHeaderTitle() %>" selected="<%= true %>" />
+			</aui:nav>
+
 			<aui:nav-bar-search>
 				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 					<liferay-ui:input-search markupView="lexicon" />

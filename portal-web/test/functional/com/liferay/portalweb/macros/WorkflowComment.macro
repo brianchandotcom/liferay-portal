@@ -61,6 +61,13 @@
 			</else>
 		</if>
 
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="MyWorkflowTasksTask#COMMENTS" value1="Comments" />
+			</then>
+		</if>
+
 		<var name="key_entryComment" value="${workflowComment}" />
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />

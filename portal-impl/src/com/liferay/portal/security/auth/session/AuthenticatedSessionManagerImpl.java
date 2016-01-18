@@ -330,76 +330,19 @@ public class AuthenticatedSessionManagerImpl
 
 		String domain = CookieKeys.getDomain(request);
 
-		Cookie companyIdCookie = new Cookie(
-			CookieKeys.COMPANY_ID, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			companyIdCookie.setDomain(domain);
-		}
-
-		companyIdCookie.setMaxAge(0);
-		companyIdCookie.setPath(StringPool.SLASH);
-
-		Cookie guestLanguageIdCookie = new Cookie(
-			CookieKeys.GUEST_LANGUAGE_ID, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			guestLanguageIdCookie.setDomain(domain);
-		}
-
-		guestLanguageIdCookie.setMaxAge(0);
-		guestLanguageIdCookie.setPath(StringPool.SLASH);
-
-		Cookie idCookie = new Cookie(CookieKeys.ID, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			idCookie.setDomain(domain);
-		}
-
-		idCookie.setMaxAge(0);
-		idCookie.setPath(StringPool.SLASH);
-
-		Cookie passwordCookie = new Cookie(
-			CookieKeys.PASSWORD, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			passwordCookie.setDomain(domain);
-		}
-
-		passwordCookie.setMaxAge(0);
-		passwordCookie.setPath(StringPool.SLASH);
+		_deleteCookie(request, response, CookieKeys.COMPANY_ID, domain);
+		_deleteCookie(request, response, CookieKeys.GUEST_LANGUAGE_ID, domain);
+		_deleteCookie(request, response, CookieKeys.ID, domain);
+		_deleteCookie(request, response, CookieKeys.PASSWORD, domain);
 
 		boolean rememberMe = GetterUtil.getBoolean(
 			CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME));
 
 		if (!rememberMe) {
-			Cookie loginCookie = new Cookie(CookieKeys.LOGIN, StringPool.BLANK);
-
-			if (Validator.isNotNull(domain)) {
-				loginCookie.setDomain(domain);
-			}
-
-			loginCookie.setMaxAge(0);
-			loginCookie.setPath(StringPool.SLASH);
-
-			CookieKeys.addCookie(request, response, loginCookie);
+			_deleteCookie(request, response, CookieKeys.LOGIN, domain);
 		}
 
-		Cookie rememberMeCookie = new Cookie(
-			CookieKeys.REMEMBER_ME, StringPool.BLANK);
-
-		if (Validator.isNotNull(domain)) {
-			rememberMeCookie.setDomain(domain);
-		}
-
-		rememberMeCookie.setMaxAge(0);
-		rememberMeCookie.setPath(StringPool.SLASH);
-
-		CookieKeys.addCookie(request, response, companyIdCookie);
-		CookieKeys.addCookie(request, response, guestLanguageIdCookie);
-		CookieKeys.addCookie(request, response, idCookie);
-		CookieKeys.addCookie(request, response, passwordCookie);
-		CookieKeys.addCookie(request, response, rememberMeCookie);
+		_deleteCookie(request, response, CookieKeys.REMEMBER_ME, domain);
 
 		try {
 			session.invalidate();
@@ -485,6 +428,22 @@ public class AuthenticatedSessionManagerImpl
 			MessageBusUtil.sendMessage(
 				DestinationNames.LIVE_USERS, jsonObject.toString());
 		}
+	}
+
+	private void _deleteCookie(
+		HttpServletRequest request, HttpServletResponse response,
+		String cookieName, String domain) {
+
+		Cookie cookie = new Cookie(cookieName, StringPool.BLANK);
+
+		if (Validator.isNotNull(domain)) {
+			cookie.setDomain(domain);
+		}
+
+		cookie.setMaxAge(0);
+		cookie.setPath(StringPool.SLASH);
+
+		CookieKeys.addCookie(request, response, cookie);
 	}
 
 }

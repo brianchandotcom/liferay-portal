@@ -97,7 +97,15 @@ else {
 				name="title"
 			>
 
-				<liferay-ui:message key="<%= HtmlUtil.escape(schedulerResponse.getDescription()) %>" />
+				<%
+				String description = schedulerResponse.getDescription();
+
+				if (description.equals(StringPool.BLANK)) {
+					description = LanguageUtil.get(request, "untitled-scheduled-publication");
+				}
+				%>
+
+				<liferay-ui:message key="<%= HtmlUtil.escape(description) %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-date

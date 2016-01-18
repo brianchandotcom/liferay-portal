@@ -488,21 +488,21 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				_prefsProps.getString(
 					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_AGE,
 					"age")
-				});
+			});
 		dictionary.put(
 			LDAPConstants.ERROR_PASSWORD_EXPIRED_KEYWORDS,
 			new String[] {
 				_prefsProps.getString(
 					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_EXPIRED,
 					"expired")
-				});
+			});
 		dictionary.put(
 			LDAPConstants.ERROR_PASSWORD_HISTORY_KEYWORDS,
 			new String[] {
 				_prefsProps.getString(
 					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_HISTORY,
 					"history")
-				});
+			});
 		dictionary.put(
 			LDAPConstants.ERROR_PASSWORD_NOT_CHANGEABLE_KEYWORDS,
 			new String[] {
@@ -510,28 +510,28 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 					companyId,
 					LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_NOT_CHANGEABLE,
 					"not allowed to change")
-				});
+			});
 		dictionary.put(
 			LDAPConstants.ERROR_PASSWORD_SYNTAX_KEYWORDS,
 			new String[] {
 				_prefsProps.getString(
 					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_SYNTAX,
 					"syntax")
-				});
+			});
 		dictionary.put(
 			LDAPConstants.ERROR_PASSWORD_TRIVIAL_KEYWORDS,
 			new String[] {
 				_prefsProps.getString(
 					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_PASSWORD_TRIVIAL,
 					"trivial")
-				});
+			});
 		dictionary.put(
 			LDAPConstants.ERROR_USER_LOCKOUT_KEYWORDS,
 			new String[] {
 				_prefsProps.getString(
 					companyId, LegacyLDAPPropsKeys.LDAP_ERROR_USER_LOCKOUT,
 					"retry limit")
-				});
+			});
 		dictionary.put(
 			LDAPConstants.FACTORY_INITIAL,
 			_prefsProps.getString(

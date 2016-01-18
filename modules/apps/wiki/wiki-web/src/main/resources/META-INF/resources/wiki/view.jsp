@@ -342,7 +342,7 @@ if (portletTitleBasedNavigation) {
 							<%
 							List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
 
-							DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider = (DLCssClassFileMimeTypeProvider)request.getAttribute(WikiWebKeys.DL_CSS_CLASS_FILE_MIME_TYPE_PROVIDER);
+							DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(WikiWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
 
 							for (FileEntry fileEntry : attachmentsFileEntries) {
 								String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
@@ -354,9 +354,9 @@ if (portletTitleBasedNavigation) {
 										url="<%= rowURL %>"
 									>
 										<c:choose>
-											<c:when test="<%= dlCssClassFileMimeTypeProvider != null %>">
+											<c:when test="<%= dlMimeTypeDisplayContext != null %>">
 												<liferay-frontend:horizontal-card-icon>
-													<span class="icon-monospaced <%= dlCssClassFileMimeTypeProvider.getCssClassFileMimeType(fileEntry.getMimeType()) %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
+													<span class="icon-monospaced <%= dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>
 												</liferay-frontend:horizontal-card-icon>
 											</c:when>
 											<c:otherwise>

@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.portlet.action;
 
-import com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -54,17 +54,17 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 			renderRequest);
 
 		request.setAttribute(
-			WikiWebKeys.DL_CSS_CLASS_FILE_MIME_TYPE_PROVIDER,
-			_dlCssClassFileMimeTypeProvider);
+			WikiWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+			_dlMimeTypeDisplayContext);
 
 		return super.render(renderRequest, renderResponse);
 	}
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL, unbind = "-")
-	public void setDLCssClassFileMimeTypeProvider(
-		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
+	public void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
 
-		_dlCssClassFileMimeTypeProvider = dlCssClassFileMimeTypeProvider;
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 	}
 
 	@Override
@@ -72,6 +72,6 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 		return "/wiki/view.jsp";
 	}
 
-	private DLCssClassFileMimeTypeProvider _dlCssClassFileMimeTypeProvider;
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 }

@@ -136,7 +136,11 @@ public class MarketplaceAppManagerUtil {
 
 		String string = GetterUtil.getString(object);
 
-		return HtmlUtil.escape(StringUtil.shorten(string, 400));
+		string = StringUtil.shorten(string, 400);
+		string = HtmlUtil.stripHtml(string);
+		string = HtmlUtil.escape(string);
+
+		return string;
 	}
 
 	protected static List<String> getAppCategories(List<App> apps) {

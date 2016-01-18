@@ -12,19 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.model;
+package com.liferay.announcements.kernel.constants;
 
 /**
- * @author Alexander Chow
+ * @author Adolfo Pérez
  */
-public class AnnouncementsFlagConstants {
+public class AnnouncementsConstants {
 
-	public static final int HIDDEN = 2;
-
-	public static final int NOT_HIDDEN = -1;
-
-	public static final int READ = 1;
-
-	public static final int UNREAD = 0;
+	public static final String CLASS_NAME_ALERTS_ENTRY =
+		"com.liferay.portlet.announcements.model.AlertsEntry";
 
 }

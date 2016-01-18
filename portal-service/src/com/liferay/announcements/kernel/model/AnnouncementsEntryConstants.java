@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.constants;
+package com.liferay.announcements.kernel.model;
+
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
- * @author Adolfo Pérez
+ * @author Alexander Chow
  */
-public class AnnouncementsConstants {
+public class AnnouncementsEntryConstants {
 
-	public static final String CLASS_NAME_ALERTS_ENTRY =
-		"com.liferay.portlet.announcements.model.AlertsEntry";
+	public static final String[] TYPES = PropsUtil.getArray(
+		PropsKeys.ANNOUNCEMENTS_ENTRY_TYPES);
 
 }

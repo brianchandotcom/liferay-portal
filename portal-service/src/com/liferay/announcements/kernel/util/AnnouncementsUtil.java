@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.util;
+package com.liferay.announcements.kernel.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;

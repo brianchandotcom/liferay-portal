@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.model;
-
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+package com.liferay.announcements.kernel.model;
 
 /**
  * @author Alexander Chow
  */
-public class AnnouncementsEntryConstants {
+public class AnnouncementsFlagConstants {
 
-	public static final String[] TYPES = PropsUtil.getArray(
-		PropsKeys.ANNOUNCEMENTS_ENTRY_TYPES);
+	public static final int HIDDEN = 2;
+
+	public static final int NOT_HIDDEN = -1;
+
+	public static final int READ = 1;
+
+	public static final int UNREAD = 0;
 
 }

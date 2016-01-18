@@ -101,8 +101,8 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 	@Deprecated
 	@Override
-	public boolean isPortletInvocationWhitelisted(long companyId, String
-		portletId, String strutsAction) {
+	public boolean isPortletInvocationWhitelisted(
+		long companyId, String portletId, String strutsAction) {
 
 		return false;
 	}

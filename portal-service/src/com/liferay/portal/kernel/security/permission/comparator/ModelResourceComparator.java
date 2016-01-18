@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.permission.comparator;
+package com.liferay.portal.kernel.security.permission.comparator;
 
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 
@@ -24,18 +24,19 @@ import java.util.Locale;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActionComparator implements Comparator<String>, Serializable {
+public class ModelResourceComparator
+	implements Comparator<String>, Serializable {
 
-	public ActionComparator(Locale locale) {
+	public ModelResourceComparator(Locale locale) {
 		_locale = locale;
 	}
 
 	@Override
-	public int compare(String action1, String action2) {
-		action1 = ResourceActionsUtil.getAction(_locale, action1);
-		action2 = ResourceActionsUtil.getAction(_locale, action2);
+	public int compare(String resource1, String resource2) {
+		resource1 = ResourceActionsUtil.getModelResource(_locale, resource1);
+		resource2 = ResourceActionsUtil.getModelResource(_locale, resource2);
 
-		return action1.compareTo(action2);
+		return resource1.compareTo(resource2);
 	}
 
 	private final Locale _locale;

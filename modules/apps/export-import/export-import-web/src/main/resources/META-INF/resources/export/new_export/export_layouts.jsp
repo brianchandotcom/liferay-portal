@@ -107,7 +107,7 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 			<div class="export-dialog-tree">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<aui:input name="name" />
+						<aui:input name="name" placeholder="process-name-placeholder" />
 					</aui:fieldset>
 
 					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">

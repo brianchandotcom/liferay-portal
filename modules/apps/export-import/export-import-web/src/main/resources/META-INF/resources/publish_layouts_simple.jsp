@@ -89,7 +89,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			<ul class="lfr-tree list-unstyled">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<aui:input name="name" />
+						<aui:input name="name" placeholder="process-name-placeholder" />
 					</aui:fieldset>
 
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="changes-since-last-publication" markupView="lexicon">

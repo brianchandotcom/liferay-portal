@@ -1631,10 +1631,11 @@
 			<var name="workflowAssetTitle" value="User 2 Blog Title Pending" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTask">
+		<execute macro="Workflow#viewCompletedSubmission">
 			<var name="workflowAssetTitle" value="User 1 Blog Title Approved" />
 			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Single Approver" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowStatus" value="Approved" />
 		</execute>
 
 		<execute macro="Workflow#viewSubmissionNotPresent">
@@ -1661,10 +1662,11 @@
 			<var name="workflowAssetTitle" value="User 1 Blog Title Pending" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTask">
+		<execute macro="Workflow#viewCompletedSubmission">
 			<var name="workflowAssetTitle" value="User 2 Blog Title Approved" />
 			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowTask" value="Single Approver" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowStatus" value="Approved" />
 		</execute>
 
 		<execute macro="Workflow#viewSubmissionNotPresent">

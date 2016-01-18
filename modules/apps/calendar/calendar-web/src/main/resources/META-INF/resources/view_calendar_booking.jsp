@@ -233,17 +233,13 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		<%
 		Frequency frequency = recurrence.getFrequency();
 
-		PositionalWeekday positionalWeekday = null;
+		PositionalWeekday positionalWeekday = recurrence.getPositionalWeekday();
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		List<String> weekdayValues = new ArrayList<>();
 
-		for (PositionalWeekday curPositionalWeekday : recurrence.getPositionalWeekdays()) {
-			positionalWeekday = curPositionalWeekday;
-
-			Weekday weekday = curPositionalWeekday.getWeekday();
-
+		for (Weekday weekday : recurrence.getWeekdays()) {
 			weekdayValues.add(weekday.getValue());
 		}
 		%>

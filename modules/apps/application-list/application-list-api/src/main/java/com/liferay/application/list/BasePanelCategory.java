@@ -91,7 +91,8 @@ public abstract class BasePanelCategory implements PanelCategory {
 			WebKeys.THEME_DISPLAY);
 
 		return panelCategoryHelper.containsPortlet(
-			themeDisplay.getPpid(), this);
+			themeDisplay.getPpid(), getKey(),
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
 	}
 
 	@Override

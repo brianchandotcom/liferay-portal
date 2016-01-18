@@ -99,7 +99,9 @@ public class ProductMenuDisplayContext {
 							PanelCategoryKeys.ROOT)) {
 
 					if (panelCategoryHelper.containsPortlet(
-							_themeDisplay.getPpid(), panelCategory)) {
+							_themeDisplay.getPpid(), panelCategory.getKey(),
+							_themeDisplay.getPermissionChecker(),
+							_themeDisplay.getScopeGroup())) {
 
 						_rootPanelCategoryKey = panelCategory.getKey();
 

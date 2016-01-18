@@ -303,14 +303,7 @@ plugins.includes=${test.plugin}</echo>
 	</target>
 
 	<target name="test-plugins">
-		<if>
-			<not>
-				<isset property="lp.plugins.dir" />
-			</not>
-			<then>
-				<fail>Missing lp.plugins.dir property, please set it in build.${user.name}.properties</fail>
-			</then>
-		</if>
+		<fail message="Please set the property ${lp.plugins.dir}" unless="lp.plugins.dir" />
 
 		<antcall target="record-test-plugin-names">
 			<param name="test.plugin.groups.size" value="1" />

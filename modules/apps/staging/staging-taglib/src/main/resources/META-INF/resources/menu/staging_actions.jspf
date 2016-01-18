@@ -232,7 +232,7 @@
 									width: 820
 								},
 								id: '<portlet:namespace />publishLatestChangesDialog',
-								title: '<%= UnicodeLanguageUtil.get(request, "publish-to-live") %>',
+								title: '<%= UnicodeFormatter.toString(publishMessage) %>',
 								uri: publishToLiveLink.attr('href')
 							}
 						);

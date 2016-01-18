@@ -22,7 +22,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
@@ -37,11 +36,10 @@ public class DeletePagePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public DeletePagePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node, WikiPage page) {
+		PortletRequest portletRequest, WikiPage page) {
 
 		super(portletRequest);
 
-		_node = node;
 		_page = page;
 	}
 
@@ -79,11 +77,11 @@ public class DeletePagePortletConfigurationIcon
 
 		redirectURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		redirectURL.setParameter("navigation", "all-pages");
-		redirectURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		redirectURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 
 		portletURL.setParameter("redirect", redirectURL.toString());
 
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 
 		return portletURL.toString();
@@ -94,12 +92,16 @@ public class DeletePagePortletConfigurationIcon
 		try {
 			if (!_page.isDraft() &&
 				WikiPagePermissionChecker.contains(
-					themeDisplay.getPermissionChecker(), _node.getNodeId(),
+					themeDisplay.getPermissionChecker(), _page.getNodeId(),
 					HtmlUtil.unescape(_page.getTitle()), ActionKeys.DELETE)) {
 
 				return true;
 			}
-			else if (_page.isDraft()) {
+			else if (_page.isDraft() &&
+					 WikiPagePermissionChecker.contains(
+						 themeDisplay.getPermissionChecker(), _page,
+						 ActionKeys.DELETE)) {
+
 				return true;
 			}
 		}
@@ -121,7 +123,6 @@ public class DeletePagePortletConfigurationIcon
 		return false;
 	}
 
-	private final WikiNode _node;
 	private final WikiPage _page;
 
 }

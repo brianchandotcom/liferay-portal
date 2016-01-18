@@ -49,15 +49,14 @@ public class PageSubscriptionPortletConfigurationIconFactory
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			WikiNode node = ActionUtil.getNode(portletRequest);
 			WikiPage page = ActionUtil.getPage(portletRequest);
 
 			boolean subscribed = _subscriptionLocalService.isSubscribed(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				WikiNode.class.getName(), node.getNodeId());
+				WikiNode.class.getName(), page.getNodeId());
 
 			return new PageSubscriptionPortletConfigurationIcon(
-				portletRequest, node, page, subscribed);
+				portletRequest, page, subscribed);
 		}
 		catch (Exception e) {
 		}

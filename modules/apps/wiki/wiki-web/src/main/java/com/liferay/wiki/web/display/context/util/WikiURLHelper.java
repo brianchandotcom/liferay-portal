@@ -89,14 +89,8 @@ public class WikiURLHelper {
 	}
 
 	public PortletURL getViewFrontPagePageURL(WikiNode wikiNode) {
-		PortletURL viewPageURL = _renderResponse.createRenderURL();
-
-		viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
-		viewPageURL.setParameter("nodeName", wikiNode.getName());
-		viewPageURL.setParameter(
-			"title", _wikiGroupServiceConfiguration.frontPageName());
-
-		return viewPageURL;
+		return getViewPageURL(
+			wikiNode, _wikiGroupServiceConfiguration.frontPageName());
 	}
 
 	public PortletURL getViewOrphanPagesURL(WikiNode wikiNode) {

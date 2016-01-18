@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.web.portlet.action.ActionUtil;
 
@@ -42,11 +41,10 @@ public class PagePermissionsPortletConfigurationIconFactory
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
 		try {
-			WikiNode node = ActionUtil.getNode(portletRequest);
 			WikiPage page = ActionUtil.getPage(portletRequest);
 
 			return new PagePermissionsPortletConfigurationIcon(
-				portletRequest, node, page);
+				portletRequest, page);
 		}
 		catch (Exception e) {
 		}

@@ -16,4 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.security.membershippolicy.MembershipPolicyException" %>
+<%@ page import="com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException" %>

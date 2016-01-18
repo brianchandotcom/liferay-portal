@@ -40,7 +40,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
-navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 
 if (delta > 0) {
 	navigationPortletURL.setParameter("delta", String.valueOf(delta));

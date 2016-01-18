@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
@@ -87,6 +88,10 @@ public class JspCDefaultsPlugin
 
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME, configurableFileCollection);
+
+		AppServer appServer = liferayExtension.getAppServer();
+
+		appServer.addAdditionalDependencies(JspCPlugin.CONFIGURATION_NAME);
 	}
 
 	@Override

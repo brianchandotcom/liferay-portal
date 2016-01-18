@@ -17,6 +17,7 @@
 <%@ include file="/management_bar_sort/init.jsp" %>
 
 <%
+boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar-sort:disabled"));
 List<ManagementBarFilterItem> managementBarFilterItems = (List<ManagementBarFilterItem>)request.getAttribute("liferay-frontend:management-bar-sort:managementBarFilterItems");
 String orderByCol = (String)request.getAttribute("liferay-frontend:management-bar-sort:orderByCol");
 String orderByType = (String)request.getAttribute("liferay-frontend:management-bar-sort:orderByType");
@@ -24,6 +25,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:manag
 %>
 
 <liferay-frontend:management-bar-filter
+	disabled="<%= disabled %>"
 	label="order-by"
 	managementBarFilterItems="<%= managementBarFilterItems %>"
 	value="<%= orderByCol %>"
@@ -39,6 +41,7 @@ orderByColAscURL.setParameter("orderByType", "asc");
 <li>
 	<liferay-frontend:management-bar-button
 		active='<%= ((Validator.isNotNull(orderByType)) && orderByType.equals("asc")) %>'
+		disabled="<%= disabled %>"
 		href="<%= orderByColAscURL.toString() %>"
 		icon="caret-top"
 		label="ascending"
@@ -55,6 +58,7 @@ orderByColDescURL.setParameter("orderByType", "desc");
 <li>
 	<liferay-frontend:management-bar-button
 		active='<%= Validator.isNotNull(orderByType) && orderByType.equals("desc") %>'
+		disabled="<%= disabled %>"
 		href="<%= orderByColDescURL.toString() %>"
 		icon="caret-bottom"
 		label="descending"

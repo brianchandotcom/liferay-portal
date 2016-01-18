@@ -17,14 +17,15 @@
 <%@ include file="/management_bar_filter/init.jsp" %>
 
 <%
+boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar-filter:disabled"));
 String label = (String)request.getAttribute("liferay-frontend:management-bar-filter:label");
 List<ManagementBarFilterItem> managementBarFilterItems = (List<ManagementBarFilterItem>)request.getAttribute("liferay-frontend:management-bar-filter:managementBarFilterItems");
 String value = (String)request.getAttribute("liferay-frontend:management-bar-filter:value");
 %>
 
 <c:if test="<%= managementBarFilterItems.size() > 0 %>">
-	<li class="dropdown">
-		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= label %>" data-toggle="dropdown" href="javascript:;">
+	<li class="dropdown <%= disabled ? "disabled" : StringPool.BLANK %>">
+		<a aria-expanded="true" class="dropdown-toggle" data-qa-id="filter<%= label %>" data-toggle="<%= disabled ? StringPool.BLANK : "dropdown" %>" href="javascript:;">
 			<span class="management-bar-item-title">
 				<c:if test="<%= Validator.isNotNull(label) %>">
 					<liferay-ui:message key="<%= label %>" />:

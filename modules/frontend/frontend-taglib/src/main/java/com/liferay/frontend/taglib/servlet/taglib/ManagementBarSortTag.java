@@ -47,6 +47,10 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
+	public void setDisabled(boolean disabled) {
+		_disabled = disabled;
+	}
+
 	public void setOrderByCol(String orderByCol) {
 		_orderByCol = orderByCol;
 	}
@@ -78,6 +82,7 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
+		_disabled = null;
 		_orderByCol = StringPool.BLANK;
 		_orderByType = StringPool.BLANK;
 		_orderColumns = new HashMap<>();
@@ -126,6 +131,23 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
+	protected boolean isDisabled() {
+		ManagementBarTag managementBarTag =
+			(ManagementBarTag)findAncestorWithClass(
+				this, ManagementBarTag.class);
+
+		boolean disabled = false;
+
+		if (_disabled != null) {
+			disabled = _disabled;
+		}
+		else if (managementBarTag != null) {
+			disabled = managementBarTag.isDisabled();
+		}
+
+		return disabled;
+	}
+
 	@Override
 	protected int processStartTag() throws Exception {
 		return EVAL_BODY_BUFFERED;
@@ -133,6 +155,8 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-frontend:management-bar-sort:disabled", isDisabled());
 		request.setAttribute(
 			"liferay-frontend:management-bar-sort:managementBarFilterItems",
 			getManagementBarFilterItems());
@@ -151,6 +175,7 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 	private static final String _PAGE = "/management_bar_sort/page.jsp";
 
+	private Boolean _disabled;
 	private String _orderByCol;
 	private String _orderByType;
 	private Map<String, String> _orderColumns = new HashMap<>();

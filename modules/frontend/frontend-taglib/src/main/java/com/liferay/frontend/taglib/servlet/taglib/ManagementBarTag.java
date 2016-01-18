@@ -37,6 +37,10 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public boolean isDisabled() {
+		return _disabled;
+	}
+
 	public void setActionButtons(String actionButtons) {
 		_actionButtons = actionButtons;
 	}

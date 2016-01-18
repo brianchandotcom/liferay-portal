@@ -77,7 +77,7 @@ public class CategorySubscriptionPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 104;
+		return 101;
 	}
 
 	@Reference(unbind = "-")

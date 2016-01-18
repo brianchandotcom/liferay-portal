@@ -55,7 +55,7 @@ public class DeleteCategoryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 105;
+		return 100;
 	}
 
 }

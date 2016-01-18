@@ -96,11 +96,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 		if (confirm(mergeLayoutSetBranchMessage)) {
 			var form = document.<portlet:namespace />fm4;
 
-			alert(form.<portlet:namespace />mergeLayoutSetBranchId.value);
-
 			form.<portlet:namespace />mergeLayoutSetBranchId.value = mergeLayoutSetBranchId;
-
-			alert(form.<portlet:namespace />mergeLayoutSetBranchId.value);
 
 			submitForm(form);
 		}

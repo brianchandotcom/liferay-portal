@@ -138,8 +138,6 @@ import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.model.impl.CookieRemotePreference;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.plugin.PluginPackageUtil;
-import com.liferay.portal.security.auth.AuthTokenUtil;
-import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
@@ -165,11 +163,6 @@ import com.liferay.portal.service.TicketLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
-import com.liferay.portal.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
-import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
-import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
@@ -1165,26 +1158,6 @@ public class PortalImpl implements Portal {
 		return groupIds;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions}
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getAuthTokenIgnoreActions() {
-		return AuthTokenWhitelistUtil.getPortletCSRFWhitelistActions();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             AuthTokenWhitelistUtil#getPortletCSRFWhitelist}
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getAuthTokenIgnorePortlets() {
-		return AuthTokenWhitelistUtil.getPortletCSRFWhitelist();
-	}
-
 	@Override
 	public BaseModel<?> getBaseModel(ResourcePermission resourcePermission)
 		throws PortalException {
@@ -1390,17 +1363,6 @@ public class PortalImpl implements Portal {
 
 		return groupFriendlyURL.concat(canonicalLayoutFriendlyURL).concat(
 			parametersURL);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getCDNHost(boolean)}
-	 */
-	@Deprecated
-	@Override
-	public String getCDNHost() {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return getCDNHostHttp(companyId);
 	}
 
 	@Override
@@ -3634,15 +3596,6 @@ public class PortalImpl implements Portal {
 		return originalRequest;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0 renamed to #getSiteGroupId(groupId)
-	 */
-	@Deprecated
-	@Override
-	public long getParentGroupId(long groupId) {
-		return getSiteGroupId(groupId);
-	}
-
 	@Override
 	public String getPathContext() {
 		return _pathContext;
@@ -3903,15 +3856,6 @@ public class PortalImpl implements Portal {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getPortalPort(boolean)}
-	 */
-	@Deprecated
-	@Override
-	public int getPortalPort() {
-		return getPortalServerPort(false);
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getPortalServerPort(boolean)}
 	 */
@@ -4093,38 +4037,6 @@ public class PortalImpl implements Portal {
 	@Override
 	public String getPortalWebDir() {
 		return PropsValues.LIFERAY_WEB_PORTAL_DIR;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             AuthTokenWhitelistUtil#getPortletInvocationWhitelist}
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             AuthTokenWhitelistUtil#getPortletInvocationWhitelistActions}
-	 */
-	@Deprecated
-	@Override
-	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
-		return AuthTokenWhitelistUtil.getPortletInvocationWhitelistActions();
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link
-	 *             #getPortletBreadcrumbs(HttpServletRequest)}
-	 */
-	@Deprecated
-	@Override
-	public List<BreadcrumbEntry> getPortletBreadcrumbList(
-		HttpServletRequest request) {
-
-		return getPortletBreadcrumbs(request);
 	}
 
 	/**
@@ -6041,136 +5953,6 @@ public class PortalImpl implements Portal {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isAllowAddPortletDefaultResource(
-			HttpServletRequest request, Portlet portlet)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		String portletId = portlet.getPortletId();
-
-		Boolean renderPortletResource = (Boolean)request.getAttribute(
-			WebKeys.RENDER_PORTLET_RESOURCE);
-
-		if (renderPortletResource != null) {
-			boolean runtimePortlet = renderPortletResource.booleanValue();
-
-			if (runtimePortlet) {
-				return true;
-			}
-		}
-
-		if (layout.isTypePanel() &&
-			isPanelSelectedPortlet(themeDisplay, portletId)) {
-
-			return true;
-		}
-
-		if (layout.isTypeControlPanel() &&
-			isControlPanelPortlet(portletId, themeDisplay)) {
-
-			return true;
-		}
-
-		if ((layoutTypePortlet != null) &&
-			layoutTypePortlet.hasPortletId(portletId)) {
-
-			return true;
-		}
-
-		if (themeDisplay.isSignedIn() &&
-			portletId.equals(PortletKeys.LAYOUTS_ADMIN)) {
-
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
-			Group group = layout.getGroup();
-
-			if (group.isSite()) {
-				if (LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.CUSTOMIZE) ||
-					LayoutPermissionUtil.contains(
-						permissionChecker, layout, ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-
-			if (group.isCompany()) {
-				if (permissionChecker.isCompanyAdmin()) {
-					return true;
-				}
-			}
-			else if (group.isLayoutPrototype()) {
-				long layoutPrototypeId = group.getClassPK();
-
-				if (LayoutPrototypePermissionUtil.contains(
-						permissionChecker, layoutPrototypeId,
-						ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-			else if (group.isLayoutSetPrototype()) {
-				long layoutSetPrototypeId = group.getClassPK();
-
-				if (LayoutSetPrototypePermissionUtil.contains(
-						permissionChecker, layoutSetPrototypeId,
-						ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-			else if (group.isOrganization()) {
-				long organizationId = group.getOrganizationId();
-
-				if (OrganizationPermissionUtil.contains(
-						permissionChecker, organizationId, ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-			else if (group.isUserGroup()) {
-				long scopeGroupId = themeDisplay.getScopeGroupId();
-
-				if (GroupPermissionUtil.contains(
-						permissionChecker, scopeGroupId, ActionKeys.UPDATE)) {
-
-					return true;
-				}
-			}
-			else if (group.isUser()) {
-				return true;
-			}
-		}
-
-		if (!portlet.isAddDefaultResource()) {
-			return false;
-		}
-
-		if (!PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
-			return true;
-		}
-
-		if (AuthTokenUtil.isValidPortletInvocationToken(
-				request, layout, portlet)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
 	public boolean isCDNDynamicResourcesEnabled(HttpServletRequest request)
 		throws PortalException {
@@ -6191,24 +5973,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return PropsValues.CDN_DYNAMIC_RESOURCES_ENABLED;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(User, long)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunityAdmin(User user, long groupId) throws Exception {
-		return isGroupAdmin(user, groupId);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(User, long)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isCommunityOwner(User user, long groupId) throws Exception {
-		return isGroupOwner(user, groupId);
 	}
 
 	@Override
@@ -6635,26 +6399,6 @@ public class PortalImpl implements Portal {
 		catch (Exception e) {
 			_log.error("Unable to clear cluster wide CDN hosts", e);
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             AuthTokenWhitelistUtil#resetPortletInvocationWhitelist}
-	 */
-	@Deprecated
-	@Override
-	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
-		return AuthTokenWhitelistUtil.resetPortletInvocationWhitelist();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions}
-	 */
-	@Deprecated
-	@Override
-	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
-		return AuthTokenWhitelistUtil.resetPortletInvocationWhitelistActions();
 	}
 
 	@Override
@@ -8122,28 +7866,6 @@ public class PortalImpl implements Portal {
 			if (strutsActions.contains(strutsAction)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, with no direct replacement
-	 */
-	@Deprecated
-	protected boolean isPanelSelectedPortlet(
-		ThemeDisplay themeDisplay, String portletId) {
-
-		Layout layout = themeDisplay.getLayout();
-
-		String panelSelectedPortlets = layout.getTypeSettingsProperty(
-			"panelSelectedPortlets");
-
-		if (Validator.isNotNull(panelSelectedPortlets)) {
-			String[] panelSelectedPortletsArray = StringUtil.split(
-				panelSelectedPortlets);
-
-			return ArrayUtil.contains(panelSelectedPortletsArray, portletId);
 		}
 
 		return false;

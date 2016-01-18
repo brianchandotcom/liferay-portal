@@ -62,6 +62,10 @@ refererURL.setParameter("updateLayout", "true");
 			<div class="lfr-content-category panel-page-category">
 				<a class="collapse-icon list-group-heading" data-toggle="collapse" href="#<%= panelId %>">
 					<liferay-ui:message key="highlighted" />
+
+					<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+					<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 				</a>
 
 				<div class="collapse in list-group-panel" id="<%= panelId %>">

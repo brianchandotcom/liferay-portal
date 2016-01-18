@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.web.configuration;
+package com.liferay.site.navigation.breadcrumb.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,13 +23,13 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
+	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration",
 	localization = "content/Language",
-	name = "%site.navigation.menu.web.configuration.name"
+	name = "%site.navigation.breadcrumb.web.template.configuration.name"
 )
-public interface SiteNavigationMenuWebConfiguration {
+public interface SiteNavigationBreadcrumbWebTemplateConfiguration {
 
-	@Meta.AD(deflt = "navbar-blank-ftl", required = false)
+	@Meta.AD(deflt = "breadcrumb-horizontal-ftl", required = false)
 	public String ddmTemplateKeyDefault();
 
 }

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbConfigurationValues;
-import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebConfiguration;
+import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration;
 import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import java.util.HashMap;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author José Manuel Navarro
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebConfiguration",
+	configurationPid = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name=" + SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB},
 	service = TemplateHandler.class
@@ -69,7 +69,7 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getDefaultTemplateKey() {
-		return _siteNavigationBreadcrumbWebConfiguration.
+		return _siteNavigationBreadcrumbWebTemplateConfiguration.
 			ddmTemplateKeyDefault();
 	}
 
@@ -127,9 +127,10 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_siteNavigationBreadcrumbWebConfiguration =
+		_siteNavigationBreadcrumbWebTemplateConfiguration =
 			Configurable.createConfigurable(
-				SiteNavigationBreadcrumbWebConfiguration.class, properties);
+				SiteNavigationBreadcrumbWebTemplateConfiguration.class,
+				properties);
 	}
 
 	@Override
@@ -138,7 +139,7 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 			DISPLAY_TEMPLATES_CONFIG;
 	}
 
-	private volatile SiteNavigationBreadcrumbWebConfiguration
-		_siteNavigationBreadcrumbWebConfiguration;
+	private volatile SiteNavigationBreadcrumbWebTemplateConfiguration
+		_siteNavigationBreadcrumbWebTemplateConfiguration;
 
 }

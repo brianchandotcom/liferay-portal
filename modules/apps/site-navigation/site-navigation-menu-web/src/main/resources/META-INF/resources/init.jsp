@@ -30,7 +30,6 @@ page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.theme.NavItem" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
-page import="com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration" %><%@
 page import="com.liferay.site.navigation.menu.web.display.context.SiteNavigationMenuDisplayContext" %>
 
 <portlet:defineObjects />
@@ -40,9 +39,7 @@ page import="com.liferay.site.navigation.menu.web.display.context.SiteNavigation
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-SiteNavigationMenuWebConfiguration siteNavigationMenuWebConfiguration = (SiteNavigationMenuWebConfiguration)request.getAttribute(SiteNavigationMenuWebConfiguration.class.getName());
-
-SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext = new SiteNavigationMenuDisplayContext(request, siteNavigationMenuWebConfiguration);
+SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext = new SiteNavigationMenuDisplayContext(request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

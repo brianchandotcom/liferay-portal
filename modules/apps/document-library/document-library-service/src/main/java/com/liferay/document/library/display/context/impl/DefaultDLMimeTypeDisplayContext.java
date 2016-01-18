@@ -77,15 +77,10 @@ public class DefaultDLMimeTypeDisplayContext
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties)
 		throws InvalidSyntaxException {
 
-		_dlConfiguration = Configurable.createConfigurable(
-			DLConfiguration.class, properties);
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
 		_dlConfiguration = Configurable.createConfigurable(
 			DLConfiguration.class, properties);
 	}

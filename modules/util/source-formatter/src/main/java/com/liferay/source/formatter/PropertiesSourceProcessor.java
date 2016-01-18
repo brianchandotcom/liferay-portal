@@ -161,7 +161,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		Set<String> allDuplicateLines = new HashSet<>();
 
 		for (Map.Entry<String, Set<String>> entry :
-			_duplicateLanguageKeyLinesMap.entrySet()) {
+				_duplicateLanguageKeyLinesMap.entrySet()) {
 
 			Set<String> duplicateLines = entry.getValue();
 
@@ -226,8 +226,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				line = trimLine(line, true);
 
 				if (line.startsWith(StringPool.TAB)) {
-					line = line.replace(
-						StringPool.TAB, StringPool.FOUR_SPACES);
+					line = line.replace(StringPool.TAB, StringPool.FOUR_SPACES);
 				}
 
 				sb.append(line);

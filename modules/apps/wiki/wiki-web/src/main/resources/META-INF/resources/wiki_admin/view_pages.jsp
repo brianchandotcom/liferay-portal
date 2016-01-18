@@ -21,6 +21,8 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 String navigation = ParamUtil.getString(request, "navigation", "all-pages");
 
+String keywords = ParamUtil.getString(request, "keywords");
+
 PortletURL portletURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, navigation), portletURL.toString());
@@ -29,23 +31,26 @@ WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProv
 
 SearchContainer wikiPagesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, wikiListPagesDisplayContext.getEmptyResultsMessage());
 
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
+if (Validator.isNull(keywords)) {
+	String orderByCol = ParamUtil.getString(request, "orderByCol");
+	String orderByType = ParamUtil.getString(request, "orderByType");
 
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-col", orderByCol);
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-type", orderByType);
+	if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+		portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-col", orderByCol);
+		portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-type", orderByType);
+	}
+	else {
+		orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-col", "modifiedDate");
+		orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-type", "desc");
+	}
+
+	request.setAttribute("view_pages.jsp-orderByCol", orderByCol);
+	request.setAttribute("view_pages.jsp-orderByType", orderByType);
+
+	wikiPagesSearchContainer.setOrderByType(orderByType);
+	wikiPagesSearchContainer.setOrderByCol(orderByCol);
 }
-else {
-	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-col", "modifiedDate");
-	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-type", "desc");
-}
 
-request.setAttribute("view_pages.jsp-orderByCol", orderByCol);
-request.setAttribute("view_pages.jsp-orderByType", orderByType);
-
-wikiPagesSearchContainer.setOrderByType(orderByType);
-wikiPagesSearchContainer.setOrderByCol(orderByCol);
 wikiPagesSearchContainer.setRowChecker(new PagesChecker(liferayPortletRequest, liferayPortletResponse));
 
 wikiListPagesDisplayContext.populateResultsAndTotal(wikiPagesSearchContainer);
@@ -92,9 +97,11 @@ else {
 		/>
 	</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
+	<c:if test="<%= Validator.isNull(keywords) %>">
+		<liferay-frontend:management-bar-filters>
+			<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
+		</liferay-frontend:management-bar-filters>
+	</c:if>
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deletePages();" %>' iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
@@ -139,7 +146,7 @@ else {
 			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			if (!navigation.equals("draft-pages")) {
+			if (!navigation.equals("draft-pages") || Validator.isNotNull(keywords)) {
 				rowURL.setParameter("mvcRenderCommandName", "/wiki/view");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("nodeName", curPage.getNode().getName());

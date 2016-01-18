@@ -21,6 +21,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -31,6 +38,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -89,6 +97,14 @@ public class DefaultWikiListPagesDisplayContext
 
 	@Override
 	public String getEmptyResultsMessage() {
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			return LanguageUtil.format(
+				_request, "no-pages-were-found-that-matched-the-keywords-x",
+				"<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
+		}
+
 		String navigation = ParamUtil.getString(_request, "navigation");
 
 		if (navigation.equals("categorized-pages")) {
@@ -172,11 +188,46 @@ public class DefaultWikiListPagesDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String navigation = ParamUtil.getString(
-			_request, "navigation", "all-pages");
+		String keywords = ParamUtil.getString(_request, "keywords");
 
 		int total = 0;
 		List<WikiPage> results = new ArrayList<>();
+
+		if (Validator.isNotNull(keywords)) {
+			Indexer<WikiPage> indexer = IndexerRegistryUtil.getIndexer(
+				WikiPage.class);
+
+			SearchContext searchContext = SearchContextFactory.getInstance(
+				_request);
+
+			searchContext.setAttribute("paginationType", "more");
+			searchContext.setEnd(searchContainer.getEnd());
+			searchContext.setIncludeAttachments(true);
+			searchContext.setIncludeDiscussions(true);
+			searchContext.setKeywords(keywords);
+			searchContext.setNodeIds(new long[] {_wikiNode.getNodeId()});
+			searchContext.setStart(searchContainer.getStart());
+
+			Hits hits = indexer.search(searchContext);
+
+			searchContainer.setTotal(hits.getLength());
+
+			for (SearchResult searchResult : SearchResultUtil.getSearchResults(
+				hits, themeDisplay.getLocale())) {
+
+				WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(
+					searchResult.getClassPK());
+
+				results.add(wikiPage);
+			}
+
+			searchContainer.setResults(results);
+
+			return;
+		}
+
+		String navigation = ParamUtil.getString(
+			_request, "navigation", "all-pages");
 
 		if (navigation.equals("all-pages")) {
 			total = WikiPageServiceUtil.getPagesCount(

@@ -24,25 +24,24 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"mvc.command.name=/wiki/search"
 	},
 	service = MVCRenderCommand.class
 )
-public class SearchMVCRenderCommand implements MVCRenderCommand {
+public class WikiAdminSearchMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return ActionUtil.viewNode(renderRequest, "/wiki/search.jsp");
+		return ActionUtil.viewNode(renderRequest, "/wiki_admin/view_pages.jsp");
 	}
 
 }

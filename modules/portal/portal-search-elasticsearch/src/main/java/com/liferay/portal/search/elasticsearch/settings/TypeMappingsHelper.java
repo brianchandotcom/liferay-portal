@@ -14,18 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch.settings;
 
-import org.elasticsearch.common.settings.Settings;
-
 /**
  * @author André de Oliveira
  */
-public interface IndexSettingsContributor
-	extends Comparable<IndexSettingsContributor> {
+public interface TypeMappingsHelper {
 
-	public void contribute(TypeMappingsHelper typeMappingsHelper);
-
-	public int getPriority();
-
-	public void populate(Settings.Builder builder);
+	public void addTypeMappings(String source);
 
 }

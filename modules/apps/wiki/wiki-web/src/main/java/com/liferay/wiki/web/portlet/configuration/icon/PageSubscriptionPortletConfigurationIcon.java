@@ -20,7 +20,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
@@ -38,12 +37,10 @@ public class PageSubscriptionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public PageSubscriptionPortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node, WikiPage page,
-		boolean subscribed) {
+		PortletRequest portletRequest, WikiPage page, boolean subscribed) {
 
 		super(portletRequest);
 
-		_node = node;
 		_page = page;
 		_subscribed = subscribed;
 	}
@@ -73,7 +70,7 @@ public class PageSubscriptionPortletConfigurationIcon
 		}
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 
 		return portletURL.toString();
@@ -103,7 +100,6 @@ public class PageSubscriptionPortletConfigurationIcon
 		return false;
 	}
 
-	private final WikiNode _node;
 	private final WikiPage _page;
 	private final boolean _subscribed;
 

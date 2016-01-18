@@ -19,7 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-WikiNode node = (WikiNode)row.getObject();
+WikiNode node = null;
+
+if (row != null) {
+	node = (WikiNode)row.getObject();
+}
+else {
+	node = (WikiNode)request.getAttribute("info_panel.jsp-wikiNode");
+}
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

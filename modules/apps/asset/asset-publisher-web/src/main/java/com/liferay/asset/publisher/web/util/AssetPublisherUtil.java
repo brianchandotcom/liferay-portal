@@ -1088,7 +1088,7 @@ public class AssetPublisherUtil {
 				_layoutLocalService.getLayoutByUuidAndGroupId(
 					layoutUuid, siteGroupId, privateLayout);
 
-			Group scopeIdGroup = _layoutLocalService.checkScopeGroup(
+			Group scopeIdGroup = _groupLocalService.checkScopeGroup(
 				scopeIdLayout, PrincipalThreadLocal.getUserId());
 
 			return scopeIdGroup.getGroupId();

@@ -15,7 +15,7 @@
 package com.liferay.exportimport.portlet.preferences.processor.capability;
 
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

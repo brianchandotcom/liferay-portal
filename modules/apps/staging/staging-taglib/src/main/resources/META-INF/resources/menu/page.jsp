@@ -43,7 +43,9 @@ if (!group.isCompany()) {
 	layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 }
 
-if (group.isStaged() && group.isStagedRemotely()) {
+boolean localPublishing = group.isStaged() && !group.isStagedRemotely();
+
+if (!localPublishing) {
 	if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
 		publishDialogTitle = "publish-x-to-remote-live";
 	}
@@ -65,7 +67,7 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 
 <liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<liferay-portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-	<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
+	<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 	<liferay-portlet:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
 	<liferay-portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

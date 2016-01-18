@@ -49,6 +49,7 @@
 		<c:if test="<%= (liveGroup != null) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.PUBLISH_STAGING) %>">
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 				<portlet:param name="tabs2" value="current-and-previous" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -61,9 +62,10 @@
 
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="simplePublishLayoutsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="publishLayoutsSimple" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 				<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="localPublishing" value="<%= String.valueOf(liveGroup.isStaged() && !liveGroup.isStagedRemotely()) %>" />
+				<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />

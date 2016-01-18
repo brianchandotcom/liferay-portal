@@ -15,6 +15,10 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil;
+import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.impl.RoleImpl;

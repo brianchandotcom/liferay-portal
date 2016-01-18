@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.model.UserGroup;

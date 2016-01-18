@@ -15,14 +15,14 @@
 package com.liferay.portal.security.membershippolicy.samples;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.membershippolicy.BaseSiteMembershipPolicy;
+import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.security.membershippolicy.BaseSiteMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.BaseSiteMembershipPolicyTestCase;
-import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 

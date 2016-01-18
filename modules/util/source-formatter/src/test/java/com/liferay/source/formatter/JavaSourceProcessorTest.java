@@ -130,7 +130,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Only private var should start with underscore:",
 				"Only private var should start with underscore:"
 			},
-			new Integer[] {19, 25});
+			new Integer[] {22, 28});
 		test("IncorrectVariableNames2.testjava");
 	}
 
@@ -170,6 +170,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testLPS28266() throws Exception {
 		test("LPS28266.testjava", "Use getInt(1) for count:");
+	}
+
+	@Test
+	public void testMissingAuthor() throws Exception {
+		test("MissingAuthor.testjava", "Missing author:");
 	}
 
 	@Test

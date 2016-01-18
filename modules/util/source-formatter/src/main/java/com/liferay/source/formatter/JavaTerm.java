@@ -115,7 +115,7 @@ public class JavaTerm {
 	public boolean hasAnnotation(String annotation) {
 		if (_content.contains(_indent + StringPool.AT + annotation + "\n") ||
 			_content.contains(
-				_indent + StringPool.AT + annotation + 
+				_indent + StringPool.AT + annotation +
 					StringPool.OPEN_PARENTHESIS)) {
 
 			return true;

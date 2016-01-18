@@ -107,8 +107,8 @@ public class JavaSourceTabCalculator {
 
 						tabLevel = calculateTabLevel(tabLevel, line);
 						calculateExtraTabs(
-							trimmedLine, lineCount, remainingContent,
-							forClause, ifClause);
+							trimmedLine, lineCount, remainingContent, forClause,
+							ifClause);
 					}
 				}
 				else if (line.endsWith("*/")) {
@@ -175,8 +175,8 @@ public class JavaSourceTabCalculator {
 	}
 
 	protected void calculateExtraTabs(
-		String line, int lineCount, String remainingContent,
-		boolean forClause, boolean ifClause) {
+		String line, int lineCount, String remainingContent, boolean forClause,
+		boolean ifClause) {
 
 		if (Validator.isNull(line)) {
 			return;
@@ -405,7 +405,9 @@ public class JavaSourceTabCalculator {
 		}
 	}
 
-	protected Tuple getFirstOccurenceTuple(String s, String[] texts, int startIndex) {
+	protected Tuple getFirstOccurenceTuple(
+		String s, String[] texts, int startIndex) {
+
 		String matchingText = null;
 		int firstIndexOf = -1;
 

@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
-import com.liferay.portal.tools.JavaImportsFormatter;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -89,7 +87,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected List<String> addIncludedAndReferencedFileNames(
-			List<String> fileNames, Set<String> checkedFileNames) {
+		List<String> fileNames, Set<String> checkedFileNames) {
 
 		Set<String> includedAndReferencedFileNames = new HashSet<>();
 
@@ -111,7 +109,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return fileNames;
 		}
 
-		for (String fileName : includedAndReferencedFileNames) { 
+		for (String fileName : includedAndReferencedFileNames) {
 			fileName = StringUtil.replace(
 				fileName, StringPool.SLASH, StringPool.BACK_SLASH);
 
@@ -280,29 +278,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
 			new String[] {"%><%@\r\n", "%><%@\n"});
 
-		return content.substring(0, x) + importsOrTaglibs + 
+		return content.substring(0, x) + importsOrTaglibs +
 			content.substring(y);
-	}
-
-	protected String fixEmptyLineInNestedTags(
-		String content, Pattern pattern, boolean startTag) {
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String tabs1 = matcher.group(1);
-			String tabs2 = matcher.group(2);
-
-			if ((startTag && ((tabs1.length() + 1) == tabs2.length())) ||
-				(!startTag && ((tabs1.length() - 1) == tabs2.length()))) {
-
-				content = StringUtil.replaceFirst(
-					content, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.end(1));
-			}
-		}
-
-		return content;
 	}
 
 	@Override
@@ -523,6 +500,27 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		return addIncludedAndReferencedFileNames(
 			fileNames, new HashSet<String>());
+	}
+
+	protected String fixEmptyLineInNestedTags(
+		String content, Pattern pattern, boolean startTag) {
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(2);
+
+			if ((startTag && ((tabs1.length() + 1) == tabs2.length())) ||
+				(!startTag && ((tabs1.length() - 1) == tabs2.length()))) {
+
+				content = StringUtil.replaceFirst(
+					content, StringPool.NEW_LINE, StringPool.BLANK,
+					matcher.end(1));
+			}
+		}
+
+		return content;
 	}
 
 	protected String fixRedirectBackURL(String content) {
@@ -794,14 +792,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 								line = StringUtil.replace(
 									line, StringPool.APOSTROPHE,
-										StringPool.QUOTE);
+									StringPool.QUOTE);
 
 								readAttributes = false;
 							}
 							else if (trimmedLine.endsWith(StringPool.QUOTE) &&
 									 tag.contains(StringPool.COLON) &&
 									 (StringUtil.count(
-										trimmedLine, StringPool.QUOTE) > 2)) {
+										 trimmedLine, StringPool.QUOTE) > 2)) {
 
 								processErrorMessage(
 									fileName,
@@ -1261,8 +1259,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		Set<String> referenceFileNames = new HashSet<>();
 
-		if (!fileName.endsWith("init.jsp") &&
-			!fileName.endsWith("init.jspf") &&
+		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf") &&
 			!fileName.contains("init-ext.jsp")) {
 
 			return referenceFileNames;

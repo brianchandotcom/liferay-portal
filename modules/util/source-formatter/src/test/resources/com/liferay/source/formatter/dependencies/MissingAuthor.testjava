@@ -14,15 +14,5 @@
 
 package com.liferay.source.formatter.dependencies;
 
-/**
- * @author Hugo Huijser
- */
-public class IncorrectVariableNames2 {
-
-	public String method1() {
-		return STRING_1;
-	}
-
-	private static final String STRING_1 = "Hello World";
-
+public class MissingAuthor {
 }

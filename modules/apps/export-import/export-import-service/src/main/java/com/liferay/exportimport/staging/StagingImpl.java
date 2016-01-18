@@ -2144,6 +2144,8 @@ public class StagingImpl implements Staging {
 		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
 			portletRequest, targetGroupId);
 
+		String name = ParamUtil.getString(portletRequest, "name");
+
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
 				DestinationNames.LAYOUTS_LOCAL_PUBLISHER, targetGroupId);
@@ -2169,17 +2171,12 @@ public class StagingImpl implements Staging {
 				schedulerEndDate = endCalendar.getTime();
 			}
 
-			String description = ParamUtil.getString(
-				portletRequest, "description");
-
 			_layoutService.schedulePublishToLive(
 				sourceGroupId, targetGroupId, privateLayout, layoutIds,
 				parameterMap, groupName, cronText, startCalendar.getTime(),
-				schedulerEndDate, description);
+				schedulerEndDate, name);
 		}
 		else {
-			String name = ParamUtil.getString(portletRequest, "name");
-
 			publishLayouts(
 				themeDisplay.getUserId(), sourceGroupId, targetGroupId,
 				privateLayout, layoutIds, name, parameterMap);
@@ -2240,6 +2237,8 @@ public class StagingImpl implements Staging {
 			groupId, remoteAddress, remotePort, remotePathContext,
 			secureConnection, remoteGroupId);
 
+		String name = ParamUtil.getString(portletRequest, "name");
+
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
 				DestinationNames.LAYOUTS_REMOTE_PUBLISHER, groupId);
@@ -2265,19 +2264,13 @@ public class StagingImpl implements Staging {
 				schedulerEndDate = endCalendar.getTime();
 			}
 
-			String description = ParamUtil.getString(
-				portletRequest, "description");
-
 			_layoutService.schedulePublishToRemote(
 				groupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
 				remoteGroupId, remotePrivateLayout, null, null, groupName,
-				cronText, startCalendar.getTime(), schedulerEndDate,
-				description);
+				cronText, startCalendar.getTime(), schedulerEndDate, name);
 		}
 		else {
-			String name = ParamUtil.getString(portletRequest, "name");
-
 			copyRemoteLayouts(
 				groupId, privateLayout, layoutIdMap, name, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,

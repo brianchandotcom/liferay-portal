@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 
@@ -89,9 +90,20 @@ public class DraftExportImportConfigurationMessageListener
 		DynamicQuery dynamicQuery =
 			_exportImportConfigurationLocalService.dynamicQuery();
 
-		Property property = PropertyFactoryUtil.forName("status");
+		Property statusProperty = PropertyFactoryUtil.forName("status");
 
-		dynamicQuery.add(property.eq(WorkflowConstants.STATUS_DRAFT));
+		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
+
+		Property typeProperty = PropertyFactoryUtil.forName("type");
+
+		dynamicQuery.add(
+			typeProperty.ne(
+				ExportImportConfigurationConstants.
+					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL));
+		dynamicQuery.add(
+			typeProperty.ne(
+				ExportImportConfigurationConstants.
+					TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE));
 
 		Order order = OrderFactoryUtil.asc("createDate");
 

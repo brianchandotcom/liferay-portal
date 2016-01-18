@@ -24,8 +24,6 @@
 			<li>
 				<aui:input name="jobName" type="hidden" />
 
-				<aui:input label="title" name="description" type="text" />
-
 				<liferay-ui:input-scheduler />
 			</li>
 		</ul>

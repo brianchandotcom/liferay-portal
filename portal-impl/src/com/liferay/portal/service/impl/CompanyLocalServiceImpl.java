@@ -39,7 +39,9 @@ import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -192,6 +194,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @return the company with the web domain and mail domain
 	 */
 	@Override
+	@Transactional(
+		isolation = Isolation.PORTAL,
+		rollbackFor = {PortalException.class, SystemException.class}
+	)
 	public Company checkCompany(String webId, String mx)
 		throws PortalException {
 
@@ -282,7 +288,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			_companyProviderWrapper.getCompanyProvider();
 
 		try {
-			long companyId = company.getCompanyId();
+			final long companyId = company.getCompanyId();
 
 			_companyProviderWrapper.setCompanyProvider(
 				new CustomCompanyProvider(companyId));
@@ -413,17 +419,33 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			portletLocalService.checkPortlets(companyId);
 
-			synchronized (_companyServiceRegistrations) {
-				if (!_companyServiceRegistrations.containsKey(companyId)) {
-					Registry registry = RegistryUtil.getRegistry();
+			final Company finalCompany = company;
 
-					ServiceRegistration<Company> serviceRegistration =
-						registry.registerService(Company.class, company);
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
 
-					_companyServiceRegistrations.put(
-						company.getCompanyId(), serviceRegistration);
+				@Override
+				public Void call() throws Exception {
+
+					synchronized (_companyServiceRegistrations) {
+						if (!_companyServiceRegistrations.containsKey(
+								companyId)) {
+
+							Registry registry = RegistryUtil.getRegistry();
+
+							ServiceRegistration<Company> serviceRegistration =
+								registry.registerService(
+									Company.class, finalCompany);
+
+							_companyServiceRegistrations.put(
+								companyId, serviceRegistration);
+						}
+					}
+
+					return null;
 				}
-			}
+
+			});
 		}
 		finally {
 			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);

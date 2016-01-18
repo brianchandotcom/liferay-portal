@@ -67,7 +67,7 @@
 			<bean class="com.liferay.portal.security.permission.PermissionConverterImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.security.permission.ResourceActions" class="com.liferay.portal.security.permission.ResourceActionsImpl" />
+	<bean id="com.liferay.portal.kernel.security.permission.ResourceActions" class="com.liferay.portal.security.permission.ResourceActionsImpl" depends-on="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" />
 	<bean id="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" class="com.liferay.portal.kernel.security.permission.ResourceActionsUtil">
 		<property name="resourceActions" ref="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	</bean>
@@ -78,9 +78,13 @@
 	<bean id="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil" class="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil">
 		<property name="passwordEncryptor" ref="com.liferay.portal.kernel.security.pwd.PasswordEncryptor" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl" />
+	<bean id="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" class="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil">
+		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.xml.SAXReader" class="com.liferay.portal.xml.SAXReaderImpl">
 		<property name="secure" value="true" />
-		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.xml.SAXReaderUtil" class="com.liferay.portal.kernel.xml.SAXReaderUtil" depends-on="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">
 		<property name="SAXReader" ref="com.liferay.portal.kernel.xml.SAXReader" />
@@ -89,7 +93,7 @@
 		<property name="SAXReader">
 			<bean class="com.liferay.portal.xml.SAXReaderImpl">
 				<property name="secure" value="false" />
-				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
 			</bean>
 		</property>
 	</bean>
@@ -104,7 +108,7 @@
 	</bean>
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
-			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" />
+			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.security.access.control.AccessControl" class="com.liferay.portal.security.access.control.AccessControlImpl" />
@@ -137,8 +141,4 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />
-	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProvider" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl" />
-	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil">
-		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
-	</bean>
 </beans>

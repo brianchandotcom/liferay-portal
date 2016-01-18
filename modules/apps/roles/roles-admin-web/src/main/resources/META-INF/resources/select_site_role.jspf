@@ -16,7 +16,7 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-int step = ParamUtil.getInteger(request, "step");
+int step = ParamUtil.getInteger(request, "step", 1);
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
 String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncSiteRoles");

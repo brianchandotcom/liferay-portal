@@ -100,7 +100,6 @@ public class SelectDDMFormFieldValueRenderer
 		_selectDDMFormFieldValueAccessor = selectDDMFormFieldValueAccessor;
 	}
 
-	private volatile SelectDDMFormFieldValueAccessor
-		_selectDDMFormFieldValueAccessor;
+	private SelectDDMFormFieldValueAccessor _selectDDMFormFieldValueAccessor;
 
 }

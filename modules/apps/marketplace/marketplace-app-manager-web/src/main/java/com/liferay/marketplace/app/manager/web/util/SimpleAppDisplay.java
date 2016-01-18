@@ -48,10 +48,12 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 		_version = version;
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
 
+	@Override
 	public String getDisplayURL(MimeResponse mimeResponse) {
 		PortletURL portletURL = mimeResponse.createRenderURL();
 
@@ -67,14 +69,17 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 		return portletURL.toString();
 	}
 
+	@Override
 	public String getIconURL(HttpServletRequest request) {
 		return PortalUtil.getPathContext(request) + "/images/icons.svg#apps";
 	}
 
+	@Override
 	public String getTitle() {
 		return _title;
 	}
 
+	@Override
 	public String getVersion() {
 		return _version.toString();
 	}

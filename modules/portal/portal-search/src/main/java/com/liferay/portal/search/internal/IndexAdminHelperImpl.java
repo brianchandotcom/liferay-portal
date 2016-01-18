@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = IndexAdminHelper.class)
 public class IndexAdminHelperImpl implements IndexAdminHelper {
 
+	@Override
 	public synchronized void backup(long companyId, String backupName)
 		throws SearchException {
 
@@ -41,6 +42,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		}
 	}
 
+	@Override
 	public synchronized String backup(
 			long companyId, String searchEngineId, String backupName)
 		throws SearchException {
@@ -51,6 +53,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		return searchEngine.backup(companyId, backupName);
 	}
 
+	@Override
 	public synchronized void backup(String backupName) throws SearchException {
 		Collection<SearchEngine> searchEngines =
 			_searchEngineHelper.getSearchEngines();
@@ -62,6 +65,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		}
 	}
 
+	@Override
 	public synchronized void removeBackup(long companyId, String backupName)
 		throws SearchException {
 
@@ -73,6 +77,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		}
 	}
 
+	@Override
 	public synchronized void removeBackup(String backupName)
 		throws SearchException {
 
@@ -86,6 +91,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		}
 	}
 
+	@Override
 	public synchronized void restore(long companyId, String backupName)
 		throws SearchException {
 
@@ -97,6 +103,7 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		}
 	}
 
+	@Override
 	public synchronized void restore(String backupName) throws SearchException {
 		Collection<SearchEngine> searchEngines =
 			_searchEngineHelper.getSearchEngines();
@@ -115,6 +122,6 @@ public class IndexAdminHelperImpl implements IndexAdminHelper {
 		_searchEngineHelper = searchEngineHelper;
 	}
 
-	private volatile SearchEngineHelper _searchEngineHelper;
+	private SearchEngineHelper _searchEngineHelper;
 
 }

@@ -38,10 +38,12 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 		return _app;
 	}
 
+	@Override
 	public String getDescription() {
 		return _app.getDescription();
 	}
 
+	@Override
 	public String getDisplayURL(MimeResponse mimeResponse) {
 		PortletURL portletURL = mimeResponse.createRenderURL();
 
@@ -57,14 +59,17 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 		return portletURL.toString();
 	}
 
+	@Override
 	public String getIconURL(HttpServletRequest request) {
 		return _app.getIconURL();
 	}
 
+	@Override
 	public String getTitle() {
 		return _app.getTitle();
 	}
 
+	@Override
 	public String getVersion() {
 		return _app.getVersion();
 	}

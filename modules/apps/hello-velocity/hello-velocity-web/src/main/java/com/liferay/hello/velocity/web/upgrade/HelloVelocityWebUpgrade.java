@@ -68,6 +68,6 @@ public class HelloVelocityWebUpgrade {
 			false);
 	}
 
-	private volatile ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 
 }

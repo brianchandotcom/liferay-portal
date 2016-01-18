@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.NoSuchListTypeException;
+import com.liferay.portal.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;

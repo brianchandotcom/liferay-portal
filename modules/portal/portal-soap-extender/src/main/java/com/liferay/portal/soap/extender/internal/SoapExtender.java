@@ -193,7 +193,7 @@ public class SoapExtender {
 
 	private org.apache.felix.dm.Component _component;
 	private TCCLDependencyManager _dependencyManager;
-	private volatile SoapDescriptorBuilder _soapDescriptorBuilder;
+	private SoapDescriptorBuilder _soapDescriptorBuilder;
 	private SoapExtenderConfiguration _soapExtenderConfiguration;
 
 }

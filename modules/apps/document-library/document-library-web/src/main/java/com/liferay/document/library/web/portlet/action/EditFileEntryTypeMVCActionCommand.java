@@ -35,9 +35,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
-import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
@@ -261,10 +261,10 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile DDM _ddm;
-	private volatile DDMBeanTranslator _ddmBeanTranslator;
-	private volatile DLAppService _dlAppService;
-	private volatile DLFileEntryTypeService _dlFileEntryTypeService;
-	private volatile GroupLocalService _groupLocalService;
+	private DDM _ddm;
+	private DDMBeanTranslator _ddmBeanTranslator;
+	private DLAppService _dlAppService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
+	private GroupLocalService _groupLocalService;
 
 }

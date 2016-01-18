@@ -44,11 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ControlPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-tasks";
-	}
-
-	@Override
 	public String getKey() {
 		return PanelCategoryKeys.CONTROL_PANEL;
 	}
@@ -76,6 +71,6 @@ public class ControlPanelCategory extends BasePanelCategory {
 		_panelAppRegistry = panelAppRegistry;
 	}
 
-	private volatile PanelAppRegistry _panelAppRegistry;
+	private PanelAppRegistry _panelAppRegistry;
 
 }

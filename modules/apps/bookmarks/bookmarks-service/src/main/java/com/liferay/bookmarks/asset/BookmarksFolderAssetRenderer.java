@@ -17,18 +17,13 @@ package com.liferay.bookmarks.asset;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
-import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
@@ -84,34 +79,6 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	@Override
-	public String getIconCssClass() throws PortalException {
-		if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
-				_folder.getGroupId(), _folder.getFolderId()) > 0) {
-
-			return "icon-folder-open";
-		}
-
-		return super.getIconCssClass();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		try {
-			if (BookmarksFolderServiceUtil.getFoldersAndEntriesCount(
-					_folder.getGroupId(), _folder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED) > 0) {
-
-				return themeDisplay.getPathThemeImages() +
-					"/common/folder_full_document.png";
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
-	}
-
-	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			return "/bookmarks/asset/folder_" + template + ".jsp";
@@ -139,27 +106,6 @@ public class BookmarksFolderAssetRenderer
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return _folder.getDescription();
-	}
-
-	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(
-			_folder.getGroupId(), _folder.getFolderId());
-		int foldersCount = BookmarksFolderServiceUtil.getFoldersCount(
-			_folder.getGroupId(), _folder.getFolderId());
-
-		if ((entriesCount > 0) || (foldersCount > 0)) {
-			return themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_full_bookmark.png";
-		}
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/folder_empty_bookmark.png";
 	}
 
 	@Override
@@ -203,7 +149,8 @@ public class BookmarksFolderAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/bookmarks/view_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);

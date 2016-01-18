@@ -185,7 +185,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -211,7 +211,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,7 +238,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder[] findByUuid_PrevAndNext(long folderId,
 		java.lang.String uuid, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(folderId, uuid, orderByComparator);
 	}
@@ -271,7 +271,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
 	public static DLFolder findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -307,7 +307,7 @@ public class DLFolderUtil {
 	* @return the document library folder that was removed
 	*/
 	public static DLFolder removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -407,7 +407,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -437,7 +437,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -469,7 +469,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByUuid_C_PrevAndNext(long folderId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(folderId, uuid, companyId,
 			orderByComparator);
@@ -573,7 +573,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByGroupId_First(long groupId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -599,7 +599,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByGroupId_Last(long groupId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -626,7 +626,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder[] findByGroupId_PrevAndNext(long folderId,
 		long groupId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(folderId, groupId,
 			orderByComparator);
@@ -689,7 +689,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder[] filterFindByGroupId_PrevAndNext(long folderId,
 		long groupId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(folderId, groupId,
 			orderByComparator);
@@ -802,7 +802,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByCompanyId_First(long companyId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -830,7 +830,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByCompanyId_Last(long companyId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -859,7 +859,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder[] findByCompanyId_PrevAndNext(long folderId,
 		long companyId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(folderId, companyId,
 			orderByComparator);
@@ -963,7 +963,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByRepositoryId_First(long repositoryId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByRepositoryId_First(repositoryId, orderByComparator);
 	}
@@ -991,7 +991,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByRepositoryId_Last(long repositoryId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByRepositoryId_Last(repositoryId, orderByComparator);
 	}
@@ -1020,7 +1020,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder[] findByRepositoryId_PrevAndNext(long folderId,
 		long repositoryId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByRepositoryId_PrevAndNext(folderId, repositoryId,
 			orderByComparator);
@@ -1129,7 +1129,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByG_P_First(long groupId, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_First(groupId, parentFolderId, orderByComparator);
 	}
@@ -1159,7 +1159,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByG_P_Last(long groupId, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_Last(groupId, parentFolderId, orderByComparator);
 	}
@@ -1190,7 +1190,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder[] findByG_P_PrevAndNext(long folderId, long groupId,
 		long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_PrevAndNext(folderId, groupId, parentFolderId,
 			orderByComparator);
@@ -1262,7 +1262,7 @@ public class DLFolderUtil {
 	public static DLFolder[] filterFindByG_P_PrevAndNext(long folderId,
 		long groupId, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_P_PrevAndNext(folderId, groupId,
 			parentFolderId, orderByComparator);
@@ -1384,7 +1384,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByC_NotS_First(long companyId, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_First(companyId, status, orderByComparator);
 	}
@@ -1414,7 +1414,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByC_NotS_Last(long companyId, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_Last(companyId, status, orderByComparator);
 	}
@@ -1446,7 +1446,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByC_NotS_PrevAndNext(long folderId,
 		long companyId, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByC_NotS_PrevAndNext(folderId, companyId, status,
 			orderByComparator);
@@ -1482,7 +1482,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a matching document library folder could not be found
 	*/
 	public static DLFolder findByR_M(long repositoryId, boolean mountPoint)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByR_M(repositoryId, mountPoint);
 	}
 
@@ -1519,7 +1519,7 @@ public class DLFolderUtil {
 	* @return the document library folder that was removed
 	*/
 	public static DLFolder removeByR_M(long repositoryId, boolean mountPoint)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().removeByR_M(repositoryId, mountPoint);
 	}
 
@@ -1621,7 +1621,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByR_P_First(long repositoryId,
 		long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByR_P_First(repositoryId, parentFolderId,
 			orderByComparator);
@@ -1653,7 +1653,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByR_P_Last(long repositoryId,
 		long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByR_P_Last(repositoryId, parentFolderId,
 			orderByComparator);
@@ -1687,7 +1687,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByR_P_PrevAndNext(long folderId,
 		long repositoryId, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByR_P_PrevAndNext(folderId, repositoryId,
 			parentFolderId, orderByComparator);
@@ -1800,7 +1800,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByP_N_First(long parentFolderId,
 		java.lang.String name, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_First(parentFolderId, name, orderByComparator);
 	}
@@ -1830,7 +1830,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByP_N_Last(long parentFolderId,
 		java.lang.String name, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_Last(parentFolderId, name, orderByComparator);
 	}
@@ -1862,7 +1862,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByP_N_PrevAndNext(long folderId,
 		long parentFolderId, java.lang.String name,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByP_N_PrevAndNext(folderId, parentFolderId, name,
 			orderByComparator);
@@ -1981,7 +1981,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByG_M_P_First(long groupId, boolean mountPoint,
 		long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_First(groupId, mountPoint, parentFolderId,
 			orderByComparator);
@@ -2015,7 +2015,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByG_M_P_Last(long groupId, boolean mountPoint,
 		long parentFolderId, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_Last(groupId, mountPoint, parentFolderId,
 			orderByComparator);
@@ -2051,7 +2051,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByG_M_P_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_PrevAndNext(folderId, groupId, mountPoint,
 			parentFolderId, orderByComparator);
@@ -2129,7 +2129,7 @@ public class DLFolderUtil {
 	public static DLFolder[] filterFindByG_M_P_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_M_P_PrevAndNext(folderId, groupId,
 			mountPoint, parentFolderId, orderByComparator);
@@ -2185,7 +2185,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder findByG_P_N(long groupId, long parentFolderId,
 		java.lang.String name)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByG_P_N(groupId, parentFolderId, name);
 	}
 
@@ -2228,7 +2228,7 @@ public class DLFolderUtil {
 	*/
 	public static DLFolder removeByG_P_N(long groupId, long parentFolderId,
 		java.lang.String name)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().removeByG_P_N(groupId, parentFolderId, name);
 	}
 
@@ -2345,7 +2345,7 @@ public class DLFolderUtil {
 	public static DLFolder findByF_C_P_NotS_First(long folderId,
 		long companyId, long parentFolderId, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByF_C_P_NotS_First(folderId, companyId, parentFolderId,
 			status, orderByComparator);
@@ -2383,7 +2383,7 @@ public class DLFolderUtil {
 	public static DLFolder findByF_C_P_NotS_Last(long folderId, long companyId,
 		long parentFolderId, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByF_C_P_NotS_Last(folderId, companyId, parentFolderId,
 			status, orderByComparator);
@@ -2539,7 +2539,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_M_P_H_First(long groupId,
 		boolean mountPoint, long parentFolderId, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_First(groupId, mountPoint, parentFolderId,
 			hidden, orderByComparator);
@@ -2577,7 +2577,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_M_P_H_Last(long groupId, boolean mountPoint,
 		long parentFolderId, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_Last(groupId, mountPoint, parentFolderId,
 			hidden, orderByComparator);
@@ -2616,7 +2616,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByG_M_P_H_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_PrevAndNext(folderId, groupId, mountPoint,
 			parentFolderId, hidden, orderByComparator);
@@ -2700,7 +2700,7 @@ public class DLFolderUtil {
 	public static DLFolder[] filterFindByG_M_P_H_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_M_P_H_PrevAndNext(folderId, groupId,
 			mountPoint, parentFolderId, hidden, orderByComparator);
@@ -2853,7 +2853,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_M_T_H_First(long groupId,
 		boolean mountPoint, java.lang.String treePath, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_T_H_First(groupId, mountPoint, treePath, hidden,
 			orderByComparator);
@@ -2891,7 +2891,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_M_T_H_Last(long groupId, boolean mountPoint,
 		java.lang.String treePath, boolean hidden,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_T_H_Last(groupId, mountPoint, treePath, hidden,
 			orderByComparator);
@@ -2930,7 +2930,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByG_M_T_H_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, java.lang.String treePath,
 		boolean hidden, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_T_H_PrevAndNext(folderId, groupId, mountPoint,
 			treePath, hidden, orderByComparator);
@@ -3013,7 +3013,7 @@ public class DLFolderUtil {
 	public static DLFolder[] filterFindByG_M_T_H_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, java.lang.String treePath,
 		boolean hidden, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_M_T_H_PrevAndNext(folderId, groupId,
 			mountPoint, treePath, hidden, orderByComparator);
@@ -3162,7 +3162,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_P_H_S_First(long groupId,
 		long parentFolderId, boolean hidden, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_H_S_First(groupId, parentFolderId, hidden,
 			status, orderByComparator);
@@ -3200,7 +3200,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_P_H_S_Last(long groupId,
 		long parentFolderId, boolean hidden, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_H_S_Last(groupId, parentFolderId, hidden, status,
 			orderByComparator);
@@ -3239,7 +3239,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByG_P_H_S_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, boolean hidden, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_P_H_S_PrevAndNext(folderId, groupId,
 			parentFolderId, hidden, status, orderByComparator);
@@ -3321,7 +3321,7 @@ public class DLFolderUtil {
 	public static DLFolder[] filterFindByG_P_H_S_PrevAndNext(long folderId,
 		long groupId, long parentFolderId, boolean hidden, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_P_H_S_PrevAndNext(folderId, groupId,
 			parentFolderId, hidden, status, orderByComparator);
@@ -3478,7 +3478,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_M_P_H_S_First(long groupId,
 		boolean mountPoint, long parentFolderId, boolean hidden, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_S_First(groupId, mountPoint, parentFolderId,
 			hidden, status, orderByComparator);
@@ -3518,7 +3518,7 @@ public class DLFolderUtil {
 	public static DLFolder findByG_M_P_H_S_Last(long groupId,
 		boolean mountPoint, long parentFolderId, boolean hidden, int status,
 		OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_S_Last(groupId, mountPoint, parentFolderId,
 			hidden, status, orderByComparator);
@@ -3559,7 +3559,7 @@ public class DLFolderUtil {
 	public static DLFolder[] findByG_M_P_H_S_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .findByG_M_P_H_S_PrevAndNext(folderId, groupId, mountPoint,
 			parentFolderId, hidden, status, orderByComparator);
@@ -3647,7 +3647,7 @@ public class DLFolderUtil {
 	public static DLFolder[] filterFindByG_M_P_H_S_PrevAndNext(long folderId,
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status, OrderByComparator<DLFolder> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence()
 				   .filterFindByG_M_P_H_S_PrevAndNext(folderId, groupId,
 			mountPoint, parentFolderId, hidden, status, orderByComparator);
@@ -3739,7 +3739,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	*/
 	public static DLFolder remove(long folderId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().remove(folderId);
 	}
 
@@ -3755,7 +3755,7 @@ public class DLFolderUtil {
 	* @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	*/
 	public static DLFolder findByPrimaryKey(long folderId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFolderException {
 		return getPersistence().findByPrimaryKey(folderId);
 	}
 

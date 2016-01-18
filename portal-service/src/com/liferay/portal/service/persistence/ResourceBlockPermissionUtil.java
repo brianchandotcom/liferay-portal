@@ -195,7 +195,7 @@ public class ResourceBlockPermissionUtil {
 	public static ResourceBlockPermission findByResourceBlockId_First(
 		long resourceBlockId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence()
 				   .findByResourceBlockId_First(resourceBlockId,
 			orderByComparator);
@@ -227,7 +227,7 @@ public class ResourceBlockPermissionUtil {
 	public static ResourceBlockPermission findByResourceBlockId_Last(
 		long resourceBlockId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence()
 				   .findByResourceBlockId_Last(resourceBlockId,
 			orderByComparator);
@@ -260,7 +260,7 @@ public class ResourceBlockPermissionUtil {
 	public static ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
 		long resourceBlockPermissionId, long resourceBlockId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence()
 				   .findByResourceBlockId_PrevAndNext(resourceBlockPermissionId,
 			resourceBlockId, orderByComparator);
@@ -365,7 +365,7 @@ public class ResourceBlockPermissionUtil {
 	*/
 	public static ResourceBlockPermission findByRoleId_First(long roleId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence().findByRoleId_First(roleId, orderByComparator);
 	}
 
@@ -391,7 +391,7 @@ public class ResourceBlockPermissionUtil {
 	*/
 	public static ResourceBlockPermission findByRoleId_Last(long roleId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence().findByRoleId_Last(roleId, orderByComparator);
 	}
 
@@ -419,7 +419,7 @@ public class ResourceBlockPermissionUtil {
 	public static ResourceBlockPermission[] findByRoleId_PrevAndNext(
 		long resourceBlockPermissionId, long roleId,
 		OrderByComparator<ResourceBlockPermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence()
 				   .findByRoleId_PrevAndNext(resourceBlockPermissionId, roleId,
 			orderByComparator);
@@ -454,7 +454,7 @@ public class ResourceBlockPermissionUtil {
 	*/
 	public static ResourceBlockPermission findByR_R(long resourceBlockId,
 		long roleId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence().findByR_R(resourceBlockId, roleId);
 	}
 
@@ -493,7 +493,7 @@ public class ResourceBlockPermissionUtil {
 	*/
 	public static ResourceBlockPermission removeByR_R(long resourceBlockId,
 		long roleId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence().removeByR_R(resourceBlockId, roleId);
 	}
 
@@ -546,7 +546,7 @@ public class ResourceBlockPermissionUtil {
 	* @throws NoSuchResourceBlockPermissionException if a resource block permission with the primary key could not be found
 	*/
 	public static ResourceBlockPermission remove(long resourceBlockPermissionId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence().remove(resourceBlockPermissionId);
 	}
 
@@ -564,7 +564,7 @@ public class ResourceBlockPermissionUtil {
 	*/
 	public static ResourceBlockPermission findByPrimaryKey(
 		long resourceBlockPermissionId)
-		throws com.liferay.portal.NoSuchResourceBlockPermissionException {
+		throws com.liferay.portal.exception.NoSuchResourceBlockPermissionException {
 		return getPersistence().findByPrimaryKey(resourceBlockPermissionId);
 	}
 

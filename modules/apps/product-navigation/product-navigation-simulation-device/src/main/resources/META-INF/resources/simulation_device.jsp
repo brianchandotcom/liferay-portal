@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", themeDisplay.getLocale(), getClass());
-%>
-
 <div id="<portlet:namespace />simulationDeviceContainer">
 	<aui:button cssClass="close" name="closeSimulationPanel" value="&times;" />
 

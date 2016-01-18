@@ -180,7 +180,7 @@ public class AppUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByUuid_First(java.lang.String uuid,
 		OrderByComparator<App> orderByComparator)
@@ -206,7 +206,7 @@ public class AppUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<App> orderByComparator)
@@ -233,7 +233,7 @@ public class AppUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next app
-	* @throws com.liferay.marketplace.NoSuchAppException if a app with the primary key could not be found
+	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
 	public static App[] findByUuid_PrevAndNext(long appId,
 		java.lang.String uuid, OrderByComparator<App> orderByComparator)
@@ -340,7 +340,7 @@ public class AppUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByUuid_C_First(java.lang.String uuid, long companyId,
 		OrderByComparator<App> orderByComparator)
@@ -370,7 +370,7 @@ public class AppUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByUuid_C_Last(java.lang.String uuid, long companyId,
 		OrderByComparator<App> orderByComparator)
@@ -401,7 +401,7 @@ public class AppUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next app
-	* @throws com.liferay.marketplace.NoSuchAppException if a app with the primary key could not be found
+	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
 	public static App[] findByUuid_C_PrevAndNext(long appId,
 		java.lang.String uuid, long companyId,
@@ -505,7 +505,7 @@ public class AppUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByCompanyId_First(long companyId,
 		OrderByComparator<App> orderByComparator)
@@ -533,7 +533,7 @@ public class AppUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByCompanyId_Last(long companyId,
 		OrderByComparator<App> orderByComparator)
@@ -562,7 +562,7 @@ public class AppUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next app
-	* @throws com.liferay.marketplace.NoSuchAppException if a app with the primary key could not be found
+	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
 	public static App[] findByCompanyId_PrevAndNext(long appId, long companyId,
 		OrderByComparator<App> orderByComparator)
@@ -592,11 +592,11 @@ public class AppUtil {
 	}
 
 	/**
-	* Returns the app where remoteAppId = &#63; or throws a {@link com.liferay.marketplace.NoSuchAppException} if it could not be found.
+	* Returns the app where remoteAppId = &#63; or throws a {@link NoSuchAppException} if it could not be found.
 	*
 	* @param remoteAppId the remote app ID
 	* @return the matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByRemoteAppId(long remoteAppId)
 		throws com.liferay.marketplace.exception.NoSuchAppException {
@@ -721,7 +721,7 @@ public class AppUtil {
 	* @param category the category
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByCategory_First(java.lang.String category,
 		OrderByComparator<App> orderByComparator)
@@ -748,7 +748,7 @@ public class AppUtil {
 	* @param category the category
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching app
-	* @throws com.liferay.marketplace.NoSuchAppException if a matching app could not be found
+	* @throws NoSuchAppException if a matching app could not be found
 	*/
 	public static App findByCategory_Last(java.lang.String category,
 		OrderByComparator<App> orderByComparator)
@@ -775,7 +775,7 @@ public class AppUtil {
 	* @param category the category
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next app
-	* @throws com.liferay.marketplace.NoSuchAppException if a app with the primary key could not be found
+	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
 	public static App[] findByCategory_PrevAndNext(long appId,
 		java.lang.String category, OrderByComparator<App> orderByComparator)
@@ -837,7 +837,7 @@ public class AppUtil {
 	*
 	* @param appId the primary key of the app
 	* @return the app that was removed
-	* @throws com.liferay.marketplace.NoSuchAppException if a app with the primary key could not be found
+	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
 	public static App remove(long appId)
 		throws com.liferay.marketplace.exception.NoSuchAppException {
@@ -849,11 +849,11 @@ public class AppUtil {
 	}
 
 	/**
-	* Returns the app with the primary key or throws a {@link com.liferay.marketplace.NoSuchAppException} if it could not be found.
+	* Returns the app with the primary key or throws a {@link NoSuchAppException} if it could not be found.
 	*
 	* @param appId the primary key of the app
 	* @return the app
-	* @throws com.liferay.marketplace.NoSuchAppException if a app with the primary key could not be found
+	* @throws NoSuchAppException if a app with the primary key could not be found
 	*/
 	public static App findByPrimaryKey(long appId)
 		throws com.liferay.marketplace.exception.NoSuchAppException {

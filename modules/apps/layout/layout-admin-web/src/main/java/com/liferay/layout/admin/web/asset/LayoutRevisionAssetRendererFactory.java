@@ -24,7 +24,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutRevisionLocalService;
 import com.liferay.portal.service.LayoutSetBranchLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -123,7 +122,7 @@ public class LayoutRevisionAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file";
+		return "edit-layout";
 	}
 
 	@Override
@@ -137,11 +136,6 @@ public class LayoutRevisionAssetRendererFactory
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
 
 	@Reference(unbind = "-")
@@ -170,10 +164,10 @@ public class LayoutRevisionAssetRendererFactory
 		_userLocalService = userLocalService;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile LayoutRevisionLocalService _layoutRevisionLocalService;
-	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
-	private volatile ServletContext _servletContext;
-	private volatile UserLocalService _userLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+	private ServletContext _servletContext;
+	private UserLocalService _userLocalService;
 
 }

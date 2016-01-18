@@ -124,7 +124,7 @@ public class GitUtil {
 		int gitLevel = getGitLevel(baseDirName);
 
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git diff --diff-filter=AM --name-only HEAD " + commitId);
+			"git diff --diff-filter=AM --name-only " + commitId);
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (StringUtil.count(line, StringPool.SLASH) >= gitLevel) {

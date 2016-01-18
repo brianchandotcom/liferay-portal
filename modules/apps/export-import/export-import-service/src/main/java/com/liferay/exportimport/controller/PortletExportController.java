@@ -25,7 +25,7 @@ import com.liferay.exportimport.lar.PermissionExporter;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
-import com.liferay.portal.NoSuchPortletPreferencesException;
+import com.liferay.portal.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -77,9 +77,9 @@ import com.liferay.portlet.asset.model.adapter.StagedAssetLink;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.asset.service.AssetLinkLocalService;
 import com.liferay.portlet.expando.model.ExpandoColumn;
-import com.liferay.portlet.exportimport.LayoutImportException;
 import com.liferay.portlet.exportimport.controller.ExportController;
 import com.liferay.portlet.exportimport.controller.ExportImportController;
+import com.liferay.portlet.exportimport.exception.LayoutImportException;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
@@ -1297,20 +1297,19 @@ public class PortletExportController implements ExportController {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletExportController.class);
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile AssetLinkLocalService _assetLinkLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetLinkLocalService _assetLinkLocalService;
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
-	private volatile ExportImportLifecycleManager _exportImportLifecycleManager;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
+	private ExportImportLifecycleManager _exportImportLifecycleManager;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
-	private volatile PortletItemLocalService _portletItemLocalService;
-	private volatile PortletLocalService _portletLocalService;
-	private volatile PortletPreferencesLocalService
-		_portletPreferencesLocalService;
-	private volatile UserLocalService _userLocalService;
+	private PortletItemLocalService _portletItemLocalService;
+	private PortletLocalService _portletLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+	private UserLocalService _userLocalService;
 
 	private class UpdatePortletLastPublishDateCallable
 		implements Callable<Void> {

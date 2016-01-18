@@ -38,6 +38,10 @@ public class StagingProcessesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
+		if (group.hasLocalOrRemoteStagingGroup()) {
+			return true;
+		}
+
 		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 			return true;
 		}

@@ -109,7 +109,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public ExpandoColumn findByTableId_First(long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	/**
 	* Returns the first expando column in the ordered set where tableId = &#63;.
@@ -131,7 +131,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	*/
 	public ExpandoColumn findByTableId_Last(long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	/**
 	* Returns the last expando column in the ordered set where tableId = &#63;.
@@ -155,7 +155,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	public ExpandoColumn[] findByTableId_PrevAndNext(long columnId,
 		long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	/**
 	* Returns all the expando columns that the user has permission to view where tableId = &#63;.
@@ -209,7 +209,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	public ExpandoColumn[] filterFindByTableId_PrevAndNext(long columnId,
 		long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	/**
 	* Removes all the expando columns where tableId = &#63; from the database.
@@ -311,7 +311,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @throws NoSuchColumnException if a matching expando column could not be found
 	*/
 	public ExpandoColumn findByT_N(long tableId, java.lang.String name)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	/**
 	* Returns the expando column where tableId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -341,7 +341,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @return the expando column that was removed
 	*/
 	public ExpandoColumn removeByT_N(long tableId, java.lang.String name)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	/**
 	* Returns the number of expando columns where tableId = &#63; and name = &#63;.
@@ -409,7 +409,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @throws NoSuchColumnException if a expando column with the primary key could not be found
 	*/
 	public ExpandoColumn remove(long columnId)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	public ExpandoColumn updateImpl(ExpandoColumn expandoColumn);
 
@@ -421,7 +421,7 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @throws NoSuchColumnException if a expando column with the primary key could not be found
 	*/
 	public ExpandoColumn findByPrimaryKey(long columnId)
-		throws com.liferay.portlet.expando.NoSuchColumnException;
+		throws com.liferay.portlet.expando.exception.NoSuchColumnException;
 
 	/**
 	* Returns the expando column with the primary key or returns <code>null</code> if it could not be found.

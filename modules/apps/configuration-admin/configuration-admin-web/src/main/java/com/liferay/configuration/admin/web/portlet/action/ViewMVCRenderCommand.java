@@ -99,6 +99,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		_configurationModelRetriever = configurationModelRetriever;
 	}
 
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
+	private ConfigurationModelRetriever _configurationModelRetriever;
 
 }

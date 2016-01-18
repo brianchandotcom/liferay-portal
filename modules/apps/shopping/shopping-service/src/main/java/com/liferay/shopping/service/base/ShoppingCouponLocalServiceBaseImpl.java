@@ -42,6 +42,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.service.ShoppingCouponLocalService;
+import com.liferay.shopping.service.persistence.ShoppingCategoryFinder;
 import com.liferay.shopping.service.persistence.ShoppingCategoryPersistence;
 import com.liferay.shopping.service.persistence.ShoppingCouponFinder;
 import com.liferay.shopping.service.persistence.ShoppingCouponPersistence;
@@ -468,6 +469,25 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the shopping category finder.
+	 *
+	 * @return the shopping category finder
+	 */
+	public ShoppingCategoryFinder getShoppingCategoryFinder() {
+		return shoppingCategoryFinder;
+	}
+
+	/**
+	 * Sets the shopping category finder.
+	 *
+	 * @param shoppingCategoryFinder the shopping category finder
+	 */
+	public void setShoppingCategoryFinder(
+		ShoppingCategoryFinder shoppingCategoryFinder) {
+		this.shoppingCategoryFinder = shoppingCategoryFinder;
+	}
+
+	/**
 	 * Returns the shopping item local service.
 	 *
 	 * @return the shopping item local service
@@ -591,12 +611,14 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 	protected com.liferay.shopping.service.ShoppingCategoryLocalService shoppingCategoryLocalService;
 	@BeanReference(type = ShoppingCategoryPersistence.class)
 	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
+	@BeanReference(type = ShoppingCategoryFinder.class)
+	protected ShoppingCategoryFinder shoppingCategoryFinder;
 	@BeanReference(type = com.liferay.shopping.service.ShoppingItemLocalService.class)
 	protected com.liferay.shopping.service.ShoppingItemLocalService shoppingItemLocalService;
 	@BeanReference(type = ShoppingItemPersistence.class)
 	protected ShoppingItemPersistence shoppingItemPersistence;
 	@BeanReference(type = ShoppingItemFinder.class)
 	protected ShoppingItemFinder shoppingItemFinder;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

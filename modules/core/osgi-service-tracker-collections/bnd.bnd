@@ -8,3 +8,6 @@ Export-Package:\
 Include-Resource:\
 	classes,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../marketplace/platform/bnd.bnd

@@ -235,12 +235,12 @@
 <!--SCHEDULED_TABLE-->
 <tr>
 	<td>SCHEDULED_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULED_TABLE_END_DATE</td>
-	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[3]</td>
+	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>

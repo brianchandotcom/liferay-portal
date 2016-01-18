@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan

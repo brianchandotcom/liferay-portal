@@ -16,6 +16,7 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,6 +30,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import freemarker.ext.beans.BeansWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,6 +41,10 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Mika Koivisto
@@ -109,6 +116,14 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 				}
 			}
 		}
+
+		// Custom template context contributors
+
+		for (TemplateContextContributor templateContextContributor :
+				_templateContextContributors) {
+
+			templateContextContributor.prepare(contextObjects, request);
+		}
 	}
 
 	@Activate
@@ -124,8 +139,9 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 		// Enum util
 
-		helperUtilities.put(
-			"enumUtil", BeansWrapper.getDefaultInstance().getEnumModels());
+		BeansWrapper beansWrapper = FreeMarkerManager.getBeansWrapper();
+
+		helperUtilities.put("enumUtil", beansWrapper.getEnumModels());
 
 		// Object util
 
@@ -138,11 +154,30 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 		// Static class util
 
-		helperUtilities.put(
-			"staticUtil", BeansWrapper.getDefaultInstance().getStaticModels());
+		helperUtilities.put("staticUtil", beansWrapper.getStaticModels());
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unregisterTemplateContextContributor"
+	)
+	protected synchronized void registerTemplateContextContributor(
+		TemplateContextContributor templateContextContributor) {
+
+		_templateContextContributors.add(templateContextContributor);
+	}
+
+	protected synchronized void unregisterTemplateContextContributor(
+		TemplateContextContributor templateContextContributor) {
+
+		_templateContextContributors.remove(templateContextContributor);
 	}
 
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
+	private final List<TemplateContextContributor>
+		_templateContextContributors = new ArrayList<>();
 
 }

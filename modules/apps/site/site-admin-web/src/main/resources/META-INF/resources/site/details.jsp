@@ -104,7 +104,7 @@ else if (group != null) {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="details" />
+<liferay-ui:error-marker key="errorSection" value="basic-information" />
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
@@ -415,8 +415,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						var applicationAdapter = $('#<portlet:namespace />customJspServletContextName');
 
 						if (applicationAdapter.length) {
-							var publicPages = $('#<portlet:namespace />publicLayoutSetPrototypeId');
 							var privatePages = $('#<portlet:namespace />privateLayoutSetPrototypeId');
+							var publicPages = $('#<portlet:namespace />publicLayoutSetPrototypeId');
 
 							var toggleCompatibleSiteTemplates = function(event) {
 								var siteTemplate = applicationAdapter.val();

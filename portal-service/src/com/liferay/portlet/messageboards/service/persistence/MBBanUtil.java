@@ -183,7 +183,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -209,7 +209,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -236,7 +236,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan[] findByUuid_PrevAndNext(long banId,
 		java.lang.String uuid, OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(banId, uuid, orderByComparator);
 	}
@@ -269,7 +269,7 @@ public class MBBanUtil {
 	* @throws NoSuchBanException if a matching message boards ban could not be found
 	*/
 	public static MBBan findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -305,7 +305,7 @@ public class MBBanUtil {
 	* @return the message boards ban that was removed
 	*/
 	public static MBBan removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -404,7 +404,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -434,7 +434,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -466,7 +466,7 @@ public class MBBanUtil {
 	public static MBBan[] findByUuid_C_PrevAndNext(long banId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(banId, uuid, companyId,
 			orderByComparator);
@@ -569,7 +569,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByGroupId_First(long groupId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -595,7 +595,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByGroupId_Last(long groupId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -622,7 +622,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan[] findByGroupId_PrevAndNext(long banId, long groupId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(banId, groupId, orderByComparator);
 	}
@@ -722,7 +722,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByUserId_First(long userId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -748,7 +748,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByUserId_Last(long userId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -775,7 +775,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan[] findByUserId_PrevAndNext(long banId, long userId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(banId, userId, orderByComparator);
 	}
@@ -876,7 +876,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByBanUserId_First(long banUserId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByBanUserId_First(banUserId, orderByComparator);
 	}
@@ -904,7 +904,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan findByBanUserId_Last(long banUserId,
 		OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByBanUserId_Last(banUserId, orderByComparator);
 	}
@@ -933,7 +933,7 @@ public class MBBanUtil {
 	*/
 	public static MBBan[] findByBanUserId_PrevAndNext(long banId,
 		long banUserId, OrderByComparator<MBBan> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence()
 				   .findByBanUserId_PrevAndNext(banId, banUserId,
 			orderByComparator);
@@ -967,7 +967,7 @@ public class MBBanUtil {
 	* @throws NoSuchBanException if a matching message boards ban could not be found
 	*/
 	public static MBBan findByG_B(long groupId, long banUserId)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByG_B(groupId, banUserId);
 	}
 
@@ -1003,7 +1003,7 @@ public class MBBanUtil {
 	* @return the message boards ban that was removed
 	*/
 	public static MBBan removeByG_B(long groupId, long banUserId)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().removeByG_B(groupId, banUserId);
 	}
 
@@ -1054,7 +1054,7 @@ public class MBBanUtil {
 	* @throws NoSuchBanException if a message boards ban with the primary key could not be found
 	*/
 	public static MBBan remove(long banId)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().remove(banId);
 	}
 
@@ -1070,7 +1070,7 @@ public class MBBanUtil {
 	* @throws NoSuchBanException if a message boards ban with the primary key could not be found
 	*/
 	public static MBBan findByPrimaryKey(long banId)
-		throws com.liferay.portlet.messageboards.NoSuchBanException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchBanException {
 		return getPersistence().findByPrimaryKey(banId);
 	}
 

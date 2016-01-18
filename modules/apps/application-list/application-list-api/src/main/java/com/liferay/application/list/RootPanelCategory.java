@@ -35,11 +35,6 @@ public class RootPanelCategory implements PanelCategory {
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public String getKey() {
 		return _ROOT_PANEL_CATEGORY_KEY;
 	}
@@ -75,6 +70,11 @@ public class RootPanelCategory implements PanelCategory {
 	public boolean isActive(
 		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper) {
 
+		return false;
+	}
+
+	@Override
+	public boolean isPersistState() {
 		return false;
 	}
 

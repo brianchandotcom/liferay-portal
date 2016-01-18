@@ -27,9 +27,6 @@ public interface LayoutFinder {
 
 	public java.util.List<com.liferay.portal.model.Layout> findByNullFriendlyURL();
 
-	public java.util.List<com.liferay.portal.model.Layout> findByScopeGroup(
-		long groupId, boolean privateLayout);
-
 	public java.util.List<com.liferay.portal.model.LayoutReference> findByC_P_P(
 		long companyId, java.lang.String portletId,
 		java.lang.String preferencesKey, java.lang.String preferencesValue);

@@ -52,6 +52,7 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 		return false;
 	}
 
+	@Override
 	public List<String> tokenize(String keyword) {
 		List<String> tokens = new ArrayList<>();
 

@@ -25,12 +25,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.announcements.EntryContentException;
-import com.liferay.portlet.announcements.EntryDisplayDateException;
-import com.liferay.portlet.announcements.EntryExpirationDateException;
-import com.liferay.portlet.announcements.EntryTitleException;
-import com.liferay.portlet.announcements.EntryURLException;
-import com.liferay.portlet.announcements.NoSuchEntryException;
+import com.liferay.portlet.announcements.exception.EntryContentException;
+import com.liferay.portlet.announcements.exception.EntryDisplayDateException;
+import com.liferay.portlet.announcements.exception.EntryExpirationDateException;
+import com.liferay.portlet.announcements.exception.EntryTitleException;
+import com.liferay.portlet.announcements.exception.EntryURLException;
+import com.liferay.portlet.announcements.exception.NoSuchEntryException;
 import com.liferay.portlet.announcements.service.AnnouncementsEntryService;
 
 import java.util.Calendar;
@@ -180,6 +180,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile AnnouncementsEntryService _announcementsEntryService;
+	private AnnouncementsEntryService _announcementsEntryService;
 
 }

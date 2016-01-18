@@ -20,18 +20,17 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
 %>
 
-<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="categories" />
-</liferay-util:include>
-
 <c:choose>
-	<c:when test='<%= tabs1.equals("categories") %>'>
-		<%@ include file="/html/portlet/shopping/categories.jspf" %>
+	<c:when test='<%= tabs1.equals("cart") %>'>
+		<liferay-util:include page="/html/portlet/shopping/cart.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("orders") && !user.isDefaultUser() %>'>
-		<%@ include file="/html/portlet/shopping/orders.jspf" %>
+	<c:when test='<%= tabs1.equals("categories") %>'>
+		<liferay-util:include page="/html/portlet/shopping/categories.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("coupons") %>'>
-		<%@ include file="/html/portlet/shopping/coupons.jspf" %>
+		<liferay-util:include page="/html/portlet/shopping/coupons.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("orders") && !user.isDefaultUser() %>'>
+		<liferay-util:include page="/html/portlet/shopping/orders.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

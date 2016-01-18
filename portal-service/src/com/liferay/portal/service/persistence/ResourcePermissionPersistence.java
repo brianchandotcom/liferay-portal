@@ -107,7 +107,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	*/
 	public ResourcePermission findByScope_First(int scope,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the first resource permission in the ordered set where scope = &#63;.
@@ -129,7 +129,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	*/
 	public ResourcePermission findByScope_Last(int scope,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the last resource permission in the ordered set where scope = &#63;.
@@ -153,7 +153,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission[] findByScope_PrevAndNext(
 		long resourcePermissionId, int scope,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns all the resource permissions where scope = any &#63;.
@@ -310,7 +310,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	*/
 	public ResourcePermission findByRoleId_First(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the first resource permission in the ordered set where roleId = &#63;.
@@ -332,7 +332,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	*/
 	public ResourcePermission findByRoleId_Last(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the last resource permission in the ordered set where roleId = &#63;.
@@ -356,7 +356,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission[] findByRoleId_PrevAndNext(
 		long resourcePermissionId, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Removes all the resource permissions where roleId = &#63; from the database.
@@ -449,7 +449,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission findByC_LikeP_First(long companyId,
 		java.lang.String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the first resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
@@ -475,7 +475,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission findByC_LikeP_Last(long companyId,
 		java.lang.String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the last resource permission in the ordered set where companyId = &#63; and primKey LIKE &#63;.
@@ -502,7 +502,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission[] findByC_LikeP_PrevAndNext(
 		long resourcePermissionId, long companyId, java.lang.String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Removes all the resource permissions where companyId = &#63; and primKey LIKE &#63; from the database.
@@ -602,7 +602,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission findByC_N_S_First(long companyId,
 		java.lang.String name, int scope,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
@@ -630,7 +630,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission findByC_N_S_Last(long companyId,
 		java.lang.String name, int scope,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63;.
@@ -660,7 +660,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 		long resourcePermissionId, long companyId, java.lang.String name,
 		int scope,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; from the database.
@@ -770,7 +770,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission findByC_N_S_P_First(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
@@ -800,7 +800,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	public ResourcePermission findByC_N_S_P_Last(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
@@ -832,7 +832,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 		long resourcePermissionId, long companyId, java.lang.String name,
 		int scope, java.lang.String primKey,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Removes all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; from the database.
@@ -954,7 +954,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	*/
 	public ResourcePermission findByC_N_S_P_R(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey, long roleId)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -996,7 +996,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	*/
 	public ResourcePermission removeByC_N_S_P_R(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey, long roleId)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the number of resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;.
@@ -1125,7 +1125,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 		java.lang.String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the first resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = &#63; and viewActionId = &#63;.
@@ -1161,7 +1161,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 		java.lang.String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the last resource permission in the ordered set where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = &#63; and viewActionId = &#63;.
@@ -1198,7 +1198,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 		long resourcePermissionId, long companyId, java.lang.String name,
 		int scope, long primKeyId, long roleId, boolean viewActionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourcePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = any &#63; and viewActionId = &#63;.
@@ -1360,7 +1360,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public ResourcePermission remove(long resourcePermissionId)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	public ResourcePermission updateImpl(ResourcePermission resourcePermission);
 
@@ -1372,7 +1372,7 @@ public interface ResourcePermissionPersistence extends BasePersistence<ResourceP
 	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
 	public ResourcePermission findByPrimaryKey(long resourcePermissionId)
-		throws com.liferay.portal.NoSuchResourcePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourcePermissionException;
 
 	/**
 	* Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.

@@ -253,6 +253,6 @@ public class AssetVocabularyStagedModelDataHandler
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
-	private volatile AssetVocabularyLocalService _assetVocabularyLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

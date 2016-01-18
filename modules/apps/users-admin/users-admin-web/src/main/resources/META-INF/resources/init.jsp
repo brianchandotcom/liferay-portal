@@ -19,46 +19,48 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.AddressCityException" %><%@
-page import="com.liferay.portal.AddressStreetException" %><%@
-page import="com.liferay.portal.AddressZipException" %><%@
-page import="com.liferay.portal.CompanyMaxUsersException" %><%@
-page import="com.liferay.portal.ContactBirthdayException" %><%@
-page import="com.liferay.portal.DuplicateOpenIdException" %><%@
-page import="com.liferay.portal.DuplicateOrganizationException" %><%@
-page import="com.liferay.portal.EmailAddressException" %><%@
-page import="com.liferay.portal.GroupFriendlyURLException" %><%@
-page import="com.liferay.portal.NoSuchCountryException" %><%@
-page import="com.liferay.portal.NoSuchListTypeException" %><%@
-page import="com.liferay.portal.NoSuchOrganizationException" %><%@
-page import="com.liferay.portal.NoSuchRegionException" %><%@
-page import="com.liferay.portal.NoSuchRoleException" %><%@
-page import="com.liferay.portal.NoSuchUserException" %><%@
-page import="com.liferay.portal.NoSuchUserGroupException" %><%@
-page import="com.liferay.portal.OrganizationNameException" %><%@
-page import="com.liferay.portal.OrganizationParentException" %><%@
-page import="com.liferay.portal.PhoneNumberException" %><%@
-page import="com.liferay.portal.PhoneNumberExtensionException" %><%@
-page import="com.liferay.portal.RequiredOrganizationException" %><%@
-page import="com.liferay.portal.RequiredUserException" %><%@
-page import="com.liferay.portal.UserEmailAddressException" %><%@
-page import="com.liferay.portal.UserFieldException" %><%@
-page import="com.liferay.portal.UserIdException" %><%@
-page import="com.liferay.portal.UserLockoutException" %><%@
-page import="com.liferay.portal.UserPasswordException" %><%@
-page import="com.liferay.portal.UserScreenNameException" %><%@
-page import="com.liferay.portal.UserSmsException" %><%@
-page import="com.liferay.portal.WebsiteURLException" %><%@
+<%@ page import="com.liferay.portal.exception.AddressCityException" %><%@
+page import="com.liferay.portal.exception.AddressStreetException" %><%@
+page import="com.liferay.portal.exception.AddressZipException" %><%@
+page import="com.liferay.portal.exception.CompanyMaxUsersException" %><%@
+page import="com.liferay.portal.exception.ContactBirthdayException" %><%@
+page import="com.liferay.portal.exception.DuplicateOpenIdException" %><%@
+page import="com.liferay.portal.exception.DuplicateOrganizationException" %><%@
+page import="com.liferay.portal.exception.EmailAddressException" %><%@
+page import="com.liferay.portal.exception.GroupFriendlyURLException" %><%@
+page import="com.liferay.portal.exception.NoSuchCountryException" %><%@
+page import="com.liferay.portal.exception.NoSuchListTypeException" %><%@
+page import="com.liferay.portal.exception.NoSuchOrganizationException" %><%@
+page import="com.liferay.portal.exception.NoSuchRegionException" %><%@
+page import="com.liferay.portal.exception.NoSuchRoleException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserGroupException" %><%@
+page import="com.liferay.portal.exception.OrganizationNameException" %><%@
+page import="com.liferay.portal.exception.OrganizationParentException" %><%@
+page import="com.liferay.portal.exception.PhoneNumberException" %><%@
+page import="com.liferay.portal.exception.PhoneNumberExtensionException" %><%@
+page import="com.liferay.portal.exception.RequiredOrganizationException" %><%@
+page import="com.liferay.portal.exception.RequiredUserException" %><%@
+page import="com.liferay.portal.exception.UserEmailAddressException" %><%@
+page import="com.liferay.portal.exception.UserFieldException" %><%@
+page import="com.liferay.portal.exception.UserIdException" %><%@
+page import="com.liferay.portal.exception.UserLockoutException" %><%@
+page import="com.liferay.portal.exception.UserPasswordException" %><%@
+page import="com.liferay.portal.exception.UserScreenNameException" %><%@
+page import="com.liferay.portal.exception.UserSmsException" %><%@
+page import="com.liferay.portal.exception.WebsiteURLException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -144,7 +146,6 @@ page import="com.liferay.portal.service.WebsiteServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
-page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.UserPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
@@ -168,11 +169,11 @@ page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserOrganizationChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.search.SearchEntry" %><%@
-page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
+page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.text.Format" %>
 

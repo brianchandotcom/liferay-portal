@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Component;
 public class AppsPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-shopping-cart";
-	}
-
-	@Override
 	public String getKey() {
 		return PanelCategoryKeys.CONTROL_PANEL_APPS;
 	}

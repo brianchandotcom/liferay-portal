@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -572,17 +574,28 @@ public class BackgroundTaskLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = null;
+
+		if (userId != UserConstants.USER_ID_DEFAULT) {
+			user = userPersistence.findByPrimaryKey(userId);
+		}
 
 		final long backgroundTaskId = counterLocalService.increment();
 
 		BackgroundTask backgroundTask = backgroundTaskPersistence.create(
 			backgroundTaskId);
 
-		backgroundTask.setCompanyId(user.getCompanyId());
+		if (user != null) {
+			backgroundTask.setCompanyId(user.getCompanyId());
+			backgroundTask.setUserName(user.getFullName());
+		}
+		else {
+			backgroundTask.setCompanyId(CompanyConstants.SYSTEM);
+			backgroundTask.setUserName(StringPool.BLANK);
+		}
+
 		backgroundTask.setGroupId(groupId);
 		backgroundTask.setUserId(userId);
-		backgroundTask.setUserName(user.getFullName());
 		backgroundTask.setName(name);
 
 		if (ArrayUtil.isNotEmpty(servletContextNames)) {

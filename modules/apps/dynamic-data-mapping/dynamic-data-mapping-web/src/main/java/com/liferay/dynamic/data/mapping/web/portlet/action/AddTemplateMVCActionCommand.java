@@ -165,6 +165,6 @@ public class AddTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		_ddmTemplateService = ddmTemplateService;
 	}
 
-	private volatile DDMTemplateService _ddmTemplateService;
+	private DDMTemplateService _ddmTemplateService;
 
 }

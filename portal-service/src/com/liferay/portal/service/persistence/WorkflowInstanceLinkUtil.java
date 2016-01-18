@@ -210,7 +210,7 @@ public class WorkflowInstanceLinkUtil {
 	public static WorkflowInstanceLink findByG_C_C_C_First(long groupId,
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException {
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException {
 		return getPersistence()
 				   .findByG_C_C_C_First(groupId, companyId, classNameId,
 			classPK, orderByComparator);
@@ -248,7 +248,7 @@ public class WorkflowInstanceLinkUtil {
 	public static WorkflowInstanceLink findByG_C_C_C_Last(long groupId,
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException {
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException {
 		return getPersistence()
 				   .findByG_C_C_C_Last(groupId, companyId, classNameId,
 			classPK, orderByComparator);
@@ -288,7 +288,7 @@ public class WorkflowInstanceLinkUtil {
 		long workflowInstanceLinkId, long groupId, long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<WorkflowInstanceLink> orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException {
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException {
 		return getPersistence()
 				   .findByG_C_C_C_PrevAndNext(workflowInstanceLinkId, groupId,
 			companyId, classNameId, classPK, orderByComparator);
@@ -360,7 +360,7 @@ public class WorkflowInstanceLinkUtil {
 	* @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
 	*/
 	public static WorkflowInstanceLink remove(long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException {
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException {
 		return getPersistence().remove(workflowInstanceLinkId);
 	}
 
@@ -378,7 +378,7 @@ public class WorkflowInstanceLinkUtil {
 	*/
 	public static WorkflowInstanceLink findByPrimaryKey(
 		long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException {
+		throws com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException {
 		return getPersistence().findByPrimaryKey(workflowInstanceLinkId);
 	}
 

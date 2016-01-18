@@ -32,6 +32,8 @@ import com.liferay.portal.template.BaseSingleTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.helper.FreeMarkerThemeHelper;
+import com.liferay.portal.template.freemarker.helper.FreeMarkerThemeHelperImpl;
 
 import freemarker.cache.TemplateCache;
 
@@ -40,12 +42,12 @@ import freemarker.core.TemplateClassResolver;
 import freemarker.debug.impl.DebuggerService;
 
 import freemarker.ext.beans.BeansWrapper;
+import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.Configuration;
-import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -96,13 +98,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FreeMarkerManager extends BaseSingleTemplateManager {
 
+	public static BeansWrapper getBeansWrapper() {
+		BeansWrapperBuilder beansWrapperBuilder = new BeansWrapperBuilder(
+			Configuration.getVersion());
+
+		return beansWrapperBuilder.build();
+	}
+
 	@Override
 	public void addStaticClassSupport(
 		Map<String, Object> contextObjects, String variableName,
 		Class<?> variableClass) {
 
 		try {
-			BeansWrapper beansWrapper = BeansWrapper.getDefaultInstance();
+			BeansWrapper beansWrapper = getBeansWrapper();
 
 			TemplateHashModel templateHashModel =
 				beansWrapper.getStaticModels();
@@ -145,7 +154,20 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		contextObjects.put(
 			applicationName,
 			new HttpRequestHashModel(
-				request, response, ObjectWrapper.DEFAULT_WRAPPER));
+				request, response, _configuration.getObjectWrapper()));
+	}
+
+	@Override
+	public void addTaglibTheme(
+		Map<String, Object> contextObjects, String themeName,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		FreeMarkerThemeHelper freeMarkerThemeHelper =
+			new FreeMarkerThemeHelperImpl(
+				request.getServletContext(), request, response, contextObjects);
+
+		contextObjects.put(themeName, freeMarkerThemeHelper);
+		contextObjects.put("theme", freeMarkerThemeHelper);
 	}
 
 	@Override
@@ -192,7 +214,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			return;
 		}
 
-		_configuration = new Configuration();
+		_configuration = new Configuration(Configuration.getVersion());
 
 		try {
 			Field field = ReflectionUtil.getDeclaredField(
@@ -297,7 +319,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		GenericServlet genericServlet = new JSPSupportServlet(servletContext);
 
 		return new ServletContextHashModel(
-			genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
+			genericServlet, _configuration.getObjectWrapper());
 	}
 
 	protected ServletContext getServletContextWrapper(
@@ -328,7 +350,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	private Configuration _configuration;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
-	private volatile TemplateClassResolver _templateClassResolver;
+	private TemplateClassResolver _templateClassResolver;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
 
@@ -456,6 +478,8 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		public TaglibFactoryWrapper(ServletContext servletContext) {
 			_taglibFactory = new TaglibFactory(
 				getServletContextWrapper(servletContext));
+
+			_taglibFactory.setObjectWrapper(getBeansWrapper());
 		}
 
 		@Override

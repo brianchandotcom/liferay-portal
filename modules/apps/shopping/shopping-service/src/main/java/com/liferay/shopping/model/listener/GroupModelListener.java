@@ -14,7 +14,7 @@
 
 package com.liferay.shopping.model.listener;
 
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
@@ -76,9 +76,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		_shoppingOrderLocalService = shoppingOrderLocalService;
 	}
 
-	private volatile ShoppingCartLocalService _shoppingCartLocalService;
-	private volatile ShoppingCategoryLocalService _shoppingCategoryLocalService;
-	private volatile ShoppingCouponLocalService _shoppingCouponLocalService;
-	private volatile ShoppingOrderLocalService _shoppingOrderLocalService;
+	private ShoppingCartLocalService _shoppingCartLocalService;
+	private ShoppingCategoryLocalService _shoppingCategoryLocalService;
+	private ShoppingCouponLocalService _shoppingCouponLocalService;
+	private ShoppingOrderLocalService _shoppingOrderLocalService;
 
 }

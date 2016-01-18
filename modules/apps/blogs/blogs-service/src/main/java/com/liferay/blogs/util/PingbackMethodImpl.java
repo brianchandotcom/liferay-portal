@@ -398,11 +398,11 @@ public class PingbackMethodImpl implements Method {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PingbackMethodImpl.class);
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 	private final CommentManager _commentManager;
-	private volatile PortletLocalService _portletLocalService;
+	private PortletLocalService _portletLocalService;
 	private String _sourceURI;
 	private String _targetURI;
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

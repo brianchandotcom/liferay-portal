@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.search.ButtonSearchEntry;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -55,7 +57,13 @@ public class SearchContainerColumnButtonTag<R>
 			buttonSearchEntry.setColspan(getColspan());
 			buttonSearchEntry.setCssClass(getCssClass());
 			buttonSearchEntry.setHref(String.valueOf(getHref()));
-			buttonSearchEntry.setName(LanguageUtil.get(request, getName()));
+
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
+			buttonSearchEntry.setName(
+				LanguageUtil.get(resourceBundle, getName()));
+
 			buttonSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, buttonSearchEntry);

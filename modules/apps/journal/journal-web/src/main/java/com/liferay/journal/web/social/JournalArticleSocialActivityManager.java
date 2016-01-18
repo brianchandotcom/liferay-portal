@@ -49,6 +49,6 @@ public class JournalArticleSocialActivityManager
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
-	private volatile SocialActivityLocalService _socialActivityLocalService;
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

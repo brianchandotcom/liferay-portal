@@ -89,7 +89,7 @@ public class CheckEntryMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
-	private volatile TrashEntryLocalService _trashEntryLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
+	private TrashEntryLocalService _trashEntryLocalService;
 
 }

@@ -186,7 +186,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription findByUserId_First(long userId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription findByUserId_Last(long userId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription[] findByUserId_PrevAndNext(long subscriptionId,
 		long userId, OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(subscriptionId, userId,
 			orderByComparator);
@@ -347,7 +347,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription findByG_U_First(long groupId, long userId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -377,7 +377,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription findByG_U_Last(long groupId, long userId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -409,7 +409,7 @@ public class SubscriptionUtil {
 	public static Subscription[] findByG_U_PrevAndNext(long subscriptionId,
 		long groupId, long userId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(subscriptionId, groupId, userId,
 			orderByComparator);
@@ -519,7 +519,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription findByU_C_First(long userId, long classNameId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByU_C_First(userId, classNameId, orderByComparator);
 	}
@@ -549,7 +549,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription findByU_C_Last(long userId, long classNameId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByU_C_Last(userId, classNameId, orderByComparator);
 	}
@@ -581,7 +581,7 @@ public class SubscriptionUtil {
 	public static Subscription[] findByU_C_PrevAndNext(long subscriptionId,
 		long userId, long classNameId,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByU_C_PrevAndNext(subscriptionId, userId, classNameId,
 			orderByComparator);
@@ -702,7 +702,7 @@ public class SubscriptionUtil {
 	public static Subscription findByC_C_C_First(long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByC_C_C_First(companyId, classNameId, classPK,
 			orderByComparator);
@@ -738,7 +738,7 @@ public class SubscriptionUtil {
 	public static Subscription findByC_C_C_Last(long companyId,
 		long classNameId, long classPK,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByC_C_C_Last(companyId, classNameId, classPK,
 			orderByComparator);
@@ -775,7 +775,7 @@ public class SubscriptionUtil {
 	public static Subscription[] findByC_C_C_PrevAndNext(long subscriptionId,
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByC_C_C_PrevAndNext(subscriptionId, companyId,
 			classNameId, classPK, orderByComparator);
@@ -909,7 +909,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription findByC_U_C_C(long companyId, long userId,
 		long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .findByC_U_C_C(companyId, userId, classNameId, classPK);
 	}
@@ -957,7 +957,7 @@ public class SubscriptionUtil {
 	*/
 	public static Subscription removeByC_U_C_C(long companyId, long userId,
 		long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence()
 				   .removeByC_U_C_C(companyId, userId, classNameId, classPK);
 	}
@@ -1028,7 +1028,7 @@ public class SubscriptionUtil {
 	* @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
 	*/
 	public static Subscription remove(long subscriptionId)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence().remove(subscriptionId);
 	}
 
@@ -1044,7 +1044,7 @@ public class SubscriptionUtil {
 	* @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
 	*/
 	public static Subscription findByPrimaryKey(long subscriptionId)
-		throws com.liferay.portal.NoSuchSubscriptionException {
+		throws com.liferay.portal.exception.NoSuchSubscriptionException {
 		return getPersistence().findByPrimaryKey(subscriptionId);
 	}
 

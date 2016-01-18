@@ -52,6 +52,6 @@ public class ItemSelectorUtil {
 
 	private static ItemSelectorUtil _instance;
 
-	private volatile ItemSelector _itemSelector;
+	private ItemSelector _itemSelector;
 
 }

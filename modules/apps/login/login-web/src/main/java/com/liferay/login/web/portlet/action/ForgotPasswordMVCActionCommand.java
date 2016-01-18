@@ -16,13 +16,13 @@ package com.liferay.login.web.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.portlet.util.LoginUtil;
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.RequiredReminderQueryException;
-import com.liferay.portal.SendPasswordException;
-import com.liferay.portal.UserActiveException;
-import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.UserLockoutException;
-import com.liferay.portal.UserReminderQueryException;
+import com.liferay.portal.exception.NoSuchUserException;
+import com.liferay.portal.exception.RequiredReminderQueryException;
+import com.liferay.portal.exception.SendPasswordException;
+import com.liferay.portal.exception.UserActiveException;
+import com.liferay.portal.exception.UserEmailAddressException;
+import com.liferay.portal.exception.UserLockoutException;
+import com.liferay.portal.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -281,6 +281,6 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

@@ -99,6 +99,6 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 		_configurationFactory = configurationFactory;
 	}
 
-	private volatile ConfigurationFactory _configurationFactory;
+	private ConfigurationFactory _configurationFactory;
 
 }

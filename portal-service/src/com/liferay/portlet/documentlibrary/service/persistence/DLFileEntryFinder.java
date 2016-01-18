@@ -89,7 +89,7 @@ public interface DLFileEntryFinder {
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
 		long imageId)
-		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByCompanyId(
 		long companyId,

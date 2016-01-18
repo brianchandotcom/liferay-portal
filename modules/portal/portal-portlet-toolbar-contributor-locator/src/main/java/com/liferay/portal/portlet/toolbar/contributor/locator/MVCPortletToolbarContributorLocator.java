@@ -30,11 +30,13 @@ public class MVCPortletToolbarContributorLocator
 	extends BasePortletToolbarContributorLocator {
 
 	@Activate
+	@Override
 	protected void activate() {
 		super.activate();
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		super.deactivate();
 	}

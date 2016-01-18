@@ -22,6 +22,7 @@ String id = (String)request.getAttribute("liferay-application-list:panel-categor
 int notificationsCount = GetterUtil.getInteger(request.getAttribute("liferay-application-list:panel-category:notificationsCount"));
 List<PanelApp> panelApps = (List<PanelApp>)request.getAttribute("liferay-application-list:panel-category:panelApps");
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel-category:panelCategory");
+boolean persistState = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category:persistState"));
 boolean showBody = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category:showBody"));
 boolean showHeader = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category:showHeader"));
 %>

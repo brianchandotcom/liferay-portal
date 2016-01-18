@@ -26,13 +26,13 @@ int notificationsCount = panelCategoryHelper.getNotificationsCount(userPanelCate
 ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="panel-toggler collapse-icon <%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" role="button">
+<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="collapse-icon collapse-icon-middle <%= Validator.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %> panel-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" role="button">
 	<liferay-ui:user-portrait
 		imageCssClass="user-icon-lg"
 		userId="<%= user.getUserId() %>"
 	/>
 
-	<span>
+	<span class="user-name">
 		<%= HtmlUtil.escape(user.getFirstName()) %>
 
 		<c:if test="<%= themeDisplay.isImpersonated() %>">
@@ -52,4 +52,8 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 	<c:if test="<%= notificationsCount > 0 %>">
 		<span class="panel-notifications-count sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
 	</c:if>
+
+	<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+	<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 </div>

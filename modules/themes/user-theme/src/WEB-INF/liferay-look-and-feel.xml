@@ -6,10 +6,10 @@
 		<version>7.0.0+</version>
 	</compatibility>
 	<theme id="user-horizontal" name="User Horizontal">
-		<images-path>${root-path}/user-horizontal-images</images-path>
-		<template-extension>vm</template-extension>
+		<images-path>${root-path}/images/user-horizontal-images</images-path>
+		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="false" key="page-distribution-type" value="vertical" />
+			<setting configurable="false" key="page-distribution-type" value="horizontal" />
 			<setting configurable="true" key="user-card-visible" type="checkbox" value="true" />
 		</settings>
 		<portlet-decorator id="barebone" name="Barebone">
@@ -25,10 +25,10 @@
 	</theme>
 
 	<theme id="user-vertical" name="User Vertical">
-		<images-path>${root-path}/user-horizontal-images</images-path>
-		<template-extension>vm</template-extension>
+		<images-path>${root-path}/images/user-vertical-images</images-path>
+		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="false" key="page-distribution-type" value="horizontal" />
+			<setting configurable="false" key="page-distribution-type" value="vertical" />
 			<setting configurable="true" key="user-card-visible" type="checkbox" value="true" />
 		</settings>
 		<portlet-decorator id="barebone" name="Barebone">

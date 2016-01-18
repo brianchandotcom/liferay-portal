@@ -406,6 +406,14 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 							"this.resourcePrimKey",
 							"versionArticle.resourcePrimKey"));
 
+					Property workflowStatusProperty =
+						PropertyFactoryUtil.forName("status");
+
+					versionArticleDynamicQuery.add(
+						workflowStatusProperty.in(
+							_journalArticleStagedModelDataHandler.
+								getExportableStatuses()));
+
 					Property versionProperty = PropertyFactoryUtil.forName(
 						"version");
 
@@ -551,6 +559,15 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(unbind = "-")
+	protected void setJournalArticleStagedModelDataHandler(
+		JournalArticleStagedModelDataHandler
+			journalArticleStagedModelDataHandler) {
+
+		_journalArticleStagedModelDataHandler =
+			journalArticleStagedModelDataHandler;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}
@@ -574,11 +591,13 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalContent _journalContent;
-	private volatile JournalFeedLocalService _journalFeedLocalService;
-	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleStagedModelDataHandler
+		_journalArticleStagedModelDataHandler;
+	private JournalContent _journalContent;
+	private JournalFeedLocalService _journalFeedLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

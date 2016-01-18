@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String aboutMe = HtmlUtil.escape(ExpandoValueLocalServiceUtil.getData(User.class.getName(), "SN", "aboutMe", user2.getUserId(), StringPool.BLANK));
+String aboutMe = HtmlUtil.escape(ExpandoValueLocalServiceUtil.getData(themeDisplay.getCompanyId(), User.class.getName(), "SN", "aboutMe", user2.getUserId(), StringPool.BLANK));
 %>
 
 <portlet:renderURL var="redirectURL" windowState="<%= WindowState.NORMAL.toString() %>" />

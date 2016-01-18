@@ -499,22 +499,22 @@ public class ServiceBuilder {
 		_tplSpringXml = _getTplProperty("spring_xml", _tplSpringXml);
 
 		try {
-			_apiDirName = apiDirName;
+			_apiDirName = _normalize(apiDirName);
 			_autoImportDefaultReferences = autoImportDefaultReferences;
 			_autoNamespaceTables = autoNamespaceTables;
 			_beanLocatorUtil = beanLocatorUtil;
 			_buildNumber = buildNumber;
 			_buildNumberIncrement = buildNumberIncrement;
-			_hbmFileName = hbmFileName;
-			_implDirName = implDirName;
-			_modelHintsFileName = modelHintsFileName;
+			_hbmFileName = _normalize(hbmFileName);
+			_implDirName = _normalize(implDirName);
+			_modelHintsFileName = _normalize(modelHintsFileName);
 			_osgiModule = osgiModule;
 			_pluginName = GetterUtil.getString(pluginName);
 			_propsUtil = propsUtil;
 			_readOnlyPrefixes = readOnlyPrefixes;
 			_resourceActionModels = resourceActionModels;
-			_resourcesDirName = resourcesDirName;
-			_springFileName = springFileName;
+			_resourcesDirName = _normalize(resourcesDirName);
+			_springFileName = _normalize(springFileName);
 
 			_springNamespaces = springNamespaces;
 
@@ -525,12 +525,12 @@ public class ServiceBuilder {
 					_springNamespaces, _SPRING_NAMESPACE_BEANS);
 			}
 
-			_sqlDirName = sqlDirName;
+			_sqlDirName = _normalize(sqlDirName);
 			_sqlFileName = sqlFileName;
 			_sqlIndexesFileName = sqlIndexesFileName;
 			_sqlSequencesFileName = sqlSequencesFileName;
 			_targetEntityName = targetEntityName;
-			_testDirName = testDirName;
+			_testDirName = _normalize(testDirName);
 			_build = build;
 
 			_badTableNames = _readLines(_tplBadTableNames);
@@ -543,7 +543,8 @@ public class ServiceBuilder {
 			SAXReader saxReader = _getSAXReader();
 
 			Document document = saxReader.read(
-				new XMLSafeReader(ToolsUtil.getContent(inputFileName)));
+				new XMLSafeReader(
+					ToolsUtil.getContent(_normalize(inputFileName))));
 
 			Element rootElement = document.getRootElement();
 
@@ -1720,6 +1721,11 @@ public class ServiceBuilder {
 		Files.move(sourceFile.toPath(), destinationPath);
 	}
 
+	private static String _normalize(String fileName) {
+		return StringUtil.replace(
+			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+	}
+
 	private static String _read(File file) throws IOException {
 		String s = new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
@@ -1904,15 +1910,36 @@ public class ServiceBuilder {
 		}
 
 		for (String exception : exceptions) {
-			String dirName = StringPool.BLANK;
-
-			if (_osgiModule) {
-				dirName = "exception/";
-			}
+			File oldExceptionFile = new File(
+				_serviceOutputPath + "/" + exception + "Exception.java");
 
 			File exceptionFile = new File(
-				_serviceOutputPath + "/" + dirName + exception +
+				_serviceOutputPath + "/exception/" + exception +
 					"Exception.java");
+
+			if (oldExceptionFile.exists()) {
+				exceptionFile.delete();
+
+				Files.createDirectories(
+					Paths.get(_serviceOutputPath, "exception"));
+
+				Files.move(oldExceptionFile.toPath(), exceptionFile.toPath());
+
+				String content = _read(exceptionFile);
+
+				content = StringUtil.replace(
+					content,
+					new String[] {
+						"package " + _packagePath,
+						"com.liferay.portal.NoSuchModelException"
+					},
+					new String[] {
+						"package " + _packagePath + ".exception",
+						"com.liferay.portal.exception.NoSuchModelException"
+					});
+
+				_write(exceptionFile, content);
+			}
 
 			if (!exceptionFile.exists()) {
 				Map<String, Object> context = _getContext();
@@ -4195,6 +4222,8 @@ public class ServiceBuilder {
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws IOException {
+		fileName = _normalize(fileName);
+
 		int pos = 0;
 
 		if (fileName.startsWith(_implDirName)) {
@@ -4208,9 +4237,8 @@ public class ServiceBuilder {
 		}
 
 		String fullyQualifiedClassName = StringUtil.replace(
-			fileName.substring(pos, fileName.length() - 5),
-			new String[] {StringPool.BACK_SLASH, StringPool.SLASH},
-			new String[] {StringPool.PERIOD, StringPool.PERIOD});
+			fileName.substring(pos, fileName.length() - 5), CharPool.SLASH,
+			CharPool.PERIOD);
 
 		JavaClass javaClass = _javaClasses.get(fullyQualifiedClassName);
 

@@ -16,7 +16,7 @@ package com.liferay.layout.admin.web.lar;
 
 import com.liferay.counter.service.CounterLocalService;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -73,7 +73,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 
@@ -1380,17 +1380,16 @@ public class LayoutStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagedModelDataHandler.class);
 
-	private volatile CounterLocalService _counterLocalService;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile ImageLocalService _imageLocalService;
-	private volatile LayoutFriendlyURLLocalService
-		_layoutFriendlyURLLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile LayoutLocalServiceHelper _layoutLocalServiceHelper;
-	private volatile LayoutPrototypeLocalService _layoutPrototypeLocalService;
-	private volatile LayoutSetLocalService _layoutSetLocalService;
-	private volatile LayoutTemplateLocalService _layoutTemplateLocalService;
-	private volatile PortletLocalService _portletLocalService;
-	private volatile ResourceLocalService _resourceLocalService;
+	private CounterLocalService _counterLocalService;
+	private GroupLocalService _groupLocalService;
+	private ImageLocalService _imageLocalService;
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
+	private LayoutTemplateLocalService _layoutTemplateLocalService;
+	private PortletLocalService _portletLocalService;
+	private ResourceLocalService _resourceLocalService;
 
 }

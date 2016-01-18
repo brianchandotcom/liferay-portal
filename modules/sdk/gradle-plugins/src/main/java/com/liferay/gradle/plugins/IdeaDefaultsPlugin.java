@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
 

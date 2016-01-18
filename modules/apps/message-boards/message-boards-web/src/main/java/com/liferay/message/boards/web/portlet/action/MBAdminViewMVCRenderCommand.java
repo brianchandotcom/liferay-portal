@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/", "mvc.command.name=/message_boards/view"
+		"mvc.command.name=/", "mvc.command.name=/message_boards/view",
+		"mvc.command.name=/message_boards/view_category"
 	},
 	service = MVCRenderCommand.class
 )
@@ -61,6 +62,6 @@ public class MBAdminViewMVCRenderCommand extends BaseViewMVCRenderCommand {
 		_mbPortletToolbarContributor = mbPortletToolbarContributor;
 	}
 
-	private volatile MBPortletToolbarContributor _mbPortletToolbarContributor;
+	private MBPortletToolbarContributor _mbPortletToolbarContributor;
 
 }

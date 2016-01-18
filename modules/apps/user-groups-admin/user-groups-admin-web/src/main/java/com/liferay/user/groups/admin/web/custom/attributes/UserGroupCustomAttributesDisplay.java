@@ -15,7 +15,6 @@
 package com.liferay.user.groups.admin.web.custom.attributes;
 
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
@@ -40,13 +39,7 @@ public class UserGroupCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-group";
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() +
-			"/common/assign_user_group_roles.png";
+		return "user";
 	}
 
 }

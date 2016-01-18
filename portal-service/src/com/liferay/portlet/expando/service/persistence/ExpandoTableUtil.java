@@ -195,7 +195,7 @@ public class ExpandoTableUtil {
 	*/
 	public static ExpandoTable findByC_C_First(long companyId,
 		long classNameId, OrderByComparator<ExpandoTable> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.exception.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_First(companyId, classNameId, orderByComparator);
 	}
@@ -225,7 +225,7 @@ public class ExpandoTableUtil {
 	*/
 	public static ExpandoTable findByC_C_Last(long companyId, long classNameId,
 		OrderByComparator<ExpandoTable> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.exception.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_Last(companyId, classNameId, orderByComparator);
 	}
@@ -257,7 +257,7 @@ public class ExpandoTableUtil {
 	public static ExpandoTable[] findByC_C_PrevAndNext(long tableId,
 		long companyId, long classNameId,
 		OrderByComparator<ExpandoTable> orderByComparator)
-		throws com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.exception.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(tableId, companyId, classNameId,
 			orderByComparator);
@@ -295,7 +295,7 @@ public class ExpandoTableUtil {
 	*/
 	public static ExpandoTable findByC_C_N(long companyId, long classNameId,
 		java.lang.String name)
-		throws com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.exception.NoSuchTableException {
 		return getPersistence().findByC_C_N(companyId, classNameId, name);
 	}
 
@@ -337,7 +337,7 @@ public class ExpandoTableUtil {
 	*/
 	public static ExpandoTable removeByC_C_N(long companyId, long classNameId,
 		java.lang.String name)
-		throws com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.exception.NoSuchTableException {
 		return getPersistence().removeByC_C_N(companyId, classNameId, name);
 	}
 
@@ -390,7 +390,7 @@ public class ExpandoTableUtil {
 	* @throws NoSuchTableException if a expando table with the primary key could not be found
 	*/
 	public static ExpandoTable remove(long tableId)
-		throws com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.exception.NoSuchTableException {
 		return getPersistence().remove(tableId);
 	}
 
@@ -406,7 +406,7 @@ public class ExpandoTableUtil {
 	* @throws NoSuchTableException if a expando table with the primary key could not be found
 	*/
 	public static ExpandoTable findByPrimaryKey(long tableId)
-		throws com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.exception.NoSuchTableException {
 		return getPersistence().findByPrimaryKey(tableId);
 	}
 

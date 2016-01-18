@@ -186,7 +186,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByUuid_First(java.lang.String uuid,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByUuid_PrevAndNext(long requestId,
 		java.lang.String uuid,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(requestId, uuid, orderByComparator);
 	}
@@ -273,7 +273,7 @@ public class SocialRequestUtil {
 	* @throws NoSuchRequestException if a matching social request could not be found
 	*/
 	public static SocialRequest findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -310,7 +310,8 @@ public class SocialRequestUtil {
 	* @return the social request that was removed
 	*/
 	public static SocialRequest removeByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.portlet.social.NoSuchRequestException {
+		long groupId)
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -411,7 +412,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -441,7 +442,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -473,7 +474,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByUuid_C_PrevAndNext(long requestId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(requestId, uuid, companyId,
 			orderByComparator);
@@ -578,7 +579,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByCompanyId_First(long companyId,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -606,7 +607,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByCompanyId_Last(long companyId,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -635,7 +636,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest[] findByCompanyId_PrevAndNext(long requestId,
 		long companyId, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(requestId, companyId,
 			orderByComparator);
@@ -738,7 +739,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByUserId_First(long userId,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -764,7 +765,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByUserId_Last(long userId,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -791,7 +792,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest[] findByUserId_PrevAndNext(long requestId,
 		long userId, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(requestId, userId,
 			orderByComparator);
@@ -897,7 +898,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByReceiverUserId_First(
 		long receiverUserId, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByReceiverUserId_First(receiverUserId, orderByComparator);
 	}
@@ -926,7 +927,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByReceiverUserId_Last(long receiverUserId,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByReceiverUserId_Last(receiverUserId, orderByComparator);
 	}
@@ -956,7 +957,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByReceiverUserId_PrevAndNext(
 		long requestId, long receiverUserId,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByReceiverUserId_PrevAndNext(requestId, receiverUserId,
 			orderByComparator);
@@ -1064,7 +1065,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByU_S_First(long userId, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_S_First(userId, status, orderByComparator);
 	}
@@ -1094,7 +1095,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByU_S_Last(long userId, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().findByU_S_Last(userId, status, orderByComparator);
 	}
 
@@ -1125,7 +1126,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByU_S_PrevAndNext(long requestId,
 		long userId, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_S_PrevAndNext(requestId, userId, status,
 			orderByComparator);
@@ -1236,7 +1237,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByC_C_First(long classNameId, long classPK,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1266,7 +1267,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1298,7 +1299,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByC_C_PrevAndNext(long requestId,
 		long classNameId, long classPK,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(requestId, classNameId, classPK,
 			orderByComparator);
@@ -1411,7 +1412,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByR_S_First(long receiverUserId,
 		int status, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByR_S_First(receiverUserId, status, orderByComparator);
 	}
@@ -1441,7 +1442,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByR_S_Last(long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByR_S_Last(receiverUserId, status, orderByComparator);
 	}
@@ -1473,7 +1474,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByR_S_PrevAndNext(long requestId,
 		long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByR_S_PrevAndNext(requestId, receiverUserId, status,
 			orderByComparator);
@@ -1513,7 +1514,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest findByU_C_C_T_R(long userId, long classNameId,
 		long classPK, int type, long receiverUserId)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_C_C_T_R(userId, classNameId, classPK, type,
 			receiverUserId);
@@ -1566,7 +1567,7 @@ public class SocialRequestUtil {
 	*/
 	public static SocialRequest removeByU_C_C_T_R(long userId,
 		long classNameId, long classPK, int type, long receiverUserId)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .removeByU_C_C_T_R(userId, classNameId, classPK, type,
 			receiverUserId);
@@ -1695,7 +1696,7 @@ public class SocialRequestUtil {
 	public static SocialRequest findByU_C_C_T_S_First(long userId,
 		long classNameId, long classPK, int type, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_C_C_T_S_First(userId, classNameId, classPK, type,
 			status, orderByComparator);
@@ -1735,7 +1736,7 @@ public class SocialRequestUtil {
 	public static SocialRequest findByU_C_C_T_S_Last(long userId,
 		long classNameId, long classPK, int type, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_C_C_T_S_Last(userId, classNameId, classPK, type,
 			status, orderByComparator);
@@ -1776,7 +1777,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByU_C_C_T_S_PrevAndNext(long requestId,
 		long userId, long classNameId, long classPK, int type, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByU_C_C_T_S_PrevAndNext(requestId, userId, classNameId,
 			classPK, type, status, orderByComparator);
@@ -1921,7 +1922,7 @@ public class SocialRequestUtil {
 	public static SocialRequest findByC_C_T_R_S_First(long classNameId,
 		long classPK, int type, long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_T_R_S_First(classNameId, classPK, type,
 			receiverUserId, status, orderByComparator);
@@ -1961,7 +1962,7 @@ public class SocialRequestUtil {
 	public static SocialRequest findByC_C_T_R_S_Last(long classNameId,
 		long classPK, int type, long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_T_R_S_Last(classNameId, classPK, type,
 			receiverUserId, status, orderByComparator);
@@ -2002,7 +2003,7 @@ public class SocialRequestUtil {
 	public static SocialRequest[] findByC_C_T_R_S_PrevAndNext(long requestId,
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence()
 				   .findByC_C_T_R_S_PrevAndNext(requestId, classNameId,
 			classPK, type, receiverUserId, status, orderByComparator);
@@ -2077,7 +2078,7 @@ public class SocialRequestUtil {
 	* @throws NoSuchRequestException if a social request with the primary key could not be found
 	*/
 	public static SocialRequest remove(long requestId)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().remove(requestId);
 	}
 
@@ -2093,7 +2094,7 @@ public class SocialRequestUtil {
 	* @throws NoSuchRequestException if a social request with the primary key could not be found
 	*/
 	public static SocialRequest findByPrimaryKey(long requestId)
-		throws com.liferay.portlet.social.NoSuchRequestException {
+		throws com.liferay.portlet.social.exception.NoSuchRequestException {
 		return getPersistence().findByPrimaryKey(requestId);
 	}
 

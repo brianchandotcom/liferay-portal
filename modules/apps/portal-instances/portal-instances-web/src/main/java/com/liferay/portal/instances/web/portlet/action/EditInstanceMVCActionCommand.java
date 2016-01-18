@@ -14,11 +14,11 @@
 
 package com.liferay.portal.instances.web.portlet.action;
 
-import com.liferay.portal.CompanyMxException;
-import com.liferay.portal.CompanyVirtualHostException;
-import com.liferay.portal.CompanyWebIdException;
-import com.liferay.portal.NoSuchCompanyException;
-import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.exception.CompanyMxException;
+import com.liferay.portal.exception.CompanyVirtualHostException;
+import com.liferay.portal.exception.CompanyWebIdException;
+import com.liferay.portal.exception.NoSuchCompanyException;
+import com.liferay.portal.exception.RequiredCompanyException;
 import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -143,6 +143,6 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile CompanyService _companyService;
+	private CompanyService _companyService;
 
 }

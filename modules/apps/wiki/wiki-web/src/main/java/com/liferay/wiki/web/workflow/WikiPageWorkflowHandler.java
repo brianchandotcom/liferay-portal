@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
 
@@ -73,11 +72,6 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 			userId, page, status, serviceContext, workflowContext);
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/pages.png";
-	}
-
 	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
@@ -85,6 +79,6 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

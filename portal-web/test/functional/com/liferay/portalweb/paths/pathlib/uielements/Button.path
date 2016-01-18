@@ -235,12 +235,12 @@
 </tr>
 <tr>
 	<td>DEACTIVATE</td>
-	<td>//button[contains(.,'Deactivate')]</td>
+	<td>//*[@data-qa-id='deactivateButton'] | //button[contains(.,'Deactivate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//button[contains(.,'Delete')]</td>
+	<td>//*[@data-qa-id='deleteButton'] | //button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -376,11 +376,6 @@
 <tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEW_TEMPLATE</td>
-	<td>//a[@role='menuitem' and contains(.,'New')]</td>
 	<td></td>
 </tr>
 <tr>

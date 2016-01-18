@@ -144,8 +144,8 @@ public class CASCompanySettingsVerifyProcess
 	private static final Log _log = LogFactoryUtil.getLog(
 		CASCompanySettingsVerifyProcess.class);
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile PrefsProps _prefsProps;
-	private volatile SettingsFactory _settingsFactory;
+	private CompanyLocalService _companyLocalService;
+	private PrefsProps _prefsProps;
+	private SettingsFactory _settingsFactory;
 
 }

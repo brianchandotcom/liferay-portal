@@ -1,8 +1,0 @@
-dependencies {
-	compile project(":apps:application-list:application-list-api")
-	compile project(":apps:application-list:application-list-taglib")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}

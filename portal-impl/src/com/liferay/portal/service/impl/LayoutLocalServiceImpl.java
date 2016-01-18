@@ -14,11 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.RequiredLayoutException;
-import com.liferay.portal.SitemapChangeFrequencyException;
-import com.liferay.portal.SitemapIncludeException;
-import com.liferay.portal.SitemapPagePriorityException;
+import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.exception.RequiredLayoutException;
+import com.liferay.portal.exception.SitemapChangeFrequencyException;
+import com.liferay.portal.exception.SitemapIncludeException;
+import com.liferay.portal.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,8 +61,8 @@ import com.liferay.portal.util.comparator.LayoutComparator;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.sites.util.Sites;
-import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -1498,18 +1498,52 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return parentLayout;
 	}
 
+	@Override
+	public List<Layout> getScopeGroupLayouts(long parentGroupId)
+		throws PortalException {
+
+		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
+
+		List<Group> groups = groupLocalService.getGroups(
+			parentGroup.getCompanyId(), Layout.class.getName(), parentGroupId);
+
+		List<Layout> layouts = new ArrayList<>(groups.size());
+
+		for (Group group : groups) {
+			layouts.add(layoutPersistence.findByPrimaryKey(group.getClassPK()));
+		}
+
+		return layouts;
+	}
+
 	/**
 	 * Returns all the layouts within scope of the group
 	 *
-	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @return the layouts within scope of the group
 	 */
 	@Override
 	public List<Layout> getScopeGroupLayouts(
-		long groupId, boolean privateLayout) {
+			long parentGroupId, boolean privateLayout)
+		throws PortalException {
 
-		return layoutFinder.findByScopeGroup(groupId, privateLayout);
+		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
+
+		List<Group> groups = groupLocalService.getGroups(
+			parentGroup.getCompanyId(), Layout.class.getName(), parentGroupId);
+
+		List<Layout> layouts = new ArrayList<>(groups.size());
+
+		for (Group group : groups) {
+			Layout layout = layoutPersistence.findByPrimaryKey(
+				group.getClassPK());
+
+			if (layout.getPrivateLayout() == privateLayout) {
+				layouts.add(layout);
+			}
+		}
+
+		return layouts;
 	}
 
 	@Override

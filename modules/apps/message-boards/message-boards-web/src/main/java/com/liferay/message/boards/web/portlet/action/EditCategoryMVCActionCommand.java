@@ -32,14 +32,14 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.CategoryNameException;
-import com.liferay.portlet.messageboards.MailingListEmailAddressException;
-import com.liferay.portlet.messageboards.MailingListInServerNameException;
-import com.liferay.portlet.messageboards.MailingListInUserNameException;
-import com.liferay.portlet.messageboards.MailingListOutEmailAddressException;
-import com.liferay.portlet.messageboards.MailingListOutServerNameException;
-import com.liferay.portlet.messageboards.MailingListOutUserNameException;
-import com.liferay.portlet.messageboards.NoSuchCategoryException;
+import com.liferay.portlet.messageboards.exception.CategoryNameException;
+import com.liferay.portlet.messageboards.exception.MailingListEmailAddressException;
+import com.liferay.portlet.messageboards.exception.MailingListInServerNameException;
+import com.liferay.portlet.messageboards.exception.MailingListInUserNameException;
+import com.liferay.portlet.messageboards.exception.MailingListOutEmailAddressException;
+import com.liferay.portlet.messageboards.exception.MailingListOutServerNameException;
+import com.liferay.portlet.messageboards.exception.MailingListOutUserNameException;
+import com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.MBCategoryService;
 import com.liferay.portlet.trash.service.TrashEntryService;
@@ -274,7 +274,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MBCategoryService _mbCategoryService;
-	private volatile TrashEntryService _trashEntryService;
+	private MBCategoryService _mbCategoryService;
+	private TrashEntryService _trashEntryService;
 
 }

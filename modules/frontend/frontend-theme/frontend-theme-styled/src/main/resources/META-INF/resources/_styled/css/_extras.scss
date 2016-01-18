@@ -20,7 +20,7 @@
 	box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5);
 }
 
-.lfr-add-panel, .lfr-simulation-panel, .lfr-edit-layout-panel {
+.lfr-add-panel, .lfr-edit-layout-panel {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -38,40 +38,6 @@
 
 .lfr-preview-file-image-current-column {
 	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);
-}
-
-.lfr-simulation-device {
-	.lfr-device-size-status-content {
-		border-radius: 3px;
-		box-shadow: 0 0 1px #FFF;
-		opacity: 0.9;
-	}
-
-	.lfr-device {
-		&:after, &:before {
-			box-shadow: #111 0 1px 0;
-		}
-
-		&:after {
-			border-radius: 15px;
-		}
-
-		&.rotated {
-			&:after, &:before {
-				box-shadow: #111 -1px 1px 0;
-			}
-		}
-
-		&.smartphone, &.tablet {
-			border-radius: 25px;
-		}
-
-		&.tablet {
-			&:before {
-				border-radius: 5px;
-			}
-		}
-	}
 }
 
 .portlet-document-library, .portlet-dynamic-data-mapping {

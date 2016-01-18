@@ -67,12 +67,12 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ImageLocalService;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
@@ -95,6 +95,7 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -272,8 +273,7 @@ public class DDMImpl implements DDM {
 			long groupId = jsonObject.getLong("groupId");
 
 			FileEntry fileEntry =
-				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					uuid, groupId);
+				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
 
 			fieldValue = DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
@@ -293,7 +293,7 @@ public class DDMImpl implements DDM {
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 			long layoutId = jsonObject.getLong("layoutId");
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
+			Layout layout = _layoutLocalService.getLayout(
 				groupId, privateLayout, layoutId);
 
 			fieldValue = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
@@ -1061,7 +1061,7 @@ public class DDMImpl implements DDM {
 		long imageId = GetterUtil.getLong(
 			HttpUtil.getParameter(url, "img_id", false));
 
-		Image image = ImageLocalServiceUtil.fetchImage(imageId);
+		Image image = _imageLocalService.fetchImage(imageId);
 
 		if (image == null) {
 			return null;
@@ -1172,6 +1172,23 @@ public class DDMImpl implements DDM {
 		return existingField.getValuesMap();
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	protected String[] splitFieldsDisplayValue(Field fieldsDisplayField) {
 		String value = (String)fieldsDisplayField.getValue();
 
@@ -1179,5 +1196,9 @@ public class DDMImpl implements DDM {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMImpl.class);
+
+	private DLAppLocalService _dlAppLocalService;
+	private ImageLocalService _imageLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -60,31 +60,14 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
-		"mvc.render.command.name=/wiki/view_all_pages"
+		"mvc.render.command.name=/wiki/view_pages"
 	},
 	service = {
 		WikiPortletToolbarContributor.class, PortletToolbarContributor.class
 	}
 )
 public class WikiPortletToolbarContributor
-	implements PortletToolbarContributor {
-
-	@Override
-	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
-		List<Menu> menus = new ArrayList<>();
-
-		Menu menu = new Menu();
-
-		menu.setDirection("down");
-		menu.setExtended(false);
-		menu.setIcon("../aui/plus-sign-2");
-		menu.setMenuItems(getPortletTitleMenuItems(portletRequest));
-		menu.setShowArrow(false);
-
-		menus.add(menu);
-
-		return menus;
-	}
+	extends BasePortletToolbarContributor {
 
 	protected void addPortletTitleMenuItem(
 			List<MenuItem> menuItems, WikiNode node, ThemeDisplay themeDisplay,
@@ -139,6 +122,7 @@ public class WikiPortletToolbarContributor
 		return true;
 	}
 
+	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest) {
 
@@ -229,7 +213,7 @@ public class WikiPortletToolbarContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPortletToolbarContributor.class);
 
-	private volatile BaseModelPermissionChecker _baseModelPermissionChecker;
-	private volatile WikiNodeService _wikiNodeService;
+	private BaseModelPermissionChecker _baseModelPermissionChecker;
+	private WikiNodeService _wikiNodeService;
 
 }

@@ -7,6 +7,7 @@
 			helpMessage=escape(fieldStructure.tip)
 			label=escape(label)
 			name=namespacedFieldName
+			required=required
 			type="checkbox"
 			value=fieldValue
 		/>

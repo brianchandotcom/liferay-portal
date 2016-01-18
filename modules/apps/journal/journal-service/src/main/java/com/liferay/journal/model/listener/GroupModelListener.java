@@ -15,7 +15,7 @@
 package com.liferay.journal.model.listener;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
@@ -49,6 +49,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
-	private volatile SubscriptionLocalService _subscriptionLocalService;
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

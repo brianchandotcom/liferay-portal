@@ -184,7 +184,7 @@ public class KaleoNodeUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
+	* @throws NoSuchNodeException if a matching kaleo node could not be found
 	*/
 	public static KaleoNode findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoNode> orderByComparator)
@@ -212,7 +212,7 @@ public class KaleoNodeUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
+	* @throws NoSuchNodeException if a matching kaleo node could not be found
 	*/
 	public static KaleoNode findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoNode> orderByComparator)
@@ -241,7 +241,7 @@ public class KaleoNodeUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
+	* @throws NoSuchNodeException if a kaleo node with the primary key could not be found
 	*/
 	public static KaleoNode[] findByCompanyId_PrevAndNext(long kaleoNodeId,
 		long companyId, OrderByComparator<KaleoNode> orderByComparator)
@@ -349,7 +349,7 @@ public class KaleoNodeUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
+	* @throws NoSuchNodeException if a matching kaleo node could not be found
 	*/
 	public static KaleoNode findByKaleoDefinitionId_First(
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
@@ -379,7 +379,7 @@ public class KaleoNodeUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
+	* @throws NoSuchNodeException if a matching kaleo node could not be found
 	*/
 	public static KaleoNode findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
@@ -410,7 +410,7 @@ public class KaleoNodeUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
+	* @throws NoSuchNodeException if a kaleo node with the primary key could not be found
 	*/
 	public static KaleoNode[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoNodeId, long kaleoDefinitionId,
@@ -524,7 +524,7 @@ public class KaleoNodeUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
+	* @throws NoSuchNodeException if a matching kaleo node could not be found
 	*/
 	public static KaleoNode findByC_KDI_First(long companyId,
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
@@ -556,7 +556,7 @@ public class KaleoNodeUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
+	* @throws NoSuchNodeException if a matching kaleo node could not be found
 	*/
 	public static KaleoNode findByC_KDI_Last(long companyId,
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
@@ -589,7 +589,7 @@ public class KaleoNodeUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
+	* @throws NoSuchNodeException if a kaleo node with the primary key could not be found
 	*/
 	public static KaleoNode[] findByC_KDI_PrevAndNext(long kaleoNodeId,
 		long companyId, long kaleoDefinitionId,
@@ -654,7 +654,7 @@ public class KaleoNodeUtil {
 	*
 	* @param kaleoNodeId the primary key of the kaleo node
 	* @return the kaleo node that was removed
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
+	* @throws NoSuchNodeException if a kaleo node with the primary key could not be found
 	*/
 	public static KaleoNode remove(long kaleoNodeId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
@@ -666,11 +666,11 @@ public class KaleoNodeUtil {
 	}
 
 	/**
-	* Returns the kaleo node with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchNodeException} if it could not be found.
+	* Returns the kaleo node with the primary key or throws a {@link NoSuchNodeException} if it could not be found.
 	*
 	* @param kaleoNodeId the primary key of the kaleo node
 	* @return the kaleo node
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
+	* @throws NoSuchNodeException if a kaleo node with the primary key could not be found
 	*/
 	public static KaleoNode findByPrimaryKey(long kaleoNodeId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {

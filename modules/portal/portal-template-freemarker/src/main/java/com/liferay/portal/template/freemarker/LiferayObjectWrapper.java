@@ -16,6 +16,7 @@ package com.liferay.portal.template.freemarker;
 
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 
+import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -24,6 +25,10 @@ import freemarker.template.TemplateModelException;
  * @author Mika Koivisto
  */
 public class LiferayObjectWrapper extends DefaultObjectWrapper {
+
+	public LiferayObjectWrapper() {
+		super(Configuration.getVersion());
+	}
 
 	@Override
 	public TemplateModel wrap(Object object) throws TemplateModelException {

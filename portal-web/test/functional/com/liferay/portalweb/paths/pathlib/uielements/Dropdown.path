@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>FILTER_VALUES</td>
-	<td>//*[@data-qa-id='filterValues']/li[contains(.,'${key_filterValue}')]</td>
+	<td>//*[@data-qa-id='filterValues']/li[contains(.,'${key_filterValue}')]/a</td>
 	<td></td>
 </tr>
 </tbody>

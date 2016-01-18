@@ -28,6 +28,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.service.ShoppingCategoryService;
+import com.liferay.shopping.service.persistence.ShoppingCategoryFinder;
 import com.liferay.shopping.service.persistence.ShoppingCategoryPersistence;
 import com.liferay.shopping.service.persistence.ShoppingItemFinder;
 import com.liferay.shopping.service.persistence.ShoppingItemPersistence;
@@ -109,6 +110,25 @@ public abstract class ShoppingCategoryServiceBaseImpl extends BaseServiceImpl
 	public void setShoppingCategoryPersistence(
 		ShoppingCategoryPersistence shoppingCategoryPersistence) {
 		this.shoppingCategoryPersistence = shoppingCategoryPersistence;
+	}
+
+	/**
+	 * Returns the shopping category finder.
+	 *
+	 * @return the shopping category finder
+	 */
+	public ShoppingCategoryFinder getShoppingCategoryFinder() {
+		return shoppingCategoryFinder;
+	}
+
+	/**
+	 * Sets the shopping category finder.
+	 *
+	 * @param shoppingCategoryFinder the shopping category finder
+	 */
+	public void setShoppingCategoryFinder(
+		ShoppingCategoryFinder shoppingCategoryFinder) {
+		this.shoppingCategoryFinder = shoppingCategoryFinder;
 	}
 
 	/**
@@ -334,6 +354,8 @@ public abstract class ShoppingCategoryServiceBaseImpl extends BaseServiceImpl
 	protected ShoppingCategoryService shoppingCategoryService;
 	@BeanReference(type = ShoppingCategoryPersistence.class)
 	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
+	@BeanReference(type = ShoppingCategoryFinder.class)
+	protected ShoppingCategoryFinder shoppingCategoryFinder;
 	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)

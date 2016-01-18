@@ -14,7 +14,7 @@
 
 package com.liferay.staging.bar.web.portlet.action;
 
-import com.liferay.portal.LayoutBranchNameException;
+import com.liferay.portal.exception.LayoutBranchNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -97,6 +97,6 @@ public class EditLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 		_layoutBranchService = layoutBranchService;
 	}
 
-	private volatile LayoutBranchService _layoutBranchService;
+	private LayoutBranchService _layoutBranchService;
 
 }

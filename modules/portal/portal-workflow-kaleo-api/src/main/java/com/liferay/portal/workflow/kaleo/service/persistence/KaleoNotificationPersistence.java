@@ -104,7 +104,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
@@ -126,7 +126,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
@@ -149,7 +149,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
+	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification[] findByCompanyId_PrevAndNext(
 		long kaleoNotificationId, long companyId,
@@ -237,7 +237,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
@@ -261,7 +261,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
@@ -286,7 +286,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
+	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoNotificationId, long kaleoDefinitionId,
@@ -379,7 +379,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByKCN_KCPK_First(
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -405,7 +405,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByKCN_KCPK_Last(
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -432,7 +432,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
+	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification[] findByKCN_KCPK_PrevAndNext(
 		long kaleoNotificationId, java.lang.String kaleoClassName,
@@ -539,7 +539,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param executionType the execution type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByKCN_KCPK_ET_First(
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -569,7 +569,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param executionType the execution type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	* @throws NoSuchNotificationException if a matching kaleo notification could not be found
 	*/
 	public KaleoNotification findByKCN_KCPK_ET_Last(
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -600,7 +600,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @param executionType the execution type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
+	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification[] findByKCN_KCPK_ET_PrevAndNext(
 		long kaleoNotificationId, java.lang.String kaleoClassName,
@@ -657,7 +657,7 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	*
 	* @param kaleoNotificationId the primary key of the kaleo notification
 	* @return the kaleo notification that was removed
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
+	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification remove(long kaleoNotificationId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
@@ -665,11 +665,11 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	public KaleoNotification updateImpl(KaleoNotification kaleoNotification);
 
 	/**
-	* Returns the kaleo notification with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchNotificationException} if it could not be found.
+	* Returns the kaleo notification with the primary key or throws a {@link NoSuchNotificationException} if it could not be found.
 	*
 	* @param kaleoNotificationId the primary key of the kaleo notification
 	* @return the kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
+	* @throws NoSuchNotificationException if a kaleo notification with the primary key could not be found
 	*/
 	public KaleoNotification findByPrimaryKey(long kaleoNotificationId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;

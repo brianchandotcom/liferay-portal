@@ -16,7 +16,7 @@ package com.liferay.mobile.device.rules.model.listener;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ModelListener;
@@ -58,7 +58,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}
 
-	private volatile MDRRuleGroupInstanceLocalService
-		_mdrRuleGroupInstanceLocalService;
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
 
 }

@@ -43,6 +43,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.ShoppingItemLocalService;
+import com.liferay.shopping.service.persistence.ShoppingCategoryFinder;
 import com.liferay.shopping.service.persistence.ShoppingCategoryPersistence;
 import com.liferay.shopping.service.persistence.ShoppingItemFieldPersistence;
 import com.liferay.shopping.service.persistence.ShoppingItemFinder;
@@ -523,6 +524,25 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the shopping category finder.
+	 *
+	 * @return the shopping category finder
+	 */
+	public ShoppingCategoryFinder getShoppingCategoryFinder() {
+		return shoppingCategoryFinder;
+	}
+
+	/**
+	 * Sets the shopping category finder.
+	 *
+	 * @param shoppingCategoryFinder the shopping category finder
+	 */
+	public void setShoppingCategoryFinder(
+		ShoppingCategoryFinder shoppingCategoryFinder) {
+		this.shoppingCategoryFinder = shoppingCategoryFinder;
+	}
+
+	/**
 	 * Returns the shopping item field local service.
 	 *
 	 * @return the shopping item field local service
@@ -672,6 +692,8 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	protected com.liferay.shopping.service.ShoppingCategoryLocalService shoppingCategoryLocalService;
 	@BeanReference(type = ShoppingCategoryPersistence.class)
 	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
+	@BeanReference(type = ShoppingCategoryFinder.class)
+	protected ShoppingCategoryFinder shoppingCategoryFinder;
 	@BeanReference(type = com.liferay.shopping.service.ShoppingItemFieldLocalService.class)
 	protected com.liferay.shopping.service.ShoppingItemFieldLocalService shoppingItemFieldLocalService;
 	@BeanReference(type = ShoppingItemFieldPersistence.class)
@@ -680,6 +702,6 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 	protected com.liferay.shopping.service.ShoppingItemPriceLocalService shoppingItemPriceLocalService;
 	@BeanReference(type = ShoppingItemPricePersistence.class)
 	protected ShoppingItemPricePersistence shoppingItemPricePersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

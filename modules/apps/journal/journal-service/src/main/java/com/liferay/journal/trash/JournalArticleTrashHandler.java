@@ -41,7 +41,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.exception.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashEntryConstants;
 
@@ -412,10 +412,10 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalArticleResourceLocalService
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

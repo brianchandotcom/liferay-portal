@@ -15,8 +15,8 @@
 package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
-import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.RemoteOptionsException;
+import com.liferay.portal.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -30,7 +30,7 @@ import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.RemoteAuthException;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.exportimport.RemoteExportException;
+import com.liferay.portlet.exportimport.exception.RemoteExportException;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import javax.portlet.ActionRequest;

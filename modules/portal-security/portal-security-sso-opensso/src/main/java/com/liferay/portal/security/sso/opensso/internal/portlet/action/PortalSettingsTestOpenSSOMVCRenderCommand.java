@@ -85,6 +85,6 @@ public class PortalSettingsTestOpenSSOMVCRenderCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsTestOpenSSOMVCRenderCommand.class);
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

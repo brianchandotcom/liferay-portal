@@ -16,23 +16,49 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Layout selLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+<div class="tree-container tree-pages">
+	<li class="tree-node">
 
-PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, PortletRequest.RENDER_PHASE);
+		<%
+		boolean selected = false;
 
-editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
-editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+		Layout selLayout = LayoutLocalServiceUtil.fetchFirstLayout(themeDisplay.getScopeGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-Map<String, Object> data = new HashMap<String, Object>();
+		if ((selLayout.getPlid() == plid) || Validator.equals(LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, themeDisplay.getPpid())) {
+			selected = true;
+		}
+		%>
 
-data.put("url", selLayout.getFriendlyURL(locale));
-data.put("uuid", selLayout.getUuid());
-%>
+		<div class="tree-node-content <%= selected ? "tree-node-selected" : StringPool.BLANK %>">
+			<span class="tree-label">
 
-<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
 
-<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= editLayoutURL.toString() %>" title='<%= LanguageUtil.format(request, "edit-x", selLayout.getName(locale)) %>'>
-	<span class="icon-cog icon-monospaced"></span>
-</aui:a>
+				data.put("url", selLayout.getFriendlyURL(locale));
+				data.put("uuid", selLayout.getUuid());
+				%>
+
+				<aui:a cssClass="layout-tree" data="<%= data %>" href="<%= selLayout.getRegularURL(request) %>" label="<%= selLayout.getName(locale) %>" />
+
+				<%
+				PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE, PortletRequest.RENDER_PHASE);
+
+				editLayoutURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+				editLayoutURL.setParameter("selPlid", String.valueOf(selLayout.getPlid()));
+				editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
+				editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+				%>
+
+				<liferay-ui:icon
+					cssClass="layout-tree-edit"
+					icon="cog"
+					label="<%= false %>"
+					markupView="lexicon"
+					message='<%= LanguageUtil.format(request, "edit-x", selLayout.getName(locale)) %>'
+					url="<%= editLayoutURL.toString() %>"
+				/>
+			</span>
+		</div>
+	</li>
+</div>

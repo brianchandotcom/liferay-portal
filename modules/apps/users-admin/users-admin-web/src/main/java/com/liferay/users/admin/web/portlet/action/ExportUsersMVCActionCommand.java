@@ -82,6 +82,8 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
+			hideDefaultSuccessMessage(actionRequest);
+
 			String keywords = ParamUtil.getString(actionRequest, "keywords");
 
 			if (Validator.isNotNull(keywords)) {
@@ -275,6 +277,6 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

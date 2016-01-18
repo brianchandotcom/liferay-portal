@@ -105,7 +105,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
+	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
 	public PollsQuestion findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
@@ -127,7 +127,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
+	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
 	public PollsQuestion findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
@@ -150,7 +150,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
+	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public PollsQuestion[] findByUuid_PrevAndNext(long questionId,
 		java.lang.String uuid,
@@ -173,12 +173,12 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the polls question where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.polls.NoSuchQuestionException} if it could not be found.
+	* Returns the polls question where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchQuestionException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
+	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
 	public PollsQuestion findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.polls.exception.NoSuchQuestionException;
@@ -293,7 +293,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
+	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
 	public PollsQuestion findByUuid_C_First(java.lang.String uuid,
 		long companyId,
@@ -319,7 +319,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
+	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
 	public PollsQuestion findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
@@ -346,7 +346,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
+	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public PollsQuestion[] findByUuid_C_PrevAndNext(long questionId,
 		java.lang.String uuid, long companyId,
@@ -435,7 +435,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
+	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
 	public PollsQuestion findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
@@ -457,7 +457,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a matching polls question could not be found
+	* @throws NoSuchQuestionException if a matching polls question could not be found
 	*/
 	public PollsQuestion findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<PollsQuestion> orderByComparator)
@@ -480,7 +480,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
+	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public PollsQuestion[] findByGroupId_PrevAndNext(long questionId,
 		long groupId,
@@ -534,7 +534,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
+	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public PollsQuestion[] filterFindByGroupId_PrevAndNext(long questionId,
 		long groupId,
@@ -591,7 +591,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	*
 	* @param questionId the primary key of the polls question
 	* @return the polls question that was removed
-	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
+	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public PollsQuestion remove(long questionId)
 		throws com.liferay.polls.exception.NoSuchQuestionException;
@@ -599,11 +599,11 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	public PollsQuestion updateImpl(PollsQuestion pollsQuestion);
 
 	/**
-	* Returns the polls question with the primary key or throws a {@link com.liferay.polls.NoSuchQuestionException} if it could not be found.
+	* Returns the polls question with the primary key or throws a {@link NoSuchQuestionException} if it could not be found.
 	*
 	* @param questionId the primary key of the polls question
 	* @return the polls question
-	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
+	* @throws NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public PollsQuestion findByPrimaryKey(long questionId)
 		throws com.liferay.polls.exception.NoSuchQuestionException;

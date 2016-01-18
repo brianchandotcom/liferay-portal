@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `489b33c`.*
+*This document has been reviewed through commit `3231563`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2986,6 +2986,33 @@ time to focus on other areas of the product that add more value.
 
 ---------------------------------------
 
+### Removed the liferay-ui:asset-categories-navigation Tag and Replaced with liferay-asset:asset-categories-navigation
+- **Date:** 2015-Nov-25
+- **JIRA Ticket:** LPS-60753
+
+#### What changed?
+
+The `liferay-ui:asset-categories-navigation` tag has been removed and replaced
+with the `liferay-asset:asset-categories-navigation` tag.
+
+#### Who is affected?
+
+Plugins or templates that are using the `liferay-ui:asset-categories-navigation`
+tag need to update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-asset` tag library (if necessary) and update the
+tag namespace from `liferay-ui:asset-categories-navigation` to
+`liferay-asset:asset-categories-navigation`.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------
+
 ### Removed the liferay-ui:trash-empty Tag and Replaced with liferay-trash:empty
 - **Date:** 2015-Nov-30
 - **JIRA Ticket:** LPS-60779
@@ -3197,138 +3224,195 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### The liferay-ui:asset-categories-navigation taglib has been removed and replaced with liferay-asset:asset-categories-navigation taglib
-- **Date:** 2015-Nov-25
-- **JIRA Ticket:** LPS-60753
-
-#### What changed?
-
-The `liferay-ui:asset-categories-navigation` taglib has been removed and
-replaced with `liferay-asset:asset-categories-navigation` taglib.
-
-#### Who is affected?
-
-Plugins or templates that are using the `liferay-ui:asset-categories-navigation`
-tag need to update their usage of the tag.
-
-#### How should I update my code?
-
-You should import the `liferay-asset` tag library if it isn't already and update
-the tag namespace from `liferay-ui:asset-categories-navigation` to
-`liferay-asset:asset-categories-navigation`.
-
-#### Why was this change made?
-
-This change was made as a part of the ongoing strategy to modularize Liferay
-Portal by means of an OSGi container.
-
----------------------------------------
-
-### The `${theme}` variable is no longer injected in the Freemarker context
+### Taglibs Are No Longer Accessible via the theme Variable in FreeMarker
 - **Date:** 2016-Jan-06
 - **JIRA Ticket:** LPS-61683
 
 #### What changed?
 
-The `${theme}` variable that was injected in the freemarker context providing access to some taglibs or utils is no longer being injected.
+The `${theme}` variable previously injected in the FreeMarker context providing
+access to various tags and utilities no longer provides them. Only the
+`${theme.include}` method is preserved for performance reasons.
 
 #### Who is affected?
 
-Freemarker templates that are using the `${theme}` variable to access any of its provided methods.
+This affects FreeMarker templates that are using the `${theme}` variable to
+access tags.
 
 #### How should I update my code?
 
-All the provided functionality available in the `${theme}` variable can be replaced by the direct usage of a taglib. For example:
+All the tags and utility methods formerly accessed via the `${theme}` variable
+should now be accessed directly via tags.
 
-`${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}` can be replaced by:
-```
-<@liferay_portlet["runtime"]
-    defaultPreferences=default_preferences
-    portletProviderAction=portletProviderAction.VIEW
-    portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
-/>
-```
+**Example 1**
 
-`${theme.include(content_include)}` can be replaced by:
-```
-<@liferay_util["include"] page=content_include />
-```
+    ${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW, "", default_preferences)}
 
-`${theme.wrapPortlet("portlet.ftl", content_include)}` can be replaced by:
-```
-<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+can be replaced by:
+
+    <@liferay_portlet["runtime"]
+        defaultPreferences=default_preferences
+        portletProviderAction=portletProviderAction.VIEW
+        portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
+    />
+
+**Example 2**
+
+    ${theme.include(content_include)}
+
+can be replaced by:
+
     <@liferay_util["include"] page=content_include />
-</@>
-```
 
-`${theme.iconHelp(portlet_description)}` can be replaced by:
-```
-<@liferay_ui["icon-help"] message=portlet_description />
-```
+**Example 3**
 
-`${nav_item.icon()}` can be replaced by:
-```
-<@liferay_theme["layout-icon"] layout=${nav_item.getLayout()} />
-```
+    ${theme.wrapPortlet("portlet.ftl", content_include)}
+
+can be replaced by:
+
+    <@liferay_theme["wrap-portlet"] page="portlet.ftl">
+        <@liferay_util["include"] page=content_include />
+    </@>
+
+**Example 4**
+
+    ${theme.iconHelp(portlet_description)}
+
+can be replaced by:
+
+    <@liferay_ui["icon-help"] message=portlet_description />
+
+**Example 5**
+
+    ${nav_item.icon()}
+
+can be replaced by:
+
+    <@liferay_theme["layout-icon"] layout=${nav_item.getLayout()} />
 
 #### Why was this change made?
 
-For historic reasons, the `{$theme} variable was being injected with the `VelocityTaglibImpl` class. This was creating some coupling between the template engines and between some specific taglibs and the template engines at the same time.
+Previously, the `{$theme}` variable was being injected with the
+`VelocityTaglibImpl` class. This created coupling between template engines and
+coupling between specific tags and template engines at the same time.
 
-Freemarker already offers native support for taglibs which cover all the functionality originally provided by the `{$theme}` variable. Removing this coupling would help future developments while still keeping all the existing functionality.
+FreeMarker already offers native support for tags which cover all the
+functionality originally provided by the `{$theme}` variable. Removing this
+coupling helps future development while still keeping all the existing
+functionality.
 
 ---------------------------------------
 
-### Portlet configuration options may not always be displayed
+### Portlet Configuration Options May Not Always Be Displayed
 - **Date:** 2016-Jan-07
 - **JIRA Ticket:** LPS-54620 and LPS-61820
 
 #### What changed?
 
-The portlet configuration options (configuration, export/import, look and feel, etc) were always displayed in every view of the portlet and they couldn't be customized.
+The portlet configuration options (e.g., configuration, export/import, look and
+feel, etc.) were always displayed in every view of the portlet and couldn't be
+customized.
 
-With Lexicon, the options that are displayed will be based on the context, so not all the options will always be displayed.
+With Lexicon, the configuration options displayed are based on the portlet's
+context, so not all options will always be displayed.
 
 #### Who is affected?
 
-Portlets that should always display all the configuration options no matter which view of the portlet is rendered.
+This affects portlets that should always display all configuration options no
+matter which view of the portlet is rendered.
 
 #### How should I update my code?
 
-If you don't apply any change to your source code you will experience the following behaviour based on the portlet type:
+If you don't apply any change to your source code, you will experience the
+following behaviors based on the portlet type:
 
-- If it's a Struts Portlet and you have defined a `view-action` init parameter, the configuration options will only be displayed for that particular view when invoking a url with a parameter `struts-action` with the value indicated in `view-action` init parameter.
+- **Struts Portlet:** If you've defined a `view-action` init parameter, the
+configuration options are only displayed for that particular view when invoking
+a URL with a parameter `struts_action` with the value indicated in the
+`view-action` init parameter and also in the default view of the portlet (when
+there is no `struts_action` parameter in the request)
 
-- If it's a Liferay MVC Portlet and you have defined a `view-template` init parameter, the configuration options will only be displayed when that template is rendered by invoking a url with a parameter `mvcPath` with the value indicated in `view-template` init parameter.
+- **Liferay MVC Portlet:** If you've defined a `view-template` init parameter,
+the configuration options are only displayed when that template is rendered by
+invoking a URL with a parameter `mvcPath` with the value indicated in the
+`view-template` init parameter. and also in the default view of the portlet
+(when there is no `mvcPath` parameter in the request)
 
-- If it's a portlet using any other framework, the configuration options will never be displayed.
+- If it's a portlet using any other framework, the configuration options are
+always displayed.
 
-In order to keep the old behaviour of adding the configuration options in every view you need to add the init parameter `always-display-default-configuration-icons` with the value `true`.
+In order to keep the old behavior of adding the configuration options in every
+view, you need to add the init parameter
+`always-display-default-configuration-icons` with the value `true`.
 
 #### Why was this change made?
 
-Lexicon patterns require the ability to specify different configuration options depending on the view of the portlet by adding or removing options. This can be easily achieved by using `PortletConfigurationIconFactory` and `PortletConfigurationIconFactory` classes.
+Lexicon patterns require the ability to specify different configuration options
+depending on the view of the portlet by adding or removing options. This can be
+easily achieved by using the `PortletConfigurationIcon` and
+`PortletConfigurationIconFactory` classes.
 
 ---------------------------------------
 
-### The `getURLView` method of AssetRenderer returns `String` instead of `PortletURL`
+### The getURLView Method of AssetRenderer Returns String Instead of PortletURL
 - **Date:** 2016-Jan-08
 - **JIRA Ticket:** LPS-61853
 
 #### What changed?
 
-The AssetRenderer interface has changed and now the method  `getURLView` returns `String` instead of `PortletURL`
+The `AssetRenderer` interface's `getURLView` method has changed and now returns
+`String` instead of `PortletURL`.
 
 #### Who is affected?
 
-All custom assets that implements AssetRenderer interface.
+This affects all custom assets that implement the `AssetRenderer` interface.
 
 #### How should I update my code?
 
-You should update the method signature to reflect that it returns a `String` and you should adapt your implementation accordingly.
+You should update the method signature to reflect that it returns a `String` and
+you should adapt your implementation accordingly.
 
 In general, it should be as easy as returning `portletURL.toString()`.
 
 #### Why was this change made?
 
-The API was forcing to return a PortletURL and this makes things harder when we want to use any other link instead of a PortletURL. For example, in the case of Bookmarks, where we want to automatically redirect to any other potential url.
+The API was forcing implementations to return a `PortletURL`, making it
+difficult to return another type of link. For example, in the case of Bookmarks,
+developers wanted to automatically redirect to other potential URLs.
+
+---------------------------------------
+
+### Removed the icon Method from NavItem
+- **Date:** 2016-Jan-11
+- **JIRA Ticket:** LPS-61900
+
+#### What changed?
+
+The `NavItem` interface has changed and the method `icon` that would render the
+nav item icon has been removed.
+
+#### Who is affected?
+
+This affects all themes using the `nav_item.icon()` method.
+
+#### How should I update my code?
+
+You should update your code to call the method `nav_item.iconURL` to return the
+image's URL and then use it as you prefer.
+
+**Example:**
+
+    <img alt="Page Icon" class="layout-logo" src="<%= nav_item.iconURL()" />
+
+To keep the previous behavior in Velocity:
+
+    $theme.layoutIcon($nav_item.getLayout())
+
+To keep the previous behavior in FreeMarker:
+
+    <@liferay_theme["layout-icon"] layout=nav_item_layout />
+ 
+#### Why was this change made?
+
+The API was forcing developers to have a dependency on a taglib, which didn't
+allow for much flexibility.

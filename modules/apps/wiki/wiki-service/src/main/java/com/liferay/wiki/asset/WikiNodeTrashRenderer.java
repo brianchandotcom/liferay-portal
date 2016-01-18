@@ -16,7 +16,6 @@ package com.liferay.wiki.asset;
 
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -52,12 +51,7 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-copy";
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/all_pages.png";
+		return "folder";
 	}
 
 	@Override

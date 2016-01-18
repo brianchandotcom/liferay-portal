@@ -24,6 +24,7 @@ import org.osgi.framework.Bundle;
  */
 public abstract class BaseAppDisplay implements AppDisplay {
 
+	@Override
 	public void addBundle(Bundle bundle) {
 		_moduleGroupDisplays = null;
 
@@ -41,10 +42,12 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return title.compareToIgnoreCase(appDisplay.getTitle());
 	}
 
+	@Override
 	public List<Bundle> getBundles() {
 		return _bundles;
 	}
 
+	@Override
 	public List<ModuleGroupDisplay> getModuleGroupDisplays() {
 		if (_moduleGroupDisplays == null) {
 			_moduleGroupDisplays =
@@ -54,6 +57,7 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return _moduleGroupDisplays;
 	}
 
+	@Override
 	public int getState() {
 		List<Bundle> _bundles = getBundles();
 
@@ -78,6 +82,7 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return state;
 	}
 
+	@Override
 	public boolean hasModuleGroups() {
 		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays();
 

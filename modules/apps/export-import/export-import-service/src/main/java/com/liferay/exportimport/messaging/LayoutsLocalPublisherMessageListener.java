@@ -117,7 +117,7 @@ public class LayoutsLocalPublisherMessageListener
 			exportImportConfigurationLocalService;
 	}
 
-	private volatile ExportImportConfigurationLocalService
+	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
 }

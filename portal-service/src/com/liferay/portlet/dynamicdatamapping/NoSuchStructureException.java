@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 
 /**
  * @author Leonardo Barros

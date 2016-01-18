@@ -14,15 +14,21 @@
 
 package com.liferay.workflow.instance.web.display.context;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.workflow.instance.web.display.context.util.WorkflowInstanceRequestHelper;
 
 import java.text.Format;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -30,24 +36,36 @@ import javax.portlet.RenderResponse;
 public abstract class BaseWorkflowInstanceDisplayContext {
 
 	public BaseWorkflowInstanceDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		PortletPreferences portletPreferences) {
 
-		this.renderRequest = renderRequest;
-		this.renderResponse = renderResponse;
+		this.liferayPortletRequest = liferayPortletRequest;
+		this.liferayPortletResponse = liferayPortletResponse;
+		this.portletPreferences = portletPreferences;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		this.request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+
+		this.portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		workflowInstanceRequestHelper = new WorkflowInstanceRequestHelper(
-			renderRequest);
+			request);
 	}
 
 	protected final Format dateFormatDateTime;
-	protected final RenderRequest renderRequest;
-	protected final RenderResponse renderResponse;
+	protected final LiferayPortletRequest liferayPortletRequest;
+	protected final LiferayPortletResponse liferayPortletResponse;
+	protected final PortalPreferences portalPreferences;
+	protected final PortletPreferences portletPreferences;
+	protected final HttpServletRequest request;
 	protected final WorkflowInstanceRequestHelper workflowInstanceRequestHelper;
 
 }

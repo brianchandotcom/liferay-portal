@@ -186,7 +186,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory[] findByUuid_PrevAndNext(long categoryId,
 		java.lang.String uuid, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(categoryId, uuid, orderByComparator);
 	}
@@ -272,7 +272,7 @@ public class MBCategoryUtil {
 	* @throws NoSuchCategoryException if a matching message boards category could not be found
 	*/
 	public static MBCategory findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -308,7 +308,7 @@ public class MBCategoryUtil {
 	* @return the message boards category that was removed
 	*/
 	public static MBCategory removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -409,7 +409,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -439,7 +439,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -471,7 +471,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] findByUuid_C_PrevAndNext(long categoryId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(categoryId, uuid, companyId,
 			orderByComparator);
@@ -576,7 +576,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByGroupId_First(long groupId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -602,7 +602,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByGroupId_Last(long groupId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -629,7 +629,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory[] findByGroupId_PrevAndNext(long categoryId,
 		long groupId, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(categoryId, groupId,
 			orderByComparator);
@@ -693,7 +693,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] filterFindByGroupId_PrevAndNext(
 		long categoryId, long groupId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(categoryId, groupId,
 			orderByComparator);
@@ -806,7 +806,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByCompanyId_First(long companyId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -834,7 +834,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByCompanyId_Last(long companyId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -863,7 +863,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory[] findByCompanyId_PrevAndNext(long categoryId,
 		long companyId, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(categoryId, companyId,
 			orderByComparator);
@@ -974,7 +974,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByG_P_First(long groupId,
 		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_First(groupId, parentCategoryId, orderByComparator);
 	}
@@ -1005,7 +1005,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByG_P_Last(long groupId,
 		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_Last(groupId, parentCategoryId, orderByComparator);
 	}
@@ -1037,7 +1037,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] findByG_P_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_PrevAndNext(categoryId, groupId,
 			parentCategoryId, orderByComparator);
@@ -1109,7 +1109,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] filterFindByG_P_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_P_PrevAndNext(categoryId, groupId,
 			parentCategoryId, orderByComparator);
@@ -1385,7 +1385,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByG_S_First(long groupId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
 	}
@@ -1415,7 +1415,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByG_S_Last(long groupId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -1447,7 +1447,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] findByG_S_PrevAndNext(long categoryId,
 		long groupId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(categoryId, groupId, status,
 			orderByComparator);
@@ -1516,7 +1516,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] filterFindByG_S_PrevAndNext(long categoryId,
 		long groupId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_S_PrevAndNext(categoryId, groupId, status,
 			orderByComparator);
@@ -1637,7 +1637,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByC_S_First(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByC_S_First(companyId, status, orderByComparator);
 	}
@@ -1667,7 +1667,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByC_S_Last(long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByC_S_Last(companyId, status, orderByComparator);
 	}
@@ -1699,7 +1699,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] findByC_S_PrevAndNext(long categoryId,
 		long companyId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByC_S_PrevAndNext(categoryId, companyId, status,
 			orderByComparator);
@@ -1822,7 +1822,7 @@ public class MBCategoryUtil {
 	public static MBCategory findByNotC_G_P_First(long categoryId,
 		long groupId, long parentCategoryId,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByNotC_G_P_First(categoryId, groupId, parentCategoryId,
 			orderByComparator);
@@ -1857,7 +1857,7 @@ public class MBCategoryUtil {
 	*/
 	public static MBCategory findByNotC_G_P_Last(long categoryId, long groupId,
 		long parentCategoryId, OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByNotC_G_P_Last(categoryId, groupId, parentCategoryId,
 			orderByComparator);
@@ -2246,7 +2246,7 @@ public class MBCategoryUtil {
 	public static MBCategory findByG_P_S_First(long groupId,
 		long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_S_First(groupId, parentCategoryId, status,
 			orderByComparator);
@@ -2282,7 +2282,7 @@ public class MBCategoryUtil {
 	public static MBCategory findByG_P_S_Last(long groupId,
 		long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_S_Last(groupId, parentCategoryId, status,
 			orderByComparator);
@@ -2319,7 +2319,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] findByG_P_S_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByG_P_S_PrevAndNext(categoryId, groupId,
 			parentCategoryId, status, orderByComparator);
@@ -2397,7 +2397,7 @@ public class MBCategoryUtil {
 	public static MBCategory[] filterFindByG_P_S_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .filterFindByG_P_S_PrevAndNext(categoryId, groupId,
 			parentCategoryId, status, orderByComparator);
@@ -2714,7 +2714,7 @@ public class MBCategoryUtil {
 	public static MBCategory findByNotC_G_P_S_First(long categoryId,
 		long groupId, long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByNotC_G_P_S_First(categoryId, groupId,
 			parentCategoryId, status, orderByComparator);
@@ -2752,7 +2752,7 @@ public class MBCategoryUtil {
 	public static MBCategory findByNotC_G_P_S_Last(long categoryId,
 		long groupId, long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence()
 				   .findByNotC_G_P_S_Last(categoryId, groupId,
 			parentCategoryId, status, orderByComparator);
@@ -3106,7 +3106,7 @@ public class MBCategoryUtil {
 	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
 	*/
 	public static MBCategory remove(long categoryId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().remove(categoryId);
 	}
 
@@ -3122,7 +3122,7 @@ public class MBCategoryUtil {
 	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
 	*/
 	public static MBCategory findByPrimaryKey(long categoryId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException {
 		return getPersistence().findByPrimaryKey(categoryId);
 	}
 

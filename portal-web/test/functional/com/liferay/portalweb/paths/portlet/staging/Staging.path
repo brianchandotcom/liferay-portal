@@ -23,6 +23,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PROCESSES-->
+<tr>
+	<td>SCHEDULED</td>
+	<td>//ul[contains(@id,'StagingProcessesPortlet')]/li/a[contains(@title,'Scheduled')]</td>
+	<td></td>
+</tr>
 <!--STAGING-->
 <tr>
 	<td>STAGING_NEW_PUBLICATION_PROCESS_NAVIGATION</td>
@@ -107,12 +113,12 @@
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION_DROPDOWN</td>
-	<td>//span[contains(.,'${key_sitePagesVariationName}')]/following-sibling::i</td>
+	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_sitePagesVariationName}')]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_VARIATION_DROPDOWN</td>
-	<td>//span[contains(.,'${key_pageVariationName}')]/following-sibling::i</td>
+	<td>//a[contains(@class,'staging-variation-selector') and contains(.,'${key_pageVariationName}')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,7 +139,7 @@
 <!--SITE_PAGES_VARIATION_MENULIST-->
 <tr>
 	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>
-	<td>//ul//a[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td>xpath=(//ul//a[contains(.,'${key_sitePagesVariationName}')])[1]</td>
 	<td></td>
 </tr>
 <tr>

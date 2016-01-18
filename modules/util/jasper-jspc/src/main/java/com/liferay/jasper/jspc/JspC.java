@@ -76,7 +76,7 @@ public class JspC extends org.apache.jasper.JspC {
 				}
 			}
 			catch (Exception e2) {
-				e2.addSuppressed(e);
+				e2.addSuppressed(e1);
 
 				throw new RuntimeException(e2);
 			}

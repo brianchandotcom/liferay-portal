@@ -106,6 +106,10 @@ String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAY
 				<%
 				String backgroundTaskName = backgroundTask.getName();
 
+				if (backgroundTask.getGroupId() == liveGroupId) {
+					backgroundTaskName = LanguageUtil.get(request, "initial-publication");
+				}
+
 				if (backgroundTaskName.equals(StringPool.BLANK)) {
 					backgroundTaskName = LanguageUtil.get(request, "untitled");
 				}

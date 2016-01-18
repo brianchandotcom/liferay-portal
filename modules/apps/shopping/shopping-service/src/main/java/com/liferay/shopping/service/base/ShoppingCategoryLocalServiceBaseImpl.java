@@ -42,6 +42,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.service.ShoppingCategoryLocalService;
+import com.liferay.shopping.service.persistence.ShoppingCategoryFinder;
 import com.liferay.shopping.service.persistence.ShoppingCategoryPersistence;
 import com.liferay.shopping.service.persistence.ShoppingItemFinder;
 import com.liferay.shopping.service.persistence.ShoppingItemPersistence;
@@ -356,6 +357,25 @@ public abstract class ShoppingCategoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the shopping category finder.
+	 *
+	 * @return the shopping category finder
+	 */
+	public ShoppingCategoryFinder getShoppingCategoryFinder() {
+		return shoppingCategoryFinder;
+	}
+
+	/**
+	 * Sets the shopping category finder.
+	 *
+	 * @param shoppingCategoryFinder the shopping category finder
+	 */
+	public void setShoppingCategoryFinder(
+		ShoppingCategoryFinder shoppingCategoryFinder) {
+		this.shoppingCategoryFinder = shoppingCategoryFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -542,6 +562,8 @@ public abstract class ShoppingCategoryLocalServiceBaseImpl
 	protected ShoppingCategoryLocalService shoppingCategoryLocalService;
 	@BeanReference(type = ShoppingCategoryPersistence.class)
 	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
+	@BeanReference(type = ShoppingCategoryFinder.class)
+	protected ShoppingCategoryFinder shoppingCategoryFinder;
 	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
@@ -556,6 +578,6 @@ public abstract class ShoppingCategoryLocalServiceBaseImpl
 	protected ShoppingItemPersistence shoppingItemPersistence;
 	@BeanReference(type = ShoppingItemFinder.class)
 	protected ShoppingItemFinder shoppingItemFinder;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

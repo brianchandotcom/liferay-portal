@@ -118,7 +118,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		_jsonFactory = jsonFactory;
 	}
 
-	private volatile JSONFactory _jsonFactory;
+	private JSONFactory _jsonFactory;
 	private final PortalCache<String, DDMRESTDataProviderResult> _portalCache =
 		MultiVMPoolUtil.getPortalCache(DDMRESTDataProvider.class.getName());
 

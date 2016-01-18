@@ -14,12 +14,10 @@
 
 package com.liferay.nested.portlets.web.display.context;
 
-import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
 import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.plugin.PluginUtil;
@@ -36,13 +34,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NestedPortletsDisplayContext {
 
-	public NestedPortletsDisplayContext(
-			HttpServletRequest request,
-			NestedPortletsConfiguration nestedPortletsConfiguration)
+	public NestedPortletsDisplayContext(HttpServletRequest request)
 		throws ConfigurationException {
 
 		_request = request;
-		_nestedPortletsConfiguration = nestedPortletsConfiguration;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -61,11 +56,6 @@ public class NestedPortletsDisplayContext {
 
 		_layoutTemplateId =
 			_nestedPortletsPortletInstanceConfiguration.layoutTemplateId();
-
-		if (Validator.isNull(_layoutTemplateId)) {
-			_layoutTemplateId =
-				_nestedPortletsConfiguration.layoutTemplateDefault();
-		}
 
 		return _layoutTemplateId;
 	}
@@ -99,11 +89,11 @@ public class NestedPortletsDisplayContext {
 
 	protected List<String> getUnsupportedLayoutTemplateIds() {
 		return ListUtil.fromArray(
-			_nestedPortletsConfiguration.layoutTemplatesUnsupported());
+			_nestedPortletsPortletInstanceConfiguration.
+				layoutTemplatesUnsupported());
 	}
 
 	private String _layoutTemplateId;
-	private final NestedPortletsConfiguration _nestedPortletsConfiguration;
 	private final NestedPortletsPortletInstanceConfiguration
 		_nestedPortletsPortletInstanceConfiguration;
 	private final HttpServletRequest _request;

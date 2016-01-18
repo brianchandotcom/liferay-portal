@@ -85,7 +85,7 @@ public class NotificationsPollerProcessor extends BasePollerProcessor {
 		return pollerResponse;
 	}
 
-	private volatile UserNotificationEventLocalService
+	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
 }

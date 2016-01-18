@@ -16,9 +16,8 @@ package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portlet.expando.DuplicateTableNameException;
-import com.liferay.portlet.expando.TableNameException;
+import com.liferay.portlet.expando.exception.DuplicateTableNameException;
+import com.liferay.portlet.expando.exception.TableNameException;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.base.ExpandoTableLocalServiceBaseImpl;
@@ -67,20 +66,6 @@ public class ExpandoTableLocalServiceImpl
 		return table;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #addTable(long, long,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public ExpandoTable addTable(long classNameId, String name)
-		throws PortalException {
-
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return addTable(companyId, classNameId, name);
-	}
-
 	@Override
 	public ExpandoTable addTable(long companyId, String className, String name)
 		throws PortalException {
@@ -88,20 +73,6 @@ public class ExpandoTableLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return addTable(companyId, classNameId, name);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #addTable(long, String,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public ExpandoTable addTable(String className, String name)
-		throws PortalException {
-
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return addTable(companyId, className, name);
 	}
 
 	@Override
@@ -228,20 +199,6 @@ public class ExpandoTableLocalServiceImpl
 			companyId, classNameId, name);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getTable(long, long,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public ExpandoTable getTable(long classNameId, String name)
-		throws PortalException {
-
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return getTable(companyId, classNameId, name);
-	}
-
 	@Override
 	public ExpandoTable getTable(long companyId, String className, String name)
 		throws PortalException {
@@ -249,20 +206,6 @@ public class ExpandoTableLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getTable(companyId, classNameId, name);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getTable(long, String,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public ExpandoTable getTable(String className, String name)
-		throws PortalException {
-
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		return getTable(companyId, className, name);
 	}
 
 	@Override

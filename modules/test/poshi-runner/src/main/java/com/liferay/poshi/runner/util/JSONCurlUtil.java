@@ -48,11 +48,16 @@ public class JSONCurlUtil {
 
 		System.out.println(sb.toString());
 
-		DocumentContext documentContext = JsonPath.parse(sb.toString());
+		try {
+			DocumentContext documentContext = JsonPath.parse(sb.toString());
 
-		Object object = documentContext.read(jsonPath);
+			Object object = documentContext.read(jsonPath);
 
-		return object.toString();
+			return object.toString();
+		}
+		catch (Exception e) {
+			return "";
+		}
 	}
 
 }

@@ -99,6 +99,6 @@ if (entry.getPriority() > 0) {
 	</div>
 
 	<div class="entry-content <%= hiddenEntry ? "hide" : StringPool.BLANK %> panel-body">
-		<%= HtmlUtil.escape(entry.getContent()) %>
+		<%= entry.getContent() %>
 	</div>
 </div>

@@ -286,7 +286,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a matching shopping order could not be found
+	 * @throws NoSuchOrderException if a matching shopping order could not be found
 	 */
 	@Override
 	public ShoppingOrder findByGroupId_First(long groupId,
@@ -337,7 +337,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a matching shopping order could not be found
+	 * @throws NoSuchOrderException if a matching shopping order could not be found
 	 */
 	@Override
 	public ShoppingOrder findByGroupId_Last(long groupId,
@@ -395,7 +395,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder[] findByGroupId_PrevAndNext(long orderId,
@@ -665,7 +665,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder[] filterFindByGroupId_PrevAndNext(long orderId,
@@ -966,11 +966,11 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns the shopping order where number = &#63; or throws a {@link com.liferay.shopping.NoSuchOrderException} if it could not be found.
+	 * Returns the shopping order where number = &#63; or throws a {@link NoSuchOrderException} if it could not be found.
 	 *
 	 * @param number the number
 	 * @return the matching shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a matching shopping order could not be found
+	 * @throws NoSuchOrderException if a matching shopping order could not be found
 	 */
 	@Override
 	public ShoppingOrder findByNumber(String number)
@@ -1199,11 +1199,11 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns the shopping order where ppTxnId = &#63; or throws a {@link com.liferay.shopping.NoSuchOrderException} if it could not be found.
+	 * Returns the shopping order where ppTxnId = &#63; or throws a {@link NoSuchOrderException} if it could not be found.
 	 *
 	 * @param ppTxnId the pp txn ID
 	 * @return the matching shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a matching shopping order could not be found
+	 * @throws NoSuchOrderException if a matching shopping order could not be found
 	 */
 	@Override
 	public ShoppingOrder findByPPTxnId(String ppTxnId)
@@ -1677,7 +1677,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param ppPaymentStatus the pp payment status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a matching shopping order could not be found
+	 * @throws NoSuchOrderException if a matching shopping order could not be found
 	 */
 	@Override
 	public ShoppingOrder findByG_U_PPPS_First(long groupId, long userId,
@@ -1740,7 +1740,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param ppPaymentStatus the pp payment status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a matching shopping order could not be found
+	 * @throws NoSuchOrderException if a matching shopping order could not be found
 	 */
 	@Override
 	public ShoppingOrder findByG_U_PPPS_Last(long groupId, long userId,
@@ -1810,7 +1810,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param ppPaymentStatus the pp payment status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder[] findByG_U_PPPS_PrevAndNext(long orderId,
@@ -2138,7 +2138,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 * @param ppPaymentStatus the pp payment status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder[] filterFindByG_U_PPPS_PrevAndNext(long orderId,
@@ -2692,7 +2692,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 *
 	 * @param orderId the primary key of the shopping order
 	 * @return the shopping order that was removed
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder remove(long orderId) throws NoSuchOrderException {
@@ -2704,7 +2704,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 *
 	 * @param primaryKey the primary key of the shopping order
 	 * @return the shopping order that was removed
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder remove(Serializable primaryKey)
@@ -2949,11 +2949,11 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	}
 
 	/**
-	 * Returns the shopping order with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the shopping order with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the shopping order
 	 * @return the shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder findByPrimaryKey(Serializable primaryKey)
@@ -2973,11 +2973,11 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	}
 
 	/**
-	 * Returns the shopping order with the primary key or throws a {@link com.liferay.shopping.NoSuchOrderException} if it could not be found.
+	 * Returns the shopping order with the primary key or throws a {@link NoSuchOrderException} if it could not be found.
 	 *
 	 * @param orderId the primary key of the shopping order
 	 * @return the shopping order
-	 * @throws com.liferay.shopping.NoSuchOrderException if a shopping order with the primary key could not be found
+	 * @throws NoSuchOrderException if a shopping order with the primary key could not be found
 	 */
 	@Override
 	public ShoppingOrder findByPrimaryKey(long orderId)

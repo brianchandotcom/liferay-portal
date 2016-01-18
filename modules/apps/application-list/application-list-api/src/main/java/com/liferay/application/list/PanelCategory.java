@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PanelCategory extends PanelEntry {
 
-	public String getIconCssClass();
-
 	public int getNotificationsCount(
 		PanelCategoryHelper panelCategoryHelper,
 		PermissionChecker permissionChecker, Group group, User user);
@@ -45,5 +43,7 @@ public interface PanelCategory extends PanelEntry {
 
 	public boolean isActive(
 		HttpServletRequest request, PanelCategoryHelper panelCategoryHelper);
+
+	public boolean isPersistState();
 
 }

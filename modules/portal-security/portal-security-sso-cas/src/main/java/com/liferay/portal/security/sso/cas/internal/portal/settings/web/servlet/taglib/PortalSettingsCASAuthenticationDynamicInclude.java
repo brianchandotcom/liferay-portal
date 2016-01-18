@@ -81,6 +81,6 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsCASAuthenticationDynamicInclude.class);
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

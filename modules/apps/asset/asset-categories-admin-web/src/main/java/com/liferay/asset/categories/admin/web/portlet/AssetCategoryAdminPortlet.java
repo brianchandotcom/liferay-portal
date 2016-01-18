@@ -25,15 +25,15 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portlet.asset.AssetCategoryNameException;
-import com.liferay.portlet.asset.CategoryPropertyKeyException;
-import com.liferay.portlet.asset.CategoryPropertyValueException;
-import com.liferay.portlet.asset.DuplicateCategoryException;
-import com.liferay.portlet.asset.DuplicateCategoryPropertyException;
-import com.liferay.portlet.asset.DuplicateVocabularyException;
-import com.liferay.portlet.asset.NoSuchCategoryException;
-import com.liferay.portlet.asset.NoSuchVocabularyException;
-import com.liferay.portlet.asset.VocabularyNameException;
+import com.liferay.portlet.asset.exception.AssetCategoryNameException;
+import com.liferay.portlet.asset.exception.CategoryPropertyKeyException;
+import com.liferay.portlet.asset.exception.CategoryPropertyValueException;
+import com.liferay.portlet.asset.exception.DuplicateCategoryException;
+import com.liferay.portlet.asset.exception.DuplicateCategoryPropertyException;
+import com.liferay.portlet.asset.exception.DuplicateVocabularyException;
+import com.liferay.portlet.asset.exception.NoSuchCategoryException;
+import com.liferay.portlet.asset.exception.NoSuchVocabularyException;
+import com.liferay.portlet.asset.exception.VocabularyNameException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -325,7 +325,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		_assetVocabularyService = assetVocabularyService;
 	}
 
-	private volatile AssetCategoryService _assetCategoryService;
-	private volatile AssetVocabularyService _assetVocabularyService;
+	private AssetCategoryService _assetCategoryService;
+	private AssetVocabularyService _assetVocabularyService;
 
 }

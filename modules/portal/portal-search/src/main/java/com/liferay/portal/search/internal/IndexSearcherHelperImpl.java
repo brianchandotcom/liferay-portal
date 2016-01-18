@@ -150,6 +150,6 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexSearcherHelperImpl.class);
 
-	private volatile SearchEngineHelper _searchEngineHelper;
+	private SearchEngineHelper _searchEngineHelper;
 
 }

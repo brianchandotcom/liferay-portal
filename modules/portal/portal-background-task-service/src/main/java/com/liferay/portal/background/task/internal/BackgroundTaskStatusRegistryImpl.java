@@ -135,7 +135,7 @@ public class BackgroundTaskStatusRegistryImpl
 
 	private final Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
 		new HashMap<>();
-	private volatile ClusterMasterExecutor _clusterMasterExecutor;
+	private ClusterMasterExecutor _clusterMasterExecutor;
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
 
 }

@@ -63,7 +63,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.util.JS;
 
 import java.text.DateFormat;
@@ -311,9 +311,7 @@ public class LayoutTypePortletImpl
 	public List<Portlet> getEmbeddedPortlets() {
 		Layout layout = getLayout();
 
-		_embeddedPortlets = layout.getEmbeddedPortlets();
-
-		return _embeddedPortlets;
+		return layout.getEmbeddedPortlets();
 	}
 
 	@Override
@@ -806,21 +804,13 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public boolean isPortletEmbedded(String portletId) {
-		Layout layout = getLayout();
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			layout.getCompanyId(), portletId);
-
-		long scopeGroupId = PortalUtil.getScopeGroupId(layout, portletId);
-
-		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				PortletKeys.PREFS_PLID_SHARED, portlet, false) < 1) {
-
-			return false;
+		for (Portlet embeddedPortlet : getEmbeddedPortlets()) {
+			if (portletId.equals(embeddedPortlet.getPortletId())) {
+				return true;
+			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1511,7 +1501,6 @@ public class LayoutTypePortletImpl
 			(LayoutTypePortletImpl)LayoutTypePortletFactoryUtil.create(
 				getLayout());
 
-		defaultLayoutTypePortletImpl._embeddedPortlets = _embeddedPortlets;
 		defaultLayoutTypePortletImpl._layoutSetPrototypeLayout =
 			_layoutSetPrototypeLayout;
 		defaultLayoutTypePortletImpl._updatePermission = _updatePermission;
@@ -1916,7 +1905,6 @@ public class LayoutTypePortletImpl
 	private final Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
-	private transient List<Portlet> _embeddedPortlets;
 	private boolean _enablePortletLayoutListener = true;
 	private Layout _layoutSetPrototypeLayout;
 	private PortalPreferences _portalPreferences;

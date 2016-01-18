@@ -84,6 +84,6 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

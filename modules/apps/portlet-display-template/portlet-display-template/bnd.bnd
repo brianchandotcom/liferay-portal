@@ -5,3 +5,6 @@ Export-Package:\
 	com.liferay.portlet.display.template,\
 	com.liferay.portlet.display.template.exportimport.portlet.preferences.processor
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../marketplace/web-content-management/bnd.bnd

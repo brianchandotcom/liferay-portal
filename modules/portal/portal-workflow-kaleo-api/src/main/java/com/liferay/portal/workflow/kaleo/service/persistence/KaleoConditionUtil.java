@@ -185,7 +185,7 @@ public class KaleoConditionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
+	* @throws NoSuchConditionException if a matching kaleo condition could not be found
 	*/
 	public static KaleoCondition findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoCondition> orderByComparator)
@@ -213,7 +213,7 @@ public class KaleoConditionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
+	* @throws NoSuchConditionException if a matching kaleo condition could not be found
 	*/
 	public static KaleoCondition findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoCondition> orderByComparator)
@@ -242,7 +242,7 @@ public class KaleoConditionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
+	* @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
 	*/
 	public static KaleoCondition[] findByCompanyId_PrevAndNext(
 		long kaleoConditionId, long companyId,
@@ -351,7 +351,7 @@ public class KaleoConditionUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
+	* @throws NoSuchConditionException if a matching kaleo condition could not be found
 	*/
 	public static KaleoCondition findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
@@ -383,7 +383,7 @@ public class KaleoConditionUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
+	* @throws NoSuchConditionException if a matching kaleo condition could not be found
 	*/
 	public static KaleoCondition findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
@@ -416,7 +416,7 @@ public class KaleoConditionUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
+	* @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
 	*/
 	public static KaleoCondition[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoConditionId, long kaleoDefinitionId,
@@ -447,11 +447,11 @@ public class KaleoConditionUtil {
 	}
 
 	/**
-	* Returns the kaleo condition where kaleoNodeId = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchConditionException} if it could not be found.
+	* Returns the kaleo condition where kaleoNodeId = &#63; or throws a {@link NoSuchConditionException} if it could not be found.
 	*
 	* @param kaleoNodeId the kaleo node ID
 	* @return the matching kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
+	* @throws NoSuchConditionException if a matching kaleo condition could not be found
 	*/
 	public static KaleoCondition findByKaleoNodeId(long kaleoNodeId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException {
@@ -535,7 +535,7 @@ public class KaleoConditionUtil {
 	*
 	* @param kaleoConditionId the primary key of the kaleo condition
 	* @return the kaleo condition that was removed
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
+	* @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
 	*/
 	public static KaleoCondition remove(long kaleoConditionId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException {
@@ -547,11 +547,11 @@ public class KaleoConditionUtil {
 	}
 
 	/**
-	* Returns the kaleo condition with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchConditionException} if it could not be found.
+	* Returns the kaleo condition with the primary key or throws a {@link NoSuchConditionException} if it could not be found.
 	*
 	* @param kaleoConditionId the primary key of the kaleo condition
 	* @return the kaleo condition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
+	* @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
 	*/
 	public static KaleoCondition findByPrimaryKey(long kaleoConditionId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException {

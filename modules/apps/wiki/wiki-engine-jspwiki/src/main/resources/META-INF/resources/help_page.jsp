@@ -16,59 +16,67 @@
 
 <%@ include file="/init.jsp" %>
 
-<h4>
-	<liferay-ui:message key="text-styles" />
-</h4>
+<div class="container-fluid-1280">
+	<h4>
+		<liferay-ui:message key="text-styles" />
+	</h4>
 
-<pre>
-//italics//
-**bold**
-</pre>
+	<pre>
+	//italics//
+	**bold**
+	</pre>
 
-<h4>
-	<liferay-ui:message key="headers" />
-</h4>
+	<h4>
+		<liferay-ui:message key="headers" />
+	</h4>
 
-<pre>
-== Large heading ==
-=== Medium heading ===
-==== Small heading ====
-</pre>
+	<pre>
+	== Large heading ==
+	=== Medium heading ===
+	==== Small heading ====
+	</pre>
 
-<h4>
-	<liferay-ui:message key="links" />
-</h4>
+	<h4>
+		<liferay-ui:message key="links" />
+	</h4>
 
-<pre>
-[[Link to a page]]
-[[http://www.liferay.com|Link to website]]
-</pre>
+	<pre>
+	[[Link to a page]]
+	[[http://www.liferay.com|Link to website]]
+	</pre>
 
-<h4>
-	<liferay-ui:message key="lists" />
-</h4>
+	<h4>
+		<liferay-ui:message key="lists" />
+	</h4>
 
-<pre>
-* Item
-** Subitem
-# Ordered Item
-## Ordered Subitem
-</pre>
+	<pre>
+	* Item
+	** Subitem
+	# Ordered Item
+	## Ordered Subitem
+	</pre>
 
-<h4>
-	<liferay-ui:message key="images" />
-</h4>
+	<h4>
+		<liferay-ui:message key="images" />
+	</h4>
 
-<pre>
-{{attached-image.png}}
-{{Page Name/other-image.jpg|label}}
-</pre>
+	<pre>
+	{{attached-image.png}}
+	{{Page Name/other-image.jpg|label}}
+	</pre>
 
-<h4>
-	<liferay-ui:message key="other" />
-</h4>
+	<h4>
+		<liferay-ui:message key="other" />
+	</h4>
 
-<pre>
-&lt;&lt;TableOfContents&gt;&gt;
-{{{ Preformatted }}}
-</pre>
+	<pre>
+	&lt;&lt;TableOfContents&gt;&gt;
+	{{{ Preformatted }}}
+	</pre>
+
+	<%
+	BaseInputEditorWikiEngine baseInputEditorWikiEngine = BaseInputEditorWikiEngine.getBaseInputEditorWikiEngine(request);
+	%>
+
+	<aui:a href="<%= baseInputEditorWikiEngine.getHelpURL() %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
+</div>

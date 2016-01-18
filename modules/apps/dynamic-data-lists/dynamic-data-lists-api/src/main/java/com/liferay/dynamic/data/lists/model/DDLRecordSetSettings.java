@@ -104,13 +104,13 @@ public interface DDLRecordSetSettings {
 	public String redirectURL();
 
 	@DDMFormField(
-		label = "%require-captcha-to-submit-the-form",
-		properties = {"showAsSwitcher=true"}, type = "checkbox"
+		label = "%require-captcha", properties = {"showAsSwitcher=true"},
+		type = "checkbox"
 	)
 	public boolean requireCaptcha();
 
 	@DDMFormField(
-		label = "%send-email-notification-for-each-entry",
+		label = "%send-an-email-notification-for-each-entry",
 		properties = {"showAsSwitcher=true"}, type = "checkbox"
 	)
 	public boolean sendEmailNotification();

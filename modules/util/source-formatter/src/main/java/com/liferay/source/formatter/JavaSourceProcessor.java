@@ -34,7 +34,9 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -290,14 +292,40 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"Enabled()";
 
 			if (!codeBlock.contains(s)) {
-				int lineCount = StringUtil.count(
-					content.substring(0, matcher.start(1)),
-					StringPool.NEW_LINE);
-
-				lineCount += 1;
+				int lineCount = getLineCount(content, matcher.start(1));
 
 				processErrorMessage(
 					fileName, "Use " + s + ": " + fileName + " " + lineCount);
+			}
+		}
+	}
+
+	protected void checkReferenceMethodsFromSuperClass(
+			String fileName, String content, String className,
+			String packagePath)
+		throws Exception {
+
+		String moduleSuperClassContent = getModuleSuperClassContent(
+			content, className, packagePath);
+
+		if (Validator.isNull(moduleSuperClassContent) ||
+			!moduleSuperClassContent.contains("@Component") ||
+			!moduleSuperClassContent.contains("@Reference")) {
+
+			return;
+		}
+
+		Matcher matcher = _referenceMethodPattern.matcher(
+			moduleSuperClassContent);
+
+		while (matcher.find()) {
+			String referenceMethodModifierAndName = matcher.group(2);
+
+			if (!content.contains(referenceMethodModifierAndName)) {
+				processErrorMessage(
+					fileName,
+					"LPS-62150: Missing method " + matcher.group(4) + ": " +
+						fileName);
 			}
 		}
 	}
@@ -684,9 +712,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				match, StringPool.OPEN_PARENTHESIS);
 
 			if (closeParenthesesCount == openParenthesesCount) {
-				String beforeMatch = newContent.substring(0, matcher.start());
-
-				int lineCount = StringUtil.count(beforeMatch, "\n") + 1;
+				int lineCount = getLineCount(newContent, matcher.start());
 
 				processErrorMessage(
 					fileName, "line break: " + fileName + " " + lineCount);
@@ -934,7 +960,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource && isModulesFile(absolutePath)) {
 			newContent = formatModulesFile(
-				fileName, absolutePath, packagePath, newContent);
+				fileName, absolutePath, className, packagePath, newContent);
 		}
 
 		// LPS-48156
@@ -984,10 +1010,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (pos != -1) {
 			String javaClassContent = newContent.substring(pos + 1);
 
-			String beforeJavaClass = newContent.substring(0, pos + 1);
-
-			int javaClassLineCount =
-				StringUtil.count(beforeJavaClass, "\n") + 1;
+			int javaClassLineCount = getLineCount(newContent, pos + 1);
 
 			newContent = formatJavaTerms(
 				className, packagePath, file, fileName, absolutePath,
@@ -999,6 +1022,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatJava(fileName, absolutePath, newContent);
 
+		if (_checkTabs &&
+			!isExcludedFile(_checkTabsExclusionFiles, absolutePath)) {
+
+			JavaSourceTabCalculator javaSourceTabCalculator =
+				new JavaSourceTabCalculator();
+
+			javaSourceTabCalculator.calculateTabs(
+				fileName, newContent, (JavaSourceProcessor)this);
+		}
+
 		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
 	}
 
@@ -1009,9 +1042,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (portalSource) {
 			fileNames = getPortalJavaFiles();
 
-			_checkModulesServiceUtil = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.modules.service.util"));
 			_checkUnprocessedExceptions = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.unprocessed.exceptions"));
@@ -1026,6 +1056,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("allow.use.service.util.in.service.impl"));
 		_checkJavaFieldTypesExclusionFiles = getPropertyList(
 			"check.java.field.types.excludes.files");
+		_checkTabs = GetterUtil.getBoolean(
+			System.getProperty("source.formatter.check.tabs"));
+		_checkTabsExclusionFiles = getPropertyList("check.tabs.excludes.files");
 		_diamondOperatorExclusionFiles = getPropertyList(
 			"diamond.operator.excludes.files");
 		_diamondOperatorExclusionPaths = getPropertyList(
@@ -2298,8 +2331,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatModulesFile(
-		String fileName, String absolutePath, String packagePath,
-		String content) {
+			String fileName, String absolutePath, String className,
+			String packagePath, String content)
+		throws Exception {
 
 		// LPS-56706 and LPS-57722
 
@@ -2346,7 +2380,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-59076
 
 		if (content.contains("@Component")) {
-			content = formatOSGIComponents(fileName, absolutePath, content);
+			content = formatOSGIComponents(
+				fileName, absolutePath, content, className, packagePath);
 		}
 
 		if (!absolutePath.contains("/modules/core/") &&
@@ -2373,7 +2408,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatOSGIComponents(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content,
+			String className, String packagePath)
+		throws Exception {
 
 		String moduleServicePackagePath = null;
 
@@ -2393,14 +2430,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (serviceUtilClassPackagePath.startsWith(
 						moduleServicePackagePath)) {
 
-					if (_checkModulesServiceUtil) {
-						processErrorMessage(
-							fileName,
-							"LPS-59076: Convert OSGi Component to Spring " +
-								"bean: " + fileName);
-					}
-
-					break;
+					continue;
 				}
 			}
 
@@ -2410,29 +2440,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					serviceUtilClassName + " directly: " + fileName);
 		}
 
-		matcher = _setReferenceMethodPattern.matcher(content);
+		matcher = _referenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
-			String annotationParameters = matcher.group(2);
+			String methodName = matcher.group(4);
+
+			if (!methodName.startsWith("set")) {
+				continue;
+			}
+
+			String annotationParameters = matcher.group(1);
 
 			if (!annotationParameters.contains("unbind =")) {
-				String setMethodName = matcher.group(4);
-
-				if (!content.contains("un" + setMethodName + "(")) {
+				if (!content.contains("un" + methodName + "(")) {
 					if (Validator.isNull(annotationParameters)) {
 						return StringUtil.insert(
-							content, "(unbind = \"-\")", matcher.start(2));
+							content, "(unbind = \"-\")", matcher.start(1));
 					}
 
 					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
 						return StringUtil.insert(
-							content, ", unbind = \"-\"", matcher.end(2) - 1);
+							content, ", unbind = \"-\"", matcher.end(1) - 1);
 					}
 
 					if (!annotationParameters.contains("\n\n")) {
-						String indent = matcher.group(1) + StringPool.TAB;
+						String indent = "\t\t";
 
-						int x = content.lastIndexOf("\n", matcher.end(2) - 1);
+						int x = content.lastIndexOf("\n", matcher.end(1) - 1);
 
 						return StringUtil.replaceFirst(
 							content, "\n",
@@ -2444,7 +2478,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String methodContent = matcher.group(6);
 
 			Matcher referenceMethodContentMatcher =
-				_setReferenceMethodContentPattern.matcher(methodContent);
+				_referenceMethodContentPattern.matcher(methodContent);
 
 			if (!referenceMethodContentMatcher.find()) {
 				continue;
@@ -2455,7 +2489,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("private ");
+			sb.append("private volatile ");
 			sb.append(typeName);
 			sb.append("\\s+");
 			sb.append(variableName);
@@ -2469,43 +2503,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String match = privateVarMatcher.group();
 
 				String replacement = StringUtil.replace(
-					match, "private ", "private volatile ");
+					match, "private volatile ", "private ");
 
 				return StringUtil.replace(content, match, replacement);
 			}
-
-			if (!_checkModulesServiceUtil) {
-				continue;
-			}
-
-			if (moduleServicePackagePath == null) {
-				moduleServicePackagePath = getModuleServicePackagePath(
-					fileName);
-			}
-
-			if (Validator.isNotNull(moduleServicePackagePath)) {
-				sb = new StringBundler(5);
-
-				sb.append("\nimport ");
-				sb.append(moduleServicePackagePath);
-				sb.append(".*\\.");
-				sb.append(typeName);
-				sb.append(StringPool.SEMICOLON);
-
-				Pattern importPattern = Pattern.compile(sb.toString());
-
-				Matcher importMatcher = importPattern.matcher(content);
-
-				if (importMatcher.find()) {
-					processErrorMessage(
-						fileName,
-						"LPS-59076: Convert OSGi Component to Spring bean: " +
-							fileName);
-
-					break;
-				}
-			}
 		}
+
+		checkReferenceMethodsFromSuperClass(
+			fileName, content, className, packagePath);
 
 		return content;
 	}
@@ -3311,6 +3316,76 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return x + 1;
 	}
 
+	protected String getModuleClassContent(String fullClassName)
+		throws Exception {
+
+		String classContent = _moduleFileContentsMap.get(fullClassName);
+
+		if (classContent != null) {
+			return classContent;
+		}
+
+		Map<String, String> moduleFileNamesMap = getModuleFileNamesMap();
+
+		String moduleFileName = moduleFileNamesMap.get(fullClassName);
+
+		if (moduleFileName == null) {
+			_moduleFileContentsMap.put(fullClassName, StringPool.BLANK);
+
+			return StringPool.BLANK;
+		}
+
+		File file = new File(moduleFileName);
+
+		classContent = FileUtil.read(file);
+
+		_moduleFileContentsMap.put(fullClassName, classContent);
+
+		return classContent;
+	}
+
+	protected Map<String, String> getModuleFileNamesMap() throws Exception {
+		if (_moduleFileNamesMap != null) {
+			return _moduleFileNamesMap;
+		}
+
+		_moduleFileNamesMap = new HashMap<>();
+
+		List<String> fileNames = new ArrayList<>();
+
+		String moduleRootDirLocation =
+			sourceFormatterArgs.getBaseDirName() + "modules/";
+
+		for (int i = 0; i < 6; i++) {
+			File file = new File(moduleRootDirLocation);
+
+			if (file.exists()) {
+				fileNames = getFileNames(
+					moduleRootDirLocation, null, new String[0], getIncludes());
+
+				break;
+			}
+
+			moduleRootDirLocation = "../" + moduleRootDirLocation;
+		}
+
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			String className = StringUtil.replace(
+				fileName, StringPool.SLASH, StringPool.PERIOD);
+
+			int pos = className.lastIndexOf(".com.liferay.");
+
+			className = className.substring(pos + 1, fileName.length() - 5);
+
+			_moduleFileNamesMap.put(className, fileName);
+		}
+
+		return _moduleFileNamesMap;
+	}
+
 	protected String getModuleServicePackagePath(String fileName) {
 		String serviceDirLocation = fileName;
 
@@ -3347,6 +3422,49 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int pos = serviceDirLocation.lastIndexOf(".com.");
 
 		return serviceDirLocation.substring(pos + 1);
+	}
+
+	protected String getModuleSuperClassContent(
+			String content, String className, String packagePath)
+		throws Exception {
+
+		Pattern pattern = Pattern.compile(
+			" class " + className + "\\s+extends\\s+([\\w.]+) ");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String superClassName = matcher.group(1);
+
+		if (superClassName.contains(StringPool.PERIOD)) {
+			if (!superClassName.startsWith("com.liferay")) {
+				return null;
+			}
+
+			return getModuleClassContent(superClassName);
+		}
+
+		String superClassPackagePath = packagePath;
+
+		pattern = Pattern.compile("\nimport (.+?)\\." + superClassName + ";");
+
+		matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			superClassPackagePath = matcher.group(1);
+		}
+
+		if (!superClassPackagePath.startsWith("com.liferay")) {
+			return null;
+		}
+
+		String superClassFullClassName =
+			superClassPackagePath + StringPool.PERIOD + superClassName;
+
+		return getModuleClassContent(superClassFullClassName);
 	}
 
 	protected String getNextLine(String content, int lineCount) {
@@ -3743,7 +3861,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
-	private boolean _checkModulesServiceUtil;
+	private boolean _checkTabs;
+	private List<String> _checkTabsExclusionFiles;
 	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
@@ -3791,20 +3910,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
 	private Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
+	private Map<String, String> _moduleFileContentsMap = new HashMap<>();
+	private Map<String, String> _moduleFileNamesMap;
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private Pattern _referenceMethodContentPattern = Pattern.compile(
+		"^(\\w+) =\\s+\\w+;$");
+	private Pattern _referenceMethodPattern = Pattern.compile(
+		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?)\\()" +
+			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private List<String> _secureDeserializationExclusionFiles;
 	private List<String> _secureRandomExclusionFiles;
 	private List<String> _secureXmlExclusionFiles;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
-	private Pattern _setReferenceMethodContentPattern = Pattern.compile(
-		"^(\\w+) =\\s+\\w+;$");
-	private Pattern _setReferenceMethodPattern = Pattern.compile(
-		"\n(\t+)@Reference([\\s\\S]*?)\\s+(protected|public) void (set\\w+?)" +
-			"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\\}");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

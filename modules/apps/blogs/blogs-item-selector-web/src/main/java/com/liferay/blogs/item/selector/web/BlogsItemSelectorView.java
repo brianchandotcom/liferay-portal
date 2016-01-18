@@ -123,6 +123,6 @@ public class BlogsItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

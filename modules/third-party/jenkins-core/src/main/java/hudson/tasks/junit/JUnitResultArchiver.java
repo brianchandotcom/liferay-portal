@@ -58,8 +58,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/* @generated */
-
 /**
  * Generates HTML report from JUnit test result XML files.
  * 
@@ -258,3 +256,4 @@ public class JUnitResultArchiver extends Recorder {
 		}
     }
 }
+/* @generated */

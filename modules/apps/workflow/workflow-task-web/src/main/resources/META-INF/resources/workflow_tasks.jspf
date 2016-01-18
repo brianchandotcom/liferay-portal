@@ -14,8 +14,7 @@
  */
 --%>
 
-<liferay-ui:search-container searchContainer="<%= workflowTaskSearch %>"
->
+<liferay-ui:search-container searchContainer="<%= workflowTaskSearch %>">
 	<liferay-ui:search-container-results results="<%= workflowTaskSearch.getResults() %>"
 		total="<%= workflowTaskSearch.getTotal() %>">
 	</liferay-ui:search-container-results>
@@ -37,46 +36,118 @@
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="task"
-		>
-			<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
-				<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
-			</span>
-		</liferay-ui:search-container-column-text>
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<liferay-ui:search-container-column-image
+					src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+					toggleRowChecker="<%= true %>"
+				/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="asset-title"
-			value="<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>"
-		/>
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<h6 class="text-default">
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="asset-type"
-			value="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>"
-		/>
+						<%
+						dateSearchEntry.setDate(workflowTask.getCreateDate());
+						%>
 
-		<liferay-ui:search-container-column-date
-			href="<%= rowURL %>"
-			name="last-activity-date"
-			value="<%= workflowTaskDisplayContext.getLastActivityDate(workflowTask) %>"
-		/>
+						<aui:a href="<%= rowURL %>">
+							<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>
+						</aui:a>
+					</h6>
 
-		<liferay-ui:search-container-column-date
-			href="<%= rowURL %>"
-			name="due-date"
-			orderable="<%= true %>"
-			value="<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>"
-		/>
+					<h5>
+						<aui:a href="<%= rowURL %>">
+							<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>
+						</aui:a>
+					</h5>
 
-		<c:if test="<%= !workflowTaskDisplayContext.isCompletedTabSelected() %>">
-			<liferay-ui:search-container-column-jsp
-				path="/workflow_task_action.jsp"
-			/>
-		</c:if>
+					<h6 class="text-default">
+						<aui:a cssClass="asset-type" href="<%= rowURL %>">
+							<liferay-ui:message key="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>" />
+						</aui:a>
+
+						<aui:a cssClass="task-name" href="<%= rowURL %>" id="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>">
+							<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
+						</aui:a>
+
+						<c:if test="<%= workflowTaskDisplayContext.getDueDate(workflowTask) != null %>">
+
+							<%
+							dateSearchEntry.setDate(workflowTaskDisplayContext.getDueDate(workflowTask));
+							%>
+
+							<aui:a cssClass="due-date" href="<%= rowURL %>">
+								<strong><liferay-ui:message key="due-date" />:</strong> <%= dateSearchEntry.getName(request) %>
+							</aui:a>
+						</c:if>
+					</h6>
+				</liferay-ui:search-container-column-text>
+
+				<c:choose>
+					<c:when test="<%= !workflowTask.isCompleted() %>">
+						<liferay-ui:search-container-column-jsp
+							path="/workflow_task_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							value="<%= StringPool.BLANK %>"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="asset-title"
+					value="<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="asset-type"
+					value="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					href="<%= rowURL %>"
+					name="task"
+				>
+					<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
+						<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
+					</span>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-date
+					href="<%= rowURL %>"
+					name="last-activity-date"
+					value="<%= workflowTaskDisplayContext.getLastActivityDate(workflowTask) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					href="<%= rowURL %>"
+					name="due-date"
+					orderable="<%= true %>"
+					value="<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>"
+				/>
+
+				<c:choose>
+					<c:when test="<%= !workflowTask.isCompleted() %>">
+						<liferay-ui:search-container-column-jsp
+							path="/workflow_task_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:search-container-column-text
+							value="<%= StringPool.BLANK %>"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new WorkflowTaskResultRowSplitter() %>" searchContainer="<%= workflowTaskSearch %>" />
 </liferay-ui:search-container>

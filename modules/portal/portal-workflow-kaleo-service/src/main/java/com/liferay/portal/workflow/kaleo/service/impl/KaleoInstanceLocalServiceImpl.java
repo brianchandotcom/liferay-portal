@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoInstanceLocalServiceBaseImpl;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
@@ -280,6 +282,33 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<KaleoInstance> search(
+		Long userId, String assetType, String nodeName,
+		String kaleoDefinitionName, Boolean completed, int start, int end,
+		OrderByComparator<KaleoInstance> orderByComparator,
+		ServiceContext serviceContext) {
+
+		DynamicQuery dynamicQuery = buildDynamicQuery(
+			userId, assetType, nodeName, kaleoDefinitionName, completed,
+			serviceContext);
+
+		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(
+		Long userId, String assetType, String nodeName,
+		String kaleoDefinitionName, Boolean completed,
+		ServiceContext serviceContext) {
+
+		DynamicQuery dynamicQuery = buildDynamicQuery(
+			userId, assetType, nodeName, kaleoDefinitionName, completed,
+			serviceContext);
+
+		return (int)dynamicQueryCount(dynamicQuery);
+	}
+
+	@Override
 	public KaleoInstance updateKaleoInstance(
 			long kaleoInstanceId, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
@@ -314,6 +343,76 @@ public class KaleoInstanceLocalServiceImpl
 
 		return buildDynamicQuery(
 			userId, assetClassNames, assetClassPKs, completed, serviceContext);
+	}
+
+	protected DynamicQuery buildDynamicQuery(
+		Long userId, String assetType, String nodeName,
+		String kaleoDefinitionName, Boolean completed,
+		ServiceContext serviceContext) {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoInstance.class, getClassLoader());
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(serviceContext.getCompanyId()));
+
+		if (Validator.isNotNull(userId)) {
+			Property userIdProperty = PropertyFactoryUtil.forName("userId");
+
+			dynamicQuery.add(userIdProperty.eq(userId));
+		}
+
+		if (completed != null) {
+			if (completed) {
+				Property completionDateProperty = PropertyFactoryUtil.forName(
+					"completionDate");
+
+				dynamicQuery.add(completionDateProperty.isNotNull());
+			}
+			else {
+				Property completionDateProperty = PropertyFactoryUtil.forName(
+					"completionDate");
+
+				dynamicQuery.add(completionDateProperty.isNull());
+			}
+		}
+
+		Junction junction = RestrictionsFactoryUtil.disjunction();
+
+		if (Validator.isNotNull(assetType)) {
+			Property classNameProperty = PropertyFactoryUtil.forName(
+				"className");
+
+			junction.add(classNameProperty.like(assetType));
+		}
+
+		if (Validator.isNotNull(kaleoDefinitionName)) {
+			Property kaleoDefinitionNameProperty = PropertyFactoryUtil.forName(
+				"kaleoDefinitionName");
+
+			junction.add(kaleoDefinitionNameProperty.eq(kaleoDefinitionName));
+		}
+
+		if (Validator.isNotNull(nodeName)) {
+			Property kaleoInstanceIdProperty = PropertyFactoryUtil.forName(
+				"kaleoInstanceId");
+
+			DynamicQuery subdynamicQuery = DynamicQueryFactoryUtil.forClass(
+				KaleoInstanceToken.class,
+				getClassLoader()).setProjection(kaleoInstanceIdProperty);
+
+			Property currentKaleoNodeNameProperty = PropertyFactoryUtil.forName(
+				"currentKaleoNodeName");
+
+			subdynamicQuery.add(currentKaleoNodeNameProperty.like(nodeName));
+
+			junction.add(kaleoInstanceIdProperty.in(subdynamicQuery));
+		}
+
+		dynamicQuery.add(junction);
+
+		return dynamicQuery;
 	}
 
 	protected DynamicQuery buildDynamicQuery(

@@ -185,7 +185,7 @@ public class ShoppingCartUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a matching shopping cart could not be found
+	* @throws NoSuchCartException if a matching shopping cart could not be found
 	*/
 	public static ShoppingCart findByGroupId_First(long groupId,
 		OrderByComparator<ShoppingCart> orderByComparator)
@@ -211,7 +211,7 @@ public class ShoppingCartUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a matching shopping cart could not be found
+	* @throws NoSuchCartException if a matching shopping cart could not be found
 	*/
 	public static ShoppingCart findByGroupId_Last(long groupId,
 		OrderByComparator<ShoppingCart> orderByComparator)
@@ -238,7 +238,7 @@ public class ShoppingCartUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
 	public static ShoppingCart[] findByGroupId_PrevAndNext(long cartId,
 		long groupId, OrderByComparator<ShoppingCart> orderByComparator)
@@ -340,7 +340,7 @@ public class ShoppingCartUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a matching shopping cart could not be found
+	* @throws NoSuchCartException if a matching shopping cart could not be found
 	*/
 	public static ShoppingCart findByUserId_First(long userId,
 		OrderByComparator<ShoppingCart> orderByComparator)
@@ -366,7 +366,7 @@ public class ShoppingCartUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a matching shopping cart could not be found
+	* @throws NoSuchCartException if a matching shopping cart could not be found
 	*/
 	public static ShoppingCart findByUserId_Last(long userId,
 		OrderByComparator<ShoppingCart> orderByComparator)
@@ -393,7 +393,7 @@ public class ShoppingCartUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
 	public static ShoppingCart[] findByUserId_PrevAndNext(long cartId,
 		long userId, OrderByComparator<ShoppingCart> orderByComparator)
@@ -422,12 +422,12 @@ public class ShoppingCartUtil {
 	}
 
 	/**
-	* Returns the shopping cart where groupId = &#63; and userId = &#63; or throws a {@link com.liferay.shopping.NoSuchCartException} if it could not be found.
+	* Returns the shopping cart where groupId = &#63; and userId = &#63; or throws a {@link NoSuchCartException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the matching shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a matching shopping cart could not be found
+	* @throws NoSuchCartException if a matching shopping cart could not be found
 	*/
 	public static ShoppingCart findByG_U(long groupId, long userId)
 		throws com.liferay.shopping.exception.NoSuchCartException {
@@ -514,7 +514,7 @@ public class ShoppingCartUtil {
 	*
 	* @param cartId the primary key of the shopping cart
 	* @return the shopping cart that was removed
-	* @throws com.liferay.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
 	public static ShoppingCart remove(long cartId)
 		throws com.liferay.shopping.exception.NoSuchCartException {
@@ -526,11 +526,11 @@ public class ShoppingCartUtil {
 	}
 
 	/**
-	* Returns the shopping cart with the primary key or throws a {@link com.liferay.shopping.NoSuchCartException} if it could not be found.
+	* Returns the shopping cart with the primary key or throws a {@link NoSuchCartException} if it could not be found.
 	*
 	* @param cartId the primary key of the shopping cart
 	* @return the shopping cart
-	* @throws com.liferay.shopping.NoSuchCartException if a shopping cart with the primary key could not be found
+	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
 	public static ShoppingCart findByPrimaryKey(long cartId)
 		throws com.liferay.shopping.exception.NoSuchCartException {

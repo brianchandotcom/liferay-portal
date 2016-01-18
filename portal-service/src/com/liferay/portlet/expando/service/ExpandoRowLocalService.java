@@ -269,16 +269,6 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	public com.liferay.portlet.expando.model.ExpandoRow getRow(long tableId,
 		long classPK) throws PortalException;
 
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,
-	String, int, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
-		java.lang.String className, java.lang.String tableName, int start,
-		int end);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
 		long companyId, java.lang.String className, java.lang.String tableName,
@@ -292,15 +282,6 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
 		long tableId, int start, int end);
-
-	/**
-	* @deprecated As of 6.1.0, replaced by {@link #getRowsCount(long, String,
-	String)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRowsCount(java.lang.String className,
-		java.lang.String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRowsCount(long companyId, java.lang.String className,

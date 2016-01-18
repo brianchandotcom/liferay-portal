@@ -47,4 +47,33 @@ public class ServiceReferenceMapperFactory {
 		};
 	}
 
+	public static <K, S> ServiceReferenceMapper<K, S> create(
+		final String propertyKey) {
+
+		return new ServiceReferenceMapper<K, S>() {
+
+			@Override
+			public void map(
+				ServiceReference<S> serviceReference, Emitter<K> emitter) {
+
+				Object propertyValue = serviceReference.getProperty(
+					propertyKey);
+
+				if (propertyValue == null) {
+					return;
+				}
+
+				if (propertyValue instanceof Object[]) {
+					for (K k : (K[])propertyValue) {
+						emitter.emit(k);
+					}
+				}
+				else {
+					emitter.emit((K)propertyValue);
+				}
+			}
+
+		};
+	}
+
 }

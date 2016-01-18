@@ -52,6 +52,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

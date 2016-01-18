@@ -20,8 +20,6 @@
 
 <%
 MBCategory category = (MBCategory)request.getAttribute("edit_message.jsp-category");
-String className = (String)request.getAttribute("edit_message.jsp-className");
-Integer depth = (Integer)request.getAttribute("edit_message.jsp-depth");
 Boolean editable = (Boolean)request.getAttribute("edit_message.jsp-editable");
 MBMessage message = (MBMessage)request.getAttribute("edit_message.jsp-message");
 Boolean showDeletedAttachmentsFileEntries = (Boolean)request.getAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries");
@@ -30,55 +28,89 @@ Boolean showRecentPosts = (Boolean)request.getAttribute("edit-message.jsp-showRe
 MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 %>
 
-<div class="message-container" style="margin-left: <%= depth * 10 %>px;">
-	<a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
+<a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
 
-	<table class="thread-message-view <%= className %>" id="<portlet:namespace />message_<%= message.getMessageId() %>">
-	<tr>
-		<td class="lfr-top user-info" <%= editable ? "rowspan=\"2\"" : StringPool.BLANK %>>
-			<c:choose>
-				<c:when test="<%= message.isAnonymous() %>">
-					<liferay-ui:message key="anonymous" />
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:user-display
-						displayStyle="2"
-						userId="<%= message.getUserId() %>"
-						userName="<%= HtmlUtil.escape(message.getUserName()) %>"
-					>
+<div class="card list-group-card panel">
+	<div class="panel-heading">
+		<div class="card-row card-row-padded">
+			<c:if test="<%= !message.isAnonymous() %>">
+				<div class="card-col-field">
+					<div class="list-group-card-icon">
+						<liferay-ui:user-portrait cssClass="user-icon-lg" userId="<%= message.getUserId() %>" />
+					</div>
+				</div>
+			</c:if>
 
-						<%
-						MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, message.getUserId());
+			<div class="card-col-content card-col-gutters">
 
-						int posts = statsUser.getMessageCount();
-						String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
-						%>
+				<%
+				String messageUserName = "anonymous";
 
-						<c:if test="<%= Validator.isNotNull(ranks[1]) %>">
-							<div class="thread-user-role thread-user-role-<%= HtmlUtil.escapeAttribute(StringUtil.toLowerCase(ranks[1])) %>"><%= HtmlUtil.escape(ranks[1]) %></div>
-						</c:if>
+				if (!message.isAnonymous()) {
+					messageUserName = message.getUserName();
+				}
 
-						<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
-							<div class="thread-user-rank">
-								<span><liferay-ui:message key="rank" />:</span> <%= HtmlUtil.escape(ranks[0]) %>
-							</div>
-						</c:if>
+				Date modifiedDate = message.getModifiedDate();
 
-						<div class="thread-user-post-count">
-							<span><liferay-ui:message key="posts" />:</span> <%= posts %>
-						</div>
+				String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 
-						<div class="thread-user-join-date">
-							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(userDisplay.getCreateDate()) %>
-						</div>
+				String userDisplayText = LanguageUtil.format(request, "x-modified-x-ago", new Object[] {messageUserName, modifiedDateDescription});
+				%>
 
-						<c:if test="<%= showRecentPosts %>">
-							<portlet:renderURL var="recentPostsURL">
-								<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-								<portlet:param name="topLink" value="recent-posts" />
-								<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
-							</portlet:renderURL>
+				<h5 class="text-default" title="<%= userDisplayText %>">
+					<%= userDisplayText %>
+				</h5>
 
+				<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
+					<c:choose>
+						<c:when test="<%= showPermanentLink %>">
+							<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />">
+								<%= HtmlUtil.escape(message.getSubject()) %>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<%= HtmlUtil.escape(message.getSubject()) %>
+						</c:otherwise>
+					</c:choose>
+				</h4>
+
+				<%
+				MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, message.getUserId());
+
+				int posts = statsUser.getMessageCount();
+				String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+
+				User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
+				%>
+
+				<c:if test="<%= (messageUser != null) && !messageUser.isDefaultUser() %>">
+					<c:if test="<%= Validator.isNotNull(ranks[1]) %>">
+						<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[1]) %>">
+							<%= HtmlUtil.escape(ranks[1]) %>
+						</span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
+						<span class="h5 text-default" title="<%= HtmlUtil.escape(ranks[0]) %>">
+							<%= HtmlUtil.escape(ranks[0]) %>
+						</span>
+					</c:if>
+
+					<span class="h5 text-default">
+						<span><liferay-ui:message key="posts" />:</span> <%= posts %>
+					</span>
+
+					<span class="h5 text-default">
+						<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(messageUser.getCreateDate()) %>
+					</span>
+
+					<c:if test="<%= showRecentPosts %>">
+						<portlet:renderURL var="recentPostsURL">
+							<portlet:param name="mvcRenderCommandName" value="/message_boards/view_recent_posts" />
+							<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(messageUser.getUserId()) %>" />
+						</portlet:renderURL>
+
+						<span class="h5">
 							<liferay-ui:icon
 								iconCssClass="icon-search"
 								label="<%= true %>"
@@ -86,121 +118,79 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								method="get"
 								url="<%= recentPostsURL.toString() %>"
 							/>
-						</c:if>
-
-						<c:if test="<%= (userDisplay != null) && (user.getUserId() != userDisplay.getUserId()) && !PortalUtil.isGroupAdmin(userDisplay, scopeGroupId) && MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
-							<br />
-
-							<c:choose>
-								<c:when test="<%= MBBanLocalServiceUtil.hasBan(scopeGroupId, userDisplay.getUserId()) %>">
-									<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">
-										<portlet:param name="<%= Constants.CMD %>" value="unban" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="banUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
-									</portlet:actionURL>
-
-									<liferay-ui:icon
-										iconCssClass="icon-ok-sign"
-										label="<%= true %>"
-										message="unban-this-user"
-										url="<%= unbanUserURL.toString() %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<portlet:actionURL name="/message_boards/ban_user" var="banUserURL">
-										<portlet:param name="<%= Constants.CMD %>" value="ban" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="banUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
-									</portlet:actionURL>
-
-									<liferay-ui:icon
-										iconCssClass="icon-ban-circle"
-										label="<%= true %>"
-										message="ban-this-user"
-										url="<%= banUserURL.toString() %>"
-									/>
-								</c:otherwise>
-							</c:choose>
-						</c:if>
-					</liferay-ui:user-display>
-				</c:otherwise>
-			</c:choose>
-		</td>
-		<td class="lfr-top">
-			<div class="float-container thread-top">
-				<div class="subject">
-					<c:choose>
-						<c:when test="<%= showPermanentLink %>">
-							<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />"><strong><%= HtmlUtil.escape(message.getSubject()) %></strong></a>
-						</c:when>
-						<c:otherwise>
-							<strong><%= HtmlUtil.escape(message.getSubject()) %></strong>
-						</c:otherwise>
-					</c:choose>
-
-					<br />
-
-					<%
-					String assetTagNames = (String)request.getAttribute("edit_message.jsp-assetTagNames");
-					%>
-
-					<div class="tags">
-						<liferay-ui:asset-tags-summary
-							assetTagNames="<%= assetTagNames %>"
-							className="<%= MBMessage.class.getName() %>"
-							classPK="<%= message.getMessageId() %>"
-						/>
-					</div>
-
-					<div class="answer <%= !message.isRoot() && message.isAnswer() ? "" : "hide" %>" id="<portlet:namespace />deleteAnswerFlag_<%= message.getMessageId() %>">
-						<liferay-ui:icon
-							iconCssClass="icon-check"
-							label="<%= true %>"
-							message="answer"
-						/>
-
-						<c:if test="<%= (message.getRootMessageId() != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) && MBMessagePermission.contains(permissionChecker, message.getRootMessageId(), ActionKeys.UPDATE) %>">
-							(<a href="javascript:<portlet:namespace />deleteAnswerFlag('<%= message.getMessageId() %>');"><liferay-ui:message key="unmark" /></a>)
-						</c:if>
-					</div>
-
-					<%= dateFormatDateTime.format(message.getModifiedDate()) %>
-
-					<c:if test="<%= (message != null) && !message.isApproved() %>">
-						<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
-
-						<aui:workflow-status status="<%= message.getStatus() %>" />
+						</span>
 					</c:if>
 
-					<%
-					MBMessage parentMessage = null;
+					<c:if test="<%= (messageUser != null) && (user.getUserId() != messageUser.getUserId()) && !PortalUtil.isGroupAdmin(messageUser, scopeGroupId) && MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
+						<br />
 
-					try {
-						parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
-					}
-					catch (Exception e) {}
-					%>
+						<c:choose>
+							<c:when test="<%= MBBanLocalServiceUtil.hasBan(scopeGroupId, messageUser.getUserId()) %>">
+								<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">
+									<portlet:param name="<%= Constants.CMD %>" value="unban" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="banUserId" value="<%= String.valueOf(messageUser.getUserId()) %>" />
+								</portlet:actionURL>
 
-					<c:if test="<%= parentMessage != null %>">
+								<liferay-ui:icon
+									iconCssClass="icon-ok-sign"
+									label="<%= true %>"
+									message="unban-this-user"
+									url="<%= unbanUserURL.toString() %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<portlet:actionURL name="/message_boards/ban_user" var="banUserURL">
+									<portlet:param name="<%= Constants.CMD %>" value="ban" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="banUserId" value="<%= String.valueOf(messageUser.getUserId()) %>" />
+								</portlet:actionURL>
 
-						<%
-						PortletURL parentMessageURL = renderResponse.createRenderURL();
-
-						parentMessageURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");
-						parentMessageURL.setParameter("messageId", String.valueOf(parentMessage.getMessageId()));
-
-						String author = parentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(parentMessage.getUserId(), parentMessage.getUserName()));
-						%>
-
-						<liferay-ui:message arguments="<%= author %>" key="posted-as-a-reply-to" translateArguments="<%= false %>" />
+								<liferay-ui:icon
+									iconCssClass="icon-ban-circle"
+									label="<%= true %>"
+									message="ban-this-user"
+									url="<%= banUserURL.toString() %>"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</c:if>
-				</div>
+				</c:if>
 
+				<c:if test="<%= enableFlags || enableRatings %>">
+					<div class="social-interaction">
+						<c:if test="<%= enableRatings %>">
+							<div>
+								<liferay-ui:ratings
+									className="<%= MBMessage.class.getName() %>"
+									classPK="<%= message.getMessageId() %>"
+								/>
+							</div>
+						</c:if>
+
+						<c:if test="<%= enableFlags %>">
+							<liferay-ui:flags
+								className="<%= MBMessage.class.getName() %>"
+								classPK="<%= message.getMessageId() %>"
+								contentTitle="<%= message.getSubject() %>"
+								reportedUserId="<%= message.getUserId() %>"
+							/>
+						</c:if>
+					</div>
+				</c:if>
+			</div>
+
+			<div class="card-col-field">
 				<c:if test="<%= editable %>">
 
 					<%
-					boolean showAnswerFlag = false;
+					boolean hasDeletePermission = !thread.isLocked() && (thread.getMessageCount() > 1) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE);
+					boolean hasMoveThreadPermission = (message.getParentMessageId() != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, category.getCategoryId(), ActionKeys.MOVE_THREAD);
+					boolean hasPermissionsPermission = !thread.isLocked() && !message.isRoot() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS);
 					boolean hasReplyPermission = MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE);
+					boolean hasUpdatePermission = !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE);
+
+					boolean showAnswerFlag = false;
 
 					if (!message.isRoot()) {
 						MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
@@ -209,313 +199,264 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					}
 					%>
 
-					<c:if test="<%= showAnswerFlag || hasReplyPermission %>">
-						<ul class="edit-controls list-unstyled">
-							<li class="<%= showAnswerFlag ? "" : "hide" %>" id="<portlet:namespace />addAnswerFlag_<%= message.getMessageId() %>">
+					<c:if test="<%= showAnswerFlag || hasReplyPermission || hasUpdatePermission || hasPermissionsPermission || hasMoveThreadPermission || hasDeletePermission %>">
+						<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+							<c:if test="<%= showAnswerFlag %>">
 
 								<%
 								String taglibMarkAsAnswerURL = "javascript:" + renderResponse.getNamespace() + "addAnswerFlag('" + message.getMessageId() + "');";
 								%>
 
 								<liferay-ui:icon
-									iconCssClass="icon-check"
-									label="<%= true %>"
 									message="mark-as-an-answer"
 									url="<%= taglibMarkAsAnswerURL %>"
 								/>
-							</li>
+							</c:if>
 
 							<c:if test="<%= hasReplyPermission && !thread.isLocked() %>">
-								<li>
-									<portlet:renderURL var="replyURL">
-										<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
-										<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-										<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-										<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
-									</portlet:renderURL>
+								<portlet:renderURL var="replyURL">
+									<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
+									<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+									<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+									<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
+								</portlet:renderURL>
 
-									<liferay-ui:icon
-										iconCssClass="icon-reply"
-										label="<%= true %>"
-										message="reply"
-										url="<%= replyURL %>"
-									/>
-								</li>
-								<li>
-									<portlet:renderURL var="quoteURL">
-										<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
-										<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-										<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-										<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
-										<portlet:param name="quote" value="<%= Boolean.TRUE.toString() %>" />
-									</portlet:renderURL>
+								<liferay-ui:icon
+									message="reply"
+									url="<%= replyURL %>"
+								/>
 
-									<liferay-ui:icon
-										iconCssClass="icon-quote-left"
-										label="<%= true %>"
-										message="reply-with-quote"
-										url="<%= quoteURL %>"
-									/>
-								</li>
-								<li>
+								<portlet:renderURL var="quoteURL">
+									<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
+									<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+									<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+									<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
+									<portlet:param name="quote" value="<%= Boolean.TRUE.toString() %>" />
+								</portlet:renderURL>
 
-									<%
-									String taglibQuickReplyURL = "javascript:" + renderResponse.getNamespace() + "addQuickReply('reply', '" + message.getMessageId() + "');";
-									%>
+								<liferay-ui:icon
+									message="reply-with-quote"
+									url="<%= quoteURL %>"
+								/>
 
-									<liferay-ui:icon
-										iconCssClass="icon-long-arrow-down"
-										label="<%= true %>"
-										message="quick-reply"
-										url="<%= taglibQuickReplyURL %>"
-									/>
-								</li>
+								<%
+								String taglibQuickReplyURL = "javascript:" + renderResponse.getNamespace() + "addQuickReply('reply', '" + message.getMessageId() + "');";
+								%>
+
+								<liferay-ui:icon
+									message="quick-reply"
+									url="<%= taglibQuickReplyURL %>"
+								/>
 							</c:if>
-						</ul>
+
+							<c:if test="<%= hasUpdatePermission %>">
+								<portlet:renderURL var="editURL">
+									<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+								</portlet:renderURL>
+
+								<liferay-ui:icon
+									message="edit"
+									url="<%= editURL %>"
+								/>
+							</c:if>
+
+							<c:if test="<%= hasPermissionsPermission %>">
+								<liferay-security:permissionsURL
+									modelResource="<%= MBMessage.class.getName() %>"
+									modelResourceDescription="<%= HtmlUtil.escape(message.getSubject()) %>"
+									resourcePrimKey="<%= String.valueOf(message.getMessageId()) %>"
+									var="permissionsURL"
+									windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+								/>
+
+								<liferay-ui:icon
+									message="permissions"
+									method="get"
+									url="<%= permissionsURL %>"
+									useDialog="<%= true %>"
+								/>
+							</c:if>
+
+							<c:if test="<%= hasMoveThreadPermission %>">
+								<portlet:renderURL var="splitThreadURL">
+									<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+									<portlet:param name="splitThread" value="<%= Boolean.TRUE.toString() %>" />
+								</portlet:renderURL>
+
+								<liferay-ui:icon
+									message="split-thread"
+									url="<%= splitThreadURL %>"
+								/>
+							</c:if>
+
+							<c:if test="<%= hasDeletePermission %>">
+
+								<%
+								PortletURL categoryURL = renderResponse.createRenderURL();
+
+								if (message.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+									categoryURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+								}
+								else {
+									categoryURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
+									categoryURL.setParameter("mbCategoryId", String.valueOf(message.getCategoryId()));
+								}
+								%>
+
+								<portlet:actionURL name="/message_boards/edit_message" var="deleteURL">
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+									<portlet:param name="redirect" value="<%= categoryURL.toString() %>" />
+									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+								</portlet:actionURL>
+
+								<liferay-ui:icon-delete
+									label="<%= true %>"
+									url="<%= deleteURL %>"
+								/>
+							</c:if>
+						</liferay-ui:icon-menu>
 					</c:if>
 				</c:if>
 			</div>
+		</div>
+	</div>
 
-			<div class="thread-body">
+	<div class="divider"></div>
 
-				<%
-				String msgBody = message.getBody();
+	<div class="panel-body">
 
-				if (message.isFormatBBCode()) {
-					msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
-				}
-				%>
+		<%
+		String msgBody = message.getBody();
 
-				<%= msgBody %>
+		if (message.isFormatBBCode()) {
+			msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
+		}
+		%>
 
-				<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
-					<div class="custom-attributes">
-						<liferay-ui:custom-attribute-list
-							className="<%= MBMessage.class.getName() %>"
-							classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
-							editable="<%= false %>"
-							label="<%= true %>"
-						/>
-					</div>
-				</liferay-ui:custom-attributes-available>
+		<div class="message-content">
+			<%= msgBody %>
+		</div>
 
-				<c:if test="<%= message.getMessageId() > 0 %>">
+		<%
+		String assetTagNames = (String)request.getAttribute("edit_message.jsp-assetTagNames");
+		%>
+
+		<div class="tags">
+			<liferay-ui:asset-tags-summary
+				assetTagNames="<%= assetTagNames %>"
+				className="<%= MBMessage.class.getName() %>"
+				classPK="<%= message.getMessageId() %>"
+			/>
+		</div>
+
+		<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
+			<div class="custom-attributes">
+				<liferay-ui:custom-attribute-list
+					className="<%= MBMessage.class.getName() %>"
+					classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+					editable="<%= false %>"
+					label="<%= true %>"
+				/>
+			</div>
+		</liferay-ui:custom-attributes-available>
+
+		<div class="entry-links">
+			<liferay-ui:asset-links
+				className="<%= MBMessage.class.getName() %>"
+				classPK="<%= message.getMessageId() %>"
+			/>
+		</div>
+
+		<c:if test="<%= message.getMessageId() > 0 %>">
+
+			<%
+			int attachmentsFileEntriesCount = message.getAttachmentsFileEntriesCount();
+			int deletedAttachmentsFileEntriesCount = message.getDeletedAttachmentsFileEntriesCount();
+			%>
+
+			<c:if test="<%= (attachmentsFileEntriesCount > 0) || ((deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE)) %>">
+				<div class="message-attachments">
+					<h3><liferay-ui:message key="attachments" />:</h3>
 
 					<%
-					int attachmentsFileEntriesCount = message.getAttachmentsFileEntriesCount();
-					int deletedAttachmentsFileEntriesCount = message.getDeletedAttachmentsFileEntriesCount();
+					List<FileEntry> attachmentsFileEntries = message.getAttachmentsFileEntries();
+
+					for (FileEntry fileEntry : attachmentsFileEntries) {
+						if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
 					%>
 
-					<c:if test="<%= (attachmentsFileEntriesCount > 0) || ((deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE)) %>">
-						<div class="message-attachments">
-							<h3><liferay-ui:message key="attachments" />:</h3>
+							<p>
+								<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" class="crop-img" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
+							</p>
 
-							<%
-							List<FileEntry> attachmentsFileEntries = message.getAttachmentsFileEntries();
+					<%
+						}
+					}
+					%>
 
-							for (FileEntry fileEntry : attachmentsFileEntries) {
-								if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
-							%>
-
-									<div>
-										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>" />
-									</div>
-
-									<br />
-
-							<%
-								}
-							}
-							%>
-
-							<ul>
-
-								<%
-								for (FileEntry fileEntry : attachmentsFileEntries) {
-								%>
-
-									<li class="message-attachment">
-
-										<%
-										StringBundler sb = new StringBundler(4);
-
-										sb.append(fileEntry.getTitle());
-										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
-										sb.append(StringPool.CLOSE_PARENTHESIS);
-
-										AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-
-										AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
-										%>
-
-										<liferay-ui:icon
-											iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-											label="<%= true %>"
-											message="<%= sb.toString() %>"
-											url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
-										/>
-									</li>
-
-								<%
-								}
-								%>
-
-								<c:if test="<%= showDeletedAttachmentsFileEntries && (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
-									<li class="message-attachment">
-										<portlet:renderURL var="viewTrashAttachmentsURL">
-											<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
-											<portlet:param name="redirect" value="<%= currentURL %>" />
-											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-										</portlet:renderURL>
-
-										<liferay-ui:icon
-											iconCssClass="icon-paperclip"
-											label="<%= true %>"
-											message='<%= LanguageUtil.format(request, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount, false) %>'
-											url="<%= viewTrashAttachmentsURL %>"
-										/>
-									</li>
-								</c:if>
-							</ul>
-						</div>
-					</c:if>
-				</c:if>
-			</div>
-		</td>
-	</tr>
-
-	<c:if test="<%= editable %>">
-		<tr>
-			<td class="thread-bottom">
-				<c:if test="<%= enableRatings %>">
-					<liferay-ui:ratings
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= message.getMessageId() %>"
-					/>
-				</c:if>
-
-				<c:if test="<%= enableFlags %>">
-					<liferay-ui:flags
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= message.getMessageId() %>"
-						contentTitle="<%= message.getSubject() %>"
-						reportedUserId="<%= message.getUserId() %>"
-					/>
-				</c:if>
-
-				<br />
-
-				<div class="entry-links">
-					<liferay-ui:asset-links
-						className="<%= MBMessage.class.getName() %>"
-						classPK="<%= message.getMessageId() %>"
-					/>
-				</div>
-
-				<ul class="edit-controls list-unstyled">
-					<li>
+					<ul>
 
 						<%
-						String topHREF = "#" + renderResponse.getNamespace() + "message_0";
+						for (FileEntry fileEntry : attachmentsFileEntries) {
 						%>
 
-						<liferay-ui:icon
-							iconCssClass="icon-long-arrow-up"
-							label="<%= true %>"
-							message="top"
-							url="<%= topHREF %>"
-						/>
-					</li>
+							<li class="message-attachment">
 
-					<c:if test="<%= !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
-						<li>
-							<portlet:renderURL var="editURL">
-								<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-							</portlet:renderURL>
+								<%
+								StringBundler sb = new StringBundler(4);
 
-							<liferay-ui:icon
-								iconCssClass="icon-edit"
-								label="<%= true %>"
-								message="edit"
-								url="<%= editURL %>"
-							/>
-						</li>
-					</c:if>
+								sb.append(fileEntry.getTitle());
+								sb.append(StringPool.OPEN_PARENTHESIS);
+								sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+								sb.append(StringPool.CLOSE_PARENTHESIS);
 
-					<c:if test="<%= !thread.isLocked() && !message.isRoot() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
-						<li>
-							<liferay-security:permissionsURL
-								modelResource="<%= MBMessage.class.getName() %>"
-								modelResourceDescription="<%= HtmlUtil.escape(message.getSubject()) %>"
-								resourcePrimKey="<%= String.valueOf(message.getMessageId()) %>"
-								var="permissionsURL"
-								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-							/>
+								AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-							<liferay-ui:icon
-								iconCssClass="icon-lock"
-								label="<%= true %>"
-								message="permissions"
-								method="get"
-								url="<%= permissionsURL %>"
-								useDialog="<%= true %>"
-							/>
-						</li>
-					</c:if>
+								AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+								%>
 
-					<c:if test="<%= (message.getParentMessageId() != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, category.getCategoryId(), ActionKeys.MOVE_THREAD) %>">
-						<li>
-							<portlet:renderURL var="splitThreadURL">
-								<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-								<portlet:param name="splitThread" value="<%= Boolean.TRUE.toString() %>" />
-							</portlet:renderURL>
+								<liferay-ui:icon
+									icon="<%= assetRenderer.getIconCssClass() %>"
+									label="<%= true %>"
+									markupView="lexicon"
+									message="<%= sb.toString() %>"
+									url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
+								/>
+							</li>
 
-							<liferay-ui:icon
-								iconCssClass="icon-unlink"
-								label="<%= true %>"
-								message="split-thread"
-								url="<%= splitThreadURL %>"
-							/>
-						</li>
-					</c:if>
+						<%
+						}
+						%>
 
-					<c:if test="<%= !thread.isLocked() && (thread.getMessageCount() > 1) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) %>">
-						<li>
+						<c:if test="<%= showDeletedAttachmentsFileEntries && (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+							<li class="message-attachment">
+								<portlet:renderURL var="viewTrashAttachmentsURL">
+									<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+								</portlet:renderURL>
 
-							<%
-							PortletURL categoryURL = renderResponse.createRenderURL();
-
-							categoryURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-							categoryURL.setParameter("mbCategoryId", String.valueOf(message.getCategoryId()));
-							%>
-
-							<portlet:actionURL name="/message_boards/edit_message" var="deleteURL">
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-								<portlet:param name="redirect" value="<%= categoryURL.toString() %>" />
-								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-							</portlet:actionURL>
-
-							<liferay-ui:icon-delete
-								label="<%= true %>"
-								url="<%= deleteURL %>"
-							/>
-						</li>
-					</c:if>
-				</ul>
-			</td>
-		</tr>
-	</c:if>
-
-	</table>
+								<liferay-ui:icon
+									iconCssClass="icon-paperclip"
+									label="<%= true %>"
+									message='<%= LanguageUtil.format(request, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount, false) %>'
+									url="<%= viewTrashAttachmentsURL %>"
+								/>
+							</li>
+						</c:if>
+					</ul>
+				</div>
+			</c:if>
+		</c:if>
+	</div>
 </div>
 
 <liferay-util:dynamic-include key="com.liferay.message.boards.web#/message_boards/view_thread_message.jsp#post" />

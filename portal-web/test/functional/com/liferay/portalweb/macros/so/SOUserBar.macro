@@ -14,9 +14,12 @@
 		<if>
 			<isset var="pageType" />
 			<then>
-				<execute macro="Page#selectPageTypeRadioPG">
-					<var name="pageType" value="${pageType}" />
-					<var name="portletNameList" value="${portletNameList}" />
+				<execute macro="SitePage#selectSitePageTypeRadioCP">
+					<var name="columnName" value="${columnName}" />
+					<var name="componentName" value="${componentName}" />
+					<var name="pageTypeDescription" value="${pageTypeDescription}" />
+					<var name="pageTypeURL" value="${pageTypeURL}" />
+					<var name="sitePageType" value="${pageType}" />
 				</execute>
 			</then>
 		</if>

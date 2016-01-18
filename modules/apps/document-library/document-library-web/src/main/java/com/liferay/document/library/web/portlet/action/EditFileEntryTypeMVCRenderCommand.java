@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
@@ -110,6 +110,6 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 		_dlFileEntryTypeService = dlFileEntryTypeService;
 	}
 
-	private volatile DLFileEntryTypeService _dlFileEntryTypeService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 }

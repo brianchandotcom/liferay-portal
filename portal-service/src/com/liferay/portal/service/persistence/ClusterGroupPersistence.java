@@ -68,7 +68,7 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	* @throws NoSuchClusterGroupException if a cluster group with the primary key could not be found
 	*/
 	public ClusterGroup remove(long clusterGroupId)
-		throws com.liferay.portal.NoSuchClusterGroupException;
+		throws com.liferay.portal.exception.NoSuchClusterGroupException;
 
 	public ClusterGroup updateImpl(ClusterGroup clusterGroup);
 
@@ -80,7 +80,7 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	* @throws NoSuchClusterGroupException if a cluster group with the primary key could not be found
 	*/
 	public ClusterGroup findByPrimaryKey(long clusterGroupId)
-		throws com.liferay.portal.NoSuchClusterGroupException;
+		throws com.liferay.portal.exception.NoSuchClusterGroupException;
 
 	/**
 	* Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.

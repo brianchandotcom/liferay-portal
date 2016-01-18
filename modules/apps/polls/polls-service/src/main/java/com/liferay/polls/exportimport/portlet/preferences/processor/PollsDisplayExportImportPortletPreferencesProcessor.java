@@ -180,7 +180,7 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		PollsDisplayExportImportPortletPreferencesProcessor.class);
 
-	private volatile ReferencedStagedModelImporterCapability
+	private ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
 
 }

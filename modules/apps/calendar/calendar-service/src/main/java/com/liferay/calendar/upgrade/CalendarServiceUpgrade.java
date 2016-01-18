@@ -15,10 +15,11 @@
 package com.liferay.calendar.upgrade;
 
 import com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendar;
-import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendarResource;
-import com.liferay.calendar.upgrade.v1_0_2.UpgradeLastPublishDate;
-import com.liferay.calendar.upgrade.v1_0_2.UpgradePortletPreferences;
+import com.liferay.calendar.upgrade.v1_0_3.UpgradeCalendarResource;
+import com.liferay.calendar.upgrade.v1_0_3.UpgradeCompanyId;
+import com.liferay.calendar.upgrade.v1_0_3.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.UserLocalService;
@@ -47,10 +48,14 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.calendar.service", "1.0.1", "1.0.2",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.calendar.service", "1.0.2", "1.0.3",
 			new UpgradeCalendarResource(
 				_classNameLocalService, _companyLocalService,
 				_userLocalService),
-			new UpgradeLastPublishDate(), new UpgradePortletPreferences());
+			new UpgradeCompanyId(), new UpgradeLastPublishDate());
 	}
 
 	@Reference(unbind = "-")
@@ -77,8 +82,8 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile ClassNameLocalService _classNameLocalService;
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile UserLocalService _userLocalService;
+	private ClassNameLocalService _classNameLocalService;
+	private CompanyLocalService _companyLocalService;
+	private UserLocalService _userLocalService;
 
 }

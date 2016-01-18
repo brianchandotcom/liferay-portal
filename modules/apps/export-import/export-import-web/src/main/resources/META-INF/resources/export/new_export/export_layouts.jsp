@@ -41,6 +41,10 @@ long[] selectedLayoutIds = null;
 
 if (openNodes == null) {
 	selectedLayoutIds = ExportImportHelperUtil.getAllLayoutIds(liveGroupId, privateLayout);
+
+	for (long selectedLayoutId : selectedLayoutIds) {
+		SessionTreeJSClicks.openLayoutNodes(request, treeId + "SelectedNode", privateLayout, selectedLayoutId, true);
+	}
 }
 else {
 	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(openNodes, ','));
@@ -101,34 +105,40 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 			<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 			<div class="export-dialog-tree">
-				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-					<aui:fieldset cssClass="options-group" label="pages">
-
-						<%
-						request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-						%>
-
-						<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-							<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-							<liferay-util:param name="treeId" value="<%= treeId %>" />
-							<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-						</liferay-util:include>
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<aui:input name="name" />
 					</aui:fieldset>
-				</c:if>
 
-				<liferay-staging:content cmd="<%= Constants.EXPORT %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
+						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
 
-				<aui:fieldset cssClass="options-group" label="permissions">
-					<%@ include file="/permissions.jspf" %>
-				</aui:fieldset>
+							<%
+							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+							%>
+
+							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+								<liferay-util:param name="treeId" value="<%= treeId %>" />
+								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+							</liferay-util:include>
+						</aui:fieldset>
+					</c:if>
+
+					<liferay-staging:content cmd="<%= Constants.EXPORT %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
+						<%@ include file="/permissions.jspf" %>
+					</aui:fieldset>
+				</aui:fieldset-group>
 			</div>
 
 			<aui:button-row>
-				<aui:button type="submit" value="export" />
+				<aui:button cssClass="btn-lg" type="submit" value="export" />
 
-				<aui:button href="<%= portletURL.toString() %>" type="cancel" />
+				<aui:button cssClass="btn-lg" href="<%= portletURL.toString() %>" type="cancel" />
 			</aui:button-row>
 		</aui:form>
 	</div>
@@ -171,8 +181,6 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 			var allContentRadioChecked = A.one('#<portlet:namespace />allContent').attr('checked');
 
 			if (allContentRadioChecked) {
-				var selectedContents = A.one('#<portlet:namespace />selectContents');
-
 				var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
 
 				portletDataControlDefault.val(true);

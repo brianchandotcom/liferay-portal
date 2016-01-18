@@ -183,11 +183,11 @@ AUI.add(
 					getContextValue: function() {
 						var instance = this;
 
-						var value = instance.getLocalizedValue(instance.get('value'));
-
 						var predefinedValue = instance.get('predefinedValue');
 
-						if (!value && predefinedValue) {
+						var value = instance.getLocalizedValue(instance.get('value'));
+
+						if (!value && predefinedValue && !instance.get('readOnly')) {
 							value = instance.getLocalizedValue(predefinedValue);
 						}
 

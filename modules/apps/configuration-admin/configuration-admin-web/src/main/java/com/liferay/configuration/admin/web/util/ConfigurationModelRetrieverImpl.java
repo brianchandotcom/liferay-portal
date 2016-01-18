@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ConfigurationModelRetrieverImpl
 	implements ConfigurationModelRetriever {
 
+	@Override
 	public Map<String, Set<ConfigurationModel>> categorizeConfigurationModels(
 		Map<String, ConfigurationModel> configurationModels) {
 
@@ -78,6 +79,7 @@ public class ConfigurationModelRetrieverImpl
 		return categorizedConfigurationModels;
 	}
 
+	@Override
 	public Configuration getConfiguration(String pid) {
 		try {
 			String pidFilter = getPidFilterString(pid, false);
@@ -96,6 +98,7 @@ public class ConfigurationModelRetrieverImpl
 		return null;
 	}
 
+	@Override
 	public List<String> getConfigurationCategories(
 		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels) {
 
@@ -107,10 +110,12 @@ public class ConfigurationModelRetrieverImpl
 		return new ArrayList<>(configurationCategories);
 	}
 
+	@Override
 	public Map<String, ConfigurationModel> getConfigurationModels() {
 		return getConfigurationModels((String)null);
 	}
 
+	@Override
 	public Map<String, ConfigurationModel> getConfigurationModels(
 		Bundle bundle) {
 
@@ -122,6 +127,7 @@ public class ConfigurationModelRetrieverImpl
 		return configurationModels;
 	}
 
+	@Override
 	public Map<String, ConfigurationModel> getConfigurationModels(
 		String locale) {
 
@@ -139,6 +145,7 @@ public class ConfigurationModelRetrieverImpl
 		return configurationModels;
 	}
 
+	@Override
 	public List<ConfigurationModel> getFactoryInstances(
 			Map<String, ConfigurationModel> configurationModels,
 			String factoryPid)
@@ -277,8 +284,8 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	private BundleContext _bundleContext;
-	private volatile ConfigurationAdmin _configurationAdmin;
-	private volatile ExtendedMetaTypeService _extendedMetaTypeService;
+	private ConfigurationAdmin _configurationAdmin;
+	private ExtendedMetaTypeService _extendedMetaTypeService;
 
 	private class ConfigurationCategoryComparator
 		implements Comparator<String> {

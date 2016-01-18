@@ -185,7 +185,7 @@ public class ShoppingCouponUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping coupon
-	* @throws com.liferay.shopping.NoSuchCouponException if a matching shopping coupon could not be found
+	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
 	public static ShoppingCoupon findByGroupId_First(long groupId,
 		OrderByComparator<ShoppingCoupon> orderByComparator)
@@ -211,7 +211,7 @@ public class ShoppingCouponUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping coupon
-	* @throws com.liferay.shopping.NoSuchCouponException if a matching shopping coupon could not be found
+	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
 	public static ShoppingCoupon findByGroupId_Last(long groupId,
 		OrderByComparator<ShoppingCoupon> orderByComparator)
@@ -238,7 +238,7 @@ public class ShoppingCouponUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping coupon
-	* @throws com.liferay.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
 	public static ShoppingCoupon[] findByGroupId_PrevAndNext(long couponId,
 		long groupId, OrderByComparator<ShoppingCoupon> orderByComparator)
@@ -268,11 +268,11 @@ public class ShoppingCouponUtil {
 	}
 
 	/**
-	* Returns the shopping coupon where code = &#63; or throws a {@link com.liferay.shopping.NoSuchCouponException} if it could not be found.
+	* Returns the shopping coupon where code = &#63; or throws a {@link NoSuchCouponException} if it could not be found.
 	*
 	* @param code the code
 	* @return the matching shopping coupon
-	* @throws com.liferay.shopping.NoSuchCouponException if a matching shopping coupon could not be found
+	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
 	public static ShoppingCoupon findByCode(java.lang.String code)
 		throws com.liferay.shopping.exception.NoSuchCouponException {
@@ -355,7 +355,7 @@ public class ShoppingCouponUtil {
 	*
 	* @param couponId the primary key of the shopping coupon
 	* @return the shopping coupon that was removed
-	* @throws com.liferay.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
 	public static ShoppingCoupon remove(long couponId)
 		throws com.liferay.shopping.exception.NoSuchCouponException {
@@ -367,11 +367,11 @@ public class ShoppingCouponUtil {
 	}
 
 	/**
-	* Returns the shopping coupon with the primary key or throws a {@link com.liferay.shopping.NoSuchCouponException} if it could not be found.
+	* Returns the shopping coupon with the primary key or throws a {@link NoSuchCouponException} if it could not be found.
 	*
 	* @param couponId the primary key of the shopping coupon
 	* @return the shopping coupon
-	* @throws com.liferay.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
 	public static ShoppingCoupon findByPrimaryKey(long couponId)
 		throws com.liferay.shopping.exception.NoSuchCouponException {

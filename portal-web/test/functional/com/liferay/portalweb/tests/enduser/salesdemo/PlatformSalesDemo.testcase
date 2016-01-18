@@ -130,7 +130,7 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="WC Page" />
 		</execute>
 
@@ -149,7 +149,7 @@
 			<var name="tagName" value="european" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Drools Page" />
 		</execute>
 

@@ -14,7 +14,7 @@
 
 package com.liferay.social.networking.web.model.listener;
 
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
@@ -48,6 +48,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		_wallEntryLocalService = wallEntryLocalService;
 	}
 
-	private volatile WallEntryLocalService _wallEntryLocalService;
+	private WallEntryLocalService _wallEntryLocalService;
 
 }

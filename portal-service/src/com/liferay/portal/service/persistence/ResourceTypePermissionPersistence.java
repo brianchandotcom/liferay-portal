@@ -107,7 +107,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public ResourceTypePermission findByRoleId_First(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the first resource type permission in the ordered set where roleId = &#63;.
@@ -129,7 +129,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public ResourceTypePermission findByRoleId_Last(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the last resource type permission in the ordered set where roleId = &#63;.
@@ -153,7 +153,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	public ResourceTypePermission[] findByRoleId_PrevAndNext(
 		long resourceTypePermissionId, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Removes all the resource type permissions where roleId = &#63; from the database.
@@ -251,7 +251,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	public ResourceTypePermission findByC_N_R_First(long companyId,
 		java.lang.String name, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the first resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -279,7 +279,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	public ResourceTypePermission findByC_N_R_Last(long companyId,
 		java.lang.String name, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the last resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -309,7 +309,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 		long resourceTypePermissionId, long companyId, java.lang.String name,
 		long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceTypePermission> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Removes all the resource type permissions where companyId = &#63; and name = &#63; and roleId = &#63; from the database.
@@ -342,7 +342,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public ResourceTypePermission findByC_G_N_R(long companyId, long groupId,
 		java.lang.String name, long roleId)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the resource type permission where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -380,7 +380,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public ResourceTypePermission removeByC_G_N_R(long companyId, long groupId,
 		java.lang.String name, long roleId)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the number of resource type permissions where companyId = &#63; and groupId = &#63; and name = &#63; and roleId = &#63;.
@@ -425,7 +425,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	* @throws NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
 	*/
 	public ResourceTypePermission remove(long resourceTypePermissionId)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	public ResourceTypePermission updateImpl(
 		ResourceTypePermission resourceTypePermission);
@@ -439,7 +439,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public ResourceTypePermission findByPrimaryKey(
 		long resourceTypePermissionId)
-		throws com.liferay.portal.NoSuchResourceTypePermissionException;
+		throws com.liferay.portal.exception.NoSuchResourceTypePermissionException;
 
 	/**
 	* Returns the resource type permission with the primary key or returns <code>null</code> if it could not be found.

@@ -109,7 +109,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="move-folder">
-									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="folder-title">
 										<%= HtmlUtil.escape(folder.getName()) %>
@@ -140,7 +140,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="icon-warning-sign move-error move-folder">
-									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="folder-title">
 										<%= HtmlUtil.escape(folder.getName()) %>
@@ -177,7 +177,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="move-file">
-									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="file-title" title="<%= HtmlUtil.escapeAttribute(validMoveEntry.getName()) %>">
 										<%= HtmlUtil.escape(validMoveEntry.getName()) %>
@@ -208,7 +208,7 @@ if (portletTitleBasedNavigation) {
 							%>
 
 								<li class="icon-warning-sign move-error move-file">
-									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+									<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
 
 									<span class="file-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveEntry.getName()) %>">
 										<%= HtmlUtil.escape(invalidMoveEntry.getName()) %>

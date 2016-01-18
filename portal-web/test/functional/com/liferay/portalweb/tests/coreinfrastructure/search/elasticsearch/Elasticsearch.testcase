@@ -46,7 +46,7 @@
 
 		<execute macro="Elasticsearch#viewReplicaAddedInConsole" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Elasticsearch Page" />
 		</execute>
 

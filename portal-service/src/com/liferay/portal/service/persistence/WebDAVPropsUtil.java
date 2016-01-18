@@ -117,7 +117,7 @@ public class WebDAVPropsUtil {
 	* @throws NoSuchWebDAVPropsException if a matching web d a v props could not be found
 	*/
 	public static WebDAVProps findByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchWebDAVPropsException {
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -154,7 +154,7 @@ public class WebDAVPropsUtil {
 	* @return the web d a v props that was removed
 	*/
 	public static WebDAVProps removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.NoSuchWebDAVPropsException {
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -205,7 +205,7 @@ public class WebDAVPropsUtil {
 	* @throws NoSuchWebDAVPropsException if a web d a v props with the primary key could not be found
 	*/
 	public static WebDAVProps remove(long webDavPropsId)
-		throws com.liferay.portal.NoSuchWebDAVPropsException {
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException {
 		return getPersistence().remove(webDavPropsId);
 	}
 
@@ -221,7 +221,7 @@ public class WebDAVPropsUtil {
 	* @throws NoSuchWebDAVPropsException if a web d a v props with the primary key could not be found
 	*/
 	public static WebDAVProps findByPrimaryKey(long webDavPropsId)
-		throws com.liferay.portal.NoSuchWebDAVPropsException {
+		throws com.liferay.portal.exception.NoSuchWebDAVPropsException {
 		return getPersistence().findByPrimaryKey(webDavPropsId);
 	}
 

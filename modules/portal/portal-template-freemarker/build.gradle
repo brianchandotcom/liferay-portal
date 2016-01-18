@@ -11,7 +11,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:configuration-admin:configuration-admin-api")
 
-	provided group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	provided group: "org.freemarker", name: "freemarker", version: "2.3.23"
 
 	testCompile project(":core:registry-api")
 }

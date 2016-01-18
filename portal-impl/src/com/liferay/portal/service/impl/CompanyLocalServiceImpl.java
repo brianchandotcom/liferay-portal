@@ -14,13 +14,13 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.AccountNameException;
-import com.liferay.portal.CompanyMxException;
-import com.liferay.portal.CompanyVirtualHostException;
-import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchVirtualHostException;
-import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.exception.AccountNameException;
+import com.liferay.portal.exception.CompanyMxException;
+import com.liferay.portal.exception.CompanyVirtualHostException;
+import com.liferay.portal.exception.CompanyWebIdException;
+import com.liferay.portal.exception.NoSuchVirtualHostException;
+import com.liferay.portal.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -80,6 +80,9 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 
@@ -90,6 +93,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -270,8 +274,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 		}
 
-		// Search engine
-
 		CompanyProvider currentCompanyProvider =
 			_companyProviderWrapper.getCompanyProvider();
 
@@ -280,8 +282,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			_companyProviderWrapper.setCompanyProvider(
 				new CustomCompanyProvider(companyId));
-
-			SearchEngineHelperUtil.initialize(companyId);
 
 			// Key
 
@@ -408,6 +408,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Portlets
 
 			portletLocalService.checkPortlets(companyId);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			ServiceRegistration<Company> serviceRegistration =
+				registry.registerService(Company.class, company);
+
+			_companyServiceRegistrations.put(
+				company.getCompanyId(), serviceRegistration);
 		}
 		finally {
 			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);
@@ -1360,6 +1368,17 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		TransactionCommitCallbackUtil.registerCallback(callable);
 
+		// Search indices
+
+		SearchEngineHelperUtil.removeCompany(companyId);
+
+		ServiceRegistration<Company> serviceRegistration =
+			_companyServiceRegistrations.remove(companyId);
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+
 		return company;
 	}
 
@@ -1647,6 +1666,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@BeanReference(type = CompanyProviderWrapper.class)
 	private CompanyProviderWrapper _companyProviderWrapper;
+
+	private final Map<Long, ServiceRegistration<Company>>
+		_companyServiceRegistrations = new HashMap<>();
 
 	private class CustomCompanyProvider implements CompanyProvider {
 

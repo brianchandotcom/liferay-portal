@@ -144,6 +144,6 @@ public class MDRRuleGroupStagedModelDataHandler
 		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
 	}
 
-	private volatile MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 
 }

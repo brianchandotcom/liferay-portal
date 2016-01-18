@@ -6,3 +6,6 @@ Export-Package:\
 	com.liferay.flags.messaging,\
 	com.liferay.flags.service
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../../marketplace/collaboration/bnd.bnd

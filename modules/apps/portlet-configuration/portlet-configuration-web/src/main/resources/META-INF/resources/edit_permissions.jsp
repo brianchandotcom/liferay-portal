@@ -119,11 +119,11 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 		</liferay-util:include>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			localizeTitle="<%= false %>"
-			title="<%= HtmlUtil.unescape(selResourceDescription) %>"
-		/>
+		<aui:nav-bar markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="<%= selResourceDescription %>" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
 	</c:otherwise>
 </c:choose>
 
@@ -344,7 +344,7 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 					}
 
 					if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
-						disabled = true;
+						continue;
 					}
 				%>
 

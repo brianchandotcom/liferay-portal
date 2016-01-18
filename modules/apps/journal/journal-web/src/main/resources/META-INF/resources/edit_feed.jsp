@@ -93,7 +93,7 @@ ResourceURL feedURL = null;
 if (feed != null) {
 	long targetLayoutPlid = PortalUtil.getPlidFromFriendlyURL(feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
 
-	feedURL = new PortletURLImpl(request, JournalPortletKeys.JOURNAL, targetLayoutPlid, PortletRequest.RESOURCE_PHASE);
+	feedURL = PortletURLFactoryUtil.create(request, JournalPortletKeys.JOURNAL, targetLayoutPlid, PortletRequest.RESOURCE_PHASE);
 
 	feedURL.setCacheability(ResourceURL.FULL);
 	feedURL.setParameter("groupId", String.valueOf(groupId));

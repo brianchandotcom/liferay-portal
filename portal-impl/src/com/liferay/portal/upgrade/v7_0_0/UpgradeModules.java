@@ -246,6 +246,10 @@ public class UpgradeModules extends UpgradeProcess {
 			"%calendarportlet"
 		},
 		{
+			"calendar-portlet", "com.liferay.calendar.web", "Calendar",
+			"%calendarportlet"
+		},
+		{
 			"social-networking-portlet",
 			"com.liferay.social.networking.service", "SN",
 			"%socialnetworkingportlet"

@@ -121,8 +121,6 @@ else {
 
 	<li class="control-menu-nav-item">
 		<c:if test="<%= !layoutRevision.isIncomplete() %>">
-			<span class="layout-revision-version"><label><liferay-ui:message key="version" />:</label> <span class=""><%= layoutRevision.getLayoutRevisionId() %></span></span>
-
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 			<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
@@ -160,8 +158,9 @@ else {
 
 				<liferay-ui:icon
 					cssClass="submit-link"
-					iconCssClass="icon-random"
+					icon="workflow"
 					id="reviewTaskIcon"
+					markupView="lexicon"
 					message="workflow"
 					method="get"
 					url="<%= portletURL.toString() %>"

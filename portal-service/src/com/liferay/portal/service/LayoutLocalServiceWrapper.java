@@ -1201,17 +1201,25 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		return _layoutLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Layout> getScopeGroupLayouts(
+		long parentGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.getScopeGroupLayouts(parentGroupId);
+	}
+
 	/**
 	* Returns all the layouts within scope of the group
 	*
-	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @return the layouts within scope of the group
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getScopeGroupLayouts(
-		long groupId, boolean privateLayout) {
-		return _layoutLocalService.getScopeGroupLayouts(groupId, privateLayout);
+		long parentGroupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.getScopeGroupLayouts(parentGroupId,
+			privateLayout);
 	}
 
 	@Override

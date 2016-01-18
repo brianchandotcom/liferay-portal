@@ -107,7 +107,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public OrgLabor findByOrganizationId_First(long organizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgLabor> orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException;
+		throws com.liferay.portal.exception.NoSuchOrgLaborException;
 
 	/**
 	* Returns the first org labor in the ordered set where organizationId = &#63;.
@@ -129,7 +129,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public OrgLabor findByOrganizationId_Last(long organizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgLabor> orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException;
+		throws com.liferay.portal.exception.NoSuchOrgLaborException;
 
 	/**
 	* Returns the last org labor in the ordered set where organizationId = &#63;.
@@ -153,7 +153,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	public OrgLabor[] findByOrganizationId_PrevAndNext(long orgLaborId,
 		long organizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<OrgLabor> orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException;
+		throws com.liferay.portal.exception.NoSuchOrgLaborException;
 
 	/**
 	* Removes all the org labors where organizationId = &#63; from the database.
@@ -200,7 +200,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	* @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	*/
 	public OrgLabor remove(long orgLaborId)
-		throws com.liferay.portal.NoSuchOrgLaborException;
+		throws com.liferay.portal.exception.NoSuchOrgLaborException;
 
 	public OrgLabor updateImpl(OrgLabor orgLabor);
 
@@ -212,7 +212,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	* @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	*/
 	public OrgLabor findByPrimaryKey(long orgLaborId)
-		throws com.liferay.portal.NoSuchOrgLaborException;
+		throws com.liferay.portal.exception.NoSuchOrgLaborException;
 
 	/**
 	* Returns the org labor with the primary key or returns <code>null</code> if it could not be found.

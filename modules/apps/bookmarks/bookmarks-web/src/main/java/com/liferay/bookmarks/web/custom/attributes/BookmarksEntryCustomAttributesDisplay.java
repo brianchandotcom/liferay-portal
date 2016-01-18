@@ -16,7 +16,6 @@ package com.liferay.bookmarks.web.custom.attributes;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 
@@ -36,11 +35,6 @@ public class BookmarksEntryCustomAttributesDisplay
 	@Override
 	public String getClassName() {
 		return BookmarksEntry.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/ratings/star_hover.png";
 	}
 
 }

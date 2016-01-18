@@ -110,8 +110,6 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
-						var definition = instance.get('definition');
-
 						var defaultLanguageId = themeDisplay.getLanguageId();
 
 						return {
@@ -129,6 +127,12 @@ AUI.add(
 								field.render();
 							}
 						);
+
+						var submitButton = instance.getSubmitButton();
+
+						if (submitButton) {
+							submitButton.attr('disabled', false);
+						}
 					},
 
 					_onDOMSubmitForm: function(event) {

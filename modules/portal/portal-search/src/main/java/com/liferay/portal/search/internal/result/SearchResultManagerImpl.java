@@ -76,7 +76,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			searchResultContributor.getEntryClassName());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setSummaryFactory(SummaryFactory newSummaryFactory) {
 		_summaryFactory = newSummaryFactory;
 	}
@@ -137,6 +137,6 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 			});
 
-	private volatile SummaryFactory _summaryFactory;
+	private SummaryFactory _summaryFactory;
 
 }

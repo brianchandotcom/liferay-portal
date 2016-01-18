@@ -14,7 +14,10 @@
 
 package com.liferay.shopping.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -66,6 +69,24 @@ public class ShoppingCategoryServiceImpl
 
 		return shoppingCategoryPersistence.filterFindByG_P(
 			groupId, parentCategoryId, start, end);
+	}
+
+	@Override
+	public List<Object> getCategoriesAndItems(
+		long groupId, long categoryId, int start, int end,
+		OrderByComparator<?> obc) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			WorkflowConstants.STATUS_ANY, start, end,
+			(OrderByComparator<Object>)obc);
+
+		return shoppingCategoryFinder.filterFindC_I_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
+	public int getCategoriesAndItemsCount(long groupId, long categoryId) {
+		return shoppingCategoryFinder.countC_I_ByG_C(groupId, categoryId);
 	}
 
 	@Override

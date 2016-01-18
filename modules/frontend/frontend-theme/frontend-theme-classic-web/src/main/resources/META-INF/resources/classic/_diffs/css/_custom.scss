@@ -1,8 +1,5 @@
 @import "portlet_decorator";
 
-$bg-color: #F5F7F8;
-$solid-color: #47647A;
-
 body {
 	background-color: $bg-color;
 }
@@ -101,7 +98,7 @@ body {
 
 		.search-input {
 			font-size: 16px;
-			padding-right: 40px;
+			padding-right: 32px;
 
 			@include sm {
 				height: auto;
@@ -114,18 +111,8 @@ body {
 			right: 0;
 			top: 0;
 
-			.search-button {
-				background-color: transparent;
-				border-width: 0;
-				margin-top: 0;
-
-				.lfr-btn-label {
-					display: none;
-				}
-
-				@include media-query(null, $screen-xs-max) {
-					padding: 0 14px;
-				}
+			a {
+				color: $complementary-color;
 			}
 		}
 	}
@@ -137,8 +124,21 @@ body {
 			top: 0;
 		}
 
+		.panel-notifications-count {
+			top: 50%;
+
+			@include transform(translateY(-50%));
+
+			@include sm {
+				right: -15px;
+			}
+		}
+
 		.sign-in > a, .user-avatar-link {
 			display: block;
+		}
+
+		.sign-in > a {
 			line-height: 28px;
 			padding: 8px 4px 14px 14px;
 		}
@@ -151,6 +151,11 @@ body {
 			overflow: hidden;
 			vertical-align: text-bottom;
 			width: 32px;
+		}
+
+		.user-avatar-link {
+			line-height: 0;
+			padding: 8px 4px 8px 14px;
 		}
 
 		.user-full-name {

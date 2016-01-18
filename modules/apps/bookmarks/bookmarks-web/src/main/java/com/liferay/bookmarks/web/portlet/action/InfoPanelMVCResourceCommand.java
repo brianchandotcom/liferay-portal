@@ -15,8 +15,13 @@
 package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.constants.BookmarksWebKeys;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+
+import java.util.List;
 
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
@@ -43,8 +48,15 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ActionUtil.getEntries(resourceRequest);
-		ActionUtil.getFolders(resourceRequest);
+		List<BookmarksEntry> entries = ActionUtil.getEntries(resourceRequest);
+
+		resourceRequest.setAttribute(
+			BookmarksWebKeys.BOOKMARKS_ENTRIES, entries);
+
+		List<BookmarksFolder> folders = ActionUtil.getFolders(resourceRequest);
+
+		resourceRequest.setAttribute(
+			BookmarksWebKeys.BOOKMARKS_FOLDERS, folders);
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			getPortletRequestDispatcher(

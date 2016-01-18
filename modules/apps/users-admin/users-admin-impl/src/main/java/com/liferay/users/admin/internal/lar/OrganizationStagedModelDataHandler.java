@@ -42,7 +42,7 @@ import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -581,15 +581,14 @@ public class OrganizationStagedModelDataHandler
 		_websiteLocalService = websiteLocalService;
 	}
 
-	private volatile AddressLocalService _addressLocalService;
-	private volatile EmailAddressLocalService _emailAddressLocalService;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile OrganizationLocalService _organizationLocalService;
-	private volatile OrgLaborLocalService _orgLaborLocalService;
-	private volatile PasswordPolicyLocalService _passwordPolicyLocalService;
-	private volatile PasswordPolicyRelLocalService
-		_passwordPolicyRelLocalService;
-	private volatile PhoneLocalService _phoneLocalService;
-	private volatile WebsiteLocalService _websiteLocalService;
+	private AddressLocalService _addressLocalService;
+	private EmailAddressLocalService _emailAddressLocalService;
+	private GroupLocalService _groupLocalService;
+	private OrganizationLocalService _organizationLocalService;
+	private OrgLaborLocalService _orgLaborLocalService;
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
+	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+	private PhoneLocalService _phoneLocalService;
+	private WebsiteLocalService _websiteLocalService;
 
 }

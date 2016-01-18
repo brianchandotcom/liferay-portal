@@ -104,6 +104,8 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	}
 </aui:script>
 
+<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>" />
+
 <portlet:actionURL var="cartURL">
 	<portlet:param name="struts_action" value="/shopping/cart" />
 </portlet:actionURL>
@@ -112,10 +114,6 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="itemIds" type="hidden" />
-
-	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="cart" />
-	</liferay-util:include>
 
 	<liferay-ui:error exception="<%= CartMinQuantityException.class %>">
 

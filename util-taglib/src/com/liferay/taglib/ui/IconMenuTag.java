@@ -31,6 +31,10 @@ import com.liferay.taglib.BaseBodyTagSupport;
 import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.PortalIncludeUtil;
+import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -88,6 +92,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		finally {
 			if (!ServerDetector.isResin()) {
 				_cssClass = null;
+				_data = null;
 				_direction = "left";
 				_endPage = null;
 				_extended = true;
@@ -157,6 +162,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
+	}
+
+	public void setData(Map<String, Object> data) {
+		_data = data;
 	}
 
 	public void setDirection(String direction) {
@@ -333,8 +342,11 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 					String message = _message;
 
+					ResourceBundle resourceBundle =
+						TagResourceBundleUtil.getResourceBundle(pageContext);
+
 					if (_localizeMessage) {
-						message = LanguageUtil.get(request, _message);
+						message = LanguageUtil.get(resourceBundle, _message);
 					}
 
 					jspWriter.write("\" href=\"javascript:;\" id=\"");
@@ -450,16 +462,21 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			(HttpServletRequest)pageContext.getRequest();
 
 		request.setAttribute("liferay-ui:icon-menu:cssClass", _cssClass);
+		request.setAttribute("liferay-ui:icon-menu:data", _data);
 		request.setAttribute("liferay-ui:icon-menu:direction", _direction);
 		request.setAttribute("liferay-ui:icon-menu:icon", _icon);
 
 		String message = _message;
 
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
 		if (_localizeMessage) {
-			message = LanguageUtil.get(request, _message);
+			message = LanguageUtil.get(resourceBundle, _message);
 		}
 
 		request.setAttribute("liferay-ui:icon-menu:message", message);
+
 		request.setAttribute("liferay-ui:icon-menu:scroll", _scroll);
 		request.setAttribute(
 			"liferay-ui:icon-menu:triggerCssClass", _triggerCssClass);
@@ -471,6 +488,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
 	private String _cssClass;
+	private Map<String, Object> _data;
 	private String _direction = "left";
 	private boolean _disabled;
 	private String _endPage;

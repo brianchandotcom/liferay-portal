@@ -16,6 +16,7 @@ package com.liferay.roles.admin.internal.exportimport.xstream.configurator;
 
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.model.impl.PermissionImpl;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
@@ -34,7 +35,7 @@ public class RolesAdminXStreamConfigurator implements XStreamConfigurator {
 
 	@Override
 	public List<XStreamType> getAllowedXStreamTypes() {
-		return null;
+		return ListUtil.toList(_xStreamTypes);
 	}
 
 	@Override
@@ -50,10 +51,17 @@ public class RolesAdminXStreamConfigurator implements XStreamConfigurator {
 	@Activate
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
+			new XStreamAlias(PermissionImpl.class, "Permission"),
 			new XStreamAlias(RoleImpl.class, "Role")
+		};
+
+		_xStreamTypes = new XStreamType[] {
+			new XStreamType(PermissionImpl.class),
+			new XStreamType(RoleImpl.class)
 		};
 	}
 
 	private XStreamAlias[] _xStreamAliases;
+	private XStreamType[] _xStreamTypes;
 
 }

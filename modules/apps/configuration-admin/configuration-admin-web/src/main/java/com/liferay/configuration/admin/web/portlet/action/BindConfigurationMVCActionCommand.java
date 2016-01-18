@@ -218,9 +218,9 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BindConfigurationMVCActionCommand.class);
 
-	private volatile ConfigurationAdmin _configurationAdmin;
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
-	private volatile DDMFormValuesFactory _ddmFormValuesFactory;
-	private volatile JSONFactory _jsonFactory;
+	private ConfigurationAdmin _configurationAdmin;
+	private ConfigurationModelRetriever _configurationModelRetriever;
+	private DDMFormValuesFactory _ddmFormValuesFactory;
+	private JSONFactory _jsonFactory;
 
 }

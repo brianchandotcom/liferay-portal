@@ -3,4 +3,7 @@ Bundle-SymbolicName: com.liferay.product.navigation.simulation.device
 Bundle-Version: 1.0.0
 Include-Resource: classes
 JS-Config: /META-INF/resources/js/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /product-navigation-simulation-device
+-include: ../../../../marketplace/web-content-management/bnd.bnd

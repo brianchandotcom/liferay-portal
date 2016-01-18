@@ -25,10 +25,10 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.DuplicateUserGroupException" %><%@
-page import="com.liferay.portal.NoSuchUserGroupException" %><%@
-page import="com.liferay.portal.RequiredUserGroupException" %><%@
-page import="com.liferay.portal.UserGroupNameException" %><%@
+<%@ page import="com.liferay.portal.exception.DuplicateUserGroupException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserGroupException" %><%@
+page import="com.liferay.portal.exception.RequiredUserGroupException" %><%@
+page import="com.liferay.portal.exception.UserGroupNameException" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

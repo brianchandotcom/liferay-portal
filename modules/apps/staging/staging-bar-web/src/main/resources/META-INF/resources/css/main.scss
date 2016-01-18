@@ -7,7 +7,26 @@
 	}
 }
 
-.control-menu-nav-level-1 .staging-links {
+.control-menu-nav {
+	@include display(flex);
+
+	font-size: 16px;
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+
+	> li {
+		@include align-self(center);
+
+		display: block;
+		float: left;
+		margin-left: 16px;
+	}
+}
+
+.control-menu .staging-links {
+	display:inline-block;
+	line-height: 25px;
 	position: static;
 
 	&:nth-last-of-type(2) {
@@ -19,8 +38,12 @@
 	}
 }
 
+.control-menu-level-1 .toolbar-group-expand-text {
+	overflow: visible;
+}
+
 .control-menu-level-2 {
-	@media screen and (max-width: 767px) {
+	@include media-query(0, $screen-xs-max) {
 		bottom: 0;
 		display: none;
 		left: 0;
@@ -31,7 +54,7 @@
 	}
 
 	&.open {
-		@media screen and (max-width: 767px) {
+		@include media-query(0, $screen-xs-max) {
 			display: block;
 			overflow: auto;
 		}
@@ -48,11 +71,11 @@
 		padding-bottom: 8px;
 		padding-top: 8px;
 
-		@media screen and (min-width: 768px) {
+		@include sm {
 			margin-bottom: 0;
 		}
 
-		@media screen and (max-width: 767px) {
+		@include media-query(0, $screen-xs-max) {
 			display: block;
 			float: none;
 			padding: 10px 0;
@@ -62,12 +85,12 @@
 	}
 
 	.control-menu-nav {
-		@media screen and (max-width: 767px) {
+		@include media-query(0, $screen-xs-max) {
 			display: block;
 		}
 
 		li {
-			@media screen and (max-width: 767px) {
+			@include media-query(0, $screen-xs-max) {
 				margin-left: 0;
 				width: 100%;
 			}
@@ -75,28 +98,6 @@
 	}
 }
 
-.add-menu-toggle,
-.edit-controls-toggle,
-.edit-layout-link,
-.info-link,
-.simulation-menu-toggle {
-	padding-bottom: 15px;
-	padding-top: 15px;
-
-	.taglib-icon-label {
-		border: 0;
-		clip: rect(0, 0, 0, 0);
-		height: 1px;
-		margin: -1px;
-		overflow: hidden;
-		padding: 0;
-		position: absolute;
-		width: 1px;
-	}
-}
-
-.live-link,
-.staging-link,
 .staging-options-toggle {
 	padding: 15px 5px 15px 2px;
 }
@@ -105,9 +106,21 @@
 	margin-right: 24px;
 }
 
+.live-link,
+.staging-link,
+.staging-options-toggle {
+	padding: 15px 5px 15px 2px;
+}
+
 .publish-btn-group {
-	@media screen and (min-width: 768px) {
+	@include sm {
 		border-radius: 4px;
 		overflow: hidden;
+	}
+}
+
+.staging-ready {
+	@include sm {
+		padding-top: 70px;
 	}
 }

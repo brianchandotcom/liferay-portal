@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
-import com.liferay.rss.web.configuration.RSSWebConfiguration;
+import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
 import com.liferay.rss.web.util.RSSFeed;
 
 import java.util.ArrayList;
@@ -34,11 +34,12 @@ import javax.servlet.http.HttpServletRequest;
 public class RSSDisplayContext {
 
 	public RSSDisplayContext(
-			HttpServletRequest request, RSSWebConfiguration rssWebConfiguration)
+			HttpServletRequest request,
+			RSSWebCacheConfiguration rssWebCacheConfiguration)
 		throws ConfigurationException {
 
 		_request = request;
-		_rssWebConfiguration = rssWebConfiguration;
+		_rssWebCacheConfiguration = rssWebCacheConfiguration;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -84,7 +85,7 @@ public class RSSDisplayContext {
 				title = titles[i];
 			}
 
-			rssFeeds.add(new RSSFeed(_rssWebConfiguration, url, title));
+			rssFeeds.add(new RSSFeed(_rssWebCacheConfiguration, url, title));
 		}
 
 		return rssFeeds;
@@ -100,6 +101,6 @@ public class RSSDisplayContext {
 	private final HttpServletRequest _request;
 	private final RSSPortletInstanceConfiguration
 		_rssPortletInstanceConfiguration;
-	private final RSSWebConfiguration _rssWebConfiguration;
+	private final RSSWebCacheConfiguration _rssWebCacheConfiguration;
 
 }

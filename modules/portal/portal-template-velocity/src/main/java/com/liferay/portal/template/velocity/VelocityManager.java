@@ -160,6 +160,11 @@ public class VelocityManager extends BaseSingleTemplateManager {
 			extendedProperties.setProperty(
 				VelocityEngine.RESOURCE_LOADER, "liferay");
 
+			extendedProperties.setProperty(
+				"liferay." + VelocityEngine.RESOURCE_LOADER +
+					"." + VelocityTemplateResourceLoader.class.getName(),
+				templateResourceLoader);
+
 			boolean cacheEnabled = false;
 
 			if (_velocityEngineConfiguration.
@@ -173,14 +178,14 @@ public class VelocityManager extends BaseSingleTemplateManager {
 				String.valueOf(cacheEnabled));
 
 			extendedProperties.setProperty(
+				"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
+				LiferayResourceLoader.class.getName());
+
+			extendedProperties.setProperty(
 				"liferay." + VelocityEngine.RESOURCE_LOADER +
 					".resourceModificationCheckInterval",
 				_velocityEngineConfiguration.
 					resourceModificationCheckInterval() + "");
-
-			extendedProperties.setProperty(
-				"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
-				LiferayResourceLoader.class.getName());
 
 			extendedProperties.setProperty(
 				VelocityEngine.RESOURCE_MANAGER_CLASS,

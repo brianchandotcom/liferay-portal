@@ -28,7 +28,7 @@ MyAccountPanelCategoryDisplayContext myAccountPanelCategoryDisplayContext = new 
 	<aui:a
 		cssClass='<%= "list-group-heading" + (myAccountPanelCategoryDisplayContext.isMySiteGroupActive(false) ? " active" : StringPool.BLANK) %>'
 		href="<%= myAccountPanelCategoryDisplayContext.getMySiteGroupURL(false) %>"
-		label="profile"
+		label="my-profile"
 	/>
 </c:if>
 
@@ -36,7 +36,7 @@ MyAccountPanelCategoryDisplayContext myAccountPanelCategoryDisplayContext = new 
 	<aui:a
 		cssClass='<%= "list-group-heading" + (myAccountPanelCategoryDisplayContext.isMySiteGroupActive(true) ? " active" : StringPool.BLANK) %>'
 		href="<%= myAccountPanelCategoryDisplayContext.getMySiteGroupURL(true) %>"
-		label="dashboard"
+		label="my-dashboard"
 	/>
 </c:if>
 

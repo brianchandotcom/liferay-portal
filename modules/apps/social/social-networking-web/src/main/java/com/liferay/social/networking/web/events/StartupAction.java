@@ -22,8 +22,8 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portlet.expando.DuplicateColumnNameException;
-import com.liferay.portlet.expando.DuplicateTableNameException;
+import com.liferay.portlet.expando.exception.DuplicateColumnNameException;
+import com.liferay.portlet.expando.exception.DuplicateTableNameException;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
@@ -122,8 +122,8 @@ public class StartupAction extends SimpleAction {
 		}
 	}
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile ExpandoColumnLocalService _expandoColumnLocalService;
-	private volatile ExpandoTableLocalService _expandoTableLocalService;
+	private CompanyLocalService _companyLocalService;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 }

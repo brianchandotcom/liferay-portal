@@ -15,7 +15,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeId:\d+}/all_pages</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/wiki/view_all_pages</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/wiki/view_pages</implicit-parameter>
 		<implicit-parameter name="nodeName"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
@@ -43,7 +43,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeName}/all_pages</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/wiki/view_all_pages</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/wiki/view_pages</implicit-parameter>
 		<implicit-parameter name="nodeId"></implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
@@ -77,7 +77,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeId:\d+}/all_pages/{p_p_state}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/wiki/view_all_pages</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/wiki/view_pages</implicit-parameter>
 		<implicit-parameter name="nodeName"></implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
@@ -101,7 +101,7 @@
 	</route>
 	<route>
 		<pattern>/{nodeName}/all_pages/{p_p_state}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/wiki/view_all_pages</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/wiki/view_pages</implicit-parameter>
 		<implicit-parameter name="nodeId"></implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>

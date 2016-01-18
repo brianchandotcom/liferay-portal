@@ -20,8 +20,13 @@
 </tr>
 <!--SITE_URL-->
 <tr>
+	<td>SITE_URL_LABEL</td>
+	<td>//div[contains(@id,'site-urlHeader')]//a[contains(.,'Site URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_URL_FRIENDLY_URL_LABEL</td>
-	<td>//div[contains(@id,'siteUrl')]//span[contains(.,'Friendly URL')]</td>
+	<td>//div[contains(@id,'site-urlContent')]//span[contains(.,'Friendly URL')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -270,6 +270,6 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		_configurationModelRetriever = configurationModelRetriever;
 	}
 
-	private volatile ConfigurationModelRetriever _configurationModelRetriever;
+	private ConfigurationModelRetriever _configurationModelRetriever;
 
 }

@@ -79,6 +79,6 @@ public class PortalSettingsLDAPAuthenticationDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsLDAPAuthenticationDynamicInclude.class);
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

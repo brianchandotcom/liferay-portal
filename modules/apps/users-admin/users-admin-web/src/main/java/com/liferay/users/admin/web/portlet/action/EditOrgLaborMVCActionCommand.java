@@ -14,8 +14,8 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.portal.NoSuchListTypeException;
-import com.liferay.portal.NoSuchOrgLaborException;
+import com.liferay.portal.exception.NoSuchListTypeException;
+import com.liferay.portal.exception.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -139,6 +139,6 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile OrgLaborService _orgLaborService;
+	private OrgLaborService _orgLaborService;
 
 }

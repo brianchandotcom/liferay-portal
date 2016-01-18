@@ -65,10 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Wesley Gong
  */
-@Component(
-	configurationPid = "com.liferay.portal.authenticator.ldap.configuration.LDAPAuthConfiguration",
-	immediate = true, service = PortalToLDAPConverter.class
-)
+@Component(immediate = true, service = PortalToLDAPConverter.class)
 public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	public DefaultPortalToLDAPConverter() {
@@ -613,14 +610,14 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
 
-	private volatile ImageLocalService _imageLocalService;
-	private volatile ConfigurationProvider<LDAPAuthConfiguration>
+	private ImageLocalService _imageLocalService;
+	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPServerConfiguration>
+	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private volatile LDAPSettings _ldapSettings;
-	private volatile PasswordEncryptor _passwordEncryptor;
-	private volatile PortalLDAP _portalLDAP;
+	private LDAPSettings _ldapSettings;
+	private PasswordEncryptor _passwordEncryptor;
+	private PortalLDAP _portalLDAP;
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();
 	private final Map<String, String> _reservedUserFieldNames = new HashMap<>();

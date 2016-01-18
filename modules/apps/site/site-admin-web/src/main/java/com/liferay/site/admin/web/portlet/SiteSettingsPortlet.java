@@ -14,6 +14,8 @@
 
 package com.liferay.site.admin.web.portlet;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.LayoutLocalService;
@@ -61,16 +63,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteSettingsPortlet extends SiteAdminPortlet {
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
@@ -78,6 +83,7 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 		this.layoutLocalService = layoutLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutSetLocalService(
 		LayoutSetLocalService layoutSetLocalService) {
@@ -85,6 +91,7 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 		this.layoutSetLocalService = layoutSetLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutSetPrototypeService(
 		LayoutSetPrototypeService layoutSetPrototypeService) {
@@ -92,11 +99,13 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 		this.layoutSetPrototypeService = layoutSetPrototypeService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setLayoutSetService(LayoutSetService layoutSetService) {
 		this.layoutSetService = layoutSetService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setMembershipRequestLocalService(
 		MembershipRequestLocalService membershipRequestLocalService) {
@@ -104,6 +113,7 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 		this.membershipRequestLocalService = membershipRequestLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setMembershipRequestService(
 		MembershipRequestService membershipRequestService) {
@@ -111,21 +121,39 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 		this.membershipRequestService = membershipRequestService;
 	}
 
+	@Override
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		this.panelAppRegistry = panelAppRegistry;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		this.panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	@Override
 	@Reference(unbind = "-")
 	protected void setRoleLocalService(RoleLocalService roleLocalService) {
 		this.roleLocalService = roleLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setTeamLocalService(TeamLocalService teamLocalService) {
 		this.teamLocalService = teamLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setUserService(UserService userService) {
 		this.userService = userService;

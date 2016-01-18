@@ -16,7 +16,7 @@ package com.liferay.portal.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.NoSuchListTypeException;
+import com.liferay.portal.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ListType;

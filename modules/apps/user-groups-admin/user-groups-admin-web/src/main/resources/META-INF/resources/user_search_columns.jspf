@@ -32,15 +32,20 @@
 				<span><%= user2.getScreenName() %></span>
 			</h6>
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/user_action.jsp"
+		/>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%
-		row.setCssClass("col-md-2 col-sm-4 col-xs-6 selectable");
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 		%>
 
 		<liferay-ui:search-container-column-text>
 			<liferay-frontend:user-vertical-card
+				actionJsp="/user_action.jsp"
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
 				resultRow="<%= row %>"
@@ -60,6 +65,11 @@
 		<liferay-ui:search-container-column-text
 			name="screen-name"
 			property="screenName"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			cssClass="list-group-item-field"
+			path="/user_action.jsp"
 		/>
 	</c:otherwise>
 </c:choose>

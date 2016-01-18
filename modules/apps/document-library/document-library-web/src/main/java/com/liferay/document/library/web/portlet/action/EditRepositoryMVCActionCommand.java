@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.InvalidRepositoryException;
-import com.liferay.portal.NoSuchRepositoryException;
+import com.liferay.portal.exception.InvalidRepositoryException;
+import com.liferay.portal.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -32,10 +32,10 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
-import com.liferay.portlet.documentlibrary.DuplicateRepositoryNameException;
-import com.liferay.portlet.documentlibrary.FolderNameException;
-import com.liferay.portlet.documentlibrary.RepositoryNameException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFolderNameException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateRepositoryNameException;
+import com.liferay.portlet.documentlibrary.exception.FolderNameException;
+import com.liferay.portlet.documentlibrary.exception.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 import javax.portlet.ActionRequest;
@@ -151,6 +151,6 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile RepositoryService _repositoryService;
+	private RepositoryService _repositoryService;
 
 }

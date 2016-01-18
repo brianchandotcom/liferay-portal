@@ -14,8 +14,7 @@
 
 package com.liferay.portal.kernel.trash;
 
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Locale;
@@ -31,19 +30,16 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file";
+		return StringPool.BLANK;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getIconPath(themeDisplay);
-	}
-
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/page.png";
+		return StringPool.BLANK;
 	}
 
 	@Override

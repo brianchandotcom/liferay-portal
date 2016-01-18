@@ -84,7 +84,7 @@ create table JournalFeed (
 	orderByCol VARCHAR(75) null,
 	orderByType VARCHAR(75) null,
 	targetLayoutFriendlyUrl VARCHAR(255) null,
-	targetPortletId VARCHAR(75) null,
+	targetPortletId VARCHAR(200) null,
 	contentField VARCHAR(75) null,
 	feedFormat VARCHAR(75) null,
 	feedVersion DOUBLE,

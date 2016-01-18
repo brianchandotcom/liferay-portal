@@ -107,7 +107,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	*/
 	public LayoutSetBranch findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the first layout set branch in the ordered set where groupId = &#63;.
@@ -129,7 +129,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	*/
 	public LayoutSetBranch findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the last layout set branch in the ordered set where groupId = &#63;.
@@ -153,7 +153,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public LayoutSetBranch[] findByGroupId_PrevAndNext(long layoutSetBranchId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns all the layout set branchs that the user has permission to view where groupId = &#63;.
@@ -207,7 +207,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public LayoutSetBranch[] filterFindByGroupId_PrevAndNext(
 		long layoutSetBranchId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Removes all the layout set branchs where groupId = &#63; from the database.
@@ -307,7 +307,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	*/
 	public LayoutSetBranch findByG_P_First(long groupId, boolean privateLayout,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
@@ -332,7 +332,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	*/
 	public LayoutSetBranch findByG_P_Last(long groupId, boolean privateLayout,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63;.
@@ -358,7 +358,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public LayoutSetBranch[] findByG_P_PrevAndNext(long layoutSetBranchId,
 		long groupId, boolean privateLayout,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns all the layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
@@ -417,7 +417,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public LayoutSetBranch[] filterFindByG_P_PrevAndNext(
 		long layoutSetBranchId, long groupId, boolean privateLayout,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Removes all the layout set branchs where groupId = &#63; and privateLayout = &#63; from the database.
@@ -456,7 +456,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	*/
 	public LayoutSetBranch findByG_P_N(long groupId, boolean privateLayout,
 		java.lang.String name)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the layout set branch where groupId = &#63; and privateLayout = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -491,7 +491,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	*/
 	public LayoutSetBranch removeByG_P_N(long groupId, boolean privateLayout,
 		java.lang.String name)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the number of layout set branchs where groupId = &#63; and privateLayout = &#63; and name = &#63;.
@@ -585,7 +585,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public LayoutSetBranch findByG_P_M_First(long groupId,
 		boolean privateLayout, boolean master,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the first layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
@@ -613,7 +613,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public LayoutSetBranch findByG_P_M_Last(long groupId,
 		boolean privateLayout, boolean master,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the last layout set branch in the ordered set where groupId = &#63; and privateLayout = &#63; and master = &#63;.
@@ -642,7 +642,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	public LayoutSetBranch[] findByG_P_M_PrevAndNext(long layoutSetBranchId,
 		long groupId, boolean privateLayout, boolean master,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns all the layout set branchs that the user has permission to view where groupId = &#63; and privateLayout = &#63; and master = &#63;.
@@ -706,7 +706,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 		long layoutSetBranchId, long groupId, boolean privateLayout,
 		boolean master,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Removes all the layout set branchs where groupId = &#63; and privateLayout = &#63; and master = &#63; from the database.
@@ -769,7 +769,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
 	*/
 	public LayoutSetBranch remove(long layoutSetBranchId)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	public LayoutSetBranch updateImpl(LayoutSetBranch layoutSetBranch);
 
@@ -781,7 +781,7 @@ public interface LayoutSetBranchPersistence extends BasePersistence<LayoutSetBra
 	* @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
 	*/
 	public LayoutSetBranch findByPrimaryKey(long layoutSetBranchId)
-		throws com.liferay.portal.NoSuchLayoutSetBranchException;
+		throws com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 
 	/**
 	* Returns the layout set branch with the primary key or returns <code>null</code> if it could not be found.

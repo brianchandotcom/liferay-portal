@@ -51,8 +51,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 
@@ -688,8 +688,8 @@ public class S3Store extends BaseStore {
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;
-	private volatile S3FileCache _s3FileCache;
-	private volatile S3KeyTransformer _s3KeyTransformer;
+	private S3FileCache _s3FileCache;
+	private S3KeyTransformer _s3KeyTransformer;
 	private StorageClass _storageClass;
 
 }

@@ -158,15 +158,13 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	var form = $(document.<portlet:namespace />fm);
-
 	<portlet:renderURL var="viewFileEntryTypeURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 		<portlet:param name="browseBy" value="file-entry-type" />
 		<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />fileEntryTypes').on(
+	AUI.$('#<portlet:namespace />fileEntryTypes').on(
 		'click',
 		function(event) {
 			event.preventDefault();

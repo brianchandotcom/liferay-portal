@@ -424,11 +424,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String javaClassName = matcher.group(2);
 
-			String beforeJavaClass = newContent.substring(
-				0, matcher.start() + 1);
-
-			int javaClassLineCount =
-				StringUtil.count(beforeJavaClass, "\n") + 1;
+			int javaClassLineCount = getLineCount(
+				newContent, matcher.start() + 1);
 
 			newContent = formatJavaTerms(
 				javaClassName, null, file, fileName, absolutePath, newContent,

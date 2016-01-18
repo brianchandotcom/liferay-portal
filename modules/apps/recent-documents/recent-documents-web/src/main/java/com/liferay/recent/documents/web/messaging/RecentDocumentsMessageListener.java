@@ -89,7 +89,7 @@ public class RecentDocumentsMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private volatile DLFileRankLocalService _dLFileRankLocalService;
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private DLFileRankLocalService _dLFileRankLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

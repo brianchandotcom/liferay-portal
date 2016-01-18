@@ -187,7 +187,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByGroupId_First(long groupId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByGroupId_Last(long groupId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity[] findByGroupId_PrevAndNext(long activityId,
 		long groupId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityId, groupId,
 			orderByComparator);
@@ -344,7 +344,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByCompanyId_First(long companyId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByCompanyId_Last(long companyId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -402,7 +402,7 @@ public class SocialActivityUtil {
 	public static SocialActivity[] findByCompanyId_PrevAndNext(
 		long activityId, long companyId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(activityId, companyId,
 			orderByComparator);
@@ -505,7 +505,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByUserId_First(long userId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -531,7 +531,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByUserId_Last(long userId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -558,7 +558,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity[] findByUserId_PrevAndNext(long activityId,
 		long userId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(activityId, userId,
 			orderByComparator);
@@ -663,7 +663,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByActivitySetId_First(long activitySetId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByActivitySetId_First(activitySetId, orderByComparator);
 	}
@@ -691,7 +691,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByActivitySetId_Last(long activitySetId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByActivitySetId_Last(activitySetId, orderByComparator);
 	}
@@ -721,7 +721,7 @@ public class SocialActivityUtil {
 	public static SocialActivity[] findByActivitySetId_PrevAndNext(
 		long activityId, long activitySetId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByActivitySetId_PrevAndNext(activityId, activitySetId,
 			orderByComparator);
@@ -754,7 +754,7 @@ public class SocialActivityUtil {
 	* @throws NoSuchActivityException if a matching social activity could not be found
 	*/
 	public static SocialActivity findByMirrorActivityId(long mirrorActivityId)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().findByMirrorActivityId(mirrorActivityId);
 	}
 
@@ -788,7 +788,7 @@ public class SocialActivityUtil {
 	* @return the social activity that was removed
 	*/
 	public static SocialActivity removeByMirrorActivityId(long mirrorActivityId)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().removeByMirrorActivityId(mirrorActivityId);
 	}
 
@@ -881,7 +881,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByClassNameId_First(long classNameId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -909,7 +909,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByClassNameId_Last(long classNameId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -939,7 +939,7 @@ public class SocialActivityUtil {
 	public static SocialActivity[] findByClassNameId_PrevAndNext(
 		long activityId, long classNameId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(activityId, classNameId,
 			orderByComparator);
@@ -1045,7 +1045,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByReceiverUserId_First(
 		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByReceiverUserId_First(receiverUserId, orderByComparator);
 	}
@@ -1074,7 +1074,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByReceiverUserId_Last(
 		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByReceiverUserId_Last(receiverUserId, orderByComparator);
 	}
@@ -1104,7 +1104,7 @@ public class SocialActivityUtil {
 	public static SocialActivity[] findByReceiverUserId_PrevAndNext(
 		long activityId, long receiverUserId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByReceiverUserId_PrevAndNext(activityId,
 			receiverUserId, orderByComparator);
@@ -1215,7 +1215,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByC_C_First(long classNameId,
 		long classPK, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1245,7 +1245,7 @@ public class SocialActivityUtil {
 	*/
 	public static SocialActivity findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1277,7 +1277,7 @@ public class SocialActivityUtil {
 	public static SocialActivity[] findByC_C_PrevAndNext(long activityId,
 		long classNameId, long classPK,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(activityId, classNameId, classPK,
 			orderByComparator);
@@ -1400,7 +1400,7 @@ public class SocialActivityUtil {
 	public static SocialActivity findByM_C_C_First(long mirrorActivityId,
 		long classNameId, long classPK,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByM_C_C_First(mirrorActivityId, classNameId, classPK,
 			orderByComparator);
@@ -1436,7 +1436,7 @@ public class SocialActivityUtil {
 	public static SocialActivity findByM_C_C_Last(long mirrorActivityId,
 		long classNameId, long classPK,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByM_C_C_Last(mirrorActivityId, classNameId, classPK,
 			orderByComparator);
@@ -1473,7 +1473,7 @@ public class SocialActivityUtil {
 	public static SocialActivity[] findByM_C_C_PrevAndNext(long activityId,
 		long mirrorActivityId, long classNameId, long classPK,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByM_C_C_PrevAndNext(activityId, mirrorActivityId,
 			classNameId, classPK, orderByComparator);
@@ -1599,7 +1599,7 @@ public class SocialActivityUtil {
 	public static SocialActivity findByC_C_T_First(long classNameId,
 		long classPK, int type,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_T_First(classNameId, classPK, type,
 			orderByComparator);
@@ -1635,7 +1635,7 @@ public class SocialActivityUtil {
 	public static SocialActivity findByC_C_T_Last(long classNameId,
 		long classPK, int type,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -1672,7 +1672,7 @@ public class SocialActivityUtil {
 	public static SocialActivity[] findByC_C_T_PrevAndNext(long activityId,
 		long classNameId, long classPK, int type,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByC_C_T_PrevAndNext(activityId, classNameId, classPK,
 			type, orderByComparator);
@@ -1818,7 +1818,7 @@ public class SocialActivityUtil {
 	public static SocialActivity findByG_U_C_C_T_R_First(long groupId,
 		long userId, long classNameId, long classPK, int type,
 		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_C_C_T_R_First(groupId, userId, classNameId,
 			classPK, type, receiverUserId, orderByComparator);
@@ -1860,7 +1860,7 @@ public class SocialActivityUtil {
 	public static SocialActivity findByG_U_C_C_T_R_Last(long groupId,
 		long userId, long classNameId, long classPK, int type,
 		long receiverUserId, OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_C_C_T_R_Last(groupId, userId, classNameId,
 			classPK, type, receiverUserId, orderByComparator);
@@ -1904,7 +1904,7 @@ public class SocialActivityUtil {
 		long activityId, long groupId, long userId, long classNameId,
 		long classPK, int type, long receiverUserId,
 		OrderByComparator<SocialActivity> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_C_C_T_R_PrevAndNext(activityId, groupId, userId,
 			classNameId, classPK, type, receiverUserId, orderByComparator);
@@ -1961,7 +1961,7 @@ public class SocialActivityUtil {
 	public static SocialActivity findByG_U_CD_C_C_T_R(long groupId,
 		long userId, long createDate, long classNameId, long classPK, int type,
 		long receiverUserId)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .findByG_U_CD_C_C_T_R(groupId, userId, createDate,
 			classNameId, classPK, type, receiverUserId);
@@ -2023,7 +2023,7 @@ public class SocialActivityUtil {
 	public static SocialActivity removeByG_U_CD_C_C_T_R(long groupId,
 		long userId, long createDate, long classNameId, long classPK, int type,
 		long receiverUserId)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence()
 				   .removeByG_U_CD_C_C_T_R(groupId, userId, createDate,
 			classNameId, classPK, type, receiverUserId);
@@ -2085,7 +2085,7 @@ public class SocialActivityUtil {
 	* @throws NoSuchActivityException if a social activity with the primary key could not be found
 	*/
 	public static SocialActivity remove(long activityId)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().remove(activityId);
 	}
 
@@ -2101,7 +2101,7 @@ public class SocialActivityUtil {
 	* @throws NoSuchActivityException if a social activity with the primary key could not be found
 	*/
 	public static SocialActivity findByPrimaryKey(long activityId)
-		throws com.liferay.portlet.social.NoSuchActivityException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityException {
 		return getPersistence().findByPrimaryKey(activityId);
 	}
 

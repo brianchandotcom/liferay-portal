@@ -68,6 +68,6 @@ public class SiteAdminControlPanelEntry extends BaseControlPanelEntry {
 		_groupLocalService = groupLocalService;
 	}
 
-	private volatile GroupLocalService _groupLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

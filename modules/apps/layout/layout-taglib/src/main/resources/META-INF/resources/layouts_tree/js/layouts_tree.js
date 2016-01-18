@@ -178,14 +178,16 @@ AUI.add(
 
 				var urls = instance.get('urls');
 
-				urls.forEach(function(url) {
-					data[url.name] = A.Lang.sub(
-						url.value,
-						{
-							selPlid: data.plid
-						}
-					);
-				});
+				urls.forEach(
+					function(item, index) {
+						data[item.name] = A.Lang.sub(
+							item.value,
+							{
+								selPlid: data.plid
+							}
+						);
+					}
+				);
 
 				data.id = data.url ? LString.escapeHTML(instance._treeId + '_layout_' + data.url.substring(1)) : STR_EMPTY;
 

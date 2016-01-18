@@ -188,6 +188,6 @@ public class BookmarksEntryStagedModelRepository
 		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
-	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

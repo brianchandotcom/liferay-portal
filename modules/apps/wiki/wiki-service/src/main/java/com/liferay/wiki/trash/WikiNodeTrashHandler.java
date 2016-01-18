@@ -26,7 +26,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.exception.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -241,8 +241,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 		}
 
 		if (!containerModel) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/wiki/view_all_pages");
+			portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 		}
 
 		return portletURL;
@@ -271,7 +270,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	private volatile WikiNodeLocalService _wikiNodeLocalService;
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private WikiNodeLocalService _wikiNodeLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

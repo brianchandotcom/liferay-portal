@@ -187,7 +187,7 @@ public class MBStatsUserUtil {
 	*/
 	public static MBStatsUser findByGroupId_First(long groupId,
 		OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -213,7 +213,7 @@ public class MBStatsUserUtil {
 	*/
 	public static MBStatsUser findByGroupId_Last(long groupId,
 		OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class MBStatsUserUtil {
 	*/
 	public static MBStatsUser[] findByGroupId_PrevAndNext(long statsUserId,
 		long groupId, OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(statsUserId, groupId,
 			orderByComparator);
@@ -342,7 +342,7 @@ public class MBStatsUserUtil {
 	*/
 	public static MBStatsUser findByUserId_First(long userId,
 		OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -368,7 +368,7 @@ public class MBStatsUserUtil {
 	*/
 	public static MBStatsUser findByUserId_Last(long userId,
 		OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -395,7 +395,7 @@ public class MBStatsUserUtil {
 	*/
 	public static MBStatsUser[] findByUserId_PrevAndNext(long statsUserId,
 		long userId, OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(statsUserId, userId,
 			orderByComparator);
@@ -429,7 +429,7 @@ public class MBStatsUserUtil {
 	* @throws NoSuchStatsUserException if a matching message boards stats user could not be found
 	*/
 	public static MBStatsUser findByG_U(long groupId, long userId)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().findByG_U(groupId, userId);
 	}
 
@@ -465,7 +465,7 @@ public class MBStatsUserUtil {
 	* @return the message boards stats user that was removed
 	*/
 	public static MBStatsUser removeByG_U(long groupId, long userId)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().removeByG_U(groupId, userId);
 	}
 
@@ -574,7 +574,7 @@ public class MBStatsUserUtil {
 	public static MBStatsUser findByG_NotU_NotM_First(long groupId,
 		long userId, int messageCount,
 		OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotU_NotM_First(groupId, userId, messageCount,
 			orderByComparator);
@@ -609,7 +609,7 @@ public class MBStatsUserUtil {
 	*/
 	public static MBStatsUser findByG_NotU_NotM_Last(long groupId, long userId,
 		int messageCount, OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotU_NotM_Last(groupId, userId, messageCount,
 			orderByComparator);
@@ -646,7 +646,7 @@ public class MBStatsUserUtil {
 	public static MBStatsUser[] findByG_NotU_NotM_PrevAndNext(
 		long statsUserId, long groupId, long userId, int messageCount,
 		OrderByComparator<MBStatsUser> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotU_NotM_PrevAndNext(statsUserId, groupId, userId,
 			messageCount, orderByComparator);
@@ -713,7 +713,7 @@ public class MBStatsUserUtil {
 	* @throws NoSuchStatsUserException if a message boards stats user with the primary key could not be found
 	*/
 	public static MBStatsUser remove(long statsUserId)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().remove(statsUserId);
 	}
 
@@ -729,7 +729,7 @@ public class MBStatsUserUtil {
 	* @throws NoSuchStatsUserException if a message boards stats user with the primary key could not be found
 	*/
 	public static MBStatsUser findByPrimaryKey(long statsUserId)
-		throws com.liferay.portlet.messageboards.NoSuchStatsUserException {
+		throws com.liferay.portlet.messageboards.exception.NoSuchStatsUserException {
 		return getPersistence().findByPrimaryKey(statsUserId);
 	}
 

@@ -182,7 +182,7 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a matching m d r rule could not be found
+	* @throws NoSuchRuleException if a matching m d r rule could not be found
 	*/
 	public static MDRRule findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MDRRule> orderByComparator)
@@ -208,7 +208,7 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a matching m d r rule could not be found
+	* @throws NoSuchRuleException if a matching m d r rule could not be found
 	*/
 	public static MDRRule findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MDRRule> orderByComparator)
@@ -235,7 +235,7 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a m d r rule with the primary key could not be found
+	* @throws NoSuchRuleException if a m d r rule with the primary key could not be found
 	*/
 	public static MDRRule[] findByUuid_PrevAndNext(long ruleId,
 		java.lang.String uuid, OrderByComparator<MDRRule> orderByComparator)
@@ -264,12 +264,12 @@ public class MDRRuleUtil {
 	}
 
 	/**
-	* Returns the m d r rule where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.mobile.device.rules.NoSuchRuleException} if it could not be found.
+	* Returns the m d r rule where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRuleException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a matching m d r rule could not be found
+	* @throws NoSuchRuleException if a matching m d r rule could not be found
 	*/
 	public static MDRRule findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.mobile.device.rules.exception.NoSuchRuleException {
@@ -404,7 +404,7 @@ public class MDRRuleUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a matching m d r rule could not be found
+	* @throws NoSuchRuleException if a matching m d r rule could not be found
 	*/
 	public static MDRRule findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MDRRule> orderByComparator)
@@ -434,7 +434,7 @@ public class MDRRuleUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a matching m d r rule could not be found
+	* @throws NoSuchRuleException if a matching m d r rule could not be found
 	*/
 	public static MDRRule findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MDRRule> orderByComparator)
@@ -465,7 +465,7 @@ public class MDRRuleUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a m d r rule with the primary key could not be found
+	* @throws NoSuchRuleException if a m d r rule with the primary key could not be found
 	*/
 	public static MDRRule[] findByUuid_C_PrevAndNext(long ruleId,
 		java.lang.String uuid, long companyId,
@@ -571,7 +571,7 @@ public class MDRRuleUtil {
 	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a matching m d r rule could not be found
+	* @throws NoSuchRuleException if a matching m d r rule could not be found
 	*/
 	public static MDRRule findByRuleGroupId_First(long ruleGroupId,
 		OrderByComparator<MDRRule> orderByComparator)
@@ -599,7 +599,7 @@ public class MDRRuleUtil {
 	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a matching m d r rule could not be found
+	* @throws NoSuchRuleException if a matching m d r rule could not be found
 	*/
 	public static MDRRule findByRuleGroupId_Last(long ruleGroupId,
 		OrderByComparator<MDRRule> orderByComparator)
@@ -628,7 +628,7 @@ public class MDRRuleUtil {
 	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a m d r rule with the primary key could not be found
+	* @throws NoSuchRuleException if a m d r rule with the primary key could not be found
 	*/
 	public static MDRRule[] findByRuleGroupId_PrevAndNext(long ruleId,
 		long ruleGroupId, OrderByComparator<MDRRule> orderByComparator)
@@ -690,7 +690,7 @@ public class MDRRuleUtil {
 	*
 	* @param ruleId the primary key of the m d r rule
 	* @return the m d r rule that was removed
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a m d r rule with the primary key could not be found
+	* @throws NoSuchRuleException if a m d r rule with the primary key could not be found
 	*/
 	public static MDRRule remove(long ruleId)
 		throws com.liferay.mobile.device.rules.exception.NoSuchRuleException {
@@ -702,11 +702,11 @@ public class MDRRuleUtil {
 	}
 
 	/**
-	* Returns the m d r rule with the primary key or throws a {@link com.liferay.mobile.device.rules.NoSuchRuleException} if it could not be found.
+	* Returns the m d r rule with the primary key or throws a {@link NoSuchRuleException} if it could not be found.
 	*
 	* @param ruleId the primary key of the m d r rule
 	* @return the m d r rule
-	* @throws com.liferay.mobile.device.rules.NoSuchRuleException if a m d r rule with the primary key could not be found
+	* @throws NoSuchRuleException if a m d r rule with the primary key could not be found
 	*/
 	public static MDRRule findByPrimaryKey(long ruleId)
 		throws com.liferay.mobile.device.rules.exception.NoSuchRuleException {

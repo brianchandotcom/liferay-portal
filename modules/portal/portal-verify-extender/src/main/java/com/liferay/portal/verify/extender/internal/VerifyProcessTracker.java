@@ -271,9 +271,9 @@ public class VerifyProcessTracker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyProcessTracker.class);
 
-	private volatile OutputStreamContainerFactoryTracker
+	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
-	private volatile ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 	private ServiceTrackerMap<String, VerifyProcess> _verifyProcesses;
 	private VerifyProcessTrackerConfiguration
 		_verifyProcessTrackerConfiguration;
@@ -318,6 +318,13 @@ public class VerifyProcessTracker {
 			release.setVerified(true);
 
 			_releaseLocalService.updateRelease(release);
+		}
+
+		@Override
+		public void keyRemoved(
+			ServiceTrackerMap<String, VerifyProcess> serviceTrackerMap,
+			String key, VerifyProcess serviceVerifyProcess,
+			VerifyProcess contentVerifyProcess) {
 		}
 
 	}

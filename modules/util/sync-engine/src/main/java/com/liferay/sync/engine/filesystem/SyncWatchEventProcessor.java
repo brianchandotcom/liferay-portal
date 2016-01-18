@@ -191,6 +191,10 @@ public class SyncWatchEventProcessor implements Runnable {
 				@Override
 				public void run() {
 					try {
+						if (!FileUtil.checkFilePath(targetFilePath)) {
+							return;
+						}
+
 						SyncFileService.addFileSyncFile(
 							targetFilePath, parentSyncFile.getTypePK(),
 							parentSyncFile.getRepositoryId(), _syncAccountId);
@@ -248,7 +252,15 @@ public class SyncWatchEventProcessor implements Runnable {
 			}
 			catch (Exception e) {
 				if (_logger.isTraceEnabled()) {
-					_logger.trace(e.getMessage(), e);
+					Throwable throwable = e.getCause();
+
+					String message = throwable.getMessage();
+
+					if (!message.contains(
+							"Unique index or primary key violation")) {
+
+						_logger.trace(e.getMessage(), e);
+					}
 				}
 			}
 
@@ -817,7 +829,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncWatchEventProcessor.class);
 
 	private static final ExecutorService _executorService =
-		SyncEngine.getEventProcessorExecutorService();
+		SyncEngine.getExecutorService();
 
 	private final Map<String, List<SyncWatchEvent>>
 		_dependentSyncWatchEventsMaps = new ConcurrentHashMap<>();

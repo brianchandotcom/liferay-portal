@@ -19,7 +19,6 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	@${app.server.lib.portal.dir}/backport-concurrent.jar,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
@@ -35,7 +34,7 @@ Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
-Require-SchemaVersion: 1.0.2
+Require-SchemaVersion: 1.0.3
 Spring-Context: META-INF/spring
 -include: ../../../../marketplace/business-productivity/bnd.bnd
 -spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

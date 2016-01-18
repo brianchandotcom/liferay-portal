@@ -29,6 +29,7 @@ public class Recurrence {
 		_exceptionJCalendars.add(calendar);
 	}
 
+	@Override
 	public Recurrence clone() {
 		Recurrence recurrence = new Recurrence();
 

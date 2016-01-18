@@ -87,7 +87,7 @@ public class LayoutSetPrototypePortletDataHandler
 			return portletPreferences;
 		}
 
-		_layoutSetPrototypeLocalService.deleteNondefaultLayoutSetPrototypes(
+		layoutSetPrototypeLocalService.deleteNondefaultLayoutSetPrototypes(
 			portletDataContext.getCompanyId());
 
 		return portletPreferences;
@@ -107,7 +107,7 @@ public class LayoutSetPrototypePortletDataHandler
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			_layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
+			layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -145,7 +145,7 @@ public class LayoutSetPrototypePortletDataHandler
 		throws Exception {
 
 		ActionableDynamicQuery layoutSetPrototypeExportActionableDynamicQuery =
-			_layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
+			layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		layoutSetPrototypeExportActionableDynamicQuery.performCount();
@@ -155,7 +155,7 @@ public class LayoutSetPrototypePortletDataHandler
 	protected void setLayoutSetPrototypeLocalService(
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
 
-		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+		this.layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -163,7 +163,6 @@ public class LayoutSetPrototypePortletDataHandler
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private volatile LayoutSetPrototypeLocalService
-		_layoutSetPrototypeLocalService;
+	protected LayoutSetPrototypeLocalService layoutSetPrototypeLocalService;
 
 }

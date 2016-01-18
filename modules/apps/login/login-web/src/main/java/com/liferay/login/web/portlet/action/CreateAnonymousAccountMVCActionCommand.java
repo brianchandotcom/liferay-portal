@@ -15,11 +15,11 @@
 package com.liferay.login.web.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.CompanyMaxUsersException;
-import com.liferay.portal.ContactNameException;
-import com.liferay.portal.EmailAddressException;
-import com.liferay.portal.GroupFriendlyURLException;
-import com.liferay.portal.UserEmailAddressException;
+import com.liferay.portal.exception.CompanyMaxUsersException;
+import com.liferay.portal.exception.ContactNameException;
+import com.liferay.portal.exception.EmailAddressException;
+import com.liferay.portal.exception.GroupFriendlyURLException;
+import com.liferay.portal.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
@@ -319,7 +319,7 @@ public class CreateAnonymousAccountMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateAnonymousAccountMVCActionCommand.class);
 
-	private volatile UserLocalService _userLocalService;
-	private volatile UserService _userService;
+	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

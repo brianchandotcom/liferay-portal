@@ -64,6 +64,7 @@ public class BasicAuthHeaderAuthVerifierPublisher
 		super.modified(bundleContext, properties);
 	}
 
+	@Override
 	protected String translateKey(String authVerifierPropertyName, String key) {
 		if (key.equals("forceBasicAuth")) {
 			key = "basic_auth";

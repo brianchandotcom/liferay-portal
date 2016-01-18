@@ -822,6 +822,8 @@ public class JournalConverterImpl implements JournalConverter {
 				"name", jsonObject.getString("name"));
 			dynamicContentElement.addAttribute(
 				"title", jsonObject.getString("title"));
+			dynamicContentElement.addAttribute(
+				"type", jsonObject.getString("type"));
 			dynamicContentElement.addCDATA(fieldValue);
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&
@@ -1052,8 +1054,8 @@ public class JournalConverterImpl implements JournalConverter {
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile GroupLocalService _groupLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private GroupLocalService _groupLocalService;
 	private final Map<String, String> _journalTypesToDDMTypes;
 	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(
 		"uuid=([^&]+)&groupId=([^&]+)");

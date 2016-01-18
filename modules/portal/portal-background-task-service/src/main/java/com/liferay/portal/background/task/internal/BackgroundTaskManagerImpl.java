@@ -18,6 +18,7 @@ import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -546,6 +547,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		_destinationFactory = destinationFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLockManager(LockManager lockManager) {
+	}
+
 	protected List<BackgroundTask> translate(
 		List<com.liferay.portal.background.task.model.BackgroundTask>
 			backgroundTaskModels) {
@@ -590,9 +595,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 			"Invalid class " + ClassUtil.getClassName(orderByComparator));
 	}
 
-	private volatile BackgroundTaskLocalService _backgroundTaskLocalService;
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
 	private volatile BundleContext _bundleContext;
-	private volatile DestinationFactory _destinationFactory;
+	private DestinationFactory _destinationFactory;
 	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
 		new HashSet<>();
 

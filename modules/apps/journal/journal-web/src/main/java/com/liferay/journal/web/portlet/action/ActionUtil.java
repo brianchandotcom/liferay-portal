@@ -418,6 +418,12 @@ public class ActionUtil {
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 						(String)values.get(i));
 
+					String type = jsonObject.getString("type");
+
+					if (type.equals("document")) {
+						continue;
+					}
+
 					String uuid = jsonObject.getString("uuid");
 					long groupId = jsonObject.getLong("groupId");
 

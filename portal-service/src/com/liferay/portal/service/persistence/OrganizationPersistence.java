@@ -107,7 +107,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public Organization findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the first organization in the ordered set where uuid = &#63;.
@@ -129,7 +129,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public Organization findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the last organization in the ordered set where uuid = &#63;.
@@ -153,7 +153,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] findByUuid_PrevAndNext(long organizationId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns all the organizations that the user has permission to view where uuid = &#63;.
@@ -207,7 +207,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] filterFindByUuid_PrevAndNext(long organizationId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Removes all the organizations where uuid = &#63; from the database.
@@ -308,7 +308,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the first organization in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -334,7 +334,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the last organization in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -361,7 +361,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] findByUuid_C_PrevAndNext(long organizationId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns all the organizations that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -420,7 +420,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] filterFindByUuid_C_PrevAndNext(long organizationId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Removes all the organizations where uuid = &#63; and companyId = &#63; from the database.
@@ -517,7 +517,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public Organization findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the first organization in the ordered set where companyId = &#63;.
@@ -539,7 +539,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public Organization findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the last organization in the ordered set where companyId = &#63;.
@@ -563,7 +563,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] findByCompanyId_PrevAndNext(long organizationId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns all the organizations that the user has permission to view where companyId = &#63;.
@@ -617,7 +617,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] filterFindByCompanyId_PrevAndNext(
 		long organizationId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Removes all the organizations where companyId = &#63; from the database.
@@ -711,7 +711,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public Organization findByLocations_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the first organization in the ordered set where companyId = &#63;.
@@ -733,7 +733,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	*/
 	public Organization findByLocations_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the last organization in the ordered set where companyId = &#63;.
@@ -757,7 +757,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] findByLocations_PrevAndNext(long organizationId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns all the organizations that the user has permission to view where companyId = &#63;.
@@ -811,7 +811,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] filterFindByLocations_PrevAndNext(
 		long organizationId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Removes all the organizations where companyId = &#63; from the database.
@@ -912,7 +912,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByC_P_First(long companyId,
 		long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the first organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
@@ -938,7 +938,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByC_P_Last(long companyId,
 		long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the last organization in the ordered set where companyId = &#63; and parentOrganizationId = &#63;.
@@ -965,7 +965,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] findByC_P_PrevAndNext(long organizationId,
 		long companyId, long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns all the organizations that the user has permission to view where companyId = &#63; and parentOrganizationId = &#63;.
@@ -1024,7 +1024,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] filterFindByC_P_PrevAndNext(long organizationId,
 		long companyId, long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Removes all the organizations where companyId = &#63; and parentOrganizationId = &#63; from the database.
@@ -1128,7 +1128,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByC_T_First(long companyId,
 		java.lang.String treePath,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the first organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
@@ -1154,7 +1154,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByC_T_Last(long companyId,
 		java.lang.String treePath,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the last organization in the ordered set where companyId = &#63; and treePath LIKE &#63;.
@@ -1181,7 +1181,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] findByC_T_PrevAndNext(long organizationId,
 		long companyId, java.lang.String treePath,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns all the organizations that the user has permission to view where companyId = &#63; and treePath LIKE &#63;.
@@ -1240,7 +1240,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization[] filterFindByC_T_PrevAndNext(long organizationId,
 		long companyId, java.lang.String treePath,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Removes all the organizations where companyId = &#63; and treePath LIKE &#63; from the database.
@@ -1277,7 +1277,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	* @throws NoSuchOrganizationException if a matching organization could not be found
 	*/
 	public Organization findByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the organization where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1307,7 +1307,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	* @return the organization that was removed
 	*/
 	public Organization removeByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the number of organizations where companyId = &#63; and name = &#63;.
@@ -1399,7 +1399,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByO_C_P_First(long organizationId, long companyId,
 		long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the first organization in the ordered set where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
@@ -1427,7 +1427,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	public Organization findByO_C_P_Last(long organizationId, long companyId,
 		long parentOrganizationId,
 		com.liferay.portal.kernel.util.OrderByComparator<Organization> orderByComparator)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the last organization in the ordered set where organizationId &gt; &#63; and companyId = &#63; and parentOrganizationId = &#63;.
@@ -1551,7 +1551,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	* @throws NoSuchOrganizationException if a organization with the primary key could not be found
 	*/
 	public Organization remove(long organizationId)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	public Organization updateImpl(Organization organization);
 
@@ -1563,7 +1563,7 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 	* @throws NoSuchOrganizationException if a organization with the primary key could not be found
 	*/
 	public Organization findByPrimaryKey(long organizationId)
-		throws com.liferay.portal.NoSuchOrganizationException;
+		throws com.liferay.portal.exception.NoSuchOrganizationException;
 
 	/**
 	* Returns the organization with the primary key or returns <code>null</code> if it could not be found.

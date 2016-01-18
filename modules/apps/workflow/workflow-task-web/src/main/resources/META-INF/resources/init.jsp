@@ -19,14 +19,13 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
@@ -42,21 +41,21 @@ page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
+page import="com.liferay.taglib.search.DateSearchEntry" %><%@
+page import="com.liferay.workflow.task.web.dao.search.WorkflowTaskResultRowSplitter" %><%@
 page import="com.liferay.workflow.task.web.display.context.WorkflowTaskDisplayContext" %><%@
-page import="com.liferay.workflow.task.web.search.WorkflowTaskDisplayTerms" %><%@
 page import="com.liferay.workflow.task.web.search.WorkflowTaskSearch" %>
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <%
-WorkflowTaskDisplayContext workflowTaskDisplayContext = new WorkflowTaskDisplayContext(renderRequest, renderResponse);
+WorkflowTaskDisplayContext workflowTaskDisplayContext = new WorkflowTaskDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
 
 String currentURL = workflowTaskDisplayContext.getCurrentURL();
 %>

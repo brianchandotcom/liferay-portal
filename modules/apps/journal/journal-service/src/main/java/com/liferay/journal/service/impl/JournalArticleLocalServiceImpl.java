@@ -61,8 +61,8 @@ import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchImageException;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchImageException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -5331,24 +5331,6 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #updateArticleTranslation(long, String, double, Locale,
-	 *             String, String, String, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public JournalArticle updateArticleTranslation(
-			long groupId, String articleId, double version, Locale locale,
-			String title, String description, String content,
-			Map<String, byte[]> images)
-		throws PortalException {
-
-		return journalArticleLocalService.updateArticleTranslation(
-			groupId, articleId, version, locale, title, description, content,
-			images, null);
-	}
-
-	/**
 	 * Updates the translation of the web content article.
 	 *
 	 * @param  groupId the primary key of the web content article's group
@@ -6487,42 +6469,48 @@ public class JournalArticleLocalServiceImpl
 		for (Element dynamicContentElement :
 				dynamicElementElement.elements("dynamic-content")) {
 
-			String value = dynamicContentElement.getText();
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
-
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
-			boolean tempFile = jsonObject.getBoolean("tempFile");
-
-			FileEntry fileEntry =
-				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
-
-			if (tempFile) {
-				String fileEntryName = DLUtil.getUniqueFileName(
-					fileEntry.getGroupId(), fileEntry.getFolderId(),
-					fileEntry.getFileName());
-
-				fileEntry = dlAppLocalService.addFileEntry(
-					fileEntry.getUserId(), fileEntry.getGroupId(), 0,
-					fileEntryName, fileEntry.getMimeType(), fileEntryName,
-					StringPool.BLANK, StringPool.BLANK,
-					fileEntry.getContentStream(), fileEntry.getSize(),
-					new ServiceContext());
-			}
-
-			String previewURL = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, true);
-
-			dynamicContentElement.clearContent();
-
-			dynamicContentElement.addCDATA(previewURL);
+			formatDocumentLibraryDynamicContent(dynamicContentElement);
 		}
+	}
+
+	protected void formatDocumentLibraryDynamicContent(
+			Element dynamicContentElement)
+		throws PortalException {
+
+		String value = dynamicContentElement.getText();
+
+		if (Validator.isNull(value)) {
+			return;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+		String uuid = jsonObject.getString("uuid");
+		long groupId = jsonObject.getLong("groupId");
+		boolean tempFile = jsonObject.getBoolean("tempFile");
+
+		FileEntry fileEntry = dlAppLocalService.getFileEntryByUuidAndGroupId(
+			uuid, groupId);
+
+		if (tempFile) {
+			String fileEntryName = DLUtil.getUniqueFileName(
+				fileEntry.getGroupId(), fileEntry.getFolderId(),
+				fileEntry.getFileName());
+
+			fileEntry = dlAppLocalService.addFileEntry(
+				fileEntry.getUserId(), fileEntry.getGroupId(), 0, fileEntryName,
+				fileEntry.getMimeType(), fileEntryName, StringPool.BLANK,
+				StringPool.BLANK, fileEntry.getContentStream(),
+				fileEntry.getSize(), new ServiceContext());
+		}
+
+		String previewURL = DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+			false, true);
+
+		dynamicContentElement.clearContent();
+
+		dynamicContentElement.addCDATA(previewURL);
 	}
 
 	protected void formatImage(
@@ -6534,6 +6522,19 @@ public class JournalArticleLocalServiceImpl
 		List<Element> imageContents = el.elements("dynamic-content");
 
 		for (Element dynamicContent : imageContents) {
+			String elType = dynamicContent.attributeValue(
+				"type", StringPool.BLANK);
+
+			if (elType.equals("document")) {
+				if (ExportImportThreadLocal.isImportInProcess()) {
+					continue;
+				}
+
+				formatDocumentLibraryDynamicContent(dynamicContent);
+
+				continue;
+			}
+
 			String elLanguage = dynamicContent.attributeValue(
 				"language-id", StringPool.BLANK);
 

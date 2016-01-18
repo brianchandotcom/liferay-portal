@@ -222,8 +222,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		_layoutLocalService = layoutLocalService;
 	}
 
-	private volatile LayoutFriendlyURLLocalService
-		_layoutFriendlyURLLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

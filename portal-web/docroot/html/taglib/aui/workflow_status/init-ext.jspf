@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.NoSuchWorkflowInstanceLinkException" %>
+<%@ page import="com.liferay.portal.exception.NoSuchWorkflowInstanceLinkException" %>
 
 <%
 String additionalText = StringPool.BLANK;

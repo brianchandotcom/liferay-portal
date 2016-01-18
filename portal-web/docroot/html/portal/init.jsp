@@ -16,15 +16,15 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portal.LayoutPermissionException" %><%@
-page import="com.liferay.portal.PortletActiveException" %><%@
-page import="com.liferay.portal.RequiredLayoutException" %><%@
-page import="com.liferay.portal.RequiredRoleException" %><%@
-page import="com.liferay.portal.UserActiveException" %><%@
-page import="com.liferay.portal.UserEmailAddressException" %><%@
-page import="com.liferay.portal.UserLockoutException" %><%@
-page import="com.liferay.portal.UserPasswordException" %><%@
-page import="com.liferay.portal.UserReminderQueryException" %><%@
+<%@ page import="com.liferay.portal.exception.LayoutPermissionException" %><%@
+page import="com.liferay.portal.exception.PortletActiveException" %><%@
+page import="com.liferay.portal.exception.RequiredLayoutException" %><%@
+page import="com.liferay.portal.exception.RequiredRoleException" %><%@
+page import="com.liferay.portal.exception.UserActiveException" %><%@
+page import="com.liferay.portal.exception.UserEmailAddressException" %><%@
+page import="com.liferay.portal.exception.UserLockoutException" %><%@
+page import="com.liferay.portal.exception.UserPasswordException" %><%@
+page import="com.liferay.portal.exception.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterNode" %><%@
 page import="com.liferay.portal.kernel.license.util.LicenseManagerUtil" %><%@

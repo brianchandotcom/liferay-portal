@@ -55,6 +55,6 @@ public class CalendarPermissionUpdateHandler
 		_calendarLocalService = calendarLocalService;
 	}
 
-	private volatile CalendarLocalService _calendarLocalService;
+	private CalendarLocalService _calendarLocalService;
 
 }

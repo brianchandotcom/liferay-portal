@@ -80,11 +80,13 @@ else {
 <liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= !pages.isEmpty() %>"
+	checkBoxDisabled="<%= pages.isEmpty() %>"
+	includeCheckBox="<%= true %>"
 	searchContainerId="wikiPages"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
+			disabled="<%= pages.isEmpty() %>"
 			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= currentURLObj %>"
 			selectedDisplayStyle="<%= displayStyle %>"
@@ -155,7 +157,7 @@ else {
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-icon
-							icon="pencil"
+							icon="wiki"
 							toggleRowChecker="<%= true %>"
 						/>
 

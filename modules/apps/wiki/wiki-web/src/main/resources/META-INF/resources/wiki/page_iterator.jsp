@@ -34,7 +34,7 @@ if (wikiPage != null) {
 }
 
 if (navigation.equals("all-pages")) {
-	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
+	portletURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-pages"), portletURL.toString());
 }

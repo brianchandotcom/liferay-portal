@@ -64,6 +64,7 @@ public class DigestAuthenticationAuthVerifierPublisher
 		super.modified(bundleContext, properties);
 	}
 
+	@Override
 	protected String translateKey(String authVerifierPropertyName, String key) {
 		if (key.equals("forceDigestAuth")) {
 			key = "digest_auth";

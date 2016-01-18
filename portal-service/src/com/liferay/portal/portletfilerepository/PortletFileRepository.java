@@ -169,6 +169,11 @@ public interface PortletFileRepository {
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException;
 
+	public Folder movePortletFolder(
+			long groupId, long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException;
 

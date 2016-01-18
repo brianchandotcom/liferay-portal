@@ -180,7 +180,7 @@ public class ImageUtil {
 	*/
 	public static Image findByLtSize_First(int size,
 		OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.NoSuchImageException {
+		throws com.liferay.portal.exception.NoSuchImageException {
 		return getPersistence().findByLtSize_First(size, orderByComparator);
 	}
 
@@ -206,7 +206,7 @@ public class ImageUtil {
 	*/
 	public static Image findByLtSize_Last(int size,
 		OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.NoSuchImageException {
+		throws com.liferay.portal.exception.NoSuchImageException {
 		return getPersistence().findByLtSize_Last(size, orderByComparator);
 	}
 
@@ -233,7 +233,7 @@ public class ImageUtil {
 	*/
 	public static Image[] findByLtSize_PrevAndNext(long imageId, int size,
 		OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.NoSuchImageException {
+		throws com.liferay.portal.exception.NoSuchImageException {
 		return getPersistence()
 				   .findByLtSize_PrevAndNext(imageId, size, orderByComparator);
 	}
@@ -293,7 +293,7 @@ public class ImageUtil {
 	* @throws NoSuchImageException if a image with the primary key could not be found
 	*/
 	public static Image remove(long imageId)
-		throws com.liferay.portal.NoSuchImageException {
+		throws com.liferay.portal.exception.NoSuchImageException {
 		return getPersistence().remove(imageId);
 	}
 
@@ -309,7 +309,7 @@ public class ImageUtil {
 	* @throws NoSuchImageException if a image with the primary key could not be found
 	*/
 	public static Image findByPrimaryKey(long imageId)
-		throws com.liferay.portal.NoSuchImageException {
+		throws com.liferay.portal.exception.NoSuchImageException {
 		return getPersistence().findByPrimaryKey(imageId);
 	}
 

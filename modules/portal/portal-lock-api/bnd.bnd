@@ -6,3 +6,6 @@ Export-Package:\
 	com.liferay.portal.lock.service.*,\
 	com.liferay.portal.lock.exception.*
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../marketplace/platform/bnd.bnd

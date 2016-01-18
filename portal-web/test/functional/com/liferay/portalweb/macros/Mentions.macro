@@ -31,7 +31,7 @@
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
 		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_REPLY_1" value1="Reply" />
 
@@ -50,7 +50,7 @@
 
 	<command name="addMentionViaMessageBoardThread">
 		<if>
-			<equals arg1="editMBThread" arg2="True" />
+			<equals arg1="${editMBThread}" arg2="True" />
 			<then>
 				<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_EDIT_1" value1="Edit" />
 			</then>

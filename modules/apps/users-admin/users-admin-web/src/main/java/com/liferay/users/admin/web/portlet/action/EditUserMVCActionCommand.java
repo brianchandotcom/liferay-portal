@@ -14,29 +14,29 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.portal.AddressCityException;
-import com.liferay.portal.AddressStreetException;
-import com.liferay.portal.AddressZipException;
-import com.liferay.portal.CompanyMaxUsersException;
-import com.liferay.portal.ContactBirthdayException;
-import com.liferay.portal.ContactNameException;
-import com.liferay.portal.EmailAddressException;
-import com.liferay.portal.GroupFriendlyURLException;
-import com.liferay.portal.NoSuchCountryException;
-import com.liferay.portal.NoSuchListTypeException;
-import com.liferay.portal.NoSuchRegionException;
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.PhoneNumberException;
-import com.liferay.portal.PhoneNumberExtensionException;
-import com.liferay.portal.RequiredUserException;
-import com.liferay.portal.UserEmailAddressException;
-import com.liferay.portal.UserFieldException;
-import com.liferay.portal.UserIdException;
-import com.liferay.portal.UserPasswordException;
-import com.liferay.portal.UserReminderQueryException;
-import com.liferay.portal.UserScreenNameException;
-import com.liferay.portal.UserSmsException;
-import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.exception.AddressCityException;
+import com.liferay.portal.exception.AddressStreetException;
+import com.liferay.portal.exception.AddressZipException;
+import com.liferay.portal.exception.CompanyMaxUsersException;
+import com.liferay.portal.exception.ContactBirthdayException;
+import com.liferay.portal.exception.ContactNameException;
+import com.liferay.portal.exception.EmailAddressException;
+import com.liferay.portal.exception.GroupFriendlyURLException;
+import com.liferay.portal.exception.NoSuchCountryException;
+import com.liferay.portal.exception.NoSuchListTypeException;
+import com.liferay.portal.exception.NoSuchRegionException;
+import com.liferay.portal.exception.NoSuchUserException;
+import com.liferay.portal.exception.PhoneNumberException;
+import com.liferay.portal.exception.PhoneNumberExtensionException;
+import com.liferay.portal.exception.RequiredUserException;
+import com.liferay.portal.exception.UserEmailAddressException;
+import com.liferay.portal.exception.UserFieldException;
+import com.liferay.portal.exception.UserIdException;
+import com.liferay.portal.exception.UserPasswordException;
+import com.liferay.portal.exception.UserReminderQueryException;
+import com.liferay.portal.exception.UserScreenNameException;
+import com.liferay.portal.exception.UserSmsException;
+import com.liferay.portal.exception.WebsiteURLException;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
@@ -91,10 +91,10 @@ import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
-import com.liferay.portlet.sites.util.SitesUtil;
-import com.liferay.portlet.usersadmin.util.UsersAdmin;
-import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -784,11 +784,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
 
-	private volatile AnnouncementsDeliveryLocalService
+	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile ListTypeLocalService _listTypeLocalService;
-	private volatile UserLocalService _userLocalService;
-	private volatile UserService _userService;
+	private DLAppLocalService _dlAppLocalService;
+	private ListTypeLocalService _listTypeLocalService;
+	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

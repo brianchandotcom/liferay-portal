@@ -71,7 +71,7 @@ public class MicroblogsPortlet extends MVCPortlet {
 		long microblogsEntryId = ParamUtil.getLong(
 			actionRequest, "microblogsEntryId");
 
-		_microblogsEntryService.deleteMicroblogsEntry(microblogsEntryId);
+		microblogsEntryService.deleteMicroblogsEntry(microblogsEntryId);
 	}
 
 	public void updateMicroblogsEntry(
@@ -99,11 +99,11 @@ public class MicroblogsPortlet extends MVCPortlet {
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		if (microblogsEntryId > 0) {
-			_microblogsEntryService.updateMicroblogsEntry(
+			microblogsEntryService.updateMicroblogsEntry(
 				microblogsEntryId, content, socialRelationType, serviceContext);
 		}
 		else {
-			_microblogsEntryService.addMicroblogsEntry(
+			microblogsEntryService.addMicroblogsEntry(
 				themeDisplay.getUserId(), content, type,
 				parentMicroblogsEntryId, socialRelationType, serviceContext);
 		}
@@ -117,14 +117,13 @@ public class MicroblogsPortlet extends MVCPortlet {
 			actionRequest, "microblogsEntryId");
 
 		MicroblogsEntry microblogsEntry =
-			_microblogsEntryLocalService.fetchMicroblogsEntry(
-				microblogsEntryId);
+			microblogsEntryLocalService.fetchMicroblogsEntry(microblogsEntryId);
 
 		if (microblogsEntry == null) {
 			return;
 		}
 
-		_assetEntryLocalService.incrementViewCounter(
+		assetEntryLocalService.incrementViewCounter(
 			0, MicroblogsEntry.class.getName(), microblogsEntryId, 1);
 	}
 
@@ -142,25 +141,25 @@ public class MicroblogsPortlet extends MVCPortlet {
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
-		_assetEntryLocalService = assetEntryLocalService;
+		this.assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setMicroblogsEntryLocalService(
 		MicroblogsEntryLocalService microblogsEntryLocalService) {
 
-		_microblogsEntryLocalService = microblogsEntryLocalService;
+		this.microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setMicroblogsEntryService(
 		MicroblogsEntryService microblogsEntryService) {
 
-		_microblogsEntryService = microblogsEntryService;
+		this.microblogsEntryService = microblogsEntryService;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile MicroblogsEntryLocalService _microblogsEntryLocalService;
-	private volatile MicroblogsEntryService _microblogsEntryService;
+	protected AssetEntryLocalService assetEntryLocalService;
+	protected MicroblogsEntryLocalService microblogsEntryLocalService;
+	protected MicroblogsEntryService microblogsEntryService;
 
 }

@@ -88,7 +88,8 @@ import org.osgi.service.component.annotations.Reference;
  * authentication is successful and the request attribute
  * <code>NTLM_REMOTE_USER</code> is set equal to the username (known as screen
  * name in Liferay terminology), in preparation for the
- * {@link com.liferay.portal.security.sso.ntlm.internal.auto.login.NTLMAutoLogin} class
+ * {@link
+ * com.liferay.portal.security.sso.ntlm.internal.auto.login.NTLMAutoLogin} class
  * to log the user in (see above).
  * </li>
  *
@@ -362,8 +363,8 @@ public class NtlmFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
-	private volatile NetlogonConnectionManager _netlogonConnectionManager;
+	private ConfigurationFactory _configurationFactory;
+	private NetlogonConnectionManager _netlogonConnectionManager;
 	private final Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<>();
 	private PortalCache<String, byte[]> _portalCache;

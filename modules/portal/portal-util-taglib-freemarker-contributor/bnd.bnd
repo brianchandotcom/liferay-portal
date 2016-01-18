@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Portal Util Taglib FreeMarker Contributor
 Bundle-SymbolicName: com.liferay.portal.util.taglib.freemarker.contributor
-Fragment-Host: com.liferay.portal.template.freemarker
 Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.portal.template.freemarker
 Import-Package:\
 	com.liferay.alloy.taglib.alloy;version='[7.0.0,8.0)',\
 	com.liferay.alloy.taglib.alloy.base;version='[7.0.0,8.0)',\
@@ -27,3 +27,6 @@ Import-Package:\
 	com.liferay.taglib.ui.util;version='[1.0.0,2.0)',\
 	com.liferay.taglib.util;version='[7.0.0,8.0)'
 Include-Resource: @lib/util-taglib.jar!/META-INF/*.tld
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../marketplace/platform/bnd.bnd

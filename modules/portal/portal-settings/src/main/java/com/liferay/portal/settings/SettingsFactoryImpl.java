@@ -14,7 +14,7 @@
 
 package com.liferay.portal.settings;
 
-import com.liferay.portal.NoSuchPortletItemException;
+import com.liferay.portal.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
@@ -283,10 +283,10 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<>();
-	private volatile GroupLocalService _groupLocalService;
-	private volatile PortletItemLocalService _portletItemLocalService;
+	private GroupLocalService _groupLocalService;
+	private PortletItemLocalService _portletItemLocalService;
 	private final Map<String, SettingsDescriptor> _settingsDescriptors =
 		new ConcurrentHashMap<>();
-	private volatile SettingsLocatorHelper _settingsLocatorHelper;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

@@ -1,13 +1,16 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: Platform${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Description: Apps and Features: System Settings, Web Content Editors, Web Content Template Languages, Theme Tools, Mobile Device Rules, Caching Support, Clustering Support, Facebook Authentication, LDAP Authentication, NTLM Authentication, OpenID Authentication, OpenSSO Authentication, Remote Authentication (AuthVerifiers), SSO-based Authentication, Token-based Authentication, Portal Scripting, Elasticsearch Support, Solr Support, Documents and Media Store Implementations, and more.<br /><br />The platform suite provides applications and features that extend the functionality provided by Liferay's core. Much of the functionality that belonged to Liferay's core prior to Liferay 7 has been extracted into the modules of the platform suite. The authentication modules provide a variety of mechanisms for allowing users and remote applications to authenticate to Liferay. The LDAP Authentication module allows administrators to establish connections to one or more LDAP directories from which users can be imported or exported. The SSO modules allow users to authenticate to Liferay using a variety of single-sign on solutions. The Token-based Authentication module allows users or remote applications to authenticate to Liferay without a password. The Scripting modules allow scripts to be written to invoke Liferay's API in several languages including Groovy, Beanshell, Python, Ruby, and JavaScript.<br /><br />This suite may contain modules that depend on Platform suite modules.
+Liferay-Releng-App-Title: Liferay Platform Core${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Dependent-Apps:\
+	com.liferay.background.task.web:1.0.0,\
 	com.liferay.configuration.admin.annotations:1.0.0,\
 	com.liferay.configuration.admin.api:1.0.0,\
 	com.liferay.configuration.admin.equinox:1.0.0,\
 	com.liferay.configuration.admin.web:1.0.0,\
+	com.liferay.directory.web:1.0.0,\
+	com.liferay.expando.web:1.0.0,\
 	com.liferay.frontend.common.css:1.0.0,\
 	com.liferay.frontend.css.web:1.0.0,\
 	com.liferay.frontend.editor.alloyeditor.web:1.0.0,\
@@ -20,15 +23,28 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.frontend.js.polyfill.babel.web:1.0.0,\
 	com.liferay.frontend.js.soyutils.web:1.0.0,\
 	com.liferay.frontend.js.web:1.0.0,\
+	com.liferay.frontend.taglib.freemarker.contributor:1.0.0,\
 	com.liferay.frontend.taglib:1.0.0,\
 	com.liferay.frontend.theme.admin.web:1.0.0,\
 	com.liferay.frontend.theme.classic.web:1.0.0,\
 	com.liferay.frontend.theme.styled:1.0.0,\
 	com.liferay.frontend.theme.unstyled:1.0.0,\
+	com.liferay.hello.velocity.web:1.0.0,\
+	com.liferay.ip.geocoder:1.0.0,\
+	com.liferay.license.manager.web:1.0.0,\
+	com.liferay.login.web:1.0.0,\
 	com.liferay.mobile.device.rules.api:1.0.0,\
 	com.liferay.mobile.device.rules.service:1.0.0,\
 	com.liferay.mobile.device.rules.test:1.0.0,\
 	com.liferay.mobile.device.rules.web:1.0.0,\
+	com.liferay.monitoring.web:1.0.0,\
+	com.liferay.my.account.web:1.0.0,\
+	com.liferay.osgi.service.tracker.collections:1.0.0,\
+	com.liferay.osgi.util:1.0.0,\
+	com.liferay.password.policies.admin.api:1.0.0,\
+	com.liferay.password.policies.admin.impl:1.0.0,\
+	com.liferay.password.policies.admin.web:1.0.0,\
+	com.liferay.plugins.admin.web:1.0.0,\
 	com.liferay.portal.axis.extender:1.0.0,\
 	com.liferay.portal.background.task.api:1.0.0,\
 	com.liferay.portal.background.task.service:1.0.0,\
@@ -37,9 +53,12 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.cache.ehcache.provider:1.0.0,\
 	com.liferay.portal.cache.ehcache:1.0.0,\
 	com.liferay.portal.cache.memory:1.0.0,\
+	com.liferay.portal.cache.single:1.0.0,\
 	com.liferay.portal.cache.test:1.0.0,\
 	com.liferay.portal.cache:1.0.0,\
+	com.liferay.portal.cluster.single:1.0.0,\
 	com.liferay.portal.cluster:1.0.0,\
+	com.liferay.portal.compound.session.id:1.0.0,\
 	com.liferay.portal.configuration.cluster:1.0.0,\
 	com.liferay.portal.configuration.persistence.test:1.0.0,\
 	com.liferay.portal.configuration.persistence:1.0.0,\
@@ -51,46 +70,57 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.expression:1.0.0,\
 	com.liferay.portal.http.service.api:1.0.0,\
 	com.liferay.portal.http.tunnel.extender:1.0.0,\
+	com.liferay.portal.instances.web:1.0.0,\
 	com.liferay.portal.jmx:1.0.0,\
 	com.liferay.portal.js.bundle.config.extender:1.0.0,\
 	com.liferay.portal.js.loader.modules.extender:1.0.0,\
 	com.liferay.portal.json.web.service.extender:1.0.0,\
+	com.liferay.portal.language.resource.bundle:1.0.0,\
+	com.liferay.portal.language.servlet.filter:1.0.0,\
 	com.liferay.portal.ldap.test:1.0.0,\
 	com.liferay.portal.ldap:1.0.0,\
+	com.liferay.portal.lock.api:1.0.0,\
 	com.liferay.portal.lock.service:1.0.0,\
 	com.liferay.portal.lock.test:1.0.0,\
+	com.liferay.portal.log4j.extender:1.0.0,\
 	com.liferay.portal.messaging:1.0.0,\
 	com.liferay.portal.mobile.device:1.0.0,\
 	com.liferay.portal.module.configuration:1.0.0,\
 	com.liferay.portal.monitoring:1.0.0,\
 	com.liferay.portal.output.stream.container:1.0.0,\
 	com.liferay.portal.pop.notifications:1.0.0,\
-	com.liferay.portal.pop.notifications:1.0.0,\
+	com.liferay.portal.portlet.bridge.soy:1.0.0,\
 	com.liferay.portal.portlet.container.test:1.0.0,\
 	com.liferay.portal.portlet.tracker:1.0.0,\
 	com.liferay.portal.rest.extender.test:1.0.0,\
 	com.liferay.portal.rest.extender:1.0.0,\
+	com.liferay.portal.rtl.servlet:1.0.0,\
 	com.liferay.portal.scheduler.quartz:1.0.0,\
+	com.liferay.portal.scheduler.single:1.0.0,\
 	com.liferay.portal.scheduler:1.0.0,\
 	com.liferay.portal.scripting.beanshell:1.0.0,\
 	com.liferay.portal.scripting.groovy:1.0.0,\
-	com.liferay.portal.scripting.groovy:1.0.0,\
+	com.liferay.portal.scripting.javascript:1.0.0,\
 	com.liferay.portal.scripting.python:1.0.0,\
 	com.liferay.portal.scripting.ruby:1.0.0,\
 	com.liferay.portal.scripting:1.0.0,\
 	com.liferay.portal.search.elasticsearch:1.0.0,\
 	com.liferay.portal.search.solr:1.0.0,\
 	com.liferay.portal.search:1.0.0,\
+	com.liferay.portal.security.antisamy:1.0.0,\
 	com.liferay.portal.security.auth.verifier:1.0.0,\
 	com.liferay.portal.security.auto.login:1.0.0,\
 	com.liferay.portal.security.sso.cas:1.0.0,\
 	com.liferay.portal.security.sso.facebook.connect:1.0.0,\
+	com.liferay.portal.security.sso.google:1.0.0,\
 	com.liferay.portal.security.sso.ntlm:1.0.0,\
 	com.liferay.portal.security.sso.openid:1.0.0,\
 	com.liferay.portal.security.sso.opensso:1.0.0,\
 	com.liferay.portal.security.sso.token:1.0.0,\
 	com.liferay.portal.servlet.jsp.compiler:1.0.0,\
 	com.liferay.portal.servlet.jstl:1.0.0,\
+	com.liferay.portal.settings.api:1.0.0,\
+	com.liferay.portal.settings.web:1.0.0,\
 	com.liferay.portal.settings:1.0.0,\
 	com.liferay.portal.soap.extender.test:1.0.0,\
 	com.liferay.portal.soap.extender:1.0.0,\
@@ -112,11 +142,30 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.template.velocity:1.0.0,\
 	com.liferay.portal.template.xsl:1.0.0,\
 	com.liferay.portal.upgrade:1.0.0,\
+	com.liferay.portal.util.taglib.freemarker.contributor:1.0.0,\
 	com.liferay.portal.verify.extender:1.0.0,\
 	com.liferay.portal.wab.extender:1.0.0,\
 	com.liferay.portal.wab.generator:1.0.0,\
+	com.liferay.portal.weblogic.support:1.0.0,\
+	com.liferay.roles.admin.api:1.0.0,\
+	com.liferay.roles.admin.impl:1.0.0,\
+	com.liferay.roles.admin.web:1.0.0,\
+	com.liferay.roles.selector.web:1.0.0,\
+	com.liferay.rtl.css:1.0.0,\
 	com.liferay.search.facet:1.0.0,\
-	com.liferay.search.web
+	com.liferay.search.facet:1.0.0,\
+	com.liferay.search.web:1.0.0,\
+	com.liferay.search.web:1.0.0,\
+	com.liferay.server.admin.web:1.0.0,\
+	com.liferay.service.access.policy.api:1.0.0,\
+	com.liferay.service.access.policy.service:1.0.0,\
+	com.liferay.service.access.policy.web:1.0.0,\
+	com.liferay.user.groups.admin.api:1.0.0,\
+	com.liferay.user.groups.admin.impl:1.0.0,\
+	com.liferay.user.groups.admin.web:1.0.0,\
+	com.liferay.users.admin.api:1.0.0,\
+	com.liferay.users.admin.impl:1.0.0,\
+	com.liferay.users.admin.web:1.0.0
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Public: ${liferay.releng.public}

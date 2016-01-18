@@ -3,3 +3,6 @@ Bundle-Name: Liferay Portal Log4j Extender
 Bundle-SymbolicName: com.liferay.portal.log4j.extender
 Bundle-Version: 1.0.0
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-include: ../../../marketplace/platform/bnd.bnd

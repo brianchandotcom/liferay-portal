@@ -29,11 +29,11 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.MessageBodyException;
-import com.liferay.portlet.messageboards.MessageSubjectException;
-import com.liferay.portlet.messageboards.NoSuchThreadException;
-import com.liferay.portlet.messageboards.RequiredMessageException;
-import com.liferay.portlet.messageboards.SplitThreadException;
+import com.liferay.portlet.messageboards.exception.MessageBodyException;
+import com.liferay.portlet.messageboards.exception.MessageSubjectException;
+import com.liferay.portlet.messageboards.exception.NoSuchThreadException;
+import com.liferay.portlet.messageboards.exception.RequiredMessageException;
+import com.liferay.portlet.messageboards.exception.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
@@ -167,8 +167,8 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		actionResponse.sendRedirect(portletURL.toString());
 	}
 
-	private volatile MBMessageLocalService _mbMessageLocalService;
-	private volatile MBMessageService _mbMessageService;
-	private volatile MBThreadService _mbThreadService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBMessageService _mbMessageService;
+	private MBThreadService _mbThreadService;
 
 }

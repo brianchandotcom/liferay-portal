@@ -23,4 +23,8 @@ public interface ServiceTrackerMapListener<K, TS, R> {
 		ServiceTrackerMap<K, R> serviceTrackerMap, K key, TS service,
 		R content);
 
+	public void keyRemoved(
+		ServiceTrackerMap<K, R> serviceTrackerMap, K key, TS service,
+		R content);
+
 }

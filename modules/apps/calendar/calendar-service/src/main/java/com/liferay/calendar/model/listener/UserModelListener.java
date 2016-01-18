@@ -16,7 +16,7 @@ package com.liferay.calendar.model.listener;
 
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
@@ -66,6 +66,6 @@ public class UserModelListener extends BaseModelListener<User> {
 		_calendarResourceLocalService = calendarResourceLocalService;
 	}
 
-	private volatile CalendarResourceLocalService _calendarResourceLocalService;
+	private CalendarResourceLocalService _calendarResourceLocalService;
 
 }

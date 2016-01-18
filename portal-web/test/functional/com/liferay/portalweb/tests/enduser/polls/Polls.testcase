@@ -68,7 +68,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -118,7 +118,7 @@
 			<var name="portlet" value="Polls" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 
@@ -180,7 +180,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Polls Page" />
 		</execute>
 

@@ -70,6 +70,6 @@ public class OpenIdImpl implements OpenId {
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenIdImpl.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
+	private ConfigurationFactory _configurationFactory;
 
 }

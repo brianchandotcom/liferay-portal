@@ -5,4 +5,11 @@
 		min-width: 200px;
 		padding-top: 250px;
 	}
+
+	.taglib-empty-search-result-message-header {
+		background: url(@theme_image_path@/emoticons/sad_search_results.gif) no-repeat 50% 50%;
+		background-size: 210px;
+		min-width: 210px;
+		padding-top: 232px;
+	}
 }

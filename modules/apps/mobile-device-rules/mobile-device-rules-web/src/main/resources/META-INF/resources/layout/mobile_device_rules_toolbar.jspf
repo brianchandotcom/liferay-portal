@@ -1,0 +1,147 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
+	<div class="btn-toolbar">
+		<a class="btn btn-default" href="javascript:;" id="<portlet:namespace />saveInstance"><liferay-ui:message key="select-device-family" /></a>
+
+		<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
+			<aui:button name="managePriorities" value="manage-rule-priorities" />
+		</c:if>
+	</div>
+</c:if>
+
+<aui:script>
+	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
+		dialog.hide();
+
+		<portlet:namespace />updateRuleGroupInstances();
+	}
+
+	function <portlet:namespace />updateRuleGroupInstances() {
+		var $ = AUI.$;
+
+		$.ajax(
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getMobileDeviceRules" portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" var="viewRuleGroupInstancesURL">
+				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="className" value="<%= className %>" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			</liferay-portlet:resourceURL>
+
+			'<%= viewRuleGroupInstancesURL.toString() %>',
+			{
+				success: function(responseData) {
+					$('#<portlet:namespace />uniqueRuleGroupInstancesContainer').html(responseData);
+				}
+			}
+		);
+	}
+
+	function <portlet:namespace />deleteRuleGroupInstance(ruleGroupInstanceId) {
+		Liferay.Service(
+			'/mdr.mdrrulegroupinstance/delete-rule-group-instance',
+			{
+				ruleGroupInstanceId: ruleGroupInstanceId,
+				serviceContext: JSON.stringify(
+					{
+						scopeGroupId: themeDisplay.getScopeGroupId(),
+						userId: themeDisplay.getUserId()
+					}
+				)
+			},
+			function(response, xhr) {
+				<portlet:namespace />updateRuleGroupInstances();
+			}
+		);
+	}
+
+	function <portlet:namespace />saveRuleGroupInstance(ruleGroupId, ruleGroupName) {
+		Liferay.Service(
+			'/mdr.mdrrulegroupinstance/add-rule-group-instance',
+			{
+				className: '<%= HtmlUtil.escapeJS(className) %>',
+				classPK: <%= classPK %>,
+				groupId: <%= groupId %>,
+				ruleGroupId: ruleGroupId,
+				serviceContext: JSON.stringify(
+					{
+						scopeGroupId: themeDisplay.getScopeGroupId(),
+						userId: themeDisplay.getUserId()
+					}
+				)
+			},
+			function(response, xhr) {
+				<portlet:namespace />updateRuleGroupInstances();
+			}
+		);
+	}
+</aui:script>
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />saveInstance').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
+					},
+					id: '<portlet:namespace />selectRuleGroup',
+					title: '<%= UnicodeLanguageUtil.get(request, "device-families") %>',
+
+					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/select_rule_group" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="className" value="<%= className %>" />
+						<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+						<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectRuleGroup" %>' />
+					</liferay-portlet:renderURL>
+
+					uri: '<%= selectRuleGroupURL %>'
+				},
+				function(event) {
+					<portlet:namespace />saveRuleGroupInstance(event.rulegroupid, event.rulegroupname);
+				}
+			);
+		}
+	);
+
+	$('#<portlet:namespace />managePriorities').on(
+		'click',
+		function(event) {
+			Liferay.Util.openWindow(
+				{
+					id: '<portlet:namespace />ruleGroupsPriorities',
+					title: '<%= UnicodeLanguageUtil.get(request, "rule-priorities") %>',
+
+					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="className" value="<%= className %>" />
+						<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+						<portlet:param name="saveCallback" value='<%= liferayPortletResponse.getNamespace() + "saveRuleGroupsPriorities" %>' />
+					</liferay-portlet:renderURL>
+
+					uri: '<%= managePrioritiesURL %>'
+				}
+			);
+		}
+	);
+</aui:script>

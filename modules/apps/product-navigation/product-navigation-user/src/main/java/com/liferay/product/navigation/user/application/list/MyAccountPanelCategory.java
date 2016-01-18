@@ -45,11 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MyAccountPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-user";
-	}
-
-	@Override
 	public String getJspPath() {
 		return "/my_account.jsp";
 	}

@@ -185,7 +185,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByUuid_First(java.lang.String uuid,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -211,7 +211,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,7 +238,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup[] findByUuid_PrevAndNext(long userGroupId,
 		java.lang.String uuid, OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(userGroupId, uuid, orderByComparator);
 	}
@@ -300,7 +300,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup[] filterFindByUuid_PrevAndNext(long userGroupId,
 		java.lang.String uuid, OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .filterFindByUuid_PrevAndNext(userGroupId, uuid,
 			orderByComparator);
@@ -421,7 +421,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -451,7 +451,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -483,7 +483,7 @@ public class UserGroupUtil {
 	public static UserGroup[] findByUuid_C_PrevAndNext(long userGroupId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(userGroupId, uuid, companyId,
 			orderByComparator);
@@ -554,7 +554,7 @@ public class UserGroupUtil {
 	public static UserGroup[] filterFindByUuid_C_PrevAndNext(long userGroupId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .filterFindByUuid_C_PrevAndNext(userGroupId, uuid,
 			companyId, orderByComparator);
@@ -670,7 +670,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByCompanyId_First(long companyId,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -698,7 +698,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByCompanyId_Last(long companyId,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -727,7 +727,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup[] findByCompanyId_PrevAndNext(long userGroupId,
 		long companyId, OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(userGroupId, companyId,
 			orderByComparator);
@@ -792,7 +792,7 @@ public class UserGroupUtil {
 	public static UserGroup[] filterFindByCompanyId_PrevAndNext(
 		long userGroupId, long companyId,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .filterFindByCompanyId_PrevAndNext(userGroupId, companyId,
 			orderByComparator);
@@ -915,7 +915,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByC_P_First(long companyId,
 		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByC_P_First(companyId, parentUserGroupId,
 			orderByComparator);
@@ -947,7 +947,7 @@ public class UserGroupUtil {
 	*/
 	public static UserGroup findByC_P_Last(long companyId,
 		long parentUserGroupId, OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByC_P_Last(companyId, parentUserGroupId,
 			orderByComparator);
@@ -981,7 +981,7 @@ public class UserGroupUtil {
 	public static UserGroup[] findByC_P_PrevAndNext(long userGroupId,
 		long companyId, long parentUserGroupId,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .findByC_P_PrevAndNext(userGroupId, companyId,
 			parentUserGroupId, orderByComparator);
@@ -1053,7 +1053,7 @@ public class UserGroupUtil {
 	public static UserGroup[] filterFindByC_P_PrevAndNext(long userGroupId,
 		long companyId, long parentUserGroupId,
 		OrderByComparator<UserGroup> orderByComparator)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence()
 				   .filterFindByC_P_PrevAndNext(userGroupId, companyId,
 			parentUserGroupId, orderByComparator);
@@ -1100,7 +1100,7 @@ public class UserGroupUtil {
 	* @throws NoSuchUserGroupException if a matching user group could not be found
 	*/
 	public static UserGroup findByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence().findByC_N(companyId, name);
 	}
 
@@ -1136,7 +1136,7 @@ public class UserGroupUtil {
 	* @return the user group that was removed
 	*/
 	public static UserGroup removeByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence().removeByC_N(companyId, name);
 	}
 
@@ -1187,7 +1187,7 @@ public class UserGroupUtil {
 	* @throws NoSuchUserGroupException if a user group with the primary key could not be found
 	*/
 	public static UserGroup remove(long userGroupId)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence().remove(userGroupId);
 	}
 
@@ -1203,7 +1203,7 @@ public class UserGroupUtil {
 	* @throws NoSuchUserGroupException if a user group with the primary key could not be found
 	*/
 	public static UserGroup findByPrimaryKey(long userGroupId)
-		throws com.liferay.portal.NoSuchUserGroupException {
+		throws com.liferay.portal.exception.NoSuchUserGroupException {
 		return getPersistence().findByPrimaryKey(userGroupId);
 	}
 

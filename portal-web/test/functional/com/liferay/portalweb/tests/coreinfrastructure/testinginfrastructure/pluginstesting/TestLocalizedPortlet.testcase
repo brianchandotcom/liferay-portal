@@ -11,7 +11,7 @@
 	</tear-down>
 
 	<command name="ViewLocalizedChinese" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 
@@ -25,7 +25,7 @@
 	</command>
 
 	<command name="ViewLocalizedEnglish" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 
@@ -41,7 +41,7 @@
 	</command>
 
 	<command name="ViewLocalizedFrench" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 
@@ -55,7 +55,7 @@
 	</command>
 
 	<command name="ViewLocalizedSpanish" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Localized Page" />
 		</execute>
 

@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.NoSuchContentException;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalService;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
@@ -474,6 +474,6 @@ public class DBStore extends BaseStore {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBStore.class);
 
-	private volatile DLContentLocalService _dlContentLocalService;
+	private DLContentLocalService _dlContentLocalService;
 
 }

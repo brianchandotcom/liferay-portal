@@ -24,70 +24,72 @@ LayoutSetBranch currentLayoutSetBranch = LayoutSetBranchLocalServiceUtil.getUser
 request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", String.valueOf(currentLayoutSetBranch.getLayoutSetBranchId()));
 %>
 
-<liferay-ui:success key="sitePageVariationAdded" message="site-page-variation-was-added" />
-<liferay-ui:success key="sitePageVariationDeleted" message="site-page-variation-was-deleted" />
-<liferay-ui:success key="sitePageVariationMerged" message="site-page-variation-was-merged" />
-<liferay-ui:success key="sitePageVariationUpdated" message="site-page-variation-was-updated" />
+<div class="container-fluid-1280">
+	<liferay-ui:success key="sitePageVariationAdded" message="site-page-variation-was-added" />
+	<liferay-ui:success key="sitePageVariationDeleted" message="site-page-variation-was-deleted" />
+	<liferay-ui:success key="sitePageVariationMerged" message="site-page-variation-was-merged" />
+	<liferay-ui:success key="sitePageVariationUpdated" message="site-page-variation-was-updated" />
 
-<div class="alert alert-info">
-	<liferay-ui:message key="pages-variations-help" />
-</div>
+	<div class="alert alert-info">
+		<liferay-ui:message key="pages-variations-help" />
+	</div>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_SET_BRANCH) %>">
-	<liferay-portlet:renderURL var="addLayoutSetBranchURL">
-		<portlet:param name="mvcRenderCommandName" value="editLayoutSetBranch" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</liferay-portlet:renderURL>
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_SET_BRANCH) %>">
+		<liferay-portlet:renderURL var="addLayoutSetBranchURL">
+			<portlet:param name="mvcRenderCommandName" value="editLayoutSetBranch" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:renderURL>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" href="<%= addLayoutSetBranchURL %>" name="addBranchButton" value="add-site-pages-variation" />
-	</aui:button-row>
-</c:if>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" href="<%= addLayoutSetBranchURL %>" name="addBranchButton" value="add-site-pages-variation" />
+		</aui:button-row>
+	</c:if>
 
-<div class="branch-results">
-	<liferay-ui:search-container>
-		<liferay-ui:search-container-results
-			results="<%= layoutSetBranches %>"
-			total="<%= layoutSetBranches.size() %>"
-		/>
+	<div class="branch-results">
+		<liferay-ui:search-container>
+			<liferay-ui:search-container-results
+				results="<%= layoutSetBranches %>"
+				total="<%= layoutSetBranches.size() %>"
+			/>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.LayoutSetBranch"
-			escapedModel="<%= true %>"
-			keyProperty="layoutSetBranchId"
-			modelVar="curLayoutSetBranch"
-		>
-
-			<liferay-ui:search-container-column-text
-				name="name"
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.model.LayoutSetBranch"
+				escapedModel="<%= true %>"
+				keyProperty="layoutSetBranchId"
+				modelVar="curLayoutSetBranch"
 			>
-				<c:if test="<%= currentLayoutSetBranch.equals(curLayoutSetBranch) %>">
-					<strong>
-				</c:if>
 
-				<liferay-ui:message key="<%= curLayoutSetBranch.getName() %>" />
+				<liferay-ui:search-container-column-text
+					name="name"
+				>
+					<c:if test="<%= currentLayoutSetBranch.equals(curLayoutSetBranch) %>">
+						<strong>
+					</c:if>
 
-				<c:if test="<%= curLayoutSetBranch.isMaster() %>">
-					<i class="icon-asterisk"></i>
-				</c:if>
+					<liferay-ui:message key="<%= curLayoutSetBranch.getName() %>" />
 
-				<c:if test="<%= currentLayoutSetBranch.equals(curLayoutSetBranch) %>">
-					</strong>
-				</c:if>
-			</liferay-ui:search-container-column-text>
+					<c:if test="<%= curLayoutSetBranch.isMaster() %>">
+						<i class="icon-asterisk"></i>
+					</c:if>
 
-			<liferay-ui:search-container-column-text
-				property="description"
-			/>
+					<c:if test="<%= currentLayoutSetBranch.equals(curLayoutSetBranch) %>">
+						</strong>
+					</c:if>
+				</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
-				path="/layout_set_branch_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-text
+					property="description"
+				/>
 
-		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
-	</liferay-ui:search-container>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action"
+					path="/layout_set_branch_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+		</liferay-ui:search-container>
+	</div>
 </div>
 
 <aui:script use="liferay-staging-branch">

@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"/common/referer_jsp.jsp=/common/referer_jsp.jsp",
-		"path=/facebook_connect/facebook_connect_oauth",
+		"path=/portal/facebook_connect_oauth",
 		"portlet.login.login=portlet.login.login",
 		"portlet.login.update_account=portlet.login.update_account"
 	},
@@ -351,8 +351,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			userGroupRoles, userGroupIds, serviceContext);
 	}
 
-	private volatile FacebookConnect _facebookConnect;
+	private FacebookConnect _facebookConnect;
 	private final Map<String, String> _forwards = new HashMap<>();
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

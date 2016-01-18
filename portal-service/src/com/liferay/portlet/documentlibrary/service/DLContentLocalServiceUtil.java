@@ -215,14 +215,14 @@ public class DLContentLocalServiceUtil {
 
 	public static com.liferay.portlet.documentlibrary.model.DLContent getContent(
 		long companyId, long repositoryId, java.lang.String path)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getService().getContent(companyId, repositoryId, path);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLContent getContent(
 		long companyId, long repositoryId, java.lang.String path,
 		java.lang.String version)
-		throws com.liferay.portlet.documentlibrary.NoSuchContentException {
+		throws com.liferay.portlet.documentlibrary.exception.NoSuchContentException {
 		return getService().getContent(companyId, repositoryId, path, version);
 	}
 

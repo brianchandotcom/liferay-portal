@@ -281,7 +281,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 * @param recordId the record ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
+	 * @throws NoSuchRecordVersionException if a matching d d l record version could not be found
 	 */
 	@Override
 	public DDLRecordVersion findByRecordId_First(long recordId,
@@ -332,7 +332,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 * @param recordId the record ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
+	 * @throws NoSuchRecordVersionException if a matching d d l record version could not be found
 	 */
 	@Override
 	public DDLRecordVersion findByRecordId_Last(long recordId,
@@ -390,7 +390,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 * @param recordId the record ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
+	 * @throws NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 */
 	@Override
 	public DDLRecordVersion[] findByRecordId_PrevAndNext(long recordVersionId,
@@ -605,12 +605,12 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the d d l record version where recordId = &#63; and version = &#63; or throws a {@link com.liferay.dynamic.data.lists.NoSuchRecordVersionException} if it could not be found.
+	 * Returns the d d l record version where recordId = &#63; and version = &#63; or throws a {@link NoSuchRecordVersionException} if it could not be found.
 	 *
 	 * @param recordId the record ID
 	 * @param version the version
 	 * @return the matching d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
+	 * @throws NoSuchRecordVersionException if a matching d d l record version could not be found
 	 */
 	@Override
 	public DDLRecordVersion findByR_V(long recordId, String version)
@@ -1057,7 +1057,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
+	 * @throws NoSuchRecordVersionException if a matching d d l record version could not be found
 	 */
 	@Override
 	public DDLRecordVersion findByR_S_First(long recordId, int status,
@@ -1113,7 +1113,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
+	 * @throws NoSuchRecordVersionException if a matching d d l record version could not be found
 	 */
 	@Override
 	public DDLRecordVersion findByR_S_Last(long recordId, int status,
@@ -1176,7 +1176,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
+	 * @throws NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 */
 	@Override
 	public DDLRecordVersion[] findByR_S_PrevAndNext(long recordVersionId,
@@ -1556,7 +1556,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 *
 	 * @param recordVersionId the primary key of the d d l record version
 	 * @return the d d l record version that was removed
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
+	 * @throws NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 */
 	@Override
 	public DDLRecordVersion remove(long recordVersionId)
@@ -1569,7 +1569,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	 *
 	 * @param primaryKey the primary key of the d d l record version
 	 * @return the d d l record version that was removed
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
+	 * @throws NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 */
 	@Override
 	public DDLRecordVersion remove(Serializable primaryKey)
@@ -1754,11 +1754,11 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	/**
-	 * Returns the d d l record version with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the d d l record version with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the d d l record version
 	 * @return the d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
+	 * @throws NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 */
 	@Override
 	public DDLRecordVersion findByPrimaryKey(Serializable primaryKey)
@@ -1778,11 +1778,11 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	/**
-	 * Returns the d d l record version with the primary key or throws a {@link com.liferay.dynamic.data.lists.NoSuchRecordVersionException} if it could not be found.
+	 * Returns the d d l record version with the primary key or throws a {@link NoSuchRecordVersionException} if it could not be found.
 	 *
 	 * @param recordVersionId the primary key of the d d l record version
 	 * @return the d d l record version
-	 * @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
+	 * @throws NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	 */
 	@Override
 	public DDLRecordVersion findByPrimaryKey(long recordVersionId)

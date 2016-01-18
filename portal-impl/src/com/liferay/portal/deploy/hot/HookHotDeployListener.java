@@ -87,7 +87,6 @@ import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.security.auth.AuthFailure;
 import com.liferay.portal.security.auth.AuthToken;
-import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -729,21 +728,6 @@ public class HookHotDeployListener
 			registerService(
 				servletContextName, AUTH_PUBLIC_PATHS + authPublicPath,
 				Object.class, new Object(), "auth.public.path", authPublicPath);
-		}
-	}
-
-	protected void initAuthTokenWhiteListActions(
-			String servletContextName, Properties portalProperties)
-		throws Exception {
-
-		String[] authTokenIgnoreActions = StringUtil.split(
-			portalProperties.getProperty(AUTH_TOKEN_IGNORE_ACTIONS));
-
-		for (String authTokenIgnoreAction : authTokenIgnoreActions) {
-			registerService(
-				servletContextName,
-				AUTH_TOKEN_IGNORE_ACTIONS + authTokenIgnoreAction, Object.class,
-				new Object(), AUTH_TOKEN_IGNORE_ACTIONS, authTokenIgnoreAction);
 		}
 	}
 
@@ -1418,10 +1402,6 @@ public class HookHotDeployListener
 			initAuthPublicPaths(servletContextName, portalProperties);
 		}
 
-		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_ACTIONS)) {
-			initAuthTokenWhiteListActions(servletContextName, portalProperties);
-		}
-
 		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
 			String authTokenClassName = portalProperties.getProperty(
 				PropsKeys.AUTH_TOKEN_IMPL);
@@ -1786,6 +1766,14 @@ public class HookHotDeployListener
 				ScreenNameValidator.class, screenNameValidator);
 		}
 
+		for (String tokenWhitelistName : _TOKEN_WHITELIST_NAMES) {
+			if (containsKey(portalProperties, tokenWhitelistName)) {
+				initTokensWhitelists(servletContextName, portalProperties);
+
+				break;
+			}
+		}
+
 		Set<String> liferayFilterClassNames =
 			LiferayFilterTracker.getClassNames();
 
@@ -2099,6 +2087,25 @@ public class HookHotDeployListener
 		}
 	}
 
+	protected void initTokensWhitelists(
+			String servletContextName, Properties portalProperties)
+		throws Exception {
+
+		for (String tokenWhitelistName : _TOKEN_WHITELIST_NAMES) {
+			String propertyValue = portalProperties.getProperty(
+				tokenWhitelistName);
+
+			if (Validator.isBlank(propertyValue)) {
+				continue;
+			}
+
+			registerService(
+				servletContextName, tokenWhitelistName + propertyValue,
+				Object.class, new Object(), tokenWhitelistName,
+				StringUtil.split(propertyValue));
+		}
+	}
+
 	protected <S, T> Map<S, T> newMap() {
 		return new ConcurrentHashMap<>();
 	}
@@ -2220,28 +2227,6 @@ public class HookHotDeployListener
 			PropsValues.LOCALES_ENABLED = PropsUtil.getArray(LOCALES_ENABLED);
 
 			LanguageUtil.init();
-		}
-
-		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_ORIGINS)) {
-			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
-		}
-
-		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_PORTLETS)) {
-			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
-		}
-
-		if (containsKey(
-				portalProperties,
-				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST)) {
-
-			AuthTokenWhitelistUtil.resetPortletInvocationWhitelist();
-		}
-
-		if (containsKey(
-				portalProperties,
-				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS)) {
-
-			AuthTokenWhitelistUtil.resetPortletInvocationWhitelistActions();
 		}
 
 		if (containsKey(
@@ -2427,6 +2412,13 @@ public class HookHotDeployListener
 		"phone.number.format.international.regexp",
 		"phone.number.format.usa.regexp", "social.activity.sets.selector",
 		"theme.shortcut.icon"
+	};
+
+	private static final String[] _TOKEN_WHITELIST_NAMES = {
+		AUTH_TOKEN_IGNORE_ACTIONS, AUTH_TOKEN_IGNORE_ORIGINS,
+		AUTH_TOKEN_IGNORE_PORTLETS,
+		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST,
+		PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

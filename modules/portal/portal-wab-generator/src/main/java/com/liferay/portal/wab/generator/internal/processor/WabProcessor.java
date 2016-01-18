@@ -159,7 +159,12 @@ public class WabProcessor {
 
 		_pluginPackage = autoDeploymentContext.getPluginPackage();
 
-		_context = _pluginPackage.getContext();
+		if (_pluginPackage != null) {
+			_context = _pluginPackage.getContext();
+		}
+		else {
+			_context = autoDeploymentContext.getContext();
+		}
 
 		File deployDir = autoDeploymentContext.getDeployDir();
 
@@ -793,6 +798,10 @@ public class WabProcessor {
 	}
 
 	protected void processRequiredDeploymentContexts(Analyzer analyzer) {
+		if (_pluginPackage == null) {
+			return;
+		}
+
 		List<String> requiredDeploymentContexts =
 			_pluginPackage.getRequiredDeploymentContexts();
 

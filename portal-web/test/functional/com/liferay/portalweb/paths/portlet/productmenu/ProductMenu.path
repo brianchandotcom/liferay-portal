@@ -65,17 +65,17 @@
 </tr>
 <tr>
 	<td>PRIVATE_PAGES</td>
-	<td>//div[contains(@id,'privateLayoutsTreeOutput')]//span[contains(.,'Private Pages')]</td>
+	<td>//*[@data-qa-id='goToPrivatePages']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLIC_PAGES</td>
-	<td>//div[contains(@id,'publicLayoutsTreeOutput')]//span[contains(.,'Public Pages')]</td>
+	<td>//*[@data-qa-id='goToPublicPages']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES</td>
-	<td>//div[@class='list-group-item']//span[contains(.,'${key_page}')]</td>
+	<td>//div[@class='list-group-item']//span[contains(.,'${key_page}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,8 +84,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PUBLIC_PAGE_ICON</td>
+	<td>//*[@data-qa-id='addPublicPage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PRIVATE_PAGE_ICON</td>
+	<td>//*[@data-qa-id='addPrivatePage']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_PUBLIC_PAGE_ICON</td>
+	<td>//*[@data-qa-id='editPublicPages']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_PRIVATE_PAGE_ICON</td>
+	<td>//*[@data-qa-id='editPrivatePages']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_PAGE</td>
-	<td>//div[@class='list-group-item']//a[contains(@title,'Edit ${key_page}')]</td>
+	<td>//a[contains(@class,'tree-edit') and contains(@onmouseover,'${key_page}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -223,7 +223,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrIndexWriter.class);
 
-	private volatile SolrClientManager _solrClientManager;
-	private volatile SolrUpdateDocumentCommand _solrUpdateDocumentCommand;
+	private SolrClientManager _solrClientManager;
+	private SolrUpdateDocumentCommand _solrUpdateDocumentCommand;
 
 }

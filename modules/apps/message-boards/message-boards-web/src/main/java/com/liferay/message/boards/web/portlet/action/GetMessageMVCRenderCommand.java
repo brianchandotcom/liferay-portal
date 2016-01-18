@@ -16,8 +16,10 @@ package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
+import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -34,7 +36,9 @@ public abstract class GetMessageMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getMessage(renderRequest);
+			MBMessage message = ActionUtil.getMessage(renderRequest);
+
+			renderRequest.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, message);
 		}
 		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());

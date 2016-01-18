@@ -49,7 +49,7 @@ if (Validator.isNotNull(scriptContent)) {
 								clazz = templateHandler.getClass();
 							}
 
-							ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, clazz);
+							ResourceBundle templateHandlerResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, clazz);
 
 							for (TemplateVariableGroup templateVariableGroup : templateVariableGroups.values()) {
 								if (templateVariableGroup.isEmpty()) {
@@ -57,7 +57,7 @@ if (Validator.isNotNull(scriptContent)) {
 								}
 							%>
 
-								<liferay-ui:panel collapsible="<%= true %>" cssClass="palette-section" extended="<%= false %>" id="<%= templateVariableGroup.getLabel() %>" title="<%= LanguageUtil.get(request, resourceBundle, templateVariableGroup.getLabel()) %>">
+								<liferay-ui:panel collapsible="<%= true %>" cssClass="palette-section" extended="<%= false %>" id="<%= templateVariableGroup.getLabel() %>" title="<%= LanguageUtil.get(request, templateHandlerResourceBundle, templateVariableGroup.getLabel()) %>">
 									<ul class="palette-item-content">
 
 										<%
@@ -65,8 +65,8 @@ if (Validator.isNotNull(scriptContent)) {
 										%>
 
 											<li class="palette-item-container">
-												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, resourceBundle, templateVariableDefinition)) %>">
-													<%= HtmlUtil.escape(LanguageUtil.get(request, resourceBundle, templateVariableDefinition.getLabel())) %>
+												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, templateHandlerResourceBundle, templateVariableDefinition)) %>">
+													<%= HtmlUtil.escape(LanguageUtil.get(request, templateHandlerResourceBundle, templateVariableDefinition.getLabel())) %>
 
 													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>

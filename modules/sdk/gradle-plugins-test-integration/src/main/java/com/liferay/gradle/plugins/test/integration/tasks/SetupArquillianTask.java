@@ -54,16 +54,19 @@ public class SetupArquillianTask
 	}
 
 	@Input
+	@Override
 	public int getJmxRemotePort() {
 		return GradleUtil.toInteger(_jmxRemotePort);
 	}
 
 	@Input
+	@Override
 	public String getManagerPassword() {
 		return GradleUtil.toString(_managerPassword);
 	}
 
 	@Input
+	@Override
 	public String getManagerUserName() {
 		return GradleUtil.toString(_managerUserName);
 	}
@@ -73,14 +76,17 @@ public class SetupArquillianTask
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
+	@Override
 	public void setJmxRemotePort(Object jmxRemotePort) {
 		_jmxRemotePort = jmxRemotePort;
 	}
 
+	@Override
 	public void setManagerPassword(Object managerPassword) {
 		_managerPassword = managerPassword;
 	}
 
+	@Override
 	public void setManagerUserName(Object managerUserName) {
 		_managerUserName = managerUserName;
 	}

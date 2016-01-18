@@ -262,10 +262,10 @@ public class MonitoringFilter
 			MonitoringFilter.class + "._processFilterCount",
 			new AtomicInteger(0));
 
-	private volatile DataSampleFactory _dataSampleFactory;
-	private volatile LayoutLocalService _layoutLocalService;
+	private DataSampleFactory _dataSampleFactory;
+	private LayoutLocalService _layoutLocalService;
 	private boolean _monitorPortalRequest;
 	private PortletMonitoringControl _portletMonitoringControl;
-	private volatile ServiceMonitoringControl _serviceMonitoringControl;
+	private ServiceMonitoringControl _serviceMonitoringControl;
 
 }

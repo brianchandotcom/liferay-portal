@@ -17,7 +17,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -94,7 +94,7 @@
 		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="adds" />
+			<var name="actionType" value="Adds" />
 			<var name="contentType" value="Message Boards" />
 			<var name="notificationType" value="Website" />
 		</execute>
@@ -161,7 +161,7 @@
 		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute macro="NotificationsPortlet#disableUserDeliveries">
-			<var name="actionType" value="updates" />
+			<var name="actionType" value="Updates" />
 			<var name="contentType" value="Message Boards" />
 			<var name="notificationType" value="Website" />
 		</execute>

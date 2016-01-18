@@ -94,10 +94,6 @@ public class SyncEngine {
 		remoteEventsScheduledFuture.cancel(true);
 	}
 
-	public static ExecutorService getEventProcessorExecutorService() {
-		return _eventProcessorExecutorService;
-	}
-
 	public static ExecutorService getExecutorService() {
 		return _executorService;
 	}
@@ -286,7 +282,6 @@ public class SyncEngine {
 			cancelSyncAccountTasks(syncAccountId);
 		}
 
-		_eventProcessorExecutorService.shutdownNow();
 		_executorService.shutdownNow();
 		_localEventsScheduledExecutorService.shutdownNow();
 		_remoteEventsScheduledExecutorService.shutdownNow();
@@ -399,8 +394,6 @@ public class SyncEngine {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SyncEngine.class);
 
-	private static final ExecutorService _eventProcessorExecutorService =
-		Executors.newFixedThreadPool(5);
 	private static final ExecutorService _executorService =
 		Executors.newCachedThreadPool();
 	private static final ScheduledExecutorService

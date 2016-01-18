@@ -255,6 +255,26 @@ public class ListUtil {
 		return !isEmpty(list);
 	}
 
+	public static boolean isNotNull(List<?> list) {
+		return !isNull(list);
+	}
+
+	public static boolean isNull(List<?> list) {
+		if ((list == null) || list.isEmpty()) {
+			return true;
+		}
+
+		for (int i = 0; i < list.size(); i++) {
+			Object bean = list.get(i);
+
+			if (Validator.isNotNull(bean)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public static boolean isUnmodifiableList(List<?> list) {
 		return _unmodifiableListClass.isInstance(list);
 	}

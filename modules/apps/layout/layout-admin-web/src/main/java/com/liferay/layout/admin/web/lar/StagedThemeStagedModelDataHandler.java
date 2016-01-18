@@ -108,6 +108,6 @@ public class StagedThemeStagedModelDataHandler
 		_themeLocalService = themeLocalService;
 	}
 
-	private volatile ThemeLocalService _themeLocalService;
+	private ThemeLocalService _themeLocalService;
 
 }

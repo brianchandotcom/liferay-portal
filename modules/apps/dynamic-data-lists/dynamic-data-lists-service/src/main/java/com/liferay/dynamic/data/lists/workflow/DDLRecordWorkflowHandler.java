@@ -28,7 +28,6 @@ import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 
@@ -112,11 +111,6 @@ public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
 			userId, classPK, status, serviceContext);
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/history.png";
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDLRecordLocalService(
 		DDLRecordLocalService ddlRecordLocalService) {
@@ -139,9 +133,9 @@ public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
 			workflowDefinitionLinkLocalService;
 	}
 
-	private volatile DDLRecordLocalService _ddlRecordLocalService;
-	private volatile DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-	private volatile WorkflowDefinitionLinkLocalService
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
+	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

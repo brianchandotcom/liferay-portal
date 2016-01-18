@@ -22,8 +22,10 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.SessionClicks;
 
 import java.util.List;
 
@@ -36,6 +38,10 @@ public class PanelCategoryTag extends BasePanelTag {
 
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;
+	}
+
+	public void setPersistState(boolean persistState) {
+		_persistState = persistState;
 	}
 
 	public void setShowBody(boolean showBody) {
@@ -55,6 +61,7 @@ public class PanelCategoryTag extends BasePanelTag {
 		super.cleanUp();
 
 		_panelCategory = null;
+		_persistState = false;
 		_showBody = true;
 		_showHeader = true;
 		_showOpen = false;
@@ -65,15 +72,51 @@ public class PanelCategoryTag extends BasePanelTag {
 		return "/panel_category/end.jsp";
 	}
 
+	protected String getId() {
+		String id = StringUtil.replace(
+			_panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
+
+		return "panel-manage-" + id;
+	}
+
 	@Override
 	protected String getStartPage() {
 		return "/panel_category/start.jsp";
 	}
 
+	protected boolean isActive(
+		List<PanelApp> panelApps, PanelCategoryHelper panelCategoryHelper) {
+
+		if (_showOpen) {
+			return true;
+		}
+
+		if (isPersistState()) {
+			String state = SessionClicks.get(
+				request, PanelCategory.class.getName() + getId(), "closed");
+
+			if (Validator.equals(state, "open")) {
+				return true;
+			}
+		}
+
+		if (panelApps.isEmpty()) {
+			return false;
+		}
+
+		return _panelCategory.isActive(request, panelCategoryHelper);
+	}
+
+	protected boolean isPersistState() {
+		if (_persistState || _panelCategory.isPersistState()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		boolean active = _showOpen;
-
 		PanelAppRegistry panelAppRegistry =
 			(PanelAppRegistry)request.getAttribute(
 				ApplicationListWebKeys.PANEL_APP_REGISTRY);
@@ -92,19 +135,12 @@ public class PanelCategoryTag extends BasePanelTag {
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			panelAppRegistry, panelCategoryRegistry);
 
-		if (!_showOpen && !panelApps.isEmpty()) {
-			active = _panelCategory.isActive(request, panelCategoryHelper);
-		}
+		request.setAttribute(
+			"liferay-application-list:panel-category:active",
+			isActive(panelApps, panelCategoryHelper));
 
 		request.setAttribute(
-			"liferay-application-list:panel-category:active", active);
-
-		String id = StringUtil.replace(
-			_panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
-
-		id = "panel-manage-" + id;
-
-		request.setAttribute("liferay-application-list:panel-category:id", id);
+			"liferay-application-list:panel-category:id", getId());
 
 		int notificationsCount = panelCategoryHelper.getNotificationsCount(
 			_panelCategory.getKey(), themeDisplay.getPermissionChecker(),
@@ -120,6 +156,9 @@ public class PanelCategoryTag extends BasePanelTag {
 			"liferay-application-list:panel-category:panelCategory",
 			_panelCategory);
 		request.setAttribute(
+			"liferay-application-list:panel-category:persistState",
+			isPersistState());
+		request.setAttribute(
 			"liferay-application-list:panel-category:showBody", _showBody);
 		request.setAttribute(
 			"liferay-application-list:panel-category:showHeader", _showHeader);
@@ -128,6 +167,7 @@ public class PanelCategoryTag extends BasePanelTag {
 	}
 
 	private PanelCategory _panelCategory;
+	private boolean _persistState;
 	private boolean _showBody = true;
 	private boolean _showHeader = true;
 	private boolean _showOpen;

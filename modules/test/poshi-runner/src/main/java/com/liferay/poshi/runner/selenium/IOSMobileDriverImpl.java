@@ -27,6 +27,7 @@ public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 		super(browserURL, webDriver);
 	}
 
+	@Override
 	protected void tap(String locator) {
 		TouchAction touchAction = new TouchAction(this);
 

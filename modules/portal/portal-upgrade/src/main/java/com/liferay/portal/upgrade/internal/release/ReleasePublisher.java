@@ -95,7 +95,7 @@ public final class ReleasePublisher {
 	}
 
 	private BundleContext _bundleContext;
-	private volatile ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 	private final Map<String, ServiceRegistration<Release>>
 		_serviceConfiguratorRegistrations = new HashMap<>();
 

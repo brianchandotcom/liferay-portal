@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.export.builder;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,6 +23,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.AddressRecipient;
@@ -317,10 +317,10 @@ public abstract class BaseNodeBuilder
 	protected abstract Node createNode(KaleoNode kaleoNode)
 		throws PortalException;
 
-	@BeanReference(type = RoleLocalService.class)
+	@ServiceReference(type = RoleLocalService.class)
 	private RoleLocalService _roleLocalService;
 
-	@BeanReference(type = UserLocalService.class)
+	@ServiceReference(type = UserLocalService.class)
 	private UserLocalService _userLocalService;
 
 }

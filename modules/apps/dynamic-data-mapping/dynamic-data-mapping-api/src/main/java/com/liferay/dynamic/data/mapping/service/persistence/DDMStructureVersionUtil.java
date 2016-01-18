@@ -188,7 +188,7 @@ public class DDMStructureVersionUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
 	public static DDMStructureVersion findByStructureId_First(
 		long structureId,
@@ -218,7 +218,7 @@ public class DDMStructureVersionUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
 	public static DDMStructureVersion findByStructureId_Last(long structureId,
 		OrderByComparator<DDMStructureVersion> orderByComparator)
@@ -248,7 +248,7 @@ public class DDMStructureVersionUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
 	public static DDMStructureVersion[] findByStructureId_PrevAndNext(
 		long structureVersionId, long structureId,
@@ -279,12 +279,12 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
-	* Returns the d d m structure version where structureId = &#63; and version = &#63; or throws a {@link com.liferay.dynamic.data.mapping.NoSuchStructureVersionException} if it could not be found.
+	* Returns the d d m structure version where structureId = &#63; and version = &#63; or throws a {@link NoSuchStructureVersionException} if it could not be found.
 	*
 	* @param structureId the structure ID
 	* @param version the version
 	* @return the matching d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
 	public static DDMStructureVersion findByS_V(long structureId,
 		java.lang.String version)
@@ -424,7 +424,7 @@ public class DDMStructureVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
 	public static DDMStructureVersion findByS_S_First(long structureId,
 		int status, OrderByComparator<DDMStructureVersion> orderByComparator)
@@ -454,7 +454,7 @@ public class DDMStructureVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a matching d d m structure version could not be found
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
 	*/
 	public static DDMStructureVersion findByS_S_Last(long structureId,
 		int status, OrderByComparator<DDMStructureVersion> orderByComparator)
@@ -485,7 +485,7 @@ public class DDMStructureVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
 	public static DDMStructureVersion[] findByS_S_PrevAndNext(
 		long structureVersionId, long structureId, int status,
@@ -551,7 +551,7 @@ public class DDMStructureVersionUtil {
 	*
 	* @param structureVersionId the primary key of the d d m structure version
 	* @return the d d m structure version that was removed
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
 	public static DDMStructureVersion remove(long structureVersionId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
@@ -564,11 +564,11 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
-	* Returns the d d m structure version with the primary key or throws a {@link com.liferay.dynamic.data.mapping.NoSuchStructureVersionException} if it could not be found.
+	* Returns the d d m structure version with the primary key or throws a {@link NoSuchStructureVersionException} if it could not be found.
 	*
 	* @param structureVersionId the primary key of the d d m structure version
 	* @return the d d m structure version
-	* @throws com.liferay.dynamic.data.mapping.NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
 	public static DDMStructureVersion findByPrimaryKey(long structureVersionId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {

@@ -199,7 +199,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	}
 
 	private volatile Details _details;
-	private volatile JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private Logger _logger;
 
 }

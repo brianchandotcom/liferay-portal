@@ -132,9 +132,9 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceSystemEventVerifyProcess.class);
 
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalArticleResourceLocalService
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private volatile SystemEventLocalService _systemEventLocalService;
+	private SystemEventLocalService _systemEventLocalService;
 
 }

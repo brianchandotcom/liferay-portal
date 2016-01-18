@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.security.membershippolicy;
+package com.liferay.portal.kernel.security.membershippolicy;
 
 /**
  * @author Roberto Díaz
  */
-public interface RoleMembershipPolicyFactory {
+public interface SiteMembershipPolicyFactory {
 
-	public RoleMembershipPolicy getRoleMembershipPolicy();
+	public SiteMembershipPolicy getSiteMembershipPolicy();
 
 }

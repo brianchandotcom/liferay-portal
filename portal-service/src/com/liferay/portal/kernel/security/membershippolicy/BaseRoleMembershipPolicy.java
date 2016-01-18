@@ -12,28 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.security.membershippolicy;
+package com.liferay.portal.kernel.security.membershippolicy;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
-public abstract class BaseUserGroupMembershipPolicy
-	implements UserGroupMembershipPolicy {
+public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 
 	@Override
 	@SuppressWarnings("unused")
-	public boolean isMembershipAllowed(long userId, long userGroupId)
+	public boolean isRoleAllowed(long userId, long roleId)
 		throws PortalException {
 
 		try {
-			checkMembership(
-				new long[] {userId}, new long[] {userGroupId}, null);
+			checkRoles(new long[] {userId}, new long[] {roleId}, null);
 		}
 		catch (Exception e) {
 			return false;
@@ -44,12 +42,11 @@ public abstract class BaseUserGroupMembershipPolicy
 
 	@Override
 	@SuppressWarnings("unused")
-	public boolean isMembershipRequired(long userId, long userGroupId)
+	public boolean isRoleRequired(long userId, long roleId)
 		throws PortalException {
 
 		try {
-			checkMembership(
-				new long[] {userId}, null, new long[] {userGroupId});
+			checkRoles(new long[] {userId}, null, new long[] {roleId});
 		}
 		catch (Exception e) {
 			return true;
@@ -61,16 +58,14 @@ public abstract class BaseUserGroupMembershipPolicy
 	@Override
 	public void verifyPolicy() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			UserGroupLocalServiceUtil.getActionableDynamicQuery();
+			RoleLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
+			new ActionableDynamicQuery.PerformActionMethod<Role>() {
 
 				@Override
-				public void performAction(UserGroup userGroup)
-					throws PortalException {
-
-					verifyPolicy(userGroup);
+				public void performAction(Role role) throws PortalException {
+					verifyPolicy(role);
 				}
 
 			});
@@ -79,8 +74,8 @@ public abstract class BaseUserGroupMembershipPolicy
 	}
 
 	@Override
-	public void verifyPolicy(UserGroup userGroup) throws PortalException {
-		verifyPolicy(userGroup, null, null);
+	public void verifyPolicy(Role role) throws PortalException {
+		verifyPolicy(role, null, null);
 	}
 
 }

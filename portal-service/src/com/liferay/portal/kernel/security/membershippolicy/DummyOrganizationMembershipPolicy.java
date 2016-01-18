@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.membershippolicy;
+package com.liferay.portal.kernel.security.membershippolicy;
 
 import com.liferay.portal.model.Organization;
 import com.liferay.portlet.asset.model.AssetCategory;

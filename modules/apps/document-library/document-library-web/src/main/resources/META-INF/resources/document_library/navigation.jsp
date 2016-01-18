@@ -28,7 +28,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	<aui:nav-bar cssClass='<%= dlPortletInstanceSettingsHelper.isShowSearch() ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
 			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="folders" selected="<%= true %>" />
+				<aui:nav-item label="documents-and-media" selected="<%= true %>" />
 			</aui:nav>
 		</c:if>
 

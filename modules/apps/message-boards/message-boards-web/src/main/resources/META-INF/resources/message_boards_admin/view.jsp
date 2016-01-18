@@ -46,7 +46,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="navItemSelected" value="message-boards-home" />
+		<liferay-util:param name="navItemSelected" value="threads" />
 	</liferay-util:include>
 
 	<liferay-portlet:renderURL varImpl="searchURL">

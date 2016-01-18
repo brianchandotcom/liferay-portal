@@ -31,8 +31,8 @@ String navItemSelected = ParamUtil.getString(request, "navItemSelected");
 
 	<aui:nav-item
 		href="<%= messageBoardsHomeURL.toString() %>"
-		label="message-boards-home"
-		selected='<%= navItemSelected.equals("message-boards-home") %>'
+		label="threads"
+		selected='<%= navItemSelected.equals("threads") %>'
 	/>
 
 	<%

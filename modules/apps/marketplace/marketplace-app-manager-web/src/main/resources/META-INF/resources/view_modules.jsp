@@ -51,7 +51,12 @@ portletURL.setParameter("moduleGroup", moduleGroup);
 portletURL.setParameter("state", state);
 portletURL.setParameter("orderByType", orderByType);
 
-renderResponse.setTitle(moduleGroupDisplay.getTitle());
+if (moduleGroupDisplay != null) {
+	renderResponse.setTitle(moduleGroupDisplay.getTitle());
+}
+else {
+	renderResponse.setTitle(appDisplay.getTitle());
+}
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
 %>

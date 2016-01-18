@@ -16,8 +16,8 @@ package com.liferay.portal.ldap.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.exportimport.UserImporter;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.portal.security.ldap.LDAPSettings;
 
 import org.osgi.framework.BundleContext;

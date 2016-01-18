@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.exportimport.bundle.userexporterutil;
 
+import com.liferay.portal.kernel.security.exportimport.UserExporter;
+import com.liferay.portal.kernel.security.exportimport.UserOperation;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.exportimport.UserExporter;
-import com.liferay.portal.security.exportimport.UserOperation;
 
 import java.io.Serializable;
 

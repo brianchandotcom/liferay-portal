@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.exportimport;
 
+import com.liferay.portal.kernel.security.exportimport.UserImporterUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

@@ -377,7 +377,7 @@ public class WorkflowInstanceViewDisplayContext
 		}
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private String _displayStyle;
 	private String _keywords;

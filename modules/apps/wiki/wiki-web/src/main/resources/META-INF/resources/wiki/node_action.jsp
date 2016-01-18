@@ -82,33 +82,8 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
-		<c:choose>
-			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
-				<portlet:actionURL name="/wiki/edit_node" var="unsubscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name="/wiki/edit_node" var="subscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
+	<c:if test="<%= row != null %>">
+		<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
 	</c:if>
 
 	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">

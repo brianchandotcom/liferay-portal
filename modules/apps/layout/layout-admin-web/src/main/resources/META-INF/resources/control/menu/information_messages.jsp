@@ -129,7 +129,7 @@ data.put("qa-id", "info");
 						</portlet:actionURL>
 
 						<%
-						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
 						%>
 
 						<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />

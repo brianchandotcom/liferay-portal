@@ -65,31 +65,35 @@
 			}
 			%>
 
-			<liferay-frontend:vertical-card
-				actionJsp="/blogs_admin/entry_action.jsp"
-				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
-				imageUrl='<%= Validator.isNotNull(entryImageURL) ? entryImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-				resultRow="<%= row %>"
-				rowChecker="<%= searchContainer.getRowChecker() %>"
-				title="<%= entry.getTitle() %>"
-				url="<%= rowURL.toString() %>"
-			>
-				<liferay-frontend:vertical-card-sticker-bottom>
-					<liferay-ui:user-portrait
-						cssClass="sticker sticker-bottom user-icon-xl"
-						userId="<%= entry.getUserId() %>"
-					/>
-				</liferay-frontend:vertical-card-sticker-bottom>
-
-				<liferay-frontend:vertical-card-footer>
-					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-				</liferay-frontend:vertical-card-footer>
-
-				<liferay-frontend:vertical-card-header>
-					<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true), HtmlUtil.escape(entry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= true %>" />
-				</liferay-frontend:vertical-card-header>
-			</liferay-frontend:vertical-card>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(entryImageURL) %>">
+					<liferay-frontend:vertical-card
+						actionJsp="/blogs_admin/entry_action.jsp"
+						actionJspServletContext="<%= application %>"
+						cssClass="entry-display-style"
+						imageUrl='<%= entryImageURL %>'
+						resultRow="<%= row %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
+						title="<%= entry.getTitle() %>"
+						url="<%= rowURL.toString() %>"
+					>
+						<%@ include file="/blogs_admin/entry_vertical_card.jspf" %>
+					</liferay-frontend:vertical-card>
+				</c:when>
+				<c:otherwise>
+					<liferay-frontend:icon-vertical-card
+						actionJsp="/blogs_admin/entry_action.jsp"
+						actionJspServletContext="<%= application %>"
+						icon="blogs"
+						resultRow="<%= row %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
+						title="<%= entry.getTitle() %>"
+						url="<%= rowURL.toString() %>"
+					>
+						<%@ include file="/blogs_admin/entry_vertical_card.jspf" %>
+					</liferay-frontend:icon-vertical-card>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>

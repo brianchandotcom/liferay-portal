@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.membershippolicy;
+package com.liferay.portal.kernel.security.membershippolicy;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;

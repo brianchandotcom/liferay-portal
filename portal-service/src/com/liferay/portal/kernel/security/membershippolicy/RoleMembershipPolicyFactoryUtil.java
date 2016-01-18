@@ -12,13 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.security.membershippolicy;
+package com.liferay.portal.kernel.security.membershippolicy;
 
 /**
  * @author Roberto Díaz
  */
-public interface SiteMembershipPolicyFactory {
+public class RoleMembershipPolicyFactoryUtil {
 
-	public SiteMembershipPolicy getSiteMembershipPolicy();
+	public static RoleMembershipPolicy getRoleMembershipPolicy() {
+		return getRoleMembershipPolicyFactory().getRoleMembershipPolicy();
+	}
+
+	public static RoleMembershipPolicyFactory getRoleMembershipPolicyFactory() {
+		return _roleMembershipPolicyFactory;
+	}
+
+	public void setRoleMembershipPolicyFactory(
+		RoleMembershipPolicyFactory roleMembershipPolicyFactory) {
+
+		_roleMembershipPolicyFactory = roleMembershipPolicyFactory;
+	}
+
+	private static RoleMembershipPolicyFactory _roleMembershipPolicyFactory;
 
 }

@@ -78,7 +78,6 @@ if (groupThreadsUserId > 0) {
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			disabled="<%= entriesTotal == 0 %>"
 			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"

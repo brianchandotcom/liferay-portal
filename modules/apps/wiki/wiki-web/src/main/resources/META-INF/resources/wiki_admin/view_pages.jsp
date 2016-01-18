@@ -86,7 +86,6 @@ else {
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			disabled="<%= pages.isEmpty() %>"
 			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= currentURLObj %>"
 			selectedDisplayStyle="<%= displayStyle %>"

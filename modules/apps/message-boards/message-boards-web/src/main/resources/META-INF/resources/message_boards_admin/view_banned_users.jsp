@@ -57,7 +57,6 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			disabled="<%= totalBannedUsers == 0 %>"
 			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"

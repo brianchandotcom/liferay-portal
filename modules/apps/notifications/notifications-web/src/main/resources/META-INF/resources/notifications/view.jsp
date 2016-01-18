@@ -39,7 +39,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			disabled="<%= userNotificationEventsCount == 0 %>"
 			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="descriptive"

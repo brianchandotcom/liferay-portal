@@ -81,7 +81,6 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
 
 		<liferay-frontend:management-bar-display-buttons
-			disabled="<%= nodesCount == 0 %>"
 			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"

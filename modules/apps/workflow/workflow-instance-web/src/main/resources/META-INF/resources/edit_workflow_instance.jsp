@@ -22,10 +22,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = null;
 
 if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
-	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
+	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 else {
-	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
+	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
 }
 
 portletDisplay.setShowBackIcon(true);

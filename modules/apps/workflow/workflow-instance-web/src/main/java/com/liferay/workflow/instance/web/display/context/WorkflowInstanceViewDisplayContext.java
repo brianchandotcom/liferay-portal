@@ -46,7 +46,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
 /**
@@ -57,12 +56,10 @@ public class WorkflowInstanceViewDisplayContext
 
 	public WorkflowInstanceViewDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			PortletPreferences portletPreferences)
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+		super(liferayPortletRequest, liferayPortletResponse);
 
 		PortletURL portletURL = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);

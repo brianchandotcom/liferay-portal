@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marcellus Tavares
  */
@@ -33,11 +31,9 @@ public class MyWorkflowInstanceEditDisplayContext
 
 	public MyWorkflowInstanceEditDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletPreferences portletPreferences) {
+		LiferayPortletResponse liferayPortletResponse) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	@Override

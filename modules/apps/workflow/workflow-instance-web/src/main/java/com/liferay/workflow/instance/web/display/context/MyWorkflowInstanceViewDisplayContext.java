@@ -26,8 +26,6 @@ import com.liferay.workflow.instance.web.search.WorkflowInstanceSearch;
 
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Marcellus Tavares
  */
@@ -36,12 +34,11 @@ public class MyWorkflowInstanceViewDisplayContext
 
 	public MyWorkflowInstanceViewDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			PortletPreferences portletPreferences)
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+		super(liferayPortletRequest, liferayPortletResponse);
+	}
 
 	@Override
 	public String getHeaderTitle() {

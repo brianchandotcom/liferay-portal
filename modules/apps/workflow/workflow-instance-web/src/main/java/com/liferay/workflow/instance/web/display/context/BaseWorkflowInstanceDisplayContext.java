@@ -26,8 +26,6 @@ import com.liferay.workflow.instance.web.display.context.util.WorkflowInstanceRe
 
 import java.text.Format;
 
-import javax.portlet.PortletPreferences;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -37,12 +35,10 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 
 	public BaseWorkflowInstanceDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletPreferences portletPreferences) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
-		this.portletPreferences = portletPreferences;
 
 		this.request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
@@ -64,7 +60,6 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
-	protected final PortletPreferences portletPreferences;
 	protected final HttpServletRequest request;
 	protected final WorkflowInstanceRequestHelper workflowInstanceRequestHelper;
 

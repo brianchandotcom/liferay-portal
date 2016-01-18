@@ -24,14 +24,12 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
@@ -39,8 +37,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
@@ -61,7 +57,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -70,37 +65,39 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  * @author Roberto Díaz
  */
-@Component(
-	immediate = true, service = AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener.class
-)
-public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener extends SimpleAction {
+@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
+	implements PortalInstanceLifecycleListener {
 
 	@Override
-	public void run(String[] ids) throws ActionException {
-		try {
-			doRun(GetterUtil.getLong(ids[0]));
-		}
-		catch (Exception e) {
-			throw new ActionException(e);
-		}
-	}
+	public void portalInstanceRegistered(Company company) throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
 
-	@Activate
-	protected void activate() throws ActionException {
-		Long companyId = CompanyThreadLocal.getCompanyId();
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
 
-		try {
-			List<Company> companies = _companyLocalService.getCompanies();
+		Group group = _groupLocalService.getCompanyGroup(
+			company.getCompanyId());
 
-			for (Company company : companies) {
-				CompanyThreadLocal.setCompanyId(company.getCompanyId());
+		serviceContext.setScopeGroupId(group.getGroupId());
 
-				run(new String[] {String.valueOf(company.getCompanyId())});
-			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
-		}
+		long defaultUserId = _userLocalService.getDefaultUserId(
+			company.getCompanyId());
+
+		serviceContext.setUserId(defaultUserId);
+
+		_defaultDDMStructureHelper.addDDMStructures(
+			defaultUserId, group.getGroupId(),
+			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+			getClass().getClassLoader(),
+			"com/liferay/document/library/events/dependencies" +
+				"/document-library-structures.xml",
+			serviceContext);
+
+		addDLFileEntryTypes(defaultUserId, group.getGroupId(), serviceContext);
+
+		addDLRawMetadataStructures(
+			defaultUserId, group.getGroupId(), serviceContext);
 	}
 
 	protected void addDLFileEntryType(
@@ -131,8 +128,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener 
 
 		String definition =
 			_defaultDDMStructureHelper.getDynamicDDMStructureDefinition(
-				AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener.class.
-					getClassLoader(),
+				getClass().getClassLoader(),
 				"com/liferay/document/library/events/dependencies" +
 					"/document-library-structures.xml",
 				languageKey, locale);
@@ -339,39 +335,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener 
 		return sb.toString();
 	}
 
-	protected void doRun(long companyId) throws Exception {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAddGroupPermissions(true);
-
-		Group group = _groupLocalService.getCompanyGroup(companyId);
-
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
-
-		serviceContext.setUserId(defaultUserId);
-
-		_defaultDDMStructureHelper.addDDMStructures(
-			defaultUserId, group.getGroupId(),
-			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-			AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener.class.getClassLoader(),
-			"com/liferay/document/library/events/dependencies" +
-				"/document-library-structures.xml",
-			serviceContext);
-		addDLFileEntryTypes(defaultUserId, group.getGroupId(), serviceContext);
-		addDLRawMetadataStructures(
-			defaultUserId, group.getGroupId(), serviceContext);
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
@@ -425,7 +388,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener 
 		_userLocalService = userLocalService;
 	}
 
-	private CompanyLocalService _companyLocalService;
 	private DDM _ddm;
 	private DDMBeanTranslator _ddmBeanTranslator;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;

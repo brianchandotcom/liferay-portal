@@ -36,6 +36,20 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 				<liferay-ui:message key="wiki" />
 			</p>
 		</c:when>
+		<c:when test="<%= wikiInfoPanelDisplayContext.isSinglePageSelection() %>">
+
+			<%
+			WikiPage wikiPage = wikiInfoPanelDisplayContext.getFirstPage();
+			%>
+
+			<h4>
+				<%= HtmlUtil.escape(wikiPage.getTitle()) %>
+			</h4>
+
+			<p>
+				<liferay-ui:message key="page" />
+			</p>
+		</c:when>
 		<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleItemSelection() %>">
 			<h4><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedItemsCount() %>" key="x-items-are-selected" /></h4>
 		</c:when>
@@ -91,6 +105,108 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 					<p>
 						<%= dateFormatDateTime.format(node.getModifiedDate()) %>
 					</p>
+				</c:when>
+				<c:when test="<%= wikiInfoPanelDisplayContext.isSinglePageSelection() %>">
+
+					<%
+					WikiPage wikiPage = wikiInfoPanelDisplayContext.getFirstPage();
+					%>
+
+					<c:if test="<%= Validator.isNotNull(wikiPage.getSummary()) %>">
+						<h5><strong><liferay-ui:message key="summary" /></strong></h5>
+
+						<p>
+							<%= HtmlUtil.escape(wikiPage.getSummary()) %>
+						</p>
+					</c:if>
+
+					<h5><strong><liferay-ui:message key="format" /></strong></h5>
+
+					<p>
+						<liferay-ui:message key="<%= WikiUtil.getFormatLabel(wikiPage.getFormat(), locale) %>" />
+					</p>
+
+					<h5><strong><liferay-ui:message key="latest-version" /></strong></h5>
+
+					<p>
+						<%= wikiPage.getVersion() %>
+
+						<c:if test="<%= wikiPage.isMinorEdit() %>">
+							(<liferay-ui:message key="minor-edit" />)
+						</c:if>
+					</p>
+
+					<h5><strong><liferay-ui:message key="create-date" /></strong></h5>
+
+					<p>
+						<%= dateFormatDateTime.format(wikiPage.getCreateDate()) %>
+					</p>
+
+					<h5><strong><liferay-ui:message key="last-modified" /></strong></h5>
+
+					<p>
+						<%= dateFormatDateTime.format(wikiPage.getModifiedDate()) %>
+					</p>
+
+					<h5><strong><liferay-ui:message key="attachments" /></strong></h5>
+
+					<p>
+						<%= wikiPage.getAttachmentsFileEntriesCount() %>
+					</p>
+
+					<h5><strong><liferay-ui:message key="rss" /></strong></h5>
+
+					<p>
+						<a href="<%= wikiInfoPanelDisplayContext.getPageRSSURL(wikiPage) %>" target="_blank">
+							<liferay-ui:message key="feed" />
+
+							<liferay-ui:message key="opens-new-window" />
+						</a>
+					</p>
+
+					<div class="lfr-asset-categories">
+						<liferay-ui:asset-categories-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							message="categories"
+						/>
+					</div>
+
+					<div class="lfr-asset-tags">
+						<liferay-ui:asset-tags-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							message="tags"
+						/>
+					</div>
+
+					<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
+						<liferay-ui:ratings
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+						/>
+					</c:if>
+
+					<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+
+					<%
+					AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
+					%>
+
+					<c:if test="<%= (wikiPageAssetEntry != null) && wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
+						<div class="entry-links">
+							<liferay-ui:asset-links
+								assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>"
+							/>
+						</div>
+					</c:if>
 				</c:when>
 				<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleItemSelection() %>">
 					<h5><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedItemsCount() %>" key="x-items-are-selected" /></h5>

@@ -14,8 +14,11 @@
 
 package com.liferay.wiki.web.display.context;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.display.context.WikiInfoPanelDisplayContext;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.display.context.util.WikiInfoPanelRequestHelper;
@@ -50,6 +53,17 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
+	public WikiPage getFirstPage() {
+		List<WikiPage> pages = _wikiInfoPanelRequestHelper.getPages();
+
+		if (pages.isEmpty()) {
+			return null;
+		}
+
+		return pages.get(0);
+	}
+
+	@Override
 	public String getItemNameLabel() {
 		if (_wikiInfoPanelRequestHelper.getNodeId() == 0) {
 			return "wikis";
@@ -68,6 +82,22 @@ public class DefaultWikiInfoPanelDisplayContext
 		}
 
 		return WikiPageLocalServiceUtil.getPagesCount(node.getNodeId());
+	}
+
+	@Override
+	public String getPageRSSURL(WikiPage page) {
+		ThemeDisplay themeDisplay =
+			_wikiInfoPanelRequestHelper.getThemeDisplay();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/wiki/rss?nodeId=");
+		sb.append(_wikiInfoPanelRequestHelper.getNodeId());
+		sb.append("&title=");
+		sb.append(page.getTitle());
+
+		return sb.toString();
 	}
 
 	@Override
@@ -99,6 +129,18 @@ public class DefaultWikiInfoPanelDisplayContext
 		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
 
 		if (nodes.size() == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isSinglePageSelection() {
+		List<WikiPage> pages = _wikiInfoPanelRequestHelper.getPages();
+
+		if (pages.size() == 1) {
 			return true;
 		}
 		else {

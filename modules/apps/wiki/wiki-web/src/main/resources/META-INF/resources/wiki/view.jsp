@@ -128,11 +128,11 @@ if (wikiPage != null) {
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
-
-PortletURL backToViewPagesURL = wikiURLHelper.getBackToViewPagesURL(node);
-
 if (portletTitleBasedNavigation) {
+	WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
+
+	PortletURL backToViewPagesURL = wikiURLHelper.getBackToViewPagesURL(node);
+
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack((viewParentPageURL != null) ? viewParentPageURL.toString() : backToViewPagesURL.toString());
 

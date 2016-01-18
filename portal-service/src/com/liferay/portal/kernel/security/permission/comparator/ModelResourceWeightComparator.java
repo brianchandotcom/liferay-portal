@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.permission.comparator;
+package com.liferay.portal.kernel.security.permission.comparator;
 
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 

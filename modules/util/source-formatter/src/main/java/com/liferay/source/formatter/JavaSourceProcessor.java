@@ -2399,8 +2399,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-60186
 
-		if (!absolutePath.contains("/test/") &&
-			content.contains("@Meta.OCD") &&
+		if (!absolutePath.contains("/test/") && content.contains("@Meta.OCD") &&
 			!content.contains("@ConfigurationAdmin")) {
 
 			processErrorMessage(
@@ -2902,11 +2901,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (nextLineTabCount != (lineTabCount + 1)) {
 				int x = trimmedLine.indexOf(CharPool.COMMA);
-	
+
 				if (x != -1) {
 					while ((previousLineLength + 1 + x) < _MAX_LINE_LENGTH) {
 						String linePart = trimmedLine.substring(0, x + 1);
-	
+
 						if (isValidJavaParameter(linePart)) {
 							if (trimmedLine.equals(linePart)) {
 								return getCombinedLinesContent(
@@ -2922,15 +2921,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 									true, 0);
 							}
 						}
-	
+
 						String partAfterComma = trimmedLine.substring(x + 1);
-	
+
 						int pos = partAfterComma.indexOf(CharPool.COMMA);
-	
+
 						if (pos == -1) {
 							break;
 						}
-	
+
 						x = x + pos + 1;
 					}
 				}

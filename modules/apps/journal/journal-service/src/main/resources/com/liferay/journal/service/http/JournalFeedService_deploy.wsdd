@@ -37,17 +37,9 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.liferay.com" name="deleteFeed" qname="operNS:deleteFeed" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="feedId" type="tns:long"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" name="deleteFeed" qname="operNS:deleteFeed" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="feedId" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="http://model.journal.liferay.com" name="getFeed" qname="operNS:getFeed" returnQName="getFeedReturn" returnType="rtns:JournalFeedSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="feedId" type="tns:long"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="http://model.journal.liferay.com" name="getFeed" qname="operNS:getFeed" returnQName="getFeedReturn" returnType="rtns:JournalFeedSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="feedId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="http://model.journal.liferay.com" name="getFeed" qname="operNS:getFeed" returnQName="getFeedReturn" returnType="rtns:JournalFeedSoap" soapAction="">

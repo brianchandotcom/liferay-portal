@@ -39,49 +39,72 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/wiki/import_pages");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("nodeId", String.valueOf(nodeId));
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
+
+PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backToNodeURL.toString());
+
+	renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
+}
 %>
 
 <portlet:actionURL name="/wiki/import_pages" var="importPagesURL" />
 
-<aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "importPages();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="importProgressId" type="hidden" value="<%= importProgressId %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
-	<aui:input name="importer" type="hidden" value="<%= tabs2 %>" />
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+	<aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "importPages();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="importProgressId" type="hidden" value="<%= importProgressId %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
+		<aui:input name="importer" type="hidden" value="<%= tabs2 %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="import-pages"
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				title="import-pages"
+			/>
+		</c:if>
+
+		<div class="panel-body">
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-ui:tabs
+					names="<%= StringUtil.merge(importers) %>"
+					param="tabs2"
+					refresh="<%= false %>"
+					type="tabs nav-tabs-default"
+					url="<%= portletURL.toString() %>"
+				/>
+
+				<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
+				<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
+
+				<liferay-util:include page="<%= WikiUtil.getWikiImporterPage(tabs2) %>" servletContext="<%= application %>" />
+			</aui:fieldset-group>
+		</div>
+
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" value="import" />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+
+	<liferay-ui:upload-progress
+		id="<%= uploadProgressId %>"
+		message="uploading"
 	/>
 
-	<liferay-ui:tabs
-		names="<%= StringUtil.merge(importers) %>"
-		param="tabs2"
-		url="<%= portletURL.toString() %>"
+	<liferay-ui:upload-progress
+		id="<%= importProgressId %>"
+		message="importing"
 	/>
-
-	<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
-	<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
-
-	<liferay-util:include page="<%= WikiUtil.getWikiImporterPage(tabs2) %>" servletContext="<%= application %>" />
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" value="import" />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
-
-<liferay-ui:upload-progress
-	id="<%= uploadProgressId %>"
-	message="uploading"
-/>
-
-<liferay-ui:upload-progress
-	id="<%= importProgressId %>"
-	message="importing"
-/>
+</div>
 
 <aui:script>
 	function <portlet:namespace />importPages() {

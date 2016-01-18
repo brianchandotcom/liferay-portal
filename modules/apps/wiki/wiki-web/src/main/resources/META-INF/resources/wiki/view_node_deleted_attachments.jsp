@@ -35,85 +35,57 @@ portletURL.setParameter("mvcRenderCommandName", "/wiki/view_node_deleted_attachm
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachments-recycle-bin"), portletURL.toString());
 
-PortletURL iteratorURL = renderResponse.createRenderURL();
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
-iteratorURL.setParameter("redirect", currentURL);
-iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
+WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
+
+PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backToNodeURL.toString());
+
+	renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
+}
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="removed-attachments"
-/>
+<c:if test="<%= !portletTitleBasedNavigation %>">
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		title="removed-attachments"
+	/>
+</c:if>
 
-<portlet:actionURL name="/wiki/edit_node_attachment" var="emptyTrashURL">
-	<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
-</portlet:actionURL>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\" panel row" : StringPool.BLANK %>>
+	<portlet:actionURL name="/wiki/edit_node_attachment" var="emptyTrashURL">
+		<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
+	</portlet:actionURL>
 
-<liferay-trash:empty
-	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-wiki-node"
-	emptyMessage="remove-the-attachments-for-this-wiki-node"
-	infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
-	portletURL="<%= emptyTrashURL.toString() %>"
-	totalEntries="<%= attachmentsFileEntries.size() %>"
-/>
-
-<liferay-ui:search-container
-	emptyResultsMessage="this-wiki-node-does-not-have-file-attachments-in-the-recycle-bin"
-	iteratorURL="<%= iteratorURL %>"
-	total="<%= attachmentsFileEntries.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= ListUtil.subList(attachmentsFileEntries, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	<liferay-trash:empty
+		confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-wiki-node"
+		emptyMessage="remove-the-attachments-for-this-wiki-node"
+		infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
+		portletURL="<%= emptyTrashURL.toString() %>"
+		totalEntries="<%= attachmentsFileEntries.size() %>"
 	/>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.repository.model.FileEntry"
-		modelVar="fileEntry"
-	>
+	<%
+	int attachmentsFileEntriesCount = attachmentsFileEntries.size();
+	String emptyResultsMessage = "this-wiki-node-does-not-have-file-attachments-in-the-recycle-bin";
 
-		<%
-		WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(fileEntry.getFileEntryId());
+	PortletURL iteratorURL = renderResponse.createRenderURL();
 
-		String rowHREF = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_IN_TRASH);
-		%>
+	iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_node_deleted_attachments");
+	iteratorURL.setParameter("redirect", currentURL);
+	iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+	iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="file-name"
-		>
+	boolean showPageAttachmentAction = true;
+	int status = WorkflowConstants.STATUS_IN_TRASH;
+	%>
 
-			<%
-			AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-
-			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
-			%>
-
-			<liferay-ui:icon
-				icon="<%= assetRenderer.getIconCssClass() %>"
-				label="<%= true %>"
-				markupView="lexicon"
-				message="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
-			/>
-		</liferay-ui:search-container-column-text>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="size"
-			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
-		/>
-
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/wiki/page_attachment_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+	<%@ include file="/wiki/attachments_list.jspf" %>
+</div>
 
 <portlet:actionURL name="/wiki/edit_page_attachment" var="checkEntryURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />

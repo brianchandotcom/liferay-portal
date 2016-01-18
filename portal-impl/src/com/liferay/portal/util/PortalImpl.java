@@ -6472,6 +6472,59 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isSkipPortletContentProcessing(
+			Group group, HttpServletRequest httpServletRequest,
+			LayoutTypePortlet layoutTypePortlet, PortletDisplay portletDisplay,
+			String portletName)
+		throws Exception {
+
+		boolean skipPortletContentRendering = isSkipPortletContentRendering(
+			group, layoutTypePortlet, portletDisplay, portletName);
+
+		if (!skipPortletContentRendering) {
+			return false;
+		}
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			getCompanyId(httpServletRequest), portletDisplay.getId());
+
+		if (portlet.isSystem() || !portlet.isUseDefaultTemplate()) {
+			return false;
+		}
+
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
+
+		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
+			portlet, servletContext);
+
+		if (invokerPortlet.isStrutsPortlet() ||
+			invokerPortlet.isStrutsBridgePortlet()) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isSkipPortletContentRendering(
+			Group group, LayoutTypePortlet layoutTypePortlet,
+			PortletDisplay portletDisplay, String portletName)
+		throws PortalException {
+
+		if (group.isLayoutPrototype() &&
+			layoutTypePortlet.hasPortletId(portletDisplay.getId()) &&
+			portletDisplay.isModeView() &&
+			!portletName.equals(PortletKeys.NESTED_PORTLETS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isSystemGroup(String groupName) {
 		if (groupName == null) {
 			return false;

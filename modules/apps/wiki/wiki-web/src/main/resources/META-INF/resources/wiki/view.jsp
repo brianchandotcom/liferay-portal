@@ -335,7 +335,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
-					<div class="container-fluid page-attachments" style="margin-top: 20px">
+					<div class="container-fluid page-attachments">
 						<h5><liferay-ui:message key="attachments" /></h5>
 						<div class="row">
 

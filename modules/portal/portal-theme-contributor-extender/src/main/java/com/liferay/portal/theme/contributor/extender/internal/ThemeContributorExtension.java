@@ -64,58 +64,60 @@ public class ThemeContributorExtension implements Extension {
 			new ServiceTrackerCustomizer
 				<ServletContext, Collection<ServiceRegistration<?>>>() {
 
-			@Override
-			public Collection<ServiceRegistration<?>> addingService(
-				ServiceReference<ServletContext> serviceReference) {
+				@Override
+				public Collection<ServiceRegistration<?>> addingService(
+					ServiceReference<ServletContext> serviceReference) {
 
-				Collection<ServiceRegistration<?>> serviceRegistrations =
-					new ArrayList<>();
+					Collection<ServiceRegistration<?>> serviceRegistrations =
+						new ArrayList<>();
 
-				ServletContext servletContext = bundleContext.getService(
-					serviceReference);
+					ServletContext servletContext = bundleContext.getService(
+						serviceReference);
 
-				serviceRegistrations.add(
-					bundleContext.registerService(
-						PortalWebResources.class.getName(),
-						new ThemeContributorPortalWebResources(servletContext),
-					null));
+					serviceRegistrations.add(
+						bundleContext.registerService(
+							PortalWebResources.class.getName(),
+							new ThemeContributorPortalWebResources(
+								servletContext),
+							null));
 
-				String contextPath = servletContext.getContextPath();
+					String contextPath = servletContext.getContextPath();
 
-				_bundleWebResources.setServletContextPath(contextPath);
+					_bundleWebResources.setServletContextPath(contextPath);
 
-				serviceRegistrations.add(
-					bundleContext.registerService(
-						BundleWebResources.class, _bundleWebResources, null));
+					serviceRegistrations.add(
+						bundleContext.registerService(
+							BundleWebResources.class, _bundleWebResources,
+							null));
 
-				return serviceRegistrations;
-			}
-
-			@Override
-			public void modifiedService(
-				ServiceReference<ServletContext> serviceReference,
-				Collection<ServiceRegistration<?>> service) {
-
-				removedService(serviceReference, service);
-
-				addingService(serviceReference);
-			}
-
-			@Override
-			public void removedService(
-				ServiceReference<ServletContext> serviceReference,
-				Collection<ServiceRegistration<?>> serviceRegistrations) {
-
-				for (ServiceRegistration<?> serviceRegistration :
-						serviceRegistrations) {
-
-					serviceRegistration.unregister();
+					return serviceRegistrations;
 				}
 
-				bundleContext.ungetService(serviceReference);
-			}
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletContext> serviceReference,
+					Collection<ServiceRegistration<?>> service) {
 
-		});
+					removedService(serviceReference, service);
+
+					addingService(serviceReference);
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletContext> serviceReference,
+					Collection<ServiceRegistration<?>> serviceRegistrations) {
+
+					for (ServiceRegistration<?> serviceRegistration :
+							serviceRegistrations) {
+
+						serviceRegistration.unregister();
+					}
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
 
 		_serviceTracker.open();
 	}

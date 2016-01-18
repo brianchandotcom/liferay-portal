@@ -1,40 +1,20 @@
 .control-menu-level-1 {
 	background-color: $control-menu-level-1-bg;
 	color: $control-menu-level-1-color;
-}
 
-.control-menu-nav-level-1 {
-	@include display(flex);
-	@include flex-wrap(wrap);
-	@include justify-content(space-between);
+	a {
+		color: $control-menu-level-1-link-color;
 
-	> .control-menu-nav-item {
-		@include align-self(center);
+		&:focus, &:hover {
+			color: $control-menu-level-1-link-hover-color;
+			text-decoration: none;
+		}
 	}
-}
-
-.control-menu .lexicon-icon {
-	@include transform(none);
 }
 
 .control-menu-level-2 {
 	background-color: $control-menu-level-2-bg;
 	color: $control-menu-level-2-color;
-
-	@media screen and (min-width: 768px) {
-		left: 0;
-		position: absolute;
-		right: 0;
-		top: 100%;
-	}
-
-	a {
-		color: $control-menu-level-2-link-color;
-	}
-
-	label {
-		color: $control-menu-level-2-label-color;
-	}
 
 	.staging-variation-label {
 		font-weight: 500;
@@ -43,9 +23,9 @@
 			text-decoration: none;
 		}
 
-		@media screen and (min-width: 768px) {
-			color: #869CAD;
-			font-size: 14px;
+		@include sm() {
+			color: $control-menu-level-2-label-color;
+			font-size: 12px;
 		}
 	}
 }
@@ -53,8 +33,6 @@
 .control-menu-level-2-heading {
 	font-size: 18px;
 	font-weight: 500;
-	padding: 20px 0;
-	text-align: center;
 
 	.close {
 		color: $control-menu-level-2-color;
@@ -63,40 +41,44 @@
 	}
 }
 
-.control-menu-icon {
-	color: $control-menu-level-1-nav-item-color;
+.live-link, .staging-link {
+	font-size: 14px;
 
-	&:focus,
-	&:hover {
-		color: $control-menu-level-1-nav-item-hover-color;
-		text-decoration: none;
-	}
-
-	&.icon-monospaced,
-	.icon-monospaced {
-		font-size: $control-menu-icon-font-size;
-	}
-}
-
-.live-link,
-.staging-link {
-	a,
-	a:focus,
-	a:hover {
+	a, a:focus, a:hover {
 		color: #869CAD;
 	}
 
 	&.active {
+		position: relative;
+
+		&:after {
+			background-color: $control-menu-level-1-active-border;
+			bottom: -13px;
+			content: "";
+			height: $control-menu-level-1-active-border-width;
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+
 		a {
 			color: #FFF;
 		}
 	}
+
+	.lexicon-icon {
+		margin-top: -2px;
+	}
 }
 
 .publish-btn-group {
-	@media screen and (min-width: 768px) {
+	@include sm() {
 		border-radius: 3px;
 	}
+}
+
+.staging-links {
+	padding-top: 3px;
 }
 
 .sidenav-transition .control-menu {
@@ -106,7 +88,7 @@
 .staging-variation-selector {
 	font-weight: 500;
 
-	@media screen and (min-width: 768px) {
+	@include sm() {
 		font-size: 14px;
 	}
 }

@@ -57,7 +57,7 @@ public class DeleteThreadPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 105;
+		return 100;
 	}
 
 }

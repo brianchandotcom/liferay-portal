@@ -83,7 +83,7 @@ public class ThreadSubscriptionPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 102;
+		return 101;
 	}
 
 	@Reference(unbind = "-")

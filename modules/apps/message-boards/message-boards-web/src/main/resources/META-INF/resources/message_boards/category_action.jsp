@@ -76,6 +76,61 @@ else {
 		/>
 	</c:if>
 
+	<c:if test="<%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS) && enableRSS %>">
+		<liferay-ui:rss
+			delta="<%= rssDelta %>"
+			displayStyle="<%= rssDisplayStyle %>"
+			feedType="<%= rssFeedType %>"
+			url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
+		/>
+	</c:if>
+
+	<%
+	long categorySubscriptionClassPK = 0;
+
+	boolean hasSubscriptionPermission = false;
+
+	if (!defaultParentCategory) {
+		categorySubscriptionClassPK = category.getCategoryId();
+
+		hasSubscriptionPermission = MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE);
+	}
+	else {
+		categorySubscriptionClassPK = scopeGroupId;
+
+		hasSubscriptionPermission = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
+	}
+	%>
+
+	<c:if test="<%= hasSubscriptionPermission && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
+		<c:choose>
+			<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(categorySubscriptionClassPK) %>">
+				<portlet:actionURL name="/message_boards/edit_category" var="unsubscribeURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					message="unsubscribe"
+					url="<%= unsubscribeURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					message="subscribe"
+					url="<%= subscribeURL %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+
 	<c:if test="<%= showPermissionsURL %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= modelResource %>"
@@ -91,64 +146,6 @@ else {
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
 		/>
-	</c:if>
-
-	<c:if test="<%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS) %>">
-		<c:if test="<%= enableRSS %>">
-
-			<liferay-ui:rss
-				delta="<%= rssDelta %>"
-				displayStyle="<%= rssDisplayStyle %>"
-				feedType="<%= rssFeedType %>"
-				url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
-			/>
-		</c:if>
-
-		<%
-		long categorySubscriptionClassPK = 0;
-
-		boolean hasSubscriptionPermission = false;
-
-		if (!defaultParentCategory) {
-			categorySubscriptionClassPK = category.getCategoryId();
-
-			hasSubscriptionPermission = MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE);
-		}
-		else {
-			categorySubscriptionClassPK = scopeGroupId;
-
-			hasSubscriptionPermission = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
-		}
-		%>
-
-		<c:if test="<%= hasSubscriptionPermission && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
-			<c:choose>
-				<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(categorySubscriptionClassPK) %>">
-					<portlet:actionURL name="/message_boards/edit_category" var="unsubscribeURL">
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
-					</portlet:actionURL>
-
-					<liferay-ui:icon
-						message="unsubscribe"
-						url="<%= unsubscribeURL %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
-					</portlet:actionURL>
-
-					<liferay-ui:icon
-						message="subscribe"
-						url="<%= subscribeURL %>"
-					/>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
 	</c:if>
 
 	<c:if test="<%= !defaultParentCategory && MBCategoryPermission.contains(permissionChecker, category, ActionKeys.DELETE) %>">

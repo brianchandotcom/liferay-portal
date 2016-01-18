@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.IOException;
 
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
 
 import java.util.Collection;
@@ -87,9 +88,13 @@ public class BundleJavaFileManager
 			return baseJavaFileObject.getClassName();
 		}
 
-		if (file.getClass() == _zipFileIndexFileObjectClass) {
+		Field nameField = _getZipFileIndexFileObjectNameField();
+
+		if ((nameField != null) &&
+			(file.getClass() == nameField.getDeclaringClass())) {
+
 			try {
-				String name = (String)_nameField.get(file);
+				String name = (String)nameField.get(file);
 
 				return name.substring(0, name.lastIndexOf(CharPool.PERIOD));
 			}
@@ -145,14 +150,7 @@ public class BundleJavaFileManager
 		return fileManager.list(location, packagePath, _kinds, recurse);
 	}
 
-	private static final Set<Kind> _kinds = EnumSet.of(Kind.CLASS);
-	private static final Field _nameField;
-	private static final Class<?> _zipFileIndexFileObjectClass;
-
-	static {
-		Field nameField = null;
-		Class<?> zipFileIndexFileObjectClass = null;
-
+	private static Field _doGetZipFileIndexFileObjectNameField() {
 		if ((JavaDetector.isOpenJDK() || JavaDetector.isOracle()) &&
 			GetterUtil.getBoolean(
 				SystemProperties.get(
@@ -163,23 +161,52 @@ public class BundleJavaFileManager
 				ClassLoader systemToolClassLoader =
 					ToolProvider.getSystemToolClassLoader();
 
-				zipFileIndexFileObjectClass = systemToolClassLoader.loadClass(
-					"com.sun.tools.javac.file.ZipFileIndexArchive$" +
-						"ZipFileIndexFileObject");
+				Class<?> zipFileIndexFileObjectClass =
+					systemToolClassLoader.loadClass(
+						"com.sun.tools.javac.file.ZipFileIndexArchive$" +
+							"ZipFileIndexFileObject");
 
-				nameField = zipFileIndexFileObjectClass.getDeclaredField(
+				Field nameField = zipFileIndexFileObjectClass.getDeclaredField(
 					"name");
 
 				nameField.setAccessible(true);
+
+				return nameField;
 			}
 			catch (ReflectiveOperationException roe) {
-				nameField = null;
-				zipFileIndexFileObjectClass = null;
 			}
 		}
 
-		_zipFileIndexFileObjectClass = zipFileIndexFileObjectClass;
-		_nameField = nameField;
+		return null;
+	}
+
+	private static Field _getZipFileIndexFileObjectNameField() {
+		if (_nameFieldReference == null) {
+			return null;
+		}
+
+		Field nameField = _nameFieldReference.get();
+
+		if (nameField != null) {
+			return nameField;
+		}
+
+		nameField = _doGetZipFileIndexFileObjectNameField();
+
+		_nameFieldReference = new SoftReference<>(nameField);
+
+		return nameField;
+	}
+
+	private static final Set<Kind> _kinds = EnumSet.of(Kind.CLASS);
+	private static SoftReference<Field> _nameFieldReference;
+
+	static {
+		Field nameField = _doGetZipFileIndexFileObjectNameField();
+
+		if (nameField != null) {
+			_nameFieldReference = new SoftReference<>(nameField);
+		}
 	}
 
 	private final ClassLoader _classLoader;

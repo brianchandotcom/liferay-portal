@@ -1081,7 +1081,7 @@ public class WorkflowTaskDisplayContext {
 		}
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private final Format _dateFormatDateTime;
 	private String _displayStyle;

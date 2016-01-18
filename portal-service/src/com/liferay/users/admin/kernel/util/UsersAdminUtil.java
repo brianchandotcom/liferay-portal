@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
@@ -32,7 +33,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
 import java.util.Locale;

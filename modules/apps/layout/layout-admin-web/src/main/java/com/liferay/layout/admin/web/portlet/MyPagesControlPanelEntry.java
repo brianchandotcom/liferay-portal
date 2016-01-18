@@ -15,10 +15,10 @@
 package com.liferay.layout.admin.web.portlet;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RoleLocalService;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BaseControlPanelEntry;

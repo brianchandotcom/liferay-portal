@@ -17,9 +17,9 @@ package com.liferay.portal.service.permission;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Brian Wing Shun Chan

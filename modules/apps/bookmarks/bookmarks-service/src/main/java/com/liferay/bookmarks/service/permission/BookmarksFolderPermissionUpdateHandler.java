@@ -16,8 +16,8 @@ package com.liferay.bookmarks.service.permission;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
+import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.permission.PermissionUpdateHandler;
 
 import java.util.Date;
 

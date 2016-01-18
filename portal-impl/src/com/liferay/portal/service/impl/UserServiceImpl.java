@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershi
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -50,8 +52,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;

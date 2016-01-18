@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.workflow;
 
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBDiscussion;

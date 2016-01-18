@@ -15,7 +15,7 @@
 package com.liferay.portlet.social.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.permission.bundle.permissioncheckerfactoryutil;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactory;
 
 import org.osgi.service.component.annotations.Component;
 

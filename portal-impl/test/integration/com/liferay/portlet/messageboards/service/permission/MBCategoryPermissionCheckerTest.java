@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.messageboards.service.permission;
 
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

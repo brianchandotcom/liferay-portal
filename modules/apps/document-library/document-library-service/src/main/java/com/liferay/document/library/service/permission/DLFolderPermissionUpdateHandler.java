@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.service.permission;
 
+import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.permission.PermissionUpdateHandler;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 

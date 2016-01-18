@@ -17,6 +17,7 @@ package com.liferay.exportimport.background.task.display;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.display.BaseBackgroundTaskDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.Constants;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import java.io.Serializable;
 

@@ -18,13 +18,13 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.template.BaseTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.permission.bundle.permissioncheckerfactoryutil.TestPermissionCheckerFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

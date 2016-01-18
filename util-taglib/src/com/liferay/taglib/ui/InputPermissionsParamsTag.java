@@ -15,6 +15,8 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -24,8 +26,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;

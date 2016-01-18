@@ -16,6 +16,8 @@ package com.liferay.portlet.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -30,8 +32,6 @@ import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourceTypePermission;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.RolePermissions;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;

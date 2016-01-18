@@ -14,9 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import javax.servlet.http.HttpServletRequest;
 

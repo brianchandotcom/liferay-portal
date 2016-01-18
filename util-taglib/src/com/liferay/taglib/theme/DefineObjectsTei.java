@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.theme;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Company;
@@ -22,7 +23,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 

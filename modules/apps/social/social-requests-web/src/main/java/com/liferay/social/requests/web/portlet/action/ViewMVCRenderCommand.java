@@ -16,10 +16,10 @@ package com.liferay.social.requests.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.UserPermissionUtil;

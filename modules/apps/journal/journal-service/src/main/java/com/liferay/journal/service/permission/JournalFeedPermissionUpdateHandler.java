@@ -16,8 +16,8 @@ package com.liferay.journal.service.permission;
 
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
+import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.permission.PermissionUpdateHandler;
 
 import java.util.Date;
 

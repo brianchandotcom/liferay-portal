@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Marcellus Tavares

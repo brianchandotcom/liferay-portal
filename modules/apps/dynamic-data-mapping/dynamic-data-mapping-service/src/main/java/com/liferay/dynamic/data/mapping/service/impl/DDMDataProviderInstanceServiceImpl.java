@@ -21,8 +21,8 @@ import com.liferay.dynamic.data.mapping.service.permission.DDMDataProviderInstan
 import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;

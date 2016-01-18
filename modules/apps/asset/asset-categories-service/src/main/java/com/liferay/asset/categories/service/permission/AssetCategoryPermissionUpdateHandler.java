@@ -14,8 +14,8 @@
 
 package com.liferay.asset.categories.service.permission;
 
+import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.permission.PermissionUpdateHandler;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 

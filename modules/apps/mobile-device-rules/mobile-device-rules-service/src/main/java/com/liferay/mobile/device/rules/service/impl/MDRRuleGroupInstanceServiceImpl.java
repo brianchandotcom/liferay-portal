@@ -21,10 +21,10 @@ import com.liferay.mobile.device.rules.service.base.MDRRuleGroupInstanceServiceB
 import com.liferay.mobile.device.rules.service.permission.MDRPermission;
 import com.liferay.mobile.device.rules.service.permission.MDRRuleGroupInstancePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;

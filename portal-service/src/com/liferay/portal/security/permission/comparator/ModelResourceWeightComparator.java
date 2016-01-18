@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.permission.comparator;
 
-import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 
 import java.io.Serializable;
 

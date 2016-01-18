@@ -22,11 +22,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListene
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalService;
 
 import java.util.Collections;

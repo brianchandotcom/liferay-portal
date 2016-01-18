@@ -19,7 +19,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;

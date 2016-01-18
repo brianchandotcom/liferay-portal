@@ -14,10 +14,10 @@
 
 package com.liferay.portal.service.permission;
 
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 
 import java.util.Collection;

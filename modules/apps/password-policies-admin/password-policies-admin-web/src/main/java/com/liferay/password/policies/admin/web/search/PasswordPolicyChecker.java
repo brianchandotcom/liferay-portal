@@ -15,10 +15,10 @@
 package com.liferay.password.policies.admin.web.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.model.PasswordPolicy;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.permission.PasswordPolicyPermissionUtil;
 
 import javax.portlet.RenderResponse;

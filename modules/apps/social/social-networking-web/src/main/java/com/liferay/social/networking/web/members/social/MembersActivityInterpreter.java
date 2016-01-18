@@ -14,13 +14,13 @@
 
 package com.liferay.social.networking.web.members.social;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;

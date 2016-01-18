@@ -56,6 +56,22 @@
 			<bean class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil" class="com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil">
+		<property name="inlineSQLHelper">
+			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.security.permission.PermissionCheckerFactory" class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" />
+	<bean id="com.liferay.portal.kernel.security.permission.PermissionConverterUtil" class="com.liferay.portal.kernel.security.permission.PermissionConverterUtil">
+		<property name="permissionConverter">
+			<bean class="com.liferay.portal.security.permission.PermissionConverterImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.security.permission.ResourceActions" class="com.liferay.portal.security.permission.ResourceActionsImpl" />
+	<bean id="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" class="com.liferay.portal.kernel.security.permission.ResourceActionsUtil">
+		<property name="resourceActions" ref="com.liferay.portal.kernel.security.permission.ResourceActions" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.security.permission.UserBagFactory" class="com.liferay.portal.security.permission.UserBagFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.xml.SAXReader" class="com.liferay.portal.xml.SAXReaderImpl">
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
@@ -100,22 +116,6 @@
 	<bean id="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" class="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" />
 	<bean id="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" class="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" />
 	<bean id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
-	<bean id="com.liferay.portal.security.permission.InlineSQLHelperUtil" class="com.liferay.portal.security.permission.InlineSQLHelperUtil">
-		<property name="inlineSQLHelper">
-			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.security.permission.PermissionCheckerFactory" class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" />
-	<bean id="com.liferay.portal.security.permission.PermissionConverterUtil" class="com.liferay.portal.security.permission.PermissionConverterUtil">
-		<property name="permissionConverter">
-			<bean class="com.liferay.portal.security.permission.PermissionConverterImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.security.permission.ResourceActions" class="com.liferay.portal.security.permission.ResourceActionsImpl" />
-	<bean id="com.liferay.portal.security.permission.ResourceActionsUtil" class="com.liferay.portal.security.permission.ResourceActionsUtil">
-		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
-	</bean>
-	<bean id="com.liferay.portal.security.permission.UserBagFactory" class="com.liferay.portal.security.permission.UserBagFactoryImpl" />
 	<bean id="com.liferay.portal.security.pwd.CompositePasswordEncryptor" class="com.liferay.portal.security.pwd.CompositePasswordEncryptor">
 		<property name="defaultPasswordEncryptor">
 			<bean class="com.liferay.portal.security.pwd.DefaultPasswordEncryptor" />

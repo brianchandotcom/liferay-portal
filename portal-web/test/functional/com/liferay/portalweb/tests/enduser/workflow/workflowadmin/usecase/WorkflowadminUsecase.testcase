@@ -228,13 +228,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasks">
+		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasks">
+		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Blogs Entry Title - Site Name" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
@@ -331,7 +331,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasks">
+		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Blogs Entry Title - Liferay" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
@@ -1631,7 +1631,7 @@
 			<var name="workflowAssetTitle" value="User 2 Blog Title Pending" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasks">
+		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="User 1 Blog Title Approved" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Single Approver" />
@@ -1661,7 +1661,7 @@
 			<var name="workflowAssetTitle" value="User 1 Blog Title Pending" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasks">
+		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="User 2 Blog Title Approved" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Single Approver" />

@@ -119,22 +119,16 @@ AUI.add(
 						return instance._serializeRow;
 					},
 
-					_visitColumns: function(rows) {
-						var instance = this;
-
-						return LayoutSerializer.superclass._visitColumns.apply(instance, arguments).filter(
-							function(item) {
-								return item.fieldNames.length > 0;
-							}
-						);
-					},
-
 					_visitRows: function(rows) {
 						var instance = this;
 
 						return LayoutSerializer.superclass._visitRows.apply(instance, arguments).filter(
 							function(item) {
-								return item.columns.length > 0;
+								return item.columns.filter(
+									function(column) {
+										return column.fieldNames.length > 0;
+									}
+								).length > 0;
 							}
 						);
 					}

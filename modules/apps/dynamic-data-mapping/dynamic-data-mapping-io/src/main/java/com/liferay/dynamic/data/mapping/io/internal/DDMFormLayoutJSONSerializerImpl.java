@@ -91,10 +91,6 @@ public class DDMFormLayoutJSONSerializerImpl
 	protected void addFieldNames(
 		JSONObject jsonObject, List<String> ddmFormFieldNames) {
 
-		if (ddmFormFieldNames.isEmpty()) {
-			return;
-		}
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (String ddmFormFieldName : ddmFormFieldNames) {

@@ -55,7 +55,7 @@ public class DeleteFolderPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 104;
+		return 100;
 	}
 
 }

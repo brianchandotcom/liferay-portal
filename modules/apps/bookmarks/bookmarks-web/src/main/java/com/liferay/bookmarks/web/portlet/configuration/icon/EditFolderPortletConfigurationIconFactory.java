@@ -55,7 +55,7 @@ public class EditFolderPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 103;
 	}
 
 }

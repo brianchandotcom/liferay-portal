@@ -561,6 +561,9 @@ public class ServiceBuilder {
 			_outputPath =
 				_implDirName + "/" + StringUtil.replace(packagePath, ".", "/");
 
+			_oldServiceOutputPath =
+				_apiDirName + "/" + StringUtil.replace(packagePath, '.', '/');
+
 			_serviceOutputPath =
 				_apiDirName + "/" +
 					StringUtil.replace(_apiPackagePath, ".", "/");
@@ -656,6 +659,8 @@ public class ServiceBuilder {
 
 						_resolveEntity(entity);
 
+						_removeOldServices(entity);
+
 						if (entity.hasActionableDynamicQuery()) {
 							_createActionableDynamicQuery(entity);
 
@@ -663,12 +668,15 @@ public class ServiceBuilder {
 								_createExportActionableDynamicQuery(entity);
 							}
 							else {
-								_removeExportActionableDynamicQuery(entity);
+								_removeExportActionableDynamicQuery(
+									entity, _serviceOutputPath);
 							}
 						}
 						else {
-							_removeActionableDynamicQuery(entity);
-							_removeExportActionableDynamicQuery(entity);
+							_removeActionableDynamicQuery(
+								entity, _serviceOutputPath);
+							_removeExportActionableDynamicQuery(
+								entity, _serviceOutputPath);
 						}
 
 						if (entity.hasColumns()) {
@@ -728,13 +736,20 @@ public class ServiceBuilder {
 						else {
 							_removeServiceImpl(entity, _SESSION_TYPE_LOCAL);
 							_removeServiceBaseImpl(entity, _SESSION_TYPE_LOCAL);
-							_removeService(entity, _SESSION_TYPE_LOCAL);
-							_removeServiceUtil(entity, _SESSION_TYPE_LOCAL);
-
-							_removeServiceClp(entity, _SESSION_TYPE_LOCAL);
+							_removeService(
+								entity, _SESSION_TYPE_LOCAL,
+								_serviceOutputPath);
+							_removeServiceUtil(
+								entity, _SESSION_TYPE_LOCAL,
+								_serviceOutputPath);
+							_removeServiceClp(
+								entity, _SESSION_TYPE_LOCAL,
+								_serviceOutputPath);
 							_removeServiceClpInvoker(
 								entity, _SESSION_TYPE_LOCAL);
-							_removeServiceWrapper(entity, _SESSION_TYPE_LOCAL);
+							_removeServiceWrapper(
+								entity, _SESSION_TYPE_LOCAL,
+								_serviceOutputPath);
 						}
 
 						if (entity.hasRemoteService()) {
@@ -764,13 +779,20 @@ public class ServiceBuilder {
 							_removeServiceImpl(entity, _SESSION_TYPE_REMOTE);
 							_removeServiceBaseImpl(
 								entity, _SESSION_TYPE_REMOTE);
-							_removeService(entity, _SESSION_TYPE_REMOTE);
-							_removeServiceUtil(entity, _SESSION_TYPE_REMOTE);
-
-							_removeServiceClp(entity, _SESSION_TYPE_REMOTE);
+							_removeService(
+								entity, _SESSION_TYPE_REMOTE,
+								_serviceOutputPath);
+							_removeServiceUtil(
+								entity, _SESSION_TYPE_REMOTE,
+								_serviceOutputPath);
+							_removeServiceClp(
+								entity, _SESSION_TYPE_REMOTE,
+								_serviceOutputPath);
 							_removeServiceClpInvoker(
 								entity, _SESSION_TYPE_REMOTE);
-							_removeServiceWrapper(entity, _SESSION_TYPE_REMOTE);
+							_removeServiceWrapper(
+								entity, _SESSION_TYPE_REMOTE,
+								_serviceOutputPath);
 
 							_removeServiceHttp(entity);
 
@@ -2111,7 +2133,7 @@ public class ServiceBuilder {
 
 	private void _createFinder(Entity entity) throws Exception {
 		if (!entity.hasFinderClass()) {
-			_removeFinder(entity);
+			_removeFinder(entity, _serviceOutputPath);
 
 			return;
 		}
@@ -2192,7 +2214,7 @@ public class ServiceBuilder {
 
 	private void _createFinderUtil(Entity entity) throws Exception {
 		if (!entity.hasFinderClass() || _osgiModule) {
-			_removeFinderUtil(entity);
+			_removeFinderUtil(entity, _serviceOutputPath);
 
 			return;
 		}
@@ -2978,7 +3000,7 @@ public class ServiceBuilder {
 
 	private void _createServiceFactory(Entity entity, int sessionType) {
 		File ejbFile = new File(
-			_serviceOutputPath + "/service/" + entity.getName() +
+			_oldServiceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceFactory.java");
 
 		if (ejbFile.exists()) {
@@ -5119,14 +5141,14 @@ public class ServiceBuilder {
 
 		_ejbList.add(
 			new Entity(
-				_packagePath, _apiPackagePath, _portletName, _portletShortName, ejbName,
-				humanName, table, alias, uuid, uuidAccessor, localService,
-				remoteService, persistenceClass, finderClass, dataSource,
-				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
-				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
-				regularColList, blobList, collectionList, columnList, order,
-				finderList, referenceList, unresolvedReferenceList,
-				txRequiredList, resourceActionModel));
+				_packagePath, _apiPackagePath, _portletName, _portletShortName,
+				ejbName, humanName, table, alias, uuid, uuidAccessor,
+				localService, remoteService, persistenceClass, finderClass,
+				dataSource, sessionFactory, txManager, cacheEnabled,
+				dynamicUpdateEnabled, jsonEnabled, mvccEnabled, trashEnabled,
+				deprecated, pkList, regularColList, blobList, collectionList,
+				columnList, order, finderList, referenceList,
+				unresolvedReferenceList, txRequiredList, resourceActionModel));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)
@@ -5164,21 +5186,59 @@ public class ServiceBuilder {
 		return lines;
 	}
 
-	private void _removeActionableDynamicQuery(Entity entity) {
+	private void _removeActionableDynamicQuery(
+		Entity entity, String outputPath) {
+
 		_deleteFile(
-			_serviceOutputPath + "/service/persistence/" +
+			outputPath + "/service/persistence/" +
 				entity.getName() + "ActionableDynamicQuery.java");
 	}
 
-	private void _removeExportActionableDynamicQuery(Entity entity) {
+	private void _removeBlobModels(Entity entity, String outputPath) {
+		List<EntityColumn> blobList = new ArrayList<>(entity.getBlobList());
+
+		Iterator<EntityColumn> itr = blobList.iterator();
+
+		while (itr.hasNext()) {
+			EntityColumn col = itr.next();
+
+			if (!col.isLazy()) {
+				itr.remove();
+			}
+		}
+
+		if (blobList.isEmpty()) {
+			return;
+		}
+
+		for (EntityColumn col : blobList) {
+			_deleteFile(
+				outputPath + "/model/" + entity.getName() +
+					col.getMethodName() + "BlobModel.java");
+		}
+	}
+
+	private void _removeEJBPK(Entity entity, String outputPath) {
 		_deleteFile(
-			_serviceOutputPath + "/service/persistence/" +
+			outputPath + "/service/persistence/" + entity.getPKClassName() +
+				".java");
+	}
+
+	private void _removeExportActionableDynamicQuery(
+		Entity entity, String outputPath) {
+
+		_deleteFile(
+			outputPath + "/service/persistence/" +
 				entity.getName() + "ExportActionableDynamicQuery.java");
 	}
 
-	private void _removeFinder(Entity entity) {
+	private void _removeExtendedModel(Entity entity, String outputPath) {
+		_deleteFile(outputPath + "/model/" + entity.getName() + ".java");
+	}
+
+	private void _removeFinder(Entity entity, String outputPath) {
 		_deleteFile(
-			_serviceOutputPath + "/service/persistence/" + entity.getName() +
+			outputPath + "/service/persistence/" + entity.getName() +
 				"Finder.java");
 	}
 
@@ -5188,15 +5248,85 @@ public class ServiceBuilder {
 				"FinderBaseImpl.java");
 	}
 
-	private void _removeFinderUtil(Entity entity) {
+	private void _removeFinderUtil(Entity entity, String outputPath) {
 		_deleteFile(
-			_serviceOutputPath + "/service/persistence/" + entity.getName() +
+			outputPath + "/service/persistence/" + entity.getName() +
 				"FinderUtil.java");
 	}
 
-	private void _removeService(Entity entity, int sessionType) {
+	private void _removeModel(Entity entity, String outputPath) {
+		_deleteFile(outputPath + "/model/" + entity.getName() + "Model.java");
+	}
+
+	private void _removeModelClp(Entity entity, String outputPath) {
+		_deleteFile(outputPath + "/model/" + entity.getName() + "Clp.java");
+	}
+
+	private void _removeModelSoap(Entity entity, String outputPath) {
+		_deleteFile(outputPath + "/model/" + entity.getName() + "Soap.java");
+	}
+
+	private void _removeModelWrapper(Entity entity, String outputPath) {
+		_deleteFile(outputPath + "/model/" + entity.getName() + "Wrapper.java");
+	}
+
+	private void _removeOldServices(Entity entity) {
+		if (!_oldServiceOutputPath.equals(_serviceOutputPath)) {
+			_removeActionableDynamicQuery(entity, _oldServiceOutputPath);
+			_removeBlobModels(entity, _oldServiceOutputPath);
+			_removeEJBPK(entity, _oldServiceOutputPath);
+			_removeExportActionableDynamicQuery(entity, _oldServiceOutputPath);
+			_removeExtendedModel(entity, _oldServiceOutputPath);
+
+			_removeFinder(entity, _oldServiceOutputPath);
+			_removeFinderUtil(entity, _oldServiceOutputPath);
+
+			_removeModel(entity, _oldServiceOutputPath);
+			_removeModelClp(entity, _oldServiceOutputPath);
+			_removeModelSoap(entity, _oldServiceOutputPath);
+			_removeModelWrapper(entity, _oldServiceOutputPath);
+
+			_removePersistence(entity, _oldServiceOutputPath);
+			_removePersistenceUtil(entity, _oldServiceOutputPath);
+
+			_removeServiceClpMessageListener(_oldServiceOutputPath);
+			_removeServiceClpSerializer(_oldServiceOutputPath);
+
+			_removeService(entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+			_removeServiceClp(
+				entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+			_removeServiceUtil(
+				entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+			_removeServiceWrapper(
+				entity, _SESSION_TYPE_LOCAL, _oldServiceOutputPath);
+
+			_removeService(entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+			_removeServiceClp(
+				entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+			_removeServiceUtil(
+				entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+			_removeServiceWrapper(
+				entity, _SESSION_TYPE_REMOTE, _oldServiceOutputPath);
+		}
+	}
+
+	private void _removePersistence(Entity entity, String outputPath) {
 		_deleteFile(
-			_serviceOutputPath + "/service/" + entity.getName() +
+			outputPath + "/service/persistence/" + entity.getName() +
+				"Persistence.java");
+	}
+
+	private void _removePersistenceUtil(Entity entity, String outputPath) {
+		_deleteFile(
+			outputPath + "/service/persistence/" + entity.getName() +
+				"Util.java");
+	}
+
+	private void _removeService(
+		Entity entity, int sessionType, String outputPath) {
+
+		_deleteFile(
+			outputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "Service.java");
 	}
 
@@ -5206,9 +5336,11 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceBaseImpl.java");
 	}
 
-	private void _removeServiceClp(Entity entity, int sessionType) {
+	private void _removeServiceClp(
+		Entity entity, int sessionType, String outputPath) {
+
 		_deleteFile(
-			_serviceOutputPath + "/service/" + entity.getName() +
+			outputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceClp.java");
 	}
 
@@ -5216,6 +5348,14 @@ public class ServiceBuilder {
 		_deleteFile(
 			_outputPath + "/service/base/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceClpInvoker.java");
+	}
+
+	private void _removeServiceClpMessageListener(String outputPath) {
+		_deleteFile(outputPath + "/service/messaging/ClpMessageListener.java");
+	}
+
+	private void _removeServiceClpSerializer(String outputPath) {
+		_deleteFile(outputPath + "/service/ClpSerializer.java");
 	}
 
 	private void _removeServiceHttp(Entity entity) {
@@ -5236,15 +5376,19 @@ public class ServiceBuilder {
 				"ServiceSoap.java");
 	}
 
-	private void _removeServiceUtil(Entity entity, int sessionType) {
+	private void _removeServiceUtil(
+		Entity entity, int sessionType, String outputPath) {
+
 		_deleteFile(
-			_serviceOutputPath + "/service/" + entity.getName() +
+			outputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceUtil.java");
 	}
 
-	private void _removeServiceWrapper(Entity entity, int sessionType) {
+	private void _removeServiceWrapper(
+		Entity entity, int sessionType, String outputPath) {
+
 		_deleteFile(
-			_serviceOutputPath + "/service/" + entity.getName() +
+			outputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceWrapper.java");
 	}
 
@@ -5312,6 +5456,7 @@ public class ServiceBuilder {
 	private String _modelHintsFileName;
 	private Set<String> _modifiedFileNames = new HashSet<>();
 	private boolean _mvccEnabled;
+	private String _oldServiceOutputPath;
 	private boolean _osgiModule;
 	private String _outputPath;
 	private String _packagePath;

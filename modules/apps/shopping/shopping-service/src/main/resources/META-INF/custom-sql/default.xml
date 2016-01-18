@@ -45,17 +45,6 @@
 				(ShoppingItem.categoryId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.shopping.service.persistence.ShoppingItemFinder.countByG_C">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT ShoppingItem.itemId) AS COUNT_VALUE
-			FROM
-				ShoppingItem
-			WHERE
-				(ShoppingItem.groupId = ?) AND
-				[$CATEGORY_ID$]
-		]]>
-	</sql>
 	<sql id="com.liferay.shopping.service.persistence.ShoppingCouponFinder.countByG_C_C_A_DT">
 		<![CDATA[
 			SELECT
@@ -70,6 +59,35 @@
 					(active_ = ?) [$AND_OR_CONNECTOR$]
 					(discountType = ? [$AND_OR_NULL_CHECK$])
 				)
+		]]>
+	</sql>
+	<sql id="com.liferay.shopping.service.persistence.ShoppingCouponFinder.findByG_C_C_A_DT">
+		<![CDATA[
+			SELECT
+				{ShoppingCoupon.*}
+			FROM
+				ShoppingCoupon
+			WHERE
+				(groupId = ?) AND
+				(companyId = ?) AND
+				(
+					(code_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(active_ = ?) [$AND_OR_CONNECTOR$]
+					(discountType = ? [$AND_OR_NULL_CHECK$])
+				)
+			ORDER BY
+				createDate ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.shopping.service.persistence.ShoppingItemFinder.countByG_C">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT ShoppingItem.itemId) AS COUNT_VALUE
+			FROM
+				ShoppingItem
+			WHERE
+				(ShoppingItem.groupId = ?) AND
+				[$CATEGORY_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.shopping.service.persistence.ShoppingOrderFinder.countByG_C_U_N_PPPS">
@@ -92,24 +110,6 @@
 					(shippingEmailAddress LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(ppPaymentStatus = ?)
 				)
-		]]>
-	</sql>
-	<sql id="com.liferay.shopping.service.persistence.ShoppingCouponFinder.findByG_C_C_A_DT">
-		<![CDATA[
-			SELECT
-				{ShoppingCoupon.*}
-			FROM
-				ShoppingCoupon
-			WHERE
-				(groupId = ?) AND
-				(companyId = ?) AND
-				(
-					(code_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(active_ = ?) [$AND_OR_CONNECTOR$]
-					(discountType = ? [$AND_OR_NULL_CHECK$])
-				)
-			ORDER BY
-				createDate ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.shopping.service.persistence.ShoppingOrderFinder.findByG_C_U_N_PPPS">

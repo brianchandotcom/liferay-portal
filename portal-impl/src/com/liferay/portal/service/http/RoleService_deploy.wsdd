@@ -18,14 +18,6 @@
 		<typeMapping xmlns:ns="http://util.kernel.portal.liferay.com" qname="ns:StringBundler" type="java:com.liferay.portal.kernel.util.StringBundler" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://xml.apache.org/xml-soap" qname="ns:mapItem" type="java:org.apache.xml.xml_soap.MapItem" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="addRole" qname="operNS:addRole" returnQName="addRoleReturn" returnType="rtns:RoleSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="titleMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="titleMapValues" type="tns:ArrayOf_xsd_string"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="descriptionMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
-			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
-		</operation>
-		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="addRole" qname="operNS:addRole" returnQName="addRoleReturn" returnType="rtns:RoleSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>

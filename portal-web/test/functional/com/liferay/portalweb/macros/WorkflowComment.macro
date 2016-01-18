@@ -19,10 +19,25 @@
 
 		<execute function="Pause" locator1="1000" />
 
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="MyWorkflowTasksTask#COMMENTS" value1="Comments" />
+			</then>
+		</if>
+
 		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
 
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${workflowComment}" />
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="MyWorkflowTasksTask#COMMENTS" value1="Comments" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<var name="key_entryComment" value="${workflowComment}" />

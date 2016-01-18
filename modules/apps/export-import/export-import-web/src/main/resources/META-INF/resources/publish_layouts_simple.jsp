@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String cmd = ParamUtil.getString(request, Constants.CMD, Constants.PUBLISH_TO_LIVE);
+
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"));
 
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-
-String cmd = Constants.PUBLISH_TO_LIVE;
 
 long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
@@ -44,6 +44,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 		<aui:nav cssClass="navbar-nav" id="publishConfigurationButtons">
 			<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 				<portlet:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />

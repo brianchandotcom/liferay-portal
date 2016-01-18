@@ -289,7 +289,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" id="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
 
-			<aui:button cssClass="btn-lg" id="publishButton" type="submit" value="<%= publishMessageKey %>" />
+			<aui:button cssClass="btn-lg" id="publishButton" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
 
 			<aui:button cssClass="btn-lg" href="<%= basePortletURL %>" type="reset" value="cancel" />
 		</aui:button-row>

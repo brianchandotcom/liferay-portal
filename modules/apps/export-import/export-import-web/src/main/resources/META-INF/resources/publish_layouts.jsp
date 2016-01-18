@@ -382,7 +382,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							<c:otherwise>
 								<aui:button cssClass="btn-lg" id="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
 
-								<aui:button cssClass="btn-lg" id="publishButton" type="submit" value="<%= publishMessageKey %>" />
+								<aui:button cssClass="btn-lg" id="publishButton" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
 							</c:otherwise>
 						</c:choose>
 					</aui:button-row>

@@ -18,9 +18,12 @@
 
 <%
 int configurationType = ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
+boolean localPublishing = true;
 
 if (stagingGroup.hasRemoteStagingGroup()) {
 	configurationType = ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
+
+	localPublishing = false;
 }
 
 List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(stagingGroupId, configurationType);
@@ -34,6 +37,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 
 	<portlet:renderURL var="addNewProcessURL">
 		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:renderURL>
 
@@ -45,6 +49,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 
 	<portlet:renderURL var="addNewCustomProcessURL">
 		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-publication") %>' url="<%= addNewCustomProcessURL %>" />

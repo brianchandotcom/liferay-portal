@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
@@ -32,11 +31,10 @@ public class EditPagePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public EditPagePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node, WikiPage page) {
+		PortletRequest portletRequest, WikiPage page) {
 
 		super(portletRequest);
 
-		_node = node;
 		_page = page;
 	}
 
@@ -53,7 +51,7 @@ public class EditPagePortletConfigurationIcon
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", _page.getTitle());
 
 		return portletURL.toString();
@@ -70,7 +68,6 @@ public class EditPagePortletConfigurationIcon
 		return false;
 	}
 
-	private final WikiNode _node;
 	private final WikiPage _page;
 
 }

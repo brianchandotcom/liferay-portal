@@ -14,12 +14,12 @@
 
 package com.liferay.wiki.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
@@ -32,11 +32,10 @@ public class PagePermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public PagePermissionsPortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node, WikiPage page) {
+		PortletRequest portletRequest, WikiPage page) {
 
 		super(portletRequest);
 
-		_node = node;
 		_page = page;
 	}
 
@@ -64,8 +63,15 @@ public class PagePermissionsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		return WikiNodePermissionChecker.contains(
-			themeDisplay.getPermissionChecker(), _node, ActionKeys.PERMISSIONS);
+		try {
+			return WikiNodePermissionChecker.contains(
+				themeDisplay.getPermissionChecker(), _page.getNodeId(),
+				ActionKeys.PERMISSIONS);
+		}
+		catch (PortalException pe) {
+		}
+
+		return false;
 	}
 
 	@Override
@@ -73,7 +79,6 @@ public class PagePermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	private final WikiNode _node;
 	private final WikiPage _page;
 
 }

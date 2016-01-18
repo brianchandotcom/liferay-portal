@@ -14,13 +14,16 @@
 
 package com.liferay.wiki.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -32,11 +35,10 @@ public class CopyPagePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public CopyPagePortletConfigurationIcon(
-		PortletRequest portletRequest, WikiNode node, WikiPage page) {
+		PortletRequest portletRequest, WikiPage page) {
 
 		super(portletRequest);
 
-		_node = node;
 		_page = page;
 	}
 
@@ -53,7 +55,7 @@ public class CopyPagePortletConfigurationIcon
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("nodeId", String.valueOf(_node.getNodeId()));
+		portletURL.setParameter("nodeId", String.valueOf(_page.getNodeId()));
 		portletURL.setParameter("title", StringPool.BLANK);
 		portletURL.setParameter("editTitle", "1");
 		portletURL.setParameter(
@@ -66,10 +68,23 @@ public class CopyPagePortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
+		try {
+			if (WikiPagePermissionChecker.contains(
+					themeDisplay.getPermissionChecker(), _page,
+					ActionKeys.UPDATE) &&
+				WikiNodePermissionChecker.contains(
+					themeDisplay.getPermissionChecker(), _page.getNodeId(),
+					ActionKeys.ADD_PAGE)) {
+
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+		}
+
 		return false;
 	}
 
-	private final WikiNode _node;
 	private final WikiPage _page;
 
 }

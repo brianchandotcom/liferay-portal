@@ -392,7 +392,7 @@ AUI.add(
 					_afterValueChange: function() {
 						var instance = this;
 
-						instance.render();
+						instance.setValue(instance.getContextValue());
 					},
 
 					_createContainer: function() {

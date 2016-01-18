@@ -16,10 +16,10 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.util.OutputData" %><%@
+<%@ page import="com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.util.OutputData" %><%@
 page import="com.liferay.portal.kernel.util.PredicateFilter" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
-page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.servlet.ComboServletStaticURLGenerator" %><%@
 page import="com.liferay.portlet.JavaScriptPortletResourcePredicateFilter" %><%@
 page import="com.liferay.portlet.PortletResourceAccessor" %><%@

@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portal.kernel.verify.model;
 
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableAuditedModel extends VerifiableModel {
+public interface VerifiableResourcedModel extends VerifiableModel {
 
-	public String getJoinByTableName();
+	public String getModelName();
 
-	public String getRelatedModelName();
+	@Override
+	public String getPrimaryKeyColumnName();
 
-	public String getRelatedPKColumnName();
+	@Override
+	public String getTableName();
 
-	public boolean isAnonymousUserAllowed();
-
-	public boolean isUpdateDates();
+	public String getUserIdColumnName();
 
 }

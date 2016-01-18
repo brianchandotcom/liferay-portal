@@ -16,7 +16,8 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portal.exception.LayoutPermissionException" %><%@
+<%@ page import="com.liferay.admin.kernel.util.PortalProductMenuApplicationType" %><%@
+page import="com.liferay.portal.exception.LayoutPermissionException" %><%@
 page import="com.liferay.portal.exception.PortletActiveException" %><%@
 page import="com.liferay.portal.exception.RequiredLayoutException" %><%@
 page import="com.liferay.portal.exception.RequiredRoleException" %><%@
@@ -39,7 +40,6 @@ page import="com.liferay.portal.util.LicenseUtil" %><%@
 page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
-page import="com.liferay.portlet.admin.util.PortalProductMenuApplicationType" %><%@
 page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType" %>
 

@@ -14,9 +14,9 @@
 
 package com.liferay.search.web.portlet;
 
+import com.liferay.admin.kernel.util.PortalSearchApplicationType;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portlet.admin.util.PortalSearchApplicationType;
 import com.liferay.search.web.constants.SearchPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

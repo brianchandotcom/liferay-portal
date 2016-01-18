@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.exception.DuplicateUserGroupException" %><%@
+<%@ page import="com.liferay.admin.kernel.util.PortalMyAccountApplicationType" %><%@
+page import="com.liferay.portal.exception.DuplicateUserGroupException" %><%@
 page import="com.liferay.portal.exception.NoSuchUserGroupException" %><%@
 page import="com.liferay.portal.exception.RequiredUserGroupException" %><%@
 page import="com.liferay.portal.exception.UserGroupNameException" %><%@
@@ -67,7 +68,6 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.admin.util.PortalMyAccountApplicationType" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@

@@ -14,8 +14,8 @@
 
 package com.liferay.journal.internal;
 
+import com.liferay.journal.kernel.util.JournalConverterManager;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.portlet.journal.util.JournalConverterManager;
 
 import java.util.Locale;
 

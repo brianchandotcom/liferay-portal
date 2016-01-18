@@ -12,17 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.admin.util;
-
-import com.liferay.portal.model.User;
+package com.liferay.portal.kernel.verify.model;
 
 /**
- * @author Michael C. Han
+ * @author Miguel Pastor
  */
-public interface Omniadmin {
-
-	public boolean isOmniadmin(long userId);
-
-	public boolean isOmniadmin(User user);
-
+public interface VerifiableUUIDModel extends VerifiableModel {
 }

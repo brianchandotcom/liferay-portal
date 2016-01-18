@@ -1868,17 +1868,7 @@ public class ServiceBuilder {
 	}
 
 	private void _createBlobModels(Entity entity) throws Exception {
-		List<EntityColumn> blobList = new ArrayList<>(entity.getBlobList());
-
-		Iterator<EntityColumn> itr = blobList.iterator();
-
-		while (itr.hasNext()) {
-			EntityColumn col = itr.next();
-
-			if (!col.isLazy()) {
-				itr.remove();
-			}
-		}
+		List<EntityColumn> blobList = _getBlobList(entity);
 
 		if (blobList.isEmpty()) {
 			return;
@@ -3832,6 +3822,22 @@ public class ServiceBuilder {
 		return xml;
 	}
 
+	private List<EntityColumn> _getBlobList(Entity entity) {
+		List<EntityColumn> blobList = new ArrayList<>(entity.getBlobList());
+
+		Iterator<EntityColumn> itr = blobList.iterator();
+
+		while (itr.hasNext()) {
+			EntityColumn col = itr.next();
+
+			if (!col.isLazy()) {
+				itr.remove();
+			}
+		}
+
+		return blobList;
+	}
+
 	private JavaField[] _getCacheFields(JavaClass javaClass) {
 		if (javaClass == null) {
 			return new JavaField[0];
@@ -5186,23 +5192,7 @@ public class ServiceBuilder {
 	}
 
 	private void _removeBlobModels(Entity entity, String outputPath) {
-		List<EntityColumn> blobList = new ArrayList<>(entity.getBlobList());
-
-		Iterator<EntityColumn> itr = blobList.iterator();
-
-		while (itr.hasNext()) {
-			EntityColumn col = itr.next();
-
-			if (!col.isLazy()) {
-				itr.remove();
-			}
-		}
-
-		if (blobList.isEmpty()) {
-			return;
-		}
-
-		for (EntityColumn col : blobList) {
+		for (EntityColumn col : _getBlobList(entity)) {
 			_deleteFile(
 				outputPath + "/model/" + entity.getName() +
 					col.getMethodName() + "BlobModel.java");

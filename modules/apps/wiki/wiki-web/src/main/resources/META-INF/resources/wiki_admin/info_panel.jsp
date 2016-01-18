@@ -23,6 +23,16 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 <div class="sidebar-header">
 	<c:choose>
 		<c:when test="<%= wikiInfoPanelDisplayContext.isSingleNodeSelection() %>">
+			<ul class="list-inline list-unstyled sidebar-header-actions">
+				<li>
+
+					<%
+					request.setAttribute("info_panel.jsp-wikiNode", wikiInfoPanelDisplayContext.getFirstNode());
+					%>
+
+					<liferay-util:include page="/wiki/node_action.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
 
 			<%
 			WikiNode node = wikiInfoPanelDisplayContext.getFirstNode();
@@ -37,6 +47,16 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 			</p>
 		</c:when>
 		<c:when test="<%= wikiInfoPanelDisplayContext.isSinglePageSelection() %>">
+			<ul class="list-inline list-unstyled sidebar-header-actions">
+				<li>
+
+					<%
+					request.setAttribute("info_panel.jsp-wikiPage", wikiInfoPanelDisplayContext.getFirstPage());
+					%>
+
+					<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
 
 			<%
 			WikiPage wikiPage = wikiInfoPanelDisplayContext.getFirstPage();

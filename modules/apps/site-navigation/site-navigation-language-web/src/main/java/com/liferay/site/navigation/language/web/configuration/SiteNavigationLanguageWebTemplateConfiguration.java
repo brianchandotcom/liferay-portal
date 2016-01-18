@@ -23,11 +23,11 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
  */
 @ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfiguration",
+	id = "com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebTemplateConfiguration",
 	localization = "content/Language",
 	name = "%site.navigation.language.web.configuration.name"
 )
-public interface SiteNavigationLanguageWebConfiguration {
+public interface SiteNavigationLanguageWebTemplateConfiguration {
 
 	@Meta.AD(deflt = "language-icon-ftl", required = false)
 	public String ddmTemplateKey();

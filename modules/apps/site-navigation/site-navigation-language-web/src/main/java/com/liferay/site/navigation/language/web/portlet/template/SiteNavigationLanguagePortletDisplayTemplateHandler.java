@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfiguration;
 import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfigurationValues;
+import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebTemplateConfiguration;
 import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import java.util.List;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Eduardo Garcia
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfiguration",
+	configurationPid = "com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebTemplateConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name="+ SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE},
 	service = TemplateHandler.class
@@ -58,7 +58,7 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getDefaultTemplateKey() {
-		return _siteNavigationLanguageWebConfiguration.ddmTemplateKey();
+		return _siteNavigationLanguageWebTemplateConfiguration.ddmTemplateKey();
 	}
 
 	@Override
@@ -102,9 +102,10 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_siteNavigationLanguageWebConfiguration =
+		_siteNavigationLanguageWebTemplateConfiguration =
 			Configurable.createConfigurable(
-				SiteNavigationLanguageWebConfiguration.class, properties);
+				SiteNavigationLanguageWebTemplateConfiguration.class,
+				properties);
 	}
 
 	@Override
@@ -113,7 +114,7 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 			DISPLAY_TEMPLATES_CONFIG;
 	}
 
-	private volatile SiteNavigationLanguageWebConfiguration
-		_siteNavigationLanguageWebConfiguration;
+	private volatile SiteNavigationLanguageWebTemplateConfiguration
+		_siteNavigationLanguageWebTemplateConfiguration;
 
 }

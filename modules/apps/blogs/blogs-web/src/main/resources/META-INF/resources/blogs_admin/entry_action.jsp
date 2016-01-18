@@ -23,7 +23,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

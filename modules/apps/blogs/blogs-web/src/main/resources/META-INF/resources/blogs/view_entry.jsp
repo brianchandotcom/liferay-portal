@@ -26,10 +26,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 if (Validator.isNull(redirect) || (mvcRenderCommandName.equals("/blogs/view_entry") && !portletId.equals(BlogsPortletKeys.BLOGS))) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	if (portletId.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
-		portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
-	}
-	else if (portletId.equals(BlogsPortletKeys.BLOGS_AGGREGATOR)) {
+	if (portletId.equals(BlogsPortletKeys.BLOGS_AGGREGATOR)) {
 		portletURL.setParameter("mvcRenderCommandName", "/blogs_aggregator/view");
 	}
 	else {

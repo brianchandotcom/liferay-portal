@@ -21,7 +21,7 @@ String navigation = ParamUtil.getString(request, "navigation", "entries");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 portletURL.setParameter("navigation", navigation);
 %>
 
@@ -64,7 +64,7 @@ portletURL.setParameter("navigation", navigation);
 
 <c:if test='<%= navigation.equals("entries") && BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>'>
 	<portlet:renderURL var="viewEntriesURL">
-		<portlet:param name="mvcRenderCommandName" value="/blogs_admin/view" />
+		<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
 	</portlet:renderURL>
 
 	<portlet:renderURL var="addEntryURL">

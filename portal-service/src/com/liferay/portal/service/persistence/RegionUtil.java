@@ -183,7 +183,7 @@ public class RegionUtil {
 	*/
 	public static Region findByCountryId_First(long countryId,
 		OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_First(countryId, orderByComparator);
 	}
@@ -211,7 +211,7 @@ public class RegionUtil {
 	*/
 	public static Region findByCountryId_Last(long countryId,
 		OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_Last(countryId, orderByComparator);
 	}
@@ -240,7 +240,7 @@ public class RegionUtil {
 	*/
 	public static Region[] findByCountryId_PrevAndNext(long regionId,
 		long countryId, OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_PrevAndNext(regionId, countryId,
 			orderByComparator);
@@ -341,7 +341,7 @@ public class RegionUtil {
 	*/
 	public static Region findByActive_First(boolean active,
 		OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
 
@@ -367,7 +367,7 @@ public class RegionUtil {
 	*/
 	public static Region findByActive_Last(boolean active,
 		OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
 
@@ -394,7 +394,7 @@ public class RegionUtil {
 	*/
 	public static Region[] findByActive_PrevAndNext(long regionId,
 		boolean active, OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(regionId, active, orderByComparator);
 	}
@@ -427,7 +427,7 @@ public class RegionUtil {
 	* @throws NoSuchRegionException if a matching region could not be found
 	*/
 	public static Region findByC_R(long countryId, java.lang.String regionCode)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence().findByC_R(countryId, regionCode);
 	}
 
@@ -464,7 +464,7 @@ public class RegionUtil {
 	* @return the region that was removed
 	*/
 	public static Region removeByC_R(long countryId, java.lang.String regionCode)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence().removeByC_R(countryId, regionCode);
 	}
 
@@ -562,7 +562,7 @@ public class RegionUtil {
 	*/
 	public static Region findByC_A_First(long countryId, boolean active,
 		OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_First(countryId, active, orderByComparator);
 	}
@@ -592,7 +592,7 @@ public class RegionUtil {
 	*/
 	public static Region findByC_A_Last(long countryId, boolean active,
 		OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_Last(countryId, active, orderByComparator);
 	}
@@ -623,7 +623,7 @@ public class RegionUtil {
 	*/
 	public static Region[] findByC_A_PrevAndNext(long regionId, long countryId,
 		boolean active, OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_PrevAndNext(regionId, countryId, active,
 			orderByComparator);
@@ -686,7 +686,7 @@ public class RegionUtil {
 	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
 	public static Region remove(long regionId)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence().remove(regionId);
 	}
 
@@ -702,7 +702,7 @@ public class RegionUtil {
 	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
 	public static Region findByPrimaryKey(long regionId)
-		throws com.liferay.portal.NoSuchRegionException {
+		throws com.liferay.portal.exception.NoSuchRegionException {
 		return getPersistence().findByPrimaryKey(regionId);
 	}
 

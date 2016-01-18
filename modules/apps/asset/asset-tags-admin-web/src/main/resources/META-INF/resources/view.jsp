@@ -27,6 +27,8 @@ if (Validator.isNotNull(keywords)) {
 
 SearchContainer tagsSearchContainer = new SearchContainer(renderRequest, renderResponse.createRenderURL(), null, "there-are-no-tags.-you-can-add-a-tag-by-clicking-the-plus-button-on-the-bottom-right-corner");
 
+tagsSearchContainer.setSearch(Validator.isNotNull(keywords));
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 
 tagsSearchContainer.setOrderByCol(orderByCol);

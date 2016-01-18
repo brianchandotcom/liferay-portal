@@ -114,7 +114,7 @@ public class CompanyUtil {
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
 	public static Company findByWebId(java.lang.String webId)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().findByWebId(webId);
 	}
 
@@ -147,7 +147,7 @@ public class CompanyUtil {
 	* @return the company that was removed
 	*/
 	public static Company removeByWebId(java.lang.String webId)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().removeByWebId(webId);
 	}
 
@@ -169,7 +169,7 @@ public class CompanyUtil {
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
 	public static Company findByMx(java.lang.String mx)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().findByMx(mx);
 	}
 
@@ -202,7 +202,7 @@ public class CompanyUtil {
 	* @return the company that was removed
 	*/
 	public static Company removeByMx(java.lang.String mx)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().removeByMx(mx);
 	}
 
@@ -224,7 +224,7 @@ public class CompanyUtil {
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
 	public static Company findByLogoId(long logoId)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().findByLogoId(logoId);
 	}
 
@@ -256,7 +256,7 @@ public class CompanyUtil {
 	* @return the company that was removed
 	*/
 	public static Company removeByLogoId(long logoId)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().removeByLogoId(logoId);
 	}
 
@@ -347,7 +347,7 @@ public class CompanyUtil {
 	*/
 	public static Company findBySystem_First(boolean system,
 		OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().findBySystem_First(system, orderByComparator);
 	}
 
@@ -373,7 +373,7 @@ public class CompanyUtil {
 	*/
 	public static Company findBySystem_Last(boolean system,
 		OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().findBySystem_Last(system, orderByComparator);
 	}
 
@@ -400,7 +400,7 @@ public class CompanyUtil {
 	*/
 	public static Company[] findBySystem_PrevAndNext(long companyId,
 		boolean system, OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence()
 				   .findBySystem_PrevAndNext(companyId, system,
 			orderByComparator);
@@ -461,7 +461,7 @@ public class CompanyUtil {
 	* @throws NoSuchCompanyException if a company with the primary key could not be found
 	*/
 	public static Company remove(long companyId)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().remove(companyId);
 	}
 
@@ -477,7 +477,7 @@ public class CompanyUtil {
 	* @throws NoSuchCompanyException if a company with the primary key could not be found
 	*/
 	public static Company findByPrimaryKey(long companyId)
-		throws com.liferay.portal.NoSuchCompanyException {
+		throws com.liferay.portal.exception.NoSuchCompanyException {
 		return getPersistence().findByPrimaryKey(companyId);
 	}
 

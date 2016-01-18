@@ -18,7 +18,7 @@ import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.announcements.NoSuchEntryException;
+import com.liferay.portlet.announcements.exception.NoSuchEntryException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

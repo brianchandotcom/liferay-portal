@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.ip.geocoder.IPGeocoder" %><%@
 page import="com.liferay.ip.geocoder.IPInfo" %><%@
-page import="com.liferay.portal.NoSuchUserException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@

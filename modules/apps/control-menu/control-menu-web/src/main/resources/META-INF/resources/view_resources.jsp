@@ -17,171 +17,270 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean viewAssetEntries = ParamUtil.getBoolean(request, "viewAssetEntries");
-boolean viewAssetPreview = ParamUtil.getBoolean(request, "viewAssetPreview");
+int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelNumItems", "10"));
+
+int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
+
+String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelDisplayStyle", "descriptive"));
+String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
+
+String keywords = ParamUtil.getString(request, "keywords");
+
+String panelTitle = "recent";
+
+if (Validator.isNotNull(keywords)) {
+	panelTitle = "search-results";
+}
 %>
 
-<c:choose>
-	<c:when test="<%= viewAssetEntries %>">
-		<div id="<portlet:namespace />entries">
+<div class="display-style-bar">
+	<span class="dropdown" id="<portlet:namespace />numItemsContainer">
+		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+			<span class="item-title"><%= delta %></span>
+			<span class="icon-sort"></span>
+		</a>
+
+		<ul class="dropdown-menu">
 
 			<%
-			String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelDisplayStyle", "descriptive"));
-			String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
-			String keywords = ParamUtil.getString(request, "keywords");
+			for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+				if (curDelta > SearchContainer.MAX_DELTA) {
+					continue;
+				}
 
-			String panelTitle = "recent";
+				Map<String, Object> data = new HashMap<String, Object>();
 
-			if (Validator.isNotNull(keywords)) {
-				panelTitle = "search-results";
-			}
+				data.put("delta", curDelta);
+			%>
 
-			String navListCssClass = "add-content ";
+				<li class="num-item <%= (delta == curDelta) ? "active" : StringPool.BLANK %>">
+					<aui:a cssClass="num-item" data="<%= data %>" href="javascript:;" label="<%= String.valueOf(curDelta) %>" />
+				</li>
 
-			if (displayStyle.equals("icon")) {
-				navListCssClass += "add-content-icon";
-			}
-			else if (displayStyle.equals("descriptive")) {
-				navListCssClass += "add-content-descriptive";
-			}
-			else if (displayStyle.equals("icon")) {
-				navListCssClass += "add-content-list";
+			<%
 			}
 			%>
 
-			<liferay-ui:panel collapsible="<%= false %>" cssClass="clearfix lfr-component panel-page-category recent" extended="<%= true %>" id="manageRecentPanel" persistState="<%= true %>" title="<%= panelTitle %>">
-				<aui:nav cssClass="<%= navListCssClass %>">
+		</ul>
+	</span>
 
-					<%
-					int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelNumItems", "10"));
-					int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
-
-					long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
-
-					for (long classNameId : availableClassNameIds) {
-						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
-
-						if (!assetRendererFactory.isSelectable()) {
-							availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
-						}
-					}
-
-					AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-					assetEntryQuery.setClassNameIds(availableClassNameIds);
-					assetEntryQuery.setEnd(delta);
-					assetEntryQuery.setGroupIds(new long[] {scopeGroupId});
-					assetEntryQuery.setKeywords(keywords);
-					assetEntryQuery.setOrderByCol1("modifiedDate");
-					assetEntryQuery.setOrderByCol2("title");
-					assetEntryQuery.setOrderByType1("DESC");
-					assetEntryQuery.setOrderByType2("ASC");
-					assetEntryQuery.setStart(0);
-
-					BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, 0, delta);
-
-					for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
-						String className = PortalUtil.getClassName(assetEntry.getClassNameId());
-						long classPK = assetEntry.getClassPK();
-
-						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-						if (assetRendererFactory == null) {
-							continue;
-						}
-
-						AssetRenderer<?> assetRenderer = null;
-
-						try {
-							assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
-						}
-						catch (Exception e) {
-						}
-
-						if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
-							continue;
-						}
-
-						String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
-
-						String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.Action.ADD);
-
-						boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
-
-						Map<String, Object> data = new HashMap<String, Object>();
-
-						data.put("class-name", assetEntry.getClassName());
-						data.put("class-pk", assetEntry.getClassPK());
-
-						if (hasAddToPagePermission) {
-							data.put("draggable", true);
-						}
-
-						data.put("instanceable", true);
-						data.put("portlet-id", portletId);
-						data.put("title", title);
-
-						String navItemCssClass ="content-shortcut drag-content-item lfr-content-item ";
-
-						if (!displayStyle.equals("icon")) {
-							navItemCssClass += "has-preview";
-						}
-					%>
-
-						<aui:nav-item cssClass='<%= navItemCssClass %>'
-							data="<%= data %>"
-							href=""
-							iconCssClass='<%= displayStyle.equals("list") ? "icon-file" : StringPool.BLANK %>'
-							label='<%= displayStyle.equals("list") ? title : "" %>'
-						>
-							<c:choose>
-								<c:when test='<%= !displayStyle.equals("list") %>'>
-									<div class="add-content-thumbnail <%= displayStyle.equals("descriptive") ? "col-md-4" : StringPool.BLANK %>">
-										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" src="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>" />
-									</div>
-
-									<div class="add-content-details <%= displayStyle.equals("descriptive") ? "col-md-8" : StringPool.BLANK %>">
-										<div class="add-content-title">
-											<%= title %>
-										</div>
-
-										<div class="add-content-description">
-											<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), 120)) %>
-										</div>
-									</div>
-								</c:when>
-								<c:when test="<%= hasAddToPagePermission %>">
-									<div <%= AUIUtil.buildData(data) %> class="add-content-item">
-										<liferay-ui:message key="add" />
-									</div>
-								</c:when>
-							</c:choose>
-						</aui:nav-item>
-
-					<%
-					}
-					%>
-
-				</aui:nav>
-			</liferay-ui:panel>
-		</div>
-	</c:when>
-
-	<c:when test="<%= viewAssetPreview %>">
+	<span class="pull-right" id="<portlet:namespace />displayStyleContainer">
 
 		<%
-		long classPK = ParamUtil.getLong(request, "classPK");
-		String className = ParamUtil.getString(request, "className");
+		Map<String, Object> data = new HashMap<String, Object>();
+
+		data.put("displaystyle", "icon");
 		%>
 
-		<c:if test="<%= (classPK > 0) && Validator.isNotNull(className) %>">
-			<div id="<portlet:namespace />preview">
-				<liferay-ui:asset-display
-					className="<%= className %>"
-					classPK="<%= classPK %>"
-					template="<%= AssetRenderer.TEMPLATE_PREVIEW %>"
-				/>
-			</div>
-		</c:if>
-	</c:when>
-</c:choose>
+		<liferay-ui:icon
+			data="<%= data %>"
+			icon="cards2"
+			linkCssClass='<%= displayStyle.equals("icon") ? "display-style active" : "display-style" %>'
+			markupView="lexicon"
+			url="javascript:;"
+		/>
+
+		<%
+		data.put("displaystyle", "descriptive");
+		%>
+
+		<liferay-ui:icon
+			data="<%= data %>"
+			icon="list"
+			linkCssClass='<%= displayStyle.equals("descriptive") ? "display-style active" : "display-style" %>'
+			markupView="lexicon"
+			url="javascript:;"
+		/>
+	</span>
+</div>
+
+<div class="add-content-button">
+
+	<%
+	PortletURL redirectURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);
+
+	redirectURL.setParameter("mvcPath", "/add_content_redirect.jsp");
+	redirectURL.setWindowState(LiferayWindowState.POP_UP);
+	%>
+
+	<liferay-ui:asset-add-button
+		redirect="<%= redirectURL.toString() %>"
+	/>
+</div>
+
+<div class="lfr-content-category panel-page-category">
+	<a class="collapse-icon list-group-heading" data-toggle="collapse" href="#manageRecentPanel">
+		<liferay-ui:message key="<%= panelTitle %>" />
+	</a>
+
+	<div class="collapse in list-group-panel" id="manageRecentPanel">
+		<div class="list-group-item">
+			<ul class="<%= displayStyle.equals("descriptive") ? "tabular-list-group" : "list-unstyled row" %>">
+
+				<%
+				long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
+
+				for (long classNameId : availableClassNameIds) {
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
+
+					if (!assetRendererFactory.isSelectable()) {
+						availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
+					}
+				}
+
+				AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+				assetEntryQuery.setClassNameIds(availableClassNameIds);
+				assetEntryQuery.setEnd(delta);
+				assetEntryQuery.setGroupIds(new long[] {scopeGroupId});
+				assetEntryQuery.setKeywords(keywords);
+				assetEntryQuery.setOrderByCol1("modifiedDate");
+				assetEntryQuery.setOrderByCol2("title");
+				assetEntryQuery.setOrderByType1("DESC");
+				assetEntryQuery.setOrderByType2("ASC");
+				assetEntryQuery.setStart(0);
+
+				BaseModelSearchResult<AssetEntry> baseModelSearchResult = AssetUtil.searchAssetEntries(request, assetEntryQuery, 0, delta);
+
+				for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
+					String className = PortalUtil.getClassName(assetEntry.getClassNameId());
+					long classPK = assetEntry.getClassPK();
+
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+					if (assetRendererFactory == null) {
+						continue;
+					}
+
+					AssetRenderer<?> assetRenderer = null;
+
+					try {
+						assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+					}
+					catch (Exception e) {
+					}
+
+					if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
+						continue;
+					}
+
+					String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
+
+					String portletId = PortletProviderUtil.getPortletId(assetEntry.getClassName(), PortletProvider.Action.ADD);
+
+					boolean hasAddToPagePermission = PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE);
+
+					Map<String, Object> itemData = new HashMap<String, Object>();
+
+					itemData.put("class-name", assetEntry.getClassName());
+					itemData.put("class-pk", assetEntry.getClassPK());
+
+					if (hasAddToPagePermission) {
+						itemData.put("draggable", true);
+					}
+
+					itemData.put("instanceable", true);
+					itemData.put("portlet-id", portletId);
+					itemData.put("title", title);
+
+					String thumbnailPath = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
+				%>
+
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("icon") %>'>
+							<li class="col-md-6 col-sm-6 col-xs-6 drag-content-item lfr-content-item" <%= AUIUtil.buildData(itemData) %>>
+								<c:choose>
+									<c:when test="<%= Validator.isNotNull(thumbnailPath) %>">
+										<liferay-frontend:vertical-card
+											imageUrl="<%= thumbnailPath %>"
+											title="<%= title %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<liferay-frontend:icon-vertical-card
+											icon="<%= assetRenderer.getIconCssClass() %>"
+											title="<%= title %>"
+										/>
+									</c:otherwise>
+								</c:choose>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="drag-content-item entry-display-style lfr-content-item list-group-item" <%= AUIUtil.buildData(itemData) %>>
+								<div class=" list-group-item-field">
+									<c:choose>
+										<c:when test="<%= Validator.isNotNull(thumbnailPath) %>">
+											<div class="user-icon user-icon-square user-icon-xl">
+												<img alt="thumbnail" class="img-responsive img-rounded" src="<%= thumbnailPath %>" />
+											</div>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:icon
+												icon="<%= assetRenderer.getIconCssClass() %>"
+												markupView="lexicon"
+											/>
+										</c:otherwise>
+									</c:choose>
+								</div>
+
+								<div class=" list-group-item-content">
+									<h4><%= title %></h4>
+
+									<%
+									Date createDate = assetRenderer.getDisplayDate();
+
+									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+									%>
+
+									<h6 class="text-default">
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(assetRenderer.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									</h6>
+
+									<h5 class="text-default">
+										<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), 120)) %>
+									</h5>
+								</div>
+							</li>
+						</c:otherwise>
+					</c:choose>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</div>
+	</div>
+</div>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />numItemsContainer').delegate(
+		'click',
+		function(event) {
+			var delta = event.currentTarget.attr('data-delta');
+
+			Liferay.fire(
+				'AddContent:refreshContentList',
+				{
+					delta: delta
+				}
+			);
+		},
+		'.num-item'
+	);
+
+	A.one('#<portlet:namespace />displayStyleContainer').delegate(
+		'click',
+		function(event) {
+			var displayStyle = event.currentTarget.attr('data-displaystyle');
+
+			Liferay.fire(
+				'AddContent:refreshContentList',
+				{
+					displayStyle: displayStyle
+				}
+			);
+		},
+		'.display-style'
+	);
+</aui:script>

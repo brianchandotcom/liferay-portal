@@ -17,7 +17,7 @@
 <%@ include file="/panel_category/init.jsp" %>
 
 <c:if test="<%= !panelApps.isEmpty() && showHeader %>">
-	<a aria-expanded="<%= active %>" class="collapse-icon <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading" data-qa-id="appGroup" data-toggle="collapse" href="#<%= id %>">
+	<a aria-expanded="<%= active %>" class="collapse-icon collapse-icon-middle <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading" data-qa-id="appGroup" data-toggle="collapse" href="#<%= id %>">
 		<c:if test="<%= !panelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
 			<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
 
@@ -25,6 +25,10 @@
 				<span class="badge badge-sm badge-warning panel-notifications-count" data-qa-id="notificationsCount"><%= notificationsCount %></span>
 			</c:if>
 		</c:if>
+
+		<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+		<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 	</a>
 
 	<div class="collapse <%= active ? "in" : StringPool.BLANK %>" id="<%= id %>">

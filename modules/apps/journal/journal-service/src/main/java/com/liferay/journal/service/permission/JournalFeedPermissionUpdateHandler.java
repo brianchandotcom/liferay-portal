@@ -55,6 +55,6 @@ public class JournalFeedPermissionUpdateHandler
 		_journalFeedLocalService = journalFeedLocalService;
 	}
 
-	private volatile JournalFeedLocalService _journalFeedLocalService;
+	private JournalFeedLocalService _journalFeedLocalService;
 
 }

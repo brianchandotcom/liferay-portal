@@ -31,10 +31,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Test Page Name" />
 		</execute>
 	</set-up>
 
@@ -1128,7 +1128,7 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
@@ -1350,9 +1350,13 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Import Site" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Import" />
 		</execute>
 
 		<execute macro="LAR#importSiteCP">
@@ -2051,7 +2055,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -2323,7 +2327,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -2399,7 +2403,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -2536,7 +2540,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -2696,7 +2700,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -2814,7 +2818,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -2860,7 +2864,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -2906,7 +2910,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -3084,10 +3088,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Name" />
 			<var name="siteName" value="Child SiteName" />
-			<var name="sitePageName" value="Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -3168,7 +3172,7 @@
 	</command>
 
 	<command name="UserSegmentAddMultipleViaUserContentDisplayPortletPG" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />

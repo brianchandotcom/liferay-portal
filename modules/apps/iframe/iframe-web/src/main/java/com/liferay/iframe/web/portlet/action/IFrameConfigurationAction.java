@@ -14,9 +14,6 @@
 
 package com.liferay.iframe.web.portlet.action;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.iframe.web.configuration.IFrameConfiguration;
 import com.liferay.iframe.web.constants.IFramePortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -24,28 +21,21 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.iframe.web.configuration.IFrameConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {"javax.portlet.name=" + IFramePortletKeys.IFRAME},
 	service = ConfigurationAction.class
 )
@@ -54,18 +44,6 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 	@Override
 	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
-	}
-
-	@Override
-	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
-
-		request.setAttribute(
-			IFrameConfiguration.class.getName(), _iFrameConfiguration);
-
-		super.include(portletConfig, request, response);
 	}
 
 	@Override
@@ -111,14 +89,5 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_iFrameConfiguration = Configurable.createConfigurable(
-			IFrameConfiguration.class, properties);
-	}
-
-	private volatile IFrameConfiguration _iFrameConfiguration;
 
 }

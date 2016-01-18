@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.lar;
 
-import com.liferay.portal.NoSuchTeamException;
+import com.liferay.portal.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocalizationUtil;

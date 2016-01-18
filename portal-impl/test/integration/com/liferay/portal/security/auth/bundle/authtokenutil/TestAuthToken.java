@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.auth.bundle.authtokenutil;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.AuthToken;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +31,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {"service.ranking:Integer=" + Integer.MAX_VALUE}
 )
 public class TestAuthToken implements AuthToken {
+
+	@Override
+	public void addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		liferayPortletURL.setParameter("p_auth", "TEST_TOKEN");
+	}
+
+	@Override
+	public void addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		liferayPortletURL.setParameter(
+			"p_p_auth", "TEST_TOKEN_BY_PLID_AND_PORTLET_ID");
+	}
 
 	/**
 	 * @deprecated As of 7.0.0
@@ -53,6 +71,19 @@ public class TestAuthToken implements AuthToken {
 		return "TEST_TOKEN_BY_PLID_AND_PORTLET_ID";
 	}
 
+	@Override
+	public boolean isValidPortletInvocationToken(
+		HttpServletRequest request, Layout layout, Portlet portlet) {
+
+		String tokenValue = request.getParameter("p_p_auth");
+
+		return "VALID_PORTLET_INVOCATION_TOKEN".equals(tokenValue);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public boolean isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,

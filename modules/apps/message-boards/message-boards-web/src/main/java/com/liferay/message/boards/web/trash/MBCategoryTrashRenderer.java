@@ -16,7 +16,6 @@ package com.liferay.message.boards.web.trash;
 
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -52,12 +51,7 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-comments";
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/category.png";
+		return "comments";
 	}
 
 	@Override

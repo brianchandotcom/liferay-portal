@@ -109,7 +109,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public AnnouncementsFlag findByEntryId_First(long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException;
 
 	/**
 	* Returns the first announcements flag in the ordered set where entryId = &#63;.
@@ -131,7 +131,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*/
 	public AnnouncementsFlag findByEntryId_Last(long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException;
 
 	/**
 	* Returns the last announcements flag in the ordered set where entryId = &#63;.
@@ -155,7 +155,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	public AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
 		long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException;
 
 	/**
 	* Removes all the announcements flags where entryId = &#63; from the database.
@@ -182,7 +182,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @throws NoSuchFlagException if a matching announcements flag could not be found
 	*/
 	public AnnouncementsFlag findByU_E_V(long userId, long entryId, int value)
-		throws com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException;
 
 	/**
 	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -215,7 +215,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @return the announcements flag that was removed
 	*/
 	public AnnouncementsFlag removeByU_E_V(long userId, long entryId, int value)
-		throws com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException;
 
 	/**
 	* Returns the number of announcements flags where userId = &#63; and entryId = &#63; and value = &#63;.
@@ -258,7 +258,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
 	public AnnouncementsFlag remove(long flagId)
-		throws com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException;
 
 	public AnnouncementsFlag updateImpl(AnnouncementsFlag announcementsFlag);
 
@@ -270,7 +270,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
 	public AnnouncementsFlag findByPrimaryKey(long flagId)
-		throws com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.exception.NoSuchFlagException;
 
 	/**
 	* Returns the announcements flag with the primary key or returns <code>null</code> if it could not be found.

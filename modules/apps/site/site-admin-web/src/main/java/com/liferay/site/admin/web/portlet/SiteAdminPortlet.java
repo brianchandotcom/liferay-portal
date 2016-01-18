@@ -18,19 +18,19 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.portal.DuplicateGroupException;
-import com.liferay.portal.GroupFriendlyURLException;
-import com.liferay.portal.GroupInheritContentException;
-import com.liferay.portal.GroupKeyException;
-import com.liferay.portal.GroupParentException;
-import com.liferay.portal.LayoutSetVirtualHostException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchBackgroundTaskException;
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RemoteOptionsException;
-import com.liferay.portal.RequiredGroupException;
+import com.liferay.portal.exception.DuplicateGroupException;
+import com.liferay.portal.exception.GroupFriendlyURLException;
+import com.liferay.portal.exception.GroupInheritContentException;
+import com.liferay.portal.exception.GroupKeyException;
+import com.liferay.portal.exception.GroupParentException;
+import com.liferay.portal.exception.LayoutSetVirtualHostException;
+import com.liferay.portal.exception.NoSuchBackgroundTaskException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.exception.PendingBackgroundTaskException;
+import com.liferay.portal.exception.RequiredGroupException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -85,13 +85,13 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetCategoryException;
-import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.exportimport.RemoteExportException;
+import com.liferay.portlet.asset.exception.AssetCategoryException;
+import com.liferay.portlet.asset.exception.AssetTagException;
+import com.liferay.portlet.exportimport.exception.RemoteExportException;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.sites.util.Sites;
-import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
+import com.liferay.sites.kernel.util.Sites;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 
@@ -304,7 +304,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			panelAppRegistry, panelCategoryRegistry);
 
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
@@ -498,14 +498,14 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
+		this.panelAppRegistry = panelAppRegistry;
 	}
 
 	@Reference(unbind = "-")
 	protected void setPanelCategoryRegistry(
 		PanelCategoryRegistry panelCategoryRegistry) {
 
-		_panelCategoryRegistry = panelCategoryRegistry;
+		this.panelCategoryRegistry = panelCategoryRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -894,6 +894,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected LayoutSetService layoutSetService;
 	protected MembershipRequestLocalService membershipRequestLocalService;
 	protected MembershipRequestService membershipRequestService;
+	protected PanelAppRegistry panelAppRegistry;
+	protected PanelCategoryRegistry panelCategoryRegistry;
 	protected RoleLocalService roleLocalService;
 	protected TeamLocalService teamLocalService;
 	protected UserLocalService userLocalService;
@@ -904,9 +906,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 	private static final TransactionAttribute _transactionAttribute =
 		TransactionAttribute.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	private volatile PanelAppRegistry _panelAppRegistry;
-	private volatile PanelCategoryRegistry _panelCategoryRegistry;
 
 	private class GroupCallable implements Callable<Group> {
 

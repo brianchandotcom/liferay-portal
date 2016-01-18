@@ -1191,7 +1191,12 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 
 	<#if (sessionTypeName == "Local") && entity.hasColumns()>
 		<#if pluginName == "">
-			@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+			<#if osgiModule>
+				@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
+			<#else>
+				@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+			</#if>
+
 			protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 		</#if>
 	</#if>

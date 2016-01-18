@@ -1,11 +1,7 @@
 <definition>
 	<command name="addCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${orgName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_REGULAR_ORGANIZATION" value1="Add Regular Organization" />
 

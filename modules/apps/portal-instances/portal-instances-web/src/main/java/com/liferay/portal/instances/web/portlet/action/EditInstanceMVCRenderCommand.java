@@ -14,7 +14,7 @@
 
 package com.liferay.portal.instances.web.portlet.action;
 
-import com.liferay.portal.NoSuchCompanyException;
+import com.liferay.portal.exception.NoSuchCompanyException;
 import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;

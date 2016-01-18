@@ -235,11 +235,11 @@ public class ReleaseManager {
 
 	private static Logger _logger;
 
-	private volatile OutputStreamContainerFactoryTracker
+	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
-	private volatile ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
-	private volatile ReleasePublisher _releasePublisher;
+	private ReleasePublisher _releasePublisher;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
 
 	private class UpgradeInfoServiceTrackerMapListener
@@ -253,6 +253,13 @@ public class ReleaseManager {
 			List<UpgradeInfo> upgradeInfos) {
 
 			doExecute(key, serviceTrackerMap);
+		}
+
+		@Override
+		public void keyRemoved(
+			ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap,
+			String key, UpgradeInfo upgradeInfo,
+			List<UpgradeInfo> upgradeInfos) {
 		}
 
 	}

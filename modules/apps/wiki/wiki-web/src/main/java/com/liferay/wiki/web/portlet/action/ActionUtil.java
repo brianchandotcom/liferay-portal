@@ -48,7 +48,9 @@ import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -291,12 +293,33 @@ public class ActionUtil {
 			node = ActionUtil.getFirstVisibleNode(portletRequest);
 		}
 
-		request.setAttribute(WikiWebKeys.WIKI_NODE, node);
-
 		return node;
 	}
 
-	public static void getPage(PortletRequest portletRequest) throws Exception {
+	public static List<WikiNode> getNodes(PortletRequest portletRequest)
+		throws PortalException {
+
+		long[] nodeIds = ParamUtil.getLongValues(
+			portletRequest, "rowIdsWikiNode");
+
+		if (nodeIds.length == 0) {
+			return Collections.emptyList();
+		}
+
+		List<WikiNode> nodes = new ArrayList<>();
+
+		for (long nodeId : nodeIds) {
+			if (nodeId != 0) {
+				nodes.add(WikiNodeServiceUtil.getNode(nodeId));
+			}
+		}
+
+		return nodes;
+	}
+
+	public static WikiPage getPage(PortletRequest portletRequest)
+		throws Exception {
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
@@ -332,23 +355,19 @@ public class ActionUtil {
 			title = wikiGroupServiceConfiguration.frontPageName();
 		}
 
-		WikiPage page = null;
-
 		try {
-			page = WikiPageServiceUtil.getPage(nodeId, title, version);
+			return WikiPageServiceUtil.getPage(nodeId, title, version);
 		}
 		catch (NoSuchPageException nspe) {
 			if (title.equals(wikiGroupServiceConfiguration.frontPageName()) &&
 				(version == 0)) {
 
-				page = getFirstVisiblePage(nodeId, portletRequest);
+				return getFirstVisiblePage(nodeId, portletRequest);
 			}
 			else {
 				throw nspe;
 			}
 		}
-
-		request.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
 
 	public static String viewNode(
@@ -358,7 +377,12 @@ public class ActionUtil {
 		try {
 			WikiNode node = ActionUtil.getNode(renderRequest);
 
-			ActionUtil.getFirstVisiblePage(node.getNodeId(), renderRequest);
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+
+			WikiPage page = ActionUtil.getFirstVisiblePage(
+				node.getNodeId(), renderRequest);
+
+			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

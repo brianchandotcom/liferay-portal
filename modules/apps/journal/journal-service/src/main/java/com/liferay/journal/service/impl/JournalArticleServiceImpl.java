@@ -2204,24 +2204,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #updateArticleTranslation(long, String, double, Locale,
-	 *             String, String, String, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public JournalArticle updateArticleTranslation(
-			long groupId, String articleId, double version, Locale locale,
-			String title, String description, String content,
-			Map<String, byte[]> images)
-		throws PortalException {
-
-		return updateArticleTranslation(
-			groupId, articleId, version, locale, title, description, content,
-			images, null);
-	}
-
-	/**
 	 * Updates the translation of the web content article.
 	 *
 	 * @param  groupId the primary key of the web content article's group

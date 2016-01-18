@@ -126,9 +126,10 @@ if (portletTitleBasedNavigation) {
 							%>
 
 							<liferay-ui:icon
-								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+								icon="<%= assetRenderer.getIconCssClass() %>"
 								label="<%= true %>"
 								localizeMessage="<%= false %>"
+								markupView="lexicon"
 								message="<%= entry.getName() %>"
 								target="_blank"
 								url="<%= rowHREF %>"
@@ -167,7 +168,7 @@ if (portletTitleBasedNavigation) {
 						%>
 
 						<liferay-portlet:renderURL var="rowURL">
-							<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+							<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_folder" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</liferay-portlet:renderURL>
@@ -184,9 +185,10 @@ if (portletTitleBasedNavigation) {
 							%>
 
 							<liferay-ui:icon
-								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+								icon="<%= assetRenderer.getIconCssClass() %>"
 								label="<%= true %>"
 								localizeMessage="<%= false %>"
+								markupView="lexicon"
 								message="<%= HtmlUtil.escape(folder.getName()) %>"
 								url="<%= rowURL %>"
 							/>

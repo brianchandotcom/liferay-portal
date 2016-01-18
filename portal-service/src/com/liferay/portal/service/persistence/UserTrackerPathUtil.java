@@ -189,7 +189,7 @@ public class UserTrackerPathUtil {
 	*/
 	public static UserTrackerPath findByUserTrackerId_First(
 		long userTrackerId, OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerPathException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerPathException {
 		return getPersistence()
 				   .findByUserTrackerId_First(userTrackerId, orderByComparator);
 	}
@@ -217,7 +217,7 @@ public class UserTrackerPathUtil {
 	*/
 	public static UserTrackerPath findByUserTrackerId_Last(long userTrackerId,
 		OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerPathException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerPathException {
 		return getPersistence()
 				   .findByUserTrackerId_Last(userTrackerId, orderByComparator);
 	}
@@ -247,7 +247,7 @@ public class UserTrackerPathUtil {
 	public static UserTrackerPath[] findByUserTrackerId_PrevAndNext(
 		long userTrackerPathId, long userTrackerId,
 		OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerPathException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerPathException {
 		return getPersistence()
 				   .findByUserTrackerId_PrevAndNext(userTrackerPathId,
 			userTrackerId, orderByComparator);
@@ -308,7 +308,7 @@ public class UserTrackerPathUtil {
 	* @throws NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
 	*/
 	public static UserTrackerPath remove(long userTrackerPathId)
-		throws com.liferay.portal.NoSuchUserTrackerPathException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerPathException {
 		return getPersistence().remove(userTrackerPathId);
 	}
 
@@ -324,7 +324,7 @@ public class UserTrackerPathUtil {
 	* @throws NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
 	*/
 	public static UserTrackerPath findByPrimaryKey(long userTrackerPathId)
-		throws com.liferay.portal.NoSuchUserTrackerPathException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerPathException {
 		return getPersistence().findByPrimaryKey(userTrackerPathId);
 	}
 

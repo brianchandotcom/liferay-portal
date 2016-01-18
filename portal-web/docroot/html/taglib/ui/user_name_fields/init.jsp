@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.ContactNameException" %><%@
+<%@ page import="com.liferay.portal.exception.ContactNameException" %><%@
 page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinitionFactory" %><%@

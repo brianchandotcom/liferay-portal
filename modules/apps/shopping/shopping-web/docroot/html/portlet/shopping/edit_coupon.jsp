@@ -36,21 +36,21 @@ if (coupon != null) {
 double minOrder = BeanParamUtil.getDouble(coupon, request, "minOrder");
 double discount = BeanParamUtil.getDouble(coupon, request, "discount");
 String discountType = BeanParamUtil.getString(coupon, request, "discountType");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((coupon == null) ? LanguageUtil.get(request, "coupon") : coupon.getName()));
 %>
 
 <portlet:actionURL var="editCouponURL">
 	<portlet:param name="struts_action" value="/shopping/edit_coupon" />
 </portlet:actionURL>
 
-<aui:form action="<%= editCouponURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCoupon();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<aui:form action="<%= editCouponURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (coupon == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="couponId" type="hidden" value="<%= couponId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="coupon"
-	/>
 
 	<liferay-ui:error exception="<%= CouponCodeException.class %>" message="please-enter-a-valid-code" />
 	<liferay-ui:error exception="<%= CouponDateException.class %>" message="please-enter-a-start-date-that-comes-before-the-expiration-date" />
@@ -64,69 +64,63 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 
 	<aui:model-context bean="<%= coupon %>" model="<%= ShoppingCoupon.class %>" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= coupon == null %>">
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="code" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && (coupon != null)) %>" name="name" />
 
-				<aui:input label="autogenerate-code" name="autoCode" type="checkbox" />
-			</c:when>
-			<c:otherwise>
-				<aui:input name="code" type="resource" value="<%= code %>" />
-			</c:otherwise>
-		</c:choose>
+			<aui:input name="description" />
 
-		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && (coupon != null)) %>" name="name" />
+			<c:choose>
+				<c:when test="<%= coupon == null %>">
+					<aui:input label="autogenerate-code" name="autoCode" type="checkbox" />
 
-		<aui:input name="description" />
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="code" />
+				</c:when>
+				<c:otherwise>
+					<aui:input name="code" type="resource" value="<%= code %>" />
+				</c:otherwise>
+			</c:choose>
 
-		<aui:input name="startDate" />
+			<aui:input name="startDate" />
 
-		<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" label="expiration-date" name="endDate" />
+			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" label="expiration-date" name="endDate" />
 
-		<aui:input name="active" value="<%= Boolean.TRUE %>" />
-	</aui:fieldset>
+			<aui:input name="active" value="<%= Boolean.TRUE %>" />
+		</aui:fieldset>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="discount">
+			<div class="alert alert-info">
+				<liferay-ui:message arguments="<%= currencyFormat.format(0) %>" key="coupons-can-be-set-to-only-apply-to-orders-above-a-minimum-amount" translateArguments="<%= false %>" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
+				<br /><br />
 
-	<liferay-ui:panel-container extended="<%= true %>" id="shoppingEditCouponPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditCouponDiscountPanel" persistState="<%= true %>" title="discount">
-			<liferay-ui:message arguments="<%= currencyFormat.format(0) %>" key="coupons-can-be-set-to-only-apply-to-orders-above-a-minimum-amount" translateArguments="<%= false %>" />
+				<liferay-ui:message key="set-the-discount-amount-and-the-discount-type" />
 
-			<br /><br />
+				<br /><br />
 
-			<liferay-ui:message key="set-the-discount-amount-and-the-discount-type" />
+				<liferay-ui:message key="if-the-discount-type-is-free-shipping,-shipping-charges-are-subtracted-from-the-order" />
+			</div>
 
-			<br /><br />
+			<aui:input ignoreRequestValue="<%= true %>" label="minimum-order" name="minOrder" size="4" type="text" value="<%= doubleFormat.format(minOrder) %>" />
 
-			<liferay-ui:message key="if-the-discount-type-is-free-shipping,-shipping-charges-are-subtracted-from-the-order" />
+			<aui:input ignoreRequestValue="<%= true %>" name="discount" size="4" type="text" value="<%= doubleFormat.format(discount) %>" />
 
-			<aui:fieldset>
-				<aui:input ignoreRequestValue="<%= true %>" label="minimum-order" name="minOrder" size="4" type="text" value="<%= doubleFormat.format(minOrder) %>" />
+			<aui:select name="discountType">
 
-				<aui:input ignoreRequestValue="<%= true %>" name="discount" size="4" type="text" value="<%= doubleFormat.format(discount) %>" />
+				<%
+				for (int i = 0; i < ShoppingCouponConstants.DISCOUNT_TYPES.length; i++) {
+				%>
 
-				<aui:select name="discountType">
+					<aui:option label="<%= ShoppingCouponConstants.DISCOUNT_TYPES[i] %>" selected="<%= discountType.equals(ShoppingCouponConstants.DISCOUNT_TYPES[i]) %>" />
 
-					<%
-					for (int i = 0; i < ShoppingCouponConstants.DISCOUNT_TYPES.length; i++) {
-					%>
+				<%
+				}
+				%>
 
-						<aui:option label="<%= ShoppingCouponConstants.DISCOUNT_TYPES[i] %>" selected="<%= discountType.equals(ShoppingCouponConstants.DISCOUNT_TYPES[i]) %>" />
+			</aui:select>
+		</aui:fieldset>
 
-					<%
-					}
-					%>
-
-				</aui:select>
-			</aui:fieldset>
-		</liferay-ui:panel>
-
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditCouponLimitsPanel" persistState="<%= true %>" title="limits">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="limits">
 			<liferay-ui:error exception="<%= CouponLimitCategoriesException.class %>">
 
 				<%
@@ -145,21 +139,19 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 				<liferay-ui:message key="the-following-are-invalid-item-skus" /> <%= HtmlUtil.escape(StringUtil.merge((String[])skus.toArray(new String[0]))) %>
 			</liferay-ui:error>
 
-			<aui:fieldset>
-				<aui:input label='<%= LanguageUtil.get(request, "this-coupon-only-applies-to-items-that-are-children-of-this-comma-delimited-list-of-categories") + StringPool.SPACE + LanguageUtil.get(request, "leave-this-blank-if-the-coupon-does-not-check-for-the-parent-categories-of-an-item") %>' name="limitCategories" />
+			<aui:input label='<%= LanguageUtil.get(request, "this-coupon-only-applies-to-items-that-are-children-of-this-comma-delimited-list-of-categories") + StringPool.SPACE + LanguageUtil.get(request, "leave-this-blank-if-the-coupon-does-not-check-for-the-parent-categories-of-an-item") %>' name="limitCategories" />
 
-				<aui:input label='<%= LanguageUtil.get(request, "this-coupon-only-applies-to-items-with-a-sku-that-corresponds-to-this-comma-delimited-list-of-item-skus") + StringPool.SPACE + LanguageUtil.get(request, "leave-this-blank-if-the-coupon-does-not-check-for-the-item-sku") %>' name="limitSkus" />
-			</aui:fieldset>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+			<aui:input label='<%= LanguageUtil.get(request, "this-coupon-only-applies-to-items-with-a-sku-that-corresponds-to-this-comma-delimited-list-of-item-skus") + StringPool.SPACE + LanguageUtil.get(request, "leave-this-blank-if-the-coupon-does-not-check-for-the-item-sku") %>' name="limitSkus" />
+		</aui:fieldset>
+	</aui:fieldset-group>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveCoupon() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (coupon == null) ? Constants.ADD : Constants.UPDATE %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoCode', '<portlet:namespace />code', true);
 </aui:script>

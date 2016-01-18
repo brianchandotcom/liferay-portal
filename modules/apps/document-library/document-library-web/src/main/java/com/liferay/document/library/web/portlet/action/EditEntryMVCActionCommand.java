@@ -34,14 +34,14 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetCategoryException;
-import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
-import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
-import com.liferay.portlet.documentlibrary.InvalidFolderException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.SourceFileNameException;
+import com.liferay.portlet.asset.exception.AssetCategoryException;
+import com.liferay.portlet.asset.exception.AssetTagException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFolderNameException;
+import com.liferay.portlet.documentlibrary.exception.InvalidFolderException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.exception.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLTrashService;
@@ -333,8 +333,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		_trashEntryService = trashEntryService;
 	}
 
-	private volatile DLAppService _dlAppService;
-	private volatile DLTrashService _dlTrashService;
-	private volatile TrashEntryService _trashEntryService;
+	private DLAppService _dlAppService;
+	private DLTrashService _dlTrashService;
+	private TrashEntryService _trashEntryService;
 
 }

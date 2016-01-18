@@ -77,7 +77,7 @@ public class MessagingConfigurator {
 	}
 
 	private volatile BundleContext _bundleContext;
-	private volatile DestinationFactory _destinationFactory;
+	private DestinationFactory _destinationFactory;
 	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

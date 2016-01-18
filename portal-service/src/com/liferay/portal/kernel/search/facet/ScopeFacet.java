@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,22 +54,14 @@ public class ScopeFacet extends MultiValueFacet {
 
 			groupIds.add(groupId);
 
-			List<Layout> publicLayouts =
-				LayoutLocalServiceUtil.getScopeGroupLayouts(groupId, false);
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			for (Layout layout :publicLayouts) {
-				Group group = layout.getScopeGroup();
+			List<Group> groups = GroupLocalServiceUtil.getGroups(
+				group.getCompanyId(), Layout.class.getName(),
+				group.getGroupId());
 
-				groupIds.add(group.getGroupId());
-			}
-
-			List<Layout> privateLayouts =
-				LayoutLocalServiceUtil.getScopeGroupLayouts(groupId, true);
-
-			for (Layout layout : privateLayouts) {
-				Group group = layout.getScopeGroup();
-
-				groupIds.add(group.getGroupId());
+			for (Group scopeGroup : groups) {
+				groupIds.add(scopeGroup.getGroupId());
 			}
 
 			return ArrayUtil.toLongArray(groupIds);

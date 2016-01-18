@@ -1,5 +1,5 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: Web Content Management${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Description: Apps and Features: Application Display Templates, Asset Publisher, Breadcrumb, Categories, Google Analytics, IFrame, Language, Navigation, Recycle Bin, Related Content, RSS, Search, Site and Page Templates, Sitemap, Sites Directory, Tags, Web Content, XSL Content<br /><br />The Web Experience Management (WEM) suite provides features that help create, manage, and track content. The Web Content app let you express your ideas and plans by creating dynamic content that can be structured to fit a specific design. You can also use templates to design web content for an appealing look and feel. Templates can be used in other realms of Liferay besides web content too. Site and Page Templates let you reproduce sites and pages that have been organized to address specific needs. Application Display Templates are another type of Liferay template that lets you develop the look and feel of applications. The IFrame and XSL Content apps let you create other forms of content by embedding HTML and XSL content on a site page.<br /><br />As administrators create content, organization is critical to keeping things tidy in your site. The suite's Tags and Categories apps lets you organize your web content to follow an organizational hierarchy. These organizational apps also aid with Liferay's Search app, which you can utilize to dynamically search content you've created. The suite's Navigation, Breadcrumb, Sitemap, and Sites Directory apps aid in Liferay's organizational structure, providing a top level view of sites and their pages that have been created. To promote content in an organized way, the Asset Publisher and Related Assets apps broadcast assets and their related information. Inevitably, some content you create becomes stale and requires removal; the Recycle Bin app lets you delete content, with the option to restore that content.<br /><br />As a site accumulates content, administrators should have a way to easily track their content. The Google Analytics app allows the use of Google's tool set for analyzing site traffic data. The suite's RSS app provides a web feed used to publish updated works such as blog entries and news articles. The suite's Language app provides a way to change Liferay's language to cater to your site's international audience. This suite's content creation and organization focus lets site administrators develop dynamic content, organize content for easy managing, and track content for ideas to better improve the content creation process in the future.<br /><br />This suite may contain modules that depend on Platform suite modules.
+Liferay-Releng-App-Title: Liferay Web Experience Management${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Productivity
 Liferay-Releng-Demo-Url:
@@ -16,10 +16,14 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.asset.publisher.test:1.0.0,\
 	com.liferay.asset.publisher.web:1.0.0,\
 	com.liferay.asset.tag.admin.web:1.0.0,\
+	com.liferay.asset.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.asset.taglib:1.0.0,\
 	com.liferay.asset.tags.compiler.web:1.0.0,\
 	com.liferay.asset.tags.navigation.web:1.0.0,\
 	com.liferay.asset.tags.service:1.0.0,\
 	com.liferay.control.menu.api:1.0.0,\
+	com.liferay.control.menu.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.control.menu.taglib:1.0.0,\
 	com.liferay.control.menu.web:1.0.0,\
 	com.liferay.exportimport.api:1.0.0,\
 	com.liferay.exportimport.service:1.0.0,\
@@ -54,10 +58,14 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.layout.set.prototype.test:1.0.0,\
 	com.liferay.layout.set.prototype.web:1.0.0,\
 	com.liferay.layout.set.prototype:1.0.0,\
+	com.liferay.layout.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.layout.taglib:1.0.0,\
 	com.liferay.layout.type.controller.control.panel:1.0.0,\
 	com.liferay.layout.type.controller.full.page.application:1.0.0,\
 	com.liferay.layout.type.controller.node:1.0.0,\
 	com.liferay.layout.type.controller.shared.portlet:1.0.0,\
+	com.liferay.mobile.device.rules.api:1.0.0,\
+	com.liferay.nested.portlets.web:1.0.0,\
 	com.liferay.portal.portlet.configuration.icon.locator:1.0.0,\
 	com.liferay.portal.portlet.toolbar.contributor.locator:1.0.0,\
 	com.liferay.portlet.configuration.icon.close:1.0.0,\
@@ -75,9 +83,15 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portlet.configuration.icon.widget:1.0.0,\
 	com.liferay.portlet.configuration.web:1.0.0,\
 	com.liferay.portlet.css.web:1.0.0,\
+	com.liferay.portlet.display.template.web:1.0.0,\
+	com.liferay.portlet.display.template:1.0.0,\
+	com.liferay.portlet.sharing.web:1.0.0,\
 	com.liferay.product.navigation.control.panel.menu.web:1.0.0,\
 	com.liferay.product.navigation.control.panel:1.0.0,\
 	com.liferay.product.navigation.product.menu.web:1.0.0,\
+	com.liferay.product.navigation.simulation.device:1.0.0,\
+	com.liferay.product.navigation.simulation.web:1.0.0,\
+	com.liferay.product.navigation.simulation:1.0.0,\
 	com.liferay.product.navigation.site.administration.menu.web:1.0.0,\
 	com.liferay.product.navigation.site.administration:1.0.0,\
 	com.liferay.product.navigation.user.menu.web:1.0.0,\
@@ -94,6 +108,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.site.navigation.language.web:1.0.0,\
 	com.liferay.site.navigation.menu.web:1.0.0,\
 	com.liferay.site.navigation.site.map.web:1.0.0,\
+	com.liferay.site.navigation.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.site.navigation.taglib:1.0.0,\
 	com.liferay.site.teams.web:1.0.0,\
 	com.liferay.staging.bar.web:1.0.0,\
 	com.liferay.staging.configuration.web:1.0.0,\
@@ -102,6 +118,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.staging.processes.web:1.0.0,\
 	com.liferay.staging.taglib:1.0.0,\
 	com.liferay.staging.test:1.0.0,\
+	com.liferay.trash.taglib.freemarker.contributor:1.0.0,\
+	com.liferay.trash.taglib:1.0.0,\
 	com.liferay.trash.web:1.0.0,\
 	com.liferay.xsl.content.web:1.0.0
 Liferay-Releng-Labs: false

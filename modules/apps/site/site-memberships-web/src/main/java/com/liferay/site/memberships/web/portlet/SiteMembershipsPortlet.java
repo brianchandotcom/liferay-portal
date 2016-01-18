@@ -14,9 +14,9 @@
 
 package com.liferay.site.memberships.web.portlet;
 
-import com.liferay.portal.MembershipRequestCommentsException;
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.exception.MembershipRequestCommentsException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -45,8 +45,8 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -447,15 +447,14 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private volatile MembershipRequestService _membershipRequestService;
-	private volatile OrganizationService _organizationService;
-	private volatile UserGroupGroupRoleLocalService
-		_userGroupGroupRoleLocalService;
-	private volatile UserGroupGroupRoleService _userGroupGroupRoleService;
-	private volatile UserGroupRoleLocalService _userGroupRoleLocalService;
-	private volatile UserGroupRoleService _userGroupRoleService;
-	private volatile UserGroupService _userGroupService;
-	private volatile UserLocalService _userLocalService;
-	private volatile UserService _userService;
+	private MembershipRequestService _membershipRequestService;
+	private OrganizationService _organizationService;
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+	private UserGroupGroupRoleService _userGroupGroupRoleService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+	private UserGroupRoleService _userGroupRoleService;
+	private UserGroupService _userGroupService;
+	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

@@ -13,7 +13,7 @@ import ${packagePath}.service.ClpSerializer;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

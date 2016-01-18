@@ -68,6 +68,7 @@ public class UpdateRecordSetMVCActionCommand
 		updateRecordSetSettings(actionRequest, recordSet);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
@@ -75,6 +76,7 @@ public class UpdateRecordSetMVCActionCommand
 		this.ddlRecordSetService = ddlRecordSetService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMFormJSONDeserializer(
 		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
@@ -82,6 +84,7 @@ public class UpdateRecordSetMVCActionCommand
 		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMFormLayoutJSONDeserializer(
 		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
@@ -89,6 +92,7 @@ public class UpdateRecordSetMVCActionCommand
 		this.ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMFormValuesJSONDeserializer(
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
@@ -96,6 +100,7 @@ public class UpdateRecordSetMVCActionCommand
 		this.ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMFormValuesQueryFactory(
 		DDMFormValuesQueryFactory ddmFormValuesQueryFactory) {
@@ -103,6 +108,7 @@ public class UpdateRecordSetMVCActionCommand
 		this.ddmFormValuesQueryFactory = ddmFormValuesQueryFactory;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
@@ -110,6 +116,7 @@ public class UpdateRecordSetMVCActionCommand
 		this.ddmStructureService = ddmStructureService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {

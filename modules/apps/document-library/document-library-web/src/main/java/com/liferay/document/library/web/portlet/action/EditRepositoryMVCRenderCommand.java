@@ -15,9 +15,11 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.NoSuchRepositoryException;
+import com.liferay.portal.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.auth.PrincipalException;
 
 import javax.portlet.PortletException;
@@ -46,7 +48,10 @@ public class EditRepositoryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getRepository(renderRequest);
+			Repository repository = ActionUtil.getRepository(renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_REPOSITORY, repository);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchRepositoryException ||

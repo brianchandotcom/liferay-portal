@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchUserNotificationDeliveryException;
+import com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDelivery;

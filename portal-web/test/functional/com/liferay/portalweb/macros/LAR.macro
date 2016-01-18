@@ -1,7 +1,5 @@
 <definition>
 	<command name="addExportTemplateCP">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateName}" />

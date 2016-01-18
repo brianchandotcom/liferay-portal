@@ -14,10 +14,10 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -65,7 +65,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.ldap.LDAPSettings;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.server.capabilities.ServerCapabilitiesUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -779,51 +778,23 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void initCompanies() throws Exception {
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initialize companies");
+		}
 
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
+		ServletContext servletContext = getServletContext();
 
-				@Override
-				public void dependenciesFulfilled() {
-					try {
-						if (_log.isDebugEnabled()) {
-							_log.debug("Initialize companies");
-						}
+		try {
+			String[] webIds = PortalInstances.getWebIds();
 
-						ServletContext servletContext = getServletContext();
-
-						try {
-							String[] webIds = PortalInstances.getWebIds();
-
-							for (String webId : webIds) {
-								PortalInstances.initCompany(
-									servletContext, webId);
-							}
-						}
-						finally {
-							CompanyThreadLocal.setCompanyId(
-								PortalInstances.getDefaultCompanyId());
-						}
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
-				}
-
-				@Override
-				public void destroy() {
-				}
-
-			});
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter("(search.engine.id=SYSTEM_ENGINE)");
-
-		serviceDependencyManager.registerDependencies(
-			new Class[] {LDAPSettings.class}, new Filter[] {filter});
+			for (String webId : webIds) {
+				PortalInstances.initCompany(servletContext, webId);
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(
+				PortalInstances.getDefaultCompanyId());
+		}
 	}
 
 	protected void initExt() throws Exception {

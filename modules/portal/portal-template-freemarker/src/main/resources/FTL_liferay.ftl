@@ -57,15 +57,6 @@ LPS-30525.
 	/>
 </#macro>
 
-<#macro control_menu>
-	<#if is_setup_complete && is_signed_in>
-		<@liferay_portlet["runtime"]
-			portletProviderAction=portletProviderAction.VIEW
-			portletProviderClassName="com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu"
-		/>
-	</#if>
-</#macro>
-
 <#macro css
 	file_name
 >

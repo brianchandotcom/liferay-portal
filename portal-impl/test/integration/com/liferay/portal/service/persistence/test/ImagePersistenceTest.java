@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence.test;
 
-import com.liferay.portal.NoSuchImageException;
+import com.liferay.portal.exception.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;

@@ -15,6 +15,9 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +25,12 @@ import javax.servlet.http.HttpServletRequest;
  * @author Amos Fong
  */
 public interface AuthToken {
+
+	public void addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
+
+	public void addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
@@ -38,6 +47,15 @@ public interface AuthToken {
 	public String getToken(
 		HttpServletRequest request, long plid, String portletId);
 
+	public boolean isValidPortletInvocationToken(
+		HttpServletRequest request, Layout layout, Portlet portlet);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout,
+	 *             Portlet)}
+	 */
+	@Deprecated
 	public boolean isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,
 		String strutsAction, String tokenValue);

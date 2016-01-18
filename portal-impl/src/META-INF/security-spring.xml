@@ -45,11 +45,7 @@
 			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.security.auth.AuthTokenWhitelistUtil" class="com.liferay.portal.security.auth.AuthTokenWhitelistUtil">
-		<property name="authTokenWhitelist">
-			<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" />
-		</property>
-	</bean>
+	<bean id="com.liferay.portal.security.auth.AuthTokenWhitelist" class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" />
 	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" class="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressValidator" class="com.liferay.portal.security.auth.DefaultEmailAddressValidator" />
@@ -71,9 +67,11 @@
 	<bean id="com.liferay.portal.security.auth.LiberalScreenNameValidator" class="com.liferay.portal.security.auth.LiberalScreenNameValidator" />
 	<bean id="com.liferay.portal.security.auth.LoginFailure" class="com.liferay.portal.security.auth.LoginFailure" />
 	<bean id="com.liferay.portal.security.auth.LoginMaxFailures" class="com.liferay.portal.security.auth.LoginMaxFailures" />
+	<bean id="com.liferay.portal.security.auth.MVCPortletAuthTokenWhitelist" class="com.liferay.portal.security.auth.MVCPortletAuthTokenWhitelist" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />
+	<bean id="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" class="com.liferay.portal.security.auth.StrutsPortletAuthTokenWhitelist" />
 	<bean id="com.liferay.portal.security.auth.http.HttpAuthManager" class="com.liferay.portal.security.auth.http.HttpAuthManagerImpl" />
 	<bean id="com.liferay.portal.security.auth.session.AuthenticatedSessionManager" class="com.liferay.portal.security.auth.session.AuthenticatedSessionManagerImpl" />
 	<bean id="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" class="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" />

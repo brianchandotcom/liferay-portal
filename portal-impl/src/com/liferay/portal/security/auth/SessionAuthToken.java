@@ -14,15 +14,27 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -32,6 +44,80 @@ import javax.servlet.http.HttpSession;
  * @author Amos Fong
  */
 public class SessionAuthToken implements AuthToken {
+
+	@Override
+	public void addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
+			return;
+		}
+
+		String lifecycle = liferayPortletURL.getLifecycle();
+
+		if (!lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+			return;
+		}
+
+		if (AuthTokenWhitelistUtil.isPortletURLCSRFWhitelisted(
+				liferayPortletURL)) {
+
+			return;
+		}
+
+		liferayPortletURL.setParameter("p_auth", getToken(request));
+	}
+
+	@Override
+	public void addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		if (!PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
+			return;
+		}
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		String portletId = liferayPortletURL.getPortletId();
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			companyId, portletId);
+
+		if (portlet == null) {
+			return;
+		}
+
+		if (!portlet.isAddDefaultResource()) {
+			return;
+		}
+
+		if (AuthTokenWhitelistUtil.isPortletURLPortletInvocationWhitelisted(
+				liferayPortletURL)) {
+
+			return;
+		}
+
+		long plid = liferayPortletURL.getPlid();
+
+		try {
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (layoutTypePortlet.hasPortletId(portletId)) {
+				return;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage(), e);
+			}
+		}
+
+		liferayPortletURL.setParameter(
+			"p_p_auth", getToken(request, plid, portletId));
+	}
 
 	/**
 	 * @deprecated As of 7.0.0
@@ -59,22 +145,18 @@ public class SessionAuthToken implements AuthToken {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (AuthTokenWhitelistUtil.isCSRFOrigintWhitelisted(
-				companyId, origin)) {
-
+		if (AuthTokenWhitelistUtil.isOriginCSRFWhitelisted(companyId, origin)) {
 			return;
 		}
 
 		if (origin.equals(SecurityPortletContainerWrapper.class.getName())) {
 			String ppid = ParamUtil.getString(request, "p_p_id");
 
-			String portletNamespace = PortalUtil.getPortletNamespace(ppid);
-
-			String strutsAction = ParamUtil.getString(
-				request, portletNamespace + "struts_action");
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				companyId, ppid);
 
 			if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
-					companyId, ppid, strutsAction)) {
+					request, portlet)) {
 
 				return;
 			}
@@ -111,28 +193,57 @@ public class SessionAuthToken implements AuthToken {
 
 	@Override
 	public boolean isValidPortletInvocationToken(
-		HttpServletRequest request, long plid, String portletId,
-		String strutsAction, String tokenValue) {
-
-		long companyId = PortalUtil.getCompanyId(request);
+		HttpServletRequest request, Layout layout, Portlet portlet) {
 
 		if (AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
-				companyId, portletId, strutsAction)) {
+				request, portlet)) {
 
 			return true;
 		}
 
-		if (Validator.isNotNull(tokenValue)) {
+		long plid = layout.getPlid();
+
+		String portletId = portlet.getPortletId();
+
+		String portletToken = ParamUtil.getString(request, "p_p_auth");
+
+		if (Validator.isNull(portletToken)) {
+			HttpServletRequest originalRequest =
+				PortalUtil.getOriginalServletRequest(request);
+
+			portletToken = ParamUtil.getString(originalRequest, "p_p_auth");
+		}
+
+		if (Validator.isNotNull(portletToken)) {
 			String key = PortletPermissionUtil.getPrimaryKey(plid, portletId);
 
 			String sessionToken = getSessionAuthenticationToken(
 				request, key, false);
 
 			if (Validator.isNotNull(sessionToken) &&
-				sessionToken.equals(tokenValue)) {
+				sessionToken.equals(portletToken)) {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	@Deprecated
+	@Override
+	public boolean isValidPortletInvocationToken(
+		HttpServletRequest request, long plid, String portletId,
+		String strutsAction, String tokenValue) {
+
+		try {
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+			return isValidPortletInvocationToken(request, layout, portlet);
+		}
+		catch (PortalException e) {
+			ReflectionUtil.throwException(e);
 		}
 
 		return false;
@@ -180,5 +291,8 @@ public class SessionAuthToken implements AuthToken {
 	}
 
 	private static final String _CSRF = "#CSRF";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SessionAuthToken.class);
 
 }

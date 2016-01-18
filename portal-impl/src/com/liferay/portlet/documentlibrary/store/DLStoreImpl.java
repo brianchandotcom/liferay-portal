@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
+import com.liferay.portlet.documentlibrary.exception.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 import java.io.File;

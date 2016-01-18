@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Javadoc Formatter
 Bundle-SymbolicName: com.liferay.javadoc.formatter
-Bundle-Version: 1.0.9
+Bundle-Version: 1.0.10
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\

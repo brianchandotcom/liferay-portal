@@ -14,7 +14,7 @@
 
 package com.liferay.portal.util.test;
 
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

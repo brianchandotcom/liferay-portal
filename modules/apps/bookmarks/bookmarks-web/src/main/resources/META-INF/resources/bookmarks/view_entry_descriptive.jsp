@@ -33,16 +33,10 @@ else {
 }
 
 entry = entry.toEscapedModel();
-
-PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-rowURL.setParameter("mvcRenderCommandName", "/bookmarks/view_entry");
-rowURL.setParameter("redirect", currentURL);
-rowURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 %>
 
 <h4>
-	<aui:a href="<%= rowURL.toString() %>">
+	<aui:a href='<%= themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId() %>'>
 		<%= entry.getName() %>
 	</aui:a>
 </h4>

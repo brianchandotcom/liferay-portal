@@ -16,7 +16,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -64,6 +64,8 @@
 	</tear-down>
 
 	<command name="AddDocument" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="dmDocumentDescription" value="DM Document Description" />
 
 		<execute macro="Page#gotoPG">
@@ -218,6 +220,8 @@
 	</command>
 
 	<command name="AddDocuments" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="dmDocumentCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
@@ -354,6 +358,8 @@
 	</command>
 
 	<command name="AddFolder" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -904,6 +910,8 @@
 	</command>
 
 	<command name="DeleteDocument" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -984,6 +992,8 @@
 	</command>
 
 	<command name="DeleteFolder" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -999,6 +1009,8 @@
 	</command>
 
 	<command name="DeleteFolderDocument" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1049,6 +1061,8 @@
 	</command>
 
 	<command name="DeleteSubFolder" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1150,6 +1164,8 @@
 	</command>
 
 	<command name="EditDocumentType" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1196,6 +1212,8 @@
 	</command>
 
 	<command name="EditFolder" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

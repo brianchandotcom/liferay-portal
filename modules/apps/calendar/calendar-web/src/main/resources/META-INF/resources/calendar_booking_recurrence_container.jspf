@@ -54,14 +54,14 @@ if (recurrence != null) {
 
 	List<java.util.Calendar> exceptionJCalendars = recurrence.getExceptionJCalendars();
 
-	Iterator<java.util.Calendar> iterator = exceptionJCalendars.iterator();
+	Iterator<java.util.Calendar> exceptionJCalendarsIterator = exceptionJCalendars.iterator();
 
-	while (iterator.hasNext()) {
-		java.util.Calendar exceptionJCalendar = iterator.next();
+	while (exceptionJCalendarsIterator.hasNext()) {
+		java.util.Calendar exceptionJCalendar = exceptionJCalendarsIterator.next();
 
 		sb.append(exceptionJCalendar.getTimeInMillis());
 
-		if (iterator.hasNext()) {
+		if (exceptionJCalendarsIterator.hasNext()) {
 			sb.append(StringPool.COMMA);
 		}
 	}

@@ -88,7 +88,7 @@ public class CalendarBookingAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-calendar";
+		return "calendar";
 	}
 
 	@Override
@@ -178,11 +178,6 @@ public class CalendarBookingAssetRendererFactory
 		_servletContext = servletContext;
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/date.png";
-	}
-
 	@Reference(unbind = "-")
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
@@ -190,7 +185,7 @@ public class CalendarBookingAssetRendererFactory
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	private volatile CalendarBookingLocalService _calendarBookingLocalService;
-	private volatile ServletContext _servletContext;
+	private CalendarBookingLocalService _calendarBookingLocalService;
+	private ServletContext _servletContext;
 
 }

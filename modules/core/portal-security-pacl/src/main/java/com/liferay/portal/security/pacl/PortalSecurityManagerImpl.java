@@ -128,6 +128,7 @@ import org.osgi.framework.BundleReference;
 
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 /**
  * This is the portal's implementation of a security manager. The goal is to
@@ -639,7 +640,15 @@ public class PortalSecurityManagerImpl
 		public Object getNewReferencedBean(
 			String referencedBeanName, BeanFactory beanFactory) {
 
-			Object newReferencedBean = beanFactory.getBean(referencedBeanName);
+			Object newReferencedBean = null;
+
+			try {
+				newReferencedBean = beanFactory.getBean(referencedBeanName);
+			}
+			catch (NoSuchBeanDefinitionException nsbde) {
+				newReferencedBean = PortalBeanLocatorUtil.locate(
+					referencedBeanName);
+			}
 
 			Object doPrivilegedBean = _doPrivilegedBeans.get(newReferencedBean);
 

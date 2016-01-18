@@ -1088,7 +1088,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_annotationsExclusions = SetUtil.fromArray(
 			new String[] {
 				"ArquillianResource", "BeanReference", "Inject", "Mock",
-				"SuppressWarnings"
+				"ServiceReference", "SuppressWarnings"
 			});
 
 		return _annotationsExclusions;
@@ -1379,6 +1379,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return new String[0];
+	}
+
+	protected int getLineCount(String content, int pos) {
+		String beforePos = content.substring(0, pos);
+
+		return StringUtil.count(beforePos, StringPool.NEW_LINE) + 1;
 	}
 
 	protected String getMainReleaseVersion() {

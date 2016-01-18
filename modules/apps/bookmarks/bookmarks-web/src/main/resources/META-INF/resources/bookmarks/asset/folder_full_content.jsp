@@ -50,7 +50,9 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 				AssetRendererFactory<BookmarksFolder> bookmarksFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
 				%>
 
-				<div class="<%= bookmarksFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
+				<div class="lfr-asset-icon">
+					<liferay-ui:icon icon="<%= bookmarksFolderAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+
 					<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 				</div>
 
@@ -58,7 +60,9 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 				AssetRendererFactory<BookmarksEntry> bookmarksEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksEntry.class);
 				%>
 
-				<div class="<%= bookmarksEntryAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
+				<div class="last lfr-asset-icon">
+					<liferay-ui:icon icon="<%= bookmarksEntryAssetRendererFactory.getIconCssClass() %>" markupView="lexicon" />
+
 					<%= entriesCount %> <liferay-ui:message key='<%= (entriesCount == 1) ? "bookmark" : "bookmarks" %>' />
 				</div>
 			</div>

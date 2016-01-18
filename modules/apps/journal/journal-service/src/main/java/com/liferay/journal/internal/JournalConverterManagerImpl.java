@@ -40,6 +40,6 @@ public class JournalConverterManagerImpl implements JournalConverterManager {
 		_journalConverter = journalConverter;
 	}
 
-	private volatile JournalConverter _journalConverter;
+	private JournalConverter _journalConverter;
 
 }

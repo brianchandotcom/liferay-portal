@@ -96,6 +96,6 @@ public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
 	}
 
-	private volatile DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 }

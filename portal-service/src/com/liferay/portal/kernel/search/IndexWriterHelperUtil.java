@@ -14,10 +14,14 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.util.ProxyFactory;
+
+import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -77,6 +81,12 @@ public class IndexWriterHelperUtil {
 
 		_indexWriterHelper.deleteEntityDocuments(
 			searchEngineId, companyId, className, commitImmediately);
+	}
+
+	public static int getReindexTaskCount(long groupId, boolean completed)
+		throws SearchException {
+
+		return _indexWriterHelper.getReindexTaskCount(groupId, completed);
 	}
 
 	public static void indexKeyword(
@@ -176,6 +186,24 @@ public class IndexWriterHelperUtil {
 
 		_indexWriterHelper.partiallyUpdateDocuments(
 			searchEngineId, companyId, documents, commitImmediately);
+	}
+
+	public static BackgroundTask reindex(
+			long userId, String jobName, long[] companyIds,
+			Map<String, Serializable> taskContextMap)
+		throws SearchException {
+
+		return _indexWriterHelper.reindex(
+			userId, jobName, companyIds, taskContextMap);
+	}
+
+	public static BackgroundTask reindex(
+			long userId, String jobName, long[] companyIds, String className,
+			Map<String, Serializable> taskContextMap)
+		throws SearchException {
+
+		return _indexWriterHelper.reindex(
+			userId, jobName, companyIds, className, taskContextMap);
 	}
 
 	public static void setIndexReadOnly(boolean indexReadOnly) {

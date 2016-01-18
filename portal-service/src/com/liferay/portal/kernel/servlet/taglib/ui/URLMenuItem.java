@@ -14,10 +14,21 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Iván Zaera
  */
 public class URLMenuItem extends MenuItem implements URLUIItem {
+
+	public Map<String, Object> getData() {
+		if (_data == null) {
+			_data = new HashMap<>();
+		}
+
+		return _data;
+	}
 
 	public String getMethod() {
 		return _method;
@@ -35,6 +46,10 @@ public class URLMenuItem extends MenuItem implements URLUIItem {
 
 	public boolean isUseDialog() {
 		return _useDialog;
+	}
+
+	public void setData(Map<String, Object> data) {
+		_data = data;
 	}
 
 	public void setMethod(String method) {
@@ -57,6 +72,7 @@ public class URLMenuItem extends MenuItem implements URLUIItem {
 
 	private static final String _TARGET_DEFAULT = "_self";
 
+	private Map<String, Object> _data;
 	private String _method;
 	private String _target = _TARGET_DEFAULT;
 	private String _url;

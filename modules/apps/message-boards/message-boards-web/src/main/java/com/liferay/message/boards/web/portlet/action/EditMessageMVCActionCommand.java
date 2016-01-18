@@ -46,19 +46,19 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.asset.AssetCategoryException;
-import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
-import com.liferay.portlet.documentlibrary.FileExtensionException;
-import com.liferay.portlet.documentlibrary.FileNameException;
-import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.asset.exception.AssetCategoryException;
+import com.liferay.portlet.asset.exception.AssetTagException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
-import com.liferay.portlet.messageboards.LockedThreadException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.FileExtensionException;
+import com.liferay.portlet.documentlibrary.exception.FileNameException;
+import com.liferay.portlet.documentlibrary.exception.FileSizeException;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.MessageBodyException;
-import com.liferay.portlet.messageboards.MessageSubjectException;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
-import com.liferay.portlet.messageboards.RequiredMessageException;
+import com.liferay.portlet.messageboards.exception.LockedThreadException;
+import com.liferay.portlet.messageboards.exception.MessageBodyException;
+import com.liferay.portlet.messageboards.exception.MessageSubjectException;
+import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
+import com.liferay.portlet.messageboards.exception.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
@@ -470,8 +470,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MBMessageService _mbMessageService;
-	private volatile MBThreadLocalService _mbThreadLocalService;
-	private volatile MBThreadService _mbThreadService;
+	private MBMessageService _mbMessageService;
+	private MBThreadLocalService _mbThreadLocalService;
+	private MBThreadService _mbThreadService;
 
 }

@@ -87,7 +87,7 @@ public class WorkflowDefinitionLinkPortlet extends MVCPortlet {
 			workflowDefinitionLinkLocalService;
 	}
 
-	private volatile WorkflowDefinitionLinkLocalService
+	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

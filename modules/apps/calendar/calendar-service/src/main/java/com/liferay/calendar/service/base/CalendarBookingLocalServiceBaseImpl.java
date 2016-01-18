@@ -1331,6 +1331,6 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
 	@ServiceReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

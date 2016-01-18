@@ -34,7 +34,7 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -323,7 +323,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutTrashHandler.class);
 
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile TrashRendererFactory _trashRendererFactory;
+	private DLAppLocalService _dlAppLocalService;
+	private TrashRendererFactory _trashRendererFactory;
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.exception.GroupParentException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

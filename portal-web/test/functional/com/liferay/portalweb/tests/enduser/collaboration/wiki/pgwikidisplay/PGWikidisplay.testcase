@@ -16,7 +16,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -171,7 +171,7 @@
 
 		<execute macro="WikiEntry#confirmHTML" />
 
-		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
+		<execute function="Click#clickAt" locator1="AlloyEditor#CONTENT_FIELD" />
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 

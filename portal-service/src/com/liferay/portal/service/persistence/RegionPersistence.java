@@ -107,7 +107,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region findByCountryId_First(long countryId,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the first region in the ordered set where countryId = &#63;.
@@ -129,7 +129,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region findByCountryId_Last(long countryId,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the last region in the ordered set where countryId = &#63;.
@@ -152,7 +152,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region[] findByCountryId_PrevAndNext(long regionId, long countryId,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Removes all the regions where countryId = &#63; from the database.
@@ -238,7 +238,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region findByActive_First(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the first region in the ordered set where active = &#63;.
@@ -260,7 +260,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region findByActive_Last(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the last region in the ordered set where active = &#63;.
@@ -283,7 +283,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region[] findByActive_PrevAndNext(long regionId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Removes all the regions where active = &#63; from the database.
@@ -309,7 +309,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @throws NoSuchRegionException if a matching region could not be found
 	*/
 	public Region findByC_R(long countryId, java.lang.String regionCode)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -339,7 +339,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @return the region that was removed
 	*/
 	public Region removeByC_R(long countryId, java.lang.String regionCode)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the number of regions where countryId = &#63; and regionCode = &#63;.
@@ -424,7 +424,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region findByC_A_First(long countryId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the first region in the ordered set where countryId = &#63; and active = &#63;.
@@ -448,7 +448,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	*/
 	public Region findByC_A_Last(long countryId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the last region in the ordered set where countryId = &#63; and active = &#63;.
@@ -474,7 +474,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	public Region[] findByC_A_PrevAndNext(long regionId, long countryId,
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<Region> orderByComparator)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Removes all the regions where countryId = &#63; and active = &#63; from the database.
@@ -523,7 +523,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
 	public Region remove(long regionId)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	public Region updateImpl(Region region);
 
@@ -535,7 +535,7 @@ public interface RegionPersistence extends BasePersistence<Region> {
 	* @throws NoSuchRegionException if a region with the primary key could not be found
 	*/
 	public Region findByPrimaryKey(long regionId)
-		throws com.liferay.portal.NoSuchRegionException;
+		throws com.liferay.portal.exception.NoSuchRegionException;
 
 	/**
 	* Returns the region with the primary key or returns <code>null</code> if it could not be found.

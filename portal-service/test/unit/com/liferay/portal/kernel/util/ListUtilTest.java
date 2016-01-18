@@ -228,6 +228,67 @@ public class ListUtilTest {
 	}
 
 	@Test
+	public void testIsNullWhenAllValuesAreNull() {
+		List<String> list = new ArrayList<>();
+
+		list.add(null);
+		list.add(null);
+
+		Assert.assertTrue(ListUtil.isNull(list));
+		Assert.assertFalse(ListUtil.isNotNull(list));
+	}
+
+	@Test
+	public void testIsNullWhenAllValuesAreStringNull() {
+		List<String> list = new ArrayList<>();
+
+		list.add("null");
+		list.add("null");
+
+		Assert.assertTrue(ListUtil.isNull(list));
+		Assert.assertFalse(ListUtil.isNotNull(list));
+	}
+
+	@Test
+	public void testIsNullWhenCombiningDifferentNullValues() {
+		List<String> list = new ArrayList<>();
+
+		list.add(null);
+		list.add("null");
+		list.add(StringPool.BLANK);
+
+		Assert.assertTrue(ListUtil.isNull(list));
+		Assert.assertFalse(ListUtil.isNotNull(list));
+	}
+
+	@Test
+	public void testIsNullWhenEmptyList() {
+		List<String> list = new ArrayList<>();
+
+		Assert.assertTrue(ListUtil.isNull(list));
+		Assert.assertFalse(ListUtil.isNotNull(list));
+	}
+
+	@Test
+	public void testIsNullWhenNotAllValuesAreEmptyString() {
+		List<String> list = new ArrayList<>();
+
+		list.add(StringPool.BLANK);
+		list.add(StringPool.BLANK);
+
+		Assert.assertTrue(ListUtil.isNull(list));
+		Assert.assertFalse(ListUtil.isNotNull(list));
+	}
+
+	@Test
+	public void testIsNullWhenNullList() {
+		List<String> list = null;
+
+		Assert.assertTrue(ListUtil.isNull(list));
+		Assert.assertFalse(ListUtil.isNotNull(list));
+	}
+
+	@Test
 	public void testRemoveEmptyElement() {
 		List<String> list = new ArrayList<>();
 

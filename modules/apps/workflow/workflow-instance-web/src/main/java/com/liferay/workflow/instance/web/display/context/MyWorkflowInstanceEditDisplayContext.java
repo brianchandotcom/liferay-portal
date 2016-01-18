@@ -16,13 +16,14 @@ package com.liferay.workflow.instance.web.display.context;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 
 import java.util.List;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Marcellus Tavares
@@ -31,9 +32,12 @@ public class MyWorkflowInstanceEditDisplayContext
 	extends WorkflowInstanceEditDisplayContext {
 
 	public MyWorkflowInstanceEditDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		PortletPreferences portletPreferences) {
 
-		super(renderRequest, renderResponse);
+		super(
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
 	}
 
 	@Override

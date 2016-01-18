@@ -400,6 +400,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

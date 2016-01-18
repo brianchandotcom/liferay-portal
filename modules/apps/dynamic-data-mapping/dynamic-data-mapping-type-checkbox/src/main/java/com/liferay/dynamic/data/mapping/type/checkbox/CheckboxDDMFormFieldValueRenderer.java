@@ -50,7 +50,7 @@ public class CheckboxDDMFormFieldValueRenderer
 		_checkboxDDMFormFieldValueAccessor = checkBoxDDMFormFieldValueAccessor;
 	}
 
-	private volatile CheckboxDDMFormFieldValueAccessor
+	private CheckboxDDMFormFieldValueAccessor
 		_checkboxDDMFormFieldValueAccessor;
 
 }

@@ -27,25 +27,41 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_message = message;
 	}
 
-	@Override
-	protected void cleanUp() {
-		_message = null;
+	public void setSearch(boolean search) {
+		_search = search;
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
+	protected void cleanUp() {
+		_message = null;
+		_search = false;
+	}
+
+	@Override
+	protected String getEndPage() {
+		return _END_PAGE;
+	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
 			"liferay-ui:empty-result-message:message", _message);
+		request.setAttribute(
+			"liferay-ui:empty-result-message:search", String.valueOf(_search));
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/empty_result_message/page.jsp";
+	private static final String _END_PAGE =
+		"/html/taglib/ui/empty_result_message/end.jsp";
+
+	private static final String _START_PAGE =
+		"/html/taglib/ui/empty_result_message/start.jsp";
 
 	private String _message;
+	private boolean _search;
 
 }

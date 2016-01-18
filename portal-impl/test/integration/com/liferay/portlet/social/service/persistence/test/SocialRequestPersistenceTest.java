@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.social.NoSuchRequestException;
+import com.liferay.portlet.social.exception.NoSuchRequestException;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;

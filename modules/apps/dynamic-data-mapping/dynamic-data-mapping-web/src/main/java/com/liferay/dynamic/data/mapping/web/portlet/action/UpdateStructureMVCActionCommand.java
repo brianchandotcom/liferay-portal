@@ -94,7 +94,7 @@ public class UpdateStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 			ddmFormLayout, serviceContext);
 	}
 
-	private volatile DDM _ddm;
-	private volatile DDMStructureService _ddmStructureService;
+	private DDM _ddm;
+	private DDMStructureService _ddmStructureService;
 
 }

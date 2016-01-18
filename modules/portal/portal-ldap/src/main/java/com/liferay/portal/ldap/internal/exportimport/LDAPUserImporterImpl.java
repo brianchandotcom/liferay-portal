@@ -14,8 +14,8 @@
 
 package com.liferay.portal.ldap.internal.exportimport;
 
-import com.liferay.portal.NoSuchRoleException;
-import com.liferay.portal.NoSuchUserGroupException;
+import com.liferay.portal.exception.NoSuchRoleException;
+import com.liferay.portal.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -109,9 +109,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hugo Huijser
  */
 @Component(
-	configurationPid = "com.liferay.portal.ldap.configuration.LDAPConfiguration",
-	immediate = true,
-	service = {LDAPUserImporter.class, UserImporter.class}
+	immediate = true, service = {LDAPUserImporter.class, UserImporter.class}
 )
 public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
@@ -955,6 +953,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			String userMappingsGroup = userMappings.getProperty("group");
 
 			if (Validator.isNull(userMappingsGroup)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping group import because no mappings for LDAP " +
+							"groups were specified in user mappings " +
+								userMappings);
+				}
+
 				return;
 			}
 
@@ -1588,24 +1593,24 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserImporterImpl.class);
 
-	private volatile AttributesTransformer _attributesTransformer;
+	private AttributesTransformer _attributesTransformer;
 	private boolean _authPipelineEnableLiferayCheck;
-	private volatile CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 	private String _companySecurityAuthType;
-	private volatile ExpandoValueLocalService _expandoValueLocalService;
-	private volatile GroupLocalService _groupLocalService;
+	private ExpandoValueLocalService _expandoValueLocalService;
+	private GroupLocalService _groupLocalService;
 	private long _lastImportTime;
-	private volatile ConfigurationProvider<LDAPImportConfiguration>
+	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPServerConfiguration>
+	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private volatile LDAPSettings _ldapSettings;
-	private volatile LDAPToPortalConverter _ldapToPortalConverter;
-	private volatile LockManager _lockManager;
+	private LDAPSettings _ldapSettings;
+	private LDAPToPortalConverter _ldapToPortalConverter;
+	private LockManager _lockManager;
 	private PortalCache<String, Long> _portalCache;
-	private volatile PortalLDAP _portalLDAP;
-	private volatile RoleLocalService _roleLocalService;
-	private volatile UserGroupLocalService _userGroupLocalService;
-	private volatile UserLocalService _userLocalService;
+	private PortalLDAP _portalLDAP;
+	private RoleLocalService _roleLocalService;
+	private UserGroupLocalService _userGroupLocalService;
+	private UserLocalService _userLocalService;
 
 }

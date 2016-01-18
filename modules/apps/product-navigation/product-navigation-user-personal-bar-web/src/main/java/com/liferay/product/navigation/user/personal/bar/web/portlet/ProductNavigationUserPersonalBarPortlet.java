@@ -20,6 +20,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.product.navigation.user.personal.bar.web.contants.ProductNavigationUserPersonalBarWebKeys;
 
@@ -62,19 +63,23 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT,
-			getNotificationsCount(renderRequest));
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		if (!user.isDefaultUser()) {
+			renderRequest.setAttribute(
+				ProductNavigationUserPersonalBarWebKeys.NOTIFICATIONS_COUNT,
+				getNotificationsCount(themeDisplay));
+		}
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	protected int getNotificationsCount(RenderRequest renderRequest) {
+	protected int getNotificationsCount(ThemeDisplay themeDisplay) {
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		return panelCategoryHelper.getNotificationsCount(
 			PanelCategoryKeys.USER, themeDisplay.getPermissionChecker(),
@@ -93,7 +98,7 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	private volatile PanelAppRegistry _panelAppRegistry;
-	private volatile PanelCategoryRegistry _panelCategoryRegistry;
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

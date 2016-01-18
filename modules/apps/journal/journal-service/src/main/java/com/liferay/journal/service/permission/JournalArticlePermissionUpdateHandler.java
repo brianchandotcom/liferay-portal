@@ -55,6 +55,6 @@ public class JournalArticlePermissionUpdateHandler
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

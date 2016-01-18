@@ -6,6 +6,7 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
+	content=../workflow-lang/src/main/resources/content,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow

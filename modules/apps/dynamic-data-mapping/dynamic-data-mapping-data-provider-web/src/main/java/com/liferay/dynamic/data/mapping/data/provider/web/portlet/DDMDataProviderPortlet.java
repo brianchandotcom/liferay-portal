@@ -111,12 +111,10 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile DDMDataProviderInstanceService
-		_ddmDataProviderInstanceService;
-	private volatile DDMDataProviderTracker _ddmDataProviderTracker;
-	private volatile DDMFormRenderer _ddmFormRenderer;
-	private volatile DDMFormValuesJSONDeserializer
-		_ddmFormValuesJSONDeserializer;
-	private volatile UserLocalService _userLocalService;
+	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
+	private DDMDataProviderTracker _ddmDataProviderTracker;
+	private DDMFormRenderer _ddmFormRenderer;
+	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private UserLocalService _userLocalService;
 
 }

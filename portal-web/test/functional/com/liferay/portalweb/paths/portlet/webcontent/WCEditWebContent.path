@@ -138,7 +138,7 @@
 <!--DISPLAY_PAGE-->
 <tr>
 	<td>DISPLAY_PAGE_CHOOSE</td>
-	<td>//div[contains(@id,'displayPage')]/div/button[contains(.,'Choose')]</td>
+	<td>//button[contains(@id,'DisplayPage') and contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -240,11 +240,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							function(index, item) {
 								var randomId = item.value;
 
-								var currentMessageSelector = '#' + randomId + 'message_' + response.commentId;
-
-								var targetNode = AUI.$(currentMessageSelector);
-
-								if (targetNode.length) {
+								if (index === 0) {
 									<%= randomNamespace %>showStatusMessage(
 										{
 											id: randomId,
@@ -252,7 +248,13 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 											type: 'success'
 										}
 									);
+								}
 
+								var currentMessageSelector = '#' + randomId + 'message_' + response.commentId;
+
+								var targetNode = AUI.$(currentMessageSelector);
+
+								if (targetNode.length) {
 									location.hash = currentMessageSelector;
 								}
 							}

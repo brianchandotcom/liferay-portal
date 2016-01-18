@@ -25,7 +25,7 @@ if (rowChecker != null) {
 %>
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
-	<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
+	<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" search="<%= searchContainer.isSearch() %>" />
 </c:if>
 
 <div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">

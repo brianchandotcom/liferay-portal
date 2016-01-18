@@ -102,6 +102,6 @@ public class SimulationControlMenuEntry
 		_panelAppRegistry = panelAppRegistry;
 	}
 
-	private volatile PanelAppRegistry _panelAppRegistry;
+	private PanelAppRegistry _panelAppRegistry;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.IOException;
@@ -41,11 +41,8 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	protected void addPortalToolDependencies(
 		Project project, String configurationName, String portalToolName) {
 
-		String portalToolVersion = _portalToolVersions.getProperty(
-			portalToolName);
-
-		portalToolVersion = GradleUtil.getProperty(
-			project, portalToolName + ".version", portalToolVersion);
+		String portalToolVersion = getPortalToolVersion(
+			project, portalToolName);
 
 		if (Validator.isNotNull(portalToolVersion)) {
 			GradleUtil.addDependency(
@@ -62,6 +59,16 @@ public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
 	protected abstract String getPortalToolConfigurationName();
 
 	protected abstract String getPortalToolName();
+
+	protected String getPortalToolVersion(
+		Project project, String portalToolName) {
+
+		String portalToolVersion = _portalToolVersions.getProperty(
+			portalToolName);
+
+		return GradleUtil.getProperty(
+			project, portalToolName + ".version", portalToolVersion);
+	}
 
 	private static final Properties _portalToolVersions = new Properties();
 

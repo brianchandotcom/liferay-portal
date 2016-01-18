@@ -14,9 +14,9 @@
 
 package com.liferay.staging.bar.web.portlet;
 
-import com.liferay.portal.LayoutBranchNameException;
-import com.liferay.portal.LayoutSetBranchNameException;
-import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.exception.LayoutBranchNameException;
+import com.liferay.portal.exception.LayoutSetBranchNameException;
+import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -289,9 +289,9 @@ public class StagingBarPortlet extends MVCPortlet {
 		_layoutSetLocalService = null;
 	}
 
-	private volatile LayoutRevisionLocalService _layoutRevisionLocalService;
-	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
-	private volatile LayoutSetBranchService _layoutSetBranchService;
-	private volatile LayoutSetLocalService _layoutSetLocalService;
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+	private LayoutSetBranchService _layoutSetBranchService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

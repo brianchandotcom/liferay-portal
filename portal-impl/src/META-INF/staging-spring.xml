@@ -14,17 +14,6 @@
 	<bean id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" class="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" />
-	<bean id="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil" class="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil">
-		<property name="portletDataHandlerStatusMessageSender">
-			<bean class="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderImpl">
-				<property name="backgroundTaskStatusMessageSender">
-					<bean class="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSenderImpl">
-						<property name="destinationName" value="liferay/background_task_status" />
-					</bean>
-				</property>
-			</bean>
-		</property>
-	</bean>
 	<aop:config proxy-target-class="false">
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutSetLocalService)" />

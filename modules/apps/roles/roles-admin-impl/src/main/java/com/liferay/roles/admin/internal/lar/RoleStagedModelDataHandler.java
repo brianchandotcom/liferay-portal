@@ -15,7 +15,7 @@
 package com.liferay.roles.admin.internal.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.NoSuchResourceActionException;
+import com.liferay.portal.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -406,15 +406,14 @@ public class RoleStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		RoleStagedModelDataHandler.class);
 
-	private volatile GroupLocalService _groupLocalService;
+	private GroupLocalService _groupLocalService;
 	private final PermissionConversionFilter _permissionConversionFilter =
 		new ImportExportPermissionConversionFilter();
-	private volatile ResourceBlockLocalService _resourceBlockLocalService;
-	private volatile ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-	private volatile ResourcePermissionService _resourcePermissionService;
-	private volatile ResourceTypePermissionLocalService
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private ResourcePermissionService _resourcePermissionService;
+	private ResourceTypePermissionLocalService
 		_resourceTypePermissionLocalService;
-	private volatile RoleLocalService _roleLocalService;
+	private RoleLocalService _roleLocalService;
 
 }

@@ -86,7 +86,7 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile OpenId _openId;
-	private volatile UserLocalService _userLocalService;
+	private OpenId _openId;
+	private UserLocalService _userLocalService;
 
 }

@@ -231,7 +231,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		_userLocalService = userLocalService;
 	}
 
-	private volatile RoleLocalService _roleLocalService;
-	private volatile UserLocalService _userLocalService;
+	private RoleLocalService _roleLocalService;
+	private UserLocalService _userLocalService;
 
 }

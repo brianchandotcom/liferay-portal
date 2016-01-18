@@ -33,7 +33,7 @@
 	<command name="AddPageFromExistingPage" priority="3">
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page" />
 		</execute>
 
@@ -41,7 +41,7 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
 			<var name="pageTemplateName" value="Content Display Page" />
 		</execute>
@@ -60,7 +60,7 @@
 	<command name="EditSitePage" priority="4">
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page" />
 		</execute>
 

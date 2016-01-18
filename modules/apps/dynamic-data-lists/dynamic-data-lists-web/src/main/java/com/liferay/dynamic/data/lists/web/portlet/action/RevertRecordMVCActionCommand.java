@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.lists.web.portlet.action;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -57,11 +59,28 @@ public class RevertRecordMVCActionCommand extends AddRecordMVCActionCommand {
 		_ddlRecordService.revertRecord(recordId, version, serviceContext);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}
 
-	private volatile DDLRecordService _ddlRecordService;
+	@Override
+	@Reference(unbind = "-")
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		this.ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	protected void setDDMFormValuesJSONDeserializer(
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+
+		this.ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+	}
+
+	private DDLRecordService _ddlRecordService;
 
 }

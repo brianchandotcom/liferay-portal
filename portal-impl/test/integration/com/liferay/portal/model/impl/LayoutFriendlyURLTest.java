@@ -14,8 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.LayoutFriendlyURLException;
-import com.liferay.portal.LayoutFriendlyURLsException;
+import com.liferay.portal.exception.LayoutFriendlyURLException;
+import com.liferay.portal.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;

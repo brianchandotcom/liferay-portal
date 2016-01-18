@@ -14,7 +14,7 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.portal.NoSuchOrganizationException;
+import com.liferay.portal.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -141,8 +141,8 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 	}
 
-	private volatile OrganizationLocalService _organizationLocalService;
-	private volatile UserGroupService _userGroupService;
-	private volatile UserService _userService;
+	private OrganizationLocalService _organizationLocalService;
+	private UserGroupService _userGroupService;
+	private UserService _userService;
 
 }

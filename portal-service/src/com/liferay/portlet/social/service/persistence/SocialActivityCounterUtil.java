@@ -191,7 +191,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static SocialActivityCounter findByGroupId_First(long groupId,
 		OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -217,7 +217,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static SocialActivityCounter findByGroupId_Last(long groupId,
 		OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -245,7 +245,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter[] findByGroupId_PrevAndNext(
 		long activityCounterId, long groupId,
 		OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityCounterId, groupId,
 			orderByComparator);
@@ -357,7 +357,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static SocialActivityCounter findByC_C_First(long classNameId,
 		long classPK, OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -387,7 +387,7 @@ public class SocialActivityCounterUtil {
 	*/
 	public static SocialActivityCounter findByC_C_Last(long classNameId,
 		long classPK, OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -419,7 +419,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter[] findByC_C_PrevAndNext(
 		long activityCounterId, long classNameId, long classPK,
 		OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(activityCounterId, classNameId,
 			classPK, orderByComparator);
@@ -547,7 +547,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter findByG_C_C_O_First(long groupId,
 		long classNameId, long classPK, int ownerType,
 		OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_O_First(groupId, classNameId, classPK,
 			ownerType, orderByComparator);
@@ -585,7 +585,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter findByG_C_C_O_Last(long groupId,
 		long classNameId, long classPK, int ownerType,
 		OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_O_Last(groupId, classNameId, classPK,
 			ownerType, orderByComparator);
@@ -625,7 +625,7 @@ public class SocialActivityCounterUtil {
 		long activityCounterId, long groupId, long classNameId, long classPK,
 		int ownerType,
 		OrderByComparator<SocialActivityCounter> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_O_PrevAndNext(activityCounterId, groupId,
 			classNameId, classPK, ownerType, orderByComparator);
@@ -675,7 +675,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter findByG_C_C_N_O_S(long groupId,
 		long classNameId, long classPK, java.lang.String name, int ownerType,
 		int startPeriod)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_N_O_S(groupId, classNameId, classPK, name,
 			ownerType, startPeriod);
@@ -734,7 +734,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter removeByG_C_C_N_O_S(long groupId,
 		long classNameId, long classPK, java.lang.String name, int ownerType,
 		int startPeriod)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .removeByG_C_C_N_O_S(groupId, classNameId, classPK, name,
 			ownerType, startPeriod);
@@ -773,7 +773,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter findByG_C_C_N_O_E(long groupId,
 		long classNameId, long classPK, java.lang.String name, int ownerType,
 		int endPeriod)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .findByG_C_C_N_O_E(groupId, classNameId, classPK, name,
 			ownerType, endPeriod);
@@ -832,7 +832,7 @@ public class SocialActivityCounterUtil {
 	public static SocialActivityCounter removeByG_C_C_N_O_E(long groupId,
 		long classNameId, long classPK, java.lang.String name, int ownerType,
 		int endPeriod)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence()
 				   .removeByG_C_C_N_O_E(groupId, classNameId, classPK, name,
 			ownerType, endPeriod);
@@ -893,7 +893,7 @@ public class SocialActivityCounterUtil {
 	* @throws NoSuchActivityCounterException if a social activity counter with the primary key could not be found
 	*/
 	public static SocialActivityCounter remove(long activityCounterId)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence().remove(activityCounterId);
 	}
 
@@ -910,7 +910,7 @@ public class SocialActivityCounterUtil {
 	* @throws NoSuchActivityCounterException if a social activity counter with the primary key could not be found
 	*/
 	public static SocialActivityCounter findByPrimaryKey(long activityCounterId)
-		throws com.liferay.portlet.social.NoSuchActivityCounterException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityCounterException {
 		return getPersistence().findByPrimaryKey(activityCounterId);
 	}
 

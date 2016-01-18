@@ -24,11 +24,14 @@ import com.liferay.portal.template.TemplateResourceThreadLocal;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import freemarker.cache.TemplateCache;
+import freemarker.cache.TemplateCache.MaybeMissingTemplate;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 import java.io.IOException;
+
+import java.lang.reflect.Constructor;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -44,7 +47,9 @@ public class LiferayTemplateCache extends TemplateCache {
 	public LiferayTemplateCache(
 		Configuration configuration,
 		FreeMarkerEngineConfiguration freemarkerEngineConfiguration,
-		TemplateResourceLoader templateResourceLoader) {
+		TemplateResourceLoader templateResourceLoader) throws Exception {
+
+		super(null, configuration);
 
 		_configuration = configuration;
 		_freemarkerEngineConfiguration = freemarkerEngineConfiguration;
@@ -56,11 +61,17 @@ public class LiferayTemplateCache extends TemplateCache {
 			TemplateConstants.LANG_TYPE_FTL);
 
 		_portalCache = SingleVMPoolUtil.getPortalCache(porttalCacheName);
+
+		_constructor = MaybeMissingTemplate.class.getDeclaredConstructor(
+			Template.class);
+
+		_constructor.setAccessible(true);
 	}
 
 	@Override
-	public Template getTemplate(
-			String templateId, Locale locale, String encoding, boolean parse)
+	public MaybeMissingTemplate getTemplate(
+			String templateId, Locale locale, Object customLookupCondition,
+			String encoding, boolean parse)
 		throws IOException {
 
 		for (String macroTemplateId :
@@ -91,7 +102,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		return doGetTemplate(templateId, locale, encoding);
 	}
 
-	private Template doGetTemplate(
+	private MaybeMissingTemplate doGetTemplate(
 			String templateId, Locale locale, String encoding)
 		throws IOException {
 
@@ -132,30 +143,39 @@ public class LiferayTemplateCache extends TemplateCache {
 
 		Object object = _portalCache.get(templateResource);
 
-		if ((object != null) && (object instanceof Template)) {
-			return (Template)object;
+		if ((object != null) && (object instanceof MaybeMissingTemplate)) {
+			return (MaybeMissingTemplate)object;
 		}
 
 		Template template = new Template(
 			templateResource.getTemplateId(), templateResource.getReader(),
-			_configuration, TemplateConstants.DEFAUT_ENCODING);
+			_configuration);
 
-		if (_freemarkerEngineConfiguration.resourceModificationCheck()
-				!= 0) {
+		try {
+			MaybeMissingTemplate maybeMissingTemplate =
+				_constructor.newInstance(template);
 
-			_portalCache.put(templateResource, template);
+			if (_freemarkerEngineConfiguration.resourceModificationCheck()
+					!= 0) {
+
+				_portalCache.put(templateResource, maybeMissingTemplate);
+			}
+
+			return maybeMissingTemplate;
 		}
-
-		return template;
+		catch (ReflectiveOperationException roe) {
+			throw new IOException(roe);
+		}
 	}
 
 	private final Configuration _configuration;
+	private final Constructor<MaybeMissingTemplate> _constructor;
 	private final FreeMarkerEngineConfiguration _freemarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private final TemplateResourceLoader _templateResourceLoader;
 
 	private class TemplatePrivilegedExceptionAction
-		implements PrivilegedExceptionAction<Template> {
+		implements PrivilegedExceptionAction<MaybeMissingTemplate> {
 
 		public TemplatePrivilegedExceptionAction(
 			String templateId, Locale locale, String encoding) {
@@ -166,7 +186,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		}
 
 		@Override
-		public Template run() throws Exception {
+		public MaybeMissingTemplate run() throws Exception {
 			return doGetTemplate(_templateId, _locale, _encoding);
 		}
 

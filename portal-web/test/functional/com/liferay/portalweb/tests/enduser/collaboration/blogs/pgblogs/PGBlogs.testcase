@@ -15,7 +15,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -67,6 +67,8 @@
 	</tear-down>
 
 	<command name="AddBlogsEntries" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
@@ -316,7 +318,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName2}" />
 		</execute>
 
@@ -520,8 +522,8 @@
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="page" value="Public Pages" />
+		<var name="pageName" value="${pageName}" />
 		<var name="siteName" value="Organization Name" />
-		<var name="sitePageName" value="${pageName}" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -536,6 +538,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="${orgName}" />
 		</execute>
@@ -544,10 +548,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
-			<var name="sitePageName" value="${sitePageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -845,6 +849,8 @@
 	</command>
 
 	<command name="MoveToRecycleBinBlogsEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -924,6 +930,8 @@
 	</command>
 
 	<command name="SaveBlogsEntryDraft" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -953,6 +961,8 @@
 	</command>
 
 	<command name="SaveBlogsEntryDraftAuto" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -1020,7 +1030,7 @@
 		<var name="blogsEntrySearchNoResult" value="Blogs1,Entry1,Content1,Blogs1 Entry1 Content1" />
 		<var name="blogsEntrySearchResult" value="Blogs,Entry,Content,Blogs Entry Content" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Search Page" />
 		</execute>
 
@@ -1070,7 +1080,7 @@
 		<var name="blogsEntrySearchNoResult" value="&quot;Blogs1&quot;,&quot;Entry1&quot;,&quot;Content1&quot;,&quot;Blogs1 Entry1 Content1&quot;" />
 		<var name="blogsEntrySearchResult" value="&quot;Blogs&quot;,&quot;Entry&quot;,&quot;Content&quot;,&quot;Blogs Entry Content&quot;" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Search Page" />
 		</execute>
 
@@ -1120,7 +1130,7 @@
 		<var name="blogsEntrySearchNoResult" value="Blogs1,Entry1,Title1,Blogs1 Entry1 Title1" />
 		<var name="blogsEntrySearchResult" value="Blogs,Entry,Title,Blogs Entry Title" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Search Page" />
 		</execute>
 
@@ -1170,7 +1180,7 @@
 		<var name="blogsEntrySearchNoResult" value="&quot;Blogs1&quot;,&quot;Entry1&quot;,&quot;Title1&quot;,&quot;Blogs1&quot;,&quot;Entry1&quot;,&quot;Title1&quot;" />
 		<var name="blogsEntrySearchResult" value="&quot;Blogs&quot;,&quot;Entry&quot;,&quot;Title&quot;,&quot;Blogs Entry Title&quot;" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Search Page" />
 		</execute>
 

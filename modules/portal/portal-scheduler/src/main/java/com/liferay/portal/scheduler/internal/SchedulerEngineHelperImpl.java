@@ -968,16 +968,16 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		SchedulerEngineHelperImpl.class);
 
 	private boolean _auditMessageSchedulerJob;
-	private volatile AuditRouter _auditRouter;
+	private AuditRouter _auditRouter;
 	private volatile BundleContext _bundleContext;
-	private volatile DestinationFactory _destinationFactory;
+	private DestinationFactory _destinationFactory;
 	private final Set<ServiceRegistration<Destination>>
 		_destinationServiceRegistrations = new HashSet<>();
-	private volatile JSONFactory _jsonFactory;
+	private JSONFactory _jsonFactory;
 	private final Map<String, ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new HashMap<>();
-	private volatile Props _props;
-	private volatile SchedulerEngine _schedulerEngine;
+	private Props _props;
+	private SchedulerEngine _schedulerEngine;
 	private volatile boolean _schedulerEngineEnabled;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>

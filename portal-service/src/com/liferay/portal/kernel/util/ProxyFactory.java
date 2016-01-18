@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -61,6 +63,8 @@ public class ProxyFactory {
 			interfaceClass.getClassLoader(), new Class[] {interfaceClass},
 			new ServiceTrackedInvocationHandler<T>(interfaceClass));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ProxyFactory.class);
 
 	private static class DummyInvocationHandler<T>
 		implements InvocationHandler {
@@ -116,6 +120,12 @@ public class ProxyFactory {
 				}
 			}
 
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skipping " + method.getName() + " because " +
+						_interfaceClassName + " is not registered");
+			}
+
 			Class<?> returnType = method.getReturnType();
 
 			if (returnType.equals(boolean.class)) {
@@ -144,6 +154,8 @@ public class ProxyFactory {
 		}
 
 		private ServiceTrackedInvocationHandler(Class<T> interfaceClass) {
+			_interfaceClassName = interfaceClass.getName();
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			_serviceTracker = registry.trackServices(interfaceClass);
@@ -151,6 +163,7 @@ public class ProxyFactory {
 			_serviceTracker.open();
 		}
 
+		private final String _interfaceClassName;
 		private final ServiceTracker<T, T> _serviceTracker;
 
 	}

@@ -134,6 +134,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 
 				PortletURL latestArticleEditURL = latestArticleAssetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP, redirectURL);
 
+				latestArticleEditURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
 				latestArticleEditURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 				Map<String, Object> data = new HashMap<String, Object>();
@@ -221,6 +222,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					<%
 					PortletURL addArticleURL = assetRendererFactory.getURLAdd(liferayPortletRequest, liferayPortletResponse, 0);
 
+					addArticleURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
 					addArticleURL.setParameter("redirect", redirectURL.toString());
 					addArticleURL.setParameter("showHeader", Boolean.FALSE.toString());
 					addArticleURL.setParameter("portletResource", portletDisplay.getId());

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.documentlibrary.NoSuchContentException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.service.base.DLContentLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.comparator.DLContentVersionComparator;

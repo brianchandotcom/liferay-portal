@@ -60,62 +60,7 @@ if (organization != null) {
 }
 %>
 
-<c:if test="<%= portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
-	<aui:nav cssClass="nav-tabs">
-		<portlet:renderURL var="viewUsersTreeURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="browse" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
-
-		<portlet:renderURL var="viewOrganizationsFlatURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="view-all-organizations" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
-
-		<portlet:renderURL var="viewUsersFlatURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-			<portlet:param name="toolbarItem" value="view-all-users" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewUsersFlatURL %>" label="all-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
-	</aui:nav>
-
-	<aui:nav-bar>
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" />
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-	</div>
-</c:if>
-
-<c:if test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
-	<aui:nav-bar>
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" />
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
+<c:if test="<%= (portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE)) || portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
@@ -150,12 +95,13 @@ if (organization != null) {
 				<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:header
-				backLabel="<%= parentOrganizationName %>"
-				backURL="<%= Validator.isNotNull(backURL) ? backURL : headerBackURL.toString() %>"
-				localizeTitle="<%= false %>"
-				title="<%= organization.getName() %>"
-			/>
+			<%
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(Validator.isNotNull(backURL) ? backURL : headerBackURL.toString());
+
+			renderResponse.setTitle(organization.getName());
+			%>
+
 		</c:if>
 
 		<aui:row>
@@ -283,12 +229,12 @@ if (organization != null) {
 
 						</liferay-util:buffer>
 
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="usersAdminOrganizationsPanel" markupView="lexicon" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
 
 							<%
 							SearchContainer searchContainer = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
 
-							RowChecker rowChecker = new RowChecker(renderResponse);
+							RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 							rowChecker.setRowIds("rowIdsOrganization");
 
@@ -296,6 +242,7 @@ if (organization != null) {
 							%>
 
 							<liferay-ui:search-container
+								id="organizations"
 								searchContainer="<%= searchContainer %>"
 								var="organizationSearchContainer"
 							>
@@ -387,7 +334,7 @@ if (organization != null) {
 									<%@ include file="/organization/organization_columns.jspf" %>
 								</liferay-ui:search-container-row>
 
-								<liferay-ui:search-iterator />
+								<liferay-ui:search-iterator markupView="lexicon" />
 							</liferay-ui:search-container>
 						</liferay-ui:panel>
 					</c:if>
@@ -432,7 +379,7 @@ if (organization != null) {
 							boolean organizationContextView = true;
 							%>
 
-							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
+							<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="usersAdminUsersPanel" markupView="lexicon" persistState="<%= true %>" title="<%= usersPanelTitle %>">
 								<%@ include file="/view_flat_users.jspf" %>
 							</liferay-ui:panel>
 						</c:if>
@@ -468,8 +415,10 @@ if (organization != null) {
 	</c:otherwise>
 </c:choose>
 
+<%@ include file="/add_menu.jspf" %>
+
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId("organizationSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request, "organizationSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 </aui:script>
 
 <%!

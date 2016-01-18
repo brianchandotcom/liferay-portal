@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConfigurationKeys;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.LegacyFacebookConnectPropsKeys;
@@ -85,9 +86,11 @@ public class FacebookConnectCompanySettingsVerifyProcess
 				StringPool.BLANK));
 		dictionary.put(
 			FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
-				StringPool.BLANK));
+			upgradeLegacyRedirectURI(
+				_prefsProps.getString(
+					companyId,
+					LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
+					StringPool.BLANK)));
 		dictionary.put(
 			FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL,
 			_prefsProps.getString(
@@ -130,8 +133,18 @@ public class FacebookConnectCompanySettingsVerifyProcess
 		_settingsFactory = settingsFactory;
 	}
 
-	private volatile CompanyLocalService _companyLocalService;
-	private volatile PrefsProps _prefsProps;
-	private volatile SettingsFactory _settingsFactory;
+	protected String upgradeLegacyRedirectURI(String legacyRedirectURI) {
+		if (Validator.isNull(legacyRedirectURI)) {
+			return legacyRedirectURI;
+		}
+
+		return legacyRedirectURI.replaceFirst(
+			"/c/login/facebook_connect_oauth",
+			"/c/portal/facebook_connect_oauth");
+	}
+
+	private CompanyLocalService _companyLocalService;
+	private PrefsProps _prefsProps;
+	private SettingsFactory _settingsFactory;
 
 }

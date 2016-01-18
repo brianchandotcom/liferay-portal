@@ -38,6 +38,29 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 int exportImportConfigurationType = localPublishing ? ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL : ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
 %>
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="publish-templates" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+		</liferay-portlet:renderURL>
+
+		<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<div class="alert alert-info">
+	<liferay-ui:message key="publish-templates-can-be-administered-in-the-control-menu" />
+</div>
+
 <aui:form action="<%= portletURL %>">
 	<liferay-ui:search-container
 		displayTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
@@ -48,29 +71,6 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 		searchTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
 		total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, exportImportConfigurationType) %>"
 	>
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-				<portlet:renderURL var="addPublishConfigurationURL">
-					<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-					<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= addPublishConfigurationURL %>" iconCssClass="icon-plus" label="new" />
-			</aui:nav>
-
-			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-
-				<%
-				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
-				%>
-
-				<liferay-util:include page="/export_import_configuration_search.jsp" servletContext="<%= application %>" />
-			</aui:nav-bar-search>
-		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
 			<%@ include file="/export_import_configuration_search_results.jspf" %>

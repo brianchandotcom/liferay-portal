@@ -131,9 +131,8 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 	}
 
-	private volatile DDMDataProviderInstanceService
-		_ddmDataProviderInstanceService;
-	private volatile DDMDataProviderTracker _ddmDataProviderTracker;
-	private volatile DDMFormValuesFactory _ddmFormValuesFactory;
+	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
+	private DDMDataProviderTracker _ddmDataProviderTracker;
+	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 }

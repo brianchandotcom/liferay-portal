@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.portal.NoSuchUserGroupException;
+import com.liferay.portal.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupImpl;
 import com.liferay.portal.service.persistence.UserGroupFinder;
+import com.liferay.portal.service.persistence.UserGroupUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
@@ -44,9 +45,6 @@ public class UserGroupFinderImpl
 
 	public static final String COUNT_BY_C_N_D =
 		UserGroupFinder.class.getName() + ".countByC_N_D";
-
-	public static final String FIND_BY_C_N =
-		UserGroupFinder.class.getName() + ".findByC_N";
 
 	public static final String FIND_BY_C_N_D =
 		UserGroupFinder.class.getName() + ".findByC_N_D";
@@ -176,50 +174,15 @@ public class UserGroupFinderImpl
 			obc);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public UserGroup findByC_N(long companyId, String name)
 		throws NoSuchUserGroupException {
 
-		name = StringUtil.lowerCase(name);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_N);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("UserGroup", UserGroupImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(name);
-
-			List<UserGroup> userGroups = q.list();
-
-			if (!userGroups.isEmpty()) {
-				return userGroups.get(0);
-			}
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("No UserGroup exists with the key {companyId=");
-		sb.append(companyId);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
+		return UserGroupUtil.findByC_N(companyId, name);
 	}
 
 	@Override

@@ -107,7 +107,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public UserIdMapper findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Returns the first user ID mapper in the ordered set where userId = &#63;.
@@ -129,7 +129,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public UserIdMapper findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Returns the last user ID mapper in the ordered set where userId = &#63;.
@@ -153,7 +153,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	public UserIdMapper[] findByUserId_PrevAndNext(long userIdMapperId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserIdMapper> orderByComparator)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Removes all the user ID mappers where userId = &#63; from the database.
@@ -179,7 +179,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @throws NoSuchUserIdMapperException if a matching user ID mapper could not be found
 	*/
 	public UserIdMapper findByU_T(long userId, java.lang.String type)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Returns the user ID mapper where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -209,7 +209,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @return the user ID mapper that was removed
 	*/
 	public UserIdMapper removeByU_T(long userId, java.lang.String type)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Returns the number of user ID mappers where userId = &#63; and type = &#63;.
@@ -230,7 +230,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public UserIdMapper findByT_E(java.lang.String type,
 		java.lang.String externalUserId)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Returns the user ID mapper where type = &#63; and externalUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -262,7 +262,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public UserIdMapper removeByT_E(java.lang.String type,
 		java.lang.String externalUserId)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Returns the number of user ID mappers where type = &#63; and externalUserId = &#63;.
@@ -303,7 +303,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @throws NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	*/
 	public UserIdMapper remove(long userIdMapperId)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	public UserIdMapper updateImpl(UserIdMapper userIdMapper);
 
@@ -315,7 +315,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	* @throws NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
 	*/
 	public UserIdMapper findByPrimaryKey(long userIdMapperId)
-		throws com.liferay.portal.NoSuchUserIdMapperException;
+		throws com.liferay.portal.exception.NoSuchUserIdMapperException;
 
 	/**
 	* Returns the user ID mapper with the primary key or returns <code>null</code> if it could not be found.

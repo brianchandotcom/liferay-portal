@@ -155,10 +155,47 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				<%= entry.getVisits() %>
 			</p>
 
+			<div class="lfr-asset-categories">
+				<liferay-ui:asset-categories-summary
+					className="<%= BookmarksEntry.class.getName() %>"
+					classPK="<%= entry.getEntryId() %>"
+				/>
+			</div>
+
+			<div class="lfr-asset-tags">
+				<liferay-ui:asset-tags-summary
+					className="<%= BookmarksEntry.class.getName() %>"
+					classPK="<%= entry.getEntryId() %>"
+					message="tags"
+				/>
+			</div>
+
 			<liferay-ui:ratings
 				className="<%= BookmarksEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
 			/>
+
+			<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+				<liferay-ui:custom-attribute-list
+					className="<%= BookmarksEntry.class.getName() %>"
+					classPK="<%= entry.getEntryId() %>"
+					editable="<%= false %>"
+					label="<%= true %>"
+				/>
+			</liferay-ui:custom-attributes-available>
+
+			<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>">
+
+				<%
+				AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry.class.getName(), entry.getEntryId());
+				%>
+
+				<div class="entry-links">
+					<liferay-ui:asset-links
+						assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
+					/>
+				</div>
+			</c:if>
 		</div>
 	</c:when>
 	<c:otherwise>

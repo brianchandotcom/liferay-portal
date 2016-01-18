@@ -72,6 +72,6 @@ public class DeleteTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		_ddmTemplateService = ddmTemplateService;
 	}
 
-	private volatile DDMTemplateService _ddmTemplateService;
+	private DDMTemplateService _ddmTemplateService;
 
 }

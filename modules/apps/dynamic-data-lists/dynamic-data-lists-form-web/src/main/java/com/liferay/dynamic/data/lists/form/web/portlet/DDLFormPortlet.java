@@ -35,7 +35,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.portal.PortletPreferencesException;
+import com.liferay.portal.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -380,10 +380,10 @@ public class DDLFormPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLFormPortlet.class);
 
-	private volatile DDLRecordSetService _ddlRecordSetService;
-	private volatile DDMFormRenderer _ddmFormRenderer;
-	private volatile DDMFormValuesFactory _ddmFormValuesFactory;
-	private volatile WorkflowDefinitionLinkLocalService
+	private DDLRecordSetService _ddlRecordSetService;
+	private DDMFormRenderer _ddmFormRenderer;
+	private DDMFormValuesFactory _ddmFormValuesFactory;
+	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

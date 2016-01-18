@@ -42,11 +42,6 @@ import org.osgi.service.component.annotations.Component;
 public class SitesPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-sitemap";
-	}
-
-	@Override
 	public String getKey() {
 		return PanelCategoryKeys.CONTROL_PANEL_SITES;
 	}

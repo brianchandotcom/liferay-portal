@@ -300,7 +300,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param resourceBlockId the resource block ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByResourceBlockId_First(long resourceBlockId,
@@ -351,7 +351,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param resourceBlockId the resource block ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByResourceBlockId_Last(long resourceBlockId,
@@ -409,7 +409,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param resourceBlockId the resource block ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByResourceBlockId_PrevAndNext(
@@ -821,7 +821,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByUuid_First(String uuid,
@@ -871,7 +871,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByUuid_Last(String uuid,
@@ -929,7 +929,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByUuid_PrevAndNext(long calendarResourceId,
@@ -1175,12 +1175,12 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the calendar resource where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.calendar.NoSuchResourceException} if it could not be found.
+	 * Returns the calendar resource where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchResourceException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByUUID_G(String uuid, long groupId)
@@ -1643,7 +1643,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByUuid_C_First(String uuid, long companyId,
@@ -1699,7 +1699,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByUuid_C_Last(String uuid, long companyId,
@@ -1762,7 +1762,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByUuid_C_PrevAndNext(
@@ -2200,7 +2200,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByGroupId_First(long groupId,
@@ -2251,7 +2251,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByGroupId_Last(long groupId,
@@ -2309,7 +2309,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByGroupId_PrevAndNext(
@@ -2554,7 +2554,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] filterFindByGroupId_PrevAndNext(
@@ -3006,7 +3006,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByActive_First(boolean active,
@@ -3057,7 +3057,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByActive_Last(boolean active,
@@ -3115,7 +3115,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByActive_PrevAndNext(
@@ -3547,7 +3547,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param code the code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByG_C_First(long groupId, String code,
@@ -3603,7 +3603,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param code the code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByG_C_Last(long groupId, String code,
@@ -3666,7 +3666,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param code the code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByG_C_PrevAndNext(long calendarResourceId,
@@ -3952,7 +3952,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param code the code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] filterFindByG_C_PrevAndNext(
@@ -5014,7 +5014,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByG_A_First(long groupId, boolean active,
@@ -5070,7 +5070,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByG_A_Last(long groupId, boolean active,
@@ -5133,7 +5133,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByG_A_PrevAndNext(long calendarResourceId,
@@ -5391,7 +5391,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] filterFindByG_A_PrevAndNext(
@@ -5677,12 +5677,12 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the calendar resource where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.calendar.NoSuchResourceException} if it could not be found.
+	 * Returns the calendar resource where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchResourceException} if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByC_C(long classNameId, long classPK)
@@ -6116,7 +6116,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByC_C_A_First(long companyId, String code,
@@ -6177,7 +6177,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a matching calendar resource could not be found
+	 * @throws NoSuchResourceException if a matching calendar resource could not be found
 	 */
 	@Override
 	public CalendarResource findByC_C_A_Last(long companyId, String code,
@@ -6245,7 +6245,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource[] findByC_C_A_PrevAndNext(long calendarResourceId,
@@ -6718,7 +6718,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 *
 	 * @param calendarResourceId the primary key of the calendar resource
 	 * @return the calendar resource that was removed
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource remove(long calendarResourceId)
@@ -6731,7 +6731,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 *
 	 * @param primaryKey the primary key of the calendar resource
 	 * @return the calendar resource that was removed
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource remove(Serializable primaryKey)
@@ -7044,11 +7044,11 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	}
 
 	/**
-	 * Returns the calendar resource with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the calendar resource with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the calendar resource
 	 * @return the calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource findByPrimaryKey(Serializable primaryKey)
@@ -7068,11 +7068,11 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	}
 
 	/**
-	 * Returns the calendar resource with the primary key or throws a {@link com.liferay.calendar.NoSuchResourceException} if it could not be found.
+	 * Returns the calendar resource with the primary key or throws a {@link NoSuchResourceException} if it could not be found.
 	 *
 	 * @param calendarResourceId the primary key of the calendar resource
 	 * @return the calendar resource
-	 * @throws com.liferay.calendar.NoSuchResourceException if a calendar resource with the primary key could not be found
+	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	 */
 	@Override
 	public CalendarResource findByPrimaryKey(long calendarResourceId)

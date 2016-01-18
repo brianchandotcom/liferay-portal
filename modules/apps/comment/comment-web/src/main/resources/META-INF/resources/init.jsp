@@ -45,8 +45,8 @@ page import="com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil" 
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
-page import="com.liferay.portlet.messageboards.DiscussionMaxCommentsException" %><%@
-page import="com.liferay.portlet.messageboards.MessageBodyException" %>
+page import="com.liferay.portlet.messageboards.exception.DiscussionMaxCommentsException" %><%@
+page import="com.liferay.portlet.messageboards.exception.MessageBodyException" %>
 
 <%@ page import="java.text.Format" %>
 

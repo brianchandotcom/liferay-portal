@@ -288,7 +288,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByUuid_First(String uuid,
@@ -337,7 +337,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByUuid_Last(String uuid,
@@ -393,7 +393,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module[] findByUuid_PrevAndNext(long moduleId, String uuid,
@@ -814,7 +814,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param appId the app ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByAppId_First(long appId,
@@ -863,7 +863,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param appId the app ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByAppId_Last(long appId,
@@ -920,7 +920,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param appId the app ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module[] findByAppId_PrevAndNext(long moduleId, long appId,
@@ -1337,7 +1337,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByBundleSymbolicName_First(String bundleSymbolicName,
@@ -1388,7 +1388,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByBundleSymbolicName_Last(String bundleSymbolicName,
@@ -1446,7 +1446,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module[] findByBundleSymbolicName_PrevAndNext(long moduleId,
@@ -1889,7 +1889,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param contextName the context name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByContextName_First(String contextName,
@@ -1939,7 +1939,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param contextName the context name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByContextName_Last(String contextName,
@@ -1996,7 +1996,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 * @param contextName the context name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module[] findByContextName_PrevAndNext(long moduleId,
@@ -2241,12 +2241,12 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the module where appId = &#63; and contextName = &#63; or throws a {@link com.liferay.marketplace.NoSuchModuleException} if it could not be found.
+	 * Returns the module where appId = &#63; and contextName = &#63; or throws a {@link NoSuchModuleException} if it could not be found.
 	 *
 	 * @param appId the app ID
 	 * @param contextName the context name
 	 * @return the matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByA_CN(long appId, String contextName)
@@ -2509,13 +2509,13 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 			});
 
 	/**
-	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or throws a {@link com.liferay.marketplace.NoSuchModuleException} if it could not be found.
+	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or throws a {@link NoSuchModuleException} if it could not be found.
 	 *
 	 * @param appId the app ID
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param bundleVersion the bundle version
 	 * @return the matching module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a matching module could not be found
+	 * @throws NoSuchModuleException if a matching module could not be found
 	 */
 	@Override
 	public Module findByA_BSN_BV(long appId, String bundleSymbolicName,
@@ -3028,7 +3028,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 *
 	 * @param moduleId the primary key of the module
 	 * @return the module that was removed
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module remove(long moduleId) throws NoSuchModuleException {
@@ -3040,7 +3040,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	 *
 	 * @param primaryKey the primary key of the module
 	 * @return the module that was removed
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module remove(Serializable primaryKey) throws NoSuchModuleException {
@@ -3246,11 +3246,11 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	}
 
 	/**
-	 * Returns the module with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the module with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the module
 	 * @return the module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module findByPrimaryKey(Serializable primaryKey)
@@ -3270,11 +3270,11 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	}
 
 	/**
-	 * Returns the module with the primary key or throws a {@link com.liferay.marketplace.NoSuchModuleException} if it could not be found.
+	 * Returns the module with the primary key or throws a {@link NoSuchModuleException} if it could not be found.
 	 *
 	 * @param moduleId the primary key of the module
 	 * @return the module
-	 * @throws com.liferay.marketplace.NoSuchModuleException if a module with the primary key could not be found
+	 * @throws NoSuchModuleException if a module with the primary key could not be found
 	 */
 	@Override
 	public Module findByPrimaryKey(long moduleId) throws NoSuchModuleException {

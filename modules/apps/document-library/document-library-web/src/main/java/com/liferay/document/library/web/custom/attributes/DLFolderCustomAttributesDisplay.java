@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.custom.attributes;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
@@ -36,11 +35,6 @@ public class DLFolderCustomAttributesDisplay
 	@Override
 	public String getClassName() {
 		return DLFolder.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
 
 }

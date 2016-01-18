@@ -61,7 +61,7 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(request, MBPortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
 		portletURL.setParameter("mbCategoryId", String.valueOf(ancestorCategory.getCategoryId()));
 
 		String cssClass = StringPool.BLANK;
@@ -81,7 +81,7 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 
 	PortletURL portletURL = PortletURLFactoryUtil.create(request, MBPortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-	portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+	portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
 	portletURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
 
 	sb.append("<li class=\"active last\">");

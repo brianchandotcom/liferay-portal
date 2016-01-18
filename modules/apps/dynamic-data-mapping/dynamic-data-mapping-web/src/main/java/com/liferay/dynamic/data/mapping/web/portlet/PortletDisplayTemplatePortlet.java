@@ -67,11 +67,13 @@ public class PortletDisplayTemplatePortlet extends DDMPortlet {
 
 	@Activate
 	@Modified
+	@Override
 	protected void activate(Map<String, Object> properties) {
 		this.ddmWebConfiguration = Configurable.createConfigurable(
 			DDMWebConfiguration.class, properties);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -79,6 +81,7 @@ public class PortletDisplayTemplatePortlet extends DDMPortlet {
 		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {

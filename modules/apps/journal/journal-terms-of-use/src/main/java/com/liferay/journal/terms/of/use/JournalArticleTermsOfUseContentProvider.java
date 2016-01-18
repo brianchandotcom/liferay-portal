@@ -75,6 +75,6 @@ public class JournalArticleTermsOfUseContentProvider
 
 	private static final String _JSP_PATH_VIEW = "/view.jsp";
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

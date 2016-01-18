@@ -116,7 +116,7 @@ public class BrowserTrackerUtil {
 	* @throws NoSuchBrowserTrackerException if a matching browser tracker could not be found
 	*/
 	public static BrowserTracker findByUserId(long userId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException {
+		throws com.liferay.portal.exception.NoSuchBrowserTrackerException {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -149,7 +149,7 @@ public class BrowserTrackerUtil {
 	* @return the browser tracker that was removed
 	*/
 	public static BrowserTracker removeByUserId(long userId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException {
+		throws com.liferay.portal.exception.NoSuchBrowserTrackerException {
 		return getPersistence().removeByUserId(userId);
 	}
 
@@ -199,7 +199,7 @@ public class BrowserTrackerUtil {
 	* @throws NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
 	*/
 	public static BrowserTracker remove(long browserTrackerId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException {
+		throws com.liferay.portal.exception.NoSuchBrowserTrackerException {
 		return getPersistence().remove(browserTrackerId);
 	}
 
@@ -215,7 +215,7 @@ public class BrowserTrackerUtil {
 	* @throws NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
 	*/
 	public static BrowserTracker findByPrimaryKey(long browserTrackerId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException {
+		throws com.liferay.portal.exception.NoSuchBrowserTrackerException {
 		return getPersistence().findByPrimaryKey(browserTrackerId);
 	}
 

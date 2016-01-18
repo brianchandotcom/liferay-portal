@@ -14,12 +14,12 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.LayoutFriendlyURLException;
-import com.liferay.portal.LayoutFriendlyURLsException;
-import com.liferay.portal.LayoutNameException;
-import com.liferay.portal.LayoutParentLayoutIdException;
-import com.liferay.portal.LayoutTypeException;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.LayoutFriendlyURLException;
+import com.liferay.portal.exception.LayoutFriendlyURLsException;
+import com.liferay.portal.exception.LayoutNameException;
+import com.liferay.portal.exception.LayoutParentLayoutIdException;
+import com.liferay.portal.exception.LayoutTypeException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -55,7 +55,7 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
-import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.HashMap;
 import java.util.List;

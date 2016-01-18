@@ -16,9 +16,15 @@ package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
+
+import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -49,10 +55,27 @@ public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getFileEntries(renderRequest);
-			ActionUtil.getFileEntry(renderRequest);
-			ActionUtil.getFileShortcuts(renderRequest);
-			ActionUtil.getFolders(renderRequest);
+			List<FileEntry> fileEntries = ActionUtil.getFileEntries(
+				renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES, fileEntries);
+
+			FileEntry fileEntry = ActionUtil.getFileEntry(renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
+
+			List<FileShortcut> fileShortcuts = ActionUtil.getFileShortcuts(
+				renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS, fileShortcuts);
+
+			List<Folder> folders = ActionUtil.getFolders(renderRequest);
+
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FOLDERS, folders);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryException ||

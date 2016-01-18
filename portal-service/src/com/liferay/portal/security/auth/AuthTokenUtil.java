@@ -15,6 +15,9 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -27,6 +30,18 @@ import javax.servlet.http.HttpServletRequest;
  * @author Raymond Augé
  */
 public class AuthTokenUtil {
+
+	public static void addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		_instance._addCSRFToken(request, liferayPortletURL);
+	}
+
+	public static void addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		_instance._addPortletInvocationToken(request, liferayPortletURL);
+	}
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
@@ -56,6 +71,19 @@ public class AuthTokenUtil {
 	}
 
 	public static boolean isValidPortletInvocationToken(
+		HttpServletRequest request, Layout layout, Portlet portlet) {
+
+		return _instance._isValidPortletInvocationToken(
+			request, layout, portlet);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout,
+	 *             Portlet)}
+	 */
+	@Deprecated
+	public static boolean isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,
 		String strutsAction, String tokenValue) {
 
@@ -69,6 +97,30 @@ public class AuthTokenUtil {
 		_serviceTracker = registry.trackServices(AuthToken.class.getName());
 
 		_serviceTracker.open();
+	}
+
+	private void _addCSRFToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		authToken.addCSRFToken(request, liferayPortletURL);
+	}
+
+	private void _addPortletInvocationToken(
+		HttpServletRequest request, LiferayPortletURL liferayPortletURL) {
+
+		if (_serviceTracker.isEmpty()) {
+			return;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		authToken.addPortletInvocationToken(request, liferayPortletURL);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -116,6 +168,23 @@ public class AuthTokenUtil {
 		return authToken.getToken(request, plid, portletId);
 	}
 
+	private boolean _isValidPortletInvocationToken(
+		HttpServletRequest request, Layout layout, Portlet portlet) {
+
+		if (_serviceTracker.isEmpty()) {
+			return false;
+		}
+
+		AuthToken authToken = _serviceTracker.getService();
+
+		return authToken.isValidPortletInvocationToken(
+			request, layout, portlet);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	private boolean _isValidPortletInvocationToken(
 		HttpServletRequest request, long plid, String portletId,
 		String strutsAction, String tokenValue) {

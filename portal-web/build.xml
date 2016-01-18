@@ -5,11 +5,6 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
-	<property name="alloy.bootstrap.version" value="3.2.0-2" />
-	<property name="alloy-font-awesome.version" value="2.0" />
-	<property name="frontend.js.web.dir" value="../modules/frontend/frontend-js-web" />
-	<property name="sass.portal.common.dir" value="../modules/frontend/frontend-common-css/tmp/META-INF/resources" />
-
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
 		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
@@ -49,66 +44,6 @@
 		<pathelement location="${project.dir}/lib/portal/struts-taglib.jar" />
 		<pathelement location="${project.dir}/lib/portal/struts-tiles.jar" />
 	</path>
-
-	<extension-point name="build-portal-web-dependencies" depends="build-css,build-dtd" />
-
-	<target name="build-common-css">
-		<property name="bourbon.deploy" value="${sass.portal.common.dir}/bourbon" />
-
-		<if>
-			<not>
-				<available file="${bourbon.deploy}" />
-			</not>
-			<then>
-				<gradle-execute dir="../modules/frontend/frontend-common-css" task="buildBourbon" />
-			</then>
-		</if>
-	</target>
-
-	<target name="build-css" depends="build-common-css">
-		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
-
-		<mkdir dir="${sass.tmp.dir}" />
-
-		<path id="css.builder.classpath">
-			<fileset dir="${portal.tools.dir}/css-builder" includes="*.jar" />
-		</path>
-
-		<java
-			classname="com.liferay.css.builder.CSSBuilder"
-			classpathref="css.builder.classpath"
-			fork="true"
-			newenvironment="true"
-			outputproperty="build-css.output"
-		>
-			<jvmarg value="-Xmx1024m" />
-			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
-			<arg value="sass.compiler.class.name=${sass.compiler.class.name}" />
-			<arg value="sass.dir=/html/portlet" />
-			<arg value="sass.docroot.dir=${basedir}/docroot" />
-			<arg value="sass.generate.source.map=${sass.generate.source.map}" />
-			<arg value="sass.portal.common.dir=${sass.portal.common.dir}" />
-			<arg value="sass.precision=${sass.precision}" />
-		</java>
-
-		<delete dir="${sass.tmp.dir}" />
-
-		<if>
-			<not>
-				<equals arg1="${build-css.output}" arg2="" />
-			</not>
-			<then>
-				<echo>${build-css.output}</echo>
-			</then>
-		</if>
-
-		<if>
-			<contains string="${build-css.output}" substring="Error" />
-			<then>
-				<fail>Sass to CSS Builder generated exceptions.</fail>
-			</then>
-		</if>
-	</target>
 
 	<target name="build-dtd">
 		<copy todir="docroot/dtd">
@@ -224,7 +159,7 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean,clean-css,clean-tlds">
+	<target name="clean" depends="build-common-web.clean,clean-tlds">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/portal/aui" />
@@ -232,12 +167,6 @@
 		<delete dir="docroot/WEB-INF/lib" />
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
-	</target>
-
-	<target name="clean-css">
-		<delete includeemptydirs="true">
-			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-		</delete>
 	</target>
 
 	<target name="clean-tlds">
@@ -465,7 +394,7 @@ ${oversize.files.jsp}</fail>
 		</antcall>
 	</target>
 
-	<target name="deploy" depends="build-portal-web-dependencies">
+	<target name="deploy" depends="build-dtd">
 		<manifest-macro />
 
 		<antcall target="build-common-web.deploy" />
@@ -516,65 +445,6 @@ ${oversize.files.jsp}</fail>
 		</if>
 	</target>
 
-	<target name="deploy-fast">
-		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="jetty" />
-				<equals arg1="${app.server.type}" arg2="resin" />
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-			</or>
-			<then>
-				<copy todir="${app.server.portal.dir}" preservelastmodified="true">
-					<fileset dir="docroot">
-						<include name="**/*.css" />
-						<include name="**/*.dtd" />
-						<include name="**/*.ftl" />
-						<include name="**/*.gif" />
-						<include name="**/*.jar" />
-						<include name="**/*.jpg" />
-						<include name="**/*.js" />
-						<include name="**/*.jsp" />
-						<include name="**/*.jspf" />
-						<include name="**/*.png" />
-						<include name="**/*.properties" />
-						<include name="**/*.tld" />
-						<include name="**/*.vm" />
-						<include name="**/*.wsdd" />
-						<include name="**/*.xml" />
-					</fileset>
-					<filtermapper>
-						<replacestring from=".sass-cache" to="" />
-					</filtermapper>
-				</copy>
-			</then>
-		</if>
-	</target>
-
-	<target name="format-js">
-		<taskdef classname="com.philmander.jshint.JsHintAntTask" classpath="${project.dir}/tools/ant-jshint-2.0.5.jar" name="jshint" />
-
-		<jshint
-			dir="${project.dir}"
-			globals="alert: true, AUI: true, confirm: true, Liferay: true, prompt: true, submitForm: true, themeDisplay: true, YUI: true"
-			options="browser=true,curly=true,devel=false,eqeqeq=false,eqnull=true,evil=true,forin=false,funcscope=true,nonew=false,nonstandard=true,scripturl=true,strict=false,trailing=true,yui=true"
-		>
-			<exclude name="**/aui/**" />
-			<exclude name="**/dynamiccss/dependencies/r2*.js" />
-			<exclude name="**/editors/**" />
-			<exclude name="**/misc/**" />
-			<exclude name="**/selenium/**" />
-			<include name="**/*.js" />
-		</jshint>
-	</target>
-
-	<target name="node-execute">
-		<ant antfile="build-node.xml" dir="${sdk.dir}" target="node-execute" inheritAll="false" />
-	</target>
-
-	<target name="npm-execute">
-		<ant antfile="build-node.xml" dir="${sdk.dir}" target="npm-execute" inheritAll="false" />
-	</target>
-
 	<target name="update-gradle-cache">
 		<gradle-execute forcedcacheenabled="false" task="updateGradleCache">
 			<arg value="--build-file=build-test.gradle" />
@@ -582,25 +452,14 @@ ${oversize.files.jsp}</fail>
 		</gradle-execute>
 	</target>
 
-	<target name="war" depends="build-portal-web-dependencies">
+	<target name="war" depends="build-dtd">
 		<manifest-macro />
 
 		<war
 			destfile="${war.file}.war"
 			webxml="docroot/WEB-INF/web.xml"
 		>
-            <fileset dir="docroot">
-                <exclude name="**/css/*.scss" />
-                <exclude name="**/.sass-cache/**" />
-            </fileset>
-
-            <mappedresources>
-                <fileset dir="docroot" includes="**/.sass-cache/*.css" />
-                <filtermapper>
-                    <replacestring from=".sass-cache" to="" />
-                </filtermapper>
-            </mappedresources>
-
+            <fileset dir="docroot" />
 			<metainf dir="${project.dir}/oss-licenses">
 				<exclude name="**/development/**" />
 			</metainf>

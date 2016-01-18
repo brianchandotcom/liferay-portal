@@ -102,6 +102,6 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MBBanService _mbBanService;
+	private MBBanService _mbBanService;
 
 }

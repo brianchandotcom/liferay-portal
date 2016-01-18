@@ -15,6 +15,9 @@
 package com.liferay.exportimport.web.portlet;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.ControlPanelEntry;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,4 +31,18 @@ import org.osgi.service.component.annotations.Component;
 	service = ControlPanelEntry.class
 )
 public class ImportControlPanelEntry extends ExportImportControlPanelEntry {
+
+	@Override
+	protected boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
+
+		if (group.hasStagingGroup()) {
+			return true;
+		}
+
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
+	}
+
 }

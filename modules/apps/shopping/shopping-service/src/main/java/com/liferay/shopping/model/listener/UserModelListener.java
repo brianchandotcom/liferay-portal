@@ -14,7 +14,7 @@
 
 package com.liferay.shopping.model.listener;
 
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
@@ -46,6 +46,6 @@ public class UserModelListener extends BaseModelListener<User> {
 		_shoppingCartLocalService = shoppingCartLocalService;
 	}
 
-	private volatile ShoppingCartLocalService _shoppingCartLocalService;
+	private ShoppingCartLocalService _shoppingCartLocalService;
 
 }

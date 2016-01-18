@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -171,12 +171,13 @@ public abstract class BaseAssetRendererFactory<T>
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getIconPath(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getIconPath(themeDisplay);
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -334,10 +335,6 @@ public abstract class BaseAssetRendererFactory<T>
 		throws PortalException {
 
 		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
-	}
-
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
 	protected void setCategorizable(boolean categorizable) {

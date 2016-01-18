@@ -38,10 +38,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -49,7 +49,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -154,10 +154,10 @@
 			<var name="page" value="Private Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
+			<var name="pageName" value="Private Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Private Page Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -237,20 +237,20 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page 1" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Test Page 1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Test Page 2" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Test Page 2" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

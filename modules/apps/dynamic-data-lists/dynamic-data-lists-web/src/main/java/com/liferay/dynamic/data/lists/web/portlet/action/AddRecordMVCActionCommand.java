@@ -63,7 +63,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
-		_ddlRecordService.addRecord(
+		ddlRecordService.addRecord(
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);
 	}
@@ -73,7 +73,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
-		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+		DDLRecordSet recordSet = ddlRecordSetService.getRecordSet(recordSetId);
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
@@ -88,32 +88,31 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		String serializedDDMFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
-		return _ddmFormValuesJSONDeserializer.deserialize(
+		return ddmFormValuesJSONDeserializer.deserialize(
 			ddmForm, serializedDDMFormValues);
 	}
 
 	@Reference(unbind = "-")
 	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
+		this.ddlRecordService = ddlRecordService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
-		_ddlRecordSetService = ddlRecordSetService;
+		this.ddlRecordSetService = ddlRecordSetService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setDDMFormValuesJSONDeserializer(
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
 
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+		this.ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 	}
 
-	private volatile DDLRecordService _ddlRecordService;
-	private volatile DDLRecordSetService _ddlRecordSetService;
-	private volatile DDMFormValuesJSONDeserializer
-		_ddmFormValuesJSONDeserializer;
+	protected DDLRecordService ddlRecordService;
+	protected DDLRecordSetService ddlRecordSetService;
+	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
 
 }

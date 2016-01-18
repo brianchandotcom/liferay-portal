@@ -17,8 +17,8 @@ package com.liferay.exportimport.web.portlet.action;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.PortletIdException;
+import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -39,12 +39,12 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
-import com.liferay.portlet.exportimport.LARFileException;
-import com.liferay.portlet.exportimport.LARFileNameException;
-import com.liferay.portlet.exportimport.LARFileSizeException;
-import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.portlet.exportimport.exception.LARFileException;
+import com.liferay.portlet.exportimport.exception.LARFileNameException;
+import com.liferay.portlet.exportimport.exception.LARFileSizeException;
+import com.liferay.portlet.exportimport.exception.LARTypeException;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.MissingReference;
@@ -398,11 +398,10 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportMVCActionCommand.class);
 
-	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile ExportImportConfigurationLocalService
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private volatile ExportImportService _exportImportService;
-	private volatile ImportLayoutsMVCActionCommand
-		_importLayoutsMVCActionCommand;
+	private ExportImportService _exportImportService;
+	private ImportLayoutsMVCActionCommand _importLayoutsMVCActionCommand;
 
 }

@@ -23,6 +23,8 @@ public class WikiWebKeys {
 
 	public static final String WIKI_NODE_ID = "WIKI_NODE_ID";
 
+	public static final String WIKI_NODES = "WIKI_NODES";
+
 	public static final String WIKI_PAGE = "WIKI_PAGE";
 
 	public static final String WIKI_PORTLET_TOOLBAR_CONTRIBUTOR =

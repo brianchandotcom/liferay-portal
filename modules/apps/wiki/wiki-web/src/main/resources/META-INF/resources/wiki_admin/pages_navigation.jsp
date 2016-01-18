@@ -25,7 +25,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewPagesURL">
-			<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view_pages" />
+			<portlet:param name="mvcRenderCommandName" value="/wiki/view_pages" />
 		</portlet:renderURL>
 
 		<aui:nav-item

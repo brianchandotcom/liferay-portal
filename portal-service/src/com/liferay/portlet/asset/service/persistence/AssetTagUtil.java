@@ -185,7 +185,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByUuid_First(java.lang.String uuid,
 		OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -211,7 +211,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,7 +238,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag[] findByUuid_PrevAndNext(long tagId,
 		java.lang.String uuid, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(tagId, uuid, orderByComparator);
 	}
@@ -271,7 +271,7 @@ public class AssetTagUtil {
 	* @throws NoSuchTagException if a matching asset tag could not be found
 	*/
 	public static AssetTag findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -307,7 +307,7 @@ public class AssetTagUtil {
 	* @return the asset tag that was removed
 	*/
 	public static AssetTag removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -407,7 +407,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -437,7 +437,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -469,7 +469,7 @@ public class AssetTagUtil {
 	public static AssetTag[] findByUuid_C_PrevAndNext(long tagId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(tagId, uuid, companyId,
 			orderByComparator);
@@ -573,7 +573,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByGroupId_First(long groupId,
 		OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -599,7 +599,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByGroupId_Last(long groupId,
 		OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -626,7 +626,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag[] findByGroupId_PrevAndNext(long tagId,
 		long groupId, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(tagId, groupId, orderByComparator);
 	}
@@ -688,7 +688,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag[] filterFindByGroupId_PrevAndNext(long tagId,
 		long groupId, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(tagId, groupId,
 			orderByComparator);
@@ -870,7 +870,7 @@ public class AssetTagUtil {
 	* @throws NoSuchTagException if a matching asset tag could not be found
 	*/
 	public static AssetTag findByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().findByG_N(groupId, name);
 	}
 
@@ -906,7 +906,7 @@ public class AssetTagUtil {
 	* @return the asset tag that was removed
 	*/
 	public static AssetTag removeByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().removeByG_N(groupId, name);
 	}
 
@@ -1006,7 +1006,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByG_LikeN_First(long groupId,
 		java.lang.String name, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByG_LikeN_First(groupId, name, orderByComparator);
 	}
@@ -1036,7 +1036,7 @@ public class AssetTagUtil {
 	*/
 	public static AssetTag findByG_LikeN_Last(long groupId,
 		java.lang.String name, OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByG_LikeN_Last(groupId, name, orderByComparator);
 	}
@@ -1068,7 +1068,7 @@ public class AssetTagUtil {
 	public static AssetTag[] findByG_LikeN_PrevAndNext(long tagId,
 		long groupId, java.lang.String name,
 		OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .findByG_LikeN_PrevAndNext(tagId, groupId, name,
 			orderByComparator);
@@ -1139,7 +1139,7 @@ public class AssetTagUtil {
 	public static AssetTag[] filterFindByG_LikeN_PrevAndNext(long tagId,
 		long groupId, java.lang.String name,
 		OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence()
 				   .filterFindByG_LikeN_PrevAndNext(tagId, groupId, name,
 			orderByComparator);
@@ -1366,7 +1366,7 @@ public class AssetTagUtil {
 	* @throws NoSuchTagException if a asset tag with the primary key could not be found
 	*/
 	public static AssetTag remove(long tagId)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().remove(tagId);
 	}
 
@@ -1382,7 +1382,7 @@ public class AssetTagUtil {
 	* @throws NoSuchTagException if a asset tag with the primary key could not be found
 	*/
 	public static AssetTag findByPrimaryKey(long tagId)
-		throws com.liferay.portlet.asset.NoSuchTagException {
+		throws com.liferay.portlet.asset.exception.NoSuchTagException {
 		return getPersistence().findByPrimaryKey(tagId);
 	}
 

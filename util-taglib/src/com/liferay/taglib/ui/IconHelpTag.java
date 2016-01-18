@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.util.TagResourceBundleUtil;
+
+import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspWriter;
 
@@ -45,11 +48,13 @@ public class IconHelpTag extends IconTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		String id = StringUtil.randomId();
-
 		jspWriter.write("<span class=\"taglib-icon-help\"><img alt=\"\" ");
 		jspWriter.write("aria-labelledby=\"");
+
+		String id = StringUtil.randomId();
+
 		jspWriter.write(id);
+
 		jspWriter.write("\" ");
 		jspWriter.write("onBlur=\"Liferay.Portal.ToolTip.hide();\" ");
 		jspWriter.write("onFocus=\"Liferay.Portal.ToolTip.show(this);\" ");
@@ -62,7 +67,12 @@ public class IconHelpTag extends IconTag {
 		jspWriter.write("id=\"");
 		jspWriter.write(id);
 		jspWriter.write("\" >");
-		jspWriter.write(LanguageUtil.get(request, getMessage()));
+
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
+		jspWriter.write(LanguageUtil.get(resourceBundle, getMessage()));
+
 		jspWriter.write("</span></span>");
 
 		return EVAL_PAGE;

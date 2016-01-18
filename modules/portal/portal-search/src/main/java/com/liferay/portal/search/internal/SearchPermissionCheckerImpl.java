@@ -14,7 +14,9 @@
 
 package com.liferay.portal.search.internal;
 
-import com.liferay.portal.NoSuchResourceException;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -26,8 +28,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -37,6 +39,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -58,7 +61,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -67,7 +72,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Amos Fong
  */
-@Component(immediate = true, service = SearchPermissionChecker.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration",
+	immediate = true, service = SearchPermissionChecker.class
+)
 public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Override
@@ -144,6 +152,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_searchPermissionCheckerConfiguration = Configurable.createConfigurable(
+			SearchPermissionCheckerConfiguration.class, properties);
 	}
 
 	protected void addRequiredMemberRole(
@@ -241,22 +256,23 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return booleanFilter;
 		}
 
+		List<Long> groupIdsList = new ArrayList<>(ListUtil.toList(groupIds));
 		Set<Group> groups = new LinkedHashSet<>();
 		Set<Role> roles = new LinkedHashSet<>();
 		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<>();
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
 
 		populate(
-			companyId, groupIds, userId, permissionChecker, groups, roles,
-			userGroupRoles, groupIdsToRoles);
+			companyId, groupIdsList, userId, permissionChecker, groups, roles,
+			userGroupRoles, groupIdsToRoles, searchContext);
 
 		return doGetPermissionFilter_6(
-			companyId, groupIds, userId, permissionChecker, className,
+			companyId, groupIdsList, userId, permissionChecker, className,
 			booleanFilter, groups, roles, userGroupRoles, groupIdsToRoles);
 	}
 
 	protected BooleanFilter doGetPermissionFilter_6(
-			long companyId, long[] groupIds, long userId,
+			long companyId, List<Long> groupIds, long userId,
 			PermissionChecker permissionChecker, String className,
 			BooleanFilter booleanFilter, Set<Group> groups, Set<Role> roles,
 			Set<UserGroupRole> userGroupRoles,
@@ -337,7 +353,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				}
 			}
 
-			if (ArrayUtil.isNotEmpty(groupIds)) {
+			if (ListUtil.isNotEmpty(groupIds)) {
 				for (long groupId : groupIds) {
 					if (_resourcePermissionLocalService.hasResourcePermission(
 							companyId, className, ResourceConstants.SCOPE_GROUP,
@@ -399,10 +415,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	protected void populate(
-			long companyId, long[] groupIds, long userId,
+			long companyId, List<Long> groupIds, long userId,
 			PermissionChecker permissionChecker, Set<Group> groups,
 			Set<Role> roles, Set<UserGroupRole> userGroupRoles,
-			Map<Long, List<Role>> groupIdsToRoles)
+			Map<Long, List<Role>> groupIdsToRoles, SearchContext searchContext)
 		throws Exception {
 
 		UserBag userBag = permissionChecker.getUserBag();
@@ -422,7 +438,26 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					userId, Collections.singletonList(guestGroup)));
 		}
 
-		if (ArrayUtil.isEmpty(groupIds)) {
+		long searchContextGroupId = GetterUtil.getLong(
+			searchContext.getAttribute("groupId"));
+
+		if ((searchContextGroupId == 0) &&
+			_searchPermissionCheckerConfiguration.
+				includeInheritedPermissions()) {
+
+			List<Group> usersGroups = _groupLocalService.getUserGroups(
+				userId, true);
+
+			groups.addAll(usersGroups);
+
+			for (Group group : groups) {
+				if (!groupIds.contains(group.getGroupId())) {
+					groupIds.add(group.getGroupId());
+				}
+			}
+		}
+
+		if (ListUtil.isEmpty(groupIds)) {
 			groups.addAll(_groupLocalService.getUserGroups(userId, true));
 			groups.addAll(userBag.getGroups());
 
@@ -513,14 +548,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
 
-	private volatile GroupLocalService _groupLocalService;
-	private volatile IndexerRegistry _indexerRegistry;
-	private volatile Portal _portal;
-	private volatile ResourceBlockLocalService _resourceBlockLocalService;
-	private volatile ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-	private volatile RoleLocalService _roleLocalService;
-	private volatile UserGroupRoleLocalService _userGroupRoleLocalService;
-	private volatile UserLocalService _userLocalService;
+	private GroupLocalService _groupLocalService;
+	private IndexerRegistry _indexerRegistry;
+	private Portal _portal;
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private RoleLocalService _roleLocalService;
+	private SearchPermissionCheckerConfiguration
+		_searchPermissionCheckerConfiguration;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+	private UserLocalService _userLocalService;
 
 }

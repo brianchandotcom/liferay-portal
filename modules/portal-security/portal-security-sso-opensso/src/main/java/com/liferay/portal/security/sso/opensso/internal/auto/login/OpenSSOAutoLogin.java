@@ -278,9 +278,9 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSSOAutoLogin.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
-	private volatile OpenSSO _openSSO;
-	private volatile ScreenNameGenerator _screenNameGenerator;
-	private volatile UserLocalService _userLocalService;
+	private ConfigurationFactory _configurationFactory;
+	private OpenSSO _openSSO;
+	private ScreenNameGenerator _screenNameGenerator;
+	private UserLocalService _userLocalService;
 
 }

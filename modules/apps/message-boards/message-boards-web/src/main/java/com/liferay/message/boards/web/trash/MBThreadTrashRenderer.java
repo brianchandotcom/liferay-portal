@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -63,12 +62,7 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-comments";
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
+		return "comments";
 	}
 
 	@Override
@@ -109,7 +103,8 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY,
 				MBThreadConstants.THREAD_VIEW_TREE, false);
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
+		request.setAttribute(
+			WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);
 
 		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 

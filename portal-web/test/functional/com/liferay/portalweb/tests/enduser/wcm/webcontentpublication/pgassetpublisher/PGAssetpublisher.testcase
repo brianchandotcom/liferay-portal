@@ -15,7 +15,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
@@ -83,7 +83,7 @@
 	</command>
 
 	<command name="AddBookmarkViaAP" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -125,7 +125,7 @@
 	</command>
 
 	<command name="AddCustomTitleViaAP" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Page" />
 		</execute>
 
@@ -157,7 +157,7 @@
 	</command>
 
 	<command name="ConfigureAPPortletDisplaytemplateFullContentWithBookmarks" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -211,7 +211,7 @@
 	</command>
 
 	<command name="ConfigureAPPortletDisplaytemplateTableWithBookmarks" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -267,7 +267,7 @@
 	</command>
 
 	<command name="ConfigureAPPortletDisplaytemplateTitlelistWithBookmarks" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -485,7 +485,7 @@
 	</command>
 
 	<command name="ConfigureAPPortletWithSelectedBookmarksEntry" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
@@ -551,7 +551,7 @@
 	</command>
 
 	<command name="FilterTagsByNameAP" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
 

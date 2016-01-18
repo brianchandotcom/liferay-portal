@@ -967,6 +967,6 @@ public abstract class DDMTemplateLocalServiceBaseImpl
 	protected com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
 	@BeanReference(type = DDMTemplateVersionPersistence.class)
 	protected DDMTemplateVersionPersistence ddmTemplateVersionPersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

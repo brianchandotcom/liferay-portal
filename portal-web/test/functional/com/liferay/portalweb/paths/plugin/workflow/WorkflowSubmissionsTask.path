@@ -52,7 +52,7 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Preview')]</td>
+	<td>//div[@class='h4 panel-title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,12 +67,12 @@
 </tr>
 <tr>
 	<td>PREVIEW_VIEW</td>
-	<td>//div[@class='task-content-actions']/span/a</td>
+	<td>//div[@class='task-content-actions']/a[contains(@title, 'View')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_EDIT</td>
-	<td>//div[@class='task-content-actions']/ul/li/a[contains(.,'Edit')]</td>
+	<td>//div[@class='task-content-actions']/a[contains(@title, 'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

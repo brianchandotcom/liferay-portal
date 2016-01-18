@@ -15,7 +15,7 @@
 package com.liferay.journal.web.upload;
 
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.portal.ImageTypeException;
+import com.liferay.portal.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -131,6 +131,17 @@ public class ImageJournalUploadHandler extends BaseUploadHandler {
 
 			return null;
 		}
+	}
+
+	@Override
+	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
+		throws PortalException {
+
+		JSONObject imageJSONObject = super.getImageJSONObject(portletRequest);
+
+		imageJSONObject.put("type", "journal");
+
+		return imageJSONObject;
 	}
 
 	@Override

@@ -988,16 +988,19 @@ public interface LayoutLocalService extends BaseLocalService,
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Layout> getScopeGroupLayouts(
+		long parentGroupId) throws PortalException;
+
 	/**
 	* Returns all the layouts within scope of the group
 	*
-	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @return the layouts within scope of the group
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Layout> getScopeGroupLayouts(
-		long groupId, boolean privateLayout);
+		long parentGroupId, boolean privateLayout) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayoutSetPrototypeLayout(long layoutSetPrototypeId,

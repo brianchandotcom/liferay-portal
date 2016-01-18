@@ -16,7 +16,7 @@ package com.liferay.journal.model.listener;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
 
@@ -50,6 +50,6 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

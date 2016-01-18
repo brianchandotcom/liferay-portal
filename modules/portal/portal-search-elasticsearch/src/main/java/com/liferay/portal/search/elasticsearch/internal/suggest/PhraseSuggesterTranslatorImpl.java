@@ -232,6 +232,6 @@ public class PhraseSuggesterTranslatorImpl
 		_queryTranslator = null;
 	}
 
-	private volatile QueryTranslator<QueryBuilder> _queryTranslator;
+	private QueryTranslator<QueryBuilder> _queryTranslator;
 
 }

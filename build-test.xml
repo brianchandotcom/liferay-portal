@@ -4977,6 +4977,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<isset property="test.pause.on.failure" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.pause.on.failure=${test.pause.on.failure}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.portal.instance" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

@@ -484,9 +484,6 @@ AUI.add(
 					_formatNumber: function(value) {
 						var instance = this;
 
-						var floor = Math.floor;
-						var padNumber = Lang.String.padNumber;
-
 						return Lang.String.padNumber(Math.floor(value), 2);
 					},
 

@@ -141,7 +141,7 @@ public class TokenLogoutAction extends Action {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TokenLogoutAction.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
+	private ConfigurationFactory _configurationFactory;
 	private final Map<LogoutProcessorType, LogoutProcessor> _logoutProcessors =
 		new ConcurrentHashMap<>();
 

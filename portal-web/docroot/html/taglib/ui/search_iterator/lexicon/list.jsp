@@ -38,7 +38,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 %>
 
 <table class="table table-list">
-	<c:if test="<%= headerNames != null %>">
+	<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
 		<thead>
 			<tr>
 
@@ -124,7 +124,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 		<c:if test="<%= resultRowSplitterEntries.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>
 				<td>
-					<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
+					<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" search="<%= searchContainer.isSearch() %>" />
 				</td>
 			</tr>
 		</c:if>

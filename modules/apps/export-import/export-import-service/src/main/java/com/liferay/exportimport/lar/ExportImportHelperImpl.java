@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.lar;
 
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -1631,13 +1631,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportHelperImpl.class);
 
-	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile GroupLocalService _groupLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile LayoutService _layoutService;
-	private volatile PortletLocalService _portletLocalService;
-	private volatile SystemEventLocalService _systemEventLocalService;
-	private volatile UserLocalService _userLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private LayoutService _layoutService;
+	private PortletLocalService _portletLocalService;
+	private SystemEventLocalService _systemEventLocalService;
+	private UserLocalService _userLocalService;
 
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 

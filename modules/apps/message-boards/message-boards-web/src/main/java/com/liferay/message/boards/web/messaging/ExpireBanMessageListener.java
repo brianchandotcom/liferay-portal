@@ -100,8 +100,8 @@ public class ExpireBanMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private volatile MBBanLocalService _mbBanLocalService;
+	private MBBanLocalService _mbBanLocalService;
 	private volatile MBConfiguration _mbConfiguration;
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

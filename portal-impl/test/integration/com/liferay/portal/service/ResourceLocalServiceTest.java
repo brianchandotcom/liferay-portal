@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.NoSuchResourceException;
+import com.liferay.portal.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;

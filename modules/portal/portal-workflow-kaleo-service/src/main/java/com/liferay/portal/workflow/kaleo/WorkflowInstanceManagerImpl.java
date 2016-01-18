@@ -168,6 +168,37 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 			end, orderByComparator, serviceContext);
 	}
 
+	@Override
+	public List<WorkflowInstance> search(
+			long companyId, Long userId, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+
+		return _workflowEngine.search(
+			userId, assetType, nodeName, kaleoDefinitionName, completed, start,
+			end, orderByComparator, serviceContext);
+	}
+
+	@Override
+	public int searchCount(
+			long companyId, Long userId, String assetType, String nodeName,
+			String kaleoDefinitionName, Boolean completed)
+		throws WorkflowException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+
+		return _workflowEngine.searchCount(
+			userId, assetType, nodeName, kaleoDefinitionName, completed,
+			serviceContext);
+	}
+
 	public void setWorkflowEngine(WorkflowEngine workflowEngine) {
 		_workflowEngine = workflowEngine;
 	}

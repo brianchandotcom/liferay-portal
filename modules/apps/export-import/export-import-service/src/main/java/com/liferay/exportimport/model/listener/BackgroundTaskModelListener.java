@@ -14,8 +14,8 @@
 
 package com.liferay.exportimport.model.listener;
 
-import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModelListener;
@@ -77,7 +77,7 @@ public class BackgroundTaskModelListener
 			exportImportConfigurationLocalService;
 	}
 
-	private volatile ExportImportConfigurationLocalService
+	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
 }

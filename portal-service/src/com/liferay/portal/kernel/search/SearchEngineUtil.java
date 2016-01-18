@@ -20,9 +20,9 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Bruno Farache
- * @author Raymond Augé
- * @author Michael C. Han
+ * @author     Bruno Farache
+ * @author     Raymond Augé
+ * @author     Michael C. Han
  * @deprecated As of 7.0.0, replaced by {@link IndexWriterHelperUtil,
  *             IndexSearcherHelperUtil, SearchEngineHelperUtil}
  */
@@ -39,8 +39,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocument(
-	 *             String, long, Document, boolean)}
+	 *             IndexWriterHelperUtil#addDocument(String, long, Document,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void addDocument(
@@ -53,8 +53,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void addDocument(
@@ -68,8 +68,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void addDocuments(
@@ -83,8 +83,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#addDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#addDocuments(String, long, Collection,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void addDocuments(
@@ -118,8 +118,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocument(
-	 *             String, long, String, boolean)}
+	 *             IndexWriterHelperUtil#deleteDocument(String, long, String,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void deleteDocument(
@@ -132,8 +132,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocument(
-	 *             String, long, String, boolean)}
+	 *             IndexWriterHelperUtil#deleteDocument(String, long, String,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void deleteDocument(
@@ -147,8 +147,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#deleteDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void deleteDocuments(
@@ -161,8 +161,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#deleteDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void deleteDocuments(
@@ -176,8 +176,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteEntityDocuments(
-	 *             String, long, String, boolean)}
+	 *             IndexWriterHelperUtil#deleteEntityDocuments(String, long,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	public static void deleteEntityDocuments(
@@ -191,8 +191,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#deleteEntityDocuments(
-	 *             String, long, String, boolean)}
+	 *             IndexWriterHelperUtil#deleteEntityDocuments(String, long,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	public static void deletePortletDocuments(
@@ -216,8 +216,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#indexKeyword(
-	 *             long, String, float, String, Locale)}
+	 *             IndexWriterHelperUtil#indexKeyword(long, String, float,
+	 *             String, Locale)}
 	 */
 	@Deprecated
 	public static void indexKeyword(
@@ -231,8 +231,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#indexKeyword(
-	 *             String, long, String, float, String, Locale)}
+	 *             IndexWriterHelperUtil#indexKeyword(String, long, String,
+	 *             float, String, Locale)}
 	 */
 	@Deprecated
 	public static void indexKeyword(
@@ -272,8 +272,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(
-	 *             long, Locale)}
+	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(long,
+	 *             Locale)}
 	 */
 	@Deprecated
 	public static void indexQuerySuggestionDictionary(
@@ -285,8 +285,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(
-	 *             String, long, Locale)}
+	 *             IndexWriterHelperUtil#indexQuerySuggestionDictionary(String,
+	 *             long, Locale)}
 	 */
 	@Deprecated
 	public static void indexQuerySuggestionDictionary(
@@ -310,8 +310,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#indexSpellCheckerDictionaries(
-	 *             String, long)}
+	 *             IndexWriterHelperUtil#indexSpellCheckerDictionaries(String,
+	 *             long)}
 	 */
 	@Deprecated
 	public static void indexSpellCheckerDictionaries(
@@ -324,8 +324,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(
-	 *             long, Locale)}
+	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(long,
+	 *             Locale)}
 	 */
 	@Deprecated
 	public static void indexSpellCheckerDictionary(
@@ -337,8 +337,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(
-	 *             String, long, Locale)}
+	 *             IndexWriterHelperUtil#indexSpellCheckerDictionary(String,
+	 *             long, Locale)}
 	 */
 	@Deprecated
 	public static void indexSpellCheckerDictionary(
@@ -360,8 +360,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#partiallyUpdateDocument(
-	 *             String, long, Document, boolean)}
+	 *             IndexWriterHelperUtil#partiallyUpdateDocument(String, long,
+	 *             Document, boolean)}
 	 */
 	@Deprecated
 	public static void partiallyUpdateDocument(
@@ -375,8 +375,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#partiallyUpdateDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#partiallyUpdateDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void partiallyUpdateDocuments(
@@ -482,8 +482,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexSearcherHelperUtil#spellCheckKeywords(
-	 *             SearchContext, int)}
+	 *             IndexSearcherHelperUtil#spellCheckKeywords(SearchContext,
+	 *             int)}
 	 */
 	@Deprecated
 	public static Map<String, List<String>> spellCheckKeywords(
@@ -495,8 +495,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexSearcherHelperUtil#suggestKeywordQueries(
-	 *             SearchContext, int)}
+	 *             IndexSearcherHelperUtil#suggestKeywordQueries(SearchContext,
+	 *             int)}
 	 */
 	@Deprecated
 	public static String[] suggestKeywordQueries(
@@ -509,8 +509,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocument(
-	 *             String, long, Document, boolean)}
+	 *             IndexWriterHelperUtil#updateDocument(String, long, Document,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void updateDocument(
@@ -523,8 +523,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocument(
-	 *             String, long, Document, boolean)}
+	 *             IndexWriterHelperUtil#updateDocument(String, long, Document,
+	 *             boolean)}
 	 */
 	@Deprecated
 	public static void updateDocument(
@@ -538,8 +538,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#updateDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void updateDocuments(
@@ -553,8 +553,8 @@ public class SearchEngineUtil extends SearchEngineHelperUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             IndexWriterHelperUtil#updateDocuments(
-	 *             String, long, Collection, boolean)}
+	 *             IndexWriterHelperUtil#updateDocuments(String, long,
+	 *             Collection, boolean)}
 	 */
 	@Deprecated
 	public static void updateDocuments(

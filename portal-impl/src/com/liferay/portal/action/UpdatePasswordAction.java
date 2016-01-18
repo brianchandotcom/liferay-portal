@@ -14,9 +14,9 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.UserLockoutException;
-import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.exception.NoSuchUserException;
+import com.liferay.portal.exception.UserLockoutException;
+import com.liferay.portal.exception.UserPasswordException;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;

@@ -63,7 +63,9 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getNode(renderRequest);
+			WikiNode node = ActionUtil.getNode(renderRequest);
+
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 
 			if (!SessionErrors.contains(
 					renderRequest, DuplicatePageException.class.getName())) {
@@ -163,6 +165,6 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 		_wikiPageService = wikiPageService;
 	}
 
-	private volatile WikiPageService _wikiPageService;
+	private WikiPageService _wikiPageService;
 
 }

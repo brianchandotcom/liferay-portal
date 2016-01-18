@@ -75,6 +75,6 @@ public class SiteNavigationBreadcrumbConfigurationAction
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
 
-	private volatile PortletDisplayTemplate _portletDisplayTemplate;
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

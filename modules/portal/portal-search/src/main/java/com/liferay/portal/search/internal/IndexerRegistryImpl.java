@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.dummy.DummyIndexer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.search.IndexerRequestBufferOverflowHandler;
+import com.liferay.portal.search.buffer.IndexerRequestBuffer;
+import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
+import com.liferay.portal.search.internal.buffer.BufferedIndexerInvocationHandler;
+import com.liferay.portal.search.internal.buffer.DefaultIndexerRequestBufferOverflowHandler;
 
 import java.util.HashSet;
 import java.util.List;

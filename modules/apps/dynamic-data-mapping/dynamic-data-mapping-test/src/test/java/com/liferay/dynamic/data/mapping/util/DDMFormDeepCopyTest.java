@@ -38,6 +38,7 @@ import org.junit.Test;
 public class DDMFormDeepCopyTest extends BaseDDMTestCase {
 
 	@Before
+	@Override
 	public void setUp() {
 		setUpBeanPropertiesUtil();
 	}

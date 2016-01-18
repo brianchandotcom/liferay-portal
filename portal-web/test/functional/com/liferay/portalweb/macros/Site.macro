@@ -17,7 +17,7 @@
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addBlankCP">
@@ -143,18 +143,18 @@
 				<if>
 					<equals arg1="${siteLimitMembership}" arg2="Yes" />
 					<then>
-						<execute function="Check" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+						<execute function="Check#checkToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
 					</then>
 					<elseif>
 						<equals arg1="${siteLimitMembership}" arg2="No" />
 						<then>
-							<execute function="Uncheck" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+							<execute function="Uncheck#uncheckToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
 						</then>
 					</elseif>
 				</if>
 
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 		</if>
 	</command>
@@ -199,7 +199,7 @@
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addMemberOrganizationCP">
@@ -221,7 +221,7 @@
 
 		<execute function="Click" locator1="Button#ADD" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addMemberUserGroupCP">
@@ -245,7 +245,7 @@
 
 		<execute function="Click" locator1="Button#ADD" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addSiteTemplateCP">
@@ -283,7 +283,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="approveJoinSiteRestrictedViaMySitesPG">
@@ -336,7 +336,7 @@
 	</command>
 
 	<command name="assignDefaultSiteTeam">
-		<execute function="Click" locator1="SitesEditSite#MENU_ADVANCED_DEFAULT_USER_ASSOCIATIONS" />
+		<execute function="Click" locator1="SitesEditSite#MENU_ADVANCED_TAB" />
 
 		<execute function="AssertClick" locator1="SiteSettingsDefaultUserAssociations#TEAMS_SELECT" value1="Select" />
 		<execute function="SelectFrame" locator1="SiteSettingsDefaultUserAssociations#TEAMS_SELECT_IFRAME" />
@@ -347,7 +347,10 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+
+		<execute function="Click" locator1="SitesEditSite#MENU_ADVANCED_TAB" />
 
 		<execute function="AssertTextEquals" locator1="SiteSettingsDefaultUserAssociations#TEAMS_SELECTED" value1="${teamName}" />
 	</command>
@@ -376,7 +379,7 @@
 		<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="Check" locator1="SiteMembershipsAssignUserRoles#USER_TABLE_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="AssertClick" locator1="SiteMembershipsAssignUserRoles#CURRENT" value1="Current" />
 
@@ -420,7 +423,7 @@
 
 		<execute function="Click" locator1="Button#ADD" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="assignSiteRolesUserGroupsCP">
@@ -441,15 +444,13 @@
 		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_USER_NAME" value1="${userGroupName}" />
 		<execute function="Check" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_CHECKBOX" />
 		<execute function="Click" locator1="Button#UPDATE_ASSOCIATIONS" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute function="Click" locator1="SiteMembershipsUserGroups#CURRENT" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_USER_NAME" value1="${userGroupName}" />
 	</command>
 
 	<command name="assignUserSitesCP">
-		<execute function="AssertClick" locator1="NavTab#ALL_USERS" value1="All Users" />
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
@@ -466,7 +467,7 @@
 		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="configureCurrentLanguagesCP">
@@ -523,7 +524,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="${localizedSuccessMessage}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</else>
 		</if>
 	</command>
@@ -541,7 +542,7 @@
 		<if>
 			<equals arg1="${successMessage}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
@@ -560,7 +561,7 @@
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
 		<execute function="AssertTextNotPresent" value1="${siteName}" />
 	</command>
@@ -570,12 +571,15 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteNameEdit}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteNameEdit}" />
 	</command>
 
 	<command name="editFriendlyURLCP">
-		<execute function="AssertClick" locator1="NavListItem#SITE_URL" value1="Site URL" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Site URL" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
 
 		<execute function="Pause" locator1="5000" />
@@ -587,11 +591,14 @@
 			<equals arg1="${friendlyURLInvalid}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+				<execute function="AssertClick" locator1="SiteSettingsSiteURL#SITE_URL_LABEL" value1="Site URL" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The friendly URL has too many slashes." />
 				<execute function="AssertTextEquals" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</else>
 		</if>
 	</command>
@@ -607,7 +614,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="enableRecycleBinCP">
@@ -616,7 +623,7 @@
 		<execute function="Check" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="exportSite">
@@ -668,9 +675,12 @@
 	<command name="inactivateCP">
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="SitesEditSite#ACTIVE_LABEL" value1="Active" />
-		<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ACTIVE" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="joinViaMySitesPG">
@@ -707,7 +717,7 @@
 
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 					<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_1" value1="Your request was sent. You will receive a reply by email." />
 
 					<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS_2" />
@@ -727,7 +737,7 @@
 
 				<execute function="AssertClick" locator1="MenuItem#JOIN" value1="Join" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 
@@ -761,7 +771,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#LEAVE" value1="Leave" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
 
@@ -788,18 +798,18 @@
 		<if>
 			<equals arg1="${allowManualMembershipManagement}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
+				<execute function="Check#checkToggleSwitch" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
 			</then>
 			<elseif>
 				<equals arg1="${allowManualMembershipManagement}" arg2="false" />
 				<then>
-					<execute function="Uncheck" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT" />
 				</then>
 			</elseif>
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="removeMemberCP">
@@ -826,7 +836,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#REMOVE_MEMBERSHIP" value1="Remove Membership" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="removeSiteRolesSiteOwnerUserGroupsCP">
@@ -845,7 +855,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#SITE_OWNER" />
 		<execute function="Click" locator1="Button#UPDATE_ASSOCIATIONS" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertNotChecked" locator1="Checkbox#SITE_OWNER" />
 	</command>
 
@@ -931,7 +941,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="selectParentSite">
@@ -969,7 +979,7 @@
 				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="ClickNoError" locator1="Icon#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 		</if>
 	</command>

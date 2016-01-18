@@ -55,6 +55,6 @@ public class DLFolderPermissionUpdateHandler
 		_dLFolderLocalService = dLFolderLocalService;
 	}
 
-	private volatile DLFolderLocalService _dLFolderLocalService;
+	private DLFolderLocalService _dLFolderLocalService;
 
 }

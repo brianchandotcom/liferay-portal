@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.mobile.device.rules.service.permission
 Include-Resource:\
 	classes,\
-	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

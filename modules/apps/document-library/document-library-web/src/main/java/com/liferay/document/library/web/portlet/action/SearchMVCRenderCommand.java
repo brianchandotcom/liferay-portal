@@ -57,6 +57,6 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		_dlPortletToolbarContributor = dlPortletToolbarContributor;
 	}
 
-	private volatile DLPortletToolbarContributor _dlPortletToolbarContributor;
+	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 
 }

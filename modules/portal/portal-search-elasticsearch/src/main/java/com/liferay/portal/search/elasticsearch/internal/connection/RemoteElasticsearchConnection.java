@@ -197,7 +197,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);
 
-	private volatile Props _props;
+	private Props _props;
 	private Set<String> _transportAddresses = new HashSet<>();
 
 }

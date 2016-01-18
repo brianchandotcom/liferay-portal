@@ -130,35 +130,6 @@
 		<!-- Asset -->
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
-
-		<!-- Global Prayer Digest -->
-
-		<action path="/global_prayer_digest/view" type="com.liferay.portlet.globalprayerdigest.action.ViewAction">
-			<forward name="portlet.iframe.view" path="portlet.iframe.view" />
-		</action>
-
-		<!-- Invitation -->
-
-		<action path="/invitation/view" type="com.liferay.portlet.invitation.action.ViewAction">
-			<forward name="portlet.invitation.view" path="portlet.invitation.view" />
-		</action>
-
-		<!-- Maps -->
-
-		<action path="/maps/view" forward="portlet.maps.view" name="mapsMapsForm" scope="request" />
-
-		<!-- News -->
-
-		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">
-			<forward name="portlet.news.edit" path="portlet.news.edit" />
-		</action>
-
-		<action path="/news/view" forward="portlet.news.view" />
-
-		<!-- Our Activities -->
-
-		<action path="/our_activities/view" forward="portlet.our_activities.view" />
-
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

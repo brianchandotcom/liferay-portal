@@ -41,6 +41,7 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 		return StagingProcessesPortletKeys.STAGING_PROCESSES;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES + ")",
 		unbind = "-"

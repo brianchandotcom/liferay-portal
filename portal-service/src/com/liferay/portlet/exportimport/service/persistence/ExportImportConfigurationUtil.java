@@ -192,7 +192,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static ExportImportConfiguration findByGroupId_First(long groupId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -218,7 +218,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static ExportImportConfiguration findByGroupId_Last(long groupId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -246,7 +246,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration[] findByGroupId_PrevAndNext(
 		long exportImportConfigurationId, long groupId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(exportImportConfigurationId,
 			groupId, orderByComparator);
@@ -353,7 +353,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration findByCompanyId_First(
 		long companyId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -383,7 +383,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration findByCompanyId_Last(
 		long companyId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -414,7 +414,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration[] findByCompanyId_PrevAndNext(
 		long exportImportConfigurationId, long companyId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(exportImportConfigurationId,
 			companyId, orderByComparator);
@@ -525,7 +525,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static ExportImportConfiguration findByG_T_First(long groupId,
 		int type, OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence().findByG_T_First(groupId, type, orderByComparator);
 	}
 
@@ -554,7 +554,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static ExportImportConfiguration findByG_T_Last(long groupId,
 		int type, OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence().findByG_T_Last(groupId, type, orderByComparator);
 	}
 
@@ -584,7 +584,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration[] findByG_T_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByG_T_PrevAndNext(exportImportConfigurationId, groupId,
 			type, orderByComparator);
@@ -698,7 +698,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration findByG_S_First(long groupId,
 		int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
 	}
@@ -730,7 +730,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration findByG_S_Last(long groupId,
 		int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -763,7 +763,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration[] findByG_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(exportImportConfigurationId, groupId,
 			status, orderByComparator);
@@ -883,7 +883,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration findByG_T_S_First(long groupId,
 		int type, int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByG_T_S_First(groupId, type, status, orderByComparator);
 	}
@@ -917,7 +917,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration findByG_T_S_Last(long groupId,
 		int type, int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByG_T_S_Last(groupId, type, status, orderByComparator);
 	}
@@ -952,7 +952,7 @@ public class ExportImportConfigurationUtil {
 	public static ExportImportConfiguration[] findByG_T_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type, int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence()
 				   .findByG_T_S_PrevAndNext(exportImportConfigurationId,
 			groupId, type, status, orderByComparator);
@@ -1021,7 +1021,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static ExportImportConfiguration remove(
 		long exportImportConfigurationId)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence().remove(exportImportConfigurationId);
 	}
 
@@ -1039,7 +1039,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static ExportImportConfiguration findByPrimaryKey(
 		long exportImportConfigurationId)
-		throws com.liferay.portlet.exportimport.NoSuchConfigurationException {
+		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException {
 		return getPersistence().findByPrimaryKey(exportImportConfigurationId);
 	}
 

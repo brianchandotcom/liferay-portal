@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -151,6 +152,9 @@ page import="com.liferay.shopping.service.permission.ShoppingItemPermission" %><
 page import="com.liferay.shopping.service.permission.ShoppingOrderPermission" %><%@
 page import="com.liferay.shopping.service.permission.ShoppingPermission" %><%@
 page import="com.liferay.shopping.util.ShoppingUtil" %><%@
+page import="com.liferay.shopping.util.comparator.CategoryItemNameComparator" %><%@
+page import="com.liferay.shopping.util.comparator.ItemNameComparator" %><%@
+page import="com.liferay.shopping.web.dao.search.ShoppingResultRowSplitter" %><%@
 page import="com.liferay.shopping.web.search.CouponDisplayTerms" %><%@
 page import="com.liferay.shopping.web.search.CouponSearch" %><%@
 page import="com.liferay.shopping.web.search.OrderDisplayTerms" %><%@

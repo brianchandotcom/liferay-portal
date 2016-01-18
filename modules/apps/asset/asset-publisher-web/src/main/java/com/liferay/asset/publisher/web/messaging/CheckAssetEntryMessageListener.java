@@ -84,6 +84,6 @@ public class CheckAssetEntryMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

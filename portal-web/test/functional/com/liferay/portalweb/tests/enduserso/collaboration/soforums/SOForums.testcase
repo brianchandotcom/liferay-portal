@@ -2617,10 +2617,10 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="preview" value="true" />
+		<execute macro="MessageboardsThread#previewAddPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2946,10 +2946,10 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="saveAsDraft" value="true" />
+		<execute macro="MessageboardsThread#saveNewThreadAsDraft">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${adminName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

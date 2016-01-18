@@ -16,7 +16,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.NoSuchBackgroundTaskException" %>
+<%@ page import="com.liferay.portal.exception.NoSuchBackgroundTaskException" %>
 
 <portlet:defineObjects />
 

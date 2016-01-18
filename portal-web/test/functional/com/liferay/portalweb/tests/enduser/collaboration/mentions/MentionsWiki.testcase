@@ -13,7 +13,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Wiki Page" />
 		</execute>
 
@@ -91,7 +91,7 @@
 
 				<execute macro="User#tearDownCP" />
 
-				<execute macro="Page#tearDownCP" />
+				<execute macro="Page#tearDownPG" />
 			</else>
 		</if>
 	</tear-down>

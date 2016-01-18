@@ -124,6 +124,6 @@ public class LayoutItemSelectorView
 					new UUIDItemSelectorReturnType()
 				}));
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

@@ -20,6 +20,16 @@
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing", !stagingGroup.isStagedRemotely());
+
+portletDisplay.setShowBackIcon(true);
+
+PortletURL stagingProcessesURL = PortalUtil.getControlPanelPortletURL(request, StagingProcessesPortletKeys.STAGING_PROCESSES, PortletRequest.RENDER_PHASE);
+
+stagingProcessesURL.setParameter("mvcPath", "/view.jsp");
+
+portletDisplay.setURLBack(stagingProcessesURL.toString());
+
+renderResponse.setTitle(LanguageUtil.get(request, "publish-templates"));
 %>
 
 <liferay-util:include page="/publish_templates/navigation.jsp" servletContext="<%= application %>" />

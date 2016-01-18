@@ -413,8 +413,7 @@ public class DDLFormEmailNotificationSender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormEmailNotificationSender.class);
 
-	private volatile DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
-	private volatile MailService _mailService;
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private MailService _mailService;
 
 }

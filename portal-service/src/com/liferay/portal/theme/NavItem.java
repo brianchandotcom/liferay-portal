@@ -18,16 +18,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -306,13 +307,20 @@ public class NavItem implements Serializable {
 		return _layout.hashCode();
 	}
 
-	public void icon() throws Exception {
-		Object velocityTaglib = _contextObjects.get("theme");
+	public String iconURL() throws Exception {
+		if ((_layout == null) || !_layout.isIconImage()) {
+			return StringPool.BLANK;
+		}
 
-		Method method = (Method)_contextObjects.get(
-			"velocityTaglib_layoutIcon");
+		StringBundler sb = new StringBundler(5);
 
-		method.invoke(velocityTaglib, _layout);
+		sb.append(_themeDisplay.getPathImage());
+		sb.append("/layout_icon?img_id");
+		sb.append(_layout.getIconImageId());
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(_layout.getIconImageId()));
+
+		return sb.toString();
 	}
 
 	public boolean isBrowsable() {

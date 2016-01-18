@@ -133,7 +133,7 @@ public class BaseHandler implements Handler<Void> {
 				}
 
 				ExecutorService executorService =
-					SyncEngine.getEventProcessorExecutorService();
+					SyncEngine.getExecutorService();
 
 				executorService.execute(_event);
 			}
@@ -199,6 +199,7 @@ public class BaseHandler implements Handler<Void> {
 		return null;
 	}
 
+	@Override
 	public void processFinally() {
 	}
 
@@ -206,6 +207,7 @@ public class BaseHandler implements Handler<Void> {
 	public void processResponse(String response) throws Exception {
 	}
 
+	@Override
 	public void removeEvent() {
 		FileEventManager.removeEvent(_event);
 	}

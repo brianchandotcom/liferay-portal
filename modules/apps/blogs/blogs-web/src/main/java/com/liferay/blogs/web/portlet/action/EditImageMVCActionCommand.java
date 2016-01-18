@@ -30,7 +30,7 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.blogs.NoSuchEntryException;
+import com.liferay.portlet.blogs.exception.NoSuchEntryException;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
@@ -135,6 +135,6 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditImageMVCActionCommand.class);
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

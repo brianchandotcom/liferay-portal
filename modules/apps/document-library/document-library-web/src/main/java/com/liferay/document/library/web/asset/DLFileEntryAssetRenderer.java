@@ -47,6 +47,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -126,12 +127,6 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
-			_fileEntry.getIcon() + ".png";
-	}
-
-	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
@@ -203,8 +198,7 @@ public class DLFileEntryAssetRenderer
 			return thumbnailSrc;
 		}
 
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/document.png";
+		return super.getThumbnailPath(portletRequest);
 	}
 
 	@Override
@@ -261,7 +255,7 @@ public class DLFileEntryAssetRenderer
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
-			"javax.portlet.action", "/document_library/get_file");
+			ActionRequest.ACTION_NAME, "/document_library/get_file");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_fileEntry.getRepositoryId()));
 		portletURL.setParameter(

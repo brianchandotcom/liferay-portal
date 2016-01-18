@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class MicroblogsEntryImpl extends MicroblogsEntryBaseImpl {
 
+	@Override
 	public long fetchParentMicroblogsEntryUserId() {
 		if (getMicroblogsEntryId() == getParentMicroblogsEntryId()) {
 			return getUserId();
@@ -39,6 +40,7 @@ public class MicroblogsEntryImpl extends MicroblogsEntryBaseImpl {
 		return microblogsEntry.getUserId();
 	}
 
+	@Override
 	public long getParentMicroblogsEntryUserId() throws PortalException {
 		if (getMicroblogsEntryId() == getParentMicroblogsEntryId()) {
 			return getUserId();

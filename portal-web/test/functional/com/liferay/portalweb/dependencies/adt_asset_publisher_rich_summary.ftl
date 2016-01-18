@@ -26,7 +26,7 @@
 	</#if>
 
 	<div class="asset-abstract">
-		<div class="lfr-meta-actions asset-actions">
+		<div class="asset-actions lfr-meta-actions">
 			<@getPrintIcon />
 
 			<@getFlagsIcon />
@@ -36,8 +36,6 @@
 
 		<h3 class="asset-title">
 			<a href="${viewURL}">
-				<i class="${assetRenderer.getIconCssClass()}"></i>
-
 				${entryTitle}
 			</a>
 		</h3>

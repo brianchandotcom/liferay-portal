@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -94,11 +93,6 @@ public class BlogsEntryAssetRenderer
 	}
 
 	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/blogs/blogs.png";
-	}
-
-	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
@@ -144,17 +138,6 @@ public class BlogsEntryAssetRenderer
 		}
 
 		return summary;
-	}
-
-	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/blog.png";
 	}
 
 	@Override

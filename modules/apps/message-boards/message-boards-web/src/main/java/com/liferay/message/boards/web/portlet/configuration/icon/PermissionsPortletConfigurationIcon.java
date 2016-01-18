@@ -17,11 +17,9 @@ package com.liferay.message.boards.web.portlet.configuration.icon;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -35,9 +33,6 @@ public class PermissionsPortletConfigurationIcon
 
 	public PermissionsPortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
-
-		_category = (MBCategory)portletRequest.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
 	}
 
 	@Override
@@ -54,12 +49,6 @@ public class PermissionsPortletConfigurationIcon
 			String modelResourceDescription = themeDisplay.getScopeGroupName();
 			String resourcePrimKey = String.valueOf(
 				themeDisplay.getScopeGroupId());
-
-			if (_category != null) {
-				modelResource = MBCategory.class.getName();
-				modelResourceDescription = _category.getName();
-				resourcePrimKey = String.valueOf(_category.getCategoryId());
-			}
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, modelResource, modelResourceDescription, null,
@@ -83,15 +72,10 @@ public class PermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		try {
-			if (!MBPermission.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
-					ActionKeys.PERMISSIONS)) {
+		if (!MBPermission.contains(
+				permissionChecker, themeDisplay.getScopeGroupId(),
+				ActionKeys.PERMISSIONS)) {
 
-				return false;
-			}
-		}
-		catch (Exception e) {
 			return false;
 		}
 
@@ -107,7 +91,5 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private final MBCategory _category;
 
 }

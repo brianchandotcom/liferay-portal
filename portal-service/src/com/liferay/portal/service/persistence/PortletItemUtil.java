@@ -192,7 +192,7 @@ public class PortletItemUtil {
 	*/
 	public static PortletItem findByG_C_First(long groupId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -222,7 +222,7 @@ public class PortletItemUtil {
 	*/
 	public static PortletItem findByG_C_Last(long groupId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -254,7 +254,7 @@ public class PortletItemUtil {
 	public static PortletItem[] findByG_C_PrevAndNext(long portletItemId,
 		long groupId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(portletItemId, groupId, classNameId,
 			orderByComparator);
@@ -375,7 +375,7 @@ public class PortletItemUtil {
 	public static PortletItem findByG_P_C_First(long groupId,
 		java.lang.String portletId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_First(groupId, portletId, classNameId,
 			orderByComparator);
@@ -411,7 +411,7 @@ public class PortletItemUtil {
 	public static PortletItem findByG_P_C_Last(long groupId,
 		java.lang.String portletId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_Last(groupId, portletId, classNameId,
 			orderByComparator);
@@ -448,7 +448,7 @@ public class PortletItemUtil {
 	public static PortletItem[] findByG_P_C_PrevAndNext(long portletItemId,
 		long groupId, java.lang.String portletId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_PrevAndNext(portletItemId, groupId, portletId,
 			classNameId, orderByComparator);
@@ -491,7 +491,7 @@ public class PortletItemUtil {
 	*/
 	public static PortletItem findByG_N_P_C(long groupId,
 		java.lang.String name, java.lang.String portletId, long classNameId)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_N_P_C(groupId, name, portletId, classNameId);
 	}
@@ -540,7 +540,7 @@ public class PortletItemUtil {
 	*/
 	public static PortletItem removeByG_N_P_C(long groupId,
 		java.lang.String name, java.lang.String portletId, long classNameId)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence()
 				   .removeByG_N_P_C(groupId, name, portletId, classNameId);
 	}
@@ -596,7 +596,7 @@ public class PortletItemUtil {
 	* @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
 	*/
 	public static PortletItem remove(long portletItemId)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence().remove(portletItemId);
 	}
 
@@ -612,7 +612,7 @@ public class PortletItemUtil {
 	* @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
 	*/
 	public static PortletItem findByPrimaryKey(long portletItemId)
-		throws com.liferay.portal.NoSuchPortletItemException {
+		throws com.liferay.portal.exception.NoSuchPortletItemException {
 		return getPersistence().findByPrimaryKey(portletItemId);
 	}
 

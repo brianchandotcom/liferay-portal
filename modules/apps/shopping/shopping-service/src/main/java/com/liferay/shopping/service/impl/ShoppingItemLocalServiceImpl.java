@@ -424,9 +424,27 @@ public class ShoppingItemLocalServiceImpl
 	}
 
 	@Override
+	public List<ShoppingItem> search(
+		long groupId, long[] categoryIds, String keywords, int start, int end,
+		OrderByComparator<ShoppingItem> obc) {
+
+		return shoppingItemFinder.findByKeywords(
+			groupId, categoryIds, keywords, start, end, obc);
+	}
+
+	@Override
 	public int searchCount(long groupId, long[] categoryIds, String keywords) {
 		return shoppingItemFinder.countByKeywords(
 			groupId, categoryIds, keywords);
+	}
+
+	@Override
+	public int searchCount(
+		long groupId, long[] categoryIds, String keywords,
+		OrderByComparator<ShoppingItem> obc) {
+
+		return shoppingItemFinder.countByKeywords(
+			groupId, categoryIds, keywords, obc);
 	}
 
 	@Override

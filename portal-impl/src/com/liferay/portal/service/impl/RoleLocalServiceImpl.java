@@ -14,10 +14,10 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.DuplicateRoleException;
-import com.liferay.portal.NoSuchRoleException;
-import com.liferay.portal.RequiredRoleException;
-import com.liferay.portal.RoleNameException;
+import com.liferay.portal.exception.DuplicateRoleException;
+import com.liferay.portal.exception.NoSuchRoleException;
+import com.liferay.portal.exception.RequiredRoleException;
+import com.liferay.portal.exception.RoleNameException;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
@@ -65,7 +65,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
-import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

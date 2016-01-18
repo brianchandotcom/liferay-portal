@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.cas.internal.auto.login;
 
-import com.liferay.portal.NoSuchUserException;
+import com.liferay.portal.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -194,7 +194,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 	private static final Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
 
-	private volatile ConfigurationFactory _configurationFactory;
-	private volatile UserLocalService _userLocalService;
+	private ConfigurationFactory _configurationFactory;
+	private UserLocalService _userLocalService;
 
 }

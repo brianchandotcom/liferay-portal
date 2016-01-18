@@ -1,5 +1,5 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: Collaboration${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Description: Apps and Features: Activities, Alerts, Announcements, Blogs, Documents and Media, Friend Requests,Invitation, Media Gallery, Meetups, Message Boards, Mentions, Microblogs, Page Flags/Comments/Ratings, Social Activity/Equity, User and Group Statistics, Wiki.<br /><br />The Collaboration and Document Management suite provides applications and features that help users share ideas, implement them, and produce terrific results. Its apps such as Message Boards and Blogs help users start discussions, ask questions, share ideas, and connect with other users. Wiki allows users to share in-depth information. And Alerts and Announcements facilitate broadcasting information and notifications.<br /><br />As users collaborate, they're sure to produce important files. The suite's Documents and Media Library allows users to store files, share them, and publish them. It not only works with Liferay's built-in repository but also allows you to integrate with external repositories, such CMIS repositories and Google Docs. Users can add and share all kinds of files, including documents, presentations, images, and videos. And the suite's Documents and Media app and Media Gallery help users display files the way they like them.<br /><br />As users engage in site activities, you'll want to recognize them and connect them with other users. The suite's social networking apps and features enable you to attribute social equity to active users automatically by increasing their rank on the site. You can even highlight user activities to show your site's liveliness. The Mentions feature facilitates notifying specific users in the context of site content, discussions, and comments. The social apps also help users share their thoughts on the your sites and other social sites, such as Facebook and Twitter. Combined with the suite's collaboration and document management features, the Collaboration and Document Management suite’s social features help develop awesome communities, foster high morale, and make work interesting.<br /><br />This suite may contain modules that depend on Platform suite modules.
+Liferay-Releng-App-Title: Liferay Collaboration${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Communication
 Liferay-Releng-Demo-Url:
@@ -37,11 +37,15 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.document.library.service:1.0.0,\
 	com.liferay.document.library.test:1.0.0,\
 	com.liferay.document.library.web:1.0.0,\
+	com.liferay.flags.api:1.0.0,\
+	com.liferay.flags.service:1.0.0,\
 	com.liferay.flags.web:1.0.0,\
+	com.liferay.image.uploader.web:1.0.0,\
 	com.liferay.invitation.web:1.0.0,\
 	com.liferay.item.selector.api:1.0.0,\
 	com.liferay.item.selector.criteria.api:1.0.0,\
 	com.liferay.item.selector.editor.configuration:1.0.0,\
+	com.liferay.item.selector.taglib.freemarker.contributor:1.0.0,\
 	com.liferay.item.selector.taglib:1.0.0,\
 	com.liferay.item.selector.upload.web:1.0.0,\
 	com.liferay.item.selector.url.web:1.0.0,\
@@ -59,9 +63,12 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.microblogs.service:1.0.0,\
 	com.liferay.microblogs.test:1.0.0,\
 	com.liferay.microblogs.web:1.0.0,\
+	com.liferay.notifications.web:1.0.0,\
 	com.liferay.portal.parser.bbcode:1.0.0,\
+	com.liferay.ratings.api:1.0.0,\
 	com.liferay.ratings.page.ratings.web:1.0.0,\
 	com.liferay.ratings.service:1.0.0,\
+	com.liferay.recent.documents.web:1.0.0,\
 	com.liferay.social.activities.web:1.0.0,\
 	com.liferay.social.activity.web:1.0.0,\
 	com.liferay.social.activity:1.0.0,\
@@ -73,6 +80,7 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.social.requests.web:1.0.0,\
 	com.liferay.social.user.statistics.web:1.0.0,\
 	com.liferay.wiki.api:1.0.0,\
+	com.liferay.wiki.editor.config:1.0.0,\
 	com.liferay.wiki.engine.creole:1.0.0,\
 	com.liferay.wiki.engine.html:1.0.0,\
 	com.liferay.wiki.engine.input.editor.common:1.0.0,\
@@ -80,6 +88,7 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.wiki.engine.mediawiki:1.0.0,\
 	com.liferay.wiki.engine.text:1.0.0,\
 	com.liferay.wiki.layout.prototype:1.0.0,\
+	com.liferay.wiki.navigation.web:1.0.0,\
 	com.liferay.wiki.service:1.0.0,\
 	com.liferay.wiki.test:1.0.0,\
 	com.liferay.wiki.web:1.0.0

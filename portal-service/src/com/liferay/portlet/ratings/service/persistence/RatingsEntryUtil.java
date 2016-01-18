@@ -186,7 +186,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry findByUuid_First(java.lang.String uuid,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -239,7 +239,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry[] findByUuid_PrevAndNext(long entryId,
 		java.lang.String uuid, OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
 	}
@@ -349,7 +349,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -379,7 +379,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -411,7 +411,7 @@ public class RatingsEntryUtil {
 	public static RatingsEntry[] findByUuid_C_PrevAndNext(long entryId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(entryId, uuid, companyId,
 			orderByComparator);
@@ -522,7 +522,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry findByC_C_First(long classNameId, long classPK,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -552,7 +552,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry findByC_C_Last(long classNameId, long classPK,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -584,7 +584,7 @@ public class RatingsEntryUtil {
 	public static RatingsEntry[] findByC_C_PrevAndNext(long entryId,
 		long classNameId, long classPK,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(entryId, classNameId, classPK,
 			orderByComparator);
@@ -621,7 +621,8 @@ public class RatingsEntryUtil {
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
 	public static RatingsEntry findByU_C_C(long userId, long classNameId,
-		long classPK) throws com.liferay.portlet.ratings.NoSuchEntryException {
+		long classPK)
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence().findByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -662,7 +663,8 @@ public class RatingsEntryUtil {
 	* @return the ratings entry that was removed
 	*/
 	public static RatingsEntry removeByU_C_C(long userId, long classNameId,
-		long classPK) throws com.liferay.portlet.ratings.NoSuchEntryException {
+		long classPK)
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence().removeByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -772,7 +774,7 @@ public class RatingsEntryUtil {
 	public static RatingsEntry findByC_C_S_First(long classNameId,
 		long classPK, double score,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_First(classNameId, classPK, score,
 			orderByComparator);
@@ -807,7 +809,7 @@ public class RatingsEntryUtil {
 	*/
 	public static RatingsEntry findByC_C_S_Last(long classNameId, long classPK,
 		double score, OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_Last(classNameId, classPK, score,
 			orderByComparator);
@@ -844,7 +846,7 @@ public class RatingsEntryUtil {
 	public static RatingsEntry[] findByC_C_S_PrevAndNext(long entryId,
 		long classNameId, long classPK, double score,
 		OrderByComparator<RatingsEntry> orderByComparator)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_C_S_PrevAndNext(entryId, classNameId, classPK,
 			score, orderByComparator);
@@ -910,7 +912,7 @@ public class RatingsEntryUtil {
 	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
 	public static RatingsEntry remove(long entryId)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence().remove(entryId);
 	}
 
@@ -926,7 +928,7 @@ public class RatingsEntryUtil {
 	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
 	*/
 	public static RatingsEntry findByPrimaryKey(long entryId)
-		throws com.liferay.portlet.ratings.NoSuchEntryException {
+		throws com.liferay.portlet.ratings.exception.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(entryId);
 	}
 

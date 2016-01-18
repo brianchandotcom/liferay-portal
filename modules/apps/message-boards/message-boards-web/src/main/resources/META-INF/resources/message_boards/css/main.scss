@@ -71,27 +71,26 @@
 		}
 	}
 
+	.thread-container {
+		margin-top: 20px;
+
+		.panel-heading {
+			span.h5 {
+				margin-right: 12px;
+			}
+		}
+
+		& > .message-container {
+			padding-left: 0;
+		}
+
+		.reply-to-main-thread-container {
+			text-align: center;
+		}
+	}
+
 	.message-container {
-		border: 1px solid #CCC;
-		margin: 5px 0 0 0;
-
-		table {
-			border-collapse: collapse;
-			table-layout: fixed;
-		}
-
-		.lfr-code table {
-			table-layout: auto;
-		}
-
-		td {
-			border-width: 0;
-		}
-
-		.user-info {
-			border-right: 1px solid #CCC;
-			padding: 5px;
-		}
+		padding-left: 10px;
 	}
 
 	.thread-bottom, .thread-top {
@@ -127,6 +126,10 @@
 		}
 	}
 
+	.reply-to-message {
+		margin-bottom: 20px;
+	}
+
 	.thread-body {
 		overflow: hidden;
 		padding: 15px;
@@ -136,12 +139,17 @@
 		}
 	}
 
-	.message-container .user-info {
-		border-right: 1px solid #CCC;
-		padding: 5px;
+	@include sm {
+		.social-interaction {
+			width: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
 
-		.user-name {
-			@include hyphens;
+			& > div {
+				float: right;
+				margin-right: 12px;
+			}
 		}
 	}
 
@@ -251,13 +259,6 @@
 		border-width: 0;
 	}
 
-	.message-container .thread-message-view, .thread-view {
-		border-collapse: collapse;
-		min-width: 400px;
-		padding: 0;
-		width: 100%;
-	}
-
 	.thread-view-controls {
 		list-style: none;
 		margin: 0;
@@ -312,11 +313,6 @@
 		text-decoration: underline;
 	}
 
-	.taglib-flags {
-		float: left;
-		margin: 10px 0 0 20px;
-	}
-
 	.threads-panel {
 		margin-top: 1em;
 	}
@@ -358,11 +354,6 @@
 			text-align: center;
 		}
 
-		.tags {
-			float: left;
-			margin-top: 0.5em;
-		}
-
 		.question-subject {
 			font-size: 125%;
 
@@ -380,97 +371,6 @@
 	.search-root-entry {
 		color: #999;
 		float: right;
-	}
-
-	@include respond-to(phone, tablet) {
-		.message-container {
-			table, tbody, td, th, thead, tr {
-				display: block;
-			}
-
-			thead tr {
-				left: -9999px;
-				position: absolute;
-				top: -9999px;
-			}
-
-			td {
-				position: relative;
-
-				&:before {
-					left: 6px;
-					padding-right: 10px;
-					position: absolute;
-					top: 6px;
-					white-space: nowrap;
-					width: 45%;
-				}
-			}
-
-			.thread-bottom, td.user-info {
-				border-width: 0;
-			}
-
-			.thread-bottom {
-				&:after {
-					clear: both;
-					content: '';
-					display: block;
-					height: 0;
-					visibility: hidden;
-				}
-
-				br {
-					display: none;
-				}
-
-				.edit-controls {
-					margin-bottom: 0;
-				}
-			}
-
-			.thread-message-view {
-				min-width: 0;
-			}
-
-			.edit-controls li, .taglib-ratings, .taglib-user-display > a, .taglib-user-display .user-details {
-				display: inline-block;
-			}
-
-			.taglib-user-display {
-				> a {
-					margin-right: 1em;
-				}
-
-				.user-details {
-					margin: 0 1em 0 0;
-				}
-
-				.avatar {
-					float: left;
-				}
-
-				.user-name {
-					text-align: left;
-				}
-			}
-
-			td.user-info {
-				padding: 0;
-				width: auto;
-			}
-
-			.thumbs, .taglib-flags {
-				margin-bottom: 0;
-				margin-top: 0;
-			}
-		}
-
-		.thread-controls {
-			border-width: 0;
-			margin: 0;
-			padding: 0;
-		}
 	}
 }
 

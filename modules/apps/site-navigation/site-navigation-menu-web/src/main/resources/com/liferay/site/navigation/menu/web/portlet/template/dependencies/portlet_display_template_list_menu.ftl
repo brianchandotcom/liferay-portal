@@ -16,6 +16,7 @@
 	<div aria-label="<@liferay.language key="site-pages" />" class="list-menu">
 		<@buildNavigation
 			branchNavItems=branchNavItems
+			cssClass="layouts"
 			includeAllChildNavItems=includeAllChildNavItems
 			navItemLevel=1
 			navItems=entries

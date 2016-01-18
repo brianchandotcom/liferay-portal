@@ -282,7 +282,7 @@
 <!--INCOMPLETE_STAGING_PAGE_VARIATION-->
 <tr>
 	<td>INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE</td>
-	<td>//form[contains(@class,'form edit-layout-form')]</td>
+	<td>//div[contains(@class,'manage-view')]</td>
 	<td></td>
 </tr>
 <tr>

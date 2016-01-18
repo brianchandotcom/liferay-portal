@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.exception.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -274,6 +274,6 @@ public class TrashPortlet extends MVCPortlet {
 		_trashEntryService = trashEntryService;
 	}
 
-	private volatile TrashEntryService _trashEntryService;
+	private TrashEntryService _trashEntryService;
 
 }

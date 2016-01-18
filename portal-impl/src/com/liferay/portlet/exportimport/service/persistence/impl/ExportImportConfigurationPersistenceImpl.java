@@ -40,7 +40,7 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.exportimport.NoSuchConfigurationException;
+import com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationImpl;
 import com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationModelImpl;
@@ -3211,7 +3211,7 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	/**
-	 * Returns the export import configuration with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the export import configuration with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the export import configuration
 	 * @return the export import configuration

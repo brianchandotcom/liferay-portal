@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pwd;
 
-import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.security.ldap.LDAPSettingsUtil;

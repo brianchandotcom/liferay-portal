@@ -163,6 +163,6 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 
 	private static final String _OR_QUERY_SEPARATOR = " OR ";
 
-	private volatile NGramHolderBuilder _nGramHolderBuilder;
+	private NGramHolderBuilder _nGramHolderBuilder;
 
 }

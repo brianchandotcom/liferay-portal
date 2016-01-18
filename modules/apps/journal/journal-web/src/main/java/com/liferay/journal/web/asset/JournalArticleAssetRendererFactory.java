@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -143,7 +142,7 @@ public class JournalArticleAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file-2";
+		return "web-content";
 	}
 
 	@Override
@@ -258,11 +257,6 @@ public class JournalArticleAssetRendererFactory
 		_servletContext = servletContext;
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/history.png";
-	}
-
 	protected JournalArticleAssetRenderer getJournalArticleAssetRenderer(
 		JournalArticle article) {
 
@@ -314,13 +308,13 @@ public class JournalArticleAssetRendererFactory
 		_journalConverter = journalConverter;
 	}
 
-	private volatile DDMStructureLocalService _ddmStructureLocalService;
-	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalArticleResourceLocalService
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private volatile JournalArticleService _journalArticleService;
-	private volatile JournalContent _journalContent;
-	private volatile JournalConverter _journalConverter;
-	private volatile ServletContext _servletContext;
+	private JournalArticleService _journalArticleService;
+	private JournalContent _journalContent;
+	private JournalConverter _journalConverter;
+	private ServletContext _servletContext;
 
 }

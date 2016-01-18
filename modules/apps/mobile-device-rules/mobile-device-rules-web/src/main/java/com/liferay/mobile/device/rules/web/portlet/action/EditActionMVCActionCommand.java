@@ -149,6 +149,6 @@ public class EditActionMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private volatile MDRActionService _mdrActionService;
+	private MDRActionService _mdrActionService;
 
 }

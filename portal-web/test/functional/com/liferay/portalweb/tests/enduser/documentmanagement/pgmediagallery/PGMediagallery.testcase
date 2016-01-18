@@ -16,7 +16,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -64,6 +64,8 @@
 	</tear-down>
 
 	<command name="AddFolder" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="mgFolderDescription" value="DM Folder Description" />
 		<var name="mgFolderName" value="DM Folder Name" />
 
@@ -82,6 +84,8 @@
 	</command>
 
 	<command name="AddFolderDocument" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="mgDocumentDescription" value="DM Document Description" />
 		<var name="mgDocumentFile" value="Document_1.jpg" />
 		<var name="mgDocumentTitle" value="DM Document Title" />
@@ -352,6 +356,8 @@
 	</command>
 
 	<command name="EditFolderDocument" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="mgDocumentDescription" value="DM Document Description" />
 		<var name="mgDocumentDescriptionEdit" value="DM Document Description Edit" />
 		<var name="mgDocumentFile" value="Document_1.jpg" />

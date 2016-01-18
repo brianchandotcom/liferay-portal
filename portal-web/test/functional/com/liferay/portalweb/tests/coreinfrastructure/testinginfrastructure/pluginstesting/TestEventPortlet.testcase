@@ -11,7 +11,7 @@
 	</tear-down>
 
 	<command name="ViewEvent" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Test Event Page" />
 		</execute>
 

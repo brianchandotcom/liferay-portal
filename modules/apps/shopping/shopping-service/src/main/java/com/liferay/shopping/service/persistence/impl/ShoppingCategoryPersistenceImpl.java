@@ -287,7 +287,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a matching shopping category could not be found
+	 * @throws NoSuchCategoryException if a matching shopping category could not be found
 	 */
 	@Override
 	public ShoppingCategory findByGroupId_First(long groupId,
@@ -338,7 +338,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a matching shopping category could not be found
+	 * @throws NoSuchCategoryException if a matching shopping category could not be found
 	 */
 	@Override
 	public ShoppingCategory findByGroupId_Last(long groupId,
@@ -396,7 +396,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory[] findByGroupId_PrevAndNext(long categoryId,
@@ -666,7 +666,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory[] filterFindByGroupId_PrevAndNext(long categoryId,
@@ -1169,7 +1169,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param parentCategoryId the parent category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a matching shopping category could not be found
+	 * @throws NoSuchCategoryException if a matching shopping category could not be found
 	 */
 	@Override
 	public ShoppingCategory findByG_P_First(long groupId,
@@ -1227,7 +1227,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param parentCategoryId the parent category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a matching shopping category could not be found
+	 * @throws NoSuchCategoryException if a matching shopping category could not be found
 	 */
 	@Override
 	public ShoppingCategory findByG_P_Last(long groupId, long parentCategoryId,
@@ -1291,7 +1291,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param parentCategoryId the parent category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory[] findByG_P_PrevAndNext(long categoryId,
@@ -1577,7 +1577,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param parentCategoryId the parent category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory[] filterFindByG_P_PrevAndNext(long categoryId,
@@ -1897,12 +1897,12 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the shopping category where groupId = &#63; and name = &#63; or throws a {@link com.liferay.shopping.NoSuchCategoryException} if it could not be found.
+	 * Returns the shopping category where groupId = &#63; and name = &#63; or throws a {@link NoSuchCategoryException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @return the matching shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a matching shopping category could not be found
+	 * @throws NoSuchCategoryException if a matching shopping category could not be found
 	 */
 	@Override
 	public ShoppingCategory findByG_N(long groupId, String name)
@@ -2311,7 +2311,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param categoryId the primary key of the shopping category
 	 * @return the shopping category that was removed
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory remove(long categoryId)
@@ -2324,7 +2324,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param primaryKey the primary key of the shopping category
 	 * @return the shopping category that was removed
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory remove(Serializable primaryKey)
@@ -2527,11 +2527,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	/**
-	 * Returns the shopping category with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the shopping category with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the shopping category
 	 * @return the shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory findByPrimaryKey(Serializable primaryKey)
@@ -2551,11 +2551,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	/**
-	 * Returns the shopping category with the primary key or throws a {@link com.liferay.shopping.NoSuchCategoryException} if it could not be found.
+	 * Returns the shopping category with the primary key or throws a {@link NoSuchCategoryException} if it could not be found.
 	 *
 	 * @param categoryId the primary key of the shopping category
 	 * @return the shopping category
-	 * @throws com.liferay.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
+	 * @throws NoSuchCategoryException if a shopping category with the primary key could not be found
 	 */
 	@Override
 	public ShoppingCategory findByPrimaryKey(long categoryId)

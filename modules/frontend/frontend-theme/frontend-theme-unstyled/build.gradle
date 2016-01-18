@@ -14,7 +14,7 @@ task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String alloyUIVersion = "3.0.3-deprecated.6"
-String lexiconVersion = "0.1.28"
+String lexiconVersion = "0.1.31"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 
@@ -25,10 +25,10 @@ buildAlloyUITheme {
 		delete alloyThemeDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(6)
+	eachFile new StripPathSegmentsAction(5)
 
-	filesMatching "build/aui-*/assets/skins/sam/", new StripPathSegmentsAction(5)
-	filesMatching "build/aui-skin-deprecated/images/", new StripPathSegmentsAction(3)
+	filesMatching "**/build/aui-*/assets/skins/sam/", new StripPathSegmentsAction(5)
+	filesMatching "**/build/aui-skin-deprecated/images/", new StripPathSegmentsAction(3)
 
 	from {
 		zipTree(configurations.alloyUI.singleFile)

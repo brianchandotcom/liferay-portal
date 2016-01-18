@@ -1,0 +1,22 @@
+dependencies {
+	compile gradleApi()
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.78"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.0"
+}
+
+jarSources {
+	into("samples") {
+		exclude ".gradle"
+		exclude "build"
+
+		filesMatching("build.gradle") {
+			filter {
+				String line ->
+
+				line.replace "latest.release", project.version
+			}
+		}
+
+		from "samples"
+	}
+}

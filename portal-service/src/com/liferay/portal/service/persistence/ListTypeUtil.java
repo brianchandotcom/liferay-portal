@@ -184,7 +184,7 @@ public class ListTypeUtil {
 	*/
 	public static ListType findByType_First(java.lang.String type,
 		OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException {
+		throws com.liferay.portal.exception.NoSuchListTypeException {
 		return getPersistence().findByType_First(type, orderByComparator);
 	}
 
@@ -210,7 +210,7 @@ public class ListTypeUtil {
 	*/
 	public static ListType findByType_Last(java.lang.String type,
 		OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException {
+		throws com.liferay.portal.exception.NoSuchListTypeException {
 		return getPersistence().findByType_Last(type, orderByComparator);
 	}
 
@@ -237,7 +237,7 @@ public class ListTypeUtil {
 	*/
 	public static ListType[] findByType_PrevAndNext(long listTypeId,
 		java.lang.String type, OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException {
+		throws com.liferay.portal.exception.NoSuchListTypeException {
 		return getPersistence()
 				   .findByType_PrevAndNext(listTypeId, type, orderByComparator);
 	}
@@ -271,7 +271,7 @@ public class ListTypeUtil {
 	*/
 	public static ListType findByN_T(java.lang.String name,
 		java.lang.String type)
-		throws com.liferay.portal.NoSuchListTypeException {
+		throws com.liferay.portal.exception.NoSuchListTypeException {
 		return getPersistence().findByN_T(name, type);
 	}
 
@@ -309,7 +309,7 @@ public class ListTypeUtil {
 	*/
 	public static ListType removeByN_T(java.lang.String name,
 		java.lang.String type)
-		throws com.liferay.portal.NoSuchListTypeException {
+		throws com.liferay.portal.exception.NoSuchListTypeException {
 		return getPersistence().removeByN_T(name, type);
 	}
 
@@ -360,7 +360,7 @@ public class ListTypeUtil {
 	* @throws NoSuchListTypeException if a list type with the primary key could not be found
 	*/
 	public static ListType remove(long listTypeId)
-		throws com.liferay.portal.NoSuchListTypeException {
+		throws com.liferay.portal.exception.NoSuchListTypeException {
 		return getPersistence().remove(listTypeId);
 	}
 
@@ -376,7 +376,7 @@ public class ListTypeUtil {
 	* @throws NoSuchListTypeException if a list type with the primary key could not be found
 	*/
 	public static ListType findByPrimaryKey(long listTypeId)
-		throws com.liferay.portal.NoSuchListTypeException {
+		throws com.liferay.portal.exception.NoSuchListTypeException {
 		return getPersistence().findByPrimaryKey(listTypeId);
 	}
 

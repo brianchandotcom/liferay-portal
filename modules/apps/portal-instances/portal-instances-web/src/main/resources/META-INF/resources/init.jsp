@@ -24,10 +24,10 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.CompanyMxException" %><%@
-page import="com.liferay.portal.CompanyVirtualHostException" %><%@
-page import="com.liferay.portal.CompanyWebIdException" %><%@
-page import="com.liferay.portal.RequiredCompanyException" %><%@
+<%@ page import="com.liferay.portal.exception.CompanyMxException" %><%@
+page import="com.liferay.portal.exception.CompanyVirtualHostException" %><%@
+page import="com.liferay.portal.exception.CompanyWebIdException" %><%@
+page import="com.liferay.portal.exception.RequiredCompanyException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

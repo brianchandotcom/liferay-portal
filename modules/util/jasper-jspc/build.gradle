@@ -2,6 +2,6 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.4"
+	compile group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.5"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 }

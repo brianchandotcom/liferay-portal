@@ -16,7 +16,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Search Page" />
 		</execute>
 	</set-up>
@@ -749,7 +749,7 @@
 	</command>
 
 	<command name="SearchMessageBoardsThread" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
@@ -1133,7 +1133,7 @@
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 

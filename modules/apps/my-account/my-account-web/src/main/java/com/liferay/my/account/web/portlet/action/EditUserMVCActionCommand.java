@@ -15,7 +15,7 @@
 package com.liferay.my.account.web.portlet.action;
 
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
-import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.exception.UserPasswordException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;

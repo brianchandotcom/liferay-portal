@@ -147,6 +147,6 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 		_userGroupLocalService = userGroupLocalService;
 	}
 
-	private volatile UserGroupLocalService _userGroupLocalService;
+	private UserGroupLocalService _userGroupLocalService;
 
 }

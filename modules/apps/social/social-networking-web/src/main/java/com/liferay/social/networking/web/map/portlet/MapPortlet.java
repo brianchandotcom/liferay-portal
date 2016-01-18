@@ -91,7 +91,7 @@ public class MapPortlet extends MVCPortlet {
 		WallEntryLocalService wallEntryLocalService) {
 	}
 
-	private volatile IPGeocoder _ipGeocoder;
-	private volatile Portal _portal;
+	private IPGeocoder _ipGeocoder;
+	private Portal _portal;
 
 }

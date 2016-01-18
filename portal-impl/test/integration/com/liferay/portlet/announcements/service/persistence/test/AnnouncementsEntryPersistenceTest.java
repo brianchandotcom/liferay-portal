@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.announcements.NoSuchEntryException;
+import com.liferay.portlet.announcements.exception.NoSuchEntryException;
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 import com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryPersistence;

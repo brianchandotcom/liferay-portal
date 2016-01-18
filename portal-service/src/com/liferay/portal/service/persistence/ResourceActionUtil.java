@@ -186,7 +186,7 @@ public class ResourceActionUtil {
 	*/
 	public static ResourceAction findByName_First(java.lang.String name,
 		OrderByComparator<ResourceAction> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException {
+		throws com.liferay.portal.exception.NoSuchResourceActionException {
 		return getPersistence().findByName_First(name, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class ResourceActionUtil {
 	*/
 	public static ResourceAction findByName_Last(java.lang.String name,
 		OrderByComparator<ResourceAction> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException {
+		throws com.liferay.portal.exception.NoSuchResourceActionException {
 		return getPersistence().findByName_Last(name, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class ResourceActionUtil {
 	public static ResourceAction[] findByName_PrevAndNext(
 		long resourceActionId, java.lang.String name,
 		OrderByComparator<ResourceAction> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException {
+		throws com.liferay.portal.exception.NoSuchResourceActionException {
 		return getPersistence()
 				   .findByName_PrevAndNext(resourceActionId, name,
 			orderByComparator);
@@ -275,7 +275,7 @@ public class ResourceActionUtil {
 	*/
 	public static ResourceAction findByN_A(java.lang.String name,
 		java.lang.String actionId)
-		throws com.liferay.portal.NoSuchResourceActionException {
+		throws com.liferay.portal.exception.NoSuchResourceActionException {
 		return getPersistence().findByN_A(name, actionId);
 	}
 
@@ -313,7 +313,7 @@ public class ResourceActionUtil {
 	*/
 	public static ResourceAction removeByN_A(java.lang.String name,
 		java.lang.String actionId)
-		throws com.liferay.portal.NoSuchResourceActionException {
+		throws com.liferay.portal.exception.NoSuchResourceActionException {
 		return getPersistence().removeByN_A(name, actionId);
 	}
 
@@ -365,7 +365,7 @@ public class ResourceActionUtil {
 	* @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	*/
 	public static ResourceAction remove(long resourceActionId)
-		throws com.liferay.portal.NoSuchResourceActionException {
+		throws com.liferay.portal.exception.NoSuchResourceActionException {
 		return getPersistence().remove(resourceActionId);
 	}
 
@@ -381,7 +381,7 @@ public class ResourceActionUtil {
 	* @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	*/
 	public static ResourceAction findByPrimaryKey(long resourceActionId)
-		throws com.liferay.portal.NoSuchResourceActionException {
+		throws com.liferay.portal.exception.NoSuchResourceActionException {
 		return getPersistence().findByPrimaryKey(resourceActionId);
 	}
 

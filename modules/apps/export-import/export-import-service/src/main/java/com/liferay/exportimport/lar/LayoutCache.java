@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.lar;
 
-import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Group;

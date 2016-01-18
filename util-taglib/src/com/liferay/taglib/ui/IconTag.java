@@ -35,12 +35,14 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletResponse;
 
@@ -192,8 +194,11 @@ public class IconTag extends IncludeTag {
 		if (_useDialog && Validator.isNull(data.get("title"))) {
 			String message = getProcessedMessage();
 
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			if (_localizeMessage) {
-				message = LanguageUtil.get(request, message);
+				message = LanguageUtil.get(resourceBundle, message);
 			}
 
 			data.put("title", HtmlUtil.stripHtml(message));
@@ -206,10 +211,13 @@ public class IconTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			pageContext);
+
 		String details = null;
 
 		if (_alt != null) {
-			details = " alt=\"" + LanguageUtil.get(request, _alt) + "\"";
+			details = " alt=\"" + LanguageUtil.get(resourceBundle, _alt) + "\"";
 		}
 		else if (isLabel()) {
 			details = " alt=\"\"";
@@ -218,18 +226,20 @@ public class IconTag extends IncludeTag {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(" alt=\"");
-			sb.append(LanguageUtil.get(request, getProcessedMessage()));
+			sb.append(LanguageUtil.get(resourceBundle, getProcessedMessage()));
 			sb.append("\"");
 
 			if (_toolTip) {
 				sb.append(" onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
 				sb.append(
-					UnicodeLanguageUtil.get(request, getProcessedMessage()));
+					UnicodeLanguageUtil.get(
+						resourceBundle, getProcessedMessage()));
 				sb.append("')\"");
 			}
 			else {
 				sb.append(" title=\"");
-				sb.append(LanguageUtil.get(request, getProcessedMessage()));
+				sb.append(
+					LanguageUtil.get(resourceBundle, getProcessedMessage()));
 				sb.append("\"");
 			}
 

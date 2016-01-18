@@ -34,10 +34,32 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
+int entriesTotal = 0;
+
+long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
+
+Calendar calendar = Calendar.getInstance();
+
+int offset = GetterUtil.getInteger(recentPostsDateOffset);
+
+calendar.add(Calendar.DATE, -offset);
+
+if (entriesNavigation.equals("all")) {
+	entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
+}
+else if (entriesNavigation.equals("recent")) {
+	entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+}
+
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+
+if (groupThreadsUserId > 0) {
+	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
+}
 %>
 
 <liferay-frontend:management-bar
+	checkBoxDisabled="<%= entriesTotal == 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="mbEntries"
 >
@@ -45,13 +67,18 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	<%
 	PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-
-	displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
+	if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
+	}
+	else {
+		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
+		displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
+	}
 	%>
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
+			disabled="<%= entriesTotal == 0 %>"
 			displayViews='<%= new String[] {"descriptive"} %>'
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
@@ -115,8 +142,15 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		%>
 
 		<portlet:renderURL var="backURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
-			<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+			<c:choose>
+				<c:when test="<%= parentCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+				</c:when>
+				<c:otherwise>
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
+					<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+				</c:otherwise>
+			</c:choose>
 		</portlet:renderURL>
 
 		<%
@@ -141,29 +175,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-
-		<%
-		long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
-		if (groupThreadsUserId > 0) {
-			portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
-		}
-
-		Calendar calendar = Calendar.getInstance();
-
-		int offset = GetterUtil.getInteger(recentPostsDateOffset);
-
-		calendar.add(Calendar.DATE, -offset);
-
-		int entriesTotal = 0;
-
-		if (entriesNavigation.equals("all")) {
-			entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
-		}
-		else if (entriesNavigation.equals("recent")) {
-			entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
-		}
-		%>
 
 		<liferay-ui:search-container
 			curParam="cur1"
@@ -213,7 +224,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 						%>
 
 						<liferay-portlet:renderURL varImpl="rowURL">
-							<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+							<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
 							<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 						</liferay-portlet:renderURL>
 

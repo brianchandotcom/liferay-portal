@@ -26,8 +26,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.DuplicateTeamException" %><%@
-page import="com.liferay.portal.TeamNameException" %><%@
+<%@ page import="com.liferay.portal.exception.DuplicateTeamException" %><%@
+page import="com.liferay.portal.exception.TeamNameException" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
@@ -67,9 +67,9 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.site.teams.web.search.TeamDisplayTerms" %><%@
-page import="com.liferay.site.teams.web.search.TeamSearch" %>
+page import="com.liferay.site.teams.web.search.TeamSearch" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@

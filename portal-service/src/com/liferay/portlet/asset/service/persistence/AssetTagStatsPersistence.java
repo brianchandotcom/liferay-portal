@@ -109,7 +109,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public AssetTagStats findByTagId_First(long tagId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Returns the first asset tag stats in the ordered set where tagId = &#63;.
@@ -131,7 +131,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public AssetTagStats findByTagId_Last(long tagId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Returns the last asset tag stats in the ordered set where tagId = &#63;.
@@ -154,7 +154,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public AssetTagStats[] findByTagId_PrevAndNext(long tagStatsId, long tagId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Removes all the asset tag statses where tagId = &#63; from the database.
@@ -240,7 +240,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public AssetTagStats findByClassNameId_First(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Returns the first asset tag stats in the ordered set where classNameId = &#63;.
@@ -262,7 +262,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	*/
 	public AssetTagStats findByClassNameId_Last(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Returns the last asset tag stats in the ordered set where classNameId = &#63;.
@@ -286,7 +286,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	public AssetTagStats[] findByClassNameId_PrevAndNext(long tagStatsId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTagStats> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Removes all the asset tag statses where classNameId = &#63; from the database.
@@ -312,7 +312,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	* @throws NoSuchTagStatsException if a matching asset tag stats could not be found
 	*/
 	public AssetTagStats findByT_C(long tagId, long classNameId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Returns the asset tag stats where tagId = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -342,7 +342,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	* @return the asset tag stats that was removed
 	*/
 	public AssetTagStats removeByT_C(long tagId, long classNameId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Returns the number of asset tag statses where tagId = &#63; and classNameId = &#63;.
@@ -383,7 +383,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	* @throws NoSuchTagStatsException if a asset tag stats with the primary key could not be found
 	*/
 	public AssetTagStats remove(long tagStatsId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	public AssetTagStats updateImpl(AssetTagStats assetTagStats);
 
@@ -395,7 +395,7 @@ public interface AssetTagStatsPersistence extends BasePersistence<AssetTagStats>
 	* @throws NoSuchTagStatsException if a asset tag stats with the primary key could not be found
 	*/
 	public AssetTagStats findByPrimaryKey(long tagStatsId)
-		throws com.liferay.portlet.asset.NoSuchTagStatsException;
+		throws com.liferay.portlet.asset.exception.NoSuchTagStatsException;
 
 	/**
 	* Returns the asset tag stats with the primary key or returns <code>null</code> if it could not be found.

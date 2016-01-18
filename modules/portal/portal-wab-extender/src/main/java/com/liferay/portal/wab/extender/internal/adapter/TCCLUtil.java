@@ -14,6 +14,8 @@
 
 package com.liferay.portal.wab.extender.internal.adapter;
 
+import com.liferay.osgi.util.classloader.PassThroughClassLoader;
+
 import java.util.concurrent.Callable;
 
 /**

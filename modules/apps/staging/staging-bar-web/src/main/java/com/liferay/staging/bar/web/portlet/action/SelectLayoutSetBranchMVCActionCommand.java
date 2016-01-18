@@ -98,7 +98,7 @@ public class SelectLayoutSetBranchMVCActionCommand
 		_layoutSetLocalService = layoutSetLocalService;
 	}
 
-	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
-	private volatile LayoutSetLocalService _layoutSetLocalService;
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

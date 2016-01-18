@@ -1113,6 +1113,11 @@ AUI.add(
 						value: 0
 					},
 
+					manageable: {
+						setter: A.DataType.Boolean.parse,
+						value: true
+					},
+
 					permissions: {
 						lazyAdd: false,
 						setter: function(val) {
@@ -1637,7 +1642,6 @@ AUI.add(
 
 						var answers = data.answers;
 						var newRecurrence = data.newRecurrence;
-						var offset = data.offset;
 						var schedulerEvent = data.schedulerEvent;
 
 						var showNextQuestion = A.bind(instance.load, instance);
@@ -1837,6 +1841,16 @@ AUI.add(
 						var	attrMap = {
 							color: instance.get('color')
 						};
+
+						var event = instance.get('event');
+
+						if (event) {
+							var calendar = CalendarUtil.availableCalendars[event.get('calendarId')];
+
+							if (calendar) {
+								attrMap.color = calendar.get('color');
+							}
+						}
 
 						return SchedulerEventRecorder.superclass.getUpdatedSchedulerEvent.call(instance, A.merge(attrMap, optAttrMap));
 					},

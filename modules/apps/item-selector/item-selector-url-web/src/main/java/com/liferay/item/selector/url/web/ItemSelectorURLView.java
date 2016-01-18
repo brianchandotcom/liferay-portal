@@ -116,6 +116,6 @@ public class ItemSelectorURLView
 					new URLItemSelectorReturnType()
 				}));
 
-	private volatile ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

@@ -724,6 +724,6 @@ public abstract class ShoppingOrderLocalServiceBaseImpl
 	protected com.liferay.shopping.service.ShoppingOrderItemLocalService shoppingOrderItemLocalService;
 	@BeanReference(type = ShoppingOrderItemPersistence.class)
 	protected ShoppingOrderItemPersistence shoppingOrderItemPersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

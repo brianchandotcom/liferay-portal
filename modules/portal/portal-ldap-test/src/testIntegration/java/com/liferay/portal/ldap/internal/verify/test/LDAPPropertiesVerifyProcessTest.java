@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
@@ -212,6 +211,15 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		}
 	}
 
+	protected void assertArrayLength(Object[] array, int length) {
+		Assert.assertEquals(length, array.length);
+	}
+
+	protected void assertContainsAll(Object[] array1, Object[] array2) {
+		Assert.assertTrue(ArrayUtil.containsAll(array1, array2));
+	}
+
+	@Override
 	protected void doVerify() throws VerifyException {
 		super.doVerify();
 
@@ -417,34 +425,23 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 			companyId, properties.get(LDAPConstants.COMPANY_ID));
 		Assert.assertNotNull(
 			properties.get(LDAPConstants.CONTACT_CUSTOM_MAPPINGS));
-		Assert.assertTrue(
-			Validator.isNull(
-				(String)properties.get(LDAPConstants.CONTACT_CUSTOM_MAPPINGS)));
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				new String[] {"birthday=", "country="},
-				StringUtil.split(
-					(String)properties.get(LDAPConstants.CONTACT_MAPPINGS),
-					StringPool.PIPE)));
+		assertArrayLength(
+			(String[])properties.get(LDAPConstants.CONTACT_CUSTOM_MAPPINGS), 0);
+		assertContainsAll(
+			new String[] {"birthday=", "country="},
+			(String[])properties.get(LDAPConstants.CONTACT_MAPPINGS));
 		Assert.assertNotNull(
 			properties.get(LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES));
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				new String[] {"top", "groupOfUniqueNames"},
-				StringUtil.split(
-					(String)properties.get(
-						LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES),
-					StringPool.PIPE)));
+		assertContainsAll(
+			new String[] {"top", "groupOfUniqueNames"},
+			(String[])properties.get(
+				LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES));
 		Assert.assertNotNull(properties.get(LDAPConstants.GROUP_MAPPINGS));
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				new String[] {
-					"description=description", "groupName=cn",
-					"user=uniqueMember"
-				},
-				StringUtil.split(
-					(String)properties.get(LDAPConstants.GROUP_MAPPINGS),
-					StringPool.PIPE)));
+		assertContainsAll(
+			new String[] {
+				"description=description", "groupName=cn", "user=uniqueMember"
+			},
+			(String[])properties.get(LDAPConstants.GROUP_MAPPINGS));
 		Assert.assertNotNull(properties.get(LDAPConstants.GROUP_SEARCH_FILTER));
 		Assert.assertEquals(
 			"(objectClass=groupOfUniqueNames)",
@@ -471,32 +468,24 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		Assert.assertEquals("test", properties.get(LDAPConstants.SERVER_NAME));
 		Assert.assertNotNull(
 			properties.get(LDAPConstants.USER_CUSTOM_MAPPINGS));
-		Assert.assertTrue(
-			Validator.isNull(
-				(String)properties.get(LDAPConstants.USER_CUSTOM_MAPPINGS)));
+		assertArrayLength(
+			(String[])properties.get(LDAPConstants.USER_CUSTOM_MAPPINGS), 0);
 		Assert.assertNotNull(
 			properties.get(LDAPConstants.USER_DEFAULT_OBJECT_CLASSES));
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				new String[] {
-					"top", "person", "inetOrgPerson", "organizationalPerson"
-				},
-				StringUtil.split(
-					(String)properties.get(
-						LDAPConstants.USER_DEFAULT_OBJECT_CLASSES),
-					StringPool.PIPE)));
+		assertContainsAll(
+			new String[] {
+				"top", "person", "inetOrgPerson", "organizationalPerson"
+			},
+			(String[])properties.get(
+				LDAPConstants.USER_DEFAULT_OBJECT_CLASSES));
 		Assert.assertNotNull(properties.get(LDAPConstants.USER_MAPPINGS));
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				new String[] {
-					"emailAddress=mail", "firstName=givenName",
-					"group=groupMembership", "jobTitle=title", "lastName=sn",
-					"password=userPassword", "screenName=cn", "uuid=uuid"
-				},
-				StringUtil.split(
-					(String)properties.get(LDAPConstants.USER_MAPPINGS),
-					StringPool.PIPE)));
-
+		assertContainsAll(
+			new String[] {
+				"emailAddress=mail", "firstName=givenName",
+				"group=groupMembership", "jobTitle=title", "lastName=sn",
+				"password=userPassword", "screenName=cn", "uuid=uuid"
+			},
+			(String[])properties.get(LDAPConstants.USER_MAPPINGS));
 		Assert.assertNotNull(properties.get(LDAPConstants.USERS_DN));
 		Assert.assertEquals(
 			"ou=users,dc=example,dc=com",

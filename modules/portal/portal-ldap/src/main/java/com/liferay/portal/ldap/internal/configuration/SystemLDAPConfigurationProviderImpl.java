@@ -40,6 +40,7 @@ public class SystemLDAPConfigurationProviderImpl
 		return SystemLDAPConfiguration.class;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {

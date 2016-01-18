@@ -15,6 +15,8 @@
 package com.liferay.portal.wab.extender.internal;
 
 import com.liferay.osgi.util.BundleUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 
@@ -66,8 +68,15 @@ public class WabServletContextHelper extends ServletContextHelper {
 
 	@Override
 	public URL getResource(String name) {
-		if (name.charAt(0) != '/') {
-			name = '/' + name;
+		if (name == null) {
+			return null;
+		}
+
+		if (name.isEmpty()) {
+			name = StringPool.SLASH;
+		}
+		else if (name.charAt(0) != CharPool.SLASH) {
+			name = StringPool.SLASH.concat(name);
 		}
 
 		if (!_wabShapedBundle && !name.startsWith("/META-INF/resources")) {

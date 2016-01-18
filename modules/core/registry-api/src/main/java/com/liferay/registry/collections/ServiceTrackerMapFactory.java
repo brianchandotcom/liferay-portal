@@ -37,6 +37,12 @@ public interface ServiceTrackerMapFactory {
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator);
 
+	public <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+		Class<S> clazz, String filterString,
+		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
+		ServiceTrackerMapListener<K, ? super S, List<S>>
+			serviceTrackerMapListener);
+
 	public <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
 		Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,

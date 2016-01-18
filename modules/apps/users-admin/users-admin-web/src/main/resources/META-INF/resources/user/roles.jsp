@@ -88,7 +88,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -187,7 +187,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		/>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <h3><liferay-ui:message key="organization-roles" /></h3>
@@ -250,7 +250,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			</c:if>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 
 	<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -420,7 +420,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				</c:if>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
@@ -572,7 +572,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </c:if>
 

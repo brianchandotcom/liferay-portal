@@ -44,59 +44,79 @@ renderResponse.setTitle(headerTitle);
 %>
 
 <div class="container-fluid-1280">
-	<aui:row>
-		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">
-			<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
+	<aui:col cssClass="lfr-asset-column lfr-asset-column-details">
+		<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
 
-			<aui:row>
-				<aui:col width="<%= 50 %>">
-					<div class="lfr-asset-assigned">
-						<c:choose>
-							<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-								<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask) %>" />
-							</c:when>
-							<c:otherwise>
-								<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= workflowTaskDisplayContext.getWorkflowTaskUnassignedUserName() %>" />
-							</c:otherwise>
-						</c:choose>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
 
-						&nbsp;
+				<%
+				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+				%>
 
-						<c:if test="<%= workflowTaskDisplayContext.hasOtherAssignees(workflowTask) %>">
-							<%= StringPool.DASH %>
-
-							<portlet:actionURL name="assignWorkflowTask" var="assignURL">
-								<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-							</portlet:actionURL>
-
-							<aui:a cssClass="icon-signin" href="<%= assignURL %>" id='<%= randomId + "taskAssignLink" %>' label="assign-to-..." />
-						</c:if>
-					</div>
-
-					<aui:input name="state" type="resource" value="<%= workflowTaskDisplayContext.getState(workflowTask) %>" />
-				</aui:col>
+				<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>" />
 
 				<aui:col width="<%= 50 %>">
-					<aui:input name="createDate" type="resource" value="<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>" />
-
-					<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value="<%= workflowTaskDisplayContext.getDueDateString(workflowTask) %>" />
-
-				</aui:col>
-			</aui:row>
-
-			<c:if test="<%= Validator.isNotNull(workflowTask.getDescription()) %>">
-				<div class="lfr-asset-field">
-					<aui:field-wrapper label="description">
-						<%= workflowTaskDisplayContext.getDescription(workflowTask) %>
+					<aui:field-wrapper label="assigned-to">
+						<aui:fieldset>
+							<div class="card-row">
+								<c:choose>
+									<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
+										<div class="card-col-field">
+											<div class="list-group-card-icon">
+												<liferay-ui:user-portrait userId="<%= workflowTask.getAssigneeUserId() %>" />
+											</div>
+										</div>
+										<div class="card-col-content card-col-gutters">
+											<div class="lfr-asset-assigned">
+												<%= workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask) %>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="card-col-content card-col-gutters lfr-asset-assigned">
+											<div class="lfr-asset-assigned">
+												<%= workflowTaskDisplayContext.getWorkflowTaskUnassignedUserName() %>
+											</div>
+										</div>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</aui:fieldset>
 					</aui:field-wrapper>
-				</div>
-			</c:if>
+					<aui:field-wrapper label="state">
+						<aui:fieldset>
+							<%= workflowTaskDisplayContext.getState(workflowTask) %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+				</aui:col>
+				<aui:col width="<%= 50 %>">
+					<aui:field-wrapper label="create-date">
+						<aui:fieldset>
+							<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+					<aui:field-wrapper label="due-date">
+						<aui:fieldset>
+							<%= workflowTaskDisplayContext.getDueDateString(workflowTask) %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+				</aui:col>
+
+				<c:if test="<%= Validator.isNotNull(workflowTask.getDescription()) %>">
+					<aui:col>
+						<aui:field-wrapper label="description">
+							<aui:fieldset>
+								<%= workflowTaskDisplayContext.getDescription(workflowTask) %>
+							</aui:fieldset>
+						</aui:field-wrapper>
+					</aui:col>
+				</c:if>
+			</aui:fieldset>
 
 			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
 				<c:if test="<%= assetRenderer != null %>">
-					<liferay-ui:panel defaultState="open" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">
+					<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">
 						<div class="task-content-actions">
 							<liferay-ui:icon-list>
 								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -113,7 +133,11 @@ renderResponse.setTitle(headerTitle);
 										<portlet:param name="showEditURL" value="<%= String.valueOf(workflowTaskDisplayContext.isShowEditURL(workflowTask)) %>" />
 									</portlet:renderURL>
 
-									<liferay-ui:icon iconCssClass="icon-search" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null) : viewFullContentURL.toString() %>" />
+									<liferay-frontend:management-bar-button
+										href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
+										icon="view"
+										label="view[action]"
+									/>
 
 									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
 										<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>" />
@@ -123,10 +147,18 @@ renderResponse.setTitle(headerTitle);
 								<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
 									<c:choose>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && workflowTaskDisplayContext.isShowEditURL(workflowTask) %>">
-											<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>" />
+											<liferay-frontend:management-bar-button
+												href="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>"
+												icon="pencil"
+												label="edit"
+											/>
 										</c:when>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !workflowTaskDisplayContext.isShowEditURL(workflowTask) && !workflowTask.isCompleted() %>">
-											<liferay-ui:icon-help message="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />
+											<liferay-frontend:management-bar-button
+												href=""
+												icon="question-circle-full"
+												label="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content"
+											/>
 										</c:when>
 									</c:choose>
 								</c:if>
@@ -135,8 +167,9 @@ renderResponse.setTitle(headerTitle);
 
 						<h3 class="task-content-title">
 							<liferay-ui:icon
-								iconCssClass="<%= workflowHandler.getIconCssClass() %>"
+								icon="<%= workflowHandler.getIconCssClass() %>"
 								label="<%= true %>"
+								markupView="lexicon"
 								message="<%= workflowTaskDisplayContext.getTaskContentTitle(workflowTask) %>"
 							/>
 						</h3>
@@ -145,15 +178,9 @@ renderResponse.setTitle(headerTitle);
 							assetRenderer="<%= assetRenderer %>"
 							template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
 						/>
-
-						<liferay-ui:asset-metadata
-							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK() %>"
-							metadataFields="<%= workflowTaskDisplayContext.getMetadataFields() %>"
-						/>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel title="comments">
+					<liferay-ui:panel markupView="lexicon" title="comments">
 						<liferay-ui:discussion
 							assetEntryVisible="<%= false %>"
 							className="<%= assetRenderer.getClassName() %>"
@@ -166,7 +193,7 @@ renderResponse.setTitle(headerTitle);
 					</liferay-ui:panel>
 				</c:if>
 
-				<liferay-ui:panel defaultState="closed" title="activities">
+				<liferay-ui:panel markupView="lexicon" title="activities">
 
 					<%
 					List<WorkflowLog> workflowLogs = workflowTaskDisplayContext.getWorkflowLogs(workflowTask);
@@ -175,17 +202,8 @@ renderResponse.setTitle(headerTitle);
 					<%@ include file="/workflow_logs.jspf" %>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
-		</aui:col>
-
-		<aui:col cssClass="lfr-asset-column lfr-asset-column-actions" last="<%= true %>" width="<%= 25 %>">
-
-			<%
-			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-			%>
-
-			<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>" />
-		</aui:col>
-	</aui:row>
+		</aui:fieldset-group>
+	</aui:col>
 </div>
 
 <aui:script use="liferay-workflow-tasks">

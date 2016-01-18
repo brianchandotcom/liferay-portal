@@ -171,6 +171,6 @@ public class StagedGroupStagedModelDataHandler
 		_groupLocalService = groupLocalService;
 	}
 
-	private volatile GroupLocalService _groupLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

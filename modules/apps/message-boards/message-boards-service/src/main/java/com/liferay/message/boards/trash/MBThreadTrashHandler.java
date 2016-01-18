@@ -31,6 +31,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
@@ -271,8 +272,16 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		}
 
 		if (containerModel) {
+			String mvcRenderCommandName = "/message_boards/view";
+
+			if (thread.getCategoryId() !=
+					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+				mvcRenderCommandName = "/message_boards/view_category";
+			}
+
 			portletURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view");
+				"mvcRenderCommandName", mvcRenderCommandName);
 		}
 		else {
 			portletURL.setParameter(
@@ -317,8 +326,8 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		_trashRendererFactory = trashRendererFactory;
 	}
 
-	private volatile MBCategoryLocalService _mbCategoryLocalService;
-	private volatile MBThreadLocalService _mbThreadLocalService;
-	private volatile TrashRendererFactory _trashRendererFactory;
+	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
+	private TrashRendererFactory _trashRendererFactory;
 
 }

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
@@ -355,9 +355,9 @@ public class WikiPageStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
 
-	private volatile WikiPageExportImportContentProcessor
+	private WikiPageExportImportContentProcessor
 		_wikiPageExportImportContentProcessor;
-	private volatile WikiPageLocalService _wikiPageLocalService;
-	private volatile WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

@@ -14,14 +14,14 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.AccountNameException;
-import com.liferay.portal.CompanyMxException;
-import com.liferay.portal.CompanyVirtualHostException;
-import com.liferay.portal.NoSuchAccountException;
-import com.liferay.portal.NoSuchPasswordPolicyException;
-import com.liferay.portal.NoSuchPreferencesException;
-import com.liferay.portal.NoSuchVirtualHostException;
-import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.exception.AccountNameException;
+import com.liferay.portal.exception.CompanyMxException;
+import com.liferay.portal.exception.CompanyVirtualHostException;
+import com.liferay.portal.exception.NoSuchAccountException;
+import com.liferay.portal.exception.NoSuchPasswordPolicyException;
+import com.liferay.portal.exception.NoSuchPreferencesException;
+import com.liferay.portal.exception.NoSuchVirtualHostException;
+import com.liferay.portal.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,7 +55,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.File;
 

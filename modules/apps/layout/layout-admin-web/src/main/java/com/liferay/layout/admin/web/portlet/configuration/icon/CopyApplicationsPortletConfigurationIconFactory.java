@@ -69,6 +69,6 @@ public class CopyApplicationsPortletConfigurationIconFactory
 		_layoutLocalService = layoutLocalService;
 	}
 
-	private volatile LayoutLocalService _layoutLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

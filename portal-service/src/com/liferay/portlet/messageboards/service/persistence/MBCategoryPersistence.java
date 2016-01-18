@@ -109,7 +109,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where uuid = &#63;.
@@ -131,7 +131,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where uuid = &#63;.
@@ -155,7 +155,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByUuid_PrevAndNext(long categoryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Removes all the message boards categories where uuid = &#63; from the database.
@@ -181,7 +181,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	* @throws NoSuchCategoryException if a matching message boards category could not be found
 	*/
 	public MBCategory findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the message boards category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +211,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	* @return the message boards category that was removed
 	*/
 	public MBCategory removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the number of message boards categories where uuid = &#63; and groupId = &#63;.
@@ -297,7 +297,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -322,7 +322,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -348,7 +348,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByUuid_C_PrevAndNext(long categoryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Removes all the message boards categories where uuid = &#63; and companyId = &#63; from the database.
@@ -436,7 +436,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where groupId = &#63;.
@@ -458,7 +458,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where groupId = &#63;.
@@ -482,7 +482,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByGroupId_PrevAndNext(long categoryId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns all the message boards categories that the user has permission to view where groupId = &#63;.
@@ -536,7 +536,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] filterFindByGroupId_PrevAndNext(long categoryId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Removes all the message boards categories where groupId = &#63; from the database.
@@ -630,7 +630,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where companyId = &#63;.
@@ -652,7 +652,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where companyId = &#63;.
@@ -676,7 +676,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByCompanyId_PrevAndNext(long categoryId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Removes all the message boards categories where companyId = &#63; from the database.
@@ -768,7 +768,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByG_P_First(long groupId, long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
@@ -792,7 +792,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByG_P_Last(long groupId, long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63;.
@@ -818,7 +818,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByG_P_PrevAndNext(long categoryId, long groupId,
 		long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
@@ -877,7 +877,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] filterFindByG_P_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63;.
@@ -1109,7 +1109,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByG_S_First(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where groupId = &#63; and status = &#63;.
@@ -1133,7 +1133,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByG_S_Last(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where groupId = &#63; and status = &#63;.
@@ -1159,7 +1159,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByG_S_PrevAndNext(long categoryId, long groupId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and status = &#63;.
@@ -1217,7 +1217,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] filterFindByG_S_PrevAndNext(long categoryId,
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Removes all the message boards categories where groupId = &#63; and status = &#63; from the database.
@@ -1319,7 +1319,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByC_S_First(long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where companyId = &#63; and status = &#63;.
@@ -1343,7 +1343,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	*/
 	public MBCategory findByC_S_Last(long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where companyId = &#63; and status = &#63;.
@@ -1369,7 +1369,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByC_S_PrevAndNext(long categoryId, long companyId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Removes all the message boards categories where companyId = &#63; and status = &#63; from the database.
@@ -1469,7 +1469,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory findByNotC_G_P_First(long categoryId, long groupId,
 		long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
@@ -1497,7 +1497,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory findByNotC_G_P_Last(long categoryId, long groupId,
 		long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
@@ -1813,7 +1813,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory findByG_P_S_First(long groupId, long parentCategoryId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
@@ -1841,7 +1841,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory findByG_P_S_Last(long groupId, long parentCategoryId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
@@ -1870,7 +1870,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] findByG_P_S_PrevAndNext(long categoryId, long groupId,
 		long parentCategoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
@@ -1933,7 +1933,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory[] filterFindByG_P_S_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns all the message boards categories that the user has permission to view where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
@@ -2191,7 +2191,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory findByNotC_G_P_S_First(long categoryId, long groupId,
 		long parentCategoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the first message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
@@ -2221,7 +2221,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	public MBCategory findByNotC_G_P_S_Last(long categoryId, long groupId,
 		long parentCategoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MBCategory> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the last message boards category in the ordered set where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
@@ -2504,7 +2504,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
 	*/
 	public MBCategory remove(long categoryId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	public MBCategory updateImpl(MBCategory mbCategory);
 
@@ -2516,7 +2516,7 @@ public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	* @throws NoSuchCategoryException if a message boards category with the primary key could not be found
 	*/
 	public MBCategory findByPrimaryKey(long categoryId)
-		throws com.liferay.portlet.messageboards.NoSuchCategoryException;
+		throws com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
 
 	/**
 	* Returns the message boards category with the primary key or returns <code>null</code> if it could not be found.

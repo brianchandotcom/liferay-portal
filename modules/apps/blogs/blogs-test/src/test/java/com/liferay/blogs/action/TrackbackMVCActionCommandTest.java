@@ -29,7 +29,7 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactory;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.blogs.NoSuchEntryException;
+import com.liferay.portlet.blogs.exception.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trackback.Trackback;
 

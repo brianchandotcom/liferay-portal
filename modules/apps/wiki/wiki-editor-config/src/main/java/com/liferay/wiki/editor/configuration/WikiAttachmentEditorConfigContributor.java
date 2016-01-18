@@ -149,6 +149,6 @@ public class WikiAttachmentEditorConfigContributor
 		_itemSelector = itemSelector;
 	}
 
-	private volatile ItemSelector _itemSelector;
+	private ItemSelector _itemSelector;
 
 }

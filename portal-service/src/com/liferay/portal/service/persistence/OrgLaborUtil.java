@@ -186,7 +186,7 @@ public class OrgLaborUtil {
 	*/
 	public static OrgLabor findByOrganizationId_First(long organizationId,
 		OrderByComparator<OrgLabor> orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException {
+		throws com.liferay.portal.exception.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_First(organizationId, orderByComparator);
 	}
@@ -215,7 +215,7 @@ public class OrgLaborUtil {
 	*/
 	public static OrgLabor findByOrganizationId_Last(long organizationId,
 		OrderByComparator<OrgLabor> orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException {
+		throws com.liferay.portal.exception.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_Last(organizationId, orderByComparator);
 	}
@@ -244,7 +244,7 @@ public class OrgLaborUtil {
 	*/
 	public static OrgLabor[] findByOrganizationId_PrevAndNext(long orgLaborId,
 		long organizationId, OrderByComparator<OrgLabor> orderByComparator)
-		throws com.liferay.portal.NoSuchOrgLaborException {
+		throws com.liferay.portal.exception.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_PrevAndNext(orgLaborId,
 			organizationId, orderByComparator);
@@ -305,7 +305,7 @@ public class OrgLaborUtil {
 	* @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	*/
 	public static OrgLabor remove(long orgLaborId)
-		throws com.liferay.portal.NoSuchOrgLaborException {
+		throws com.liferay.portal.exception.NoSuchOrgLaborException {
 		return getPersistence().remove(orgLaborId);
 	}
 
@@ -321,7 +321,7 @@ public class OrgLaborUtil {
 	* @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	*/
 	public static OrgLabor findByPrimaryKey(long orgLaborId)
-		throws com.liferay.portal.NoSuchOrgLaborException {
+		throws com.liferay.portal.exception.NoSuchOrgLaborException {
 		return getPersistence().findByPrimaryKey(orgLaborId);
 	}
 

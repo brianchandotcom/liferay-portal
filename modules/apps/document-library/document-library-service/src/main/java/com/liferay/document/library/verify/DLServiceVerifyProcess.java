@@ -40,8 +40,8 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
-import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -717,13 +717,12 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLServiceVerifyProcess.class);
 
-	private volatile CounterLocalService _counterLocalService;
-	private volatile DLAppHelperLocalService _dlAppHelperLocalService;
-	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile DLFileEntryMetadataLocalService
-		_dlFileEntryMetadataLocalService;
-	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
-	private volatile DLFolderLocalService _dlFolderLocalService;
+	private CounterLocalService _counterLocalService;
+	private DLAppHelperLocalService _dlAppHelperLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileVersionLocalService _dlFileVersionLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
 
 }

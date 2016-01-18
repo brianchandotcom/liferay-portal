@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -41,9 +42,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
-import com.liferay.portlet.messageboards.NoSuchCategoryException;
-import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.constants.MBConstants;
+import com.liferay.portlet.messageboards.exception.NoSuchCategoryException;
+import com.liferay.portlet.messageboards.exception.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -1104,6 +1105,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBThread oldThread = message.getThread();
 		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 			oldThread.getRootMessageId());
+		long oldAttachmentsFolderId = message.getAttachmentsFolderId();
 
 		// Message flags
 
@@ -1158,6 +1160,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		message.setParentMessageId(0);
 
 		mbMessagePersistence.update(message);
+
+		// Attachments
+
+		moveAttachmentsFolders(
+			message, oldAttachmentsFolderId, oldThread, thread, serviceContext);
 
 		// Indexer
 
@@ -1298,6 +1305,32 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		mbThreadPersistence.update(thread);
 
 		return thread;
+	}
+
+	protected void moveAttachmentsFolders(
+			MBMessage message, long oldAttachmentsFolderId, MBThread oldThread,
+			MBThread newThread, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (oldAttachmentsFolderId !=
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			Folder newThreadFolder = newThread.addAttachmentsFolder();
+
+			PortletFileRepositoryUtil.movePortletFolder(
+				message.getGroupId(), message.getUserId(),
+				oldAttachmentsFolderId, newThreadFolder.getFolderId(),
+				serviceContext);
+		}
+
+		List<MBMessage> childMessages = mbMessagePersistence.findByT_P(
+			oldThread.getThreadId(), message.getMessageId());
+
+		for (MBMessage childMessage : childMessages) {
+			moveAttachmentsFolders(
+				childMessage, childMessage.getAttachmentsFolderId(), oldThread,
+				newThread, serviceContext);
+		}
 	}
 
 	protected void moveChildrenMessages(

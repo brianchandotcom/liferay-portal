@@ -4,9 +4,12 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.service.access.policy.service.permission
 Include-Resource: classes
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Spring-Context: META-INF/spring
+-include: ../../../../marketplace/platform/bnd.bnd
 -spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

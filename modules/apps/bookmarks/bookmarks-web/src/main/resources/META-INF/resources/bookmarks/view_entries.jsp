@@ -82,7 +82,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				%>
 
 				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_folder" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</liferay-portlet:renderURL>
@@ -118,13 +118,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				row.setData(rowData);
 
 				row.setPrimaryKey(String.valueOf(entry.getEntryId()));
-				%>
 
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-				</liferay-portlet:renderURL>
+				String entryHREF = themeDisplay.getPathMain() + "/bookmarks/open_entry?entryId=" + entry.getEntryId();
+				%>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>

@@ -184,7 +184,7 @@ public class BackgroundTaskUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByGroupId_First(long groupId,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -210,7 +210,7 @@ public class BackgroundTaskUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByGroupId_Last(long groupId,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -237,7 +237,7 @@ public class BackgroundTaskUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByGroupId_PrevAndNext(
 		long backgroundTaskId, long groupId,
@@ -342,7 +342,7 @@ public class BackgroundTaskUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByCompanyId_First(long companyId,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -370,7 +370,7 @@ public class BackgroundTaskUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByCompanyId_Last(long companyId,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -399,7 +399,7 @@ public class BackgroundTaskUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByCompanyId_PrevAndNext(
 		long backgroundTaskId, long companyId,
@@ -503,7 +503,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByStatus_First(int status,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -529,7 +529,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByStatus_Last(int status,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -556,7 +556,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByStatus_PrevAndNext(
 		long backgroundTaskId, int status,
@@ -670,7 +670,7 @@ public class BackgroundTaskUtil {
 	* @param taskExecutorClassName the task executor class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_T_First(long groupId,
 		java.lang.String taskExecutorClassName,
@@ -704,7 +704,7 @@ public class BackgroundTaskUtil {
 	* @param taskExecutorClassName the task executor class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_T_Last(long groupId,
 		java.lang.String taskExecutorClassName,
@@ -739,7 +739,7 @@ public class BackgroundTaskUtil {
 	* @param taskExecutorClassName the task executor class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByG_T_PrevAndNext(
 		long backgroundTaskId, long groupId,
@@ -947,7 +947,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_S_First(long groupId, int status,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -977,7 +977,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_S_Last(long groupId, int status,
 		OrderByComparator<BackgroundTask> orderByComparator)
@@ -1008,7 +1008,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByG_S_PrevAndNext(
 		long backgroundTaskId, long groupId, int status,
@@ -1124,7 +1124,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByT_S_First(
 		java.lang.String taskExecutorClassName, int status,
@@ -1158,7 +1158,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByT_S_Last(
 		java.lang.String taskExecutorClassName, int status,
@@ -1193,7 +1193,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByT_S_PrevAndNext(
 		long backgroundTaskId, java.lang.String taskExecutorClassName,
@@ -1412,7 +1412,7 @@ public class BackgroundTaskUtil {
 	* @param taskExecutorClassName the task executor class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_N_T_First(long groupId,
 		java.lang.String name, java.lang.String taskExecutorClassName,
@@ -1448,7 +1448,7 @@ public class BackgroundTaskUtil {
 	* @param taskExecutorClassName the task executor class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_N_T_Last(long groupId,
 		java.lang.String name, java.lang.String taskExecutorClassName,
@@ -1485,7 +1485,7 @@ public class BackgroundTaskUtil {
 	* @param taskExecutorClassName the task executor class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByG_N_T_PrevAndNext(
 		long backgroundTaskId, long groupId, java.lang.String name,
@@ -1718,7 +1718,7 @@ public class BackgroundTaskUtil {
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_T_C_First(long groupId,
 		java.lang.String taskExecutorClassName, boolean completed,
@@ -1754,7 +1754,7 @@ public class BackgroundTaskUtil {
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_T_C_Last(long groupId,
 		java.lang.String taskExecutorClassName, boolean completed,
@@ -1791,7 +1791,7 @@ public class BackgroundTaskUtil {
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByG_T_C_PrevAndNext(
 		long backgroundTaskId, long groupId,
@@ -2023,7 +2023,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_T_S_First(long groupId,
 		java.lang.String taskExecutorClassName, int status,
@@ -2059,7 +2059,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_T_S_Last(long groupId,
 		java.lang.String taskExecutorClassName, int status,
@@ -2096,7 +2096,7 @@ public class BackgroundTaskUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByG_T_S_PrevAndNext(
 		long backgroundTaskId, long groupId,
@@ -2337,7 +2337,7 @@ public class BackgroundTaskUtil {
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_N_T_C_First(long groupId,
 		java.lang.String name, java.lang.String taskExecutorClassName,
@@ -2375,7 +2375,7 @@ public class BackgroundTaskUtil {
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a matching background task could not be found
+	* @throws NoSuchBackgroundTaskException if a matching background task could not be found
 	*/
 	public static BackgroundTask findByG_N_T_C_Last(long groupId,
 		java.lang.String name, java.lang.String taskExecutorClassName,
@@ -2414,7 +2414,7 @@ public class BackgroundTaskUtil {
 	* @param completed the completed
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask[] findByG_N_T_C_PrevAndNext(
 		long backgroundTaskId, long groupId, java.lang.String name,
@@ -2601,7 +2601,7 @@ public class BackgroundTaskUtil {
 	*
 	* @param backgroundTaskId the primary key of the background task
 	* @return the background task that was removed
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask remove(long backgroundTaskId)
 		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException {
@@ -2613,11 +2613,11 @@ public class BackgroundTaskUtil {
 	}
 
 	/**
-	* Returns the background task with the primary key or throws a {@link com.liferay.portal.background.task.NoSuchBackgroundTaskException} if it could not be found.
+	* Returns the background task with the primary key or throws a {@link NoSuchBackgroundTaskException} if it could not be found.
 	*
 	* @param backgroundTaskId the primary key of the background task
 	* @return the background task
-	* @throws com.liferay.portal.background.task.NoSuchBackgroundTaskException if a background task with the primary key could not be found
+	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public static BackgroundTask findByPrimaryKey(long backgroundTaskId)
 		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException {

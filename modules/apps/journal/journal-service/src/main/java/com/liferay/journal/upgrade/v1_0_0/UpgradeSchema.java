@@ -54,6 +54,9 @@ public class UpgradeSchema extends UpgradeProcess {
 			runSQL(
 				"alter_column_name JournalFeed rendererTemplateId " +
 					"DDMRendererTemplateKey TEXT null");
+			runSQL(
+				"alter_column_type JournalFeed targetPortletId VARCHAR(200) " +
+					"null");
 		}
 		catch (SQLException sqle) {
 

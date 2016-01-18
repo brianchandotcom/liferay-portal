@@ -14,8 +14,8 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -132,7 +133,8 @@ public class FriendlyURLServlet extends HttpServlet {
 				else {
 					lastPath = new LastPath(
 						_friendlyURLPathPrefix, pathInfo,
-						request.getParameterMap());
+						HttpUtil.parameterMapToString(
+							request.getParameterMap()));
 				}
 
 				request.setAttribute(WebKeys.LAST_PATH, lastPath);
@@ -398,6 +400,10 @@ public class FriendlyURLServlet extends HttpServlet {
 		String i18nLanguageId = i18nPath.substring(pos + 1);
 
 		Locale i18nLocale = LanguageUtil.getLocale(i18nLanguageId);
+
+		if (i18nLocale == null) {
+			i18nLocale = LocaleUtil.fromLanguageId(i18nLanguageId, true, false);
+		}
 
 		if (LanguageUtil.isAvailableLocale(groupId, i18nLocale)) {
 			return false;

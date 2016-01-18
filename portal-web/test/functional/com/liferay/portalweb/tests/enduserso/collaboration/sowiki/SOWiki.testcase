@@ -899,12 +899,6 @@
 	</command>
 
 	<command name="AddSOWikiPageFormatCreole" priority="4">
-		<var name="wikiPageCreoleSource">
-			<![CDATA[
-				==Wiki Page Content==\\
-				//Creole Formatting 1// **Creole Formatting 2** **//Creole Formatting//** 3
-			]]>
-		</var>
 		<var name="wikiPageContent1" value="Wiki Page Content# " />
 		<var name="wikiPageContent2" value=" Creole Formatting 1 Creole Formatting 2 Creole Formatting 3" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -916,11 +910,19 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiPage#addPG">
-			<var name="creoleSource" value="true" />
-			<var name="wikiPageContent" value="${wikiPageCreoleSource}" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
+
+		<execute macro="WikiEntry#selectPageFormat">
+			<var name="pageFormat" value="Creole" />
+		</execute>
+
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent1}${wikiPageContent2}" />
+
+		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -957,11 +959,27 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiPage#addPG">
-			<var name="htmlSource" value="true" />
-			<var name="welcomeToLiferay" value="${welcomeToLiferay}" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
+
+		<execute macro="WikiEntry#selectPageFormat">
+			<var name="pageFormat" value="HTML" />
+		</execute>
+
+		<execute macro="WikiEntry#confirmHTML" />
+
+		<execute function="Click#clickAt" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
+
+		<execute function="Pause" locator1="1000" />
+
+		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${welcomeToLiferay}" />
+
+		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1001,11 +1019,23 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute macro="WikiPage#addPG">
-			<var name="mediawikiSource" value="true" />
-			<var name="wikiPageMediaWikiContent" value="${wikiPageMediaWikiContent}" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
+
+		<execute macro="WikiEntry#selectPageFormat">
+			<var name="pageFormat" value="MediaWiki" />
+		</execute>
+
+		<execute macro="WikiEntry#confirmMediaWiki" />
+
+		<execute macro="WikiEntry#addMediaWikiDescription">
+			<var name="wikiPageContent" value="${wikiPageMediaWikiContent}" />
+		</execute>
+
+		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />

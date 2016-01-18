@@ -59,7 +59,7 @@ if (iteratorURL != null) {
 	<div id="<%= namespace + id %>SearchContainer">
 		<table class="table table-bordered table-hover table-striped">
 
-		<c:if test="<%= headerNames != null %>">
+		<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
 			<thead class="table-columns">
 				<tr>
 

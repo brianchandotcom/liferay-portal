@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
 		"service.ranking:Integer=" + Integer.MAX_VALUE
 	},
 	service = Object.class
-
 )
 public class TestAuthTokenIgnoreActions {
 

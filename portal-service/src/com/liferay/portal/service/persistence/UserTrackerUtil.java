@@ -186,7 +186,7 @@ public class UserTrackerUtil {
 	*/
 	public static UserTracker findByCompanyId_First(long companyId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -214,7 +214,7 @@ public class UserTrackerUtil {
 	*/
 	public static UserTracker findByCompanyId_Last(long companyId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -244,7 +244,7 @@ public class UserTrackerUtil {
 	public static UserTracker[] findByCompanyId_PrevAndNext(
 		long userTrackerId, long companyId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(userTrackerId, companyId,
 			orderByComparator);
@@ -346,7 +346,7 @@ public class UserTrackerUtil {
 	*/
 	public static UserTracker findByUserId_First(long userId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -372,7 +372,7 @@ public class UserTrackerUtil {
 	*/
 	public static UserTracker findByUserId_Last(long userId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -399,7 +399,7 @@ public class UserTrackerUtil {
 	*/
 	public static UserTracker[] findByUserId_PrevAndNext(long userTrackerId,
 		long userId, OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(userTrackerId, userId,
 			orderByComparator);
@@ -505,7 +505,7 @@ public class UserTrackerUtil {
 	public static UserTracker findBySessionId_First(
 		java.lang.String sessionId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence()
 				   .findBySessionId_First(sessionId, orderByComparator);
 	}
@@ -534,7 +534,7 @@ public class UserTrackerUtil {
 	*/
 	public static UserTracker findBySessionId_Last(java.lang.String sessionId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence()
 				   .findBySessionId_Last(sessionId, orderByComparator);
 	}
@@ -565,7 +565,7 @@ public class UserTrackerUtil {
 	public static UserTracker[] findBySessionId_PrevAndNext(
 		long userTrackerId, java.lang.String sessionId,
 		OrderByComparator<UserTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence()
 				   .findBySessionId_PrevAndNext(userTrackerId, sessionId,
 			orderByComparator);
@@ -626,7 +626,7 @@ public class UserTrackerUtil {
 	* @throws NoSuchUserTrackerException if a user tracker with the primary key could not be found
 	*/
 	public static UserTracker remove(long userTrackerId)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence().remove(userTrackerId);
 	}
 
@@ -642,7 +642,7 @@ public class UserTrackerUtil {
 	* @throws NoSuchUserTrackerException if a user tracker with the primary key could not be found
 	*/
 	public static UserTracker findByPrimaryKey(long userTrackerId)
-		throws com.liferay.portal.NoSuchUserTrackerException {
+		throws com.liferay.portal.exception.NoSuchUserTrackerException {
 		return getPersistence().findByPrimaryKey(userTrackerId);
 	}
 

@@ -24,81 +24,50 @@ WikiPage wikiPage = BaseInputEditorWikiEngine.getWikiPage(request);
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 %>
 
-<c:if test="<%= baseInputEditorWikiEngine.isHelpPageDefined() %>">
-	<div align="right">
-		<liferay-ui:toggle
-			defaultShowContent="<%= false %>"
-			hideMessage='<%= LanguageUtil.get(request, "hide-syntax-help") + " &raquo;" %>'
-			id="<%= baseInputEditorWikiEngine.getToggleId(pageContext) %>"
-			showMessage='<%= "&laquo; " + LanguageUtil.get(request, "show-syntax-help") %>'
-		/>
-	</div>
-</c:if>
-
 <div>
-	<aui:row>
-		<aui:col id="wikiEditorContainer" width="<%= baseInputEditorWikiEngine.isSyntaxHelpVisible(pageContext) ? 70 : 100 %>">
-			<%@ include file="/editor_config.jspf" %>
+	<%@ include file="/editor_config.jspf" %>
 
-			<liferay-ui:input-editor
-				configParams="<%= configParams %>"
-				contents="<%= content %>"
-				cssClass="form-control"
-				editorName="<%= baseInputEditorWikiEngine.getEditorName() %>"
-				fileBrowserParams="<%= fileBrowserParams %>"
-				toolbarSet="<%= baseInputEditorWikiEngine.getToolbarSet() %>"
-				width="100%"
-			/>
+	<liferay-ui:input-editor
+		configParams="<%= configParams %>"
+		contents="<%= content %>"
+		editorName="<%= baseInputEditorWikiEngine.getEditorName() %>"
+		fileBrowserParams="<%= fileBrowserParams %>"
+		toolbarSet="<%= baseInputEditorWikiEngine.getToolbarSet() %>"
+	/>
 
-			<aui:input name="content" type="hidden" />
-		</aui:col>
+	<aui:input name="content" type="hidden" />
 
-		<c:if test="<%= baseInputEditorWikiEngine.isHelpPageDefined() %>">
-			<aui:col cssClass="syntax-help" id="toggle_id_wiki_editor_help" style='<%= baseInputEditorWikiEngine.isSyntaxHelpVisible(pageContext) ? StringPool.BLANK : "display: none" %>' width="<%= 30 %>">
-				<h3>
-					<liferay-ui:message key="syntax-help" />
-				</h3>
+	<c:if test="<%= baseInputEditorWikiEngine.isHelpPageDefined() %>">
+		<div align="right">
+			<a href="javascript:;" id="<%= renderResponse.getNamespace() + "toggle_id_wiki_editor_help" %>"><liferay-ui:message key="show-syntax-help" /> &raquo;</a>
+		</div>
 
-				<%
-				baseInputEditorWikiEngine.renderHelpPage(pageContext);
-				%>
+		<%
+		String helpPageHTML = baseInputEditorWikiEngine.getHelpPageHTML(pageContext);
+		String helpPageTitle = baseInputEditorWikiEngine.getHelpPageTitle(request);
+		%>
 
-				<aui:a href="<%= baseInputEditorWikiEngine.getHelpURL() %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
-			</aui:col>
-		</c:if>
-	</aui:row>
-</div>
+		<aui:script use="liferay-util-window">
+			var helpPageLink = A.one('#<%= renderResponse.getNamespace() + "toggle_id_wiki_editor_help" %>');
 
-<c:if test="<%= baseInputEditorWikiEngine.isHelpPageDefined() %>">
-	<aui:script sandbox="<%= true %>">
-		var CSS_EDITOR_WIDTH = 'col-md-8';
+			helpPageLink.on(
+				'click',
+				function(event) {
+					event.preventDefault();
 
-		var CSS_EDITOR_WIDTH_EXPANDED = 'col-md-12';
+					var helpPageDialog = Liferay.Util.Window.getWindow(
+						{
+							dialog: {
+								bodyContent: '<%= HtmlUtil.escapeJS(helpPageHTML) %>',
+								destroyOnHide: true
+							},
+							title: '<%= HtmlUtil.escapeJS(helpPageTitle) %>'
+						}
+					);
 
-		Liferay.on(
-			'toggle:stateChange',
-			function(event) {
-				if (event.id === '<%= baseInputEditorWikiEngine.getToggleId(pageContext) %>') {
-					var classSrc = CSS_EDITOR_WIDTH;
-					var classDest = CSS_EDITOR_WIDTH_EXPANDED;
-
-					if (event.state === 1) {
-						classSrc = CSS_EDITOR_WIDTH_EXPANDED;
-						classDest = CSS_EDITOR_WIDTH;
-					}
-
-					var editorContainer = $('#<portlet:namespace />wikiEditorContainer');
-
-					editorContainer.addClass(classDest);
-					editorContainer.removeClass(classSrc);
-
-					var editorInstance = window['<portlet:namespace />editor'];
-
-					if (editorInstance) {
-						editorInstance.focus();
-					}
+					helpPageDialog.render();
 				}
-			}
-		);
-	</aui:script>
-</c:if>
+			);
+		</aui:script>
+	</c:if>
+</div>

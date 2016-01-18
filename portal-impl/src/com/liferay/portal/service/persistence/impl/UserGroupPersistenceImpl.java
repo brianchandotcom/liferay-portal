@@ -16,7 +16,7 @@ package com.liferay.portal.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.NoSuchUserGroupException;
+import com.liferay.portal.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
@@ -3934,7 +3935,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				qPos.add(companyId);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				List<UserGroup> list = q.list();
@@ -4041,7 +4042,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				qPos.add(companyId);
 
 				if (bindName) {
-					qPos.add(name);
+					qPos.add(StringUtil.toLowerCase(name));
 				}
 
 				count = (Long)q.uniqueResult();
@@ -4063,7 +4064,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "userGroup.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_1 = "userGroup.name IS NULL";
-	private static final String _FINDER_COLUMN_C_N_NAME_2 = "userGroup.name = ?";
+	private static final String _FINDER_COLUMN_C_N_NAME_2 = "lower(userGroup.name) = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(userGroup.name IS NULL OR userGroup.name = '')";
 
 	public UserGroupPersistenceImpl() {
@@ -4494,7 +4495,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	/**
-	 * Returns the user group with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the user group with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the user group
 	 * @return the user group

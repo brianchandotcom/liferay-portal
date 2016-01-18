@@ -19,8 +19,8 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.portal.NoSuchLayoutSetPrototypeException;
-import com.liferay.portal.RequiredLayoutSetPrototypeException;
+import com.liferay.portal.exception.NoSuchLayoutSetPrototypeException;
+import com.liferay.portal.exception.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -34,7 +34,7 @@ import com.liferay.portal.service.LayoutSetPrototypeService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
 
@@ -194,7 +194,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			panelAppRegistry, panelCategoryRegistry);
 
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
@@ -230,19 +230,18 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
+		this.panelAppRegistry = panelAppRegistry;
 	}
 
 	@Reference(unbind = "-")
 	protected void setPanelCategoryRegistry(
 		PanelCategoryRegistry panelCategoryRegistry) {
 
-		_panelCategoryRegistry = panelCategoryRegistry;
+		this.panelCategoryRegistry = panelCategoryRegistry;
 	}
 
 	protected LayoutSetPrototypeService layoutSetPrototypeService;
-
-	private volatile PanelAppRegistry _panelAppRegistry;
-	private volatile PanelCategoryRegistry _panelCategoryRegistry;
+	protected PanelAppRegistry panelAppRegistry;
+	protected PanelCategoryRegistry panelCategoryRegistry;
 
 }

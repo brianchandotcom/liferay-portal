@@ -1,0 +1,24 @@
+body.open {
+	.control-menu {
+		@include sm() {
+			left: 320px;
+		}
+	}
+}
+
+.control-menu {
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 500;
+}
+
+.control-menu-level-1 {
+	position: relative;
+}
+
+.control-menu-icon {
+	display: inline-block;
+	margin: 0 10px;
+}

@@ -168,11 +168,11 @@ public class PortalSettingsLDAPFormMVCActionCommand
 		configurationProvider.updateProperties(companyId, properties);
 	}
 
-	private volatile ConfigurationProvider<LDAPAuthConfiguration>
+	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPExportConfiguration>
+	private ConfigurationProvider<LDAPExportConfiguration>
 		_ldapExportConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPImportConfiguration>
+	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
 
 }

@@ -29,11 +29,11 @@ taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.LayoutPrototypeException" %><%@
-page import="com.liferay.portal.NoSuchGroupException" %><%@
-page import="com.liferay.portal.NoSuchLayoutException" %><%@
-page import="com.liferay.portal.NoSuchRoleException" %><%@
-page import="com.liferay.portal.RemoteOptionsException" %><%@
+<%@ page import="com.liferay.portal.RemoteOptionsException" %><%@
+page import="com.liferay.portal.exception.LayoutPrototypeException" %><%@
+page import="com.liferay.portal.exception.NoSuchGroupException" %><%@
+page import="com.liferay.portal.exception.NoSuchLayoutException" %><%@
+page import="com.liferay.portal.exception.NoSuchRoleException" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
@@ -82,9 +82,9 @@ page import="com.liferay.portal.util.SessionClicks" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.exportimport.RemoteExportException" %><%@
 page import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants" %><%@
+page import="com.liferay.portlet.exportimport.exception.RemoteExportException" %><%@
 page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %><%@

@@ -31,7 +31,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.exception.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashEntryConstants;
 
@@ -321,6 +321,6 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

@@ -45,8 +45,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.asset.DuplicateQueryRuleException;
+import com.liferay.portlet.asset.exception.AssetTagException;
+import com.liferay.portlet.asset.exception.DuplicateQueryRuleException;
 import com.liferay.portlet.asset.model.AssetQueryRule;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetTagLocalService;
@@ -603,7 +603,15 @@ public class AssetPublisherConfigurationAction
 		String[] classNameIds = StringUtil.split(
 			getParameter(actionRequest, "classNameIds"));
 		String[] classTypeIds = getClassTypeIds(actionRequest, classNameIds);
+
 		String[] extensions = actionRequest.getParameterValues("extensions");
+
+		if ((extensions.length == 1) &&
+			extensions[0].equals(Boolean.FALSE.toString())) {
+
+			extensions = new String[0];
+		}
+
 		boolean subtypeFieldsFilterEnabled = getSubtypesFieldsFilterEnabled(
 			actionRequest, classNameIds);
 

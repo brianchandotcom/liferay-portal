@@ -191,7 +191,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static AnnouncementsDelivery findByUserId_First(long userId,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchDeliveryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -217,7 +217,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static AnnouncementsDelivery findByUserId_Last(long userId,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchDeliveryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -245,7 +245,7 @@ public class AnnouncementsDeliveryUtil {
 	public static AnnouncementsDelivery[] findByUserId_PrevAndNext(
 		long deliveryId, long userId,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchDeliveryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(deliveryId, userId,
 			orderByComparator);
@@ -280,7 +280,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static AnnouncementsDelivery findByU_T(long userId,
 		java.lang.String type)
-		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchDeliveryException {
 		return getPersistence().findByU_T(userId, type);
 	}
 
@@ -318,7 +318,7 @@ public class AnnouncementsDeliveryUtil {
 	*/
 	public static AnnouncementsDelivery removeByU_T(long userId,
 		java.lang.String type)
-		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchDeliveryException {
 		return getPersistence().removeByU_T(userId, type);
 	}
 
@@ -370,7 +370,7 @@ public class AnnouncementsDeliveryUtil {
 	* @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	*/
 	public static AnnouncementsDelivery remove(long deliveryId)
-		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchDeliveryException {
 		return getPersistence().remove(deliveryId);
 	}
 
@@ -387,7 +387,7 @@ public class AnnouncementsDeliveryUtil {
 	* @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	*/
 	public static AnnouncementsDelivery findByPrimaryKey(long deliveryId)
-		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.exception.NoSuchDeliveryException {
 		return getPersistence().findByPrimaryKey(deliveryId);
 	}
 

@@ -83,7 +83,7 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isViewAllPagesNavItemSelected() {
-		return isNavItemSelected("/wiki/view_all_pages");
+		return isNavItemSelected("/wiki/view_pages");
 	}
 
 	public boolean isViewDraftPagesNavItemSelected() {

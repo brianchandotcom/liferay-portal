@@ -66,6 +66,17 @@ public class ShoppingCategoryServiceUtil {
 		return getService().getCategories(groupId, parentCategoryId, start, end);
 	}
 
+	public static java.util.List<java.lang.Object> getCategoriesAndItems(
+		long groupId, long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		return getService()
+				   .getCategoriesAndItems(groupId, categoryId, start, end, obc);
+	}
+
+	public static int getCategoriesAndItemsCount(long groupId, long categoryId) {
+		return getService().getCategoriesAndItemsCount(groupId, categoryId);
+	}
+
 	public static int getCategoriesCount(long groupId, long parentCategoryId) {
 		return getService().getCategoriesCount(groupId, parentCategoryId);
 	}

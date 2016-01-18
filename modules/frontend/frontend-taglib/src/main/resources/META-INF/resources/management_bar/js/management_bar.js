@@ -118,11 +118,11 @@ AUI.add(
 
 						var elements = event.elements;
 
-						var numberAllSelectedElements = elements.allSelectedElements.size();
+						var numberAllSelectedElements = elements.allSelectedElements.filter(':enabled').size();
 
-						var numberCurrentPageSelectedElements = elements.currentPageSelectedElements.size();
+						var numberCurrentPageSelectedElements = elements.currentPageSelectedElements.filter(':enabled').size();
 
-						var numberCurrentPageElements = elements.currentPageElements.size();
+						var numberCurrentPageElements = elements.currentPageElements.filter(':enabled').size();
 
 						instance._updateItemsCount(numberAllSelectedElements);
 

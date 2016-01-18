@@ -1,5 +1,5 @@
-Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: Business Productivity${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Description: Apps and Features: Calendar, Dynamic Data Lists, Dynamic Data Mapping, Forms, Polls, Workflow<br /><br />An increase in productivity means you're saving time and effort; you’re becoming more efficient.  The Business Productivity apps help you do that by giving you built-in calendars and the ability to create your own forms and list applications. These are powerful, flexible apps that can be quickly leveraged for basic tasks, or carefully configured and mastered to perfect business processes.<br /><br />Need a quick survey or complex Sign Up form? Use the Liferay Forms app and make any forms you want. If there's a forms feature you need, this app probably has it.<br /><br />Maybe you need an entire list application, and you need it today. Dynamic Data Lists lets you do it without any developer expertise.<br /><br />Do you need personal calendars for your users, and/or site calendars? Do you need the calendar to be highly configurable? Use the Calendar app.<br /><br />Would you like to initiate a review process when new content, or any new asset, is created? The Kaleo Workflow Engine lets you send any asset through review before it gets published.<br /><br />Want to quickly get the opinion of your users on something? The Polls app is extremely easy to use.<br /><br />This suite may contain modules that depend on Platform suite modules.
+Liferay-Releng-App-Title: Liferay Business Productivity${liferay.releng.app.title.suffix}
 Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Productivity
 Liferay-Releng-Demo-Url:
@@ -32,12 +32,13 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.dynamic.data.mapping.type.date:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.key.value:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.options:1.0.0,\
+	com.liferay.dynamic.data.mapping.type.paragraph:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.radio:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.select:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.text:1.0.0,\
 	com.liferay.dynamic.data.mapping.type.validation:1.0.0,\
 	com.liferay.dynamic.data.mapping.validator:1.0.0,\
-	com.liferay.dynamic.data.mapping.validator:1.0.0,\
+	com.liferay.dynamic.data.mapping.web:1.0.0,\
 	com.liferay.polls.api:1.0.0,\
 	com.liferay.polls.service:1.0.0,\
 	com.liferay.polls.test:1.0.0,\

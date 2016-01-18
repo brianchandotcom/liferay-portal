@@ -57,6 +57,6 @@ public class DDLRecordSetPermissionUpdateHandler
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}
 
-	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 }

@@ -2,7 +2,7 @@
 	<command name="addNewPG">
 		<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 
-		<execute function="AssertElementNotPresent" locator1="ControlMenuAddPanel#LOADING_ANIMATION" />
+		<execute function="AssertElementNotPresent" locator1="Home#LOADING_ANIMATION" />
 
 		<execute macro="Panel#expandSidebarPanel">
 			<var name="panelHeading" value="Content" />

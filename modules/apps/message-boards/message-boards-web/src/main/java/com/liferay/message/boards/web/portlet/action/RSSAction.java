@@ -71,11 +71,14 @@ public class RSSAction extends BaseRSSStrutsAction {
 				version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
 		else if (groupId > 0) {
-			String topLink = ParamUtil.getString(request, "topLink");
+			String mvcRenderCommandName = ParamUtil.getString(
+				request, "mvcRenderCommandName");
 
 			String feedURL = null;
 
-			if (topLink.equals("recent-posts")) {
+			if (mvcRenderCommandName.equals(
+					"/message_boards/view_recent_posts")) {
+
 				feedURL =
 					themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
 						"/message_boards/find_recent_posts?p_l_id=" + plid;
@@ -141,6 +144,6 @@ public class RSSAction extends BaseRSSStrutsAction {
 		_mbMessageService = mbMessageService;
 	}
 
-	private volatile MBMessageService _mbMessageService;
+	private MBMessageService _mbMessageService;
 
 }

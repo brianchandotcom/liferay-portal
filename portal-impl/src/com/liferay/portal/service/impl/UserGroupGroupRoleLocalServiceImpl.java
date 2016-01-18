@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchUserGroupGroupRoleException;
+import com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.UserGroup;

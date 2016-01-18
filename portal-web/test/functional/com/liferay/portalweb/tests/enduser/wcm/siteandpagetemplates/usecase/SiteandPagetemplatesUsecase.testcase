@@ -567,7 +567,7 @@
 
 		<execute macro="SitePage#viewOnlyAddOptionViaSiteAdminCP" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />

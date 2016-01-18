@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.asset;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 
 /**
  * @author Adolfo Pérez

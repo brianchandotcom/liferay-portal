@@ -35,7 +35,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.LockedThreadException;
+import com.liferay.portlet.messageboards.exception.LockedThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -596,6 +596,23 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		return mbMessageLocalService.getMessage(messageId);
 	}
 
+	@Override
+	public MBMessageDisplay getMessageDisplay(
+			long messageId, int status, boolean includePrevAndNext)
+		throws PortalException {
+
+		MBMessagePermission.check(
+			getPermissionChecker(), messageId, ActionKeys.VIEW);
+
+		return mbMessageLocalService.getMessageDisplay(
+			getGuestOrUserId(), messageId, status, includePrevAndNext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long, int,
+	 *             boolean)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessageDisplay getMessageDisplay(
 			long messageId, int status, String threadView,

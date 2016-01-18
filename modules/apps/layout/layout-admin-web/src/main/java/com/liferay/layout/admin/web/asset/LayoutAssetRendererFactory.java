@@ -21,7 +21,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -115,11 +114,6 @@ public class LayoutAssetRendererFactory
 		_servletContext = servletContext;
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/pages.png";
-	}
-
 	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
@@ -139,9 +133,9 @@ public class LayoutAssetRendererFactory
 		_userLocalService = userLocalService;
 	}
 
-	private volatile AssetEntryLocalService _assetEntryLocalService;
-	private volatile LayoutLocalService _layoutLocalService;
-	private volatile ServletContext _servletContext;
-	private volatile UserLocalService _userLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private ServletContext _servletContext;
+	private UserLocalService _userLocalService;
 
 }

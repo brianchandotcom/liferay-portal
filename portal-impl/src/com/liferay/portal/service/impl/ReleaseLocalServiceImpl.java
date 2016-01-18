@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchReleaseException;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.exception.NoSuchReleaseException;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;

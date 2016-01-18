@@ -116,7 +116,7 @@ public class ClassNameUtil {
 	* @throws NoSuchClassNameException if a matching class name could not be found
 	*/
 	public static ClassName findByValue(java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException {
+		throws com.liferay.portal.exception.NoSuchClassNameException {
 		return getPersistence().findByValue(value);
 	}
 
@@ -149,7 +149,7 @@ public class ClassNameUtil {
 	* @return the class name that was removed
 	*/
 	public static ClassName removeByValue(java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException {
+		throws com.liferay.portal.exception.NoSuchClassNameException {
 		return getPersistence().removeByValue(value);
 	}
 
@@ -199,7 +199,7 @@ public class ClassNameUtil {
 	* @throws NoSuchClassNameException if a class name with the primary key could not be found
 	*/
 	public static ClassName remove(long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException {
+		throws com.liferay.portal.exception.NoSuchClassNameException {
 		return getPersistence().remove(classNameId);
 	}
 
@@ -215,7 +215,7 @@ public class ClassNameUtil {
 	* @throws NoSuchClassNameException if a class name with the primary key could not be found
 	*/
 	public static ClassName findByPrimaryKey(long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException {
+		throws com.liferay.portal.exception.NoSuchClassNameException {
 		return getPersistence().findByPrimaryKey(classNameId);
 	}
 

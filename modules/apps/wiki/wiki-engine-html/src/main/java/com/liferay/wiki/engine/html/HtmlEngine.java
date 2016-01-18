@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
@@ -60,6 +61,11 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 	@Override
 	public String getFormat() {
 		return "html";
+	}
+
+	@Override
+	public String getHelpPageTitle(HttpServletRequest request) {
+		return null;
 	}
 
 	@Override
@@ -191,8 +197,7 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 
 	private String _friendlyURLMapping;
 	private Router _router;
-	private volatile WikiGroupServiceConfiguration
-		_wikiGroupServiceConfiguration;
-	private volatile WikiNodeLocalService _wikiNodeLocalService;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

@@ -17,7 +17,7 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName", "/message_boards/view");
 
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
@@ -30,8 +30,7 @@ Set<Long> threadSubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-portletURL.setParameter("topLink", topLink);
+portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 %>
 
@@ -63,7 +62,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
 
 					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 

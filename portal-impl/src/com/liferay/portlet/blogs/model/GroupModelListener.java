@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogs.model;
 
-import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.exception.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;

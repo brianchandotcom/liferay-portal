@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xuggler.XugglerInstallException;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
@@ -79,7 +78,6 @@ import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceComponentLocalService;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -352,22 +350,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		String className = ParamUtil.getString(actionRequest, "className");
 
-		taskContextMap.put("className", className);
-
-		taskContextMap.put("companyIds", PortalInstances.getCompanyIds());
-
-		String taskExecutorClassName =
-			_CLASS_NAME_REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR;
-
-		if (Validator.isNotNull(className)) {
-			taskExecutorClassName =
-				_CLASS_NAME_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR;
-		}
-
 		if (!ParamUtil.getBoolean(actionRequest, "blocking")) {
-			BackgroundTaskManagerUtil.addBackgroundTask(
-				themeDisplay.getUserId(), CompanyConstants.SYSTEM, "reindex",
-				taskExecutorClassName, taskContextMap, new ServiceContext());
+			IndexWriterHelperUtil.reindex(
+				themeDisplay.getUserId(), "reindex",
+				PortalInstances.getCompanyIds(), className, taskContextMap);
 
 			return;
 		}
@@ -432,9 +418,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			DestinationNames.BACKGROUND_TASK_STATUS, messageListener);
 
 		try {
-			BackgroundTaskManagerUtil.addBackgroundTask(
-				themeDisplay.getUserId(), CompanyConstants.SYSTEM, "reindex",
-				taskExecutorClassName, taskContextMap, new ServiceContext());
+			IndexWriterHelperUtil.reindex(
+				themeDisplay.getUserId(), "reindex",
+				PortalInstances.getCompanyIds(), className, taskContextMap);
 
 			countDownLatch.await(
 				ParamUtil.getLong(actionRequest, "timeout", Time.HOUR),
@@ -867,20 +853,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		_serviceComponentLocalService.verifyDB();
 	}
 
-	private static final String
-		_CLASS_NAME_REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR =
-			"com.liferay.portal.search.internal.background.task." +
-				"ReindexPortalBackgroundTaskExecutor";
-
-	private static final String
-		_CLASS_NAME_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR =
-			"com.liferay.portal.search.internal.background.task." +
-				"ReindexSingleIndexerBackgroundTaskExecutor";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditServerMVCActionCommand.class);
 
-	private volatile MailService _mailService;
-	private volatile ServiceComponentLocalService _serviceComponentLocalService;
+	private MailService _mailService;
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }

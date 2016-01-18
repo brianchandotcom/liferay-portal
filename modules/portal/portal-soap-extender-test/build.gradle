@@ -1,11 +1,11 @@
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.4"
+	compile group: "com.liferay", name: "com.liferay.osgi.util", version: "2.0.5"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
 	compile group: "org.apache.httpcomponents", name: "httpclient", version: "4.3.5"
-	compile group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Final-SNAPSHOT"
-	compile group: "org.arquillian.liferay", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Final-SNAPSHOT"
-	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-SNAPSHOT"
+	compile group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Final-20150827.124553-23"
+	compile group: "org.arquillian.liferay", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Final-20150827.124553-23"
+	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-20150611.165350-3"
 	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.8.Final"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"

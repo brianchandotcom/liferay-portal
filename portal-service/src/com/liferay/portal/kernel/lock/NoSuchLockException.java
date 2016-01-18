@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.lock;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.exception.NoSuchModelException;
 
 /**
  * @author Tina Tian

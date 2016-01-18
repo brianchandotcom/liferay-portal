@@ -144,6 +144,6 @@ public class MDRServicePreAction extends Action {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MDRServicePreAction.class);
 
-	private volatile MDRActionLocalService _mdrActionLocalService;
+	private MDRActionLocalService _mdrActionLocalService;
 
 }

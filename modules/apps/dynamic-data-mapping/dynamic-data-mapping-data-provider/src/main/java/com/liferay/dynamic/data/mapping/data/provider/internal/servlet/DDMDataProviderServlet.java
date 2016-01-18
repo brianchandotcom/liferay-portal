@@ -195,9 +195,8 @@ public class DDMDataProviderServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private volatile DDMDataProviderInstanceService
-		_ddmDataProviderInstanceService;
-	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private volatile JSONFactory _jsonFactory;
+	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private JSONFactory _jsonFactory;
 
 }

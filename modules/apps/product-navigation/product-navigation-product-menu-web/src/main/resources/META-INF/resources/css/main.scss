@@ -25,8 +25,8 @@ body {
 
 .product-menu {
 	.sidebar-header {
-		padding-bottom: 5px;
-		padding-top: 5px;
+		padding-bottom: 10px;
+		padding-top: 12px;
 
 		@include sm() {
 			padding: 19px 24px;
@@ -34,6 +34,8 @@ body {
 
 		.sidenav-close {
 			float: right;
+			margin-right: -8px;
+			margin-top: -4px;
 		}
 	}
 
@@ -49,7 +51,7 @@ body {
 		padding: 0;
 		position: absolute;
 		right: 0;
-		top: 35px;
+		top: 48px;
 
 		@include sm() {
 			top: 63px;
@@ -59,6 +61,12 @@ body {
 			overflow: visible;
 			position: static;
 		}
+	}
+}
+
+.product-menu {
+	.panel-group {
+		overflow: hidden;
 	}
 }
 
@@ -111,6 +119,13 @@ body {
 
 		&.collapsed .panel-notifications-count {
 			display: inline-block;
+			font-weight: bold;
+			min-width: 32px;
+			padding: 0 5px;
+			position: absolute;
+			right: 46px;
+			text-align: center;
+			width: auto;
 		}
 	}
 }
@@ -185,15 +200,34 @@ body {
 
 	.staging-links {
 		font-size: 12px;
-		padding: 4px 16px;
+		padding: 16px 22px 4px 16px;
 	}
 }
 
 /* Layouts Tree */
 
 .product-menu {
-	li.tree-node .tree-node-content.lfr-root-node{
-		display: none;
+	li.tree-node .tree-node-content {
+		z-index: 1;
+
+		&.lfr-root-node {
+			display: none;
+		}
+
+		&:hover, &:focus, &.tree-node-selected {
+			&.tree-node-content:before {
+				background: #3A4D5A;
+				bottom: 0;
+				content: '';
+				height: 40px;
+				left: -300px;
+				opacity: 0.5;
+				position: absolute;
+				right: -100px;
+				top: 0;
+				z-index: -1;
+			}
+		}
 	}
 
 	.tree-node-content {
@@ -221,8 +255,10 @@ body {
 	}
 
 	.layout-set-tabs {
-		font-size: .9em;
+		display: table;
+		font-size: 1em;
 		padding: 0 0 2em 0;
+		width: 100%;
 
 		.layout-set-tree-add, .layout-set-tree-edit {
 			opacity: 0;
@@ -233,20 +269,45 @@ body {
 		}
 
 		.layout-set-tab {
-			padding: 0 10px 0 0;
+			a {
+				&:hover {
+					text-decoration: none;
+				}
 
-			.layout-set-link {
-				padding-right: 5px;
+				@include ellipsis(87px);
 			}
+
+			display: table-cell;
+			margin-right: 10px;
+			padding-bottom: 4px;
+		}
+
+		.layout-set-tab:not(.selected-layout-set) {
+			&:first-child {
+				padding-left: 0;
+			}
+
+			margin-right: 0;
+			padding-left: 10px;
+			width: 97px;
 		}
 
 		.lexicon-icon {
-			height: 12px;
-			width: 12px;
+			height: 16px;
+			width: 16px;
+		}
+
+		.selected-layout-set {
+			border-bottom: 1px solid;
+
+			a {
+				max-width: 108px;
+			}
 		}
 
 		.selected-layout-set, .layout-set-tab:hover {
 			.layout-set-tree-add, .layout-set-tree-edit {
+				margin-left: 10px;
 				opacity: 1;
 			}
 		}
@@ -258,7 +319,6 @@ body {
 		}
 	}
 }
-
 
 /* Icon Animation */
 
@@ -275,20 +335,29 @@ body {
 		left: 0;
 		position: absolute;
 		top: 1px;
-		@include transition(all .6s $ease-out-quart);
-		@include transition-delay(.2s);
+
+		@include transition(all 0.6s $ease-out-quart);
+		@include transition-delay(0.2s);
 	}
 
 	.cn {
 		border: 1px solid #FFF;
 		border-radius: 1px;
-		content: "";
+		content: '';
 		height: 18px;
 		position: absolute;
 		right: 0;
+
+		@include transition(all 0.3s $ease-out-quart);
+		@include transition-delay(0.2s);
+
 		width: 15px;
-		@include transition(all .3s $ease-out-quart);
-		@include transition-delay(.2s);
+	}
+}
+
+@include sm {
+	.toast-animation {
+		margin: 12px 4px 0 4px;
 	}
 }
 

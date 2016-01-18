@@ -14,21 +14,16 @@
 
 package com.liferay.journal.web.asset;
 
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
@@ -82,37 +77,6 @@ public class JournalFolderAssetRenderer
 	}
 
 	@Override
-	public String getIconCssClass() throws PortalException {
-		if (JournalServiceConfigurationValues.JOURNAL_FOLDER_ICON_CHECK_COUNT &&
-			JournalFolderServiceUtil.getFoldersAndArticlesCount(
-				_folder.getGroupId(), _folder.getFolderId()) > 0) {
-
-			return "icon-folder-open";
-		}
-
-		return super.getIconCssClass();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		try {
-			if (JournalServiceConfigurationValues.
-					JOURNAL_FOLDER_ICON_CHECK_COUNT &&
-				JournalFolderServiceUtil.getFoldersAndArticlesCount(
-					_folder.getGroupId(), _folder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED) > 0) {
-
-				return themeDisplay.getPathThemeImages() +
-					"/common/folder_full_document.png";
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return themeDisplay.getPathThemeImages() + "/common/folder_empty.png";
-	}
-
-	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			request.setAttribute(WebKeys.JOURNAL_FOLDER, _folder);
@@ -142,34 +106,6 @@ public class JournalFolderAssetRenderer
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return _folder.getDescription();
-	}
-
-	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!JournalServiceConfigurationValues.
-				JOURNAL_FOLDER_ICON_CHECK_COUNT) {
-
-			return themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_empty_article.png";
-		}
-
-		int articlesCount = JournalArticleServiceUtil.getArticlesCount(
-			_folder.getGroupId(), _folder.getFolderId());
-		int foldersCount = JournalFolderServiceUtil.getFoldersCount(
-			_folder.getGroupId(), _folder.getFolderId());
-
-		if ((articlesCount > 0) || (foldersCount > 0)) {
-			return themeDisplay.getPathThemeImages() +
-				"/file_system/large/folder_full_article.png";
-		}
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/folder_empty_article.png";
 	}
 
 	@Override

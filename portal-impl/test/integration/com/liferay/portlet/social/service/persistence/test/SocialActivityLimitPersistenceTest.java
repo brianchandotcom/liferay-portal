@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.social.NoSuchActivityLimitException;
+import com.liferay.portlet.social.exception.NoSuchActivityLimitException;
 import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
 import com.liferay.portlet.social.service.persistence.SocialActivityLimitPersistence;

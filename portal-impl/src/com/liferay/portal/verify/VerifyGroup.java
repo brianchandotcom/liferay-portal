@@ -14,7 +14,7 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.GroupFriendlyURLException;
+import com.liferay.portal.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;

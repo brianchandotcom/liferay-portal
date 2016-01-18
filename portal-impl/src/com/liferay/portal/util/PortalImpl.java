@@ -14,16 +14,16 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.ImageTypeException;
-import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.NoSuchImageException;
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.RSSFeedException;
 import com.liferay.portal.comment.action.EditDiscussionStrutsAction;
 import com.liferay.portal.comment.action.GetCommentsStrutsAction;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.exception.ImageTypeException;
+import com.liferay.portal.exception.NoSuchGroupException;
+import com.liferay.portal.exception.NoSuchImageException;
+import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.exception.NoSuchUserException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -199,16 +199,14 @@ import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.documentlibrary.ImageSizeException;
+import com.liferay.portlet.documentlibrary.exception.ImageSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.expando.ValueDataException;
+import com.liferay.portlet.expando.exception.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.sites.util.Sites;
-import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.registry.Registry;
@@ -216,6 +214,8 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.sites.kernel.util.Sites;
+import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
 
@@ -6162,49 +6162,10 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		Set<String> whiteList =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
+		if (AuthTokenUtil.isValidPortletInvocationToken(
+				request, layout, portlet)) {
 
-		if (whiteList.contains(portletId)) {
 			return true;
-		}
-
-		String namespace = getPortletNamespace(portletId);
-
-		String strutsAction = ParamUtil.getString(
-			request, namespace + "struts_action");
-
-		if (Validator.isNull(strutsAction)) {
-			strutsAction = ParamUtil.getString(request, "struts_action");
-		}
-
-		Set<String> whitelistActions =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelistActions();
-
-		if (whitelistActions.contains(strutsAction)) {
-			return true;
-		}
-
-		String requestPortletAuthenticationToken = ParamUtil.getString(
-			request, "p_p_auth");
-
-		if (Validator.isNull(requestPortletAuthenticationToken)) {
-			HttpServletRequest originalRequest = getOriginalServletRequest(
-				request);
-
-			requestPortletAuthenticationToken = ParamUtil.getString(
-				originalRequest, "p_p_auth");
-		}
-
-		if (Validator.isNotNull(requestPortletAuthenticationToken)) {
-			String actualPortletAuthenticationToken = AuthTokenUtil.getToken(
-				request, layout.getPlid(), portletId);
-
-			if (requestPortletAuthenticationToken.equals(
-					actualPortletAuthenticationToken)) {
-
-				return true;
-			}
 		}
 
 		return false;

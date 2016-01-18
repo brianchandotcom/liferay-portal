@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALL_USERS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'All Users')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_SELECTION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Asset Selection')]/a</td>
 	<td></td>

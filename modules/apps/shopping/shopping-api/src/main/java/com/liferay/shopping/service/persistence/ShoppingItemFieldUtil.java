@@ -185,7 +185,7 @@ public class ShoppingItemFieldUtil {
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping item field
-	* @throws com.liferay.shopping.NoSuchItemFieldException if a matching shopping item field could not be found
+	* @throws NoSuchItemFieldException if a matching shopping item field could not be found
 	*/
 	public static ShoppingItemField findByItemId_First(long itemId,
 		OrderByComparator<ShoppingItemField> orderByComparator)
@@ -211,7 +211,7 @@ public class ShoppingItemFieldUtil {
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping item field
-	* @throws com.liferay.shopping.NoSuchItemFieldException if a matching shopping item field could not be found
+	* @throws NoSuchItemFieldException if a matching shopping item field could not be found
 	*/
 	public static ShoppingItemField findByItemId_Last(long itemId,
 		OrderByComparator<ShoppingItemField> orderByComparator)
@@ -238,7 +238,7 @@ public class ShoppingItemFieldUtil {
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping item field
-	* @throws com.liferay.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
 	public static ShoppingItemField[] findByItemId_PrevAndNext(
 		long itemFieldId, long itemId,
@@ -301,7 +301,7 @@ public class ShoppingItemFieldUtil {
 	*
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field that was removed
-	* @throws com.liferay.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
 	public static ShoppingItemField remove(long itemFieldId)
 		throws com.liferay.shopping.exception.NoSuchItemFieldException {
@@ -314,11 +314,11 @@ public class ShoppingItemFieldUtil {
 	}
 
 	/**
-	* Returns the shopping item field with the primary key or throws a {@link com.liferay.shopping.NoSuchItemFieldException} if it could not be found.
+	* Returns the shopping item field with the primary key or throws a {@link NoSuchItemFieldException} if it could not be found.
 	*
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field
-	* @throws com.liferay.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
 	public static ShoppingItemField findByPrimaryKey(long itemFieldId)
 		throws com.liferay.shopping.exception.NoSuchItemFieldException {

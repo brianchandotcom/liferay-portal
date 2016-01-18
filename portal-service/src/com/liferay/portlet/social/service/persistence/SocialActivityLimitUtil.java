@@ -190,7 +190,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit findByGroupId_First(long groupId,
 		OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -216,7 +216,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit findByGroupId_Last(long groupId,
 		OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -244,7 +244,7 @@ public class SocialActivityLimitUtil {
 	public static SocialActivityLimit[] findByGroupId_PrevAndNext(
 		long activityLimitId, long groupId,
 		OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activityLimitId, groupId,
 			orderByComparator);
@@ -349,7 +349,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit findByUserId_First(long userId,
 		OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -375,7 +375,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit findByUserId_Last(long userId,
 		OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -403,7 +403,7 @@ public class SocialActivityLimitUtil {
 	public static SocialActivityLimit[] findByUserId_PrevAndNext(
 		long activityLimitId, long userId,
 		OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(activityLimitId, userId,
 			orderByComparator);
@@ -515,7 +515,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit findByC_C_First(long classNameId,
 		long classPK, OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -545,7 +545,7 @@ public class SocialActivityLimitUtil {
 	*/
 	public static SocialActivityLimit findByC_C_Last(long classNameId,
 		long classPK, OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -577,7 +577,7 @@ public class SocialActivityLimitUtil {
 	public static SocialActivityLimit[] findByC_C_PrevAndNext(
 		long activityLimitId, long classNameId, long classPK,
 		OrderByComparator<SocialActivityLimit> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(activityLimitId, classNameId,
 			classPK, orderByComparator);
@@ -619,7 +619,7 @@ public class SocialActivityLimitUtil {
 	public static SocialActivityLimit findByG_U_C_C_A_A(long groupId,
 		long userId, long classNameId, long classPK, int activityType,
 		java.lang.String activityCounterName)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .findByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
 			activityType, activityCounterName);
@@ -678,7 +678,7 @@ public class SocialActivityLimitUtil {
 	public static SocialActivityLimit removeByG_U_C_C_A_A(long groupId,
 		long userId, long classNameId, long classPK, int activityType,
 		java.lang.String activityCounterName)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence()
 				   .removeByG_U_C_C_A_A(groupId, userId, classNameId, classPK,
 			activityType, activityCounterName);
@@ -740,7 +740,7 @@ public class SocialActivityLimitUtil {
 	* @throws NoSuchActivityLimitException if a social activity limit with the primary key could not be found
 	*/
 	public static SocialActivityLimit remove(long activityLimitId)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence().remove(activityLimitId);
 	}
 
@@ -757,7 +757,7 @@ public class SocialActivityLimitUtil {
 	* @throws NoSuchActivityLimitException if a social activity limit with the primary key could not be found
 	*/
 	public static SocialActivityLimit findByPrimaryKey(long activityLimitId)
-		throws com.liferay.portlet.social.NoSuchActivityLimitException {
+		throws com.liferay.portlet.social.exception.NoSuchActivityLimitException {
 		return getPersistence().findByPrimaryKey(activityLimitId);
 	}
 

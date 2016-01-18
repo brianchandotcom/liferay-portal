@@ -56,6 +56,7 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		_version = version;
 	}
 
+	@Override
 	public void addBundle(Bundle bundle) {
 		_bundles.add(bundle);
 	}
@@ -75,14 +76,17 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		return _appDisplay;
 	}
 
+	@Override
 	public List<Bundle> getBundles() {
 		return _bundles;
 	}
 
+	@Override
 	public String getDescription() {
 		return _description;
 	}
 
+	@Override
 	public String getDisplayURL(MimeResponse mimeResponse) {
 		PortletURL portletURL = mimeResponse.createRenderURL();
 
@@ -105,6 +109,7 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		return portletURL.toString();
 	}
 
+	@Override
 	public int getState() {
 		List<Bundle> bundles = getBundles();
 
@@ -129,10 +134,12 @@ public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
 		return state;
 	}
 
+	@Override
 	public String getTitle() {
 		return _title;
 	}
 
+	@Override
 	public String getVersion() {
 		return _version.toString();
 	}

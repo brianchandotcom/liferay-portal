@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -176,7 +176,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		_dlAppService = dlAppService;
 	}
 
-	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
 
 }

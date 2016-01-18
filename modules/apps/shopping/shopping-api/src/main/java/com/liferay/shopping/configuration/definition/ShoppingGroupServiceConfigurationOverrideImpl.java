@@ -166,6 +166,7 @@ public class ShoppingGroupServiceConfigurationOverrideImpl
 			"emailOrderConfirmationSubject");
 	}
 
+	@Override
 	public LocalizedValuesMap getEmailOrderShippingBody() {
 		return _typedSettings.getLocalizedValuesMap("emailOrderShippingBody");
 	}

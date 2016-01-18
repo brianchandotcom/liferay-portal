@@ -171,10 +171,11 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Site Page" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -513,6 +514,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="Organization Name 1" />
 		</execute>
@@ -521,10 +524,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Organization Name 1" />
-			<var name="sitePageName" value="Site Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -543,6 +546,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name 1" />
 			<var name="userFirstName" value="userfn" />
@@ -554,6 +559,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name 1" />
 			<var name="userFirstName" value="Test" />
@@ -564,6 +571,8 @@
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#manageMembershipOptionsInSites">
 			<var name="allowManualMembershipManagement" value="true" />

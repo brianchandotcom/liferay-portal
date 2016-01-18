@@ -27,9 +27,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
-page import="com.liferay.portal.NoSuchUserException" %><%@
-page import="com.liferay.portal.NoSuchUserGroupException" %><%@
+<%@ page import="com.liferay.portal.exception.NoSuchOrganizationException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserException" %><%@
+page import="com.liferay.portal.exception.NoSuchUserGroupException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -77,7 +77,6 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
-page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
@@ -86,8 +85,9 @@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
+page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.text.Format" %>
 

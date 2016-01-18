@@ -136,6 +136,6 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 		_teamLocalService = teamLocalService;
 	}
 
-	private volatile TeamLocalService _teamLocalService;
+	private TeamLocalService _teamLocalService;
 
 }

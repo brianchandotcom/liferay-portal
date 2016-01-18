@@ -42,6 +42,75 @@
 		</if>
 	</tear-down>
 
+	<command name="ActivateStagingWithWebContentLinkingDMImage" priority="3">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="DMDocument#linkImage">
+			<var name="documentName" value="DM Document Title" />
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishingTools">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
 	<command name="AddAndViewStructureAndTemplateWithPermissions" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -52,12 +121,12 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Home" />
+			<var name="pageName" value="Home" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -342,7 +411,7 @@
 
 		<execute macro="WebContent#publish" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -383,12 +452,12 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Web Content Display Page" />
+			<var name="pageName" value="Web Content Display Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -445,7 +514,7 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="WebContent#addPGViaWCD">
+		<execute macro="WebContent#addStructuredPGViaWCD">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
@@ -467,12 +536,12 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
-			<var name="sitePageName" value="Web Content Display Page" />
+			<var name="pageName" value="Web Content Display Page" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -522,7 +591,7 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="WebContent#addPGViaWCD">
+		<execute macro="WebContent#addStructuredPGViaWCD">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
@@ -543,10 +612,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Blank Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -657,7 +726,7 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="WCD Page" />
 		</execute>
 
@@ -749,7 +818,7 @@
 
 		<execute macro="WebContentTemplates#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1063,7 +1132,7 @@
 
 		<execute macro="WebContentTemplates#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1235,7 +1304,7 @@
 
 		<execute macro="WebContentTemplates#save" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -1414,10 +1483,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="SitePage#addCP">
+		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageName" value="Staging Test Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1440,7 +1509,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -1758,7 +1827,7 @@
 	</command>
 
 	<command name="WebContentAdministrationLocalization" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -2057,7 +2126,7 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
@@ -2085,7 +2154,7 @@
 	</command>
 
 	<command name="WebcontentAdministrationTemplateValidation" priority="4">
-		<execute macro="Page#addPG">
+		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 

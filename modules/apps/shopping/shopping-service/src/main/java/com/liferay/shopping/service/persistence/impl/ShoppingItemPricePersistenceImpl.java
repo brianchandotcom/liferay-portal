@@ -278,7 +278,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 * @param itemId the item ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping item price
-	 * @throws com.liferay.shopping.NoSuchItemPriceException if a matching shopping item price could not be found
+	 * @throws NoSuchItemPriceException if a matching shopping item price could not be found
 	 */
 	@Override
 	public ShoppingItemPrice findByItemId_First(long itemId,
@@ -329,7 +329,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 * @param itemId the item ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping item price
-	 * @throws com.liferay.shopping.NoSuchItemPriceException if a matching shopping item price could not be found
+	 * @throws NoSuchItemPriceException if a matching shopping item price could not be found
 	 */
 	@Override
 	public ShoppingItemPrice findByItemId_Last(long itemId,
@@ -387,7 +387,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 * @param itemId the item ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping item price
-	 * @throws com.liferay.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
+	 * @throws NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	 */
 	@Override
 	public ShoppingItemPrice[] findByItemId_PrevAndNext(long itemPriceId,
@@ -695,7 +695,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 *
 	 * @param itemPriceId the primary key of the shopping item price
 	 * @return the shopping item price that was removed
-	 * @throws com.liferay.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
+	 * @throws NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	 */
 	@Override
 	public ShoppingItemPrice remove(long itemPriceId)
@@ -708,7 +708,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	 *
 	 * @param primaryKey the primary key of the shopping item price
 	 * @return the shopping item price that was removed
-	 * @throws com.liferay.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
+	 * @throws NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	 */
 	@Override
 	public ShoppingItemPrice remove(Serializable primaryKey)
@@ -865,11 +865,11 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	}
 
 	/**
-	 * Returns the shopping item price with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the shopping item price with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the shopping item price
 	 * @return the shopping item price
-	 * @throws com.liferay.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
+	 * @throws NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	 */
 	@Override
 	public ShoppingItemPrice findByPrimaryKey(Serializable primaryKey)
@@ -889,11 +889,11 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 	}
 
 	/**
-	 * Returns the shopping item price with the primary key or throws a {@link com.liferay.shopping.NoSuchItemPriceException} if it could not be found.
+	 * Returns the shopping item price with the primary key or throws a {@link NoSuchItemPriceException} if it could not be found.
 	 *
 	 * @param itemPriceId the primary key of the shopping item price
 	 * @return the shopping item price
-	 * @throws com.liferay.shopping.NoSuchItemPriceException if a shopping item price with the primary key could not be found
+	 * @throws NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	 */
 	@Override
 	public ShoppingItemPrice findByPrimaryKey(long itemPriceId)

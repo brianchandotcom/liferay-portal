@@ -186,7 +186,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static PasswordTracker findByUserId_First(long userId,
 		OrderByComparator<PasswordTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordTrackerException {
+		throws com.liferay.portal.exception.NoSuchPasswordTrackerException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -212,7 +212,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static PasswordTracker findByUserId_Last(long userId,
 		OrderByComparator<PasswordTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordTrackerException {
+		throws com.liferay.portal.exception.NoSuchPasswordTrackerException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -240,7 +240,7 @@ public class PasswordTrackerUtil {
 	public static PasswordTracker[] findByUserId_PrevAndNext(
 		long passwordTrackerId, long userId,
 		OrderByComparator<PasswordTracker> orderByComparator)
-		throws com.liferay.portal.NoSuchPasswordTrackerException {
+		throws com.liferay.portal.exception.NoSuchPasswordTrackerException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(passwordTrackerId, userId,
 			orderByComparator);
@@ -301,7 +301,7 @@ public class PasswordTrackerUtil {
 	* @throws NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
 	*/
 	public static PasswordTracker remove(long passwordTrackerId)
-		throws com.liferay.portal.NoSuchPasswordTrackerException {
+		throws com.liferay.portal.exception.NoSuchPasswordTrackerException {
 		return getPersistence().remove(passwordTrackerId);
 	}
 
@@ -317,7 +317,7 @@ public class PasswordTrackerUtil {
 	* @throws NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
 	*/
 	public static PasswordTracker findByPrimaryKey(long passwordTrackerId)
-		throws com.liferay.portal.NoSuchPasswordTrackerException {
+		throws com.liferay.portal.exception.NoSuchPasswordTrackerException {
 		return getPersistence().findByPrimaryKey(passwordTrackerId);
 	}
 

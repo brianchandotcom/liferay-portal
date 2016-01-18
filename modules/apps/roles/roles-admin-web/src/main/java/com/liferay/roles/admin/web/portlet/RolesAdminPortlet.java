@@ -19,12 +19,12 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.portal.DuplicateRoleException;
-import com.liferay.portal.NoSuchRoleException;
-import com.liferay.portal.RequiredRoleException;
-import com.liferay.portal.RoleAssignmentException;
-import com.liferay.portal.RoleNameException;
-import com.liferay.portal.RolePermissionsException;
+import com.liferay.portal.exception.DuplicateRoleException;
+import com.liferay.portal.exception.NoSuchRoleException;
+import com.liferay.portal.exception.RequiredRoleException;
+import com.liferay.portal.exception.RoleAssignmentException;
+import com.liferay.portal.exception.RoleNameException;
+import com.liferay.portal.exception.RolePermissionsException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -674,14 +674,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	private volatile GroupService _groupService;
-	private volatile PanelAppRegistry _panelAppRegistry;
-	private volatile PanelCategoryRegistry _panelCategoryRegistry;
-	private volatile ResourceBlockLocalService _resourceBlockLocalService;
-	private volatile ResourceBlockService _resourceBlockService;
-	private volatile ResourcePermissionService _resourcePermissionService;
-	private volatile RoleLocalService _roleLocalService;
-	private volatile RoleService _roleService;
-	private volatile UserService _userService;
+	private GroupService _groupService;
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private ResourceBlockService _resourceBlockService;
+	private ResourcePermissionService _resourcePermissionService;
+	private RoleLocalService _roleLocalService;
+	private RoleService _roleService;
+	private UserService _userService;
 
 }

@@ -16,11 +16,11 @@
 
 <ul class="lfr-tree list-unstyled">
 	<li class="tree-item">
-		<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="checkbox" />
+		<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" />
 
 		<ul id="<portlet:namespace />permissionsUl">
 			<li class="tree-item">
-				<aui:input name="permissionsAssignedToRoles" type="checkbox" value='<%= MapUtil.getBoolean(parameterMap, "permissionsAssignedToRoles", true) %>' />
+				<aui:input name="permissionsAssignedToRoles" type="toggle-switch" value='<%= MapUtil.getBoolean(parameterMap, "permissionsAssignedToRoles", true) %>' />
 			</li>
 		</ul>
 	</li>

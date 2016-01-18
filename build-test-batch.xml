@@ -1234,6 +1234,8 @@ ${output.content}</echo>
 			<test-action>
 				<database-test-run-test database.type="mysql">
 					<test-action>
+						<ant dir="portal-web" target="compile-tomcat" />
+
 						<run-poshi-validation />
 
 						<if>
@@ -1262,8 +1264,6 @@ ${output.content}</echo>
 		<record action="start" name="${project.dir}/sass-compiler-log" />
 
 		<gradle-execute dir="modules" task="buildCSS" />
-
-		<ant dir="portal-web" target="build-css" inheritAll="false" />
 
 		<record action="stop" name="${project.dir}/sass-compiler-log" />
 

@@ -25,10 +25,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.DuplicateGroupException" %><%@
-page import="com.liferay.portal.GroupKeyException" %><%@
-page import="com.liferay.portal.MembershipRequestCommentsException" %><%@
-page import="com.liferay.portal.RequiredGroupException" %><%@
+<%@ page import="com.liferay.portal.exception.DuplicateGroupException" %><%@
+page import="com.liferay.portal.exception.GroupKeyException" %><%@
+page import="com.liferay.portal.exception.MembershipRequestCommentsException" %><%@
+page import="com.liferay.portal.exception.RequiredGroupException" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -77,7 +77,6 @@ page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
 page import="com.liferay.portlet.sites.search.UserGroupGroupRoleRoleChecker" %><%@
 page import="com.liferay.portlet.sites.search.UserGroupRoleRoleChecker" %><%@
-page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
 page import="com.liferay.portlet.sitesadmin.search.OrganizationSiteMembershipChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserGroupSiteMembershipChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserSiteMembershipChecker" %><%@
@@ -87,9 +86,10 @@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
-page import="com.liferay.site.memberships.web.display.context.SiteMembershipsDisplayContext" %>
+page import="com.liferay.site.memberships.web.display.context.SiteMembershipsDisplayContext" %><%@
+page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

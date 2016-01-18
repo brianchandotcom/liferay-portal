@@ -105,7 +105,37 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 		<c:otherwise>
 			<input name="<%= namespace %><%= param %>TabsScroll" type="hidden" />
 
-			<ul class="lfr-nav nav nav-<%= type %>">
+			<c:choose>
+				<c:when test='<%= type.equals("dropdown") %>'>
+
+					<%
+					String name = value;
+
+					int pos = Arrays.binarySearch(values, value);
+
+					if (pos != -1) {
+						name = names[pos];
+					}
+					%>
+
+					<nav class="navbar navbar-default">
+						<div class="container-fluid">
+							<ul class="nav navbar-nav">
+								<c:if test="<%= names.length > 1 %>">
+									<li class="active dropdown">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+											<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(request, name) %></span>
+
+											<span class="caret"></span>
+										</a>
+
+										<ul class="dropdown-menu">
+								</c:if>
+				</c:when>
+				<c:otherwise>
+					<ul class="lfr-nav nav nav-<%= type %>">
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 
@@ -217,7 +247,20 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 			</fb:tabs>
 		</c:when>
 		<c:otherwise>
-			</ul>
+			<c:choose>
+				<c:when test='<%= type.equals("dropdown") %>'>
+								<c:if test="<%= names.length == 1 %>">
+										</ul>
+									</li>
+								</c:if>
+							</ul>
+						</div>
+					</nav>
+				</c:when>
+				<c:otherwise>
+					</ul>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 

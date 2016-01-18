@@ -1,17 +1,8 @@
 diff --git a/hudson/tasks/junit/JUnitResultArchiver.java b/hudson/tasks/junit/JUnitResultArchiver.java
-index d3804a9..add9d9b 100644
+index d3804a9..6f6ed40 100644
 --- a/hudson/tasks/junit/JUnitResultArchiver.java
 +++ b/hudson/tasks/junit/JUnitResultArchiver.java
-@@ -58,6 +58,8 @@ import java.util.Collection;
- import java.util.Collections;
- import java.util.List;
- 
-+/* @generated */
-+
- /**
-  * Generates HTML report from JUnit test result XML files.
-  * 
-@@ -122,7 +124,9 @@ public class JUnitResultArchiver extends Recorder {
+@@ -122,7 +122,9 @@ public class JUnitResultArchiver extends Recorder {
  			BuildListener listener) throws InterruptedException, IOException {
  		listener.getLogger().println(Messages.JUnitResultArchiver_Recording());
  		TestResultAction action;
@@ -22,7 +13,7 @@ index d3804a9..add9d9b 100644
  		final String testResults = build.getEnvironment(listener).expand(this.testResults);
  
  		try {
-@@ -152,9 +156,6 @@ public class JUnitResultArchiver extends Recorder {
+@@ -152,9 +154,6 @@ public class JUnitResultArchiver extends Recorder {
  			}
  
  			action.setData(data);
@@ -32,7 +23,7 @@ index d3804a9..add9d9b 100644
  		} catch (AbortException e) {
  			if (build.getResult() == Result.FAILURE)
  				// most likely a build failed before it gets to the test phase.
-@@ -171,7 +172,6 @@ public class JUnitResultArchiver extends Recorder {
+@@ -171,7 +170,6 @@ public class JUnitResultArchiver extends Recorder {
  		}
  
  		build.addAction(action);
@@ -40,7 +31,7 @@ index d3804a9..add9d9b 100644
  
  		if (action.getResult().getFailCount() > 0)
  			build.setResult(Result.UNSTABLE);
-@@ -216,12 +216,6 @@ public class JUnitResultArchiver extends Recorder {
+@@ -216,12 +214,6 @@ public class JUnitResultArchiver extends Recorder {
  		return keepLongStdio;
  	}
  
@@ -53,3 +44,9 @@ index d3804a9..add9d9b 100644
  	private static final long serialVersionUID = 1L;
  
      @Extension
+@@ -264,3 +256,4 @@ public class JUnitResultArchiver extends Recorder {
+ 		}
+     }
+ }
++/* @generated */
+\ No newline at end of file

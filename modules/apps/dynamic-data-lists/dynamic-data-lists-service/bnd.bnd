@@ -12,7 +12,6 @@ Export-Package:\
 	com.liferay.dynamic.data.lists.workflow
 Include-Resource:\
 	classes,\
-	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

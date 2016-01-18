@@ -179,6 +179,6 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {BlogsEntry.class.getName()};
 
-	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

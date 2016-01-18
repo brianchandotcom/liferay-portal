@@ -14,8 +14,8 @@
 
 package com.liferay.portal.ldap.internal.authenticator;
 
-import com.liferay.portal.PasswordExpiredException;
-import com.liferay.portal.UserLockoutException;
+import com.liferay.portal.exception.PasswordExpiredException;
+import com.liferay.portal.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.ldap.LDAPFilterException;
 import com.liferay.portal.kernel.log.Log;
@@ -260,6 +260,13 @@ public class LDAPAuth implements Authenticator {
 			ldapServerId, companyId);
 
 		if (ldapContext == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No LDAP server configuration available for " +
+						"LDAP server " + ldapServerId + " and company " +
+							companyId);
+			}
+
 			return FAILURE;
 		}
 
@@ -293,73 +300,93 @@ public class LDAPAuth implements Authenticator {
 
 			enu = ldapContext.search(baseDN, filter, searchControls);
 
-			if (enu.hasMoreElements()) {
+			if (!enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Search filter returned at least one result");
-				}
-
-				SearchResult result = enu.nextElement();
-
-				String fullUserDN = _portalLDAP.getNameInNamespace(
-					ldapServerId, companyId, result);
-
-				Attributes attributes = _portalLDAP.getUserAttributes(
-					ldapServerId, companyId, ldapContext, fullUserDN);
-
-				// Get user or create from LDAP
-
-				User user = _ldapUserImporter.importUser(
-					ldapServerId, companyId, ldapContext, attributes, password);
-
-				// Authenticate
-
-				LDAPAuthResult ldapAuthResult = authenticate(
-					ldapContext, companyId, attributes, fullUserDN, password);
-
-				// Process LDAP failure codes
-
-				String errorMessage = ldapAuthResult.getErrorMessage();
-
-				if (errorMessage != null) {
-					SystemLDAPConfiguration systemLDAPConfiguration =
-						_systemLDAPConfigurationProvider.getConfiguration(
-							companyId);
-
-					int pos = errorMessage.indexOf(
-						systemLDAPConfiguration.errorUserLockout());
-
-					if (pos != -1) {
-						throw new UserLockoutException.LDAPLockout(
-							fullUserDN, errorMessage);
-					}
-
-					pos = errorMessage.indexOf(
-						systemLDAPConfiguration.errorPasswordExpired());
-
-					if (pos != -1) {
-						throw new PasswordExpiredException();
-					}
-				}
-
-				if (!ldapAuthResult.isAuthenticated()) {
-					return FAILURE;
-				}
-
-				// Process LDAP success codes
-
-				String resultCode = ldapAuthResult.getResponseControl();
-
-				if (resultCode.equals(LDAPAuth.RESULT_PASSWORD_RESET)) {
-					_userLocalService.updatePasswordReset(
-						user.getUserId(), true);
-				}
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Search filter did not return any results");
+					_log.debug(
+						"No results found with search filter: " + filter);
 				}
 
 				return DNE;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Found results with search filter: " + filter);
+			}
+
+			SearchResult result = enu.nextElement();
+
+			String fullUserDN = _portalLDAP.getNameInNamespace(
+				ldapServerId, companyId, result);
+
+			Attributes attributes = _portalLDAP.getUserAttributes(
+				ldapServerId, companyId, ldapContext, fullUserDN);
+
+			// Get user or create from LDAP
+
+			User user = _ldapUserImporter.importUser(
+				ldapServerId, companyId, ldapContext, attributes, password);
+
+			// Authenticate
+
+			LDAPAuthResult ldapAuthResult = authenticate(
+				ldapContext, companyId, attributes, fullUserDN, password);
+
+			// Process LDAP failure codes
+
+			String errorMessage = ldapAuthResult.getErrorMessage();
+
+			if (errorMessage != null) {
+				SystemLDAPConfiguration systemLDAPConfiguration =
+					_systemLDAPConfigurationProvider.getConfiguration(
+						companyId);
+
+				for (String errorUserLockoutKeyword :
+						systemLDAPConfiguration.
+							errorUserLockoutKeywords()) {
+
+					if (errorMessage.contains(errorUserLockoutKeyword)) {
+						throw new UserLockoutException.LDAPLockout(
+							fullUserDN, errorMessage);
+					}
+				}
+
+				for (String errorPasswordExpiredKeyword :
+						systemLDAPConfiguration.
+							errorPasswordExpiredKeywords()) {
+
+					if (errorMessage.contains(errorPasswordExpiredKeyword)) {
+						throw new PasswordExpiredException();
+					}
+				}
+			}
+
+			if (!ldapAuthResult.isAuthenticated()) {
+				if (_log.isDebugEnabled()) {
+					StringBundler sb = new StringBundler(10);
+
+					sb.append("Uanble to authenticate with ");
+					sb.append(fullUserDN);
+					sb.append(" on LDAP server ");
+					sb.append(ldapServerId);
+					sb.append(", company ");
+					sb.append(companyId);
+					sb.append(", and LDAP context ");
+					sb.append(ldapContext);
+					sb.append(": ");
+					sb.append(errorMessage);
+
+					_log.debug(sb.toString());
+				}
+
+				return FAILURE;
+			}
+
+			// Process LDAP success codes
+
+			String resultCode = ldapAuthResult.getResponseControl();
+
+			if (resultCode.equals(LDAPAuth.RESULT_PASSWORD_RESET)) {
+				_userLocalService.updatePasswordReset(user.getUserId(), true);
 			}
 		}
 		catch (Exception e) {
@@ -379,9 +406,7 @@ public class LDAPAuth implements Authenticator {
 				enu.close();
 			}
 
-			if (ldapContext != null) {
-				ldapContext.close();
-			}
+			ldapContext.close();
 		}
 
 		return SUCCESS;
@@ -418,8 +443,20 @@ public class LDAPAuth implements Authenticator {
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
 		if (preferredLDAPServerResult == SUCCESS) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Found preferred LDAP server");
+			}
+
 			if (ldapImportConfiguration.importUserPasswordEnabled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Import user password enabled");
+				}
+
 				return preferredLDAPServerResult;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Import user password disabled");
 			}
 
 			return Authenticator.SKIP_LIFERAY_CHECK;
@@ -435,7 +472,7 @@ public class LDAPAuth implements Authenticator {
 					ldapServerConfiguration.ldapServerId()) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("Bypassing preferred ldap server id");
+					_log.debug("Bypassing preferred LDAP server");
 				}
 
 				continue;
@@ -598,12 +635,16 @@ public class LDAPAuth implements Authenticator {
 		}
 
 		if (user == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get user " + userId);
+			}
+
 			return -1;
 		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Using LDAP server ID " + user.getLdapServerId() +
+				"Using LDAP server " + user.getLdapServerId() +
 					" to authenticate user " + userId);
 		}
 
@@ -611,6 +652,10 @@ public class LDAPAuth implements Authenticator {
 	}
 
 	protected String removeEncryptionAlgorithm(String ldapPassword) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Removing encryption algorithm");
+		}
+
 		int x = ldapPassword.indexOf(StringPool.OPEN_CURLY_BRACE);
 
 		if (x == -1) {
@@ -728,20 +773,20 @@ public class LDAPAuth implements Authenticator {
 			new AutoResetThreadLocal<Map<String, LDAPAuthResult>>(
 				LDAPAuth.class + "._failedLDAPAuthResultCache",
 				new HashMap<String, LDAPAuthResult>());
-	private volatile ConfigurationProvider<LDAPAuthConfiguration>
+	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPImportConfiguration>
+	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private volatile ConfigurationProvider<LDAPServerConfiguration>
+	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private volatile LDAPSettings _ldapSettings;
-	private volatile LDAPUserImporter _ldapUserImporter;
-	private volatile Omniadmin _omniadmin;
-	private volatile PasswordEncryptor _passwordEncryptor;
-	private volatile PortalLDAP _portalLDAP;
-	private volatile Props _props;
-	private volatile ConfigurationProvider<SystemLDAPConfiguration>
+	private LDAPSettings _ldapSettings;
+	private LDAPUserImporter _ldapUserImporter;
+	private Omniadmin _omniadmin;
+	private PasswordEncryptor _passwordEncryptor;
+	private PortalLDAP _portalLDAP;
+	private Props _props;
+	private ConfigurationProvider<SystemLDAPConfiguration>
 		_systemLDAPConfigurationProvider;
-	private volatile UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

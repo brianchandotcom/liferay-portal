@@ -154,6 +154,6 @@ public class AssetTagStagedModelDataHandler
 		_assetTagLocalService = assetTagLocalService;
 	}
 
-	private volatile AssetTagLocalService _assetTagLocalService;
+	private AssetTagLocalService _assetTagLocalService;
 
 }

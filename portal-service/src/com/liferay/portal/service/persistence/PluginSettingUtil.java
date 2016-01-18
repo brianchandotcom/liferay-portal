@@ -186,7 +186,7 @@ public class PluginSettingUtil {
 	*/
 	public static PluginSetting findByCompanyId_First(long companyId,
 		OrderByComparator<PluginSetting> orderByComparator)
-		throws com.liferay.portal.NoSuchPluginSettingException {
+		throws com.liferay.portal.exception.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -214,7 +214,7 @@ public class PluginSettingUtil {
 	*/
 	public static PluginSetting findByCompanyId_Last(long companyId,
 		OrderByComparator<PluginSetting> orderByComparator)
-		throws com.liferay.portal.NoSuchPluginSettingException {
+		throws com.liferay.portal.exception.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -244,7 +244,7 @@ public class PluginSettingUtil {
 	public static PluginSetting[] findByCompanyId_PrevAndNext(
 		long pluginSettingId, long companyId,
 		OrderByComparator<PluginSetting> orderByComparator)
-		throws com.liferay.portal.NoSuchPluginSettingException {
+		throws com.liferay.portal.exception.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(pluginSettingId, companyId,
 			orderByComparator);
@@ -280,7 +280,7 @@ public class PluginSettingUtil {
 	*/
 	public static PluginSetting findByC_I_T(long companyId,
 		java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.NoSuchPluginSettingException {
+		throws com.liferay.portal.exception.NoSuchPluginSettingException {
 		return getPersistence().findByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -324,7 +324,7 @@ public class PluginSettingUtil {
 	*/
 	public static PluginSetting removeByC_I_T(long companyId,
 		java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.NoSuchPluginSettingException {
+		throws com.liferay.portal.exception.NoSuchPluginSettingException {
 		return getPersistence().removeByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -377,7 +377,7 @@ public class PluginSettingUtil {
 	* @throws NoSuchPluginSettingException if a plugin setting with the primary key could not be found
 	*/
 	public static PluginSetting remove(long pluginSettingId)
-		throws com.liferay.portal.NoSuchPluginSettingException {
+		throws com.liferay.portal.exception.NoSuchPluginSettingException {
 		return getPersistence().remove(pluginSettingId);
 	}
 
@@ -393,7 +393,7 @@ public class PluginSettingUtil {
 	* @throws NoSuchPluginSettingException if a plugin setting with the primary key could not be found
 	*/
 	public static PluginSetting findByPrimaryKey(long pluginSettingId)
-		throws com.liferay.portal.NoSuchPluginSettingException {
+		throws com.liferay.portal.exception.NoSuchPluginSettingException {
 		return getPersistence().findByPrimaryKey(pluginSettingId);
 	}
 

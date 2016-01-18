@@ -998,6 +998,6 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected WikiPagePersistence wikiPagePersistence;
 	@BeanReference(type = WikiPageFinder.class)
 	protected WikiPageFinder wikiPageFinder;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

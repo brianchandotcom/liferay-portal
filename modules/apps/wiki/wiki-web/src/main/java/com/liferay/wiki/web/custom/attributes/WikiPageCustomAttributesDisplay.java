@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.web.custom.attributes;
 
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -35,11 +34,6 @@ public class WikiPageCustomAttributesDisplay
 	@Override
 	public String getClassName() {
 		return WikiPage.class.getName();
-	}
-
-	@Override
-	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
 
 }

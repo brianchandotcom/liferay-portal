@@ -107,7 +107,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public ResourceAction findByName_First(java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException;
+		throws com.liferay.portal.exception.NoSuchResourceActionException;
 
 	/**
 	* Returns the first resource action in the ordered set where name = &#63;.
@@ -129,7 +129,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public ResourceAction findByName_Last(java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException;
+		throws com.liferay.portal.exception.NoSuchResourceActionException;
 
 	/**
 	* Returns the last resource action in the ordered set where name = &#63;.
@@ -153,7 +153,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	public ResourceAction[] findByName_PrevAndNext(long resourceActionId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction> orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException;
+		throws com.liferay.portal.exception.NoSuchResourceActionException;
 
 	/**
 	* Removes all the resource actions where name = &#63; from the database.
@@ -180,7 +180,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public ResourceAction findByN_A(java.lang.String name,
 		java.lang.String actionId)
-		throws com.liferay.portal.NoSuchResourceActionException;
+		throws com.liferay.portal.exception.NoSuchResourceActionException;
 
 	/**
 	* Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -212,7 +212,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public ResourceAction removeByN_A(java.lang.String name,
 		java.lang.String actionId)
-		throws com.liferay.portal.NoSuchResourceActionException;
+		throws com.liferay.portal.exception.NoSuchResourceActionException;
 
 	/**
 	* Returns the number of resource actions where name = &#63; and actionId = &#63;.
@@ -253,7 +253,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	*/
 	public ResourceAction remove(long resourceActionId)
-		throws com.liferay.portal.NoSuchResourceActionException;
+		throws com.liferay.portal.exception.NoSuchResourceActionException;
 
 	public ResourceAction updateImpl(ResourceAction resourceAction);
 
@@ -265,7 +265,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	* @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	*/
 	public ResourceAction findByPrimaryKey(long resourceActionId)
-		throws com.liferay.portal.NoSuchResourceActionException;
+		throws com.liferay.portal.exception.NoSuchResourceActionException;
 
 	/**
 	* Returns the resource action with the primary key or returns <code>null</code> if it could not be found.

@@ -14,32 +14,22 @@
 
 package com.liferay.site.navigation.menu.web.portlet.action;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
 import com.liferay.site.navigation.menu.web.constants.SiteNavigationMenuPortletKeys;
 
 import java.io.IOException;
 
-import java.util.Map;
-
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -48,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {"javax.portlet.name=" + SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU},
 	service = ConfigurationAction.class
 )
@@ -62,32 +51,12 @@ public class SiteNavigationMenuConfigurationAction
 	}
 
 	@Override
-	public void include(
-			PortletConfig portletConfig, HttpServletRequest request,
-			HttpServletResponse response)
-		throws Exception {
-
-		request.setAttribute(
-			SiteNavigationMenuWebConfiguration.class.getName(),
-			_siteNavigationMenuWebConfiguration);
-
-		super.include(portletConfig, request, response);
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_siteNavigationMenuWebConfiguration = Configurable.createConfigurable(
-			SiteNavigationMenuWebConfiguration.class, properties);
 	}
 
 	@Override
@@ -109,7 +78,5 @@ public class SiteNavigationMenuConfigurationAction
 	}
 
 	private PortletDisplayTemplate _portletDisplayTemplate;
-	private volatile SiteNavigationMenuWebConfiguration
-		_siteNavigationMenuWebConfiguration;
 
 }

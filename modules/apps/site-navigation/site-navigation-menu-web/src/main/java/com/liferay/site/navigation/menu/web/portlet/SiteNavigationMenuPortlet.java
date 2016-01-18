@@ -14,34 +14,25 @@
 
 package com.liferay.site.navigation.menu.web.portlet;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
 
 import java.io.IOException;
-
-import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-navigation",
@@ -67,25 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteNavigationMenuPortlet extends MVCPortlet {
 
 	@Override
-	public void doView(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderRequest.setAttribute(
-			SiteNavigationMenuWebConfiguration.class.getName(),
-			_siteNavigationMenuWebConfiguration);
-
-		super.doView(renderRequest, renderResponse);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_siteNavigationMenuWebConfiguration = Configurable.createConfigurable(
-			SiteNavigationMenuWebConfiguration.class, properties);
-	}
-
-	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -104,7 +76,5 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 	}
 
 	private PortletDisplayTemplate _portletDisplayTemplate;
-	private volatile SiteNavigationMenuWebConfiguration
-		_siteNavigationMenuWebConfiguration;
 
 }

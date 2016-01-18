@@ -25,7 +25,6 @@ import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration;
-import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
 
 import java.util.List;
 
@@ -36,13 +35,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SiteNavigationMenuDisplayContext {
 
-	public SiteNavigationMenuDisplayContext(
-			HttpServletRequest request,
-			SiteNavigationMenuWebConfiguration navigationMenuWebConfiguration)
+	public SiteNavigationMenuDisplayContext(HttpServletRequest request)
 		throws ConfigurationException {
 
 		_request = request;
-		_siteNavigationMenuWebConfiguration = navigationMenuWebConfiguration;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -187,7 +183,5 @@ public class SiteNavigationMenuDisplayContext {
 	private String _rootLayoutUuid;
 	private final SiteNavigationMenuPortletInstanceConfiguration
 		_siteNavigationMenuPortletInstanceConfiguration;
-	private final SiteNavigationMenuWebConfiguration
-		_siteNavigationMenuWebConfiguration;
 
 }

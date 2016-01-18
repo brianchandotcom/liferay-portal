@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -152,11 +153,14 @@ public class JournalTestUtil {
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			_locales, defaultLocale);
 
+		long ddmGroupId = GetterUtil.getLong(
+			serviceContext.getAttribute("ddmGroupId"), groupId);
+
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			groupId, JournalArticle.class.getName(), ddmForm, defaultLocale);
+			ddmGroupId, JournalArticle.class.getName(), ddmForm, defaultLocale);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			groupId, ddmStructure.getStructureId(),
+			ddmGroupId, ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class));
 
 		boolean neverExpire = true;

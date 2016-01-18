@@ -72,6 +72,12 @@
 		<property name="resourceActions" ref="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.security.permission.UserBagFactory" class="com.liferay.portal.security.permission.UserBagFactoryImpl" />
+	<bean id="com.liferay.portal.kernel.security.pwd.PasswordEncryptor" class="com.liferay.portal.security.pwd.LegacyAlgorithmAwarePasswordEncryptor">
+		<property name="parentPasswordEncryptor" ref="com.liferay.portal.security.pwd.CompositePasswordEncryptor" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil" class="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil">
+		<property name="passwordEncryptor" ref="com.liferay.portal.kernel.security.pwd.PasswordEncryptor" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.xml.SAXReader" class="com.liferay.portal.xml.SAXReaderImpl">
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
@@ -131,12 +137,6 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />
-	<bean id="com.liferay.portal.security.pwd.PasswordEncryptor" class="com.liferay.portal.security.pwd.LegacyAlgorithmAwarePasswordEncryptor">
-		<property name="parentPasswordEncryptor" ref="com.liferay.portal.security.pwd.CompositePasswordEncryptor" />
-	</bean>
-	<bean id="com.liferay.portal.security.pwd.PasswordEncryptorUtil" class="com.liferay.portal.security.pwd.PasswordEncryptorUtil">
-		<property name="passwordEncryptor" ref="com.liferay.portal.security.pwd.PasswordEncryptor" />
-	</bean>
 	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProvider" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl" />
 	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil">
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />

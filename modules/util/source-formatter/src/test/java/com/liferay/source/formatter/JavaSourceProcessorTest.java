@@ -173,6 +173,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingAuthor() throws Exception {
+		test("MissingAuthor.testjava", "Missing author:");
+	}
+
+	@Test
 	public void testMissingEmptyLines() throws Exception {
 		test("MissingEmptyLines.testjava");
 	}

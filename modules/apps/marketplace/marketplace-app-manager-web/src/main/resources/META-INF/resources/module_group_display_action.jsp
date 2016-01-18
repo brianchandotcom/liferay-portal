@@ -34,9 +34,20 @@ String bundleIds = _getBundleIds(moduleGroupDisplay);
 				<portlet:param name="bundleIds" value="<%= bundleIds %>" />
 			</portlet:actionURL>
 
+			<%
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("javascript:if (confirm('");
+			sb.append(UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this"));
+			sb.append("')){submitForm(document.hrefFm, '");
+			sb.append(HtmlUtil.unescape(deactivateBundlesURL.toString()));
+			sb.append("');};");
+			%>
+
 			<liferay-ui:icon
+				id="deactivateBundlesButton"
 				message="deactivate"
-				url="<%= deactivateBundlesURL %>"
+				url="<%= sb.toString() %>"
 			/>
 		</c:when>
 		<c:otherwise>

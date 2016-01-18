@@ -180,6 +180,10 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.lists.data.dynamic.liferay.com" xmlns:rtns="http://model.lists.data.dynamic.liferay.com" name="updateRecordSet" qname="operNS:updateRecordSet" returnQName="updateRecordSetReturn" returnType="rtns:DDLRecordSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="recordSetId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="settingsDDMFormValues" type="tns:anyType"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.lists.data.dynamic.liferay.com" xmlns:rtns="http://model.lists.data.dynamic.liferay.com" name="updateRecordSet" qname="operNS:updateRecordSet" returnQName="updateRecordSetReturn" returnType="rtns:DDLRecordSetSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="recordSetId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="ddmStructureId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.lists.data.dynamic.liferay.com" qname="nameMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.lists.data.dynamic.liferay.com" qname="nameMapValues" type="tns:ArrayOf_xsd_string"></parameter>
@@ -199,10 +203,6 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="minDisplayRows" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.lists.data.dynamic.liferay.com" xmlns:rtns="http://model.lists.data.dynamic.liferay.com" name="updateRecordSet" qname="operNS:updateRecordSet" returnQName="updateRecordSetReturn" returnType="rtns:DDLRecordSetSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="recordSetId" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="settings" type="tns:string"></parameter>
-		</operation>
 		<parameter name="allowedMethods" value="addRecordSet deleteRecordSet getRecordSet getRecordSets search searchCount updateMinDisplayRows updateRecordSet" />
 		<parameter name="className" value="com.liferay.dynamic.data.lists.service.http.DDLRecordSetServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.lists.data.dynamic.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.lists.data.dynamic.liferay.com" />
@@ -213,7 +213,7 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.lists.data.dynamic.liferay.com" />
 	</service>
 	<service name="Plugin_DDL_DDLRecordVersionService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.lists.data.dynamic.liferay.com" xmlns:cmp-ns="http://model.lists.data.dynamic.liferay.com" qname="ns:ArrayOf_tns2_DDLRecordVersionSoap" type="java:com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap[]" innerType="cmp-ns:DDLRecordVersionSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.lists.data.dynamic.liferay.com" xmlns:cmp-ns="http://model.lists.data.dynamic.liferay.com" qname="ns:ArrayOf_tns3_DDLRecordVersionSoap" type="java:com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap[]" innerType="cmp-ns:DDLRecordVersionSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.lists.data.dynamic.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.lists.data.dynamic.liferay.com" qname="ns:DDLRecordVersionSoap" type="java:com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://util.kernel.portal.liferay.com" qname="ns:OrderByComparator" type="java:com.liferay.portal.kernel.util.OrderByComparator" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -227,7 +227,7 @@
 		<operation xmlns:operNS="urn:http.service.lists.data.dynamic.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getRecordVersionsCount" qname="operNS:getRecordVersionsCount" returnQName="getRecordVersionsCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="recordId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.lists.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.lists.data.dynamic.liferay.com" xmlns:tns2="http://model.lists.data.dynamic.liferay.com" name="getRecordVersions" qname="operNS:getRecordVersions" returnQName="getRecordVersionsReturn" returnType="rtns:ArrayOf_tns2_DDLRecordVersionSoap" returnItemType="tns2:DDLRecordVersionSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.lists.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.lists.data.dynamic.liferay.com" xmlns:tns2="http://model.lists.data.dynamic.liferay.com" name="getRecordVersions" qname="operNS:getRecordVersions" returnQName="getRecordVersionsReturn" returnType="rtns:ArrayOf_tns3_DDLRecordVersionSoap" returnItemType="tns2:DDLRecordVersionSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="recordId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>

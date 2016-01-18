@@ -177,23 +177,7 @@ public interface Sites {
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception;
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #mergeLayoutPrototypeLayout(Group, Layout)}
-	 */
-	@Deprecated
-	public void mergeLayoutProtypeLayout(Group group, Layout layout)
-		throws Exception;
-
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
-		throws Exception;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #mergeLayoutSetPrototypeLayouts(Group, LayoutSet)}
-	 */
-	@Deprecated
-	public void mergeLayoutSetProtypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception;
 
 	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet);

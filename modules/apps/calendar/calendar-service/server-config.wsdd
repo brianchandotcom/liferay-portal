@@ -567,6 +567,10 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="data" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.calendar.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="isManageableFromGroup" qname="operNS:isManageableFromGroup" returnQName="isManageableFromGroupReturn" returnType="rtns:boolean" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="calendarId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.calendar.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="searchCount" qname="operNS:searchCount" returnQName="searchCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.calendar.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -670,7 +674,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="color" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addCalendar deleteCalendar exportCalendar fetchCalendar getCalendar getCalendarResourceCalendars importCalendar search searchCount updateCalendar updateColor" />
+		<parameter name="allowedMethods" value="addCalendar deleteCalendar exportCalendar fetchCalendar getCalendar getCalendarResourceCalendars importCalendar isManageableFromGroup search searchCount updateCalendar updateColor" />
 		<parameter name="className" value="com.liferay.calendar.service.http.CalendarServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.calendar.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.calendar.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

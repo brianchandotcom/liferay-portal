@@ -15,13 +15,13 @@
 package com.liferay.dynamic.data.mapping.validator;
 
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marcellus Tavares
  */
 public interface DDMFormValuesValidator {
 
-	public void validate(DDMFormValues ddmFormValues) throws PortalException;
+	public void validate(DDMFormValues ddmFormValues)
+		throws DDMFormValuesValidationException;
 
 }

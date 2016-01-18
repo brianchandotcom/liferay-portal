@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
-import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException.RequiredValue;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
@@ -28,6 +26,12 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustNotSetValue;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidAvailableLocales;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidDefaultLocale;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValue;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
 import com.liferay.dynamic.data.mapping.validator.internal.DDMFormValuesValidatorImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -106,7 +110,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustSetValidValue.class)
 	public void testValidationWithLocalizableField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -277,7 +281,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = RequiredValue.class)
 	public void testValidationWithRequiredFieldAndEmptyDefaultLocaleValue()
 		throws Exception {
 
@@ -306,7 +310,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = RequiredValue.class)
 	public void testValidationWithRequiredFieldAndEmptyTranslatedValue()
 		throws Exception {
 
@@ -340,7 +344,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustSetValidAvailableLocales.class)
 	public void testValidationWithRequiredFieldAndNullValue() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
@@ -384,7 +388,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustNotSetValue.class)
 	public void testValidationWithSeparatorField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -403,7 +407,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustSetValidValue.class)
 	public void testValidationWithUnlocalizableField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -426,7 +430,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustNotSetValue.class)
 	public void testValidationWithValueSetForTransientField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -455,7 +459,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustSetValidAvailableLocales.class)
 	public void testValidationWithWrongAvailableLocales() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -479,7 +483,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustSetValidDefaultLocale.class)
 	public void testValidationWithWrongDefaultLocale() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -502,7 +506,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldValueException.class)
+	@Test(expected = MustSetValidValuesSize.class)
 	public void testValidationWithWrongValuesForNonRepeatableField()
 		throws Exception {
 

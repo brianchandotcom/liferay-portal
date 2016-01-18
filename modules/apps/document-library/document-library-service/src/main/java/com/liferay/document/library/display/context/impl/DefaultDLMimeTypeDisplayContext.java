@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.mime.type.impl;
+package com.liferay.document.library.display.context.impl;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 
 import java.util.Map;
 
@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
-public class DLCssClassFileMimeTypeProviderImpl
-	implements DLCssClassFileMimeTypeProvider {
+public class DefaultDLMimeTypeDisplayContext
+	implements DLMimeTypeDisplayContext {
 
 	@Override
 	public String getCssClassFileMimeType(String mimeType) {

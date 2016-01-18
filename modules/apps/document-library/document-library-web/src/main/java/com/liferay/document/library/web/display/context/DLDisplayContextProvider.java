@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.display.context;
 
-import com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -93,8 +93,7 @@ public class DLDisplayContextProvider {
 		try {
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
-					request, response, fileShortcut,
-					_dlCssClassFileMimeTypeProvider);
+					request, response, fileShortcut, _dlMimeTypeDisplayContext);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -123,8 +122,7 @@ public class DLDisplayContextProvider {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
-				request, response, fileVersion,
-				_dlCssClassFileMimeTypeProvider);
+				request, response, fileVersion, _dlMimeTypeDisplayContext);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -143,10 +141,10 @@ public class DLDisplayContextProvider {
 	}
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL, unbind = "-")
-	public void setDLCssClassFileMimeTypeProvider(
-		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
+	public void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
 
-		_dlCssClassFileMimeTypeProvider = dlCssClassFileMimeTypeProvider;
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 	}
 
 	@Activate
@@ -158,8 +156,8 @@ public class DLDisplayContextProvider {
 			bundleContext, DLDisplayContextFactory.class);
 	}
 
-	private DLCssClassFileMimeTypeProvider _dlCssClassFileMimeTypeProvider;
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 }

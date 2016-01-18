@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.mime.type;
+package com.liferay.document.library.display.context;
 
 /**
  * @author Roberto Díaz
  */
-public interface DLCssClassFileMimeTypeProvider {
+public interface DLMimeTypeDisplayContext {
 
 	public String getCssClassFileMimeType(String mimeType);
 

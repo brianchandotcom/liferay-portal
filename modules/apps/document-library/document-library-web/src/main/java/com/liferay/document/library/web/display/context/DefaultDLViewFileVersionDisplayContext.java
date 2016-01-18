@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.display.context;
 
-import com.liferay.document.library.mime.type.DLCssClassFileMimeTypeProvider;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.display.context.logic.FileVersionDisplayContextHelper;
@@ -58,31 +58,29 @@ public class DefaultDLViewFileVersionDisplayContext
 	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileShortcut fileShortcut,
-			DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider)
+			DLMimeTypeDisplayContext dlMimeTypeDisplayContext)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			dlCssClassFileMimeTypeProvider);
+			dlMimeTypeDisplayContext);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion,
-		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
 
-		this(
-			request, response, fileVersion, null,
-			dlCssClassFileMimeTypeProvider);
+		this(request, response, fileVersion, null, dlMimeTypeDisplayContext);
 	}
 
 	@Override
 	public String getCssClassFileMimeType() {
-		if (_dlCssClassFileMimeTypeProvider == null) {
+		if (_dlMimeTypeDisplayContext == null) {
 			return "file-icon-color-0";
 		}
 
-		return _dlCssClassFileMimeTypeProvider.getCssClassFileMimeType(
+		return _dlMimeTypeDisplayContext.getCssClassFileMimeType(
 			_fileVersion.getMimeType());
 	}
 
@@ -182,7 +180,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, FileShortcut fileShortcut,
-		DLCssClassFileMimeTypeProvider dlCssClassFileMimeTypeProvider) {
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -206,7 +204,7 @@ public class DefaultDLViewFileVersionDisplayContext
 				_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
 			}
 
-			_dlCssClassFileMimeTypeProvider = dlCssClassFileMimeTypeProvider;
+			_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -257,8 +255,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private final DLCssClassFileMimeTypeProvider
-		_dlCssClassFileMimeTypeProvider;
+	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;

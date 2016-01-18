@@ -28,6 +28,18 @@ String bundleIds = _getBundleIds(appDisplay);
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+
+	<%
+	String storeURL = appDisplay.getStoreURL(request);
+	%>
+
+	<c:if test="<%= Validator.isNotNull(storeURL) %>">
+		<liferay-ui:icon
+			message="go-to-marketplace"
+			url="<%= storeURL %>"
+		/>
+	</c:if>
+
 	<c:choose>
 		<c:when test="<%= appDisplay.getState() == BundleStateConstants.ACTIVE %>">
 			<portlet:actionURL name="deactivateBundles" var="deactivateBundlesURL">

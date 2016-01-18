@@ -75,6 +75,11 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 	}
 
 	@Override
+	public String getStoreURL(HttpServletRequest request) {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getTitle() {
 		return _title;
 	}

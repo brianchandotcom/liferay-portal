@@ -43,6 +43,8 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public int getState();
 
+	public String getStoreURL(HttpServletRequest request);
+
 	public String getTitle();
 
 	public String getVersion();

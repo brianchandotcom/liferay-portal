@@ -16,9 +16,9 @@ package com.liferay.portal.events.test;
 
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.io.File;
 

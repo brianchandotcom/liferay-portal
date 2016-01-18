@@ -19,9 +19,9 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 

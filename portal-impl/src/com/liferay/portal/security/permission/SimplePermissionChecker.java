@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.UserBag;
+
 /**
  * @author Brian Wing Shun Chan
  */

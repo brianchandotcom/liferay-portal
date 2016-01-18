@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.repository.registry;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 
 import java.util.Locale;
 

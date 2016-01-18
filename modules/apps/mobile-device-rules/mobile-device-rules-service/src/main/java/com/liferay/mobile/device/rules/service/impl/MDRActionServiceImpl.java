@@ -20,8 +20,8 @@ import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.service.base.MDRActionServiceBaseImpl;
 import com.liferay.mobile.device.rules.service.permission.MDRRuleGroupInstancePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.Locale;

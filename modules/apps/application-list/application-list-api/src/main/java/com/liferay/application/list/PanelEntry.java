@@ -15,8 +15,8 @@
 package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Locale;
 

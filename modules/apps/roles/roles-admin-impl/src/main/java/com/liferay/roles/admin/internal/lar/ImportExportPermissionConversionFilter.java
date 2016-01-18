@@ -14,13 +14,13 @@
 
 package com.liferay.roles.admin.internal.lar;
 
+import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.PermissionConversionFilter;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 
 /**

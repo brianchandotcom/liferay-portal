@@ -22,7 +22,7 @@ import com.liferay.polls.service.base.PollsQuestionServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsQuestionPermissionChecker;
 import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;

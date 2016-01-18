@@ -17,8 +17,8 @@ package com.liferay.calendar.service.permission;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Eduardo Lundgren

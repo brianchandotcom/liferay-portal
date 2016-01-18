@@ -14,9 +14,9 @@
 
 package com.liferay.layout.internal.service.permission;
 
+import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.service.LayoutLocalService;
 
 import java.util.Date;

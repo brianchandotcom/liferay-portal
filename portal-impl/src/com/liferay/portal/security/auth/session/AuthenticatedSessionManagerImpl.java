@@ -340,6 +340,16 @@ public class AuthenticatedSessionManagerImpl
 		companyIdCookie.setMaxAge(0);
 		companyIdCookie.setPath(StringPool.SLASH);
 
+		Cookie guestLanguageIdCookie = new Cookie(
+			CookieKeys.GUEST_LANGUAGE_ID, StringPool.BLANK);
+
+		if (Validator.isNotNull(domain)) {
+			guestLanguageIdCookie.setDomain(domain);
+		}
+
+		guestLanguageIdCookie.setMaxAge(0);
+		guestLanguageIdCookie.setPath(StringPool.SLASH);
+
 		Cookie idCookie = new Cookie(CookieKeys.ID, StringPool.BLANK);
 
 		if (Validator.isNotNull(domain)) {
@@ -386,6 +396,7 @@ public class AuthenticatedSessionManagerImpl
 		rememberMeCookie.setPath(StringPool.SLASH);
 
 		CookieKeys.addCookie(request, response, companyIdCookie);
+		CookieKeys.addCookie(request, response, guestLanguageIdCookie);
 		CookieKeys.addCookie(request, response, idCookie);
 		CookieKeys.addCookie(request, response, passwordCookie);
 		CookieKeys.addCookie(request, response, rememberMeCookie);

@@ -96,6 +96,9 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param mx the company's mail domain
 	* @return the company with the web domain and mail domain
 	*/
+	@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
+		com.liferay.portal.kernel.exception.PortalException.class, com.liferay.portal.kernel.exception.SystemException.class}
+	)
 	public com.liferay.portal.model.Company checkCompany(
 		java.lang.String webId, java.lang.String mx) throws PortalException;
 

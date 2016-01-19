@@ -1,5 +1,6 @@
 dependencies {
 	compile project(":apps:document-library:document-library-web")
+	compile project(":portal:portal-instance-lifecycle")
 }
 
 liferay {

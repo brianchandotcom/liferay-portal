@@ -1,5 +1,6 @@
 dependencies {
 	compile project(":apps:wiki:wiki-web")
+	compile project(":portal:portal-instance-lifecycle")
 }
 
 liferay {

@@ -2,6 +2,7 @@ dependencies {
 	compile project(":apps:asset:asset-tags-navigation-web")
 	compile project(":apps:blogs:blogs-recent-bloggers-web")
 	compile project(":apps:blogs:blogs-web")
+	compile project(":portal:portal-instance-lifecycle")
 }
 
 liferay {

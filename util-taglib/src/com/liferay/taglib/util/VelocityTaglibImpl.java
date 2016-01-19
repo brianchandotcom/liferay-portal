@@ -27,7 +27,6 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.TagSupport;
-import com.liferay.taglib.aui.ColumnTag;
 import com.liferay.taglib.aui.LayoutTag;
 import com.liferay.taglib.portlet.ActionURLTag;
 import com.liferay.taglib.portletext.IconBackTag;
@@ -383,15 +382,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		setUp(breadcrumbTag);
 
 		return breadcrumbTag;
-	}
-
-	@Override
-	public ColumnTag getColumnTag() throws Exception {
-		ColumnTag columnTag = new ColumnTag();
-
-		setUp(columnTag);
-
-		return columnTag;
 	}
 
 	@Override

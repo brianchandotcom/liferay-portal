@@ -100,7 +100,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 	</c:if>
 
 	<c:if test="<%= group.isCompany() && hasUpdatePermission %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL portletName="<%= ExportImportPortletKeys.EXPORT %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
@@ -115,7 +115,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			useDialog="<%= true %>"
 		/>
 
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL portletName="<%= ExportImportPortletKeys.IMPORT %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />

@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
+page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.exception.DuplicateGroupException" %><%@

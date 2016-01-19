@@ -74,7 +74,7 @@ Group group = layoutSetPrototype.getGroup();
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 
 		<%
-		PortletURL exportPagesURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, PortletRequest.RENDER_PHASE);
+		PortletURL exportPagesURL = PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.EXPORT, PortletRequest.RENDER_PHASE);
 
 		exportPagesURL.setParameter("mvcRenderCommandName", "exportLayouts");
 		exportPagesURL.setParameter(Constants.CMD, Constants.EXPORT);
@@ -94,7 +94,7 @@ Group group = layoutSetPrototype.getGroup();
 		/>
 
 		<%
-		PortletURL importPagesURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, PortletRequest.RENDER_PHASE);
+		PortletURL importPagesURL = PortalUtil.getControlPanelPortletURL(request, ExportImportPortletKeys.IMPORT, PortletRequest.RENDER_PHASE);
 
 		importPagesURL.setParameter("mvcRenderCommandName", "importLayouts");
 		importPagesURL.setParameter(Constants.CMD, Constants.IMPORT);

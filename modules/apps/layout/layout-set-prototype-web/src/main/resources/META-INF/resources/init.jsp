@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
+page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys" %><%@
 page import="com.liferay.portal.exception.NoSuchLayoutSetPrototypeException" %><%@
 page import="com.liferay.portal.exception.RequiredLayoutSetPrototypeException" %><%@
@@ -56,7 +57,6 @@ page import="com.liferay.portal.service.permission.LayoutSetPrototypePermissionU
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.comparator.LayoutSetPrototypeCreateDateComparator" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@

@@ -89,6 +89,8 @@ public class WorkspacePlugin implements Plugin<Project> {
 
 	public static final String PLUGIN_NAME = "workspace";
 
+	public static final String PROPERTY_PREFIX = "liferay.workspace.";
+
 	public static final String UPDATE_SDK_PROPERTIES_TASK_NAME =
 		"updateSDKProperties";
 

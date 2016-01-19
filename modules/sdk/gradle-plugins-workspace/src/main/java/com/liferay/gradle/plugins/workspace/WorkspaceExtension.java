@@ -28,26 +28,37 @@ public class WorkspaceExtension {
 
 	public WorkspaceExtension(Project project) {
 		_bundleArtifactGroup = GradleUtil.getProperty(
-			project, "liferay.workspace.bundle.artifact.group", (String)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.group",
+			(String)null);
 		_bundleArtifactName = GradleUtil.getProperty(
-			project, "liferay.workspace.bundle.artifact.name", (String)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.name",
+			(String)null);
 		_bundleArtifactVersion = GradleUtil.getProperty(
-			project, "liferay.workspace.bundle.artifact.version", (String)null);
+			project,
+			WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.version",
+			(String)null);
 		_bundleMavenUrl = GradleUtil.getProperty(
-			project, "liferay.workspace.bundle.maven.url", (String)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.maven.url",
+			(String)null);
 		_environment = GradleUtil.getProperty(
-			project, "liferay.workspace.environment", (String)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "environment",
+			(String)null);
 		_homeDir = GradleUtil.getProperty(
-			project, "liferay.workspace.home.dir", (File)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "home.dir", (File)null);
 		_modulesDefaultRepositoryEnabled = GradleUtil.getProperty(
-			project, "liferay.workspace.modules.default.repository.enabled",
+			project,
+			WorkspacePlugin.PROPERTY_PREFIX +
+				"modules.default.repository.enabled",
 			true);
 		_modulesDir = GradleUtil.getProperty(
-			project, "liferay.workspace.modules.dir", (File)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "modules.dir",
+			(File)null);
 		_pluginsSDKDir = GradleUtil.getProperty(
-			project, "liferay.workspace.plugins.sdk.dir", (File)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "plugins.sdk.dir",
+			(File)null);
 		_themesDir = GradleUtil.getProperty(
-			project, "liferay.workspace.themes.dir", (File)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "themes.dir",
+			(File)null);
 	}
 
 	public String getBundleArtifactGroup() {

@@ -43,10 +43,10 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class JSTranspilerPlugin implements Plugin<Project> {
 
-	public static final String DOWNLOAD_BABEL_TASK_NAME = "downloadBabel";
-
 	public static final String DOWNLOAD_LFR_AMD_LOADER_TASK_NAME =
 		"downloadLfrAmdLoader";
+
+	public static final String DOWNLOAD_METAL_CLI_TASK_NAME = "downloadMetalCli";
 
 	public static final String EXTENSION_NAME = "jsTranspiler";
 
@@ -59,8 +59,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		JSTranspilerExtension jsTranspilerExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, JSTranspilerExtension.class);
 
-		addTaskDownloadBabel(project, jsTranspilerExtension);
 		addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
+		addTaskDownloadMetalCli(project, jsTranspilerExtension);
 		addTaskTranspileJS(project);
 
 		project.afterEvaluate(
@@ -74,20 +74,20 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected DownloadNodeModuleTask addTaskDownloadBabel(
+	protected DownloadNodeModuleTask addTaskDownloadMetalCli(
 		Project project, final JSTranspilerExtension jsTranspilerExtension) {
 
 		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
-			project, DOWNLOAD_BABEL_TASK_NAME, DownloadNodeModuleTask.class);
+			project, DOWNLOAD_METAL_CLI_TASK_NAME, DownloadNodeModuleTask.class);
 
-		downloadNodeModuleTask.setModuleName("babel");
+		downloadNodeModuleTask.setModuleName("metal-cli");
 
 		downloadNodeModuleTask.setModuleVersion(
 			new Callable<String>() {
 
 				@Override
 				public String call() throws Exception {
-					return jsTranspilerExtension.getBabelVersion();
+					return jsTranspilerExtension.getMetalCliVersion();
 				}
 
 			});
@@ -193,7 +193,9 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getSrcDir(sourceSet.getResources());
+					File resourcesDir = getSrcDir(sourceSet.getResources());
+
+					return new File(resourcesDir, "META-INF/resources");
 				}
 
 			});

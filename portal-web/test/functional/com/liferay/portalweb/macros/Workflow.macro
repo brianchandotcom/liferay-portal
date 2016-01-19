@@ -662,13 +662,9 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
+		<execute macro="Workflow#_gotoAssignedToMyRoles" />
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
+		<execute macro="Workflow#_gotoPendingFilter" />
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
 
@@ -700,11 +696,7 @@
 	</command>
 
 	<command name="viewCompletedSubmission">
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Completed" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
+		<execute macro="Workflow#_gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -717,11 +709,7 @@
 	</command>
 
 	<command name="viewCompletedTask">
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Completed" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
+		<execute macro="Workflow#_gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -733,11 +721,7 @@
 	</command>
 
 	<command name="viewCompletedTasksTaskNotPresentCP">
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Completed" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
+		<execute macro="Workflow#_gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -865,17 +849,12 @@
 	</command>
 
 	<command name="viewRejectedTask">
+		<execute macro="Workflow#_gotoPendingFilter" />
+
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="Update" />
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
-
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK" value1="Update" />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
@@ -886,12 +865,6 @@
 		<execute macro="Workflow#_gotoPendingFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
 
 		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 	</command>
@@ -904,11 +877,7 @@
 
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_ACTIVE" />
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
+		<execute macro="Workflow#_gotoPendingFilter" />
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
 
@@ -919,16 +888,11 @@
 	</command>
 
 	<command name="viewTaskAssignedToMeDetails">
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-		<var name="key_workflowTask" value="${workflowTask}" />
-
 		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_ME" />
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<execute macro="Workflow#_gotoPendingFilter" />
 
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 
@@ -942,6 +906,8 @@
 			</else>
 		</if>
 
+		<var name="key_workflowTask" value="${workflowTask}" />
+
 		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
@@ -951,15 +917,9 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
+		<execute macro="Workflow#_gotoAssignedToMyRoles" />
 
-		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_ACTIVE" />
-
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
+		<execute macro="Workflow#_gotoPendingFilter" />
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
 
@@ -971,16 +931,12 @@
 	</command>
 
 	<command name="viewTaskNotPresentAssignedToMyRoles">
+		<execute macro="Workflow#_gotoAssignedToMyRoles" />
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
-
-		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
-
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
 
 		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
 	</command>

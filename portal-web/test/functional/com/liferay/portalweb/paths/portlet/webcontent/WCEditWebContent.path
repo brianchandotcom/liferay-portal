@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SELECT_TEMPLATE</td>
-	<td>xpath=(//a[contains(.,'Select')]/span)[2]</td>
+	<td>//button[contains(@id,'selectTemplate')]</td>
 	<td></td>
 </tr>
 <tr>

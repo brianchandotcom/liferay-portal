@@ -209,10 +209,6 @@
 	<command name="save">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="SelectFrame" />
-
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 

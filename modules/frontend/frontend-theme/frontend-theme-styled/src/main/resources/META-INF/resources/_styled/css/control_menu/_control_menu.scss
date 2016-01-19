@@ -17,15 +17,8 @@
 	color: $control-menu-level-2-color;
 
 	.staging-variation-label {
-		font-weight: 500;
-
-		&:hover {
-			text-decoration: none;
-		}
-
 		@include sm() {
 			color: $control-menu-level-2-label-color;
-			font-size: 12px;
 		}
 	}
 }
@@ -36,7 +29,6 @@
 
 	.close {
 		color: $control-menu-level-2-color;
-
 		opacity: 1;
 	}
 }
@@ -71,24 +63,6 @@
 	}
 }
 
-.publish-btn-group {
-	@include sm() {
-		border-radius: 3px;
-	}
-}
-
-.staging-links {
-	padding-top: 3px;
-}
-
 .sidenav-transition .control-menu {
 	@include transition($control-menu-css-transition);
-}
-
-.staging-variation-selector {
-	font-weight: 500;
-
-	@include sm() {
-		font-size: 14px;
-	}
 }

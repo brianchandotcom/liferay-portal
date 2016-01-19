@@ -56,7 +56,7 @@ if (portletTitleBasedNavigation) {
 	/>
 </c:if>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\" panel row" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<portlet:actionURL name="/wiki/edit_node_attachment" var="emptyTrashURL">
 		<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 	</portlet:actionURL>

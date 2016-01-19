@@ -30,7 +30,7 @@
 	</command>
 
 	<command name="previewPG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#SIMULATION" />
+		<execute function="Click" locator1="ControlMenu#SIMULATION" />
 
 		<if>
 			<equals arg1="${deviceType}" arg2="smartphone" />

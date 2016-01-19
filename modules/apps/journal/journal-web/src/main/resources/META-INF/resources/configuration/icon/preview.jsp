@@ -39,7 +39,7 @@ JournalArticle article = ActionUtil.getArticle(renderRequest);
 		Liferay.fire(
 			'previewArticle',
 			{
-				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
+				title: '<%= HtmlUtil.escapeJS(HtmlUtil.escape(article.getTitle(locale))) %>',
 				uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
 			}
 		);

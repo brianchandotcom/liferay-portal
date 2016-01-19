@@ -34,9 +34,13 @@ Bundle bundle = (Bundle)row.getObject();
 				<portlet:param name="bundleIds" value="<%= String.valueOf(bundle.getBundleId()) %>" />
 			</portlet:actionURL>
 
+			<%
+			String deactivateBundlesConfirmationURL = "javascript:if(confirm(\'" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "\')){submitForm(document.hrefFm, \'" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "\');};";
+			%>
+
 			<liferay-ui:icon
 				message="deactivate"
-				url="<%= deactivateBundlesURL %>"
+				url="<%= deactivateBundlesConfirmationURL %>"
 			/>
 		</c:when>
 		<c:otherwise>

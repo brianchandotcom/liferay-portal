@@ -722,6 +722,8 @@
 
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
+		<execute function="Click" locator1="Wiki#ADD_PAGE" />
+
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>

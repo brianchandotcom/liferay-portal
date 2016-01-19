@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_PAGE</td>
-	<td>//div[contains(@id,'wiki_web')]//button[contains(.,'Add Page')]</td>
+	<td>//a[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -81,7 +81,7 @@ AUI.add(
 						}
 
 						instance._table = boundingBox.one('table');
-						instance._parentContainer = boundingBox.ancestor();
+						instance._parentContainer = boundingBox.ancestor('.lfr-search-container-wrapper');
 
 						if (instance._table) {
 							instance._table.setAttribute('data-searchContainerId', id);

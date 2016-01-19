@@ -16,6 +16,7 @@
 
 <liferay-ui:search-container
 	emptyResultsMessage="<%= emptyResultsMessage %>"
+	headerNames="file-name,size,null"
 	id="pageAttachments"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= attachmentsFileEntriesCount %>"

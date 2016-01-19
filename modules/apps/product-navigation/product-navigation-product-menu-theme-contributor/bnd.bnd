@@ -1,8 +1,11 @@
-Bundle-Name: Liferay Frontend Theme Contributor Product Menu
-Bundle-SymbolicName: com.liferay.frontend.theme.contributor.product.menu
+Bundle-Name: Liferay Product Navigation Product Menu Theme Contributor
+Bundle-SymbolicName: com.liferay.product.navigation.product.menu.theme.contributor
 Bundle-Version: 1.0.0
 Theme-Contributor-Type: product-menu
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
-Web-ContextPath: /frontend-theme-contributor-product-menu
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Product Navigation
+Web-ContextPath: /product-navigation-product-menu-theme-contributor
+-include: ../../../../marketplace/web-content-management/bnd.bnd

@@ -1679,21 +1679,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Returns the user with the UUID.
-	*
-	* @param uuid the user's UUID
-	* @return the user with the UUID
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getUserByUuidAndCompanyId(String, long)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.User getUserByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserByUuid(uuid);
-	}
-
-	/**
 	* Returns the user with the matching UUID and company.
 	*
 	* @param uuid the user's UUID

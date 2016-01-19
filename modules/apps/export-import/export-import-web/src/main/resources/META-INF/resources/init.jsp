@@ -28,7 +28,8 @@ taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException" %><%@
+<%@ page import="com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException" %><%@
 page import="com.liferay.exportimport.util.comparator.ExportImportConfigurationNameComparator" %><%@
 page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
 page import="com.liferay.exportimport.web.portlet.action.ExportImportMVCActionCommand" %><%@
@@ -113,7 +114,6 @@ page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
 page import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants" %><%@
 page import="com.liferay.portlet.exportimport.exception.LARFileException" %><%@

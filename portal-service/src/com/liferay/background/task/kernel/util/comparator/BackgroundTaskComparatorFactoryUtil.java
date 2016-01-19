@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.backgroundtask.util.comparator;
+package com.liferay.background.task.kernel.util.comparator;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.util.OrderByComparator;

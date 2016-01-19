@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.backgroundtask.util.comparator;
+package com.liferay.background.task.kernel.util.comparator;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -21,22 +21,20 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Eduardo Garcia
  */
-public class BackgroundTaskCompletionDateComparator
+public class BackgroundTaskCreateDateComparator
 	extends OrderByComparator<BackgroundTask> {
 
-	public static final String ORDER_BY_ASC =
-		"BackgroundTask.completionDate ASC";
+	public static final String ORDER_BY_ASC = "BackgroundTask.createDate ASC";
 
-	public static final String ORDER_BY_DESC =
-		"BackgroundTask.completionDate DESC";
+	public static final String ORDER_BY_DESC = "BackgroundTask.createDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"completionDate"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public BackgroundTaskCompletionDateComparator() {
+	public BackgroundTaskCreateDateComparator() {
 		this(false);
 	}
 
-	public BackgroundTaskCompletionDateComparator(boolean ascending) {
+	public BackgroundTaskCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -45,8 +43,7 @@ public class BackgroundTaskCompletionDateComparator
 		BackgroundTask backgroundTask1, BackgroundTask backgroundTask2) {
 
 		int value = DateUtil.compareTo(
-			backgroundTask1.getCompletionDate(),
-			backgroundTask2.getCompletionDate());
+			backgroundTask1.getCreateDate(), backgroundTask2.getCreateDate());
 
 		if (_ascending) {
 			return value;

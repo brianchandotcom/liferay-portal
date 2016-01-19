@@ -759,6 +759,13 @@
 							'uploader'
 						]
 					},
+					'liferay-url-preview': {
+						path: 'url_preview.js',
+						requires: [
+							'aui-base',
+							'liferay-util-window'
+						]
+					},
 					'liferay-util-window': {
 						path: 'util_window.js',
 						requires: [

@@ -391,8 +391,6 @@ AUI.add(
 
 					modalConfig.id = config.id;
 
-					delete modalConfig.headerContent;
-
 					return modalConfig;
 				},
 

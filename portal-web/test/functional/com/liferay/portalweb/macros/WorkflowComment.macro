@@ -10,7 +10,7 @@
 			<then>
 				<execute macro="Workflow#_gotoCompletedFilter" />
 
-				<execute function="AssertClick" locator1="CPMyworkflowtasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
@@ -54,7 +54,7 @@
 			<then>
 				<execute macro="Workflow#_gotoCompletedFilter" />
 
-				<execute function="AssertClick" locator1="CPMyworkflowtasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />

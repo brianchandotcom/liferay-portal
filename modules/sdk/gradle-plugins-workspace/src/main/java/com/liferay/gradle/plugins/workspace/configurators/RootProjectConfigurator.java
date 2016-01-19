@@ -124,14 +124,25 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Configuration bundleConfiguration,
 		WorkspaceExtension workspaceExtension) {
 
-		T task = GradleUtil.addTask(project, taskName, clazz);
+		final T task = GradleUtil.addTask(project, taskName, clazz);
 
 		configureTaskCopyBundle(task, bundleConfiguration, workspaceExtension);
 
 		task.setBaseName(project.getName());
-		task.setDescription("Assembles the bundle and zips it up.");
 		task.setDestinationDir(project.getBuildDir());
 		task.setIncludeEmptyDirs(false);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					task.setDescription(
+						"Assembles the Liferay bundle and zips it up into '" +
+							project.relativePath(task.getArchivePath()) + "'.");
+				}
+
+			});
 
 		return task;
 	}
@@ -140,7 +151,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Project project, Configuration bundleConfiguration,
 		final WorkspaceExtension workspaceExtension) {
 
-		Copy copy = GradleUtil.addTask(
+		final Copy copy = GradleUtil.addTask(
 			project, INIT_BUNDLE_TASK_NAME, Copy.class);
 
 		configureTaskCopyBundle(copy, bundleConfiguration, workspaceExtension);
@@ -169,10 +180,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
-		copy.setDescription(
-			"Downloads and unzips the bundle into " +
-				workspaceExtension.getHomeDir() + ".");
 		copy.setIncludeEmptyDirs(false);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					copy.setDescription(
+						"Downloads and unzips the bundle into '" +
+							project.relativePath(copy.getDestinationDir()) +
+								"'.");
+				}
+
+			});
 
 		return copy;
 	}

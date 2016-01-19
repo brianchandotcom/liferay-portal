@@ -242,6 +242,12 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiPage getPage(long pageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageService.getPage(pageId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long groupId, long nodeId, boolean head, int status, int start,
 		int end,

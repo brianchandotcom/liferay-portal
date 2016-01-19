@@ -48,6 +48,8 @@ iteratorURL.setParameter("mvcRenderCommandName", "/wiki/view_page_activities");
 iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("title", wikiPage.getTitle());
+
+WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
 %>
 
 <div class="page-activities">
@@ -67,186 +69,42 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 		>
 
 			<%
-			User socialActivityUser = UserLocalServiceUtil.fetchUserById(socialActivity.getUserId());
-
-			if (socialActivityUser == null) {
-				socialActivityUser = UserLocalServiceUtil.getDefaultUser(socialActivity.getCompanyId());
-			}
-
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
 
-			FileEntry fileEntry = null;
-			FileVersion fileVersion = null;
+			double version = extraDataJSONObject.getDouble("version");
+
+			WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
 			%>
 
 			<liferay-ui:search-container-column-text
 				name="activity"
 			>
 				<c:choose>
-					<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_ADD_ATTACHMENT) || (socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH) %>">
-
-						<%
-						try {
-							fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(extraDataJSONObject.getLong("fileEntryId"));
-						}
-						catch (NoSuchModelException nsme) {
-						}
-
-						String title = extraDataJSONObject.getString("fileEntryTitle");
-
-						if (fileEntry != null) {
-							fileVersion = fileEntry.getFileVersion();
-						}
-						%>
-
-						<liferay-util:buffer var="attachmentTitle">
-							<c:choose>
-								<c:when test="<%= fileVersion != null %>">
-									<aui:a href="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"><%= title %></aui:a>
-								</c:when>
-								<c:otherwise>
-									<%= title %>
-								</c:otherwise>
-							</c:choose>
-						</liferay-util:buffer>
-
-						<c:choose>
-							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_ADD_ATTACHMENT %>">
-								<liferay-ui:icon
-									iconCssClass="icon-paperclip"
-									label="<%= true %>"
-									message='<%= LanguageUtil.format(request, "x-added-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
-								/>
-							</c:when>
-							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH %>">
-								<liferay-ui:icon
-									iconCssClass="icon-remove"
-									label="<%= true %>"
-									message='<%= LanguageUtil.format(request, "x-removed-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
-								/>
-							</c:when>
-							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH %>">
-								<liferay-ui:icon
-									iconCssClass="icon-undo"
-									label="<%= true %>"
-									message='<%= LanguageUtil.format(request, "x-restored-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
-								/>
-							</c:when>
-						</c:choose>
-					</c:when>
-
 					<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_ADD_COMMENT %>">
-
-						<%
-						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle());
-						%>
-
-						<portlet:renderURL var="viewPageURL">
-							<portlet:param name="mvcRenderCommandName" value="/wiki/view" />
-							<portlet:param name="nodeName" value="<%= node.getName() %>" />
-							<portlet:param name="title" value="<%= socialActivityWikiPage.getTitle() %>" />
-						</portlet:renderURL>
-
 						<liferay-ui:icon
 							label="<%= true %>"
-							message='<%= LanguageUtil.format(request, "x-added-a-comment", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), viewPageURL + "#wikiCommentsPanel"}, false) %>'
+							message="<%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %>"
 						/>
 					</c:when>
 
-					<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_TO_TRASH) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) || (socialActivity.getType() == WikiActivityKeys.ADD_PAGE) || (socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE) %>">
-
-						<%
-						double version = extraDataJSONObject.getDouble("version");
-
-						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(node.getNodeId(), wikiPage.getTitle(), version);
-						%>
-
-						<portlet:renderURL var="viewPageURL">
-							<portlet:param name="mvcRenderCommandName" value="/wiki/view" />
-							<portlet:param name="nodeName" value="<%= node.getName() %>" />
-							<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-							<portlet:param name="version" value="<%= String.valueOf(version) %>" />
-						</portlet:renderURL>
-
-						<c:choose>
-							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_TO_TRASH %>">
-								<liferay-ui:icon
-									iconCssClass="icon-trash"
-									label="<%= true %>"
-									message='<%= LanguageUtil.format(request, "activity-wiki-page-move-to-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), wikiPage.getTitle()}, false) %>'
-								/>
-							</c:when>
-							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH %>">
-								<liferay-util:buffer var="pageTitleLink">
-									<c:choose>
-										<c:when test="<%= socialActivityWikiPage != null %>">
-											<aui:a href="<%= viewPageURL.toString() %>"><%= wikiPage.getTitle() %></aui:a>
-										</c:when>
-										<c:otherwise>
-											<%= wikiPage.getTitle() %>
-										</c:otherwise>
-									</c:choose>
-								</liferay-util:buffer>
-
-								<liferay-ui:icon
-									iconCssClass="icon-undo"
-									label="<%= true %>"
-									message='<%= LanguageUtil.format(request, "activity-wiki-page-restore-from-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
-								/>
-							</c:when>
-							<c:when test="<%= socialActivity.getType() == WikiActivityKeys.ADD_PAGE %>">
-								<liferay-util:buffer var="pageTitleLink">
-									<c:choose>
-										<c:when test="<%= socialActivityWikiPage != null %>">
-											<aui:a href="<%= viewPageURL.toString() %>"><%= wikiPage.getTitle() %></aui:a>
-										</c:when>
-										<c:otherwise>
-											<%= wikiPage.getTitle() %>
-										</c:otherwise>
-									</c:choose>
-								</liferay-util:buffer>
-
-								<liferay-ui:icon
-									iconCssClass="icon-plus"
-									label="<%= true %>"
-									message='<%= LanguageUtil.format(request, "x-added-the-page-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
-								/>
-							</c:when>
-							<c:when test="<%= socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE %>">
-								<liferay-util:buffer var="pageTitleLink">
-									<c:choose>
-										<c:when test="<%= socialActivityWikiPage != null %>">
-											<aui:a href="<%= viewPageURL.toString() %>">
-												<%= version %>
-
-												<c:if test="<%= socialActivityWikiPage.isMinorEdit() %>">
-													(<liferay-ui:message key="minor-edit" />)
-												</c:if>
-											</aui:a>
-										</c:when>
-										<c:otherwise>
-											<%= version %>
-										</c:otherwise>
-									</c:choose>
-								</liferay-util:buffer>
-
-								<liferay-ui:icon
-									iconCssClass="icon-edit"
-									label="<%= true %>"
-									message='<%= LanguageUtil.format(request, "x-updated-the-page-to-version-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
-								/>
-
-								<c:if test="<%= (socialActivityWikiPage != null) && (socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
-									<span class="activity-status"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(socialActivityWikiPage.getStatus()) %>" /></span>
-								</c:if>
-
-								<c:if test="<%= (socialActivityWikiPage != null) && Validator.isNotNull(socialActivityWikiPage.getSummary()) %>">
-									<em class="activity-summary"><%= StringPool.QUOTE + HtmlUtil.escape(socialActivityWikiPage.getSummary()) + StringPool.QUOTE %></em>
-								</c:if>
-							</c:when>
-						</c:choose>
+					<c:when test="<%= wikiSocialActivityHelper.isSocialActivitySupported(socialActivity) %>">
+						<liferay-ui:icon
+							iconCssClass="<%= wikiSocialActivityHelper.getSocialActivityIcon(socialActivity) %>"
+							label="<%= true %>"
+							message="<%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %>"
+						/>
 					</c:when>
 				</c:choose>
+
+				<c:if test="<%= socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE %>">
+					<c:if test="<%= (socialActivityWikiPage != null) && (socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
+						<span class="activity-status"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(socialActivityWikiPage.getStatus()) %>" /></span>
+					</c:if>
+
+					<c:if test="<%= (socialActivityWikiPage != null) && Validator.isNotNull(socialActivityWikiPage.getSummary()) %>">
+						<em class="activity-summary"><%= StringPool.QUOTE + HtmlUtil.escape(socialActivityWikiPage.getSummary()) + StringPool.QUOTE %></em>
+					</c:if>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-date
@@ -254,19 +112,20 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 				value="<%= new Date(socialActivity.getCreateDate()) %>"
 			/>
 
+			<%
+			String jspPath = null;
+
+			if (wikiSocialActivityHelper.isSocialActivitySupported(socialActivity)) {
+				jspPath = wikiSocialActivityHelper.getSocialActivityActionJSP(socialActivity, extraDataJSONObject);
+			}
+			%>
+
 			<c:choose>
-				<c:when test="<%= ((socialActivity.getType() == SocialActivityConstants.TYPE_ADD_ATTACHMENT) || (socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH)) && (fileEntry != null) %>">
+				<c:when test="<%= Validator.isNotNull(jspPath) %>">
 					<liferay-ui:search-container-column-jsp
 						align="right"
 						cssClass="entry-action"
-						path="/wiki/page_activity_attachment_action.jsp"
-					/>
-				</c:when>
-				<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) || (socialActivity.getType() == WikiActivityKeys.ADD_PAGE) || (socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE) %>">
-					<liferay-ui:search-container-column-jsp
-						align="right"
-						cssClass="entry-action"
-						path="/wiki/page_activity_page_action.jsp"
+						path="<%= jspPath %>"
 					/>
 				</c:when>
 				<c:otherwise>

@@ -85,6 +85,8 @@ else {
 	searchContainerId="wikiPages"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
+
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive", "list"} %>'
 			portletURL="<%= currentURLObj %>"
@@ -101,7 +103,22 @@ else {
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<portlet:resourceURL id="/wiki/info_panel" var="sidebarPanelURL">
+		<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+	</portlet:resourceURL>
+
+	<liferay-frontend:sidebar-panel
+			resourceURL="<%= sidebarPanelURL %>"
+			searchContainerId="wikiPages"
+	>
+
+		<%
+		request.setAttribute(WikiWebKeys.WIKI_NODE, node);
+		%>
+
+		<liferay-util:include page="/wiki_admin/info_panel.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:sidebar-panel>
 
 	<%
 	WikiVisualizationHelper wikiVisualizationHelper = new WikiVisualizationHelper(wikiRequestHelper, wikiPortletInstanceSettingsHelper, wikiGroupServiceConfiguration);
@@ -259,4 +276,15 @@ else {
 			submitForm(form, '<portlet:actionURL name="/wiki/edit_page" />');
 		}
 	}
+
+	$('#<portlet:namespace />infoPanelId').sideNavigation(
+		{
+			gutter: 15,
+			position: 'right',
+			toggler: '.infoPanelToggler',
+			type: 'relative',
+			typeMobile: 'fixed',
+			width: 320
+		}
+	);
 </aui:script>

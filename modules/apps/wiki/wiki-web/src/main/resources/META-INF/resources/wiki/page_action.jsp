@@ -19,7 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-WikiPage wikiPage = (WikiPage)row.getObject();
+WikiPage wikiPage = null;
+
+if (row != null) {
+	wikiPage = (WikiPage)row.getObject();
+}
+else {
+	wikiPage = (WikiPage)request.getAttribute("info_panel.jsp-wikiPage");
+}
 
 WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, wikiPage.getNode());
 %>

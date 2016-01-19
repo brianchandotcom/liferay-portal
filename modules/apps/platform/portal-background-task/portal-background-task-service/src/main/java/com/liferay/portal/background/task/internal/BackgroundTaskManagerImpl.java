@@ -557,7 +557,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK);
 		registerDestination(
-			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+			bundleContext, DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 			DestinationNames.BACKGROUND_TASK_STATUS);
 	}
 

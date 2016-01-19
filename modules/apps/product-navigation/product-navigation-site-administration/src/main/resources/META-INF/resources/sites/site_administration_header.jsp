@@ -22,29 +22,63 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getPanelCategory();
 %>
 
-<div class="icon-sites">
-	<liferay-ui:icon
-		icon="sites"
-		id="manageSitesLink"
-		label="<%= false %>"
-		linkCssClass="icon-monospaced"
-		markupView="lexicon"
-		message='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'
-		url="javascript:;"
-	/>
-</div>
-
-<div class="hide">
-	<div id="<portlet:namespace/>siteSelectorContent">
-		<liferay-util:include page="/sites/my_sites.jsp" servletContext="<%= application %>" />
-
-		<c:if test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getManageSitesURL()) %>">
-			<div class="manage-sites-link">
-				<aui:icon image="sites" label='<%= LanguageUtil.get(resourceBundle, "manage-sites") %>' markupView="lexicon" url="<%= siteAdministrationPanelCategoryDisplayContext.getManageSitesURL() %>" />
-			</div>
-		</c:if>
+<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
+	<div class="icon-sites">
+		<liferay-ui:icon
+			icon="sites"
+			id="manageSitesLink"
+			label="<%= false %>"
+			linkCssClass="icon-monospaced"
+			markupView="lexicon"
+			message='<%= LanguageUtil.get(resourceBundle, "go-to-other-site") %>'
+			url="javascript:;"
+		/>
 	</div>
-</div>
+
+	<div class="hide">
+		<div id="<portlet:namespace/>siteSelectorContent">
+			<liferay-util:include page="/sites/my_sites.jsp" servletContext="<%= application %>" />
+
+			<c:if test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getManageSitesURL()) %>">
+				<div class="manage-sites-link">
+					<aui:icon image="sites" label='<%= LanguageUtil.get(resourceBundle, "manage-sites") %>' markupView="lexicon" url="<%= siteAdministrationPanelCategoryDisplayContext.getManageSitesURL() %>" />
+				</div>
+			</c:if>
+		</div>
+	</div>
+
+	<aui:script position="auto" use="aui-popover,event-outside">
+		var trigger = A.one('#<portlet:namespace/>manageSitesLink');
+
+		var popOver = new A.Popover(
+			{
+				align: {
+					node: '#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler',
+					points:[A.WidgetPositionAlign.LT, A.WidgetPositionAlign.RT]
+				},
+				bodyContent: A.one('#<portlet:namespace/>siteSelectorContent'),
+				cssClass: 'product-menu',
+				constrain: true,
+				hideOn: [
+					{
+						node: A.one('document'),
+						eventName: 'key',
+						keyCode: 'esc'
+					},
+					{
+						node: A.one('document'),
+						eventName: 'clickoutside'
+					}
+				],
+				position: 'right',
+				trigger: trigger,
+				visible: false,
+				width: 300,
+				zIndex: Liferay.zIndex.TOOLTIP
+			}
+		).render();
+	</aui:script>
+</c:if>
 
 <div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %>" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %> >
 	<div>
@@ -78,35 +112,3 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 		<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 	</div>
 </div>
-
-<aui:script use="aui-popover,event-outside">
-	var trigger = A.one('#<portlet:namespace/>manageSitesLink');
-
-	var popOver = new A.Popover(
-		{
-			align: {
-				node: '#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler',
-				points:[A.WidgetPositionAlign.LT, A.WidgetPositionAlign.RT]
-			},
-			bodyContent: A.one('#<portlet:namespace/>siteSelectorContent'),
-			cssClass: 'product-menu',
-			constrain: true,
-			hideOn: [
-				{
-					node: A.one('document'),
-					eventName: 'key',
-					keyCode: 'esc'
-				},
-				{
-					node: A.one('document'),
-					eventName: 'clickoutside'
-				}
-			],
-			position: 'right',
-			trigger: trigger,
-			visible: false,
-			width: 300,
-			zIndex: Liferay.zIndex.TOOLTIP
-		}
-	).render();
-</aui:script>

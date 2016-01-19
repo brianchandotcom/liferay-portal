@@ -24,6 +24,16 @@ ManifestSummary manifestSummary = (ManifestSummary)request.getAttribute("render_
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("render_controls.jsp-parameterMap"), Collections.emptyMap());
 String portletId = (String)request.getAttribute("render_controls.jsp-portletId");
 
+if (Validator.isNotNull(portletId)) {
+	PortletBag portletBag = PortletBagPool.get(portletId);
+
+	ResourceBundle portletResourceBundle = portletBag.getResourceBundle(locale);
+
+	if (portletResourceBundle != null) {
+		resourceBundle = new AggregateResourceBundle(resourceBundle, portletResourceBundle);
+	}
+}
+
 control:
 for (int i = 0; i < controls.length; i++) {
 %>
@@ -37,7 +47,7 @@ for (int i = 0; i < controls.length; i++) {
 
 				PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)controls[i];
 
-				String controlLabel = LanguageUtil.get(request, control.getControlLabel());
+				String controlLabel = LanguageUtil.get(request, resourceBundle, control.getControlLabel());
 
 				String className = controls[i].getClassName();
 
@@ -79,7 +89,7 @@ for (int i = 0; i < controls.length; i++) {
 				</c:if>
 			</c:when>
 			<c:when test="<%= controls[i] instanceof PortletDataHandlerChoice %>">
-				<aui:field-wrapper label='<%= "&#9632" + LanguageUtil.get(request, controls[i].getControlLabel()) %>'>
+				<aui:field-wrapper label='<%= "&#9632" + LanguageUtil.get(request, resourceBundle, controls[i].getControlLabel()) %>'>
 
 					<%
 					PortletDataHandlerChoice control = (PortletDataHandlerChoice)controls[i];
@@ -91,7 +101,7 @@ for (int i = 0; i < controls.length; i++) {
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
-						String controlName = LanguageUtil.get(request, choice);
+						String controlName = LanguageUtil.get(request, resourceBundle, choice);
 
 						data.put("name", controlName);
 					%>

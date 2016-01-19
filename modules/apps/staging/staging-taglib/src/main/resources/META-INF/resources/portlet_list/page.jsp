@@ -89,6 +89,7 @@
 								request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 								request.setAttribute("render_controls.jsp-parameterMap", parameterMap);
 								request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+								request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
 						%>
 
 								<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
@@ -106,6 +107,7 @@
 								request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
 								request.setAttribute("render_controls.jsp-parameterMap", parameterMap);
 								request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+								request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
 						%>
 
 								<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
@@ -132,6 +134,7 @@
 
 								if (ArrayUtil.isNotEmpty(childrenControls)) {
 									request.setAttribute("render_controls.jsp-controls", childrenControls);
+									request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
 						%>
 
 									<aui:field-wrapper label="content-metadata">

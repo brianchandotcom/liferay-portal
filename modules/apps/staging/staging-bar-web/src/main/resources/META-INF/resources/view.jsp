@@ -145,7 +145,7 @@ if (layout != null) {
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
-						<li class="active control-menu-nav-item  hidden-xs staging-link">
+						<li class="active control-menu-nav-item control-menu-link hidden-xs staging-link">
 							<a class="control-menu-icon" id="stagingLink" value="staging">
 								<aui:icon image="staging" label="staging" markupView="lexicon" />
 							</a>
@@ -153,7 +153,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<li class="control-menu-nav-item hidden-xs staging-link">
+					<li class="control-menu-nav-item control-menu-link hidden-xs staging-link">
 						<a class="control-menu-icon" href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging">
 							<aui:icon image="staging" label="staging" markupView="lexicon" />
 						</a>
@@ -167,7 +167,7 @@ if (layout != null) {
 
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">
-					<li class="control-menu-nav-item hidden-xs live-link">
+					<li class="control-menu-nav-item control-menu-link hidden-xs live-link">
 						<a class="control-menu-icon" href="<%= StagingUtil.getRemoteSiteURL(group, layout.isPrivateLayout()) %>" value="go-to-remote-live">
 							<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
 						</a>
@@ -175,7 +175,7 @@ if (layout != null) {
 				</c:when>
 				<c:when test="<%= group.isStagingGroup() %>">
 					<c:if test="<%= Validator.isNotNull(liveFriendlyURL) %>">
-						<li class="control-menu-nav-item hidden-xs live-link">
+						<li class="control-menu-nav-item control-menu-link hidden-xs live-link">
 							<a class="control-menu-icon" href="<%= liveFriendlyURL %>" value="live">
 								<aui:icon image="live" label="live" markupView="lexicon" />
 							</a>
@@ -183,7 +183,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<li class="active control-menu-nav-item  hidden-xs live-link">
+					<li class="active control-menu-nav-item control-menu-link hidden-xs live-link">
 						<a class="control-menu-icon taglib-icon" id="liveLink" value="live">
 							<aui:icon image="live" label="live" markupView="lexicon" />
 						</a>

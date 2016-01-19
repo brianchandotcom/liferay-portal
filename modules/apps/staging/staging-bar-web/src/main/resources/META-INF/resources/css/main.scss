@@ -99,3 +99,31 @@
 		font-size: 14px;
 	}
 }
+
+.live-link, .staging-link {
+	font-size: 14px;
+
+	a, a:focus, a:hover {
+		color: #869CAD;
+	}
+
+	&.active {
+		position: relative;
+
+		&:after {
+			bottom: -13px;
+			content: "";
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+
+		a {
+			color: #FFF;
+		}
+	}
+
+	.lexicon-icon {
+		margin-top: -2px;
+	}
+}

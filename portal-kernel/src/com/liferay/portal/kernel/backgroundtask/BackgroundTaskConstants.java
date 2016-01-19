@@ -28,6 +28,8 @@ public class BackgroundTaskConstants {
 
 	public static final int ISOLATION_LEVEL_COMPANY = 2;
 
+	public static final int ISOLATION_LEVEL_CUSTOM = 6;
+
 	public static final int ISOLATION_LEVEL_GROUP = 3;
 
 	public static final int ISOLATION_LEVEL_NOT_ISOLATED = 4;

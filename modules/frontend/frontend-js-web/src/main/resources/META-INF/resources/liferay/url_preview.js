@@ -148,6 +148,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-util-window']
+		requires: ['aui-component', 'liferay-util-window']
 	}
 );

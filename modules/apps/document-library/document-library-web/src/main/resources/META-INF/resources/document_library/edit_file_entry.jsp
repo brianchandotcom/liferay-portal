@@ -596,6 +596,20 @@ if (portletTitleBasedNavigation) {
 		['document-library-checkin']
 	);
 
+	function <portlet:namespace />updateTitle() {
+		var title = $('#<portlet:namespace />title').val();
+
+		if (!title) {
+			var filePath = $('#<portlet:namespace />file').val();
+
+			var fileName = filePath.replace(/^.*[\\\/]/, '')
+
+			$('#<portlet:namespace />title').val(fileName);
+		}
+
+		<portlet:namespace />validateTitle();
+	}
+
 	function <portlet:namespace />validateTitle() {
 		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
 	}

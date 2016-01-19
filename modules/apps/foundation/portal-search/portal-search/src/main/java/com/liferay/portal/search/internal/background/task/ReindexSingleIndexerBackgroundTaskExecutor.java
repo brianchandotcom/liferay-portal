@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.background.task;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +24,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Andrew Betts
@@ -29,9 +36,27 @@ import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSend
 public class ReindexSingleIndexerBackgroundTaskExecutor
 	extends ReindexBackgroundTaskExecutor {
 
+	public ReindexSingleIndexerBackgroundTaskExecutor() {
+		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_CUSTOM);
+	}
+
 	@Override
 	public BackgroundTaskExecutor clone() {
 		return new ReindexSingleIndexerBackgroundTaskExecutor();
+	}
+
+	@Override
+	public String generateLockKey(BackgroundTask backgroundTask) {
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		String className = (String)taskContextMap.get("className");
+
+		if (Validator.isNotNull(className)) {
+			return className;
+		}
+
+		return super.generateLockKey(backgroundTask);
 	}
 
 	@Override

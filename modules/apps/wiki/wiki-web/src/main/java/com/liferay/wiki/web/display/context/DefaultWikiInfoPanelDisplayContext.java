@@ -81,7 +81,7 @@ public class DefaultWikiInfoPanelDisplayContext
 				_wikiInfoPanelRequestHelper.getScopeGroupId());
 		}
 
-		return WikiPageLocalServiceUtil.getPagesCount(node.getNodeId());
+		return WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
 	}
 
 	@Override

@@ -149,6 +149,12 @@ AUI.add(
 						instance._bindContainerEvents();
 					},
 
+					_afterValueChange: function() {
+						var instance = this;
+
+						instance.render();
+					},
+
 					_bindContainerEvents: function() {
 						var instance = this;
 

@@ -1937,31 +1937,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					if (trimmedLine.endsWith(StringPool.PLUS) &&
-						!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
-
-						int closeParenthesisCount = StringUtil.count(
-							strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
-						int openParenthesisCount = StringUtil.count(
-							strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
-
-						if (openParenthesisCount > closeParenthesisCount) {
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
-						}
-					}
-
-					if (!strippedQuotesLine.endsWith("{") &&
-						strippedQuotesLine.contains("{") &&
-						!strippedQuotesLine.contains("}") &&
-						!strippedQuotesLine.contains("\t//")) {
-
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
-					}
-
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 						previousLine.endsWith(StringPool.PLUS)) {
 
@@ -2180,34 +2155,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 									"tab: " + fileName + " " + lineCount);
 							}
 
-							if (Validator.isNotNull(trimmedLine)) {
-								if (((previousLine.endsWith(StringPool.COLON) &&
-									  previousLine.contains(
-										  StringPool.TAB + "for ")) ||
-									 (previousLine.endsWith(
-										 StringPool.OPEN_PARENTHESIS) &&
-									  previousLine.contains(
-										  StringPool.TAB + "if "))) &&
-									((previousLineLeadingTabCount + 2) !=
-										lineLeadingTabCount)) {
+							if (Validator.isNotNull(trimmedLine) &&
+								previousLine.endsWith(
+									StringPool.OPEN_CURLY_BRACE) &&
+								!trimmedLine.startsWith(
+									StringPool.CLOSE_CURLY_BRACE) &&
+								((previousLineLeadingTabCount + 1) !=
+									lineLeadingTabCount)) {
 
-									processErrorMessage(
-										fileName,
-										"line break: " + fileName + " " +
-											lineCount);
-								}
-
-								if (previousLine.endsWith(
-										StringPool.OPEN_CURLY_BRACE) &&
-									!trimmedLine.startsWith(
-										StringPool.CLOSE_CURLY_BRACE) &&
-									((previousLineLeadingTabCount + 1) !=
-										lineLeadingTabCount)) {
-
-									processErrorMessage(
-										fileName,
-										"tab: " + fileName + " " + lineCount);
-								}
+								processErrorMessage(
+									fileName,
+									"tab: " + fileName + " " + lineCount);
 							}
 
 							if (previousLine.endsWith(StringPool.PERIOD)) {

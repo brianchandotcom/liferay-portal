@@ -49,7 +49,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 %>
 
 <c:if test="<%= editPortletURL != null %>">
-	<div class="asset-actions lfr-meta-actions">
+	<div class="pull-right">
 
 		<%
 		Map<String, Object> data = new HashMap<String, Object>();

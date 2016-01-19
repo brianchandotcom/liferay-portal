@@ -1500,11 +1500,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		@Override
 		public int compare(Element solrElement1, Element solrElement2) {
-			NaturalOrderStringComparator naturalOrderStringComparator =
-				new NaturalOrderStringComparator(true, false);
-
-			int value = naturalOrderStringComparator.compare(
-				getElementName(solrElement1), getElementName(solrElement2));
+			int value = super.compare(solrElement1, solrElement2);
 
 			if (value <= 0) {
 				return value;

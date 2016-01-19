@@ -79,6 +79,11 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				BackgroundTaskConstants.STATUS_IN_PROGRESS, serviceContext);
 
 		if (backgroundTask == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find BackgroundTask: " + backgroundTaskId);
+			}
+
 			return;
 		}
 
@@ -126,6 +131,12 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		}
 		catch (DuplicateLockException dle) {
 			status = BackgroundTaskConstants.STATUS_QUEUED;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to acquire lock. Queuing BackgroundTask: " +
+						backgroundTaskId);
+			}
 		}
 		catch (Exception e) {
 			status = BackgroundTaskConstants.STATUS_FAILED;
@@ -156,6 +167,12 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			_log.error("Unable to execute background task", e);
 		}
 		finally {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Completing BackgroundTask: " + backgroundTaskId +
+						" with status: " + status);
+			}
+
 			_backgroundTaskManager.amendBackgroundTask(
 				backgroundTaskId, null, status, statusMessage, serviceContext);
 

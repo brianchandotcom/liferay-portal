@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -44,6 +46,10 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			"taskExecutorClassName");
 
 		if (Validator.isNull(taskExecutorClassName)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No taskExecutorClassName on message: " + message);
+			}
+
 			return;
 		}
 
@@ -85,17 +91,32 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 	}
 
 	private void executeQueuedBackgroundTasks(String taskExecutorClassName) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Acquiring next queued BackgroundTask for:" +
+					taskExecutorClassName);
+		}
+
 		BackgroundTask backgroundTask =
 			_backgroundTaskManager.fetchFirstBackgroundTask(
 				taskExecutorClassName, BackgroundTaskConstants.STATUS_QUEUED);
 
 		if (backgroundTask == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No additional queued BackgroundTasks for :" +
+						taskExecutorClassName);
+			}
+
 			return;
 		}
 
 		_backgroundTaskManager.resumeBackgroundTask(
 			backgroundTask.getBackgroundTaskId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BackgroundTaskQueuingMessageListener.class);
 
 	private BackgroundTaskManager _backgroundTaskManager;
 

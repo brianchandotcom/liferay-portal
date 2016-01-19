@@ -67,19 +67,19 @@ public class WorkspaceExtension {
 	}
 
 	public String getBundleArtifactGroup() {
-		return _bundleArtifactGroup;
+		return GradleUtil.toString(_bundleArtifactGroup);
 	}
 
 	public String getBundleArtifactName() {
-		return _bundleArtifactName;
+		return GradleUtil.toString(_bundleArtifactName);
 	}
 
 	public String getBundleArtifactVersion() {
-		return _bundleArtifactVersion;
+		return GradleUtil.toString(_bundleArtifactVersion);
 	}
 
 	public String getBundleMavenUrl() {
-		return _bundleMavenUrl;
+		return GradleUtil.toString(_bundleMavenUrl);
 	}
 
 	public File getConfigsDir() {
@@ -87,15 +87,15 @@ public class WorkspaceExtension {
 	}
 
 	public String getEnvironment() {
-		return _environment;
+		return GradleUtil.toString(_environment);
 	}
 
 	public File getHomeDir() {
-		return _homeDir;
+		return GradleUtil.toFile(_project, _homeDir);
 	}
 
 	public File getModulesDir() {
-		return _modulesDir;
+		return GradleUtil.toFile(_project, _modulesDir);
 	}
 
 	public File getPluginsSDKDir() {
@@ -103,24 +103,48 @@ public class WorkspaceExtension {
 	}
 
 	public File getThemesDir() {
-		return _themesDir;
+		return GradleUtil.toFile(_project, _themesDir);
 	}
 
 	public boolean isModulesDefaultRepositoryEnabled() {
 		return _modulesDefaultRepositoryEnabled;
 	}
 
+	public void setBundleArtifactGroup(Object bundleArtifactGroup) {
+		_bundleArtifactGroup = bundleArtifactGroup;
+	}
+
+	public void setBundleArtifactName(Object bundleArtifactName) {
+		_bundleArtifactName = bundleArtifactName;
+	}
+
+	public void setBundleArtifactVersion(Object bundleArtifactVersion) {
+		_bundleArtifactVersion = bundleArtifactVersion;
+	}
+
+	public void setBundleMavenUrl(Object bundleMavenUrl) {
+		_bundleMavenUrl = bundleMavenUrl;
+	}
+
 	public void setConfigsDir(Object configsDir) {
 		_configsDir = configsDir;
 	}
 
-	private final String _bundleArtifactGroup;
-	private final String _bundleArtifactName;
-	private final String _bundleArtifactVersion;
-	private final String _bundleMavenUrl;
+	public void setEnvironment(Object environment) {
+		_environment = environment;
+	}
+
+	public void setHomeDir(Object homeDir) {
+		_homeDir = homeDir;
+	}
+
+	private Object _bundleArtifactGroup;
+	private Object _bundleArtifactName;
+	private Object _bundleArtifactVersion;
+	private Object _bundleMavenUrl;
 	private Object _configsDir;
-	private final String _environment;
-	private final File _homeDir;
+	private Object _environment;
+	private Object _homeDir;
 	private final boolean _modulesDefaultRepositoryEnabled;
 	private final File _modulesDir;
 	private final File _pluginsSDKDir;

@@ -73,6 +73,8 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
+		// liferay-theme-tasks already uses the "build" directory
+
 		project.setBuildDir("build_gradle");
 
 		GradleUtil.applyPlugin(project, BasePlugin.class);

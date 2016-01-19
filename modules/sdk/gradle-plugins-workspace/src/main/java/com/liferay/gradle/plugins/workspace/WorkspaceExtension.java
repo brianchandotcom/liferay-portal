@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace;
 
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.util.GradleUtil;
 
 import java.io.File;
 

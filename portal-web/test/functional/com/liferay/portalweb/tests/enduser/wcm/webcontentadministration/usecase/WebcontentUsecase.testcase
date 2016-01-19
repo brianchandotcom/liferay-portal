@@ -43,6 +43,8 @@
 	</tear-down>
 
 	<command name="ActivateStagingWithWebContentLinkingDMImage" priority="3">
+		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -60,7 +62,7 @@
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
-		
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Liferay" />
 		</execute>

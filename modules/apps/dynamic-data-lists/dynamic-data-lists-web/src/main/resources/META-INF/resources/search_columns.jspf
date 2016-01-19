@@ -25,14 +25,14 @@
 	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= false %>"
-	value="<%= recordSet.getName(locale) %>"
+	value="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
 />
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="description"
 	orderable="<%= false %>"
-	value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
+	value="<%= HtmlUtil.escape(StringUtil.shorten(recordSet.getDescription(locale), 100)) %>"
 />
 
 <liferay-ui:search-container-column-date

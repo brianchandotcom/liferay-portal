@@ -61,7 +61,6 @@ recordSetSearch.setOrderByType(orderByType);
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
 				cssClass="entry-display-style"
-				escapedModel="<%= true %>"
 				keyProperty="recordSetId"
 				modelVar="recordSet"
 			>

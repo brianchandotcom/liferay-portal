@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
@@ -82,7 +81,7 @@ public class AppViewEntryTag extends IncludeTag {
 	}
 
 	public void setDescription(String description) {
-		_description = HtmlUtil.unescape(description);
+		_description = description;
 	}
 
 	public void setDisplayDate(Date displayDate) {
@@ -172,7 +171,7 @@ public class AppViewEntryTag extends IncludeTag {
 	}
 
 	public void setTitle(String title) {
-		_title = HtmlUtil.unescape(title);
+		_title = title;
 	}
 
 	public void setUrl(String url) {

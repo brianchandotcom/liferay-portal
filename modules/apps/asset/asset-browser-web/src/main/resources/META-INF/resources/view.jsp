@@ -178,7 +178,7 @@ else {
 
 			<liferay-ui:search-container-column-text
 				name="user-name"
-				value="<%= HtmlUtil.escape(PortalUtil.getUserName(assetEntry)) %>"
+				value="<%= PortalUtil.getUserName(assetEntry) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

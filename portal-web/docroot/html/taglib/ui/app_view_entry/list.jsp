@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/ui/app_view_entry/init.jsp" %>
 
-<div class="app-view-entry app-view-entry-taglib display-<%= displayStyle %> entry-display-style <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
+<div class="app-view-entry app-view-entry-taglib display-<%= HtmlUtil.escapeAttribute(displayStyle) %> entry-display-style <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 	<liferay-ui:icon
 		cssClass='<%= showCheckbox ? "pull-left app-view-entry app-view-entry-taglib entry-display-style selectable" : "pull-left app-view-entry app-view-entry-taglib entry-display-style" %>'
 		data="<%= data %>"
@@ -26,7 +26,7 @@
 		localizeMessage="<%= false %>"
 		message="<%= HtmlUtil.escape(title) %>"
 		method="get"
-		src="<%= thumbnailSrc %>"
+		src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>"
 		url="<%= url %>"
 	/>
 

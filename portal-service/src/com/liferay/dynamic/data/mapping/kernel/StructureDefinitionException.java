@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping;
+package com.liferay.dynamic.data.mapping.kernel;
 
-import com.liferay.portal.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Leonardo Barros
+ * @author Rafael Praxedes
  */
-public class NoSuchStructureException extends NoSuchModelException {
+public class StructureDefinitionException extends PortalException {
 
-	public NoSuchStructureException() {
+	public StructureDefinitionException() {
 	}
 
-	public NoSuchStructureException(String msg) {
+	public StructureDefinitionException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchStructureException(String msg, Throwable cause) {
+	public StructureDefinitionException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchStructureException(Throwable cause) {
+	public StructureDefinitionException(Throwable cause) {
 		super(cause);
 	}
 

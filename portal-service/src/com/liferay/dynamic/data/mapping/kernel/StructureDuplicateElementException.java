@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping;
+package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Rafael Praxedes
  */
-public class StructureNameException extends PortalException {
+public class StructureDuplicateElementException extends PortalException {
 
-	public StructureNameException() {
+	public StructureDuplicateElementException() {
 	}
 
-	public StructureNameException(String msg) {
+	public StructureDuplicateElementException(String msg) {
 		super(msg);
 	}
 
-	public StructureNameException(String msg, Throwable cause) {
+	public StructureDuplicateElementException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public StructureNameException(Throwable cause) {
+	public StructureDuplicateElementException(Throwable cause) {
 		super(cause);
 	}
 

@@ -37,7 +37,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 	@Override
 	public DDMForm translate(
-		com.liferay.portlet.dynamicdatamapping.DDMForm ddmForm) {
+		com.liferay.dynamic.data.mapping.kernel.DDMForm ddmForm) {
 
 		if (ddmForm == null) {
 			return null;
@@ -48,7 +48,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMForm.setAvailableLocales(ddmForm.getAvailableLocales());
 		translatedDDMForm.setDefaultLocale(ddmForm.getDefaultLocale());
 
-		for (com.liferay.portlet.dynamicdatamapping.DDMFormField ddmFormField :
+		for (com.liferay.dynamic.data.mapping.kernel.DDMFormField ddmFormField :
 				ddmForm.getDDMFormFields()) {
 
 			DDMFormField translatedDDMFormField = translate(ddmFormField);
@@ -63,7 +63,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 	@Override
 	public DDMFormField translate(
-		com.liferay.portlet.dynamicdatamapping.DDMFormField ddmFormField) {
+		com.liferay.dynamic.data.mapping.kernel.DDMFormField ddmFormField) {
 
 		if (ddmFormField == null) {
 			return null;
@@ -93,7 +93,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormField.setTip(
 			translateLocalizedValue(ddmFormField.getTip()));
 
-		for (com.liferay.portlet.dynamicdatamapping.DDMFormField
+		for (com.liferay.dynamic.data.mapping.kernel.DDMFormField
 				nestedDDMFormField :
 					ddmFormField.getNestedDDMFormFields()) {
 
@@ -106,7 +106,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 	@Override
 	public DDMFormValues translate(
-		com.liferay.portlet.dynamicdatamapping.DDMFormValues ddmFormValues) {
+		com.liferay.dynamic.data.mapping.kernel.DDMFormValues ddmFormValues) {
 
 		if (ddmFormValues == null) {
 			return null;
@@ -120,7 +120,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormValues.setDefaultLocale(
 			ddmFormValues.getDefaultLocale());
 
-		for (com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
+		for (com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
 				ddmFormFieldValue :
 					ddmFormValues.getDDMFormFieldValues()) {
 
@@ -132,21 +132,21 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.DDMForm translate(
+	public com.liferay.dynamic.data.mapping.kernel.DDMForm translate(
 		DDMForm ddmForm) {
 
 		if (ddmForm == null) {
 			return null;
 		}
 
-		com.liferay.portlet.dynamicdatamapping.DDMForm translatedDDMForm =
-			new com.liferay.portlet.dynamicdatamapping.DDMForm();
+		com.liferay.dynamic.data.mapping.kernel.DDMForm translatedDDMForm =
+			new com.liferay.dynamic.data.mapping.kernel.DDMForm();
 
 		translatedDDMForm.setAvailableLocales(ddmForm.getAvailableLocales());
 		translatedDDMForm.setDefaultLocale(ddmForm.getDefaultLocale());
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			com.liferay.portlet.dynamicdatamapping.DDMFormField
+			com.liferay.dynamic.data.mapping.kernel.DDMFormField
 				translatedDDMFormField = translate(ddmFormField);
 
 			translatedDDMFormField.setDDMForm(translatedDDMForm);
@@ -158,16 +158,16 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.DDMFormField
+	public com.liferay.dynamic.data.mapping.kernel.DDMFormField
 		translate(DDMFormField ddmFormField) {
 
 		if (ddmFormField == null) {
 			return null;
 		}
 
-		com.liferay.portlet.dynamicdatamapping.DDMFormField
+		com.liferay.dynamic.data.mapping.kernel.DDMFormField
 			translatedDDMFormField =
-				new com.liferay.portlet.dynamicdatamapping.DDMFormField(
+				new com.liferay.dynamic.data.mapping.kernel.DDMFormField(
 					ddmFormField.getName(), ddmFormField.getType());
 
 		translatedDDMFormField.setDataType(ddmFormField.getDataType());
@@ -202,19 +202,19 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.DDMFormValues translate(
+	public com.liferay.dynamic.data.mapping.kernel.DDMFormValues translate(
 		DDMFormValues ddmFormValues) {
 
 		if (ddmFormValues == null) {
 			return null;
 		}
 
-		com.liferay.portlet.dynamicdatamapping.DDMForm translatedDDMForm =
+		com.liferay.dynamic.data.mapping.kernel.DDMForm translatedDDMForm =
 			translate(ddmFormValues.getDDMForm());
 
-		com.liferay.portlet.dynamicdatamapping.DDMFormValues
+		com.liferay.dynamic.data.mapping.kernel.DDMFormValues
 			translatedDDMFormValues =
-				new com.liferay.portlet.dynamicdatamapping.DDMFormValues(
+				new com.liferay.dynamic.data.mapping.kernel.DDMFormValues(
 					translatedDDMForm);
 
 		translatedDDMFormValues.setAvailableLocales(
@@ -233,7 +233,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	protected DDMFormFieldOptions translate(
-		com.liferay.portlet.dynamicdatamapping.DDMFormFieldOptions
+		com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions
 			ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
@@ -246,11 +246,11 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormFieldOptions.setDefaultLocale(
 			ddmFormFieldOptions.getDefaultLocale());
 
-		Map<String, com.liferay.portlet.dynamicdatamapping.LocalizedValue>
+		Map<String, com.liferay.dynamic.data.mapping.kernel.LocalizedValue>
 			options = ddmFormFieldOptions.getOptions();
 
 		for (String optionValue : options.keySet()) {
-			com.liferay.portlet.dynamicdatamapping.LocalizedValue
+			com.liferay.dynamic.data.mapping.kernel.LocalizedValue
 				localizedValue = options.get(optionValue);
 
 			for (Locale locale : localizedValue.getAvailableLocales()) {
@@ -263,7 +263,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	protected DDMFormFieldValue translate(
-		com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
+		com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
 			ddmFormFieldValue) {
 
 		if (ddmFormFieldValue == null) {
@@ -278,7 +278,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormFieldValue.setValue(
 			translate(ddmFormFieldValue.getValue()));
 
-		for (com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
+		for (com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
 				nestedFormFieldValue :
 					ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
@@ -290,7 +290,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	protected Value translate(
-		com.liferay.portlet.dynamicdatamapping.Value value) {
+		com.liferay.dynamic.data.mapping.kernel.Value value) {
 
 		if (value == null) {
 			return null;
@@ -304,16 +304,16 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		}
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.DDMFormFieldOptions
+	protected com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions
 		translate(DDMFormFieldOptions ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
 			return null;
 		}
 
-		com.liferay.portlet.dynamicdatamapping.DDMFormFieldOptions
+		com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions
 			translatedDDMFormFieldOptions =
-				new com.liferay.portlet.dynamicdatamapping.DDMFormFieldOptions();
+				new com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions();
 
 		translatedDDMFormFieldOptions.setDefaultLocale(
 			ddmFormFieldOptions.getDefaultLocale());
@@ -332,7 +332,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		return translatedDDMFormFieldOptions;
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
+	protected com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
 		translate(
 			DDMFormFieldValue ddmFormFieldValue) {
 
@@ -340,9 +340,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			return null;
 		}
 
-		com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
+		com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
 			translatedDDMFormFieldValue =
-				new com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue();
+				new com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue();
 
 		translatedDDMFormFieldValue.setInstanceId(
 			ddmFormFieldValue.getInstanceId());
@@ -360,7 +360,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		return translatedDDMFormFieldValue;
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.Value translate(
+	protected com.liferay.dynamic.data.mapping.kernel.Value translate(
 		Value value) {
 
 		if (value == null) {
@@ -376,7 +376,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	protected LocalizedValue translateLocalizedValue(
-		com.liferay.portlet.dynamicdatamapping.Value value) {
+		com.liferay.dynamic.data.mapping.kernel.Value value) {
 
 		if (value == null) {
 			return null;
@@ -395,16 +395,16 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		return translatedLocalizedValue;
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.LocalizedValue
+	protected com.liferay.dynamic.data.mapping.kernel.LocalizedValue
 		translateLocalizedValue(Value value) {
 
 		if (value == null) {
 			return null;
 		}
 
-		com.liferay.portlet.dynamicdatamapping.LocalizedValue
+		com.liferay.dynamic.data.mapping.kernel.LocalizedValue
 			translatedLocalizedValue =
-				new com.liferay.portlet.dynamicdatamapping.LocalizedValue();
+				new com.liferay.dynamic.data.mapping.kernel.LocalizedValue();
 
 		translatedLocalizedValue.setDefaultLocale(value.getDefaultLocale());
 
@@ -418,7 +418,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	protected UnlocalizedValue translateUnlocalizedValue(
-		com.liferay.portlet.dynamicdatamapping.Value value) {
+		com.liferay.dynamic.data.mapping.kernel.Value value) {
 
 		if (value == null) {
 			return null;
@@ -427,14 +427,14 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		return new UnlocalizedValue(value.getString(value.getDefaultLocale()));
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.UnlocalizedValue
+	protected com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue
 		translateUnlocalizedValue(Value value) {
 
 		if (value == null) {
 			return null;
 		}
 
-		return new com.liferay.portlet.dynamicdatamapping.UnlocalizedValue(
+		return new com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue(
 			value.getString(value.getDefaultLocale()));
 	}
 

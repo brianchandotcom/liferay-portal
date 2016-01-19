@@ -16,8 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
+<%@ page import="com.liferay.dynamic.data.mapping.kernel.DDMTemplate" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %>
 
 <%
 String formName = (String)request.getAttribute("liferay-ui:language:formName");

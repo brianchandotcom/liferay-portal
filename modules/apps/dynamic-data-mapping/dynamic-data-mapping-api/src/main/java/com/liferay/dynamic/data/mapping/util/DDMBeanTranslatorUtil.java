@@ -28,36 +28,36 @@ import org.osgi.util.tracker.ServiceTracker;
 public class DDMBeanTranslatorUtil {
 
 	public static DDMForm translate(
-		com.liferay.portlet.dynamicdatamapping.DDMForm ddmForm) {
+		com.liferay.dynamic.data.mapping.kernel.DDMForm ddmForm) {
 
 		return getDDMBeanTranslator().translate(ddmForm);
 	}
 
 	public static DDMFormField translate(
-		com.liferay.portlet.dynamicdatamapping.DDMFormField ddmFormField) {
+		com.liferay.dynamic.data.mapping.kernel.DDMFormField ddmFormField) {
 
 		return getDDMBeanTranslator().translate(ddmFormField);
 	}
 
 	public static DDMFormValues translate(
-		com.liferay.portlet.dynamicdatamapping.DDMFormValues ddmFormValues) {
+		com.liferay.dynamic.data.mapping.kernel.DDMFormValues ddmFormValues) {
 
 		return getDDMBeanTranslator().translate(ddmFormValues);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.DDMForm translate(
+	public static com.liferay.dynamic.data.mapping.kernel.DDMForm translate(
 		DDMForm ddmForm) {
 
 		return getDDMBeanTranslator().translate(ddmForm);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.DDMFormField translate(
-		DDMFormField ddmFormField) {
+	public static com.liferay.dynamic.data.mapping.kernel.DDMFormField
+		translate(DDMFormField ddmFormField) {
 
 		return getDDMBeanTranslator().translate(ddmFormField);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.DDMFormValues
+	public static com.liferay.dynamic.data.mapping.kernel.DDMFormValues
 		translate(DDMFormValues ddmFormValues) {
 
 		return getDDMBeanTranslator().translate(ddmFormValues);

@@ -16,8 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
+<%@ page import="com.liferay.dynamic.data.mapping.kernel.DDMTemplate" %><%@
+page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" %>
 
 <%
 List<BreadcrumbEntry> breadcrumbEntries = (List<BreadcrumbEntry>)request.getAttribute("liferay-ui:breadcrumb:breadcrumbEntries");

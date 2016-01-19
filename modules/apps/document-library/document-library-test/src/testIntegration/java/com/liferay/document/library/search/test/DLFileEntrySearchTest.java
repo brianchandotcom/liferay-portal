@@ -15,6 +15,9 @@
 package com.liferay.document.library.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -65,9 +68,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.LocalizedValue;
 
 import java.io.File;
 import java.io.InputStream;
@@ -337,7 +337,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	protected DDMFormValues createDDMFormValues(
-		com.liferay.portlet.dynamicdatamapping.DDMForm ddmForm) {
+		com.liferay.dynamic.data.mapping.kernel.DDMForm ddmForm) {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 

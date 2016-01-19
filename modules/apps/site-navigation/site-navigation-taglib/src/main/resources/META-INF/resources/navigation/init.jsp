@@ -16,8 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.theme.NavItem" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
+<%@ page import="com.liferay.dynamic.data.mapping.kernel.DDMTemplate" %><%@
+page import="com.liferay.portal.theme.NavItem" %>
 
 <%
 List<NavItem> branchNavItems = (List)request.getAttribute("liferay-site-navigation:navigation:branchNavItems");

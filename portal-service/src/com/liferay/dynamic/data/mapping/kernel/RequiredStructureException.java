@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping;
+package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Leonardo Barros
+ * @author Rafael Praxedes
  */
-public class StorageFieldRequiredException extends PortalException {
+public class RequiredStructureException extends PortalException {
 
-	public StorageFieldRequiredException() {
+	public RequiredStructureException() {
 	}
 
-	public StorageFieldRequiredException(String msg) {
+	public RequiredStructureException(String msg) {
 		super(msg);
 	}
 
-	public StorageFieldRequiredException(String msg, Throwable cause) {
+	public RequiredStructureException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public StorageFieldRequiredException(Throwable cause) {
+	public RequiredStructureException(Throwable cause) {
 		super(cause);
 	}
 

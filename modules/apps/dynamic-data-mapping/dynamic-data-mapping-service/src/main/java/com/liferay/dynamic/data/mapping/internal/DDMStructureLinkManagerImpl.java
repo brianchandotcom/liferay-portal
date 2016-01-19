@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
-import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManager;
 
 import java.util.ArrayList;
 import java.util.List;

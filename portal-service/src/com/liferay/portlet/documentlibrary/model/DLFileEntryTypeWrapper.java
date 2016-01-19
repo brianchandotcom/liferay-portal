@@ -183,7 +183,7 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.DDMStructure> getDDMStructures() {
+	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures() {
 		return _dlFileEntryType.getDDMStructures();
 	}
 

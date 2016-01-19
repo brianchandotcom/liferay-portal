@@ -12,31 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping;
+package com.liferay.dynamic.data.mapping.kernel;
 
-import java.io.Serializable;
-
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marcellus Tavares
+ * @author Rafael Praxedes
  */
-public interface Value extends Serializable {
+public class StructureNameException extends PortalException {
 
-	public void addString(Locale locale, String value);
+	public StructureNameException() {
+	}
 
-	public Set<Locale> getAvailableLocales();
+	public StructureNameException(String msg) {
+		super(msg);
+	}
 
-	public Locale getDefaultLocale();
+	public StructureNameException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public String getString(Locale locale);
-
-	public Map<Locale, String> getValues();
-
-	public boolean isLocalized();
-
-	public void setDefaultLocale(Locale defaultLocale);
+	public StructureNameException(Throwable cause) {
+		super(cause);
+	}
 
 }

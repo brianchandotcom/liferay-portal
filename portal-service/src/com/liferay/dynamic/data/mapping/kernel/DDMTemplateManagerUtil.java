@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping;
+package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -25,28 +26,38 @@ import java.util.Map;
 /**
  * @author Marcellus Tavares
  */
-public interface DDMTemplateManager {
+public class DDMTemplateManagerUtil {
 
-	public static final String TEMPLATE_MODE_CREATE = "create";
-
-	public static final String TEMPLATE_TYPE_DISPLAY = "display";
-
-	public static final String TEMPLATE_TYPE_MACRO = "macro";
-
-	public static final String TEMPLATE_VERSION_DEFAULT = "1.0";
-
-	public DDMTemplate addTemplate(
+	public static DDMTemplate addTemplate(
 			long userId, long groupId, long classNameId, long classPK,
 			long resourceClassNameId, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
 			boolean cacheable, boolean smallImage, String smallImageURL,
 			File smallImageFile, ServiceContext serviceContext)
-		throws PortalException;
+		throws PortalException {
 
-	public DDMTemplate fetchTemplate(
-		long groupId, long classNameId, String templateKey);
+		return _ddmTemplateManager.addTemplate(
+			userId, groupId, classNameId, classPK, resourceClassNameId,
+			templateKey, nameMap, descriptionMap, type, mode, language, script,
+			cacheable, smallImage, smallImageURL, smallImageFile,
+			serviceContext);
+	}
 
-	public DDMTemplate getTemplate(long templateId) throws PortalException;
+	public static DDMTemplate fetchTemplate(
+		long groupId, long classNameId, String templateKey) {
+
+		return _ddmTemplateManager.fetchTemplate(
+			groupId, classNameId, templateKey);
+	}
+
+	public static DDMTemplate getTemplate(long templateId)
+		throws PortalException {
+
+		return _ddmTemplateManager.getTemplate(templateId);
+	}
+
+	private static final DDMTemplateManager _ddmTemplateManager =
+		ProxyFactory.newServiceTrackedInstance(DDMTemplateManager.class);
 
 }

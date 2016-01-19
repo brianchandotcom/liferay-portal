@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ConsoleTestUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.template.CacheTemplateResource;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

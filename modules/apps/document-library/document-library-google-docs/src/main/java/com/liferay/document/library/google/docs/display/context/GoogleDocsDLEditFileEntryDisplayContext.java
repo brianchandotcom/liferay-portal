@@ -15,6 +15,7 @@
 package com.liferay.document.library.google.docs.display.context;
 
 import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,7 +25,6 @@ import com.liferay.portlet.documentlibrary.display.context.BaseDLEditFileEntryDi
 import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.portlet.documentlibrary.display.context.DLFilePicker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 
 import java.util.UUID;
 

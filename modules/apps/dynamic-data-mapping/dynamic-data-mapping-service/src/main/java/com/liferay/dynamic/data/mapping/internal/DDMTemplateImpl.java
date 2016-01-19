@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 

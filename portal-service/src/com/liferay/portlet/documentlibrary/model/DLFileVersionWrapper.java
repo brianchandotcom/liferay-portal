@@ -322,7 +322,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.DDMStructure> getDDMStructures()
+	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileVersion.getDDMStructures();
 	}

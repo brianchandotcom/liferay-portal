@@ -53,7 +53,7 @@ public interface DLFileEntryType extends DLFileEntryTypeModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.DDMStructure> getDDMStructures();
+	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures();
 
 	public java.lang.String getUnambiguousName(
 		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFileEntryTypes,

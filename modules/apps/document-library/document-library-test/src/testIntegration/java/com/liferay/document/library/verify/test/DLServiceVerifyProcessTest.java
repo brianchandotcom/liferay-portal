@@ -17,6 +17,11 @@ package com.liferay.document.library.verify.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.verify.DLServiceVerifyProcess;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.kernel.DDMForm;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -59,11 +64,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLTrashServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.UnlocalizedValue;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -128,10 +128,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
 
-		List<com.liferay.portlet.dynamicdatamapping.DDMStructure>
+		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = dlFileEntryType.getDDMStructures();
 
-		com.liferay.portlet.dynamicdatamapping.DDMStructure ddmStructure =
+		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
 			ddmStructures.get(0);
 
 		DDMStructure modelDDMStructure =
@@ -167,10 +167,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
 
-		List<com.liferay.portlet.dynamicdatamapping.DDMStructure>
+		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = dlFileEntryType.getDDMStructures();
 
-		com.liferay.portlet.dynamicdatamapping.DDMStructure ddmStructure =
+		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
 			ddmStructures.get(0);
 
 		DDMStructureLocalServiceUtil.deleteDDMStructure(
@@ -384,13 +384,13 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
 				serviceContext);
 
-		List<com.liferay.portlet.dynamicdatamapping.DDMStructure>
+		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = dlFileEntryType.getDDMStructures();
 
-		com.liferay.portlet.dynamicdatamapping.DDMStructure ddmStructure =
+		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
 			ddmStructures.get(0);
 
-		Map<String, com.liferay.portlet.dynamicdatamapping.DDMFormValues>
+		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 			ddmFormValuesMap = getDDMFormValuesMap(
 				ddmStructure.getStructureKey(), user.getLocale());
 

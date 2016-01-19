@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
-import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
 
 /**
  * @author Rafael Praxedes

@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.display.template.internal;
 
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplateManager;
 
 import java.util.List;
 import java.util.Map;

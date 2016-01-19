@@ -165,7 +165,7 @@ public class DLFileEntryTypeServiceTest {
 				"Test Structure", StringPool.BLANK, new long[0],
 				serviceContext);
 
-		List<com.liferay.portlet.dynamicdatamapping.DDMStructure>
+		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = dlFileEntryType.getDDMStructures();
 
 		Assert.assertEquals(1, ddmStructures.size());

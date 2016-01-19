@@ -107,6 +107,8 @@ public class JavadocFormatter {
 
 		_author = author;
 
+		_generateXml = GetterUtil.getBoolean(arguments.get("javadoc.xml"));
+
 		String init = arguments.get("javadoc.init");
 
 		_initializeMissingJavadocs = GetterUtil.getBoolean(init);
@@ -241,50 +243,52 @@ public class JavadocFormatter {
 			}
 		}
 
-		for (Map.Entry<String, Tuple> entry : _javadocxXmlTuples.entrySet()) {
-			Tuple tuple = entry.getValue();
+		if (_generateXml) {
+			for (Map.Entry<String, Tuple> entry : _javadocxXmlTuples.entrySet()) {
+				Tuple tuple = entry.getValue();
 
-			File javadocsXmlFile = (File)tuple.getObject(1);
-			String oldJavadocsXmlContent = (String)tuple.getObject(2);
-			Document javadocsXmlDocument = (Document)tuple.getObject(3);
+				File javadocsXmlFile = (File)tuple.getObject(1);
+				String oldJavadocsXmlContent = (String)tuple.getObject(2);
+				Document javadocsXmlDocument = (Document)tuple.getObject(3);
 
-			Element javadocsXmlRootElement =
-				javadocsXmlDocument.getRootElement();
+				Element javadocsXmlRootElement =
+					javadocsXmlDocument.getRootElement();
 
-			_sortElementsByChildElement(
-				javadocsXmlRootElement, "javadoc", "type");
+				_sortElementsByChildElement(
+					javadocsXmlRootElement, "javadoc", "type");
 
-			String newJavadocsXmlContent = _formattedString(
-				javadocsXmlDocument);
+				String newJavadocsXmlContent = _formattedString(
+					javadocsXmlDocument);
 
-			if (!oldJavadocsXmlContent.equals(newJavadocsXmlContent)) {
-				_write(javadocsXmlFile, newJavadocsXmlContent);
+				if (!oldJavadocsXmlContent.equals(newJavadocsXmlContent)) {
+					_write(javadocsXmlFile, newJavadocsXmlContent);
 
-				_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
-			}
+					_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
+				}
 
-			_detachUnnecessaryTypes(javadocsXmlRootElement);
+				_detachUnnecessaryTypes(javadocsXmlRootElement);
 
-			File javadocsRuntimeXmlFile = new File(
-				StringUtil.replaceLast(
-					javadocsXmlFile.toString(), "-all.xml", "-rt.xml"));
+				File javadocsRuntimeXmlFile = new File(
+					StringUtil.replaceLast(
+						javadocsXmlFile.toString(), "-all.xml", "-rt.xml"));
 
-			String oldJavadocsRuntimeXmlContent = StringPool.BLANK;
+				String oldJavadocsRuntimeXmlContent = StringPool.BLANK;
 
-			if (javadocsRuntimeXmlFile.exists()) {
-				oldJavadocsRuntimeXmlContent = _read(javadocsRuntimeXmlFile);
-			}
+				if (javadocsRuntimeXmlFile.exists()) {
+					oldJavadocsRuntimeXmlContent = _read(javadocsRuntimeXmlFile);
+				}
 
-			String newJavadocsRuntimeXmlContent = _compactString(
-				javadocsXmlDocument);
+				String newJavadocsRuntimeXmlContent = _compactString(
+					javadocsXmlDocument);
 
-			if (!oldJavadocsRuntimeXmlContent.equals(
-					newJavadocsRuntimeXmlContent)) {
+				if (!oldJavadocsRuntimeXmlContent.equals(
+						newJavadocsRuntimeXmlContent)) {
 
-				_write(javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
+					_write(javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
 
-				_modifiedFileNames.add(
-					javadocsRuntimeXmlFile.getAbsolutePath());
+					_modifiedFileNames.add(
+						javadocsRuntimeXmlFile.getAbsolutePath());
+				}
 			}
 		}
 	}
@@ -876,7 +880,9 @@ public class JavadocFormatter {
 
 		Document document = _getJavadocDocument(javaClass);
 
-		_updateJavadocsXmlFile(fileName, javaClass, document);
+		if (_generateXml) {
+			_updateJavadocsXmlFile(fileName, javaClass, document);
+		}
 
 		String newContent = _getUpdateJavaFromDocument(
 			fileName, javadocLessContent, document);
@@ -2214,6 +2220,7 @@ public class JavadocFormatter {
 	}
 
 	private final String _author;
+	private final boolean _generateXml;
 	private String _imports;
 	private final boolean _initializeMissingJavadocs;
 	private final String _inputDirName;

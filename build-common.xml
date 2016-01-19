@@ -1732,6 +1732,7 @@ rerun your task.
 			<arg value="javadoc.limit=${limit}" />
 			<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
 			<arg value="javadoc.update=${update}" />
+			<arg value="javadoc.xml=${xml}" />
 		</java>
 	</target>
 

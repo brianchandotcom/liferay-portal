@@ -94,12 +94,12 @@
 <!--MESSAGE_BOARDS_THREAD-->
 <tr>
 	<td>MESSAGE_BOARDS_THREAD_TITLE</td>
-	<td>//div[@class='subject']/strong</td>
+	<td>//h4[@title='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_BOARDS_THREAD_CONTENT</td>
-	<td>//div[@class='thread-body']</td>
+	<td>//div[@class='panel-body']/div[@class='message-content']</td>
 	<td></td>
 </tr>
 <tr>

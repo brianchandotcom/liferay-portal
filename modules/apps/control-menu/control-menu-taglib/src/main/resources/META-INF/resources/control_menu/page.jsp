@@ -24,7 +24,7 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">
 	<div class="control-menu control-menu-level-1" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
 		<div class="container-fluid-1280">
-			<ul class="control-menu-nav control-menu-level-1-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
+			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 				<%
 				for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {

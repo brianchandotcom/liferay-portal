@@ -178,7 +178,7 @@ request.setAttribute("view_layout_revision_details.jsp-layoutRevision", layoutRe
 
 <li class="control-menu-nav-item">
 	<div class="dropdown hidden-xs">
-		<a class="dropdown-toggle taglib-icon" href="javascript:;" data-toggle="dropdown">
+		<a class="dropdown-toggle taglib-icon" data-toggle="dropdown" href="javascript:;">
 			<aui:icon image="ellipsis-v" markupView="lexicon" />
 
 			<span class="sr-only">

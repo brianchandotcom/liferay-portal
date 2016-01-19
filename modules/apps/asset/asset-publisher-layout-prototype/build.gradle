@@ -3,6 +3,7 @@ dependencies {
 	compile project(":apps:asset:asset-publisher-web")
 	compile project(":apps:asset:asset-tags-navigation-web")
 	compile project(":apps:search:search-web")
+	compile project(":portal:portal-instance-lifecycle")
 }
 
 liferay {

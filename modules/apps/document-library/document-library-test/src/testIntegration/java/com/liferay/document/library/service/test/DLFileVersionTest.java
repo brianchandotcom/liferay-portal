@@ -15,8 +15,6 @@
 package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.events.AddDefaultDocumentLibraryStructuresAction;
-import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -62,8 +60,6 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -101,15 +97,6 @@ public class DLFileVersionTest {
 
 		setUpParentFolder();
 		setUpResourcePermission();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		SimpleAction simpleAction = registry.getService(
-			AddDefaultDocumentLibraryStructuresAction.class);
-
-		String companyIdString = String.valueOf(TestPropsValues.getCompanyId());
-
-		simpleAction.run(new String[] {companyIdString});
 
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(

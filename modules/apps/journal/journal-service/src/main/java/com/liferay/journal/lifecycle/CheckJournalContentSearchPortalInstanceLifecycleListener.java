@@ -1,0 +1,60 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.journal.lifecycle;
+
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.model.Company;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Eudaldo Alonso
+ */
+@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+public class CheckJournalContentSearchPortalInstanceLifecycleListener
+	implements PortalInstanceLifecycleListener {
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!JournalServiceConfigurationValues.SYNC_CONTENT_SEARCH_ON_STARTUP) {
+			return;
+		}
+
+		_journalContentSearchLocalService.checkContentSearches(
+			company.getCompanyId());
+	}
+
+	protected void doRun(long companyId) throws Exception {
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalContentSearchLocalService(
+		JournalContentSearchLocalService journalContentSearchLocalService) {
+
+		_journalContentSearchLocalService = journalContentSearchLocalService;
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+}

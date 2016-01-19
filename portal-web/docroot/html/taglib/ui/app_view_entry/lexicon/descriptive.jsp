@@ -22,7 +22,7 @@
 				<%= HtmlUtil.escape(title) %>
 			</c:when>
 			<c:otherwise>
-				<a href="<%= url %>" title="<%= linkTitle %>">
+				<a href="<%= HtmlUtil.escapeAttribute(url) %>" title="<%= linkTitle %>">
 					<%= HtmlUtil.escape(title) %>
 				</a>
 			</c:otherwise>

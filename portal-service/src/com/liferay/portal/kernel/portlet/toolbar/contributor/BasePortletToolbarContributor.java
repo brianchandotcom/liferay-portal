@@ -56,6 +56,7 @@ public abstract class BasePortletToolbarContributor
 		menu.setIcon("../aui/plus-sign-2");
 		menu.setMenuItems(portletTitleMenuItems);
 		menu.setShowArrow(false);
+		menu.setShowWhenSingleIcon(true);
 
 		menus.add(menu);
 

@@ -75,7 +75,6 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:tabs
 				names="<%= StringUtil.merge(importers) %>"
 				param="tabs2"
-				refresh="<%= false %>"
 				type="tabs nav-tabs-default"
 				url="<%= portletURL.toString() %>"
 			/>

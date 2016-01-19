@@ -17,19 +17,17 @@
 <%
 ExportImportConfigurationSearchTerms searchTerms = (ExportImportConfigurationSearchTerms)searchContainer.getSearchTerms();
 
-BaseModelSearchResult<ExportImportConfiguration> baseModelSearchResult = null;
-
-Sort sort = SortFactoryUtil.getSort(ExportImportConfiguration.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
-
 if (searchTerms.isAdvancedSearch()) {
-	baseModelSearchResult = ExportImportConfigurationLocalServiceUtil.searchExportImportConfigurations(company.getCompanyId(), groupId, exportImportConfigurationType, searchTerms.getName(), searchTerms.getDescription(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	results = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(company.getCompanyId(), groupId, searchTerms.getName(), searchTerms.getDescription(), exportImportConfigurationType, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+	total = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(company.getCompanyId(), groupId, searchTerms.getName(), searchTerms.getDescription(), exportImportConfigurationType, searchTerms.isAndOperator());
 }
 else {
-	baseModelSearchResult = ExportImportConfigurationLocalServiceUtil.searchExportImportConfigurations(company.getCompanyId(), groupId, exportImportConfigurationType, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	results = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(company.getCompanyId(), groupId, searchTerms.getKeywords(), exportImportConfigurationType, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+	total = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(company.getCompanyId(), groupId, searchTerms.getKeywords(), exportImportConfigurationType);
 }
 
-results = baseModelSearchResult.getBaseModels();
-
 searchContainer.setResults(results);
-searchContainer.setTotal(baseModelSearchResult.getLength());
+searchContainer.setTotal(total);
 %>

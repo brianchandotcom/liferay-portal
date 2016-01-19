@@ -2679,6 +2679,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-test-smtp-server">
+ 		<sequential>
+			<parallel>
+				<daemons>
+					<java dir="${test.smtp.server.dir}" jar="${test.smtp.server.dir}\MockMock.jar" fork="true" />
+				</daemons>
+			</parallel>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-android-device">
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
@@ -5070,6 +5080,15 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 		</if>
+
+		<if>
+			<isset property="test.smtp.server.dir" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.smtp.server.dir=${test.smtp.server.dir}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-selenium">
@@ -5957,6 +5976,17 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 		</if>
+
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
+ 		<if>
+ 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
+ 			<then>
+ 				<echo file="${test.ext.properties.file}" append="true">
+ 					test.smtp.server.enabled=${test.smtp.server.enabled}
+ 				</echo>
+ 			</then>
+ 		</if>
 
 		<get-testcase-property property.name="timeout.explicit.wait" />
 
@@ -7235,6 +7265,20 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</if>
 			</then>
 		</if>
+
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
+ 		<if>
+ 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
+ 			<then>
+ 				<mirrors-get
+ 					dest="${test.smtp.server.dir}/MockMock.jar"
+ 					src="${test.smtp.server.release.url}/com.mockmock/1.4.0/com.mockmock-1.4.0.jar"
+ 				/>
+
+ 				<start-test-smtp-server />
+ 			</then>
+ 		</if>
 
 		<get-testcase-property property.name="solr.enabled" />
 

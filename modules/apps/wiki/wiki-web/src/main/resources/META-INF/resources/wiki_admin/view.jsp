@@ -155,7 +155,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
 							<liferay-ui:search-container-column-icon
-								icon="folder"
+								icon="wiki"
 								toggleRowChecker="<%= true %>"
 							/>
 

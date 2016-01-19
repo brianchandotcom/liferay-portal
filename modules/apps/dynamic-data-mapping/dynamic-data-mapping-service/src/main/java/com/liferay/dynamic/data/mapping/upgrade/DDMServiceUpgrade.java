@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -28,33 +29,49 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(
+	immediate = true,
+	service = {DDMServiceUpgrade.class, UpgradeStepRegistrator.class}
+)
 public class DDMServiceUpgrade implements UpgradeStepRegistrator {
+
+	public UpgradeStep[] getUpgradeSteps(String toSchemaVersionString) {
+		return _upgradeStepsMap.get(toSchemaVersionString);
+	}
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.dynamic.data.mapping.service", "0.0.1", "1.0.0",
-			new UpgradeSchema(), new UpgradeClassNames(),
-			new UpgradeCompanyId(),
-			new UpgradeDynamicDataMapping(
-				_assetEntryLocalService, _dlFileEntryLocalService,
-				_dlFileVersionLocalService, _dlFolderLocalService,
-				_resourceActionLocalService, _resourcePermissionLocalService),
-			new UpgradeLastPublishDate());
+			getUpgradeSteps("1.0.0"));
 	}
 
-	@Reference(unbind = "-")
-	public void setDLFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
+	@Activate
+	protected void activate() {
+		_upgradeStepsMap = new HashMap<>();
 
-		_dlFileEntryLocalService = dlFileEntryLocalService;
+		_upgradeStepsMap.put(
+			"1.0.0",
+			new UpgradeStep[] {
+				new UpgradeSchema(), new UpgradeClassNames(),
+				new UpgradeCompanyId(),
+				new UpgradeDynamicDataMapping(
+					_assetEntryLocalService, _dlFileEntryLocalService,
+					_dlFileVersionLocalService, _dlFolderLocalService,
+					_resourceActionLocalService,
+					_resourcePermissionLocalService),
+				new UpgradeLastPublishDate()
+			});
 	}
 
 	@Reference(unbind = "-")
@@ -62,6 +79,13 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -103,5 +127,6 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	private DLFolderLocalService _dlFolderLocalService;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private Map<String, UpgradeStep[]> _upgradeStepsMap;
 
 }

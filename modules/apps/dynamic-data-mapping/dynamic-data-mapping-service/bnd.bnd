@@ -8,6 +8,8 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.service.permission,\
 	com.liferay.dynamic.data.mapping.storage.impl,\
 	com.liferay.dynamic.data.mapping.template,\
+	com.liferay.dynamic.data.mapping.upgrade,\
+	com.liferay.dynamic.data.mapping.upgrade.v1_0_0,\
 	com.liferay.dynamic.data.mapping.util.impl,\
 	com.liferay.dynamic.data.mapping.verify,\
 	com.liferay.dynamic.data.mapping.webdav

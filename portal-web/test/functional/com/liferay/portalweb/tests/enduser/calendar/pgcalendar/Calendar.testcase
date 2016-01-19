@@ -3855,32 +3855,16 @@
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<for list="usersn1,usersn2,usersn3" param="userScreenName">
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="Users and Organizations" />
+			</execute>
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea3@liferay.com" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
+			<execute macro="User#editPasswordCP">
+				<var name="userEmailAddress" value="${userScreenName}@liferay.com" />
+				<var name="userScreenName" value="${userScreenName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

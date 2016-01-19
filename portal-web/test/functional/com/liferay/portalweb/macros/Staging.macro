@@ -114,7 +114,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Staging#SCHEDULED" value1="Scheduled" />

@@ -29,7 +29,6 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
 portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("usersListView", usersListView);
 

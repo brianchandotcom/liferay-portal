@@ -18,7 +18,6 @@
 	<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
 		<aui:nav cssClass="navbar-nav">
 			<portlet:renderURL var="viewUsersFlatURL">
-				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 				<portlet:param name="toolbarItem" value="view-all-users" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
@@ -31,7 +30,6 @@
 			/>
 
 			<portlet:renderURL var="viewOrganizationsFlatURL">
-				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 				<portlet:param name="toolbarItem" value="view-all-organizations" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />

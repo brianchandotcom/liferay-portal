@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.exportimport">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.background.task">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.exportimport.background.task.display">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.backgroundtask">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.content.processor.base">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.exportimport.controller">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.exportimport.lar">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.exportimport.lifecycle">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.messaging">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.model.listener">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.portlet.preferences.processor.base">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.exportimport.portlet.preferences.processor.capability">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.exportimport.search">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.staged.model.repository.base">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.exportimport.staging">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.exportimport.staging.permission">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.exportimport.xstream">
+		<priority value="WARN" />
+	</category>
+</log4j:configuration>

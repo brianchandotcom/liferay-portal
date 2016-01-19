@@ -338,6 +338,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatPoshiXML(fileName, newContent);
 		}
+		else if (fileName.contains("/resource-actions/")) {
+			formatResourceActionXML(fileName, newContent);
+		}
 		else if (fileName.endsWith("/service.xml")) {
 			formatServiceXML(fileName, absolutePath, newContent);
 		}
@@ -809,6 +812,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		content = fixPoshiXMLEndLines(content);
 
 		return fixPoshiXMLNumberOfTabs(content);
+	}
+
+	protected void formatResourceActionXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "portlet-resource", null,
+			new ResourceActionPortletResourceElementComparator());
 	}
 
 	protected void formatServiceXML(
@@ -1344,14 +1357,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ElementComparator implements Comparator<Element> {
+	private class ElementComparator extends NaturalOrderStringComparator {
 
-		@Override
 		public int compare(Element element1, Element element2) {
 			String elementName1 = getElementName(element1);
 			String elementName2 = getElementName(element2);
 
-			return elementName1.compareToIgnoreCase(elementName2);
+			return super.compare(elementName1, elementName2);
 		}
 
 		protected String getElementName(Element element) {
@@ -1363,6 +1375,19 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		private static final String _NAME_ATTRIBUTE = "name";
+
+	}
+
+	private class ResourceActionPortletResourceElementComparator
+		extends ElementComparator {
+
+		@Override
+		protected String getElementName(Element portletResourceElement) {
+			Element portletNameElement = portletResourceElement.element(
+				"portlet-name");
+
+			return portletNameElement.getText();
+		}
 
 	}
 

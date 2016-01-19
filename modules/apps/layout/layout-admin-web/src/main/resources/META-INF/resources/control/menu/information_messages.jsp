@@ -25,6 +25,7 @@
 
 <%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminWebKeys" %>
 <%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesControlMenuEntry" %>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
@@ -147,7 +148,7 @@ data.put("qa-id", "info");
 					}
 					%>
 
-					<liferay-ui:icon cssClass="view-default" id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
+					<liferay-ui:icon cssClass="view-default" id="toggleCustomizedView" label="<%= true %>" message="<%= LanguageUtil.get(resourceBundle, taglibMessage) %>" url="javascript:;" />
 
 					<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 						<portlet:actionURL name="resetCustomizationView" var="resetCustomizationViewURL">
@@ -158,7 +159,7 @@ data.put("qa-id", "info");
 						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
 						%>
 
-						<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
+						<liferay-ui:icon cssClass="reset-my-customizations" label="<%= true %>" message='<%= LanguageUtil.get(resourceBundle, "reset-my-customizations") %>' url="<%= taglibURL %>" />
 					</c:if>
 				</span>
 			</div>

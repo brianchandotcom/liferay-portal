@@ -79,16 +79,14 @@ if (folder != null) {
 				catch (com.liferay.portal.security.auth.PrincipalException pe) {
 					rowURL = null;
 				}
-
-				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-
-				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 				%>
 
 				<liferay-ui:search-container-column-text
 					name="folder"
 				>
-					<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" label="<%= true %>" markupView="lexicon" message="<%= HtmlUtil.escape(curFolder.getName()) %>" url="<%= rowURL.toString() %>" />
+					<aui:a href="<%= rowURL.toString() %>">
+						<%= HtmlUtil.escape(curFolder.getName()) %>
+					</aui:a>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
@@ -104,7 +102,7 @@ if (folder != null) {
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 
 		<br />
@@ -132,12 +130,15 @@ if (folder != null) {
 				>
 
 					<%
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+					Map<String, Object> data = new HashMap<String, Object>();
 
-					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFile.getFileEntryId());
+					data.put("entryid", curFile.getFileEntryId());
+					data.put("entryname", curFile.getTitle());
 					%>
 
-					<liferay-ui:icon icon="<%= assetRenderer.getIconCssClass() %>" label="<%= true %>" markupView="lexicon" message="<%= HtmlUtil.escape(curFile.getTitle()) %>" />
+					<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+						<%= HtmlUtil.escape(curFile.getTitle()) %>
+					</aui:a>
 
 					<c:if test="<%= Validator.isNotNull(curFile.getDescription()) %>">
 						<br />
@@ -161,18 +162,6 @@ if (folder != null) {
 					name="locked"
 					value='<%= LanguageUtil.get(request, curFile.isCheckedOut() ? "yes" : "no") %>'
 				/>
-
-				<liferay-ui:search-container-column-text>
-
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("entryid", curFile.getFileEntryId());
-					data.put("entryname", curFile.getTitle());
-					%>
-
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator markupView="lexicon" />

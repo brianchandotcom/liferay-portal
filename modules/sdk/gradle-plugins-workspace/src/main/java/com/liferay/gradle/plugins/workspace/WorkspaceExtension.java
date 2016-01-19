@@ -27,6 +27,8 @@ import org.gradle.api.Project;
 public class WorkspaceExtension {
 
 	public WorkspaceExtension(Project project) {
+		_project = project;
+
 		_bundleArtifactGroup = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.group",
 			(String)null);
@@ -40,6 +42,9 @@ public class WorkspaceExtension {
 		_bundleMavenUrl = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.maven.url",
 			(String)null);
+		_configsDir = GradleUtil.getProperty(
+			project, WorkspacePlugin.PROPERTY_PREFIX + "configs.dir",
+			(File)null);
 		_environment = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "environment",
 			(String)null);
@@ -77,6 +82,10 @@ public class WorkspaceExtension {
 		return _bundleMavenUrl;
 	}
 
+	public File getConfigsDir() {
+		return GradleUtil.toFile(_project, _configsDir);
+	}
+
 	public String getEnvironment() {
 		return _environment;
 	}
@@ -101,15 +110,21 @@ public class WorkspaceExtension {
 		return _modulesDefaultRepositoryEnabled;
 	}
 
+	public void setConfigsDir(Object configsDir) {
+		_configsDir = configsDir;
+	}
+
 	private final String _bundleArtifactGroup;
 	private final String _bundleArtifactName;
 	private final String _bundleArtifactVersion;
 	private final String _bundleMavenUrl;
+	private Object _configsDir;
 	private final String _environment;
 	private final File _homeDir;
 	private final boolean _modulesDefaultRepositoryEnabled;
 	private final File _modulesDir;
 	private final File _pluginsSDKDir;
+	private final Project _project;
 	private final File _themesDir;
 
 }

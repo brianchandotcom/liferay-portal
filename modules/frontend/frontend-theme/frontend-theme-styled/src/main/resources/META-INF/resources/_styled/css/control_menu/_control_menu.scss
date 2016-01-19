@@ -16,7 +16,7 @@
 	background-color: $control-menu-level-2-bg;
 	color: $control-menu-level-2-color;
 
-	.staging-variation-label {
+	.control-menu-label {
 		@include sm() {
 			color: $control-menu-level-2-label-color;
 		}

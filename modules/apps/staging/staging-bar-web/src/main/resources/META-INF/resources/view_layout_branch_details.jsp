@@ -28,7 +28,7 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 %>
 
 <li class="control-menu-nav-item">
-	<a class="staging-variation-label" href="javascript:;" id="manageLayoutRevisions" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
+	<a class="control-menu-label staging-variation-label" href="javascript:;" id="manageLayoutRevisions" onclick='<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>'>
 		<liferay-ui:message key="page-variations" />
 	</a>
 

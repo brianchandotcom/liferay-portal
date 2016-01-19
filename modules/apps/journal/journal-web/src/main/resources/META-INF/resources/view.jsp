@@ -16,13 +16,43 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+ArticleSearch articleSearchContainer = journalDisplayContext.getSearchContainer();
+%>
+
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
 
 <liferay-trash:undo
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+<%
+Map<String, Object> data = new HashMap<>();
+
+data.put("qa-id", "navigation");
+%>
+
+<aui:nav-bar cssClass="collapse-basic-search" data="<%= data %>" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="web-content" selected="<%= true %>" />
+	</aui:nav>
+
+	<c:if test="<%= journalDisplayContext.isShowSearch() %>">
+		<aui:nav-bar-search>
+
+			<%
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+			portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
+			%>
+
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="articles" />

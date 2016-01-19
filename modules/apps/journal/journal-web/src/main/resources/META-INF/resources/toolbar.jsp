@@ -21,21 +21,20 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-frontend:management-bar
+	disabled="<%= journalDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= !user.isDefaultUser() && journalDisplayContext.isShowEditActions() %>"
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
+			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" disabled="<%= false %>" href="javascript:;" icon="info-circle" label="info" />
 		</c:if>
 
-		<c:if test="<%= !journalDisplayContext.isSearch() %>">
-			<liferay-frontend:management-bar-display-buttons
-				displayViews="<%= journalDisplayContext.getDisplayViews() %>"
-				portletURL="<%= journalDisplayContext.getPortletURL() %>"
-				selectedDisplayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
-			/>
-		</c:if>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews="<%= journalDisplayContext.getDisplayViews() %>"
+			portletURL="<%= journalDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
+		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<%
@@ -55,7 +54,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationHome() %>" label="all" url="<%= viewArticlesHomeURL.toString() %>" />
+			<liferay-frontend:management-bar-filter-item active="<%= journalDisplayContext.isNavigationHome() %>" label="all" url="<%= viewArticlesHomeURL.toString() %>" />
 
 			<portlet:renderURL var="viewRecentArticlesURL">
 				<portlet:param name="navigation" value="recent" />
@@ -63,7 +62,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationRecent() %>" label="recent" url="<%= viewRecentArticlesURL.toString() %>" />
+			<liferay-frontend:management-bar-filter-item active="<%= journalDisplayContext.isNavigationRecent() %>" label="recent" url="<%= viewRecentArticlesURL.toString() %>" />
 
 			<portlet:renderURL var="viewMyArticlesURL">
 				<portlet:param name="navigation" value="mine" />
@@ -71,9 +70,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationMine() %>" label="mine" url="<%= viewMyArticlesURL.toString() %>" />
+			<liferay-frontend:management-bar-filter-item active="<%= journalDisplayContext.isNavigationMine() %>" label="mine" url="<%= viewMyArticlesURL.toString() %>" />
 
-			<liferay-frontend:management-bar-navigation-item active="<%= journalDisplayContext.isNavigationStructure() %>" id="structures" label="structures" url="javascript:;" />
+			<liferay-frontend:management-bar-filter-item active="<%= journalDisplayContext.isNavigationStructure() %>" id="structures" label="structures" url="javascript:;" />
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-filter
@@ -92,7 +91,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
+			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" disabled="<%= false %>" href="javascript:;" icon="info-circle" label="info" />
 		</c:if>
 
 		<%

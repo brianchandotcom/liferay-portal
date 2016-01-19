@@ -61,7 +61,6 @@ if (deltaEntry > 0) {
 %>
 
 <liferay-frontend:management-bar-display-buttons
-	disabled="<%= total == 0 %>"
 	displayViews='<%= new String[] {"descriptive", "list"} %>'
 	portletURL="<%= displayStyleURL %>"
 	selectedDisplayStyle="<%= displayStyle %>"

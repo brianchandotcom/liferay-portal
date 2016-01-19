@@ -193,11 +193,9 @@ if (wikiInfoPanelDisplayContext.isSinglePageSelection()) {
 					<h5><strong><liferay-ui:message key="rss" /></strong></h5>
 
 					<p>
-						<a href="<%= wikiInfoPanelDisplayContext.getPageRSSURL(wikiPage) %>" target="_blank">
+						<aui:a href="<%= wikiInfoPanelDisplayContext.getPageRSSURL(wikiPage) %>" target="_blank">
 							<liferay-ui:message key="feed" />
-
-							<liferay-ui:message key="opens-new-window" />
-						</a>
+						</aui:a>
 					</p>
 
 					<div class="lfr-asset-categories">
@@ -285,9 +283,7 @@ if (wikiInfoPanelDisplayContext.isSinglePageSelection()) {
 						<h4><liferay-ui:message arguments="<%= curPage.getVersion() %>" key="version-x" /></h4>
 
 						<small class="text-muted">
-							<liferay-ui:message arguments="<%= curPage.getUserName() %>" key="by-x" />
-							,
-							<liferay-ui:message arguments="<%= dateFormatDateTime.format(curPage.getCreateDate()) %>" key="on-x" />
+							<liferay-ui:message arguments="<%= new Object[] {curPage.getUserName(), dateFormatDateTime.format(curPage.getCreateDate())} %>" key="by-x-on-x" />
 						</small>
 					</div>
 

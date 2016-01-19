@@ -39,72 +39,74 @@ else {
 }
 %>
 
-<c:choose>
-	<c:when test="<%= (node != null) && WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
-		<c:choose>
-			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
-				<portlet:actionURL name="/wiki/edit_node" var="unsubscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				</portlet:actionURL>
+<c:if test="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled() %>">
+	<c:choose>
+		<c:when test="<%= (node != null) && WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) %>">
+			<c:choose>
+				<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
+					<portlet:actionURL name="/wiki/edit_node" var="unsubscribeURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon
-					icon="star"
-					markupView="lexicon"
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name="/wiki/edit_node" var="subscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				</portlet:actionURL>
+					<liferay-ui:icon
+						icon="star"
+						markupView="lexicon"
+						message="unsubscribe"
+						url="<%= unsubscribeURL %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<portlet:actionURL name="/wiki/edit_node" var="subscribeURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon
-					icon="star-o"
-					markupView="lexicon"
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:when>
+					<liferay-ui:icon
+						icon="star-o"
+						markupView="lexicon"
+						message="subscribe"
+						url="<%= subscribeURL %>"
+					/>
+				</c:otherwise>
+			</c:choose>
+		</c:when>
 
-	<c:when test="<%= (wikiPage != null) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
-		<c:choose>
-			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>">
-				<portlet:actionURL name="/wiki/edit_page" var="unsubscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-				</portlet:actionURL>
+		<c:when test="<%= (wikiPage != null) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) %>">
+			<c:choose>
+				<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>">
+					<portlet:actionURL name="/wiki/edit_page" var="unsubscribeURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon
-					icon="star"
-					markupView="lexicon"
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name="/wiki/edit_page" var="subscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-				</portlet:actionURL>
+					<liferay-ui:icon
+						icon="star"
+						markupView="lexicon"
+						message="unsubscribe"
+						url="<%= unsubscribeURL %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<portlet:actionURL name="/wiki/edit_page" var="subscribeURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+						<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+					</portlet:actionURL>
 
-				<liferay-ui:icon
-					icon="star-o"
-					markupView="lexicon"
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:when>
-</c:choose>
+					<liferay-ui:icon
+						icon="star-o"
+						markupView="lexicon"
+						message="subscribe"
+						url="<%= subscribeURL %>"
+					/>
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+	</c:choose>
+</c:if>

@@ -763,8 +763,23 @@
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to you." />
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to you." />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO_2" value1="There are no pending tasks assigned to your roles." />
+
+		<execute macro="Workflow#_gotoCompletedFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
+
+		<execute macro="Workflow#_gotoAssignedToMyRoles" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to your roles." />
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to your roles." />
 
 		<execute macro="Workflow#_gotoCompletedFilter" />
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.internal.instance.lifecycle;
 
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
 
@@ -25,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)
 public class KaleoPortalInstanceLifecycleListener
-	extends PortalInstanceLifecycleListener {
+	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {

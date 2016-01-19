@@ -277,9 +277,9 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<div class="form-group">
-					<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
-
 					<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
+						<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
+
 						<aui:button name="selectFolderButton" value="select" />
 
 						<%

@@ -40,36 +40,25 @@ portletURL.setParameter("mvcRenderCommandName", "/wiki/import_pages");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("nodeId", String.valueOf(nodeId));
 
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
-
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
 
 PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
 
-if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backToNodeURL.toString());
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backToNodeURL.toString());
 
-	renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
-}
+renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 %>
 
 <portlet:actionURL name="/wiki/import_pages" var="importPagesURL" />
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div class="container-fluid-1280">
 	<aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "importPages();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="importProgressId" type="hidden" value="<%= importProgressId %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
 		<aui:input name="importer" type="hidden" value="<%= tabs2 %>" />
-
-		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				title="import-pages"
-			/>
-		</c:if>
 
 		<aui:fieldset-group markupView="lexicon">
 			<liferay-ui:tabs

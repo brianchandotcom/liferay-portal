@@ -35,28 +35,17 @@ portletURL.setParameter("mvcRenderCommandName", "/wiki/view_node_deleted_attachm
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachments-recycle-bin"), portletURL.toString());
 
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
-
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
 
 PortletURL backToNodeURL = wikiURLHelper.getBackToNodeURL(node);
 
-if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backToNodeURL.toString());
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backToNodeURL.toString());
 
-	renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
-}
+renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 %>
 
-<c:if test="<%= !portletTitleBasedNavigation %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="removed-attachments"
-	/>
-</c:if>
-
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div class="container-fluid-1280">
 	<portlet:actionURL name="/wiki/edit_node_attachment" var="emptyTrashURL">
 		<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 	</portlet:actionURL>

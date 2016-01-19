@@ -23,16 +23,10 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 
-String headerTitle = (node == null) ? LanguageUtil.get(request, "new-wiki-node") : node.getName();
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
-
-if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
-	renderResponse.setTitle(headerTitle);
-}
+renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-node") : node.getName());
 %>
 
 <portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
@@ -42,14 +36,6 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
-
-		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				localizeTitle="<%= (node == null) %>"
-				title="<%= headerTitle %>"
-			/>
-		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicateNodeNameException.class %>" message="please-enter-a-unique-node-name" />
 		<liferay-ui:error exception="<%= NodeNameException.class %>" message="please-enter-a-valid-name" />

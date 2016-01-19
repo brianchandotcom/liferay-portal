@@ -35,77 +35,81 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 
 <aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(groupId, privateLayout, selectedLayoutIds) %>" />
 
-<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
+<ul class="flex-container layout-selector" id="<portlet:namespace />pages">
+	<li class="layout-selector-options">
+		<aui:fieldset label="pages-options">
+			<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">
+				<c:choose>
+					<c:when test="<%= layoutSetBranchId > 0 %>">
+						<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
+					</c:when>
+					<c:otherwise>
+						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
 
-<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
+							<%
+							List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
+							%>
 
-<div id="<portlet:namespace />pages">
-	<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
-		<div class="selected-pages" id="<portlet:namespace />pane">
+							<aui:select label="site-pages-variation" name="layoutSetBranchId">
+
+								<%
+								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+									boolean selected = false;
+
+									if (layoutSetBranch.isMaster()) {
+										selected = true;
+									}
+								%>
+
+								<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+
+								<%
+								}
+								%>
+
+							</aui:select>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+		</aui:fieldset>
+	</li>
+
+	<li class="layout-selector-options">
+		<aui:fieldset label="pages-to-export">
 
 			<%
 			String treeId = ParamUtil.getString(request, "treeId");
 			long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 			%>
 
-			<liferay-layout:layouts-tree
-				defaultStateChecked="<%= true %>"
-				draggableTree="<%= false %>"
-				groupId="<%= groupId %>"
-				incomplete="<%= false %>"
-				portletURL="<%= renderResponse.createRenderURL() %>"
-				privateLayout="<%= privateLayout %>"
-				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
-				selectableTree="<%= true %>"
-				selectedLayoutIds="<%= selectedLayoutIds %>"
-				selPlid="<%= selPlid %>"
-				treeId="<%= treeId %>"
-			/>
-		</div>
+			<div class="pages-selector">
+				<liferay-layout:layouts-tree
+					defaultStateChecked="<%= true %>"
+					draggableTree="<%= false %>"
+					groupId="<%= groupId %>"
+					incomplete="<%= false %>"
+					portletURL="<%= renderResponse.createRenderURL() %>"
+					privateLayout="<%= privateLayout %>"
+					rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+					selectableTree="<%= true %>"
+					selectedLayoutIds="<%= selectedLayoutIds %>"
+					selPlid="<%= selPlid %>"
+					treeId="<%= treeId %>"
+				/>
+			</div>
+		</aui:fieldset>
+	</li>
 
-		<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">
-			<c:choose>
-				<c:when test="<%= layoutSetBranchId > 0 %>">
-					<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
-				</c:when>
-				<c:otherwise>
-					<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
+	<li class="layout-selector-options">
+		<aui:fieldset label="look-and-feel">
+			<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
 
-						<%
-						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
-						%>
+			<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
 
-						<aui:select label="site-pages-variation" name="layoutSetBranchId">
-
-							<%
-							for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-								boolean selected = false;
-
-								if (layoutSetBranch.isMaster()) {
-									selected = true;
-								}
-							%>
-
-								<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
+			<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
 
 			<aui:input helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" />
-		</c:if>
-
-		<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
-	</aui:fieldset>
-
-	<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
-		<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
-
-		<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
-	</aui:fieldset>
-</div>
+		</aui:fieldset>
+	</li>
+</ul>

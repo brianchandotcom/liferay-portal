@@ -1729,8 +1729,8 @@ public class ServicePreAction extends Action {
 	}
 
 	/**
-	 * Returns <code>true</code> if the request URI's path starts with
-	 * {@link #_PATH_PORTAL_LOGIN}.
+	 * Returns <code>true</code> if the request URI's path starts with the
+	 * portal's default login path <code>c/portal/login</code>.
 	 *
 	 * @param  request the servlet request for the page, which can be a result
 	 *         of a redirect

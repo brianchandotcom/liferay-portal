@@ -87,7 +87,7 @@
 		</execute>
 	</command>
 
-	<command name="NavigateToCorrectForm" priority="4">
+	<command name="NavigateToCorrectForm" priority="5">
 		<description message="This is a use case for LPS-59331" />
 
 		<execute macro="Navigator#openURL" />

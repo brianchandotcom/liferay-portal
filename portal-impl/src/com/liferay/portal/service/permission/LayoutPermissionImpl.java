@@ -171,36 +171,6 @@ public class LayoutPermissionImpl
 		return contains(permissionChecker, layout, false, actionId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             Layout, boolean, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, boolean checkViewableGroup,
-			String actionId)
-		throws PortalException {
-
-		return contains(
-			permissionChecker, layout, checkViewableGroup, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             Layout, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, String actionId)
-		throws PortalException {
-
-		return contains(permissionChecker, layout, actionId);
-	}
-
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, long groupId,
@@ -211,22 +181,6 @@ public class LayoutPermissionImpl
 			groupId, privateLayout, layoutId);
 
 		return contains(permissionChecker, layout, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             long, boolean, long, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String controlPanelCategory,
-			String actionId)
-		throws PortalException {
-
-		return contains(
-			permissionChecker, groupId, privateLayout, layoutId, actionId);
 	}
 
 	@Override
@@ -384,39 +338,6 @@ public class LayoutPermissionImpl
 
 		return containsWithoutViewableGroup(
 			permissionChecker, layout, true, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #containsWithoutViewableGroup(PermissionChecker, Layout,
-	 *             boolean, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean containsWithoutViewableGroup(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, boolean checkLayoutUpdateable,
-			String actionId)
-		throws PortalException {
-
-		return containsWithoutViewableGroup(
-			permissionChecker, layout, checkLayoutUpdateable, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #containsWithoutViewableGroup(PermissionChecker, Layout,
-	 *             String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean containsWithoutViewableGroup(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, String actionId)
-		throws PortalException {
-
-		return containsWithoutViewableGroup(
-			permissionChecker, layout, actionId);
 	}
 
 	protected boolean containsWithViewableGroup(

@@ -74,36 +74,6 @@ public class LayoutPermissionUtil {
 			permissionChecker, layout, actionId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             Layout, boolean, String)}
-	 */
-	@Deprecated
-	public static boolean contains(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, boolean checkViewableGroup,
-			String actionId)
-		throws PortalException {
-
-		return getLayoutPermission().contains(
-			permissionChecker, layout, controlPanelCategory, checkViewableGroup,
-			actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             Layout, String)}
-	 */
-	@Deprecated
-	public static boolean contains(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, String actionId)
-		throws PortalException {
-
-		return getLayoutPermission().contains(
-			permissionChecker, layout, controlPanelCategory, actionId);
-	}
-
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId,
 			boolean privateLayout, long layoutId, String actionId)
@@ -111,22 +81,6 @@ public class LayoutPermissionUtil {
 
 		return getLayoutPermission().contains(
 			permissionChecker, groupId, privateLayout, layoutId, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
-	 *             long, boolean, long, String)}
-	 */
-	@Deprecated
-	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId,
-			boolean privateLayout, long layoutId, String controlPanelCategory,
-			String actionId)
-		throws PortalException {
-
-		return getLayoutPermission().contains(
-			permissionChecker, groupId, privateLayout, layoutId,
-			controlPanelCategory, actionId);
 	}
 
 	public static boolean contains(
@@ -152,38 +106,6 @@ public class LayoutPermissionUtil {
 
 		return getLayoutPermission().containsWithoutViewableGroup(
 			permissionChecker, layout, true, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #containsWithoutViewableGroup(PermissionChecker, Layout,
-	 *             boolean, String)}
-	 */
-	@Deprecated
-	public static boolean containsWithoutViewableGroup(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, boolean checkLayoutUpdateable,
-			String actionId)
-		throws PortalException {
-
-		return getLayoutPermission().containsWithoutViewableGroup(
-			permissionChecker, layout, controlPanelCategory,
-			checkLayoutUpdateable, actionId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #containsWithoutViewableGroup(PermissionChecker, Layout,
-	 *             String)}
-	 */
-	@Deprecated
-	public static boolean containsWithoutViewableGroup(
-			PermissionChecker permissionChecker, Layout layout,
-			String controlPanelCategory, String actionId)
-		throws PortalException {
-
-		return getLayoutPermission().containsWithoutViewableGroup(
-			permissionChecker, layout, controlPanelCategory, true, actionId);
 	}
 
 	public static LayoutPermission getLayoutPermission() {

@@ -45,16 +45,6 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalPreferencesLocalServiceUtil} to access the portal preferences local service. Add custom service methods to {@link com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
-	int, String)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
-		long companyId, long ownerId, int ownerType,
-		java.lang.String defaultPreferences);
-
 	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long ownerId, int ownerType, java.lang.String defaultPreferences);
 
@@ -226,23 +216,6 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPortalPreferencesesCount();
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
-	String)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences getPreferences(long companyId,
-		long ownerId, int ownerType, java.lang.String defaultPreferences);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long ownerId,

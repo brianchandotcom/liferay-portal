@@ -52,33 +52,6 @@ public class PasswordPolicyLocalServiceUtil {
 		return getService().addPasswordPolicy(passwordPolicy);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addPasswordPolicy(long,
-	boolean, String, String, boolean, boolean, long, boolean,
-	boolean, int, int, int, int, int, int, String, boolean, int,
-	boolean, long, long, int, boolean, int, long, long, long,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
-		long userId, boolean defaultPolicy, java.lang.String name,
-		java.lang.String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		boolean history, int historyCount, boolean expireable, long maxAge,
-		long warningTime, int graceLimit, boolean lockout, int maxFailure,
-		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPasswordPolicy(userId, defaultPolicy, name, description,
-			changeable, changeRequired, minAge, checkSyntax,
-			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
-			minNumbers, minSymbols, minUpperCase, history, historyCount,
-			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
-	}
-
 	public static com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		long userId, boolean defaultPolicy, java.lang.String name,
 		java.lang.String description, boolean changeable,
@@ -311,17 +284,6 @@ public class PasswordPolicyLocalServiceUtil {
 		return getService().getPasswordPoliciesCount();
 	}
 
-	/**
-	* @deprecated As of 6.1.0
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
-		long companyId, long organizationId, long locationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getPasswordPolicy(companyId, organizationId, locationId);
-	}
-
 	public static com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long[] organizationIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -385,33 +347,6 @@ public class PasswordPolicyLocalServiceUtil {
 	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		com.liferay.portal.model.PasswordPolicy passwordPolicy) {
 		return getService().updatePasswordPolicy(passwordPolicy);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #updatePasswordPolicy(long,
-	String, String, boolean, boolean, long, boolean, boolean,
-	int, int, int, int, int, int, String, boolean, int, boolean,
-	long, long, int, boolean, int, long, long, long,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
-		long passwordPolicyId, java.lang.String name,
-		java.lang.String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		boolean history, int historyCount, boolean expireable, long maxAge,
-		long warningTime, int graceLimit, boolean lockout, int maxFailure,
-		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updatePasswordPolicy(passwordPolicyId, name, description,
-			changeable, changeRequired, minAge, checkSyntax,
-			allowDictionaryWords, minAlphanumeric, minLength, minLowerCase,
-			minNumbers, minSymbols, minUpperCase, history, historyCount,
-			expireable, maxAge, warningTime, graceLimit, lockout, maxFailure,
-			lockoutDuration, resetFailureCount, resetTicketMaxAge);
 	}
 
 	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(

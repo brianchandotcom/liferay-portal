@@ -46,16 +46,6 @@ public interface WebsiteLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteLocalServiceUtil} to access the website local service. Add custom service methods to {@link com.liferay.portal.service.impl.WebsiteLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
-	long, String, int, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Website addWebsite(long userId,
-		java.lang.String className, long classPK, java.lang.String url,
-		long typeId, boolean primary) throws PortalException;
-
 	public com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,
 		long typeId, boolean primary,

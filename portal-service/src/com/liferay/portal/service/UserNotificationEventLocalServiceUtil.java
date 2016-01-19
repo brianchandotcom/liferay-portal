@@ -504,27 +504,6 @@ public class UserNotificationEventLocalServiceUtil {
 		return getService().getUserNotificationEvents(userId);
 	}
 
-	/**
-	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
-	boolean)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived) {
-		return getService().getUserNotificationEvents(userId, archived);
-	}
-
-	/**
-	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
-	boolean, int, int)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
-		long userId, boolean archived, int start, int end) {
-		return getService()
-				   .getUserNotificationEvents(userId, archived, start, end);
-	}
-
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, int deliveryType) {
 		return getService().getUserNotificationEvents(userId, deliveryType);
@@ -552,16 +531,6 @@ public class UserNotificationEventLocalServiceUtil {
 
 	public static int getUserNotificationEventsCount(long userId) {
 		return getService().getUserNotificationEventsCount(userId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0 {@link
-	#getArchivedUserNotificationEventsCount(long, boolean)}
-	*/
-	@Deprecated
-	public static int getUserNotificationEventsCount(long userId,
-		boolean archived) {
-		return getService().getUserNotificationEventsCount(userId, archived);
 	}
 
 	public static int getUserNotificationEventsCount(long userId,

@@ -28,9 +28,9 @@ if (translateMessage) {
 
 <c:if test="<%= MultiSessionMessages.contains(portletRequest, key) %>">
 	<liferay-ui:alert
+		icon="check"
 		message="<%= message %>"
 		timeout="5000"
-		title='<%= LanguageUtil.get(request, "success") %>'
 		type="success"
 	/>
 </c:if>

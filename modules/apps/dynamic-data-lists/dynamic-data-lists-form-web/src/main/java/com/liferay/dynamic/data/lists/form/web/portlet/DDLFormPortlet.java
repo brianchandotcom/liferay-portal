@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -36,6 +35,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.portal.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -116,12 +116,11 @@ public class DDLFormPortlet extends MVCPortlet {
 		catch (Exception e) {
 			Throwable cause = getRootCause(e);
 
-			if (cause instanceof DDMFormEvaluationException) {
+			if (cause instanceof DDMFormValuesValidationException) {
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(
-					actionRequest, DDMFormEvaluationException.class,
-					cause.getMessage());
+					actionRequest, cause.getClass(), cause.getMessage());
 			}
 			else {
 				throw e;

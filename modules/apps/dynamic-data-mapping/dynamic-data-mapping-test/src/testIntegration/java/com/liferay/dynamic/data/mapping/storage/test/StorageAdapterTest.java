@@ -15,9 +15,6 @@
 package com.liferay.dynamic.data.mapping.storage.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException.RequiredValue;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -37,6 +34,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -168,23 +166,16 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (StorageException se)
+		catch (DDMFormValuesValidationException.MustSetValidValues msvv)
 		{
-			Assert.assertTrue(
-				se.getCause() instanceof DDMFormEvaluationException);
-
-			String message = se.getMessage();
+			String message = msvv.getMessage();
 
 			Assert.assertTrue(
 				message.contains("custom validation error message"));
 		}
-		catch (Exception ex)
-		{
-			Assert.fail();
-		}
 	}
 
-	@Test(expected = RequiredValue.class)
+	@Test(expected = DDMFormValuesValidationException.RequiredValue.class)
 	public void testCreateWithInvalidDDMFormValues() throws Exception {
 		DDMStructure structure = addStructure(
 			_CLASS_NAME_ID, "Default Structure");
@@ -598,7 +589,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		validate(structure.getStructureId(), fields);
 	}
 
-	@Test(expected = RequiredValue.class)
+	@Test(expected = DDMFormValuesValidationException.RequiredValue.class)
 	public void testUpdateWithInvalidDDMFormValues() throws Exception {
 		DDMStructure structure = addStructure(
 			_CLASS_NAME_ID, "Default Structure");

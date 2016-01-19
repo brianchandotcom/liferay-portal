@@ -254,7 +254,7 @@
 </tr>
 <tr>
 	<td>COMPLETED_TABLE_TASK</td>
-	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
+	<td>//tr[contains(.,'${key_workflowTask}') and contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>

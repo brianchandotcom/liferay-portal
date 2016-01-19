@@ -712,6 +712,7 @@
 		<execute macro="Workflow#_gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />

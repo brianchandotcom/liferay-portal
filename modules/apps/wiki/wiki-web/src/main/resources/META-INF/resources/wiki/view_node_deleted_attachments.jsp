@@ -43,6 +43,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backToNodeURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
+
+int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR), ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA));
 %>
 
 <div class="container-fluid-1280">
@@ -60,6 +62,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 
 	<%
 	int attachmentsFileEntriesCount = attachmentsFileEntries.size();
+	attachmentsFileEntries = ListUtil.subList(attachmentsFileEntries, startAndEnd[0], startAndEnd[1]);
 	String emptyResultsMessage = "this-wiki-node-does-not-have-file-attachments-in-the-recycle-bin";
 
 	PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -69,6 +72,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 	iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 	iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 
+	boolean paginate = true;
 	boolean showPageAttachmentAction = true;
 	int status = WorkflowConstants.STATUS_IN_TRASH;
 	%>

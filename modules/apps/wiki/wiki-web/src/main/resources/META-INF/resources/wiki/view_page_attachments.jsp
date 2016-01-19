@@ -54,8 +54,9 @@ iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("title", wikiPage.getTitle());
 
-boolean showPageAttachmentAction = false;
+boolean paginate = false;
 int status = WorkflowConstants.STATUS_APPROVED;
+boolean showPageAttachmentAction = false;
 %>
 
 <%@ include file="/wiki/attachments_list.jspf" %>

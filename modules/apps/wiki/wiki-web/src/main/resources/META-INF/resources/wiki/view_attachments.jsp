@@ -84,6 +84,7 @@ int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
 	<%
 	int attachmentsFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
 	String emptyResultsMessage = "this-page-does-not-have-file-attachments";
+	boolean paginate = false;
 	boolean showPageAttachmentAction = true;
 	int status = WorkflowConstants.STATUS_APPROVED;
 	%>

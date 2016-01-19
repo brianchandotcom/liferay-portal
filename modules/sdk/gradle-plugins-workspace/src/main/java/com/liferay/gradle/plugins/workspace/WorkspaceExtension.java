@@ -14,11 +14,23 @@
 
 package com.liferay.gradle.plugins.workspace;
 
+import com.liferay.gradle.plugins.workspace.configurators.ModulesProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.configurators.PluginsProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.configurators.ProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.configurators.ThemesProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.util.GradleUtil;
+
+import groovy.lang.MissingPropertyException;
 
 import java.io.File;
 
-import org.gradle.api.Project;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.gradle.api.initialization.Settings;
+import org.gradle.api.invocation.Gradle;
 
 /**
  * @author David Truong
@@ -26,44 +38,34 @@ import org.gradle.api.Project;
  */
 public class WorkspaceExtension {
 
-	public WorkspaceExtension(Project project) {
-		_project = project;
+	public WorkspaceExtension(Settings settings) {
+		_gradle = settings.getGradle();
+
+		_projectConfigurators.add(new ModulesProjectConfigurator(settings));
+		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
+		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 
 		_bundleArtifactGroup = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.group",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.group",
 			_BUNDLE_ARTIFACT_GROUP);
 		_bundleArtifactName = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.name",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.name",
 			_BUNDLE_ARTIFACT_NAME);
 		_bundleArtifactVersion = GradleUtil.getProperty(
-			project,
+			settings,
 			WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.version",
 			_BUNDLE_ARTIFACT_VERSION);
 		_bundleMavenUrl = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.maven.url",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.maven.url",
 			_BUNDLE_MAVEN_URL);
 		_configsDir = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "configs.dir",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "configs.dir",
 			_CONFIGS_DIR);
 		_environment = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "environment",
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "environment",
 			_ENVIRONMENT);
 		_homeDir = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "home.dir", _HOME_DIR);
-		_modulesDefaultRepositoryEnabled = GradleUtil.getProperty(
-			project,
-			WorkspacePlugin.PROPERTY_PREFIX +
-				"modules.default.repository.enabled",
-			true);
-		_modulesDir = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "modules.dir",
-			(File)null);
-		_pluginsSDKDir = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "plugins.sdk.dir",
-			(File)null);
-		_themesDir = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "themes.dir",
-			(File)null);
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "home.dir", _HOME_DIR);
 	}
 
 	public String getBundleArtifactGroup() {
@@ -83,7 +85,7 @@ public class WorkspaceExtension {
 	}
 
 	public File getConfigsDir() {
-		return GradleUtil.toFile(_project, _configsDir);
+		return GradleUtil.toFile(_gradle.getRootProject(), _configsDir);
 	}
 
 	public String getEnvironment() {
@@ -91,23 +93,25 @@ public class WorkspaceExtension {
 	}
 
 	public File getHomeDir() {
-		return GradleUtil.toFile(_project, _homeDir);
+		return GradleUtil.toFile(_gradle.getRootProject(), _homeDir);
 	}
 
-	public File getModulesDir() {
-		return GradleUtil.toFile(_project, _modulesDir);
+	public Iterable<ProjectConfigurator> getProjectConfigurators() {
+		return Collections.unmodifiableSet(_projectConfigurators);
 	}
 
-	public File getPluginsSDKDir() {
-		return _pluginsSDKDir;
+	public RootProjectConfigurator getRootProjectConfigurator() {
+		return _rootProjectConfigurator;
 	}
 
-	public File getThemesDir() {
-		return GradleUtil.toFile(_project, _themesDir);
-	}
+	public ProjectConfigurator propertyMissing(String name) {
+		for (ProjectConfigurator projectConfigurator : _projectConfigurators) {
+			if (name.equals(projectConfigurator.getName())) {
+				return projectConfigurator;
+			}
+		}
 
-	public boolean isModulesDefaultRepositoryEnabled() {
-		return _modulesDefaultRepositoryEnabled;
+		throw new MissingPropertyException(name, ProjectConfigurator.class);
 	}
 
 	public void setBundleArtifactGroup(Object bundleArtifactGroup) {
@@ -162,11 +166,11 @@ public class WorkspaceExtension {
 	private Object _bundleMavenUrl;
 	private Object _configsDir;
 	private Object _environment;
+	private final Gradle _gradle;
 	private Object _homeDir;
-	private final boolean _modulesDefaultRepositoryEnabled;
-	private final File _modulesDir;
-	private final File _pluginsSDKDir;
-	private final Project _project;
-	private final File _themesDir;
+	private final Set<ProjectConfigurator> _projectConfigurators =
+		new HashSet<>();
+	private final RootProjectConfigurator _rootProjectConfigurator =
+		new RootProjectConfigurator();
 
 }

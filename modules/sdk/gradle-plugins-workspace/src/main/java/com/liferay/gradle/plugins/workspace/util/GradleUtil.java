@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.util;
 
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -47,6 +48,12 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 				}
 
 			});
+	}
+
+	public static String getProjectPath(File projectDir, File rootDir) {
+		String projectPath = FileUtil.relativize(projectDir, rootDir);
+
+		return ":" + projectPath.replace(File.separatorChar, ':');
 	}
 
 	public static Object getProperty(Object object, String name) {

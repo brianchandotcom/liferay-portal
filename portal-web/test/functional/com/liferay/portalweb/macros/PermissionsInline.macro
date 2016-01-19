@@ -296,7 +296,8 @@
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
 		<execute function="Click" locator1="Polls#POLLS_TABLE_ACTION" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+
+		<execute function="AssertClick" locator1="Polls#ACTIONS_DROPDOWN_PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 	</command>

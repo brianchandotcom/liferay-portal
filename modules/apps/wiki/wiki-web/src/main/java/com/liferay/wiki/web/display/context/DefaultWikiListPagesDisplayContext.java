@@ -190,6 +190,9 @@ public class DefaultWikiListPagesDisplayContext
 
 		String keywords = ParamUtil.getString(_request, "keywords");
 
+		String navigation = ParamUtil.getString(
+			_request, "navigation", "all-pages");
+
 		int total = 0;
 		List<WikiPage> results = new ArrayList<>();
 
@@ -212,24 +215,18 @@ public class DefaultWikiListPagesDisplayContext
 
 			searchContainer.setTotal(hits.getLength());
 
-			for (SearchResult searchResult : SearchResultUtil.getSearchResults(
-				hits, themeDisplay.getLocale())) {
+			List<SearchResult> searchResults =
+				SearchResultUtil.getSearchResults(
+					hits, themeDisplay.getLocale());
 
+			for (SearchResult searchResult : searchResults) {
 				WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(
 					searchResult.getClassPK());
 
 				results.add(wikiPage);
 			}
-
-			searchContainer.setResults(results);
-
-			return;
 		}
-
-		String navigation = ParamUtil.getString(
-			_request, "navigation", "all-pages");
-
-		if (navigation.equals("all-pages")) {
+		else if (navigation.equals("all-pages")) {
 			total = WikiPageServiceUtil.getPagesCount(
 				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(), true,
 				themeDisplay.getUserId(), true,

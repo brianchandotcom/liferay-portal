@@ -424,28 +424,29 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			TransactionCommitCallbackUtil.registerCallback(
 				new Callable<Void>() {
 
-				@Override
-				public Void call() throws Exception {
+					@Override
+					public Void call() throws Exception {
 
-					synchronized (_companyServiceRegistrations) {
-						if (!_companyServiceRegistrations.containsKey(
-								companyId)) {
+						synchronized (_companyServiceRegistrations) {
+							if (!_companyServiceRegistrations.containsKey(
+									companyId)) {
 
-							Registry registry = RegistryUtil.getRegistry();
+								Registry registry = RegistryUtil.getRegistry();
 
-							ServiceRegistration<Company> serviceRegistration =
-								registry.registerService(
-									Company.class, finalCompany);
+								ServiceRegistration<Company>
+									serviceRegistration =
+										registry.registerService(
+											Company.class, finalCompany);
 
-							_companyServiceRegistrations.put(
-								companyId, serviceRegistration);
+								_companyServiceRegistrations.put(
+									companyId, serviceRegistration);
+							}
 						}
+
+						return null;
 					}
 
-					return null;
-				}
-
-			});
+				});
 		}
 		finally {
 			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);

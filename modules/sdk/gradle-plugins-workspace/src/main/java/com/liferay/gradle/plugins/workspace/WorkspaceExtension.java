@@ -31,25 +31,25 @@ public class WorkspaceExtension {
 
 		_bundleArtifactGroup = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.group",
-			(String)null);
+			_BUNDLE_ARTIFACT_GROUP);
 		_bundleArtifactName = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.name",
-			(String)null);
+			_BUNDLE_ARTIFACT_NAME);
 		_bundleArtifactVersion = GradleUtil.getProperty(
 			project,
 			WorkspacePlugin.PROPERTY_PREFIX + "bundle.artifact.version",
-			(String)null);
+			_BUNDLE_ARTIFACT_VERSION);
 		_bundleMavenUrl = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "bundle.maven.url",
-			(String)null);
+			_BUNDLE_MAVEN_URL);
 		_configsDir = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "configs.dir",
-			(File)null);
+			_CONFIGS_DIR);
 		_environment = GradleUtil.getProperty(
 			project, WorkspacePlugin.PROPERTY_PREFIX + "environment",
-			(String)null);
+			_ENVIRONMENT);
 		_homeDir = GradleUtil.getProperty(
-			project, WorkspacePlugin.PROPERTY_PREFIX + "home.dir", (File)null);
+			project, WorkspacePlugin.PROPERTY_PREFIX + "home.dir", _HOME_DIR);
 		_modulesDefaultRepositoryEnabled = GradleUtil.getProperty(
 			project,
 			WorkspacePlugin.PROPERTY_PREFIX +
@@ -137,6 +137,24 @@ public class WorkspaceExtension {
 	public void setHomeDir(Object homeDir) {
 		_homeDir = homeDir;
 	}
+
+	private static final String _BUNDLE_ARTIFACT_GROUP = "com.liferay";
+
+	private static final String _BUNDLE_ARTIFACT_NAME = "portal-tomcat-bundle";
+
+	private static final String _BUNDLE_ARTIFACT_VERSION =
+		"7.0-ce-b2-20160105152151933";
+
+	private static final String _BUNDLE_MAVEN_URL =
+		"https://liferay-test-01.ci.cloudbees.com/job/" +
+			"liferay-bundle-publishing/lastSuccessfulBuild/artifact/build/" +
+				"m2_repo/";
+
+	private static final String _CONFIGS_DIR = "configs";
+
+	private static final String _ENVIRONMENT = "local";
+
+	private static final String _HOME_DIR = "bundles";
 
 	private Object _bundleArtifactGroup;
 	private Object _bundleArtifactName;

@@ -37,8 +37,8 @@ if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
 	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-col", "title");
-	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-type", "asc");
+	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-col", "modifiedDate");
+	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "pages-order-by-type", "desc");
 }
 
 request.setAttribute("view_pages.jsp-orderByCol", orderByCol);
@@ -224,7 +224,7 @@ else {
 
 						<liferay-ui:search-container-column-date
 							href="<%= rowURL %>"
-							name="date"
+							name="modified-date"
 							value="<%= curPage.getModifiedDate() %>"
 						/>
 

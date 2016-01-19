@@ -355,7 +355,7 @@ public class UpgradePortletId extends UpgradeProcess {
 			"select name from ResourceAction where name = '" + newName + "'";
 
 		try (PreparedStatement ps = connection.prepareStatement(selectSQL);
-			ResultSet rs = ps.executeQuery()) {
+				ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
 				runSQL(

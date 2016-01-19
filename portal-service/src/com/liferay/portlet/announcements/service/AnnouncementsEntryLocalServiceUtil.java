@@ -69,28 +69,6 @@ public class AnnouncementsEntryLocalServiceUtil {
 			expirationDateHour, expirationDateMinute, priority, alert);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addEntry(long, long, long,
-	String, String, String, String, int, int, int, int, int,
-	boolean, int, int, int, int, int, int, boolean)}
-	*/
-	@Deprecated
-	public static com.liferay.portlet.announcements.model.AnnouncementsEntry addEntry(
-		long userId, long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, int priority, boolean alert)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addEntry(userId, classNameId, classPK, title, content, url,
-			type, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, priority, alert);
-	}
-
 	public static void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkEntries();

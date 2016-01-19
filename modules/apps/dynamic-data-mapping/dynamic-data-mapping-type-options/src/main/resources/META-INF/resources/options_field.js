@@ -82,12 +82,6 @@ AUI.add(
 						field.get('repetitions').forEach(fn, instance);
 					},
 
-					getContextValue: function() {
-						var instance = this;
-
-						return instance.getOptionsValues();
-					},
-
 					getLastField: function() {
 						var instance = this;
 
@@ -199,16 +193,9 @@ AUI.add(
 
 						instance._clearRepetitions();
 
-						instance._renderFields(instance.getOptionsValues());
+						instance._renderFields();
 
 						return instance;
-					},
-
-					setValue: function(optionsValues) {
-						var instance = this;
-
-						instance._clearRepetitions();
-						instance._renderFields(optionsValues);
 					},
 
 					showErrorMessage: function(errorMessage) {
@@ -227,18 +214,6 @@ AUI.add(
 						var mainField = instance._mainField;
 
 						mainField.get('container').toggleClass('has-error', hasErrors);
-					},
-
-					updateContainer: function() {
-						var instance = this;
-
-						OptionsField.superclass.updateContainer.apply(instance, arguments);
-
-						instance.eachRepetition(
-							function(field) {
-								field.updateContainer();
-							}
-						);
 					},
 
 					_afterSortableListDragEnd: function(event) {
@@ -371,7 +346,7 @@ AUI.add(
 						}
 					},
 
-					_renderFields: function(optionsValues) {
+					_renderFields: function() {
 						var instance = this;
 
 						var container = instance.get('container');
@@ -381,6 +356,8 @@ AUI.add(
 						mainField.render(container.one('.options'));
 
 						instance._syncFieldUI(mainField);
+
+						var optionsValues = instance.getOptionsValues();
 
 						var hasOptionValues = !!optionsValues.length;
 

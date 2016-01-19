@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface TemplateContextContributor {
 
+	public static final String TYPE_GLOBAL = "GLOBAL";
+
+	public static final String TYPE_THEME = "THEME";
+
 	public void prepare(
 		Map<String, Object> contextObjects, HttpServletRequest request);
 

@@ -174,7 +174,7 @@ public class WorkflowInstanceViewDisplayContext
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
+				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
 				"last-activity-date");
 		}
 		else {
@@ -182,7 +182,8 @@ public class WorkflowInstanceViewDisplayContext
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_TASK, "order-by-col", _orderByCol);
+					PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
+					_orderByCol);
 			}
 		}
 
@@ -198,14 +199,14 @@ public class WorkflowInstanceViewDisplayContext
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
+				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type", "asc");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_TASK, "order-by-type",
+					PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type",
 					_orderByType);
 			}
 		}

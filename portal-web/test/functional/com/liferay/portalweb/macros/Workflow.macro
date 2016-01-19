@@ -1,4 +1,10 @@
 <definition>
+	<command name="_gotoAssignedToMyRoles">
+		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
+
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_ACTIVE" />
+	</command>
+
 	<command name="_gotoCompletedFilter">
 		<execute function="Click" locator1="Dropdown#FILTER" />
 

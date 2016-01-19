@@ -129,7 +129,15 @@
 			<var name="page" value="${page}" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
 		<var name="key_page" value="${sitePageName}" />
+
+		<execute function="Click" locator1="ProductMenu#PAGES" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
 

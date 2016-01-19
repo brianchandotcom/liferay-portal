@@ -3,25 +3,6 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ADD_TO_PAGE</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>CONFIGURATION</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
 		<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet</portlet-name>
 		<permissions>
 			<supports>
@@ -37,6 +18,25 @@
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
+		<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
 		</permissions>

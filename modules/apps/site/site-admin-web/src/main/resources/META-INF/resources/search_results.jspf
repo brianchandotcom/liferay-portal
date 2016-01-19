@@ -67,7 +67,11 @@
 		</portlet:renderURL>
 
 		<%
-		String rowURL = siteAdministrationURL.toString();
+		String rowURL = null;
+
+		if (GroupPermissionUtil.contains(permissionChecker, curGroup.getGroupId(), ActionKeys.UPDATE)) {
+			rowURL = siteAdministrationURL.toString();
+		}
 		%>
 
 		<%@ include file="/site_columns.jspf" %>

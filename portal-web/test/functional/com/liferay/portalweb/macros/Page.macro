@@ -546,7 +546,7 @@
 
 	<command name="tearDownPG" summary="Delete all pages except the Welcome Page">
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${site}" />
+			<var name="site" value="Liferay" />
 		</execute>
 
 		<while>

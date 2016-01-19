@@ -77,7 +77,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 				<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPublicLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(false) %>" />
 
 				<c:if test="<%= !layoutsTreeDisplayContext.isPrivateLayout() %>">
-					<span class="pages-options">
+					<span class="pages-options pull-right">
 						<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 
 							<%
@@ -90,7 +90,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								data="<%= data %>"
 								icon="plus"
 								label="<%= false %>"
-								linkCssClass="layout-set-tree-add pull-right"
+								linkCssClass="layout-set-tree-add"
 								markupView="lexicon"
 								message="add-page"
 								url="<%= addLayoutURL.toString() %>"
@@ -109,7 +109,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								data="<%= data %>"
 								icon="cog"
 								label="<%= false %>"
-								linkCssClass="layout-set-tree-edit pull-right"
+								linkCssClass="layout-set-tree-edit"
 								markupView="lexicon"
 								message='<%= LanguageUtil.format(request, "edit-x", layoutsTreeDisplayContext.getRootNodeName(false)) %>'
 								url="<%= editLayoutURL.toString() %>"
@@ -130,7 +130,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 				<aui:a cssClass="layout-set-link" data="<%= data %>" href="<%= layoutsTreeDisplayContext.getPrivateLayoutsURL() %>" label="<%= layoutsTreeDisplayContext.getRootNodeName(true) %>" />
 
 				<c:if test="<%= layoutsTreeDisplayContext.isPrivateLayout() %>">
-					<span class="pages-options">
+					<span class="pages-options pull-right">
 						<c:if test="<%= layoutsTreeDisplayContext.isShowAddRootLayoutButton() %>">
 
 							<%
@@ -144,7 +144,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								data="<%= data %>"
 								icon="plus"
 								label="<%= false %>"
-								linkCssClass="layout-set-tree-add pull-right"
+								linkCssClass="layout-set-tree-add"
 								markupView="lexicon"
 								message="add-page"
 								url="<%= addLayoutURL.toString() %>"
@@ -163,7 +163,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								data="<%= data %>"
 								icon="cog"
 								label="<%= false %>"
-								linkCssClass="layout-set-tree-edit pull-right"
+								linkCssClass="layout-set-tree-edit"
 								markupView="lexicon"
 								message='<%= LanguageUtil.format(request, "edit-x", layoutsTreeDisplayContext.getRootNodeName(true)) %>'
 								url="<%= editLayoutURL.toString() %>"

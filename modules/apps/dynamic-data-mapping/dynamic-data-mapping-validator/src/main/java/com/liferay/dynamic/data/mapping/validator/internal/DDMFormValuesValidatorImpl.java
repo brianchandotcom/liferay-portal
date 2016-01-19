@@ -33,9 +33,9 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -110,34 +110,20 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			ddmFormFieldEvaluationResultsMap =
 				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
 
-		StringBundler sb = new StringBundler(
-			ddmFormFieldEvaluationResultsMap.size());
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			new ArrayList<>();
 
 		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
 				ddmFormFieldEvaluationResultsMap.values()) {
 
-			inspectDDMFormFieldEvaluationResult(
-				ddmFormFieldEvaluationResult, sb);
+			if (!ddmFormFieldEvaluationResult.isValid()) {
+				ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
+			}
 		}
 
-		if (sb.index() > 0) {
-			throw new MustSetValidValues(sb.toString());
+		if (!ddmFormFieldEvaluationResults.isEmpty()) {
+			throw new MustSetValidValues(ddmFormFieldEvaluationResults);
 		}
-	}
-
-	protected void inspectDDMFormFieldEvaluationResult(
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
-		StringBundler sb) {
-
-		if (ddmFormFieldEvaluationResult.isValid()) {
-			return;
-		}
-
-		String errorMessage = String.format(
-			"%s : %s \n", ddmFormFieldEvaluationResult.getName(),
-			ddmFormFieldEvaluationResult.getErrorMessage());
-
-		sb.append(errorMessage);
 	}
 
 	protected boolean isNull(Value value) {

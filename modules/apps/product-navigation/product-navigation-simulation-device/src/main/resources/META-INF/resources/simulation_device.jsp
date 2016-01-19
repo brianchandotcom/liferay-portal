@@ -113,6 +113,4 @@
 			namespace: '<portlet:namespace />'
 		}
 	);
-
-	Liferay.once('dockbarHidePanel', A.bind('destroy', simulationDevice));
 </aui:script>

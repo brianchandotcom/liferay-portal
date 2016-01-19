@@ -17,28 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> data = new HashMap<String, Object>();
+PortletURL addPanelURL = PortletURLFactoryUtil.create(request, ControlMenuPortletKeys.CONTROL_MENU, plid, PortletRequest.RENDER_PHASE);
 
-PortletURL addURL = PortletURLFactoryUtil.create(request, ControlMenuPortletKeys.CONTROL_MENU, plid, PortletRequest.RENDER_PHASE);
-
-addURL.setParameter("mvcPath", "/add_panel.jsp");
-addURL.setParameter("stateMaximized", String.valueOf(themeDisplay.isStateMaximized()));
-addURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-
-data.put("panelURL", addURL);
-
-data.put("qa-id", "add");
+addPanelURL.setParameter("mvcPath", "/add_panel.jsp");
+addPanelURL.setParameter("stateMaximized", String.valueOf(themeDisplay.isStateMaximized()));
+addPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 %>
 
 <li class="control-menu-nav-item">
-	<liferay-ui:icon
-		data="<%= data %>"
-		icon="plus"
-		id="addPanel"
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		markupView="lexicon"
-		message="add"
-		url="javascript:;"
-	/>
+	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-open-class="open-admin-panel" data-qa-id="add" data-target="#addPanelId,#wrapper" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "add")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= addPanelURL.toString() %>" href="javascript:;" id="addToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "add")) %>')">
+		<aui:icon image="plus" markupView="lexicon" />
+	</a>
 </li>
+
+<div class="closed lfr-add-panel lfr-admin-panel lfr-product-menu-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="addPanelId">
+	<div class="product-menu sidebar sidebar-body sidebar-inverse"></div>
+</div>
+
+<aui:script use="liferay-store,io-request,parse-content">
+	var addToggle = $('#addToggleId');
+
+	addToggle.sideNavigation();
+</aui:script>

@@ -34,15 +34,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"mvc.command.name=/wiki/edit_node_attachment",
 		"mvc.command.name=/wiki/view_node_deleted_attachments"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditNodeAttachmentMVCRenderCommand implements MVCRenderCommand {
+public class ViewNodeDeletedAttachmentMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -67,7 +65,7 @@ public class EditNodeAttachmentMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/wiki/view_node_deleted_attachments.jsp";
+		return "/wiki_admin/view_node_deleted_attachments.jsp";
 	}
 
 }

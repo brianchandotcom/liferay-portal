@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"mvc.command.name=/wiki/import_pages"
 	},
@@ -65,7 +64,7 @@ public class ImportPagesMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/wiki/import_pages.jsp";
+		return "/wiki_admin/import_pages.jsp";
 	}
 
 }

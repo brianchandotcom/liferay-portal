@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"mvc.command.name=/wiki/edit_node"
 	},
 	service = MVCRenderCommand.class
@@ -71,7 +69,7 @@ public class EditNodeMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/wiki/edit_node.jsp";
+		return "/wiki_admin/edit_node.jsp";
 	}
 
 }

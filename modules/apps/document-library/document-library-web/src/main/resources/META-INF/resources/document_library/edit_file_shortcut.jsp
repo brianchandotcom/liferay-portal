@@ -155,6 +155,7 @@ if (portletTitleBasedNavigation) {
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true,
 					},
 					id: '<portlet:namespace />selectGroup',
@@ -189,6 +190,7 @@ if (portletTitleBasedNavigation) {
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true,
 					},
 					id: <portlet:namespace />createSelectFileEntryId(),

@@ -142,6 +142,7 @@
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true,
 						width: 830
 					},

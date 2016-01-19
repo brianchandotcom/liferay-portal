@@ -296,6 +296,7 @@ if (portletTitleBasedNavigation) {
 										{
 											dialog: {
 												constrain: true,
+												destroyOnHide: true,
 												modal: true,
 												width: 680
 											},

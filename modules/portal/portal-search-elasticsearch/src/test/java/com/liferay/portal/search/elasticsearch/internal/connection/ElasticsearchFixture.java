@@ -44,7 +44,7 @@ import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
-import org.elasticsearch.common.settings.Settings.Builder;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 
 import org.mockito.Mockito;
@@ -69,19 +69,15 @@ public class ElasticsearchFixture {
 		_tmpDirName = "tmp/" + subdirName;
 	}
 
-	public Index createIndex(String indexName) {
-		return createIndex(indexName, Mockito.mock(IndexCreationHelper.class));
-	}
-
 	public Index createIndex(
-		String indexName, IndexCreationHelper indexCreationHelper) {
+		IndexName indexName, IndexCreationHelper indexCreationHelper) {
 
-		indexName = StringUtil.toLowerCase(indexName);
+		String name = indexName.getName();
 
 		IndicesAdminClient indicesAdminClient = getIndicesAdminClient();
 
 		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-			indicesAdminClient.prepareDelete(indexName);
+			indicesAdminClient.prepareDelete(name);
 
 		deleteIndexRequestBuilder.setIndicesOptions(
 			IndicesOptions.lenientExpandOpen());
@@ -89,13 +85,28 @@ public class ElasticsearchFixture {
 		deleteIndexRequestBuilder.get();
 
 		CreateIndexRequestBuilder createIndexRequestBuilder =
-			indicesAdminClient.prepareCreate(indexName);
+			indicesAdminClient.prepareCreate(name);
 
 		indexCreationHelper.contribute(createIndexRequestBuilder);
 
+		Settings.Builder builder = Settings.settingsBuilder();
+
+		indexCreationHelper.contributeIndexSettings(builder);
+
+		createIndexRequestBuilder.setSettings(builder);
+
 		createIndexRequestBuilder.get();
 
+		indexCreationHelper.whenIndexCreated();
+
 		return new Index(indexName);
+	}
+
+	public Index createIndex(String indexName) {
+		IndexCreationHelper indexCreationHelper = Mockito.mock(
+			IndexCreationHelper.class);
+
+		return createIndex(new IndexName(indexName), indexCreationHelper);
 	}
 
 	public void createNode() throws Exception {
@@ -184,10 +195,24 @@ public class ElasticsearchFixture {
 		destroyNode();
 	}
 
-	public class Index {
+	public static class Index {
 
-		public Index(String name) {
-			_name = name;
+		public Index(IndexName indexName) {
+			_indexName = indexName;
+		}
+
+		public String getName() {
+			return _indexName.getName();
+		}
+
+		private final IndexName _indexName;
+
+	}
+
+	public static class IndexName {
+
+		public IndexName(String name) {
+			_name = StringUtil.toLowerCase(name);
 		}
 
 		public String getName() {
@@ -205,7 +230,7 @@ public class ElasticsearchFixture {
 			new BaseSettingsContributor(0) {
 
 				@Override
-				public void populate(Builder builder) {
+				public void populate(Settings.Builder builder) {
 					builder.put(
 						"cluster.service.slow_task_logging_threshold", "600s");
 				}
@@ -220,7 +245,7 @@ public class ElasticsearchFixture {
 			new BaseSettingsContributor(0) {
 
 				@Override
-				public void populate(Builder builder) {
+				public void populate(Settings.Builder builder) {
 					builder.put(
 						"cluster.routing.allocation.disk.threshold_enabled",
 						"false");

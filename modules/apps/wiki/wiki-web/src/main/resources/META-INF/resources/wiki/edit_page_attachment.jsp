@@ -100,7 +100,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 	uploader.on(
 		'uploadComplete',
 		function(event) {
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />pageAttachmentsSearchContainer');
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />pageAttachments');
 
 			if (searchContainer) {
 				var rowColumns = [];

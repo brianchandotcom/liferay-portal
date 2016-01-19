@@ -39,7 +39,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 
 <aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 
-<div class="hide" id="<portlet:namespace />pages">
+<div id="<portlet:namespace />pages">
 	<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 		<div class="selected-pages" id="<portlet:namespace />pane">
 

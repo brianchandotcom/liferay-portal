@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockId">
+	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockId">
 		<![CDATA[
 			WHERE
 				(resourceBlockId IN ([$USER_RESOURCE_BLOCK_ID$]))
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
+	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
 		<![CDATA[
 			WHERE
 				(
@@ -19,7 +19,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.findByResourceBlockId">
+	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.findByResourceBlockId">
 		<![CDATA[
 			SELECT
 				resourceBlock.resourceBlockId
@@ -39,7 +39,7 @@
 				(resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]')
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.joinResourcePermission">
+	<sql id="com.liferay.portal.kernel.security.permission.InlineSQLHelper.joinResourcePermission">
 		<![CDATA[
 			INNER JOIN ResourcePermission ON
 				(ResourcePermission.companyId = [$COMPANY_ID$]) AND

@@ -30,6 +30,8 @@
 		<execute function="AssertVisible" locator1="Form#NAME_FIELD" />
 		<execute function="AssertVisible" locator1="Form#DESCRIPTION_FIELD" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="Type#typeAceEditor" locator1="Form#NAME_FIELD" value1="${formName}" />
 	</command>
 

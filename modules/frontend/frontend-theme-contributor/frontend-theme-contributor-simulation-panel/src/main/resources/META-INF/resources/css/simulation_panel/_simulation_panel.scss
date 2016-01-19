@@ -1,33 +1,32 @@
 .lfr-simulation-panel {
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	padding: 10px;
 	width: 350px;
 
-	.btn-default {
-		color: #FFF;
+	.custom-devices {
+		.form-control {
+			padding: 8px 6px;
+		}
+
+		.form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.default-devices {
+		margin-bottom: 20px;
 	}
 
 	.lfr-device-item {
 		cursor: pointer;
-		overflow: hidden;
-		padding: 10px;
 
-		.device-info {
-			height: auto;
-			padding: 5px 0 0 70px;
-
-			.device-name, .device-dimensions {
-				display: block;
-			}
-
-			.device-dimensions {
-				font-size: 13px;
-			}
+		&.selected .icon {
+			background-color: #3A4D5A;
 		}
+	}
 
-		.form-group {
-			margin: -10px 0 0;
-		}
+	.preview-info-message {
+		background-color: #1B2228;
+		margin: 20px;
+		padding: 5px 20px;
 	}
 }
 
@@ -183,24 +182,5 @@
 
 	.lfr-simulation-device {
 		display: block;
-	}
-}
-
-.ie9 {
-	.lfr-has-simulation-panel {
-		.lfr-simulation-panel {
-			margin: 0;
-			position: fixed;
-			width: 350px;
-
-			.btn.close {
-				font-size: 20px;
-				margin: 0;
-			}
-
-			.field {
-				font-size: 14px;
-			}
-		}
 	}
 }

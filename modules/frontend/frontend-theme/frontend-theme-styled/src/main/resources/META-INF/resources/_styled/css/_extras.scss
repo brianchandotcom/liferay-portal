@@ -20,10 +20,6 @@
 	box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5);
 }
 
-.lfr-add-panel, .lfr-edit-layout-panel {
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
 .lfr-ddm-container .file-entry-upload-progress {
 	border-radius: 0 0 4px 4px;
 }
@@ -50,7 +46,7 @@
 	border-radius: 5px;
 }
 
-.lfr-search-combobox-item, .portlet-journal .lfr-search-combobox .search input {
+.lfr-search-combobox-item {
 	border-radius: 1px;
 }
 
@@ -78,11 +74,11 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	border-radius: 4px;
 }
 
-.entry-display-style, .lfr-search-combobox, .lfr-upload-container .upload-file, .lfr-upload-container .upload-target, .portlet-asset-tag-admin .merge-tag, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon, .select-documents, .select-files {
+.entry-display-style, .lfr-search-combobox, .lfr-upload-container .upload-file, .lfr-upload-container .upload-target, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon, .select-documents, .select-files {
 	border-radius: 5px;
 }
 
-.portlet-dynamic-data-list-display, .portlet-dynamic-data-lists, .portlet-journal {
+.portlet-dynamic-data-list-display, .portlet-dynamic-data-lists {
 	.lfr-ddm-container {
 		.lfr-ddm-repeatable-placeholder {
 			border-radius: 6px;
@@ -90,12 +86,8 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	}
 }
 
-.portlet-journal .display-page-item-container .display-page-item, .portlet-journal .display-page-item-container .display-page-item .display-page-item-remove, .taglib-categorization-filter .asset-entry {
+.taglib-categorization-filter .asset-entry {
 	border-radius: 14px;
-}
-
-.portlet-journal-content .lfr-icon-actions .lfr-icon-action-add a {
-	text-shadow: none;
 }
 
 .menu-content {
@@ -142,31 +134,6 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 
 	.palette-item-selected .lfr-input-localized-state {
 		box-shadow: 0 0 3px #27C1F2;
-	}
-}
-
-.lfr-add-panel {
-	.lfr-panel-content .app-view-entry-taglib {
-		&.display-list, &.display-descriptive {
-			&:hover, &.hover, &.over {
-				border-radius: 0;
-			}
-		}
-	}
-
-	.lfr-panel.lfr-extended {
-		border-radius: 0;
-		box-shadow: none;
-	}
-
-	.lfr-panel.lfr-extended .lfr-panel-titlebar, .add-application-tab .lfr-add-content .lfr-title-category {
-		@include background-image(linear-gradient(#D2DBE4, #BDC8D6));
-	}
-
-	.search-panel {
-		.add-content-search .field-input {
-			border-radius: 4px;
-		}
 	}
 }
 

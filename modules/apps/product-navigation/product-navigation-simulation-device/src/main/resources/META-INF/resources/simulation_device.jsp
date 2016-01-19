@@ -16,60 +16,61 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="<portlet:namespace />simulationDeviceContainer">
-	<aui:button cssClass="close" name="closeSimulationPanel" value="&times;" />
+<li id="<portlet:namespace />simulationDeviceContainer">
+	<h3 class="list-group-heading"><liferay-ui:message key="device" /></h3>
 
-	<h1><liferay-ui:message key="device" /></h1>
+	<div class="list-group-panel">
+		<div class="devices">
+			<div class="container-fluid default-devices">
+				<div class="col-xs-3 lfr-device-item selected text-center" data-device="smartphone">
+					<span class="icon icon-lg icon-mobile icon-monospaced"></span>
 
-	<aui:nav>
-		<aui:nav-item cssClass="autosize lfr-device-item" data-device="autosize">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(resourceBundle, "autosize") %></span>
-				<span class="device-dimensions">100%</span>
-			</div>
-		</aui:nav-item>
+					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "mobile") %></h5>
 
-		<aui:nav-item cssClass="lfr-device-item selected smartphone" data-device="smartphone">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(resourceBundle, "smartphone") %></span>
-				<span class="device-dimensions">768px</span>
-			</div>
-		</aui:nav-item>
-
-		<aui:nav-item cssClass="lfr-device-item tablet" data-device="tablet">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(resourceBundle, "tablet") %></span>
-				<span class="device-dimensions">1024px</span>
-			</div>
-		</aui:nav-item>
-
-		<aui:nav-item cssClass="desktop lfr-device-item" data-device="desktop">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(resourceBundle, "desktop") %></span>
-				<span class="device-dimensions">1280px</span>
-			</div>
-		</aui:nav-item>
-
-		<aui:nav-item cssClass="lfr-device-item" data-device="custom">
-			<p><liferay-ui:message key="custom" /> (px)</p>
-				<div class="col-xs-5">
-					<aui:input cssClass="form-control" inlineField="<%= true %>" label="" name="width" value="400" />
+					<h5 class="text-default">768px</h5>
 				</div>
 
-				<div class="col-xs-2">
-					<span> &times; </span>
+				<div class="col-xs-3 lfr-device-item text-center" data-device="tablet">
+					<span class="icon icon-lg icon-monospaced icon-tablet"></span>
+
+					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "tablet") %></h5>
+
+					<h5 class="text-default">1024px</h5>
 				</div>
 
-				<div class="col-xs-5">
-					<aui:input cssClass="form-control" inlineField="<%= true %>" label="" name="height" value="400" />
-				</div>
-		</aui:nav-item>
-	</aui:nav>
+				<div class="col-xs-3 lfr-device-item text-center" data-device="desktop">
+					<span class="icon icon-desktop icon-lg icon-monospaced"></span>
 
-	<div class="alert alert-warning">
-		<small><%= LanguageUtil.get(resourceBundle, "preview-may-not-be-accurate") %></small>
+					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "desktop") %></h5>
+
+					<h5 class="text-default">1280px</h5>
+				</div>
+
+				<div class="col-xs-3 lfr-device-item text-center" data-device="autosize">
+					<span class="icon icon-lg icon-monospaced icon-resize-full"></span>
+
+					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "autosize") %></h5>
+
+					<h5 class="text-default">100%</h5>
+				</div>
+			</div>
+
+			<div class="container-fluid custom-devices">
+				<aui:input inlineField="<%= true %>" inlineLabel="left" name="width" size="4" value="400" wrapperCssClass="col-xs-5" />
+
+				<aui:input inlineField="<%= true %>" inlineLabel="left" name="height" size="4" value="400" wrapperCssClass="col-xs-5" />
+
+				<span class="col-xs-2 lfr-device-item" data-device="custom">
+					<i class="icon icon-cog icon-lg icon-monospaced"></i>
+				</span>
+			</div>
+		</div>
+
+		<div class="preview-info-message">
+			<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "preview-may-not-be-accurate") %></h5>
+		</div>
 	</div>
-</div>
+</li>
 
 <aui:script use="liferay-product-navigation-simulation-device">
 	var simulationDevice = new Liferay.SimulationDevice(

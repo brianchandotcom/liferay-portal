@@ -22,4 +22,14 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(SimulationPanelCategory.SIMULATION);
 %>
 
-<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showHeader="<%= false %>" />
+<div class="simulation-menu" id="<portlet:namespace />simulationPanelContainer">
+	<h4 class="sidebar-header">
+		<span><liferay-ui:message key="simulation" /></span>
+
+		<aui:icon cssClass="close" id="closeSimulationPanel" image="times" markupView="lexicon" url="javascript:;" />
+	</h4>
+
+	<div id="<portlet:namespace />simulationCategoriesContainer">
+		<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showHeader="<%= false %>" />
+	</div>
+</div>

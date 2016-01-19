@@ -70,24 +70,8 @@
 		margin: 0 2em 2em 0;
 	}
 
-	.asset-actions {
-		float: right;
-		font-size: 11px;
-		font-weight: normal;
-		margin-bottom: 3px;
-		margin-top: 10px;
-
-		.icon-edit-sign {
-			font-size: 2em;
-		}
-	}
-
 	.asset-title {
 		padding: 10px;
-
-		.asset-actions img {
-			margin-left: 5px;
-		}
 
 		a {
 			text-decoration: none;
@@ -138,33 +122,6 @@
 		.taglib-rss {
 			margin-left: 10px;
 		}
-	}
-
-	.title-list {
-		.asset-actions {
-			left: 10px;
-			position: relative;
-		}
-
-		.asset-metadata {
-			padding: 0;
-		}
-
-		a {
-			float: left;
-		}
-	}
-
-	li.title-list {
-		clear: both;
-		list-style: none;
-		margin-bottom: 0.15em;
-		margin-right: 8px;
-		padding-bottom: 1px;
-	}
-
-	ul.title-list {
-		margin-left: 0;
 	}
 }
 

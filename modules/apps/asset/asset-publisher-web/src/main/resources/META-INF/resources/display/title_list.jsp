@@ -39,10 +39,10 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 %>
 
 	<c:if test="<%= assetEntryIndex == 0 %>">
-		<ul class="title-list">
+		<ul class="list-unstyled">
 	</c:if>
 
-	<li class="title-list <%= assetRendererFactory.getType() %>">
+	<li class="<%= assetRendererFactory.getType() %>">
 		<aui:a href="<%= viewURL %>">
 			<%= HtmlUtil.escape(title) %>
 		</aui:a>

@@ -128,9 +128,6 @@ public class EditPublishConfigurationMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			long exportImportConfigurationId = ParamUtil.getLong(
-				actionRequest, "exportImportConfigurationId");
-
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updatePublishConfiguration(actionRequest);
 			}

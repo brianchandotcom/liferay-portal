@@ -103,7 +103,7 @@ recordSetSearch.setOrderByType(orderByType);
 								icon="forms"
 								resultRow="<%= row %>"
 								showCheckbox= "<%= false %>"
-								title="<%= recordSet.getName(locale) %>"
+								title="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
 								url="<%= rowURL %>"
 							>
 								<liferay-frontend:vertical-card-sticker-bottom>
@@ -115,7 +115,7 @@ recordSetSearch.setOrderByType(orderByType);
 								</liferay-frontend:vertical-card-sticker-bottom>
 
 								<liferay-frontend:vertical-card-header>
-									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), recordSet.getUserName()} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 								</liferay-frontend:vertical-card-header>
 							</liferay-frontend:icon-vertical-card>
 						</liferay-ui:search-container-column-text>
@@ -125,12 +125,12 @@ recordSetSearch.setOrderByType(orderByType);
 						<liferay-ui:search-container-column-text
 							href="<%= rowURL %>"
 							name="name"
-							value="<%= recordSet.getName(locale) %>"
+							value="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
 							name="description"
-							value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
+							value="<%= HtmlUtil.escape(StringUtil.shorten(recordSet.getDescription(locale), 100)) %>"
 						/>
 
 						<liferay-ui:search-container-column-date

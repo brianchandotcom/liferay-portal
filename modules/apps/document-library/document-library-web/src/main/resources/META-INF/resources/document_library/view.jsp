@@ -271,7 +271,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 	);
 
 	var clearDocumentLibraryHandles = function(event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+		if (event.portletId === '<%= portletDisplay.getId() %>') {
 			documentLibrary.destroy();
 
 			Liferay.detach('destroyPortlet', clearDocumentLibraryHandles);

@@ -39,7 +39,6 @@ Import-Package:\
 	!org.springframework.*,\
 	*
 Include-Resource:\
-	classes,\
 	lib/=lib/cxf-core.jar,\
 	lib/=lib/cxf-rt-bindings-soap.jar,\
 	lib/=lib/cxf-rt-databinding-jaxb.jar,\

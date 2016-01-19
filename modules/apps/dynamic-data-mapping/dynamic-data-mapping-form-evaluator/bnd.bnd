@@ -2,7 +2,6 @@ Bundle-Name: Liferay Dynamic Data Mapping Form Evaluator
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.evaluator
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.dynamic.data.mapping.form.evaluator
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 -include: ../../../../marketplace/business-productivity/bnd.bnd

@@ -9,8 +9,6 @@ Import-Package:\
 	!junit.*,\
 	*
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/cas-client-core.jar,\
 	@lib/opensaml.jar
 Liferay-Releng-Module-Group-Description:

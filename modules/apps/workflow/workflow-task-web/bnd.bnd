@@ -2,9 +2,7 @@ Bundle-Name: Liferay Workflow Task Web
 Bundle-SymbolicName: com.liferay.workflow.task.web
 Bundle-Version: 1.0.0
 Include-Resource:\
-	classes,\
-	content=../workflow-lang/src/main/resources/content,\
-	META-INF/resources=src/main/resources/META-INF/resources,
+	content=../workflow-lang/src/main/resources/content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
 -include: ../../../../marketplace/business-productivity/bnd.bnd

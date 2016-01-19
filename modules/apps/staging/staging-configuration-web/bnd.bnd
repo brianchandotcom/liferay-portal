@@ -3,9 +3,7 @@ Bundle-SymbolicName: com.liferay.staging.configuration.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.staging.configuration.web.portlet.constants
 Include-Resource:\
-	classes,\
-	content=../staging-lang/src/main/resources/content,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	content=../staging-lang/src/main/resources/content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 -include: ../../../../marketplace/web-content-management/bnd.bnd

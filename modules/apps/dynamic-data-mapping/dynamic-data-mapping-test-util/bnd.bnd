@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.dynamic.data.mapping.test.util,\
 	com.liferay.dynamic.data.mapping.test.util.search
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 -include: ../../../../marketplace/business-productivity/bnd.bnd

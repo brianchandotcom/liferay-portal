@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Calendar API
 Bundle-SymbolicName: com.liferay.calendar.api
 Bundle-Version: 1.0.0
-Include-Resource: classes
 Export-Package:\
 	com.google.ical.iter,\
 	com.google.ical.util,\
@@ -19,7 +18,6 @@ Import-Package:\
 	!org.joda.*,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/com.google.ical.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar

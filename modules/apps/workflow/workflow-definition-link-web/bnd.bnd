@@ -5,9 +5,7 @@ Import-Package:\
 	com.liferay.portal.workflow,\
 	*
 Include-Resource:\
-	classes,\
-	content=../workflow-lang/src/main/resources/content,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	content=../workflow-lang/src/main/resources/content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
 -include: ../../../../marketplace/business-productivity/bnd.bnd

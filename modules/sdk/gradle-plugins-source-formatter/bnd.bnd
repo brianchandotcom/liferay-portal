@@ -3,5 +3,4 @@ Bundle-SymbolicName: com.liferay.gradle.plugins.source.formatter
 Bundle-Version: 1.0.9
 Export-Package: com.liferay.gradle.plugins.source.formatter
 Include-Resource:\
-	classes,\
 	@lib/com.liferay.source.formatter.jar!/com/liferay/source/formatter/SourceFormatterArgs.class

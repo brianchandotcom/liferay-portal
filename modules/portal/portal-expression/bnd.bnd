@@ -8,7 +8,6 @@ Import-Package:\
 	*
 Export-Package: com.liferay.portal.expression
 Include-Resource:\
-	classes,\
 	@lib/commons-compiler.jar,\
 	@lib/janino.jar
 Liferay-Releng-Module-Group-Description:

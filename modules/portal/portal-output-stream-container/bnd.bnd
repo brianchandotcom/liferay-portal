@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.portal.output.stream.container
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.output.stream.container
 Include-Resource:\
-	classes,\
 	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime

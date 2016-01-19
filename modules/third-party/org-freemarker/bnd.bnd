@@ -1,3 +1,2 @@
 Bundle-SymbolicName: org.freemarker
 Bundle-Version: 2.3.17.LIFERAY-PATCHED-1
-Include-Resource: classes

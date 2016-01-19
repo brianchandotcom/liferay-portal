@@ -10,8 +10,6 @@ Import-Package:\
 	!javax.microedition.*,\
 	*
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/jcifs.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks

@@ -4,9 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.dynamic.data.mapping.taglib.servlet.taglib,\
 	com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Provide-Capability:\

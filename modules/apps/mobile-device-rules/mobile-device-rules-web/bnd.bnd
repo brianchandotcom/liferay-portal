@@ -5,8 +5,6 @@ Import-Package:\
 	javax.servlet;version='[2.3.0,4.0.0)',\
 	*
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mobile Device Rules

@@ -3,9 +3,7 @@ Bundle-SymbolicName: com.liferay.staging.processes.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.staging.processes.web.constants
 Include-Resource:\
-	classes,\
-	content=../staging-lang/src/main/resources/content,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	content=../staging-lang/src/main/resources/content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Web-ContextPath: /staging-processes

@@ -6,7 +6,6 @@ Export-Package:\
 	com.liferay.portal.cache,\
 	com.liferay.portal.cache.configuration,\
 	com.liferay.portal.cache.io
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Cache Engines
 -include: ../../../marketplace/platform/bnd.bnd

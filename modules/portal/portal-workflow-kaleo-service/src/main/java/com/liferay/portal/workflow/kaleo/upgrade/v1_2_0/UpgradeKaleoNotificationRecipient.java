@@ -36,15 +36,21 @@ public class UpgradeKaleoNotificationRecipient extends UpgradeProcess {
 						"recipientClassName = ''");
 
 			ps.executeUpdate();
-			
-			runSQL("alter table KaleoNotificationRecipient add recipientScript TEXT null");
-			runSQL("alter table KaleoNotificationRecipient add recipientScriptLanguage  varchar(75) null");
-			runSQL("alter table KaleoNotificationRecipient add recipientScriptContexts  TEXT null");
-			runSQL("alter table KaleoNotificationRecipient add notificationReceptionType  varchar(3) null");
-			
+
+			runSQL(
+				"alter table KaleoNotificationRecipient "+
+					"add recipientScript TEXT null");
+			runSQL(
+				"alter table KaleoNotificationRecipient "+
+					"add recipientScriptLanguage  varchar(75) null");
+			runSQL(
+				"alter table KaleoNotificationRecipient "+
+					"add recipientScriptContexts  TEXT null");
+			runSQL(
+				"alter table KaleoNotificationRecipient "+
+					"add notificationReceptionType  varchar(3) null");
 		}
-		catch (SQLException sqle){
-			
+		catch (SQLException sqle) {
 		}
 		finally {
 			DataAccess.cleanUp(ps);

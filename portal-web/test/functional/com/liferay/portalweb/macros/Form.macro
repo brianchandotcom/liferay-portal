@@ -32,6 +32,8 @@
 
 		<execute function="Pause" locator1="5000" />
 
+		<execute function="Click" locator1="Form#NAME_FIELD" />
+
 		<execute function="Type#typeAceEditor" locator1="Form#NAME_FIELD" value1="${formName}" />
 	</command>
 

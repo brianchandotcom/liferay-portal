@@ -26,7 +26,6 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWithParentFolderDisabled");
-boolean showFolderSelector = ParamUtil.getBoolean(request, "showFolderSelector");
 
 if (folder != null) {
 	BookmarksUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
@@ -70,7 +69,6 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
-		<aui:input name="showFolderSelector" type="hidden" value="<%= showFolderSelector %>" />
 
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<liferay-ui:header
@@ -94,7 +92,13 @@ if (portletTitleBasedNavigation) {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<c:if test="<%= showFolderSelector %>">
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+
+				<aui:input name="description" />
+			</aui:fieldset>
+
+			<c:if test="<%= (folder != null) %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="parent-folder">
 
 					<%
 					String parentFolderName = LanguageUtil.get(request, "home");
@@ -150,13 +154,9 @@ if (portletTitleBasedNavigation) {
 						<aui:button disabled="<%= (parentFolderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 					</div>
 
-					<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="checkbox" />
-				</c:if>
-
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
-
-				<aui:input name="description" />
-			</aui:fieldset>
+					<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="toggle-switch" />
+				</aui:fieldset>
+			</c:if>
 
 			<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">

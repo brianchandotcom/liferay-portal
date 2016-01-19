@@ -170,7 +170,9 @@ AUI.add(
 					_closePanel: function() {
 						var instance = this;
 
-						Liferay.ControlMenu.togglePanel('simulationPanel');
+						var simulationToggle = AUI.$('#simulationToggleId');
+
+						simulationToggle.sideNavigation('hide');
 					},
 
 					_normalizeDialogAttrs: function(device, rotation) {

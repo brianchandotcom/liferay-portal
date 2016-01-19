@@ -110,5 +110,7 @@
 		}
 	);
 
-	Liferay.once('dockbarHidePanel', A.bind('destroy', simulationDevice));
+	var simulationToggle = $('#simulationToggleId');
+
+	simulationToggle.on('closed.lexicon.sidenav', A.bind('destroy', simulationDevice));
 </aui:script>

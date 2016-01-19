@@ -364,7 +364,10 @@
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${webContentTitle}" />
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+		
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${webContentTitle}" />
 	</command>
 
 	<command name="viewPermissionsChecked">

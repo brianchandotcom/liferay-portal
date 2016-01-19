@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ASSET_TITLE</td>
+	<td>//a[@title='${key_assetTitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS_IFRAME</td>
 	<td>//iframe[@class='dialog-iframe-node ']</td>
 	<td></td>

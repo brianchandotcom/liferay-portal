@@ -74,7 +74,9 @@
 	</command>
 
 	<command name="_viewPermissionsIframe">
-		<execute function="AssertTextEquals" locator1="CalendarPermissions#HEADER_TITLE" value1="${calendarName}" />
+		<var name="key_assetTitle" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
@@ -575,7 +577,10 @@
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${calendarName}" />
+
+		<var name="key_assetTitle" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
 		<execute function="Check" locator1="Permissions#EVENT_PERMISSIONS_VIEW_EVENT_DETAILS_CHECKBOX" value1="${roleName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />
@@ -667,7 +672,11 @@
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${calendarName}" />
+
+		<var name="key_assetTitle" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
+
 		<execute function="Uncheck" locator1="Permissions#EVENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />

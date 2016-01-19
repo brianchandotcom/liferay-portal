@@ -1485,7 +1485,10 @@
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${dmDocumentTitle}" />
+
+		<var name="key_assetTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${dmDocumentTitle}" />
 		<execute function="Uncheck" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -1986,7 +1989,10 @@
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${dmDocumentTitle}" />
+
+		<var name="key_assetTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
 			<equals arg1="${viewPermissionValue}" arg2="checked" />
@@ -2065,7 +2071,10 @@
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${dmDocumentTitle}" />
+
+		<var name="key_assetTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
 			<equals arg1="${viewPermissionValue}" arg2="checked" />

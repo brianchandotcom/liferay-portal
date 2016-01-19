@@ -113,13 +113,24 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
-				"line break:", "line break:", "line break:", "line break:"
+				"line break:"
 			},
 			new Integer[] {
-				31, 35, 42, 47, 51, 53, 56, 59, 63, 66, 71, 77, 81, 87, 98, 111,
-				114, 120, 123, 130
+				31, 35, 43, 47, 49, 52, 55, 59, 62, 67, 73, 77, 83, 94, 107,
+				111, 121
 			});
 		test("IncorrectLineBreaks2.testjava");
+	}
+
+	@Test
+	public void testIncorrectTabs() throws Exception {
+		test(
+			"IncorrectTabs.testjava",
+			new String[] {
+				"Incorrect tab or line break:", "Incorrect tab or line break:",
+				"Incorrect tab or line break:"
+			},
+			new Integer[] {27, 31, 37});
 	}
 
 	@Test

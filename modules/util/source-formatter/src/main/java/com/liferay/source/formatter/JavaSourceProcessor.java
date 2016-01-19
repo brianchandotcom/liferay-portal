@@ -1026,9 +1026,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatJava(fileName, absolutePath, newContent);
 
-		if (_checkTabs &&
-			!isExcludedFile(_checkTabsExclusionFiles, absolutePath)) {
-
+		if (!isExcludedFile(_checkTabsExclusionFiles, absolutePath)) {
 			JavaSourceTabCalculator javaSourceTabCalculator =
 				new JavaSourceTabCalculator();
 
@@ -1060,8 +1058,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("allow.use.service.util.in.service.impl"));
 		_checkJavaFieldTypesExclusionFiles = getPropertyList(
 			"check.java.field.types.excludes.files");
-		_checkTabs = GetterUtil.getBoolean(
-			System.getProperty("source.formatter.check.tabs"));
 		_checkTabsExclusionFiles = getPropertyList("check.tabs.excludes.files");
 		_diamondOperatorExclusionFiles = getPropertyList(
 			"diamond.operator.excludes.files");
@@ -1937,31 +1933,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
-					if (trimmedLine.endsWith(StringPool.PLUS) &&
-						!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
-
-						int closeParenthesisCount = StringUtil.count(
-							strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
-						int openParenthesisCount = StringUtil.count(
-							strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
-
-						if (openParenthesisCount > closeParenthesisCount) {
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
-						}
-					}
-
-					if (!strippedQuotesLine.endsWith("{") &&
-						strippedQuotesLine.contains("{") &&
-						!strippedQuotesLine.contains("}") &&
-						!strippedQuotesLine.contains("\t//")) {
-
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
-					}
-
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 						previousLine.endsWith(StringPool.PLUS)) {
 
@@ -2180,34 +2151,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 									"tab: " + fileName + " " + lineCount);
 							}
 
-							if (Validator.isNotNull(trimmedLine)) {
-								if (((previousLine.endsWith(StringPool.COLON) &&
-									  previousLine.contains(
-										  StringPool.TAB + "for ")) ||
-									 (previousLine.endsWith(
-										 StringPool.OPEN_PARENTHESIS) &&
-									  previousLine.contains(
-										  StringPool.TAB + "if "))) &&
-									((previousLineLeadingTabCount + 2) !=
-										lineLeadingTabCount)) {
+							if (Validator.isNotNull(trimmedLine) &&
+								previousLine.endsWith(
+									StringPool.OPEN_CURLY_BRACE) &&
+								!trimmedLine.startsWith(
+									StringPool.CLOSE_CURLY_BRACE) &&
+								((previousLineLeadingTabCount + 1) !=
+									lineLeadingTabCount)) {
 
-									processErrorMessage(
-										fileName,
-										"line break: " + fileName + " " +
-											lineCount);
-								}
-
-								if (previousLine.endsWith(
-										StringPool.OPEN_CURLY_BRACE) &&
-									!trimmedLine.startsWith(
-										StringPool.CLOSE_CURLY_BRACE) &&
-									((previousLineLeadingTabCount + 1) !=
-										lineLeadingTabCount)) {
-
-									processErrorMessage(
-										fileName,
-										"tab: " + fileName + " " + lineCount);
-								}
+								processErrorMessage(
+									fileName,
+									"tab: " + fileName + " " + lineCount);
 							}
 
 							if (previousLine.endsWith(StringPool.PERIOD)) {
@@ -3864,7 +3818,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
-	private boolean _checkTabs;
 	private List<String> _checkTabsExclusionFiles;
 	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(

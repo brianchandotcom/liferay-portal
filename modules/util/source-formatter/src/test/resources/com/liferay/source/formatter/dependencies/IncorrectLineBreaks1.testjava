@@ -38,10 +38,6 @@ public class IncorrectLineBreaks1 {
 			test = thisIsAStringWithAVeryVeryVeryLongName;
 		}
 
-		String test2 =
-			test1 + StringUtil.trim(thisIsAStringWithAVeryVeryVeryLongName +
-				StringPool.Period);
-
 		boolean b = StringUtil.contains(
 			StringUtil.replace(
 				"Hello World", "Hello", "World"), "Hello World Hello World");
@@ -50,17 +46,17 @@ public class IncorrectLineBreaks1 {
 			"Hello World Hello World Hello World " +
 				"Hello World Hello World Hello World", "Hello");
 
-		String test3 = thisIsAStringWithAVeryVeryVeryLongName +
+		String test2 = thisIsAStringWithAVeryVeryVeryLongName +
 			thisIsAStringWithAVeryVeryVeryLongName2;
 
-		String test4 = "Hello" + StringUtil.trim(
+		String test3 = "Hello" + StringUtil.trim(
 			thisIsAStringWithAVeryVeryVeryLongName);
 
 		boolean booleanWithAVeryVeryVeryVeryVeryVeryLongName = StringUtil.
-			contains(test1, test2);
+			contains(test2, test3);
 
 		boolean booleanWithAVeryVeryVeryVeryVeryVeryLongName = StringUtil
-			.contains(test1, test2);
+			.contains(test2, test3);
 	}
 
 	public void method2(String test1, String test2, String test3) throws
@@ -109,18 +105,13 @@ public class IncorrectLineBreaks1 {
 			new String[] {
 				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"
 			}, 5);
-
-		StringUtil.merge(
-			new String[] {"One", "Two", "Three", "Four", "Five", "Six", "Seven",
-			"Eight"
-		});
 	}
 
 	public void methodWithASlightlyLongerName(
 		String test1, String test2, String[] testStringArray) throws Exception {
 
 		for (String testStringWithAVeryVeryVeryVeryVeryVeryVeryLongName :
-			testStringArray) {
+				testStringArray) {
 
 			continue;
 		}

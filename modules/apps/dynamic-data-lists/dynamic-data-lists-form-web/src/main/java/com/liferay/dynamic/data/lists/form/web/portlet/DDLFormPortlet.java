@@ -119,8 +119,17 @@ public class DDLFormPortlet extends MVCPortlet {
 			if (cause instanceof DDMFormValuesValidationException) {
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(
-					actionRequest, cause.getClass(), cause.getMessage());
+				if (cause instanceof
+						DDMFormValuesValidationException.MustSetValidValues ||
+					cause instanceof
+						DDMFormValuesValidationException.RequiredValue) {
+
+					SessionErrors.add(actionRequest, cause.getClass(), cause);
+				}
+				else {
+					SessionErrors.add(
+						actionRequest, DDMFormValuesValidationException.class);
+				}
 			}
 			else {
 				throw e;

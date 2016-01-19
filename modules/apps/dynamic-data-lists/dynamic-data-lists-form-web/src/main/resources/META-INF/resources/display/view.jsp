@@ -53,14 +53,36 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 						<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 						<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 
-						<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>">
-							<liferay-ui:message arguments="<%= errorException %>" key="some-field-validations-have-failed-x" translateArguments="<%= false %>" />
-						</liferay-ui:error>
+						<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
-						<liferay-ui:error exception="<%= StorageFieldValueException.RequiredValue.class %>">
+						<liferay-ui:error exception="<%= DDMFormValuesValidationException.MustSetValidValues.class %>">
 
 							<%
-							StorageFieldValueException.RequiredValue rv = (StorageFieldValueException.RequiredValue)errorException;
+							DDMFormValuesValidationException.MustSetValidValues msvv = (DDMFormValuesValidationException.MustSetValidValues)errorException;
+
+							List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults = msvv.getDDMFormFieldEvaluationResults();
+
+							for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult : ddmFormFieldEvaluationResults) {
+							%>
+
+								<liferay-ui:message
+									arguments="<%= new Object[] {ddmFormFieldEvaluationResult.getName(), ddmFormFieldEvaluationResult.getErrorMessage()} %>"
+									key="a-validation-failed-for-field-x"
+									translateArguments="<%= false %>"
+								/>
+
+								<br />
+
+							<%
+							}
+							%>
+
+						</liferay-ui:error>
+
+						<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
+
+							<%
+							DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
 							%>
 
 							<liferay-ui:message arguments="<%= rv.getFieldName() %>" key="no-value-defined-for-field-x" translateArguments="<%= false %>" />

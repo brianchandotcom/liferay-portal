@@ -17,7 +17,7 @@
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
-		<portlet-resource>
+	<portlet-resource>
 		<portlet-name>com_liferay_directory_web_portlet_FriendsDirectoryPortlet</portlet-name>
 		<permissions>
 			<supports>

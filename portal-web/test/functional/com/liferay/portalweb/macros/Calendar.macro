@@ -581,8 +581,11 @@
 		<var name="key_assetTitle" value="${calendarName}" />
 
 		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
+
 		<execute function="Check" locator1="Permissions#EVENT_PERMISSIONS_VIEW_EVENT_DETAILS_CHECKBOX" value1="${roleName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -678,7 +681,9 @@
 		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${calendarName}" />
 
 		<execute function="Uncheck" locator1="Permissions#EVENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

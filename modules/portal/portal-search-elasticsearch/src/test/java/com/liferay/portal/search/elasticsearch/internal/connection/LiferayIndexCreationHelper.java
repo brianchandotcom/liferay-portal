@@ -14,14 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch.internal.index.IndexSettingsConstants;
-import com.liferay.portal.search.elasticsearch.internal.index.LiferayTypeMappingsConstants;
-
-import java.io.IOException;
-import java.io.InputStream;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
+import com.liferay.portal.search.elasticsearch.internal.index.LiferayDocumentTypeFactory;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.Settings;
 
 /**
@@ -29,30 +26,31 @@ import org.elasticsearch.common.settings.Settings;
  */
 public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
+	public LiferayIndexCreationHelper(
+		IndicesAdminClient indicesAdminClient, IndexName indexName) {
+
+		_liferayDocumentTypeFactory = new LiferayDocumentTypeFactory(
+			indexName.getName(), indicesAdminClient);
+	}
+
 	@Override
 	public void contribute(
 		CreateIndexRequestBuilder createIndexRequestBuilder) {
 
-		createIndexRequestBuilder.addMapping(
-			LiferayTypeMappingsConstants.TYPE,
-			read(LiferayTypeMappingsConstants.FILE));
-
-		Settings.Builder builder = Settings.settingsBuilder();
-
-		builder.loadFromSource(read(IndexSettingsConstants.FILE));
-
-		createIndexRequestBuilder.setSettings(builder);
+		_liferayDocumentTypeFactory.createRequiredDefaultTypeMappings(
+			createIndexRequestBuilder);
 	}
 
-	private String read(String file) {
-		try (InputStream inputStream =
-				LiferayIndexCreationHelper.class.getResourceAsStream(file)) {
-
-			return StringUtil.read(inputStream);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+	@Override
+	public void contributeIndexSettings(Settings.Builder builder) {
+		_liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(builder);
 	}
+
+	@Override
+	public void whenIndexCreated() {
+		_liferayDocumentTypeFactory.createOptionalDefaultTypeMappings();
+	}
+
+	private final LiferayDocumentTypeFactory _liferayDocumentTypeFactory;
 
 }

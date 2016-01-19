@@ -16,8 +16,25 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+boolean showStagingConfiguration = ParamUtil.getBoolean(request, "showStagingConfiguration");
+%>
+
 <c:choose>
-	<c:when test="<%= !group.isStaged() && !group.hasLocalOrRemoteStagingGroup() %>">
+	<c:when test="<%= showStagingConfiguration || (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup()) %>">
+
+		<%
+		if (group.isStaged() || group.hasLocalOrRemoteStagingGroup()) {
+			portletDisplay.setShowBackIcon(true);
+
+			PortletURL stagingProcessesURL = PortalUtil.getControlPanelPortletURL(request, StagingProcessesPortletKeys.STAGING_PROCESSES, PortletRequest.RENDER_PHASE);
+
+			stagingProcessesURL.setParameter("mvcPath", "/view.jsp");
+
+			portletDisplay.setURLBack(stagingProcessesURL.toString());
+		}
+		%>
+
 		<liferay-portlet:runtime portletName="<%= StagingConfigurationPortletKeys.STAGING_CONFIGURATION %>" />
 	</c:when>
 	<c:otherwise>

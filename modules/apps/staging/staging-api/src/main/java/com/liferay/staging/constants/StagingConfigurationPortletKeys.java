@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.constants;
+package com.liferay.staging.constants;
 
 /**
  * @author Levente Hudák
  */
-public class StagingProcessesPortletKeys {
+public class StagingConfigurationPortletKeys {
 
-	public static final String STAGING_PROCESSES =
-		"com_liferay_staging_processes_web_portlet_StagingProcessesPortlet";
+	public static final String STAGING_CONFIGURATION =
+		"com_liferay_staging_configuration_web_portlet_" +
+			"StagingConfigurationPortlet";
 
 }

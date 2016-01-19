@@ -31,7 +31,7 @@ import com.liferay.portal.security.auth.RemoteAuthException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.exception.RemoteExportException;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

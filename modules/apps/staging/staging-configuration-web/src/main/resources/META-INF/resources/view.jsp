@@ -36,8 +36,6 @@ if (stagedLocally) {
 }
 
 BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskManagerUtil.fetchFirstBackgroundTask(liveGroupId, BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR, true, new BackgroundTaskCreateDateComparator(false));
-
-boolean disableStagingOptions = GetterUtil.getBoolean(SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "disableStagingOptions"), false);
 %>
 
 <div class="container-fluid-1280">
@@ -157,26 +155,17 @@ boolean disableStagingOptions = GetterUtil.getBoolean(SessionMessages.get(lifera
 				</liferay-ui:error>
 
 				<aui:fieldset-group markupView="lexicon">
-					<c:choose>
-						<c:when test="<%= !disableStagingOptions %>">
-							<aui:fieldset>
-								<div id="<portlet:namespace />stagingTypes">
-									<aui:input checked="<%= !liveGroup.isStaged() %>" id="none" label="none" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_NOT_STAGED %>" />
+					<aui:fieldset>
+						<div id="<portlet:namespace />stagingTypes">
+							<aui:input checked="<%= !liveGroup.isStaged() %>" id="none" label="none" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_NOT_STAGED %>" />
 
-									<c:if test="<%= !liveGroupRemoteStaging %>">
-										<aui:input checked="<%= stagedLocally %>" helpMessage="staging-type-local" id="local" label="local-live" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_LOCAL_STAGING %>" />
-									</c:if>
+							<c:if test="<%= !liveGroupRemoteStaging %>">
+								<aui:input checked="<%= stagedLocally %>" helpMessage="staging-type-local" id="local" label="local-live" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_LOCAL_STAGING %>" />
+							</c:if>
 
-									<aui:input checked="<%= stagedRemotely %>" helpMessage="staging-type-remote" id="remote" label="remote-live" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_REMOTE_STAGING %>" />
-								</div>
-							</aui:fieldset>
-						</c:when>
-						<c:otherwise>
-							<div class="alert alert-warning">
-								<liferay-ui:message key="staging-is-disabled.-please-close-this-window-in-order-to-go-to-the-live-site" />
-							</div>
-						</c:otherwise>
-					</c:choose>
+							<aui:input checked="<%= stagedRemotely %>" helpMessage="staging-type-remote" id="remote" label="remote-live" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_REMOTE_STAGING %>" />
+						</div>
+					</aui:fieldset>
 
 					<%
 					boolean showRemoteOptions = stagedRemotely;
@@ -284,7 +273,7 @@ boolean disableStagingOptions = GetterUtil.getBoolean(SessionMessages.get(lifera
 			</c:otherwise>
 		</c:choose>
 
-		<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() && !disableStagingOptions %>">
+		<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
 			<aui:button-row>
 				<aui:button cssClass="btn-lg btn-primary" type="submit" />
 			</aui:button-row>

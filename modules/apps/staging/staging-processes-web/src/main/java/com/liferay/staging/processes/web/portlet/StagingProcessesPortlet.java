@@ -15,7 +15,7 @@
 package com.liferay.staging.processes.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.Portlet;
 

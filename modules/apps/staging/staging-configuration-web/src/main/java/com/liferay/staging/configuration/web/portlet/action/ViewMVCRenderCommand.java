@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys;
+import com.liferay.staging.constants.StagingConfigurationPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

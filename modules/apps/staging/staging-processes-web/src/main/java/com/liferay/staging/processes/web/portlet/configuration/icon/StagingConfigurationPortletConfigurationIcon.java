@@ -16,8 +16,11 @@ package com.liferay.staging.processes.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Levente Hudák
@@ -38,7 +41,16 @@ public class StagingConfigurationPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		return "javascript:;";
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"showStagingConfiguration", Boolean.TRUE.toString());
+
+		return portletURL.toString();
 	}
 
 	@Override

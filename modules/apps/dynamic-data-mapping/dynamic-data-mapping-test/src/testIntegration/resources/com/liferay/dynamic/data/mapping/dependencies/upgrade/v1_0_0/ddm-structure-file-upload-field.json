@@ -1,0 +1,28 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"label": {
+				"en_US": "File Upload"
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"dataType": "document-library",
+			"indexType": "",
+			"localizable": true,
+			"name": "file_upload",
+			"readOnly": false,
+			"repeatable": true,
+			"required": true,
+			"showLabel": true,
+			"type": "ddm-documentlibrary"
+		}
+	]
+}

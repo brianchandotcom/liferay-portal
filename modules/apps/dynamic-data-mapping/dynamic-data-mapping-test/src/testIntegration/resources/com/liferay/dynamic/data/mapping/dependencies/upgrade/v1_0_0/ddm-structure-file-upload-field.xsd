@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="file-upload" indexType="" name="file_upload" repeatable="true" required="true" type="ddm-fileupload">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[File Upload]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

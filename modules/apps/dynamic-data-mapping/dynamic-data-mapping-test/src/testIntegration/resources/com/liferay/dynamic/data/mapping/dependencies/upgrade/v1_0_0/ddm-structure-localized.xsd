@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,pt_BR" default-locale="en_US">
+	<dynamic-element dataType="string" indexType="keyword" localizable="true" name="Name" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Name]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[Please type your name.]]></entry>
+		</meta-data>
+		<meta-data locale="pt_BR">
+			<entry name="label"><![CDATA[Nome]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[Por favor digite o seu nome.]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

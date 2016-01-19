@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
@@ -331,8 +332,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		try {
 			ps = connection.prepareStatement(
-				"select parentStructureId, definition from DDMStructure " +
-					"where structureId = ?" );
+				"select parentStructureId, definition, storageType from " +
+					"DDMStructure where structureId = ?" );
 
 			ps.setLong(1, structureId);
 
@@ -341,8 +342,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			if (rs.next()) {
 				long parentStructureId = rs.getLong("parentStructureId");
 				String definition = rs.getString("definition");
+				String storageType = rs.getString("storageType");
 
-				ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
+				if (storageType.equals("xml")) {
+					ddmForm = DDMFormXSDDeserializerUtil.deserialize(
+						definition);
+				}
+				else {
+					ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+						definition);
+				}
 
 				if (parentStructureId > 0) {
 					DDMForm parentDDMForm = getDDMForm(parentStructureId);
@@ -816,6 +825,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				long parentStructureId = rs.getLong("parentStructureId");
 				long classNameId = rs.getLong("classNameId");
+				String version = rs.getString("version");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 				String storageType = rs.getString("storageType");
@@ -837,6 +847,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				upgradeStructureDefinition(structureId, definition);
 
 				// Structure version
+
+				if (version != null) {
+					continue;
+				}
 
 				long structureVersionId = increment();
 
@@ -950,6 +964,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 				long templateId = rs.getLong("templateId");
+				String version = rs.getString("version");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 				String language = rs.getString("language");
@@ -986,12 +1001,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// Template version
 
-				addTemplateVersion(
-					increment(), groupId, companyId, userId, userName,
-					modifiedDate, classNameId, classPK, templateId, name,
-					description, language, updatedScript,
-					WorkflowConstants.STATUS_APPROVED, userId, userName,
-					modifiedDate);
+				if (version == null) {
+					addTemplateVersion(
+						increment(), groupId, companyId, userId, userName,
+						modifiedDate, classNameId, classPK, templateId, name,
+						description, language, updatedScript,
+						WorkflowConstants.STATUS_APPROVED, userId, userName,
+						modifiedDate);
+				}
 			}
 		}
 		finally {

@@ -196,9 +196,7 @@ public class JavaSourceTabCalculator {
 
 		int lineTabLevel = calculateTabLevel(0, line);
 
-		if (skipCalculateExtraTabs(
-				line, lineTabLevel, remainingContent, forClause, ifClause)) {
-
+		if (skipCalculateExtraTabs(line, lineTabLevel, forClause, ifClause)) {
 			return;
 		}
 
@@ -454,8 +452,7 @@ public class JavaSourceTabCalculator {
 	}
 
 	protected boolean skipCalculateExtraTabs(
-		String line, int lineTabLevel, String remainingContent,
-		boolean forClause, boolean ifClause) {
+		String line, int lineTabLevel, boolean forClause, boolean ifClause) {
 
 		if (line.startsWith("@") || line.equals("}") || line.equals(")")) {
 			return true;

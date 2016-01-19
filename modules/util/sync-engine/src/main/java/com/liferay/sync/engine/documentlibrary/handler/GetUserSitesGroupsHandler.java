@@ -67,10 +67,32 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 					remoteSyncSite.getGroupId());
 			}
 
+			String filePathName = FileUtil.getFilePathName(
+				syncAccount.getFilePathName(), remoteSyncSiteName);
+
 			if (localSyncSite == null) {
-				remoteSyncSite.setFilePathName(
-					FileUtil.getFilePathName(
-						syncAccount.getFilePathName(), remoteSyncSiteName));
+				SyncSite deletedSyncSite = SyncSiteService.fetchSyncSite(
+					filePathName, getSyncAccountId());
+
+				if (deletedSyncSite != null) {
+					if (deletedSyncSite.isActive()) {
+						if (_logger.isDebugEnabled()) {
+							_logger.debug(
+								"Sync site {} was deactivated or removed.",
+								deletedSyncSite.getName());
+						}
+
+						deletedSyncSite.setUiEvent(
+							SyncSite.UI_EVENT_SYNC_SITE_DEACTIVATED);
+
+						SyncSiteService.update(deletedSyncSite);
+					}
+
+					SyncSiteService.deleteSyncSite(
+						deletedSyncSite.getSyncSiteId());
+				}
+
+				remoteSyncSite.setFilePathName(filePathName);
 				remoteSyncSite.setRemoteSyncTime(-1);
 				remoteSyncSite.setSyncAccountId(getSyncAccountId());
 
@@ -102,8 +124,7 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 
 					FileUtil.moveFile(
 						Paths.get(localSyncSite.getFilePathName()),
-						FileUtil.getFilePath(
-							syncAccount.getFilePathName(), remoteSyncSiteName));
+						Paths.get(filePathName));
 				}
 
 				remoteSyncSiteIds.add(localSyncSite.getSyncSiteId());

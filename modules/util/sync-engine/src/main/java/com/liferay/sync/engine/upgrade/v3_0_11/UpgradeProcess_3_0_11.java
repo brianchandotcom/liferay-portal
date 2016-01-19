@@ -57,6 +57,16 @@ public class UpgradeProcess_3_0_11 extends UpgradeProcess {
 				SyncFile syncFile = SyncFileService.fetchSyncFile(
 					syncSite.getFilePathName());
 
+				if (syncFile == null) {
+					syncFile = SyncFileService.fetchSyncFile(
+						syncSite.getGroupId(), syncSite.getSyncAccountId(), 0);
+
+					syncFile.setName(syncSite.getName());
+					syncFile.setFilePathName(syncSite.getFilePathName());
+
+					SyncFileService.update(syncFile);
+				}
+
 				FileKeyUtil.writeFileKey(
 					Paths.get(syncSite.getFilePathName()),
 					String.valueOf(syncFile.getSyncFileId()), true);

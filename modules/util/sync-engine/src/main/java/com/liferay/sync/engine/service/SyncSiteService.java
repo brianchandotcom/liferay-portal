@@ -112,6 +112,13 @@ public class SyncSiteService {
 
 			_syncSitePersistence.deleteById(syncSiteId);
 
+			// Sync file
+
+			SyncFile syncFile = SyncFileService.fetchSyncFile(
+				syncSite.getFilePathName());
+
+			SyncFileService.deleteSyncFile(syncFile);
+
 			// Sync files
 
 			try {
@@ -248,6 +255,15 @@ public class SyncSiteService {
 			FileUtil.getFilePathName(syncAccount.getFilePathName(), name));
 
 		update(syncSite);
+
+		// Sync file
+
+		SyncFile syncFile = SyncFileService.fetchSyncFile(filePathName);
+
+		syncFile.setName(name);
+		syncFile.setFilePathName(filePathName);
+
+		SyncFileService.update(syncFile);
 
 		// Sync files
 

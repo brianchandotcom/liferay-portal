@@ -24,7 +24,20 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.announcements.web.constants.AnnouncementsPortletKeys" %><%@
+<%@ page import="com.liferay.announcements.kernel.exception.EntryContentException" %><%@
+page import="com.liferay.announcements.kernel.exception.EntryDisplayDateException" %><%@
+page import="com.liferay.announcements.kernel.exception.EntryExpirationDateException" %><%@
+page import="com.liferay.announcements.kernel.exception.EntryTitleException" %><%@
+page import="com.liferay.announcements.kernel.exception.EntryURLException" %><%@
+page import="com.liferay.announcements.kernel.exception.NoSuchEntryException" %><%@
+page import="com.liferay.announcements.kernel.exception.NoSuchFlagException" %><%@
+page import="com.liferay.announcements.kernel.model.AnnouncementsEntry" %><%@
+page import="com.liferay.announcements.kernel.model.AnnouncementsEntryConstants" %><%@
+page import="com.liferay.announcements.kernel.model.AnnouncementsFlagConstants" %><%@
+page import="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil" %><%@
+page import="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil" %><%@
+page import="com.liferay.announcements.kernel.util.AnnouncementsUtil" %><%@
+page import="com.liferay.announcements.web.constants.AnnouncementsPortletKeys" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -58,20 +71,7 @@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.announcements.exception.EntryContentException" %><%@
-page import="com.liferay.portlet.announcements.exception.EntryDisplayDateException" %><%@
-page import="com.liferay.portlet.announcements.exception.EntryExpirationDateException" %><%@
-page import="com.liferay.portlet.announcements.exception.EntryTitleException" %><%@
-page import="com.liferay.portlet.announcements.exception.EntryURLException" %><%@
-page import="com.liferay.portlet.announcements.exception.NoSuchEntryException" %><%@
-page import="com.liferay.portlet.announcements.exception.NoSuchFlagException" %><%@
-page import="com.liferay.portlet.announcements.model.AnnouncementsEntry" %><%@
-page import="com.liferay.portlet.announcements.model.AnnouncementsEntryConstants" %><%@
-page import="com.liferay.portlet.announcements.model.AnnouncementsFlagConstants" %><%@
-page import="com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission" %><%@
-page import="com.liferay.portlet.announcements.util.AnnouncementsUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.DateFormat" %><%@

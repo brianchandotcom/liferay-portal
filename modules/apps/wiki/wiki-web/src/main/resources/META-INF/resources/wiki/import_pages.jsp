@@ -71,22 +71,20 @@ if (portletTitleBasedNavigation) {
 			/>
 		</c:if>
 
-		<div class="panel-body">
-			<aui:fieldset-group markupView="lexicon">
-				<liferay-ui:tabs
-					names="<%= StringUtil.merge(importers) %>"
-					param="tabs2"
-					refresh="<%= false %>"
-					type="tabs nav-tabs-default"
-					url="<%= portletURL.toString() %>"
-				/>
+		<aui:fieldset-group markupView="lexicon">
+			<liferay-ui:tabs
+				names="<%= StringUtil.merge(importers) %>"
+				param="tabs2"
+				refresh="<%= false %>"
+				type="tabs nav-tabs-default"
+				url="<%= portletURL.toString() %>"
+			/>
 
-				<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
-				<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
+			<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
+			<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-				<liferay-util:include page="<%= WikiUtil.getWikiImporterPage(tabs2) %>" servletContext="<%= application %>" />
-			</aui:fieldset-group>
-		</div>
+			<liferay-util:include page="<%= WikiUtil.getWikiImporterPage(tabs2) %>" servletContext="<%= application %>" />
+		</aui:fieldset-group>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" value="import" />

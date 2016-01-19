@@ -43,8 +43,8 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="Portlet#viewDisplayStyles">
-			<var name="displayStyleList" value="Descriptive,Icon,List" />
+		<execute macro="Portlet#viewDefaultDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -72,12 +72,8 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="Portlet#viewDisplayStyles">
-			<var name="displayStyleList" value="Icon,List" />
-		</execute>
-
-		<execute macro="Portlet#viewDisplayStylesNotPresent">
-			<var name="displayStyleList" value="Descriptive" />
+		<execute macro="Portlet#viewDefaultDisplayStyle">
+			<var name="displayStyle" value="Icon" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -93,8 +89,8 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="Portlet#viewDisplayStyles">
-			<var name="displayStyleList" value="Icon,Descriptive,List" />
+		<execute macro="Portlet#viewDefaultDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
 		</execute>
 	</command>
 

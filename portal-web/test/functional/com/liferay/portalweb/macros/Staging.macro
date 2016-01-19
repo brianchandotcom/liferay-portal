@@ -140,6 +140,10 @@
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${pageVariationName}" />
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Page variation was added." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="addPublishTemplate">
@@ -178,6 +182,10 @@
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was added." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="changePageVariationPG">

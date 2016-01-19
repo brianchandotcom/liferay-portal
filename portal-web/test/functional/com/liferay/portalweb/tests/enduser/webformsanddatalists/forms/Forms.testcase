@@ -59,7 +59,10 @@
 			<var name="configurationName" value="Forms" />
 		</execute>
 
-		<execute macro="FormFields#removeRepeatableField" />
+		<execute macro="FormFields#selectSelectOption">
+			<var name="fieldName" value="DisplayView" />
+			<var name="selectOption" value="Icon" />
+		</execute>
 
 		<execute macro="Button#clickSave" />
 

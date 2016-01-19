@@ -54,6 +54,12 @@ public class AlertTag extends IncludeTag {
 		setScopedAttribute("destroyOnHide", destroyOnHide);
 	}
 
+	public void setIcon(String icon) {
+		_icon = icon;
+
+		setScopedAttribute("icon", icon);
+	}	
+
 	public void setMessage(String message) {
 		_message = message;
 
@@ -90,6 +96,7 @@ public class AlertTag extends IncludeTag {
 
 		_animationTime = 500;
 		_closeable = true;
+		_icon = "info-circle";
 		_message = null;
 		_cssClass = null;
 		_destroyOnHide = false;
@@ -108,6 +115,7 @@ public class AlertTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "animationTime", _animationTime);
 		setNamespacedAttribute(request, "closeable", _closeable);
+		setNamespacedAttribute(request, "icon", _icon);
 		setNamespacedAttribute(request, "message", _message);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "destroyOnHide", _destroyOnHide);
@@ -125,6 +133,7 @@ public class AlertTag extends IncludeTag {
 	private boolean _closeable = true;
 	private String _cssClass;
 	private boolean _destroyOnHide;
+	private String _icon = "info-circle";
 	private String _message;
 	private String _targetContainer;
 	private Integer _timeout = -1;

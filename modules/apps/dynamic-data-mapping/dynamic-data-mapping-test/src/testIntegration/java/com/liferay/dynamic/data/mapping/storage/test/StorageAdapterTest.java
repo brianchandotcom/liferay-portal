@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.storage.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -168,10 +169,18 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		}
 		catch (DDMFormValuesValidationException.MustSetValidValues msvv)
 		{
-			String message = msvv.getMessage();
+			List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+				msvv.getDDMFormFieldEvaluationResults();
 
-			Assert.assertTrue(
-				message.contains("custom validation error message"));
+			Assert.assertEquals(1, ddmFormFieldEvaluationResults.size());
+
+			DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+				ddmFormFieldEvaluationResults.get(0);
+
+			Assert.assertEquals("text", ddmFormFieldEvaluationResult.getName());
+			Assert.assertEquals(
+				"custom validation error message",
+				ddmFormFieldEvaluationResult.getErrorMessage());
 		}
 	}
 

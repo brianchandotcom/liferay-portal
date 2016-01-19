@@ -26,7 +26,7 @@
 
 	<div class="form-group">
 		<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required showEmptyOption=!required>
-			<#if (validator.isNotNull(selectedLayout) && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
+			<#if (selectedLayout?? && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
 				<optgroup label="${languageUtil.get(requestedLocale, "current")}">
 					<@getLayoutOption
 						layout = selectedLayout

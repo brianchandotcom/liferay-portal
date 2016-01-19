@@ -23,7 +23,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);
 
-LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId, true);
+LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId);
 
 String ldapServerName = ldapServerConfiguration.serverName();
 String ldapBaseProviderUrl = ldapServerConfiguration.baseProviderURL();

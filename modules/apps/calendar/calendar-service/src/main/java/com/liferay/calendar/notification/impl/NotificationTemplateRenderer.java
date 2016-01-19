@@ -19,6 +19,7 @@ import com.liferay.calendar.notification.NotificationField;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
@@ -67,9 +68,10 @@ public class NotificationTemplateRenderer {
 			},
 			new String[] {
 				GetterUtil.getString(attributes.get("endTime")),
-				GetterUtil.getString(attributes.get("location")),
+				HtmlUtil.escape(
+					GetterUtil.getString(attributes.get("location"))),
 				GetterUtil.getString(attributes.get("startTime")),
-				GetterUtil.getString(attributes.get("title")),
+				HtmlUtil.escape(GetterUtil.getString(attributes.get("title"))),
 				GetterUtil.getString(attributes.get("url")),
 				GetterUtil.getString(
 					notificationTemplateContext.getFromAddress()),

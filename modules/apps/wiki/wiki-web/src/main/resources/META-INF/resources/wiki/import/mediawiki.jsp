@@ -20,7 +20,7 @@
 
 <liferay-ui:error exception="<%= PortalException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
 
-<aui:fieldset>
+<aui:fieldset markupView="lexicon">
 	<aui:input helpMessage="import-wiki-pages-help" label="pages-file" name="file0" type="file" />
 
 	<aui:input helpMessage="import-wiki-users-help" label='<%= LanguageUtil.get(request, "users-file") + "(" + LanguageUtil.get(request, "optional") + ")" %>' name="file1" type="file" />

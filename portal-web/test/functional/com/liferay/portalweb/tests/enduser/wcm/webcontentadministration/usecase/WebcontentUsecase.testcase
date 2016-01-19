@@ -43,6 +43,24 @@
 	</tear-down>
 
 	<command name="ActivateStagingWithWebContentLinkingDMImage" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+		
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Liferay" />
 		</execute>

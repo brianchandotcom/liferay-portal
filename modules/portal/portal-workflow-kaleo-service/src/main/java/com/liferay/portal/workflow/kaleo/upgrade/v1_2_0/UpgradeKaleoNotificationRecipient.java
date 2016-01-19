@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * @author Michael C. Han
@@ -35,6 +36,15 @@ public class UpgradeKaleoNotificationRecipient extends UpgradeProcess {
 						"recipientClassName = ''");
 
 			ps.executeUpdate();
+			
+			runSQL("alter table KaleoNotificationRecipient add recipientScript TEXT null");
+			runSQL("alter table KaleoNotificationRecipient add recipientScriptLanguage  varchar(75) null");
+			runSQL("alter table KaleoNotificationRecipient add recipientScriptContexts  TEXT null");
+			runSQL("alter table KaleoNotificationRecipient add notificationReceptionType  varchar(3) null");
+			
+		}
+		catch (SQLException sqle){
+			
 		}
 		finally {
 			DataAccess.cleanUp(ps);

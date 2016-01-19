@@ -14,10 +14,14 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.spring.aop.AdvisedSupportProxy;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -66,13 +70,33 @@ public class SpringJSONWebServiceScannerStrategy
 	}
 
 	protected Class<?> getTargetClass(Object service) throws Exception {
-		if (ProxyUtil.isProxyClass(service.getClass())) {
-			AdvisedSupport advisedSupport =
-				ServiceBeanAopProxy.getAdvisedSupport(service);
+		while (ProxyUtil.isProxyClass(service.getClass())) {
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(service);
 
-			TargetSource targetSource = advisedSupport.getTargetSource();
+			if (invocationHandler instanceof AdvisedSupportProxy) {
+				AdvisedSupport advisedSupport =
+					ServiceBeanAopProxy.getAdvisedSupport(service);
 
-			service = targetSource.getTarget();
+				TargetSource targetSource = advisedSupport.getTargetSource();
+
+				service = targetSource.getTarget();
+			}
+			else if (invocationHandler instanceof ClassLoaderBeanHandler) {
+				ClassLoaderBeanHandler classLoaderBeanHandler =
+					(ClassLoaderBeanHandler)invocationHandler;
+
+				Object bean = classLoaderBeanHandler.getBean();
+
+				if (bean instanceof ServiceWrapper) {
+					ServiceWrapper<?> serviceWrapper = (ServiceWrapper<?>)bean;
+
+					service = serviceWrapper.getWrappedService();
+				}
+				else {
+					service = bean;
+				}
+			}
 		}
 
 		return service.getClass();

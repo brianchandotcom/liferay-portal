@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.dependencies;
 
+import com.liferay.portal.kernel.portlet.LiferayPortlet;
+
 import java.util.List;
 
 import javax.portlet.Portlet;
@@ -29,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.social",
 		"javax.portlet.display-name=Friends' Activities"
 	},
-	service = Portlet.class
+	service = {LiferayPortlet.class, Portlet.class}
 )
 public class IncorrectWhitespace {
 

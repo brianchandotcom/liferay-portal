@@ -191,7 +191,12 @@ public class WabProcessor {
 
 			deployDir.mkdirs();
 
-			AntUtil.expandFile(file, deployDir);
+			if (file.isDirectory()) {
+				FileUtil.move(file, deployDir);
+			}
+			else {
+				AntUtil.expandFile(file, deployDir);
+			}
 		}
 
 		return deployDir;

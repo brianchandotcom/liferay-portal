@@ -14,7 +14,6 @@
 
 package com.liferay.announcements.web.upgrade;
 
-import com.liferay.announcements.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -33,10 +32,6 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.announcements.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.announcements.web", "0.0.1", "1.0.0",
-			new UpgradePortletId());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

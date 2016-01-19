@@ -40,6 +40,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeOrganization;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePhone;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
+import com.liferay.portal.upgrade.v7_0_0.UpgradePortletId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRelease;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
@@ -94,6 +95,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeSharding.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
+		upgrade(UpgradePortletId.class);
 	}
 
 }

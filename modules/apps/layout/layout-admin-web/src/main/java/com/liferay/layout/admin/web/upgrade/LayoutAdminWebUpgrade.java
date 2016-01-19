@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.upgrade;
 
 import com.liferay.layout.admin.web.upgrade.v_1_0_0.UpgradeLayout;
-import com.liferay.layout.admin.web.upgrade.v_1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -34,7 +33,7 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.layout.admin.web", "0.0.1", "1.0.0",
-			new UpgradeLayout(), new UpgradePortletId());
+			new UpgradeLayout());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

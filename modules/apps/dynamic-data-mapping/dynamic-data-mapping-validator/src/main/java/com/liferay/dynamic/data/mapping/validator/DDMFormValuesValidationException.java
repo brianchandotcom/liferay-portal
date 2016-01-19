@@ -46,7 +46,7 @@ public class DDMFormValuesValidationException extends StorageException {
 			super(
 				String.format(
 					"Value should not be set for transient field name %s",
-				fieldName));
+					fieldName));
 
 			_fieldName = fieldName;
 		}

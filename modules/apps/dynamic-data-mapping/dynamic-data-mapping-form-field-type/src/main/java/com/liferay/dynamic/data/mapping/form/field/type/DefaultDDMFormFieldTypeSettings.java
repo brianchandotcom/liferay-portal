@@ -80,7 +80,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	public String indexType();
 
 	@DDMFormField(
-		label = "%label", properties = { "placeholder=%enter-a-field-label" },
+		label = "%label", properties = {"placeholder=%enter-a-field-label"},
 		required = true,
 		tip = "%enter-a-descriptive-field-label-that-guides-users-to-enter-the-information-you-want",
 		type = "key-value"
@@ -92,7 +92,7 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%predefined-value",
-		properties = { "placeholder=%enter-a-default-value" },
+		properties = {"placeholder=%enter-a-default-value"},
 		tip = "%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered",
 		type = "text"
 	)
@@ -105,7 +105,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	public boolean repeatable();
 
 	@DDMFormField(
-		label = "%required-field", properties = { "showAsSwitcher=true" }
+		label = "%required-field", properties = {"showAsSwitcher=true"}
 	)
 	public boolean required();
 
@@ -127,7 +127,7 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%field-visibility-expression",
-		properties = { "placeholder=%Country.equals(\"US\")" },
+		properties = {"placeholder=%Country.equals(\"US\")"},
 		tip = "%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
 	)
 	public String visibilityExpression();

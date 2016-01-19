@@ -54,27 +54,27 @@ public interface DDMRESTDataProviderSettings {
 
 	@DDMFormField(
 		label = "%displayed-json-attribute",
-		properties = { "placeholder=%enter-the-attribute-to-be-displayed" },
+		properties = {"placeholder=%enter-the-attribute-to-be-displayed"},
 		required = true,
 		tip = "%the-attribute-whose-value-is-displayed-to-the-end-user-for-selection"
 	)
 	public String key();
 
 	@DDMFormField(
-		label = "%password", properties = { "placeholder=%enter-a-password" },
+		label = "%password", properties = {"placeholder=%enter-a-password"},
 		tip = "%provide-the-password-for-authenticating-to-the-rest-provider"
 	)
 	public String password();
 
 	@DDMFormField(
 		label = "%url",
-		properties = { "placeholder=%enter-the-rest-service-url" },
+		properties = {"placeholder=%enter-the-rest-service-url"},
 		required = true
 	)
 	public String url();
 
 	@DDMFormField(
-		label = "%user-name", properties = { "placeholder=%enter-a-user-name" },
+		label = "%user-name", properties = {"placeholder=%enter-a-user-name"},
 		tip = "%provide-the-user-name-for-authenticating-to-the-rest-provider"
 	)
 	public String username();

@@ -46,7 +46,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
 /**
@@ -57,12 +56,10 @@ public class WorkflowInstanceViewDisplayContext
 
 	public WorkflowInstanceViewDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			PortletPreferences portletPreferences)
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+		super(liferayPortletRequest, liferayPortletResponse);
 
 		PortletURL portletURL = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
@@ -78,6 +75,15 @@ public class WorkflowInstanceViewDisplayContext
 		_searchContainer.setTotal(getSearchContainerTotal());
 
 		setSearchContainerEmptyResultsMessage(_searchContainer);
+	}
+
+	public String getAssetIconCssClass( WorkflowInstance workflowInstance)
+		throws PortalException {
+
+		WorkflowHandler<?> workflowHandler = getWorkflowHandler(
+			workflowInstance);
+
+		return workflowHandler.getIconCssClass();
 	}
 
 	public String getAssetTitle(WorkflowInstance workflowInstance) {
@@ -123,6 +129,10 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowInstance.getEndDate();
 	}
 
+	public String getHeaderTitle() {
+		return "workflow-submissions";
+	}
+
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -164,7 +174,7 @@ public class WorkflowInstanceViewDisplayContext
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
+				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
 				"last-activity-date");
 		}
 		else {
@@ -172,7 +182,8 @@ public class WorkflowInstanceViewDisplayContext
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_TASK, "order-by-col", _orderByCol);
+					PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-col",
+					_orderByCol);
 			}
 		}
 
@@ -188,14 +199,14 @@ public class WorkflowInstanceViewDisplayContext
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
+				PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type", "asc");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_TASK, "order-by-type",
+					PortletKeys.MY_WORKFLOW_INSTANCE, "order-by-type",
 					_orderByType);
 			}
 		}
@@ -377,7 +388,7 @@ public class WorkflowInstanceViewDisplayContext
 		}
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private String _displayStyle;
 	private String _keywords;

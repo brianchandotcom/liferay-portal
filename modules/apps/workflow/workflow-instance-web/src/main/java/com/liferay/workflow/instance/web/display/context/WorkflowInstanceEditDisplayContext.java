@@ -51,8 +51,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Leonardo Barros
  */
@@ -61,11 +59,9 @@ public class WorkflowInstanceEditDisplayContext
 
 	public WorkflowInstanceEditDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletPreferences portletPreferences) {
+		LiferayPortletResponse liferayPortletResponse) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {

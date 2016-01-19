@@ -819,8 +819,33 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
+		Element rootElement = document.getRootElement();
+
+		List<Element> portletResourceElements = rootElement.elements(
+			"portlet-resource");
+
+		for (Element portletResourceElement : portletResourceElements) {
+			Element portletNameElement = portletResourceElement.element(
+				"portlet-name");
+
+			String portletName = portletNameElement.getText();
+
+			Element permissionsElement = portletResourceElement.element(
+				"permissions");
+
+			List<Element> permissionsChildElements =
+				permissionsElement.elements();
+
+			for (Element permissionsChildElement : permissionsChildElements) {
+				checkOrder(
+					fileName, permissionsChildElement, "action-key",
+					portletName,
+					new ResourceActionActionKeyElementComparator());
+			}
+		}
+
 		checkOrder(
-			fileName, document.getRootElement(), "portlet-resource", null,
+			fileName, rootElement, "portlet-resource", null,
 			new ResourceActionPortletResourceElementComparator());
 	}
 
@@ -1375,6 +1400,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		private static final String _NAME_ATTRIBUTE = "name";
+
+	}
+
+	private class ResourceActionActionKeyElementComparator
+		extends ElementComparator {
+
+		@Override
+		protected String getElementName(Element actionKeyElement) {
+			return actionKeyElement.getStringValue();
+		}
 
 	}
 

@@ -178,23 +178,6 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 						/>
 					</c:if>
 
-					<c:if test="<%= showPermissionsURL %>">
-						<liferay-security:permissionsURL
-							modelResource="<%= modelResource %>"
-							modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
-							resourcePrimKey="<%= resourcePrimKey %>"
-							var="permissionsURL"
-							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						/>
-
-						<liferay-ui:icon
-							message="permissions"
-							method="get"
-							url="<%= permissionsURL %>"
-							useDialog="<%= true %>"
-						/>
-					</c:if>
-
 					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && !folder.isMountPoint() %>">
 						<portlet:renderURL var="addFolderURL">
 							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
@@ -259,23 +242,6 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 						<liferay-ui:icon
 							message="edit"
 							url="<%= editURL %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= showPermissionsURL %>">
-						<liferay-security:permissionsURL
-							modelResource="<%= modelResource %>"
-							modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
-							resourcePrimKey="<%= resourcePrimKey %>"
-							var="permissionsURL"
-							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						/>
-
-						<liferay-ui:icon
-							message="permissions"
-							method="get"
-							url="<%= permissionsURL %>"
-							useDialog="<%= true %>"
 						/>
 					</c:if>
 
@@ -368,6 +334,23 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 
 		<c:if test="<%= hasViewPermission && portletDisplay.isWebDAVEnabled() && ((folder == null) || (folder.getRepositoryId() == scopeGroupId)) %>">
 			<liferay-util:include page="/document_library/access_from_desktop.jsp" servletContext="<%= application %>" />
+		</c:if>
+
+		<c:if test="<%= showPermissionsURL %>">
+			<liferay-security:permissionsURL
+				modelResource="<%= modelResource %>"
+				modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
+				resourcePrimKey="<%= resourcePrimKey %>"
+				var="permissionsURL"
+				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+			/>
+
+			<liferay-ui:icon
+				message="permissions"
+				method="get"
+				url="<%= permissionsURL %>"
+				useDialog="<%= true %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && (folder != null) %>">

@@ -84,6 +84,8 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.portal.lock.test:1.0.0,\
 	com.liferay.portal.log4j.extender:1.0.0,\
 	com.liferay.portal.messaging:1.0.0,\
+	com.liferay.portal.metatype.definitions.annotations:1.0.0,\
+	com.liferay.portal.metatype.definitions.equinox:1.0.0,\
 	com.liferay.portal.mobile.device:1.0.0,\
 	com.liferay.portal.module.configuration:1.0.0,\
 	com.liferay.portal.monitoring:1.0.0,\
@@ -153,8 +155,6 @@ Liferay-Releng-Dependent-Apps:\
 	com.liferay.roles.selector.web:1.0.0,\
 	com.liferay.rtl.css:1.0.0,\
 	com.liferay.search.facet:1.0.0,\
-	com.liferay.search.facet:1.0.0,\
-	com.liferay.search.web:1.0.0,\
 	com.liferay.search.web:1.0.0,\
 	com.liferay.server.admin.web:1.0.0,\
 	com.liferay.service.access.policy.api:1.0.0,\

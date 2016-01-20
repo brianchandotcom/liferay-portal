@@ -19,9 +19,13 @@
 <c:if test="<%= Validator.isContent(bodyContentString) %>">
 	<div class="navbar navbar-default <%= cssClass %>" id="<%= id %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<div class="container-fluid-1280">
-			<c:if test="<%= Validator.isNotNull(responsiveButtons) %>">
-				<div class="navbar-header">
-					<%= responsiveButtons %>
+			<c:if test="<%= Validator.isNotNull(dataTarget) %>">
+				<div class="navbar-header visible-xs">
+					<button class="collapsed navbar-toggle navbar-toggle-left navbar-toggle-page-name" data-target="#<%= namespace %>navTagNavbarCollapse" data-toggle="collapse" id="<%= namespace %>navTagNavbarBtn" type="button">
+						<span class="sr-only"><liferay-ui:message key="toggle-navigation" /></span>
+						<span class="page-name"><%= LanguageUtil.get(request, selectedItemName) %></span>
+						<span class="caret"></span>
+					</button>
 				</div>
 			</c:if>
 

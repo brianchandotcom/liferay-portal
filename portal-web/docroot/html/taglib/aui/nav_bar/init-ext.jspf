@@ -31,5 +31,7 @@ if (Validator.isNull(id)) {
 	id = StringUtil.randomId();
 }
 
+String dataTarget = (String)request.getAttribute("aui:nav-bar:dataTarget");
 String responsiveButtons = (String)request.getAttribute("aui:nav-bar:responsiveButtons");
+String selectedItemName = (String)request.getAttribute("aui:nav-bar:selectedItemName");
 %>

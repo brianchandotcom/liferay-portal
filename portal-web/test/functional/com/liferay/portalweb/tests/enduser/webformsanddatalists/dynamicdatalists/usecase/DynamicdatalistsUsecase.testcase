@@ -836,6 +836,8 @@
 			<var name="roleList" value="Guest" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>

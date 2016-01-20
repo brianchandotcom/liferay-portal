@@ -79,6 +79,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_STYLE_DESCRIPTIVE_ACTIVE</td>
+	<td>//a[contains(@class,'active') and @title='Descriptive']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_ICON_ACTIVE</td>
+	<td>//a[contains(@class,'active') and @title='Icon']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_LIST_ACTIVE</td>
+	<td>//a[contains(@class,'active') and @title='List']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_STYLE_DESCRIPTIVE</td>
 	<td>//*[@data-qa-id='descriptiveButton']/span | //a[@title='Descriptive']/span</td>
 	<td></td>

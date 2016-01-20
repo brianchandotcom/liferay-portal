@@ -287,16 +287,6 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().getFileEntryMetadata(fileEntryMetadataId);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getFileVersionFileEntryMetadatasCount(long)}
-	*/
-	@Deprecated
-	public static long getFileEntryMetadataCount(long fileEntryId,
-		long fileVersionId) {
-		return getService().getFileEntryMetadataCount(fileEntryId, fileVersionId);
-	}
-
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
 		long fileVersionId) {
 		return getService().getFileVersionFileEntryMetadatas(fileVersionId);

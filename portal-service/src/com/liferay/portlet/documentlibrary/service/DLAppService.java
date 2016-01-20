@@ -269,14 +269,6 @@ public interface DLAppService extends BaseService {
 	public void cancelCheckOut(long fileEntryId) throws PortalException;
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	String, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
-		throws PortalException;
-
-	/**
 	* Checks in the file entry using the lock's UUID. If a user has not checked
 	* out the specified file entry, invoking this method will result in no
 	* changes. This method is primarily used by WebDAV.
@@ -1500,21 +1492,6 @@ public interface DLAppService extends BaseService {
 	* @param folderId the primary key of the folder
 	*/
 	public void subscribeFolder(long groupId, long folderId)
-		throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	boolean, String, ServiceContext)}.
-	*/
-	@java.lang.Deprecated
-	public void unlockFileEntry(long fileEntryId) throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	String)}.
-	*/
-	@java.lang.Deprecated
-	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws PortalException;
 
 	/**

@@ -72,14 +72,6 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
 		long userId, long fileEntryId) throws PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long,
-	String, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public void checkInFileEntry(long userId, long fileEntryId,
-		java.lang.String lockUuid) throws PortalException;
-
 	public void checkInFileEntry(long userId, long fileEntryId,
 		java.lang.String lockUuid,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -89,23 +81,6 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		boolean majorVersion, java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	long, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long userId, long fileEntryId) throws PortalException;
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	long, String, long, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long userId, long fileEntryId, java.lang.String owner,
-		long expirationTime) throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId, java.lang.String owner,

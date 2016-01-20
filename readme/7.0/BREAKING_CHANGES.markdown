@@ -125,7 +125,7 @@ New way:
     <liferay-ui:logo-selector
         currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
         defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-        hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
+        hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, null, selUser, "portrait") %>'
         imageId="<%= selUser.getPortraitId() %>"
         logoDisplaySelector=".user-logo"
         maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"

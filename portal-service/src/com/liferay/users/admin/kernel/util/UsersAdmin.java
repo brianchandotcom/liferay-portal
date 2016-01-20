@@ -358,38 +358,9 @@ public interface UsersAdmin {
 	public List<Website> getWebsites(
 		ActionRequest actionRequest, List<Website> defaultWebsites);
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
-	 *             String)}
-	 */
-	@Deprecated
-	public boolean hasUpdateEmailAddress(
-			PermissionChecker permissionChecker, User user)
-		throws PortalException;
-
 	public boolean hasUpdateFieldPermission(
 			PermissionChecker permissionChecker, User updatingUser,
 			User updatedUser, String field)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
-	 *             String)}
-	 */
-	@Deprecated
-	public boolean hasUpdateFieldPermission(User user, String field)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
-	 *             String)}
-	 */
-	@Deprecated
-	public boolean hasUpdateScreenName(
-			PermissionChecker permissionChecker, User user)
 		throws PortalException;
 
 	public long[] removeRequiredRoles(long userId, long[] roleIds)

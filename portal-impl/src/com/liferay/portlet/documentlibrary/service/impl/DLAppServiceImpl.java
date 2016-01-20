@@ -493,18 +493,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException {
-
-		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
-	}
-
-	/**
 	 * Checks in the file entry using the lock's UUID. If a user has not checked
 	 * out the specified file entry, invoking this method will result in no
 	 * changes. This method is primarily used by WebDAV.
@@ -2320,29 +2308,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
 
 		dlAppLocalService.subscribeFolder(getUserId(), groupId, folderId);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	 *             boolean, String, ServiceContext)}.
-	 */
-	@Deprecated
-	@Override
-	public void unlockFileEntry(long fileEntryId) throws PortalException {
-		checkInFileEntry(
-			fileEntryId, false, StringPool.BLANK, new ServiceContext());
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	 *             String)}.
-	 */
-	@Deprecated
-	@Override
-	public void unlockFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException {
-
-		checkInFileEntry(fileEntryId, lockUuid);
 	}
 
 	/**

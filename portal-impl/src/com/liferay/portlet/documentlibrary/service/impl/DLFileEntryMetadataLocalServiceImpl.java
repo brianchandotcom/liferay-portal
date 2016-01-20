@@ -112,18 +112,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 			ddmStructureId, fileVersionId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getFileVersionFileEntryMetadatasCount(long)}
-	 */
-	@Deprecated
-	@Override
-	public long getFileEntryMetadataCount(
-		long fileEntryId, long fileVersionId) {
-
-		return getFileVersionFileEntryMetadatasCount(fileVersionId);
-	}
-
 	@Override
 	public List<DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
 		long fileVersionId) {

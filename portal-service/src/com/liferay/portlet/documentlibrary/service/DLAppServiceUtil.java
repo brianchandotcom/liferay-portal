@@ -294,17 +294,6 @@ public class DLAppServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	String, ServiceContext)}
-	*/
-	@Deprecated
-	public static void checkInFileEntry(long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkInFileEntry(fileEntryId, lockUuid);
-	}
-
-	/**
 	* Checks in the file entry using the lock's UUID. If a user has not checked
 	* out the specified file entry, invoking this method will result in no
 	* changes. This method is primarily used by WebDAV.
@@ -1726,27 +1715,6 @@ public class DLAppServiceUtil {
 	public static void subscribeFolder(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().subscribeFolder(groupId, folderId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	boolean, String, ServiceContext)}.
-	*/
-	@Deprecated
-	public static void unlockFileEntry(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().unlockFileEntry(fileEntryId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	String)}.
-	*/
-	@Deprecated
-	public static void unlockFileEntry(long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().unlockFileEntry(fileEntryId, lockUuid);
 	}
 
 	/**

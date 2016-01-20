@@ -68,18 +68,6 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.cancelCheckOut(userId, fileEntryId);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long,
-	String, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public void checkInFileEntry(long userId, long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlFileEntryLocalService.checkInFileEntry(userId, fileEntryId, lockUuid);
-	}
-
 	@Override
 	public void checkInFileEntry(long userId, long fileEntryId,
 		java.lang.String lockUuid,
@@ -96,32 +84,6 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryLocalService.checkInFileEntry(userId, fileEntryId,
 			majorVersion, changeLog, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	long, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryLocalService.checkOutFileEntry(userId, fileEntryId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	long, String, long, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long userId, long fileEntryId, java.lang.String owner,
-		long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryLocalService.checkOutFileEntry(userId, fileEntryId,
-			owner, expirationTime);
 	}
 
 	@Override

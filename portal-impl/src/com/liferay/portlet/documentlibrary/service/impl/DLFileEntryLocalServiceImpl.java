@@ -398,18 +398,6 @@ public class DLFileEntryLocalServiceImpl
 		unlockFileEntry(fileEntryId);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long,
-	 *             String, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(long userId, long fileEntryId, String lockUuid)
-		throws PortalException {
-
-		checkInFileEntry(userId, fileEntryId, lockUuid, new ServiceContext());
-	}
-
 	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId, String lockUuid,
@@ -439,18 +427,6 @@ public class DLFileEntryLocalServiceImpl
 			userId, fileEntryId, false, StringPool.BLANK, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId)
-		throws PortalException {
-
-		return checkOutFileEntry(userId, fileEntryId, new ServiceContext());
-	}
-
 	@Override
 	public DLFileEntry checkOutFileEntry(
 			long userId, long fileEntryId, ServiceContext serviceContext)
@@ -459,20 +435,6 @@ public class DLFileEntryLocalServiceImpl
 		return checkOutFileEntry(
 			userId, fileEntryId, StringPool.BLANK,
 			DLFileEntryImpl.LOCK_EXPIRATION_TIME, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             long, String, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFileEntry checkOutFileEntry(
-			long userId, long fileEntryId, String owner, long expirationTime)
-		throws PortalException {
-
-		return checkOutFileEntry(
-			userId, fileEntryId, owner, expirationTime, new ServiceContext());
 	}
 
 	@Override

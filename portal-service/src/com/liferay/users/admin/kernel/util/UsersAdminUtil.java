@@ -287,19 +287,6 @@ public class UsersAdminUtil {
 		return getUsersAdmin().getWebsites(actionRequest, defaultWebsites);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
-	 *             String)}
-	 */
-	@Deprecated
-	public static boolean hasUpdateEmailAddress(
-			PermissionChecker permissionChecker, User user)
-		throws PortalException {
-
-		return getUsersAdmin().hasUpdateEmailAddress(permissionChecker, user);
-	}
-
 	public static boolean hasUpdateFieldPermission(
 			PermissionChecker permissionChecker, User updatingUser,
 			User updatedUser, String field)
@@ -307,31 +294,6 @@ public class UsersAdminUtil {
 
 		return getUsersAdmin().hasUpdateFieldPermission(
 			permissionChecker, updatingUser, updatedUser, field);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
-	 *             String)}
-	 */
-	@Deprecated
-	public static boolean hasUpdateFieldPermission(User user, String field)
-		throws PortalException {
-
-		return getUsersAdmin().hasUpdateFieldPermission(user, field);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #hasUpdateFieldPermission(PermissionChecker, User, User,
-	 *             String)}
-	 */
-	@Deprecated
-	public static boolean hasUpdateScreenName(
-			PermissionChecker permissionChecker, User user)
-		throws PortalException {
-
-		return getUsersAdmin().hasUpdateScreenName(permissionChecker, user);
 	}
 
 	public static long[] removeRequiredRoles(long userId, long[] roleIds)

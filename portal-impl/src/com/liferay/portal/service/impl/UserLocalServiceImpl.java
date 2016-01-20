@@ -2675,27 +2675,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Returns the user with the UUID.
 	 *
-	 * @param      uuid the user's UUID
-	 * @return     the user with the UUID
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #getUserByUuidAndCompanyId(String, long)}
-	 */
-	@Deprecated
-	@Override
-	public User getUserByUuid(String uuid) throws PortalException {
-		List<User> users = userPersistence.findByUuid(uuid);
-
-		if (users.isEmpty()) {
-			throw new NoSuchUserException("{uuid=" + uuid + "}");
-		}
-		else {
-			return users.get(0);
-		}
-	}
-
-	/**
-	 * Returns the user with the UUID.
-	 *
 	 * @param  uuid the user's UUID
 	 * @param  companyId the primary key of the user's company
 	 * @return the user with the UUID

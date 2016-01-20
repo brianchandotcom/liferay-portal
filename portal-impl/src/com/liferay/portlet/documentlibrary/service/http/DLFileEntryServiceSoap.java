@@ -95,23 +95,6 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
-	String, ServiceContext)}
-	*/
-	@Deprecated
-	public static void checkInFileEntry(long fileEntryId,
-		java.lang.String lockUuid) throws RemoteException {
-		try {
-			DLFileEntryServiceUtil.checkInFileEntry(fileEntryId, lockUuid);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -127,25 +110,6 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap checkOutFileEntry(
-		long fileEntryId) throws RemoteException {
-		try {
-			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.checkOutFileEntry(fileEntryId);
-
-			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap checkOutFileEntry(
 		long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -153,27 +117,6 @@ public class DLFileEntryServiceSoap {
 		try {
 			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.checkOutFileEntry(fileEntryId,
 					serviceContext);
-
-			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	String, long, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap checkOutFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime)
-		throws RemoteException {
-		try {
-			com.liferay.portlet.documentlibrary.model.DLFileEntry returnValue = DLFileEntryServiceUtil.checkOutFileEntry(fileEntryId,
-					owner, expirationTime);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
 		}

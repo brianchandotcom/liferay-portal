@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = EditorConfigContributor.class
 )
-public class JournalMediaConfigContributor
-	extends BaseEditorConfigContributor {
+public class JournalMediaConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
 	public void populateConfigJSONObject(
@@ -48,34 +47,36 @@ public class JournalMediaConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (XugglerUtil.isEnabled()) {
-			JSONObject toolbars = jsonObject.getJSONObject("toolbars");
-
-			if (Validator.isNull(toolbars)) {
-				toolbars = JSONFactoryUtil.createJSONObject();
-			}
-
-			JSONObject toolbarAdd = toolbars.getJSONObject("add");
-
-			if (Validator.isNull(toolbarAdd)) {
-				toolbarAdd = JSONFactoryUtil.createJSONObject();
-			}
-
-			JSONArray buttons = toolbarAdd.getJSONArray("buttons");
-
-			if (Validator.isNull(buttons)) {
-				buttons = JSONFactoryUtil.createJSONArray();
-			}
-
-			buttons.put("video");
-			buttons.put("audio");
-
-			toolbarAdd.put("add", buttons);
-
-			toolbars.put("add", toolbarAdd);
-
-			jsonObject.put("toolbars", toolbars);
+		if (!XugglerUtil.isEnabled()) {
+			return;
 		}
+
+		JSONObject toolbars = jsonObject.getJSONObject("toolbars");
+
+		if (Validator.isNull(toolbars)) {
+			toolbars = JSONFactoryUtil.createJSONObject();
+		}
+
+		JSONObject toolbarAdd = toolbars.getJSONObject("add");
+
+		if (Validator.isNull(toolbarAdd)) {
+			toolbarAdd = JSONFactoryUtil.createJSONObject();
+		}
+
+		JSONArray buttons = toolbarAdd.getJSONArray("buttons");
+
+		if (Validator.isNull(buttons)) {
+			buttons = JSONFactoryUtil.createJSONArray();
+		}
+
+		buttons.put("video");
+		buttons.put("audio");
+
+		toolbarAdd.put("add", buttons);
+
+		toolbars.put("add", toolbarAdd);
+
+		jsonObject.put("toolbars", toolbars);
 	}
 
 }

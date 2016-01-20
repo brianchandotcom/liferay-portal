@@ -19,7 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-WikiNode node = (WikiNode)row.getObject();
+WikiNode node = null;
+
+if (row != null) {
+	node = (WikiNode)row.getObject();
+}
+else {
+	node = (WikiNode)request.getAttribute("info_panel.jsp-wikiNode");
+}
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -75,33 +82,8 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
-		<c:choose>
-			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
-				<portlet:actionURL name="/wiki/edit_node" var="unsubscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					message="unsubscribe"
-					url="<%= unsubscribeURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name="/wiki/edit_node" var="subscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
+	<c:if test="<%= row != null %>">
+		<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
 	</c:if>
 
 	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">

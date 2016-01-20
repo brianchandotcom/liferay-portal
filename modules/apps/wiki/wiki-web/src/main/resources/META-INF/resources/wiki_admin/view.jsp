@@ -103,6 +103,11 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 		resourceURL="<%= sidebarPanelURL %>"
 		searchContainerId="wikiNodes"
 	>
+
+		<%
+		request.removeAttribute(WikiWebKeys.WIKI_NODE);
+		%>
+
 		<liferay-util:include page="/wiki_admin/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 

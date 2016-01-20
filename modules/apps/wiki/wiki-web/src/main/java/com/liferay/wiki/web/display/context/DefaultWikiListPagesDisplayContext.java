@@ -50,6 +50,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.taglib.search.ResultRow;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
@@ -582,6 +583,13 @@ public class DefaultWikiListPagesDisplayContext
 
 	protected void addSubscriptionMenuItem(
 		List<MenuItem> menuItems, WikiPage wikiPage) {
+
+		ResultRow row = (ResultRow)_request.getAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+		if (row == null) {
+			return;
+		}
 
 		WikiGroupServiceOverriddenConfiguration
 			wikiGroupServiceOverriddenConfiguration =

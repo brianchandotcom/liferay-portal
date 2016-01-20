@@ -371,6 +371,14 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage getPage(long pageId) throws PortalException {
+		WikiPagePermissionChecker.check(
+			getPermissionChecker(), pageId, ActionKeys.VIEW);
+
+		return wikiPageLocalService.getPage(pageId);
+	}
+
+	@Override
 	public WikiPage getPage(long groupId, long nodeId, String title)
 		throws PortalException {
 

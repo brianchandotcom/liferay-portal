@@ -27,15 +27,3 @@ simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		<aui:icon image="simulation-menu-closed" markupView="lexicon" />
 	</a>
 </div>
-
-<div class="closed lfr-admin-panel lfr-product-menu-panel lfr-simulation-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="simulationPanelId">
-	<div class="product-menu sidebar sidebar-body sidebar-inverse">
-		<div class="loading-animation"></div>
-	</div>
-</div>
-
-<aui:script use="liferay-store,io-request,parse-content">
-	var simulationToggle = $('#simulationToggleId');
-
-	simulationToggle.sideNavigation();
-</aui:script>

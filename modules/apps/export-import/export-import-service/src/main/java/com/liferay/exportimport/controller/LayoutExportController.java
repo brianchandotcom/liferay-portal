@@ -280,6 +280,10 @@ public class LayoutExportController implements ExportController {
 					group.getClassPK());
 
 			headerElement.addAttribute("type-uuid", layoutPrototype.getUuid());
+
+			layoutIds = ExportImportHelperUtil.getAllLayoutIds(
+				portletDataContext.getGroupId(),
+				portletDataContext.isPrivateLayout());
 		}
 		else if (group.isLayoutSetPrototype()) {
 			type ="layout-set-prototype";

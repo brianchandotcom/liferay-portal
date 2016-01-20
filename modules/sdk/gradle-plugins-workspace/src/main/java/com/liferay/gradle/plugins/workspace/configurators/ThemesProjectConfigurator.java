@@ -171,6 +171,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		Task task = project.task(LiferayJavaPlugin.DEPLOY_TASK_NAME);
 
 		task.dependsOn(_GULP_DEPLOY_TASK_NAME);
+		task.setDescription("Assembles the theme and deploys it to Liferay.");
 
 		return task;
 	}

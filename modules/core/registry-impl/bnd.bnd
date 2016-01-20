@@ -8,4 +8,3 @@ Import-Package:\
 	com.liferay.registry.collections;version='[1.0.0,2.0.0)',\
 	org.osgi.framework,\
 	org.osgi.util.tracker
-Include-Resource: classes

@@ -1,4 +1,3 @@
 Bundle-SymbolicName: net.sf.jpathwatch
 Bundle-Version: 0.95.LIFERAY-PATCHED-2
 Export-Package: name.pachler.nio.*
-Include-Resource: classes

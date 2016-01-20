@@ -4,6 +4,3 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.util,\
 	*
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources

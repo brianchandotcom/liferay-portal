@@ -45,7 +45,6 @@ Import-Package:\
 	!sun.misc,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/ehcache.jar!/com/*,\
 	@lib/ehcache.jar!/net/*,\
 	@lib/ehcache.jar!/org/*,\

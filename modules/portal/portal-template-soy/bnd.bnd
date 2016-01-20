@@ -7,7 +7,6 @@ Import-Package:\
 	!org.objectweb.asm.util,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/aopalliance.jar,\
 	@lib/args4j.jar,\
 	@lib/asm.jar,\

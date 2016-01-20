@@ -5,8 +5,6 @@ Import-Package:\
 	com.liferay.portlet.messageboards.model,\
 	*
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Liferay-Releng-Module-Group-Description:

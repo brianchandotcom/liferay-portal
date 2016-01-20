@@ -5,7 +5,6 @@ DynamicImport-Package: *
 Export-Package:\
 	com.liferay.portal.cache.ehcache,\
 	com.liferay.portal.cache.ehcache.event
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Cache Engines
 -include: ../../../marketplace/platform/bnd.bnd

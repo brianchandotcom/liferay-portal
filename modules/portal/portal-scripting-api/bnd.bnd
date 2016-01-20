@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.portal.scripting
 Bundle-Version: 1.0.0
 DynamicImport-Package: *
 Export-Package: com.liferay.portal.scripting.*;version=${plugin.full.version}
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -include: ../../../marketplace/platform/bnd.bnd

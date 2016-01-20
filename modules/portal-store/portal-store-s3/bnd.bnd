@@ -13,7 +13,6 @@ Import-Package:\
 	!org.joda.convert,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/aws-java-sdk-core.jar,\
 	@lib/aws-java-sdk-kms.jar,\
 	@lib/aws-java-sdk-s3.jar,\

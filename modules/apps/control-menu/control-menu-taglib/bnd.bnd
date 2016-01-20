@@ -4,9 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.control.menu.taglib.servlet,\
 	com.liferay.control.menu.taglib.servlet.taglib
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
 JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

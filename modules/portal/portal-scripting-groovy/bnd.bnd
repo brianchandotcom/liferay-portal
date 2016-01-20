@@ -9,8 +9,7 @@ Import-Package:\
 	!org.apache.ivy.*,\
 	!org.fusesource.jansi.*,\
 	*
-Include-Resource: \
-	classes,\
+Include-Resource:\
 	@lib/antlr.jar,\
 	@lib/groovy.jar
 Liferay-Releng-Module-Group-Description:

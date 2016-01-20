@@ -1,7 +1,4 @@
 Bundle-Name: Liferay Amazon Rankings Web
 Bundle-SymbolicName: com.liferay.amazon.rankings.web
 Bundle-Version: 1.0.0
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /amazon-rankings-web

@@ -17,14 +17,12 @@ Import-Package:\
 	!org.apache.http.*,\
 	*
 Include-Resource:\
-	classes,\
 	lib/google-api-client.jar=lib/google-api-client.jar,\
 	lib/google-api-services-oauth2.jar=lib/google-api-services-oauth2.jar,\
 	lib/google-http-client-jackson2.jar=lib/google-http-client-jackson2.jar,\
 	lib/google-http-client.jar=lib/google-http-client.jar,\
 	lib/google-oauth-client.jar=lib/google-oauth-client.jar,\
-	lib/jackson-core.jar=lib/jackson-core.jar,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	lib/jackson-core.jar=lib/jackson-core.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /portal-security-sso-google

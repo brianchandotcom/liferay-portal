@@ -18,7 +18,6 @@ Import-Package:\
 	!org.codehaus.*,\
 	*
 Include-Resource:\
-	classes,\
 	@${app.server.lib.portal.dir}/backport-concurrent.jar,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\

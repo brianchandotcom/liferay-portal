@@ -16,7 +16,6 @@ Export-Package:\
 	com.liferay.bookmarks.util,\
 	com.liferay.bookmarks.verify
 Include-Resource:\
-	classes,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Releng-Module-Group-Description:

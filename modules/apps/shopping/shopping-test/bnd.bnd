@@ -5,5 +5,4 @@ Import-Package:\
 	!org.junit.experimental.theories,\
 	*
 Include-Resource:\
-	classes,\
 	test-classes/integration

@@ -8,7 +8,6 @@ Import-Package:\
 	!org.incava.util.diff.*,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/org.jamwiki.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki

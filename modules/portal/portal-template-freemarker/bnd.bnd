@@ -50,7 +50,6 @@ Import-Package:\
 	org.apache.taglibs.standard.tlv;version='[1.2.3,2.0)',\
 	*
 Include-Resource:\
-	classes,\
 	WEB-INF=src/main/resources/WEB-INF,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
 	@lib/freemarker.jar

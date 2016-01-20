@@ -20,45 +20,29 @@
 String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
 %>
 
-<div class="<%= Validator.equals(productMenuState, "open") ? "content-loaded" : StringPool.BLANK %>" id="productMenuSidebar">
-	<c:choose>
-		<c:when test='<%= Validator.equals(productMenuState, "open") %>'>
+<div id="productMenuSidebar">
+	<h4 class="sidebar-header">
+		<a href="<%= themeDisplay.getURLPortal() %>">
+			<span class="company-details">
+				<img alt="" class="company-logo" src="<%= themeDisplay.getCompanyLogo() %>" />
+				<span class="company-name"><%= company.getName() %></span>
+			</span>
+
+			<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" image="remove" url="javascript:;" />
+		</a>
+	</h4>
+
+	<div class="sidebar-body">
+		<c:if test='<%= Validator.equals(productMenuState, "open") %>'>
 			<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:otherwise>
-			<div class="loading-animation"></div>
-		</c:otherwise>
-	</c:choose>
+		</c:if>
+	</div>
 </div>
 
 <aui:script use="liferay-store,io-request,parse-content">
 	var sidenavToggle = $('#sidenavToggleId');
 
 	sidenavToggle.sideNavigation();
-
-	var loadPanelContent = function(container, uri) {
-		if (uri) {
-			A.io.request(
-				uri,
-				{
-					after: {
-						success: function(event, id, obj) {
-							var response = this.get('responseData');
-
-							var productMenuSidebar = A.one('#productMenuSidebar');
-
-							container.plug(A.Plugin.ParseContent);
-
-							container.setContent(response);
-							container.addClass('content-loaded');
-
-							Liferay.fire('ProductMenu:contentLoaded');
-						}
-					}
-				}
-			);
-		}
-	};
 
 	var sidenavSlider = $('#sidenavSliderId');
 
@@ -72,51 +56,56 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 		}
 	);
 
-	var productMenuSidebar = A.one('#productMenuSidebar');
-
 	sidenavSlider.on(
 		'open.lexicon.sidenav',
 		function(event) {
-	 		if (productMenuSidebar && !productMenuSidebar.hasClass('content-loaded')) {
-				loadPanelContent(productMenuSidebar, sidenavToggle.attr('data-panelurl'));
-	 		}
-
 			Liferay.Store('com.liferay.control.menu.web_productMenuState', 'open');
 		}
 	);
 
-	Liferay.on(
-		'ProductMenu:openUserMenu',
-		function(event) {
-			var userCollapse = $('#<portlet:namespace /><%= AUIUtil.normalizeId(PanelCategoryKeys.USER) %>Collapse');
+	<c:if test="<%= productMenuDisplayContext.hasUserPanelCategory() %>">
+		Liferay.on(
+			'ProductMenu:openUserMenu',
+			function(event) {
+				var userCollapseSelector = '#<portlet:namespace /><%= AUIUtil.normalizeId(PanelCategoryKeys.USER) %>Collapse';
 
-			if ($('body').hasClass('open')) {
-				if (userCollapse.hasClass('in')) {
-					userCollapse.collapse('hide');
+				var showUserCollapse = function() {
+					var userCollapse = $(userCollapseSelector);
 
-					sidenavToggle.sideNavigation('hide');
+					userCollapse.collapse({
+						show: true,
+						parent: '#<portlet:namespace />Accordion'
+					});
+
+					userCollapse.collapse('show');
+				};
+
+				if ($('body').hasClass('open')) {
+					if ($(userCollapseSelector).hasClass('in')) {
+						sidenavToggle.sideNavigation('hide');
+					}
+					else {
+						showUserCollapse();
+					}
 				}
 				else {
-					userCollapse.collapse('show');
+					var urlLoadedState = sidenavToggle.data('url-loaded') ? sidenavToggle.data('url-loaded').state() : '';
+
+					sidenavToggle.sideNavigation('show');
+
+					if (urlLoadedState === 'resolved') {
+						showUserCollapse();
+					}
+					else {
+						sidenavSlider.on(
+							'urlLoaded.lexicon.sidenav',
+							function(event) {
+								showUserCollapse();
+							}
+						);
+					}
 				}
 			}
-			else {
-				sidenavToggle.sideNavigation('show');
-
-				if (productMenuSidebar.hasClass('content-loaded')) {
-					userCollapse.collapse('show');
-				}
-				else {
-					Liferay.on(
-						'ProductMenu:contentLoaded',
-						function(event) {
-							userCollapse = $('#<portlet:namespace /><%= AUIUtil.normalizeId(PanelCategoryKeys.USER) %>Collapse');
-
-							userCollapse.collapse('show');
-						}
-					);
-				}
-			}
-		}
-	);
+		);
+	</c:if>
 </aui:script>

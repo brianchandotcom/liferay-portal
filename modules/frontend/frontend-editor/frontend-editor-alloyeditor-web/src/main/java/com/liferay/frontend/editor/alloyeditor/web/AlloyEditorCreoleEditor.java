@@ -31,6 +31,11 @@ public class AlloyEditorCreoleEditor implements Editor {
 	}
 
 	@Override
+	public String[] getModules() {
+		return new String[] {"liferay-alloy-editor"};
+	}
+
+	@Override
 	public String getName() {
 		return "alloyeditor_creole";
 	}

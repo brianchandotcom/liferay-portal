@@ -32,6 +32,11 @@ public class TinyMCESimpleEditor implements Editor {
 	}
 
 	@Override
+	public String[] getModules() {
+		return new String[] {};
+	}
+
+	@Override
 	public String getName() {
 		return "tinymce_simple";
 	}

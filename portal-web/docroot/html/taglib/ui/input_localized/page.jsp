@@ -16,6 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.taglib.ui.InputEditorTag" %>
+
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_localized") + StringPool.UNDERLINE;
 
@@ -275,7 +277,17 @@ if ((exception != null) && fieldName.equals(focusField)) {
 
 <c:choose>
 	<c:when test="<%= !availableLocales.isEmpty() && Validator.isNull(languageId) %>">
-		<aui:script use="liferay-input-localized">
+		<%
+			String modules = "liferay-input-localized";
+
+			if (type.equals("editor")) {
+				String[] editorModules = InputEditorTag.getEditor(request, editorName).getModules();
+
+				modules += StringPool.COMMA + StringUtil.merge(editorModules);
+			}
+		%>
+
+		<aui:script use="<%= modules %>">
 			var defaultLanguageId = '<%= defaultLanguageId %>';
 
 			var available = {};

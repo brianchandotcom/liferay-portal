@@ -32,6 +32,11 @@ public class CKEditorEditor implements Editor {
 	}
 
 	@Override
+	public String[] getModules() {
+		return new String[] {};
+	}
+
+	@Override
 	public String getName() {
 		return "ckeditor";
 	}

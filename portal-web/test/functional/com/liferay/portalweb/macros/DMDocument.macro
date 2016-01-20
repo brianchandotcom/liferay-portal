@@ -2146,8 +2146,8 @@
 	</command>
 
 	<command name="viewOlderVersionPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_dmDocumentDescription" value="${dmDocumentDescription}" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 
 		<execute function="Click" locator1="DocumentsAndMediaDocument#VERSION_HISTORY_TABLE_DROPDOWN" value1="${dmDocumentVersionNumber}" />

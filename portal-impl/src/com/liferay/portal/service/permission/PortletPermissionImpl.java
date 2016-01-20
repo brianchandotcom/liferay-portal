@@ -27,10 +27,12 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
@@ -335,6 +337,13 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		primKey = getPrimaryKey(layout.getPlid(), portletId);
+
+		if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+				permissionChecker.getCompanyId(), name,
+				ResourceConstants.SCOPE_INDIVIDUAL, primKey) == 0) {
+
+			primKey = name;
+		}
 
 		if (strict) {
 			return permissionChecker.hasPermission(

@@ -396,6 +396,8 @@
 		</execute>
 
 		<for list="Site Page 1,Site Page 2,Site Page 3" param="pageName">
+			<execute macro="Navigator#openURL" />
+
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
 			</execute>

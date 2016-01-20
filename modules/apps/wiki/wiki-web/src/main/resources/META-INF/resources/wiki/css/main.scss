@@ -56,8 +56,12 @@
 		}
 	}
 
+	.page-attachments {
+		margin: 20px 0 0 0;
+	}
+
 	.page-categorization {
-		margin: -8px 0 10px;
+	  margin: 0;
 	}
 
 	.page-categories {
@@ -107,7 +111,7 @@
 	}
 
 	.child-pages {
-		margin: 2em 0;
+		margin: 0;
 
 		h2 {
 			background-color: #DDD;
@@ -243,7 +247,7 @@
 	}
 
 	.page-ratings {
-		margin: 2em 0;
+		margin: 0;
 	}
 
 	.page-redirect {

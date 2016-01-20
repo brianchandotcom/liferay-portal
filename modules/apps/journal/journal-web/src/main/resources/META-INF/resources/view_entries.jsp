@@ -291,13 +291,15 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							<liferay-frontend:horizontal-card
 								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/folder_action.jsp" : null %>'
 								actionJspServletContext="<%= application %>"
-								icon="icon-folder-close-alt"
-								imageCSSClass="icon-monospaced"
 								resultRow="<%= row %>"
 								rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 								text="<%= HtmlUtil.escape(curFolder.getName()) %>"
 								url="<%= rowURL.toString() %>"
-							/>
+							>
+								<liferay-frontend:horizontal-card-icon>
+									<span class="icon-folder-close-alt icon-monospaced"></span>
+								</liferay-frontend:horizontal-card-icon>
+							</liferay-frontend:horizontal-card>
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>

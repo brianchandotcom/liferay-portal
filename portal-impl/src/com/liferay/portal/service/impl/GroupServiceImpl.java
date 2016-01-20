@@ -561,11 +561,18 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		if (ArrayUtil.contains(classNames, Company.class.getName())) {
-			userSiteGroups.add(
-				groupLocalService.getCompanyGroup(user.getCompanyId()));
+			Group companyGroup = groupLocalService.getCompanyGroup(
+				user.getCompanyId());
 
-			if (userSiteGroups.size() == max) {
-				return new ArrayList<>(userSiteGroups);
+			if (GroupPermissionUtil.contains(
+					getPermissionChecker(), companyGroup,
+					ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
+				userSiteGroups.add(companyGroup);
+
+				if (userSiteGroups.size() == max) {
+					return new ArrayList<>(userSiteGroups);
+				}
 			}
 		}
 

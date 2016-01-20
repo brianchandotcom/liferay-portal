@@ -372,6 +372,16 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return false;
 	}
 
+	public boolean isShowSiteSelector() throws PortalException {
+		List<Group> mySites = getMySites();
+
+		if (mySites.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isShowStagingInfo() throws PortalException {
 		if (_showStagingInfo != null) {
 			return _showStagingInfo.booleanValue();

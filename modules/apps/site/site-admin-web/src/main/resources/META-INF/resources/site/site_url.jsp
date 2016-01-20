@@ -29,7 +29,7 @@ String publicVirtualHost = ParamUtil.getString(request, "publicVirtualHost", Bea
 String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", BeanParamUtil.getString(privateLayoutSet, request, "virtualHostname"));
 %>
 
-<liferay-ui:error-marker key="errorSection" value="siteUrl" />
+<liferay-ui:error-marker key="errorSection" value="site-url" />
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 

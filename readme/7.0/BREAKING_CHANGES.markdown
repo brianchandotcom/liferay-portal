@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `3231563`.*
+*This document has been reviewed through commit `c5c2845`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3330,13 +3330,13 @@ following behaviors based on the portlet type:
 configuration options are only displayed for that particular view when invoking
 a URL with a parameter `struts_action` with the value indicated in the
 `view-action` init parameter and also in the default view of the portlet (when
-there is no `struts_action` parameter in the request)
+there is no `struts_action` parameter in the request).
 
 - **Liferay MVC Portlet:** If you've defined a `view-template` init parameter,
 the configuration options are only displayed when that template is rendered by
 invoking a URL with a parameter `mvcPath` with the value indicated in the
 `view-template` init parameter. and also in the default view of the portlet
-(when there is no `mvcPath` parameter in the request)
+(when there is no `mvcPath` parameter in the request).
 
 - If it's a portlet using any other framework, the configuration options are
 always displayed.

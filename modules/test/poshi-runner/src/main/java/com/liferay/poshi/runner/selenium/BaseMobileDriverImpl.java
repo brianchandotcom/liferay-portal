@@ -1022,6 +1022,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public boolean isTestName(String testName) {
+		return LiferaySeleniumHelper.isTestName(testName);
+	}
+
+	@Override
 	public boolean isText(String locator, String value) throws Exception {
 		return value.equals(getElementText(locator, "1"));
 	}

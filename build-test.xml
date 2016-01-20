@@ -5013,7 +5013,21 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="test.portal.instance" />
 			<then>
+				<if>
+					<contains string="${poshi.test.name}" substring="," />
+					<then>
+						<propertyregex
+							input="${poshi.test.name}"
+							override="false"
+							property="test.name.skip.portal.instance"
+							regexp="(.*?),.*"
+							replace="\1"
+						/>
+					</then>
+				</if>
+
 				<echo append="true" file="${test.ext.properties.file}">
+					test.name.skip.portal.instance=${test.name.skip.portal.instance}
 					test.portal.instance=${test.portal.instance}
 				</echo>
 			</then>

@@ -29,13 +29,3 @@ addPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		<aui:icon image="plus" markupView="lexicon" />
 	</a>
 </li>
-
-<div class="closed lfr-add-panel lfr-admin-panel lfr-product-menu-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="addPanelId">
-	<div class="product-menu sidebar sidebar-body sidebar-inverse"></div>
-</div>
-
-<aui:script use="liferay-store,io-request,parse-content">
-	var addToggle = $('#addToggleId');
-
-	addToggle.sideNavigation();
-</aui:script>

@@ -911,7 +911,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletProviderClassName, portletProviderAction, StringPool.BLANK,
-			null, null, _pageContext, _request, _response);
+			null, null, true, _pageContext, _request, _response);
 	}
 
 	@Override
@@ -922,7 +922,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletProviderClassName, portletProviderAction, instanceId, null,
-			null, _pageContext, _request, _response);
+			null, true, _pageContext, _request, _response);
 	}
 
 	@Override
@@ -934,7 +934,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		RuntimeTag.doTag(
 			portletProviderClassName, portletProviderAction, instanceId, null,
-			defaultPreferences, _pageContext, _request, _response);
+			defaultPreferences, true, _pageContext, _request, _response);
 	}
 
 	@Override

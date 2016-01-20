@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * @author Lino Alves
  */
-public class UpgradeClassName extends UpgradeProcess {
+public class UpgradeClassNames extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

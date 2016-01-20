@@ -27,104 +27,95 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 if (folder != null) {
 	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcRenderCommandName", "/document_library/select_file_entry");
+portletURL.setParameter("groupId", String.valueOf(groupId));
+portletURL.setParameter("folderId", String.valueOf(folderId));
+
+SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+int foldersAndFileEntriesAndFileShortcutsCount = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(groupId, folderId,  WorkflowConstants.STATUS_APPROVED, true);
+
+dlSearchContainer.setTotal(foldersAndFileEntriesAndFileShortcutsCount);
+
+List<Object> foldersAndFileEntriesAndFileShortcuts = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(groupId, folderId,  WorkflowConstants.STATUS_APPROVED, true, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
+
+dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 %>
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectFileEntryFm">
 		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
-		<%
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/document_library/select_file_entry");
-		portletURL.setParameter("groupId", String.valueOf(groupId));
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-		%>
-
 		<liferay-ui:search-container
-			iteratorURL="<%= portletURL %>"
-			total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
+			emptyResultsMessage="there-are-no-documents-or-media-files-in-this-folder"
+			searchContainer="<%= dlSearchContainer %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.repository.model.Folder"
-				keyProperty="folderId"
-				modelVar="curFolder"
-				rowVar="row"
+				className="Object"
+				cssClass="app-view-entry-taglib entry-display-style"
+				modelVar="result"
 			>
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_entry" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-				</liferay-portlet:renderURL>
 
-				<%
-				try{
-					DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
-					DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
-				}
-				catch (com.liferay.portal.kernel.repository.RepositoryException re) {
-					rowURL = null;
-				}
-				catch (com.liferay.portal.security.auth.PrincipalException pe) {
-					rowURL = null;
-				}
-				%>
+				<%@ include file="/document_library/cast_result.jspf" %>
 
-				<liferay-ui:search-container-column-text
-					name="folder"
-				>
-					<aui:a href="<%= rowURL.toString() %>">
-						<%= HtmlUtil.escape(curFolder.getName()) %>
-					</aui:a>
-				</liferay-ui:search-container-column-text>
+				<c:choose>
+					<c:when test="<%= curFolder != null %>">
+
+						<liferay-portlet:renderURL varImpl="rowURL">
+							<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_entry" />
+							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+						</liferay-portlet:renderURL>
+
+						<%
+						try{
+							DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
+							DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+						}
+						catch (com.liferay.portal.kernel.repository.RepositoryException re) {
+							rowURL = null;
+						}
+						catch (com.liferay.portal.security.auth.PrincipalException pe) {
+							rowURL = null;
+						}
+						%>
+
+						<liferay-ui:search-container-column-text
+							name="title"
+						>
+							<aui:a href="<%= rowURL.toString() %>">
+								<%= HtmlUtil.escape(curFolder.getName()) %>
+							</aui:a>
+						</liferay-ui:search-container-column-text>
+					</c:when>
+					<c:when test="<%= (fileEntry != null) && (fileShortcut == null) %>">
+						<liferay-ui:search-container-column-text
+							name="title"
+						>
+
+							<%
+							Map<String, Object> data = new HashMap<String, Object>();
+
+							data.put("entryid", fileEntry.getFileEntryId());
+							data.put("entryname", fileEntry.getTitle());
+							%>
+
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(fileEntry.getTitle()) %>
+							</aui:a>
+
+							<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
+								<br />
+								<%= HtmlUtil.escape(fileEntry.getDescription()) %>
+							</c:if>
+						</liferay-ui:search-container-column-text>
+					</c:when>
+				</c:choose>
 			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator markupView="lexicon" />
-		</liferay-ui:search-container>
-
-		<br />
-
-		<liferay-ui:search-container
-			iteratorURL="<%= portletURL %>"
-			total="<%= DLAppServiceUtil.getFileEntriesCount(groupId, folderId) %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFileEntries(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.repository.model.FileEntry"
-				keyProperty="fileEntryId"
-				modelVar="curFile"
-				rowVar="row"
-			>
-				<liferay-ui:search-container-column-text
-					name="document"
-				>
-
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("entryid", curFile.getFileEntryId());
-					data.put("entryname", curFile.getTitle());
-					%>
-
-					<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-						<%= HtmlUtil.escape(curFile.getTitle()) %>
-					</aui:a>
-
-					<c:if test="<%= Validator.isNotNull(curFile.getDescription()) %>">
-						<br />
-						<%= HtmlUtil.escape(curFile.getDescription()) %>
-					</c:if>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= dlSearchContainer %>" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

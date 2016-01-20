@@ -130,7 +130,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 					map.put("deployed", false);
 
 					File deployDir = new File(
-						workspaceExtension.getHomeDir(), "deploy");
+						workspaceExtension.getHomeDir(), "osgi/modules");
 
 					map.put("deployPath", deployDir.getAbsolutePath());
 					map.put("themeName", project.getName());

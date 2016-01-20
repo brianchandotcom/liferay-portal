@@ -338,6 +338,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatPoshiXML(fileName, newContent);
 		}
+		else if (fileName.contains("/resource-actions/")) {
+			formatResourceActionXML(fileName, newContent);
+		}
 		else if (fileName.endsWith("/service.xml")) {
 			formatServiceXML(fileName, absolutePath, newContent);
 		}
@@ -809,6 +812,41 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		content = fixPoshiXMLEndLines(content);
 
 		return fixPoshiXMLNumberOfTabs(content);
+	}
+
+	protected void formatResourceActionXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> portletResourceElements = rootElement.elements(
+			"portlet-resource");
+
+		for (Element portletResourceElement : portletResourceElements) {
+			Element portletNameElement = portletResourceElement.element(
+				"portlet-name");
+
+			String portletName = portletNameElement.getText();
+
+			Element permissionsElement = portletResourceElement.element(
+				"permissions");
+
+			List<Element> permissionsChildElements =
+				permissionsElement.elements();
+
+			for (Element permissionsChildElement : permissionsChildElements) {
+				checkOrder(
+					fileName, permissionsChildElement, "action-key",
+					portletName,
+					new ResourceActionActionKeyElementComparator());
+			}
+		}
+
+		checkOrder(
+			fileName, rootElement, "portlet-resource", null,
+			new ResourceActionPortletResourceElementComparator());
 	}
 
 	protected void formatServiceXML(
@@ -1344,14 +1382,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ElementComparator implements Comparator<Element> {
+	private class ElementComparator extends NaturalOrderStringComparator {
 
-		@Override
 		public int compare(Element element1, Element element2) {
 			String elementName1 = getElementName(element1);
 			String elementName2 = getElementName(element2);
 
-			return elementName1.compareToIgnoreCase(elementName2);
+			return super.compare(elementName1, elementName2);
 		}
 
 		protected String getElementName(Element element) {
@@ -1363,6 +1400,29 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		private static final String _NAME_ATTRIBUTE = "name";
+
+	}
+
+	private class ResourceActionActionKeyElementComparator
+		extends ElementComparator {
+
+		@Override
+		protected String getElementName(Element actionKeyElement) {
+			return actionKeyElement.getStringValue();
+		}
+
+	}
+
+	private class ResourceActionPortletResourceElementComparator
+		extends ElementComparator {
+
+		@Override
+		protected String getElementName(Element portletResourceElement) {
+			Element portletNameElement = portletResourceElement.element(
+				"portlet-name");
+
+			return portletNameElement.getText();
+		}
 
 	}
 
@@ -1475,11 +1535,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		@Override
 		public int compare(Element solrElement1, Element solrElement2) {
-			NaturalOrderStringComparator naturalOrderStringComparator =
-				new NaturalOrderStringComparator(true, false);
-
-			int value = naturalOrderStringComparator.compare(
-				getElementName(solrElement1), getElementName(solrElement2));
+			int value = super.compare(solrElement1, solrElement2);
 
 			if (value <= 0) {
 				return value;

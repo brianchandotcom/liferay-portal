@@ -114,7 +114,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
-			<var name="portlet" value="Staging Processes" />
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Staging#SCHEDULED" value1="Scheduled" />
@@ -140,6 +140,10 @@
 		<execute function="Type" locator1="StagingManageVariations#MANAGE_VARIATION" value1="${pageVariationName}" />
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Page variation was added." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="addPublishTemplate">
@@ -178,6 +182,10 @@
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Site page variation was added." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="changePageVariationPG">
@@ -858,6 +866,8 @@
 				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 			</then>
 		</if>
+
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 

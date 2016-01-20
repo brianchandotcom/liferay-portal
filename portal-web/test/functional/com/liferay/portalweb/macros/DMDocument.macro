@@ -2136,7 +2136,7 @@
 	</command>
 
 	<command name="viewPG">
-		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

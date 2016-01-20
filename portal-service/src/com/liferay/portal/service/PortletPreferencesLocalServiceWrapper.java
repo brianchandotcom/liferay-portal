@@ -322,6 +322,12 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByPortletInstanceKey(
+		java.lang.String portletInstanceKey) {
+		return _portletPreferencesLocalService.getPortletPreferencesByPortletInstanceKey(portletInstanceKey);
+	}
+
+	@Override
 	public long getPortletPreferencesCount(long ownerId, int ownerType,
 		long plid, com.liferay.portal.model.Portlet portlet,
 		boolean excludeDefaultPreferences) {

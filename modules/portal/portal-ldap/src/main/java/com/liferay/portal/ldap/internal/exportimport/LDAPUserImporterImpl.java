@@ -273,22 +273,16 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		for (LDAPServerConfiguration ldapServerConfiguration :
 				ldapServerConfigurations) {
 
-			User user = importUser(
-				ldapServerConfiguration.ldapServerId(), companyId, emailAddress,
-				screenName);
-
-			if (user != null) {
-				return user;
-			}
-		}
-
-		for (LDAPServerConfiguration ldapServerConfiguration :
-				ldapServerConfigurations) {
-
 			String providerUrl = ldapServerConfiguration.baseProviderURL();
 
 			if (Validator.isNull(providerUrl)) {
-				break;
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No providerUrl defined for: " +
+							ldapServerConfiguration);
+				}
+
+				continue;
 			}
 
 			User user = importUser(

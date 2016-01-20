@@ -27,10 +27,15 @@
 						</label>
 					</div>
 				</c:if>
+
+				<a class="collapsed management-bar-toggle management-bar-toggle-link" data-toggle="collapse" href="#<%= namespace %>managementBarCollapse">
+					<span class="management-bar-item-title"><liferay-ui:message key="label" /> </span>
+					<span class="icon-sort"></span>
+				</a>
 			</div>
 
 			<c:if test="<%= Validator.isNotNull(filters) %>">
-				<div class="collapse management-bar-collapse">
+				<div class="collapse management-bar-collapse" id="<%= namespace %>managementBarCollapse">
 					<ul class="management-bar-nav nav">
 						<%= filters %>
 					</ul>

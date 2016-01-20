@@ -165,6 +165,9 @@ public interface WikiPageService extends BaseService {
 	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title, double version) throws PortalException;
 
+	public com.liferay.wiki.model.WikiPage getPage(long pageId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
 		long groupId, long nodeId, boolean head, int status, int start,

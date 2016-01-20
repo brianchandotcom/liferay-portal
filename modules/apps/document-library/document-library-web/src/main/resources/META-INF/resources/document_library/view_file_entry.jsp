@@ -174,7 +174,7 @@ if (portletTitleBasedNavigation) {
 
 							<p>
 
-								<liferay-ui:message arguments="<%= new Object[] { HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate()) } %>" key="by-x-on-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 							</p>
 						</div>
 
@@ -182,7 +182,7 @@ if (portletTitleBasedNavigation) {
 							<h5><strong><liferay-ui:message key="modified" /></strong></h5>
 
 							<p>
-								<liferay-ui:message arguments="<%= new Object[] { HtmlUtil.escape(fileVersion.getStatusByUserName()), dateFormatDateTime.format(fileVersion.getModifiedDate()) } %>" key="by-x-on-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getStatusByUserName()), dateFormatDateTime.format(fileVersion.getModifiedDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 							</p>
 						</div>
 

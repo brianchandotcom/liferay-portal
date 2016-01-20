@@ -374,7 +374,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getChildren(
-		com.liferay.portal.security.permission.PermissionChecker permissionChecker)
+		com.liferay.portal.kernel.security.permission.PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layout.getChildren(permissionChecker);
 	}

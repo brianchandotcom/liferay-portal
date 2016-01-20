@@ -21,7 +21,7 @@ import aQute.bnd.annotation.ProviderType;
  * {@link com.liferay.polls.service.PollsChoiceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
+ * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,7 +40,7 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see PollsChoiceServiceSoap
- * @see com.liferay.portal.security.auth.HttpPrincipal
+ * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
  * @see com.liferay.polls.service.PollsChoiceServiceUtil
  * @generated
  */

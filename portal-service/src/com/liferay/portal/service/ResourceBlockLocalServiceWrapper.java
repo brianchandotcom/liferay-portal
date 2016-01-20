@@ -367,7 +367,7 @@ public class ResourceBlockLocalServiceWrapper
 
 	@Override
 	public java.util.List<java.lang.Long> getResourceBlockIds(
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag,
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag,
 		java.lang.String name, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockLocalService.getResourceBlockIds(resourceBlockIdsBag,
@@ -375,7 +375,7 @@ public class ResourceBlockLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.security.permission.ResourceBlockIdsBag getResourceBlockIdsBag(
+	public com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag getResourceBlockIdsBag(
 		long companyId, long groupId, java.lang.String name, long[] roleIds) {
 		return _resourceBlockLocalService.getResourceBlockIdsBag(companyId,
 			groupId, name, roleIds);
@@ -419,7 +419,7 @@ public class ResourceBlockLocalServiceWrapper
 	public boolean hasPermission(java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		java.lang.String actionId,
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockLocalService.hasPermission(name,
 			permissionedModel, actionId, resourceBlockIdsBag);
@@ -428,7 +428,7 @@ public class ResourceBlockLocalServiceWrapper
 	@Override
 	public boolean hasPermission(java.lang.String name, long primKey,
 		java.lang.String actionId,
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockLocalService.hasPermission(name, primKey,
 			actionId, resourceBlockIdsBag);

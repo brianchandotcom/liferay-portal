@@ -344,14 +344,14 @@ public class ResourceBlockLocalServiceUtil {
 	}
 
 	public static java.util.List<java.lang.Long> getResourceBlockIds(
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag,
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag,
 		java.lang.String name, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getResourceBlockIds(resourceBlockIdsBag, name, actionId);
 	}
 
-	public static com.liferay.portal.security.permission.ResourceBlockIdsBag getResourceBlockIdsBag(
+	public static com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag getResourceBlockIdsBag(
 		long companyId, long groupId, java.lang.String name, long[] roleIds) {
 		return getService()
 				   .getResourceBlockIdsBag(companyId, groupId, name, roleIds);
@@ -391,7 +391,7 @@ public class ResourceBlockLocalServiceUtil {
 	public static boolean hasPermission(java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		java.lang.String actionId,
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .hasPermission(name, permissionedModel, actionId,
@@ -400,7 +400,7 @@ public class ResourceBlockLocalServiceUtil {
 
 	public static boolean hasPermission(java.lang.String name, long primKey,
 		java.lang.String actionId,
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .hasPermission(name, primKey, actionId, resourceBlockIdsBag);

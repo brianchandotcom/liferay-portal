@@ -1407,6 +1407,20 @@
 							bindUI: function() {
 								var instance = this;
 
+								instance.startDurationPreservation();
+							},
+
+							destructor: function() {
+								var instance = this;
+
+								instance.stopDurationPreservation();
+
+								instance.eventHandlers = null;
+							},
+
+							startDurationPreservation: function() {
+								var instance = this;
+
 								instance.eventHandlers.push(
 									instance._endDatePicker.on(EVENT_SELECTION_CHANGE, instance._onEndDatePickerSelectionChange, instance),
 									instance._endTimePicker.on(EVENT_SELECTION_CHANGE, instance._onEndTimePickerSelectionChange, instance),
@@ -1415,12 +1429,11 @@
 								);
 							},
 
-							destructor: function() {
+
+							stopDurationPreservation: function() {
 								var instance = this;
 
 								AArray.invoke(instance.eventHandlers, 'detach');
-
-								instance.eventHandlers = null;
 							},
 
 							_getComponent: function(name) {

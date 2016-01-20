@@ -60,17 +60,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	public static final int PORTAL_MAX_DIR_LEVEL = 5;
 
-	public BaseSourceProcessor() {
-		portalSource = _isPortalSource();
-
-		try {
-			_properties = _getProperties();
-		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
-		}
-	}
-
 	@Override
 	public final void format() throws Exception {
 		for (String fileName : getFileNames()) {
@@ -2020,16 +2009,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _init() {
+		portalSource = _isPortalSource();
+
 		_errorMessagesMap = new HashMap<>();
 
-		_sourceFormatterHelper = new SourceFormatterHelper(
-			sourceFormatterArgs.isUseProperties());
-
 		try {
+			_properties = _getProperties();
+
+			_sourceFormatterHelper = new SourceFormatterHelper(
+				sourceFormatterArgs.isUseProperties());
+
 			_sourceFormatterHelper.init();
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 
 		_excludes = _getExcludes();

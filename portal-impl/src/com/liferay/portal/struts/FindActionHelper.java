@@ -14,6 +14,8 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.theme.ThemeDisplay;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +31,10 @@ public interface FindActionHelper {
 		throws Exception;
 
 	public long getGroupId(long primaryKey) throws Exception;
+
+	public Object[] getPlidAndPortletId(
+			ThemeDisplay themeDisplay, long groupId, long plid)
+		throws Exception;
 
 	public String getPrimaryKeyParameterName();
 

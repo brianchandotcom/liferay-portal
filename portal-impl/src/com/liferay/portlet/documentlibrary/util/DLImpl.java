@@ -53,6 +53,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -1084,7 +1085,9 @@ public class DLImpl implements DL {
 
 		HttpServletRequest request = serviceContext.getRequest();
 
-		if ((request == null) || (serviceContext.getThemeDisplay() == null)) {
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if ((request == null) || (themeDisplay == null)) {
 			return StringPool.BLANK;
 		}
 
@@ -1095,6 +1098,21 @@ public class DLImpl implements DL {
 			serviceContext.getCompanyId());
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		FindActionHelper findActionHelper = new DLFileEntryFindActionHelper();
+
+		try {
+			Object[] plidAndPortletId = findActionHelper.getPlidAndPortletId(
+				themeDisplay, themeDisplay.getScopeGroupId(), plid);
+
+			plid = (Long)plidAndPortletId[0];
+			portletId = (String)plidAndPortletId[1];
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to obtain plid and portlet id");
+			}
+		}
 
 		if ((plid == controlPanelPlid) ||
 			(plid == LayoutConstants.DEFAULT_PLID)) {

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet.action;
+package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import javax.portlet.PortletURL;
@@ -44,7 +44,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 	@Override
 	public String[] initPortletIds() {
 		return new String[] {
-			DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
+			PortletKeys.DOCUMENT_LIBRARY, PortletKeys.MEDIA_GALLERY_DISPLAY
 		};
 	}
 
@@ -72,7 +72,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
-		if (rootPortletId.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+		if (rootPortletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/image_gallery_display/view");
 		}

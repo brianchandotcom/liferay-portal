@@ -155,6 +155,14 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 	public abstract long getGroupId(long primaryKey) throws Exception;
 
 	@Override
+	public Object[] getPlidAndPortletId(
+			ThemeDisplay themeDisplay, long groupId, long plid)
+		throws Exception {
+
+		return getPlidAndPortletId(themeDisplay, groupId, plid, _portletIds);
+	}
+
+	@Override
 	public abstract String getPrimaryKeyParameterName();
 
 	@Override

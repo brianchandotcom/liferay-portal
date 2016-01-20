@@ -351,23 +351,9 @@ public class UpgradePortletId extends UpgradeProcess {
 	protected void updateResourceAction(String oldName, String newName)
 		throws Exception {
 
-		String sql =
-			"select name from ResourceAction where name = '" + newName + "'";
-
-		try (PreparedStatement ps = connection.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery()) {
-
-			if (rs.next()) {
-				runSQL(
-					"delete from ResourceAction where name = '" + oldName +
-						"'");
-			}
-			else {
-				runSQL(
-					"update ResourceAction set name = '" + newName +
-						"' where name = '" + oldName + "'");
-			}
-		}
+		runSQL(
+			"update ResourceAction set name = '" + newName +
+				"' where name = '" + oldName + "'");
 	}
 
 	protected void updateResourcePermission(

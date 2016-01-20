@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.marketplace.app.manager.web.constants.BundleConstants" %><%@
 page import="com.liferay.marketplace.app.manager.web.constants.BundleStateConstants" %><%@
+page import="com.liferay.marketplace.app.manager.web.dao.search.MarketplaceAppManagerResultRowSplitter" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplay" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplayComparator" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplayFactoryUtil" %><%@

@@ -7,6 +7,6 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/scribe.jar
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Store
+Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /marketplace-store-web
 -include: ../../../../marketplace/marketplace/bnd.bnd

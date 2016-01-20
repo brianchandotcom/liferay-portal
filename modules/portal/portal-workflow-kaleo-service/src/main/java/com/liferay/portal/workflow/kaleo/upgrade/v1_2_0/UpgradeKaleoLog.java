@@ -27,7 +27,7 @@ public class UpgradeKaleoLog extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
-			runSQL("alter_column_type KaleoLog comment TEXT null");
+			runSQL("alter_column_type KaleoLog comment_ TEXT null");
 		}
 		catch (SQLException sqle) {
 			upgradeTable(

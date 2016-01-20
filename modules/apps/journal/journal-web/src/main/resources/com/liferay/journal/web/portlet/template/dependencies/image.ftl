@@ -11,7 +11,7 @@ ${r"<#if"} ${variableName}?? && ${variableName} != "">
 	<img alt="${getVariableReferenceCode(variableAltName)}" src="${getVariableReferenceCode(variableName)}" />
 ${r"</#if>"}
 <#else>
-#if (!$${variableName} && $${variableName} != "")
+#if ($${variableName} && $${variableName} != "")
 	<img alt="${getVariableReferenceCode(variableAltName)}" src="${getVariableReferenceCode(variableName)}" />
 #end
 </#if>

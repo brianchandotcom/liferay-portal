@@ -3715,6 +3715,31 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="deploy-osgi-modules">
+		<get-testcase-property property.name="osgi.modules.includes" />
+
+		<if>
+			<isset property="osgi.modules.includes" />
+			<then>
+				<for list="${osgi.modules.includes}" param="osgi.module">
+					<sequential>
+						<var name="osgi.module.dir" unset="true" />
+
+						<path id="osgi.module.dir">
+							<dirset dir="${project.dir}/modules">
+								<include name="**/@{osgi.module}" />
+							</dirset>
+						</path>
+
+						<property name="osgi.module.dir" refid="osgi.module.dir" />
+
+						<gradle-execute dir="${osgi.module.dir}" task="deploy" />
+					</sequential>
+				</for>
+			</then>
+		</if>
+	</target>
+
 	<target name="deploy-specified-plugins">
 
 		<!--
@@ -7138,6 +7163,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
 		</if>
+
+		<antcall target="deploy-osgi-modules" />
 
 		<antcall target="deploy-specified-plugins" />
 

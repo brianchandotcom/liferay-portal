@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -763,9 +764,18 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		String entryTitle = entry.getName();
-		String entryURL =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
-				StringPool.SLASH + entry.getEntryId();
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(layoutFullURL);
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("bookmarks");
+		sb.append(StringPool.SLASH);
+		sb.append("folder");
+		sb.append(StringPool.SLASH);
+		sb.append(entry.getFolderId());
+
+		String entryURL = sb.toString();
 
 		String fromName =
 			bookmarksGroupServiceOverriddenConfiguration.emailFromName();

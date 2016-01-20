@@ -363,8 +363,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		if (user != null) {
 			if (user.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
 				session.setAttribute(
-					GoogleWebKeys.GOOGLE_INCOMPLETE_USER_ID,
-					userinfoplus.getId());
+					WebKeys.GOOGLE_INCOMPLETE_USER_ID, userinfoplus.getId());
 
 				user.setEmailAddress(userinfoplus.getEmail());
 				user.setFirstName(userinfoplus.getGivenName());

@@ -19,10 +19,9 @@ package com.liferay.portal.security.sso.google.constants;
  */
 public class GoogleWebKeys {
 
-	public static final String GOOGLE_INCOMPLETE_USER_ID =
-		"GOOGLE_INCOMPLETE_USER_ID";
-
 	public static final String GOOGLE_USER_EMAIL_ADDRESS =
 		"GOOGLE_USER_EMAIL_ADDRESS";
+
+	public static final String GOOGLE_USER_ID = "GOOGLE_USER_ID";
 
 }

@@ -38,7 +38,8 @@ AUI.add(
 							{
 								displayStyle: instance.get('displayStyle'),
 								placeholder: instance.getLocalizedValue(instance.get('placeholder')),
-								tip: instance.getLocalizedValue(instance.get('tip'))
+								tip: instance.getLocalizedValue(instance.get('tip')),
+								tooltip: instance.getLocalizedValue(instance.get('tooltip'))
 							}
 						);
 					},

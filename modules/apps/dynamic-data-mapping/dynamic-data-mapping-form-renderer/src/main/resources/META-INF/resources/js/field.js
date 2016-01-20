@@ -86,6 +86,10 @@ AUI.add(
 						value: ''
 					},
 
+					tooltip: {
+						value: ''
+					},
+
 					type: {
 						value: ''
 					},

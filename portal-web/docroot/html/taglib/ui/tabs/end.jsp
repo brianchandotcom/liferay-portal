@@ -22,8 +22,6 @@ String errorSection = (String)request.getAttribute("errorSection");
 
 <c:if test="<%= !themeDisplay.isFacebook() %>">
 	<aui:script>
-		if (Liferay.Portal.Tabs.exists('<%= namespace + param %>', '<%= UnicodeFormatter.toString((errorSection == null) ? value : errorSection) %>')) {
-			Liferay.Portal.Tabs.show('<%= namespace + param %>', <%= namesJS %>, '<%= UnicodeFormatter.toString((errorSection == null) ? value : errorSection) %>');
-		}
+		Liferay.Portal.Tabs.show('<%= namespace + param %>', <%= namesJS %>, '<%= UnicodeFormatter.toString((errorSection == null) ? value : errorSection) %>');
 	</aui:script>
 </c:if>

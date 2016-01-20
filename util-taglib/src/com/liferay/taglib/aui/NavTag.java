@@ -141,6 +141,28 @@ public class NavTag extends BaseNavTag implements BodyTag {
 		_namespacedId = null;
 	}
 
+	protected String getMarkupView() {
+		String markupView = StringPool.BLANK;
+
+		NavBarTag navBarTag = (NavBarTag)findAncestorWithClass(
+			this, NavBarTag.class);
+
+		if (navBarTag != null) {
+			markupView = navBarTag.getMarkupView();
+		}
+
+		return markupView;
+	}
+
+	@Override
+	protected String getPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/nav/" + getMarkupView() + "/page.jsp";
+		}
+
+		return "/html/taglib/aui/nav/lexicon/page.jsp";
+	}
+
 	@Override
 	protected int processStartTag() throws Exception {
 		return EVAL_BODY_BUFFERED;

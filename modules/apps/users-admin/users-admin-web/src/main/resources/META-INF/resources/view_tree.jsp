@@ -202,7 +202,7 @@ if (organization != null) {
 					}
 					%>
 
-					<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+					<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= backURL %>" />
 					<aui:input name="deleteOrganizationIds" type="hidden" />
 
 					<c:if test="<%= showOrganizations %>">

@@ -156,23 +156,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		}
 	}
 
-	protected Group replace(Group group) {
-		if (group == null) {
-			return group;
-		}
-
-		return StagingUtil.getLiveGroup(group.getGroupId());
-	}
-
-	protected long replace(long groupId) {
-		if (groupId == 0) {
-			return groupId;
-		}
-
-		return StagingUtil.getLiveGroupId(groupId);
-	}
-
-	protected void replace(Object[] arguments, int index) {
+	protected void replaceArgument(Object[] arguments, int index) {
 		if (arguments == null) {
 			return;
 		}
@@ -186,7 +170,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		if (object instanceof Long) {
 			long groupId = (Long)object;
 
-			arguments[index] = replace(groupId);
+			arguments[index] = replaceGroupIdArgument(groupId);
 
 			return;
 		}
@@ -194,7 +178,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		if (object instanceof Group) {
 			Group group = (Group)object;
 
-			arguments[index] = replace(group);
+			arguments[index] = replaceGroupArgument(group);
 
 			return;
 		}
@@ -203,7 +187,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 			long[] groupIds = (long[])object;
 
 			for (int i = 0; i < groupIds.length; i++) {
-				groupIds[i] = replace(groupIds[i]);
+				groupIds[i] = replaceGroupIdArgument(groupIds[i]);
 			}
 
 			return;
@@ -213,7 +197,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 			Long[] groupIds = (Long[])object;
 
 			for (int i = 0; i < groupIds.length; i++) {
-				groupIds[i] = replace(groupIds[i]);
+				groupIds[i] = replaceGroupIdArgument(groupIds[i]);
 			}
 
 			return;
@@ -223,7 +207,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 			Group[] groups = (Group[])object;
 
 			for (int i = 0; i < groups.length; i++) {
-				groups[i] = replace(groups[i]);
+				groups[i] = replaceGroupArgument(groups[i]);
 			}
 
 			return;
@@ -240,7 +224,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 				new Object[collection.size()]);
 
 			for (int i = 0; i < collectionArray.length; i++) {
-				replace(collectionArray, i);
+				replaceArgument(collectionArray, i);
 			}
 
 			if (object instanceof List) {
@@ -267,6 +251,22 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 			"Unknown type " + object.getClass());
 	}
 
+	protected Group replaceGroupArgument(Group group) {
+		if (group == null) {
+			return group;
+		}
+
+		return StagingUtil.getLiveGroup(group.getGroupId());
+	}
+
+	protected long replaceGroupIdArgument(long groupId) {
+		if (groupId == 0) {
+			return groupId;
+		}
+
+		return StagingUtil.getLiveGroupId(groupId);
+	}
+
 	protected void replaceStagingGroupIdsInCustomMethod(
 		MethodInvocation methodInvocation) {
 
@@ -281,7 +281,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 		Object[] arguments = methodInvocation.getArguments();
 
 		for (Integer argumentIndex : argumentIndexes) {
-			replace(arguments, argumentIndex);
+			replaceArgument(arguments, argumentIndex);
 		}
 	}
 
@@ -296,7 +296,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 
 		Object[] arguments = methodInvocation.getArguments();
 
-		replace(arguments, 0);
+		replaceArgument(arguments, 0);
 	}
 
 	protected void unregisterAdvice(Object service) {

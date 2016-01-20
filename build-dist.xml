@@ -986,7 +986,9 @@ release was successful.</echo>
 
 		<ant dir="portal-impl" inheritall="false" target="compile-test" />
 
-		<ant inheritall="false" target="format-javadoc" />
+		<ant inheritall="false" target="format-javadoc">
+			<property name="xml" value="true"/>
+		</ant>
 
 		<delete>
 			<fileset dir="${lp.plugins.dir}" includes="**/javadocs-all.xml,**/javadocs-rt.xml" />
@@ -996,7 +998,9 @@ release was successful.</echo>
 
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="clean" />
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="compile" />
-		<ant dir="${lp.plugins.dir}" inheritall="false" target="format-javadoc" />
+		<ant dir="${lp.plugins.dir}" inheritall="false" target="format-javadoc">
+			<property name="xml" value="true"/>
+		</ant>
 
 		<parallel>
 			<if>

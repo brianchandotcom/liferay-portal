@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -299,22 +300,22 @@ public class VerifyGroup extends VerifyProcess {
 	protected void verifyStagingGroupOrganizationMembership(Group stagingGroup)
 		throws Exception {
 
-		List<Organization> staged =
+		List<Organization> stagingOrganizations =
 			OrganizationLocalServiceUtil.getGroupOrganizations(
 				stagingGroup.getGroupId());
 
-		if (staged.isEmpty()) {
+		if (ListUtil.isEmpty(stagingOrganizations)) {
 			return;
 		}
 
-		List<Organization> live =
+		List<Organization> liveOrganizations =
 			OrganizationLocalServiceUtil.getGroupOrganizations(
 				stagingGroup.getLiveGroupId());
 
-		for (Organization organization : staged) {
-			if (!live.contains(organization)) {
+		for (Organization stagingGroupOrganization : stagingOrganizations) {
+			if (!liveOrganizations.contains(stagingGroupOrganization)) {
 				OrganizationLocalServiceUtil.addGroupOrganization(
-					stagingGroup.getLiveGroupId(), organization);
+					stagingGroup.getLiveGroupId(), stagingGroupOrganization);
 			}
 		}
 
@@ -353,20 +354,20 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	private void verifyStagingGroupRoleMembership(Group stagingGroup) {
-		List<Role> staged = RoleLocalServiceUtil.getGroupRoles(
+		List<Role> stagingRoles = RoleLocalServiceUtil.getGroupRoles(
 			stagingGroup.getGroupId());
 
-		if (staged.isEmpty()) {
+		if (ListUtil.isEmpty(stagingRoles)) {
 			return;
 		}
 
-		List<Role> live = RoleLocalServiceUtil.getGroupRoles(
+		List<Role> liveRoles = RoleLocalServiceUtil.getGroupRoles(
 			stagingGroup.getLiveGroupId());
 
-		for (Role role : staged) {
-			if (!live.contains(role)) {
+		for (Role stagingGroupRole : stagingRoles) {
+			if (!liveRoles.contains(stagingGroupRole)) {
 				RoleLocalServiceUtil.addGroupRole(
-					stagingGroup.getLiveGroupId(), role);
+					stagingGroup.getLiveGroupId(), stagingGroupRole);
 			}
 		}
 
@@ -374,20 +375,22 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	private void verifyStagingGroupUserGroupMembership(Group stagingGroup) {
-		List<UserGroup> staged = UserGroupLocalServiceUtil.getGroupUserGroups(
-			stagingGroup.getGroupId());
+		List<UserGroup> stagingUserGroups =
+			UserGroupLocalServiceUtil.getGroupUserGroups(
+				stagingGroup.getGroupId());
 
-		if (staged.isEmpty()) {
+		if (ListUtil.isEmpty(stagingUserGroups)) {
 			return;
 		}
 
-		List<UserGroup> live = UserGroupLocalServiceUtil.getGroupUserGroups(
-			stagingGroup.getLiveGroupId());
+		List<UserGroup> liveUserGroups =
+			UserGroupLocalServiceUtil.getGroupUserGroups(
+				stagingGroup.getLiveGroupId());
 
-		for (UserGroup userGroup : staged) {
-			if (!live.contains(userGroup)) {
+		for (UserGroup stagingUserGroup : stagingUserGroups) {
+			if (!liveUserGroups.contains(stagingUserGroup)) {
 				UserGroupLocalServiceUtil.addGroupUserGroup(
-					stagingGroup.getLiveGroupId(), userGroup);
+					stagingGroup.getLiveGroupId(), stagingUserGroup);
 			}
 		}
 
@@ -396,20 +399,20 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	private void verifyStagingGroupUserMembership(Group stagingGroup) {
-		List<User> staged = UserLocalServiceUtil.getGroupUsers(
+		List<User> stagingGroupUsers = UserLocalServiceUtil.getGroupUsers(
 			stagingGroup.getGroupId());
 
-		if (staged.isEmpty()) {
+		if (ListUtil.isEmpty(stagingGroupUsers)) {
 			return;
 		}
 
-		List<User> live = UserLocalServiceUtil.getGroupUsers(
+		List<User> liveGroupUsers = UserLocalServiceUtil.getGroupUsers(
 			stagingGroup.getLiveGroupId());
 
-		for (User user : staged) {
-			if (!live.contains(user)) {
+		for (User stagingGroupUser : stagingGroupUsers) {
+			if (!liveGroupUsers.contains(stagingGroupUser)) {
 				UserLocalServiceUtil.addGroupUser(
-					stagingGroup.getLiveGroupId(), user);
+					stagingGroup.getLiveGroupId(), stagingGroupUser);
 			}
 		}
 
@@ -456,24 +459,24 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	private void verifyStagingUserGroupRolesAssignments(Group stagingGroup) {
-		List<UserGroupRole> staged =
+		List<UserGroupRole> stagingUserGroupRoles =
 			UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroup(
 				stagingGroup.getGroupId());
 
-		if (staged.isEmpty()) {
+		if (ListUtil.isEmpty(stagingUserGroupRoles)) {
 			return;
 		}
 
-		List<UserGroupRole> live =
+		List<UserGroupRole> liveUserGroupRoles =
 			UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroup(
 				stagingGroup.getLiveGroupId());
 
-		for (UserGroupRole userGroupRole : staged) {
-			userGroupRole.setGroupId(stagingGroup.getLiveGroupId());
+		for (UserGroupRole stagingUserGroupRole : stagingUserGroupRoles) {
+			stagingUserGroupRole.setGroupId(stagingGroup.getLiveGroupId());
 
-			if (!live.contains(userGroupRole)) {
+			if (!liveUserGroupRoles.contains(stagingUserGroupRole)) {
 				UserGroupRoleLocalServiceUtil.updateUserGroupRole(
-					userGroupRole);
+					stagingUserGroupRole);
 			}
 		}
 

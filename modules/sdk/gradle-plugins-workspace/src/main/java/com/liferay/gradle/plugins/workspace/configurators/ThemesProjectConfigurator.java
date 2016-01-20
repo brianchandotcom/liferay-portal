@@ -174,7 +174,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			project.getRootProject(), rootTaskName);
 
 		copySpec.into(
-			"deploy",
+			"osgi/modules",
 			new Closure<Void>(null) {
 
 				@SuppressWarnings("unused")

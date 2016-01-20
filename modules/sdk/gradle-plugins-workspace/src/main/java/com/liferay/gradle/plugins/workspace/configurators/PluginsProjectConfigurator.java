@@ -126,7 +126,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 			project.getRootProject(), rootTaskName);
 
 		copySpec.into(
-			"deploy",
+			"osgi/modules",
 			new Closure<Void>(null) {
 
 				@SuppressWarnings("unused")

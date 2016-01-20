@@ -37,36 +37,25 @@ public class UserGroupGroupRoleLocalServiceStagingAdvice
 
 		initCustomMethod(
 			"addUserGroupGroupRoles", 1, long.class, long.class, long[].class);
-
 		initCustomMethod(
 			"addUserGroupGroupRoles", 1, long[].class, long.class, long.class);
-
 		initCustomMethod("deleteUserGroupGroupRoles", 0, long.class, int.class);
-
 		initCustomMethod(
 			"deleteUserGroupGroupRoles", 1, long.class, long.class,
 			long[].class);
-
 		initCustomMethod(
 			"deleteUserGroupGroupRoles", 1, long.class, long[].class);
-
 		initCustomMethod(
 			"deleteUserGroupGroupRoles", 1, long[].class, long.class);
-
 		initCustomMethod(
 			"deleteUserGroupGroupRoles", 1, long[].class, long.class,
 			long.class);
-
 		initCustomMethod("deleteUserGroupGroupRolesByGroupId", 0, long.class);
-
 		initCustomMethod("getUserGroupGroupRoles", 1, long.class, long.class);
-
 		initCustomMethod(
 			"getUserGroupGroupRolesByGroupAndRole", 0, long.class, long.class);
-
 		initCustomMethod(
 			"hasUserGroupGroupRole", 1, long.class, long.class, long.class);
-
 		initCustomMethod(
 			"hasUserGroupGroupRole", 1, long.class, long.class, String.class);
 

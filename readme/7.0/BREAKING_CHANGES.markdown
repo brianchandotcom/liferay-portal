@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `c5c2845`.*
+*This document has been reviewed through commit `762e1e9`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3419,21 +3419,22 @@ allow for much flexibility.
 
 ---------------------------------------
 
-### Renamed packages to fix the split packages problem
+### Renamed Packages to Fix the Split Packages Problem
 - **Date:** 2016-Jan-19
 - **JIRA Ticket:** LPS-61952
 
 #### What changed?
 
-A split packages is caused where two or more bundles export the same package
-name and version. When the classloader loads a package, exactly one exporter of
-that package is chosen, so if a package is split across multiple bundles then an
-importer will only ever see a subset of the package.
+Split packages are caused when two or more bundles export the same package name
+and version. When the classloader loads a package, exactly one exporter of that
+package is chosen; so if a package is split across multiple bundles, then an
+importer only sees a subset of the package.
 
 #### Who is affected?
 
-Portal-Service and Portal-Impl has many packages with the same package name.
-All of these packages will be affected by the split package problem.
+The `portal-service` and `portal-impl` folders have many packages with the same
+name. Therefore, all of these packages are affected by the split package
+problem.
 
 #### How should I update my code?
 
@@ -3442,7 +3443,7 @@ else.
 
 **Example**
 
-`com.liferay.portal.jdbc.pool.metrics` renamed to `com.liferay.portal.kernel.jdbc.pool.metrics`
+- `com.liferay.portal.jdbc.pool.metrics` &rarr; `com.liferay.portal.kernel.jdbc.pool.metrics`
 
 `com.liferay.portal.layoutconfiguration.util` renamed to `com.liferay.portal.kernel.layoutconfiguration.util`
 
@@ -3450,13 +3451,13 @@ else.
 
 `com.liferay.portal.repository.proxy` renamed to `com.liferay.portal.kernel.repository.proxy`
 
-`com.liferay.portal.webserver` renamed to `com.liferay.portal.kernel.webserver`
+- `com.liferay.portal.webserver` &rarr; `com.liferay.portal.kernel.webserver`
 
-`com.liferay.portlet.backgroundtask` renamed to `com.liferay.background.task.kernel`
+- `com.liferay.portlet.backgroundtask` &rarr; `com.liferay.background.task.kernel`
 
-`com.liferay.portlet.dynamicdatamapping` renamed to `com.liferay.dynamic.data.mapping.kernel`
+- `com.liferay.portlet.dynamicdatamapping` &rarr; `com.liferay.dynamic.data.mapping.kernel`
 
-`com.liferay.portlet.imagegallerydisplay.display.context` renamed to `com.liferay.image.gallery.display.kernel.display.context`
+- `com.liferay.portlet.imagegallerydisplay.display.context` &rarr; `com.liferay.image.gallery.display.kernel.display.context`
 
 `com.liferay.portlet.layoutsadmin.util` renamed to `com.liferay.layouts.admin.kernel.util`
 
@@ -3464,11 +3465,11 @@ else.
 
 `com.liferay.portlet.portletconfiguration.util` renamed to `com.liferay.portlet.configuration.kernel.util`
 
-`com.liferay.portlet.rolesadmin.util` renamed to `com.liferay.roles.admin.kernel.util`
+- `com.liferay.portlet.rolesadmin.util` &rarr; `com.liferay.roles.admin.kernel.util`
 
-`com.liferay.portlet.sites.util` renamed to `com.liferay.sites.kernel.util`
+- `com.liferay.portlet.sites.util` &rarr; `com.liferay.sites.kernel.util`
 
-`com.liferay.portlet.useradmin.util` renamed to `com.liferay.users.admin.kernel.util`
+- `com.liferay.portlet.useradmin.util` &rarr; `com.liferay.users.admin.kernel.util`
 
 #### Why was this change made?
 

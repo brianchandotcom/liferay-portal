@@ -75,7 +75,7 @@
 		if (curFormNavigatorEntry.getKey().equals(errorSection)) {
 		%>
 
-			<aui:script>
+			<aui:script sandbox="<%= true %>">
 				var sectionContent = $('#<%= errorSection %>Content');
 
 				if (!sectionContent.hasClass('in')) {

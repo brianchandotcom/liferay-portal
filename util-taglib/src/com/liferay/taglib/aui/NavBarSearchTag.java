@@ -69,6 +69,39 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 	}
 
 	@Override
+	protected String getEndPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/nav_bar_search/" + getMarkupView() +
+				"/end.jsp";
+		}
+
+		return "/html/taglib/aui/nav_bar_search/end.jsp";
+	}
+
+	protected String getMarkupView() {
+		String markupView = StringPool.BLANK;
+
+		NavBarTag navBarTag = (NavBarTag)findAncestorWithClass(
+			this, NavBarTag.class);
+
+		if (navBarTag != null) {
+			markupView = navBarTag.getMarkupView();
+		}
+
+		return markupView;
+	}
+
+	@Override
+	protected String getStartPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/nav_bar_search/" + getMarkupView() +
+				"/start.jsp";
+		}
+
+		return "/html/taglib/aui/nav_bar_search/start.jsp";
+	}
+
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 

@@ -56,6 +56,8 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 			setCollapsible(true);
 
+			navBarTag.setDataTarget(_getNamespacedId());
+
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
@@ -139,6 +141,28 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 		_calledCollapsibleSetter = false;
 		_namespacedId = null;
+	}
+
+	protected String getMarkupView() {
+		String markupView = StringPool.BLANK;
+
+		NavBarTag navBarTag = (NavBarTag)findAncestorWithClass(
+			this, NavBarTag.class);
+
+		if (navBarTag != null) {
+			markupView = navBarTag.getMarkupView();
+		}
+
+		return markupView;
+	}
+
+	@Override
+	protected String getPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/nav/" + getMarkupView() + "/page.jsp";
+		}
+
+		return "/html/taglib/aui/nav/lexicon/page.jsp";
 	}
 
 	@Override

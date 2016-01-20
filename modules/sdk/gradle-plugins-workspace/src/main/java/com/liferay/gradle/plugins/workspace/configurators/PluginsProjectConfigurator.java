@@ -83,6 +83,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		Task task = project.task(LifecycleBasePlugin.BUILD_TASK_NAME);
 
 		task.dependsOn(updatePropertiesTask, WarPlugin.WAR_TASK_NAME);
+		task.setDescription("Alias for 'ant war'.");
 
 		return task;
 	}

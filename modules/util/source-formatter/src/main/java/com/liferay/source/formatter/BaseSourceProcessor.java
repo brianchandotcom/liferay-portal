@@ -60,17 +60,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	public static final int PORTAL_MAX_DIR_LEVEL = 5;
 
-	public BaseSourceProcessor() {
-		portalSource = _isPortalSource();
-
-		try {
-			_properties = _getProperties();
-		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
-		}
-	}
-
 	@Override
 	public final void format() throws Exception {
 		for (String fileName : getFileNames()) {
@@ -1265,7 +1254,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected File getFile(String fileName, int level) {
 		for (int i = 0; i < level; i++) {
-			File file = new File(fileName);
+			File file = new File(
+				sourceFormatterArgs.getBaseDirName() + fileName);
 
 			if (file.exists()) {
 				return file;
@@ -1975,13 +1965,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		for (int i = 0; i <= level; i++) {
 			try {
-				InputStream inputStream = new FileInputStream(fileName);
+				InputStream inputStream = new FileInputStream(
+					sourceFormatterArgs.getBaseDirName() + fileName);
 
 				Properties props = new Properties();
 
 				props.load(inputStream);
 
 				propertiesList.add(props);
+
+				break;
 			}
 			catch (FileNotFoundException fnfe) {
 			}
@@ -2033,16 +2026,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _init() {
+		portalSource = _isPortalSource();
+
 		_errorMessagesMap = new HashMap<>();
 
-		_sourceFormatterHelper = new SourceFormatterHelper(
-			sourceFormatterArgs.isUseProperties());
-
 		try {
+			_properties = _getProperties();
+
+			_sourceFormatterHelper = new SourceFormatterHelper(
+				sourceFormatterArgs.isUseProperties());
+
 			_sourceFormatterHelper.init();
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 
 		_excludes = _getExcludes();

@@ -34,9 +34,6 @@ import java.util.regex.Pattern;
  */
 public class JavaSourceTabCalculator {
 
-	public JavaSourceTabCalculator() {
-	}
-
 	public void calculateTabs(
 			String fileName, String content,
 			JavaSourceProcessor javaSourceProcessor)

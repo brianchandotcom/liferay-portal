@@ -1030,8 +1030,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Pattern pattern = Pattern.compile(
 			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
 
-		Matcher matcher = pattern.matcher(
-			getTablesContent(fileName, absolutePath));
+		String tablesContent = getTablesContent(fileName, absolutePath);
+
+		if (tablesContent == null) {
+			return columnNames;
+		}
+
+		Matcher matcher = pattern.matcher(tablesContent);
 
 		if (!matcher.find()) {
 			return columnNames;
@@ -1079,21 +1084,23 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
-		if (portalSource) {
-			tablesContent = getContent(
-				fileName.substring(0, pos) +
-					"/src/main/resources/META-INF/sql/tables.sql",
-				1);
+		String moduleOrPluginFolder = fileName.substring(0, pos);
 
-			if (Validator.isNull(tablesContent)) {
-				tablesContent = getContent(
-					fileName.substring(0, pos) + "/src/META-INF/sql/tables.sql",
-					1);
+		if (portalSource) {
+			tablesContent = FileUtil.read(
+				new File(
+					moduleOrPluginFolder +
+						"/src/main/resources/META-INF/sql/tables.sql"));
+
+			if (tablesContent == null) {
+				tablesContent = FileUtil.read(
+					new File(
+						moduleOrPluginFolder + "/src/META-INF/sql/tables.sql"));
 			}
 		}
 		else {
-			tablesContent = getContent(
-				fileName.substring(0, pos) + "/sql/tables.sql", 1);
+			tablesContent = FileUtil.read(
+				new File(moduleOrPluginFolder + "/sql/tables.sql"));
 		}
 
 		_tablesContentMap.put(fileName, tablesContent);

@@ -25,7 +25,6 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfoplus;
 
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
@@ -151,6 +150,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		String screenName = StringPool.BLANK;
 		String emailAddress = userinfoplus.getEmail();
 		String openId = StringPool.BLANK;
+		String googleId = userinfoplus.getId();
 		Locale locale = LocaleUtil.getDefault();
 		String firstName = userinfoplus.getGivenName();
 		String middleName = StringPool.BLANK;
@@ -176,6 +176,8 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+
+		user = _userLocalService.updateGoogleId(user.getUserId(), googleId);
 
 		user = _userLocalService.updateLastLogin(
 			user.getUserId(), user.getLoginIP());
@@ -428,6 +430,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		String firstName = userinfoplus.getGivenName();
 		String lastName = userinfoplus.getFamilyName();
 		boolean male = Validator.equals(userinfoplus.getGender(), "male");
+		String googleId = userinfoplus.getId();
 
 		if (emailAddress.equals(user.getEmailAddress()) &&
 			firstName.equals(user.getFirstName()) &&
@@ -453,6 +456,10 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		long[] userGroupIds = null;
 
 		ServiceContext serviceContext = new ServiceContext();
+
+		if (!StringUtil.equalsIgnoreCase(googleId, user.getGoogleId())) {
+			_userLocalService.updateGoogleId(user.getUserId(), googleId);
+		}
 
 		if (!StringUtil.equalsIgnoreCase(
 				emailAddress, user.getEmailAddress())) {

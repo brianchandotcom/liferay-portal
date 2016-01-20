@@ -181,7 +181,7 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
 				_user.getUserId(), calendar.getCalendarId(),
-				new long[] { invitedCalendar.getCalendarId() },
+				new long[] {invitedCalendar.getCalendarId()},
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -223,7 +223,7 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
 				_user.getUserId(), calendar.getCalendarId(),
-				new long[] { invitedCalendar.getCalendarId() },
+				new long[] {invitedCalendar.getCalendarId()},
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -262,7 +262,7 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
 				_user.getUserId(), calendar.getCalendarId(),
-				new long[] { invitedCalendar.getCalendarId() },
+				new long[] {invitedCalendar.getCalendarId()},
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -385,7 +385,7 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
 				_user.getUserId(), calendar.getCalendarId(),
-				new long[] { invitedCalendar.getCalendarId() },
+				new long[] {invitedCalendar.getCalendarId()},
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -404,7 +404,7 @@ public class CalendarBookingLocalServiceTest {
 		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			calendar.getCalendarId(),
-			new long[] { invitedCalendar.getCalendarId() },
+			new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomString(), startTime, startTime + 36000000,
@@ -442,7 +442,7 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
 				_user.getUserId(), calendar.getCalendarId(),
-				new long[] { invitedCalendar.getCalendarId() },
+				new long[] {invitedCalendar.getCalendarId()},
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -650,7 +650,7 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
 				_user.getUserId(), calendar.getCalendarId(),
-				new long[] { invitedCalendar.getCalendarId() },
+				new long[] {invitedCalendar.getCalendarId()},
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -670,7 +670,7 @@ public class CalendarBookingLocalServiceTest {
 		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			calendarBooking.getCalendarId(),
-			new long[] { invitedCalendar.getCalendarId() },
+			new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomString(), startTime, startTime + 36000000,
@@ -689,7 +689,7 @@ public class CalendarBookingLocalServiceTest {
 		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			calendarBooking.getCalendarId(),
-			new long[] { invitedCalendar.getCalendarId() },
+			new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomString(), startTime, startTime + 37000000,

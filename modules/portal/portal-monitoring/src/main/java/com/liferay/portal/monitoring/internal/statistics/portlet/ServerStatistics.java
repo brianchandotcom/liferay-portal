@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true, property = { "namespace=com.liferay.monitoring.Portlet" },
-	service = { DataSampleProcessor.class, ServerStatistics.class }
+	immediate = true, property = {"namespace=com.liferay.monitoring.Portlet"},
+	service = {DataSampleProcessor.class, ServerStatistics.class}
 )
 public class ServerStatistics
 	implements DataSampleProcessor<PortletRequestDataSample> {

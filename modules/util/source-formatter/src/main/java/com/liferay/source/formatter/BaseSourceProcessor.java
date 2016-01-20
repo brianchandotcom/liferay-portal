@@ -905,6 +905,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		linePart = formatIncorrectSyntax(linePart, "){", ") {", false);
 		linePart = formatIncorrectSyntax(linePart, "]{", "] {", false);
 		linePart = formatIncorrectSyntax(linePart, " [", "[", false);
+		linePart = formatIncorrectSyntax(linePart, "{ ", "{", false);
+		linePart = formatIncorrectSyntax(linePart, " }", "}", false);
 
 		for (int x = 0;;) {
 			x = linePart.indexOf(CharPool.EQUAL, x + 1);

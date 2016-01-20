@@ -153,7 +153,7 @@ if (iteratorURL != null) {
 										<a href="<%= url %>">
 									</c:when>
 									<c:otherwise>
-										<a href="<%= StringUtil.replace(orderByJS, new String[] { "orderKey", "orderByType" }, new String[] { orderKey, orderByType }) %>">
+										<a href="<%= StringUtil.replace(orderByJS, new String[] {"orderKey", "orderByType"}, new String[] {orderKey, orderByType}) %>">
 									</c:otherwise>
 								</c:choose>
 						</c:if>

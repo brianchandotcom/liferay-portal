@@ -34,7 +34,7 @@
 
 		<execute function="Click" locator1="Form#NAME_FIELD" />
 
-		<execute function="Type#typeAceEditor" locator1="Form#NAME_FIELD" value1="${formName}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#NAME_FIELD" value1="${formName}" />
 	</command>
 
 	<command name="editPageDescription">

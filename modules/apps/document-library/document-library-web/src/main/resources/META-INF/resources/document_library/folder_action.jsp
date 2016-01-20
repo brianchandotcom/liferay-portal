@@ -106,8 +106,6 @@ boolean view = false;
 if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 	view = true;
 }
-
-String iconMenuId = null;
 %>
 
 <liferay-util:buffer var="iconMenu">
@@ -369,16 +367,7 @@ String iconMenuId = null;
 		</c:choose>
 
 		<c:if test="<%= hasViewPermission && portletDisplay.isWebDAVEnabled() && ((folder == null) || (folder.getRepositoryId() == scopeGroupId)) %>">
-
-			<%
-			iconMenuId = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
-			%>
-
-			<liferay-ui:icon
-				cssClass='<%= randomNamespace + "-webdav-action" %>'
-				message="access-from-desktop"
-				url="javascript:;"
-			/>
+			<liferay-util:include page="/document_library/access_from_desktop.jsp" servletContext="<%= application %>" />
 		</c:if>
 
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && (folder != null) %>">
@@ -422,29 +411,7 @@ String iconMenuId = null;
 
 <%= iconMenu %>
 
-<div id="<%= randomNamespace %>webDav" style="display: none;">
-	<div class="portlet-document-library">
-
-		<%
-		String webDavHelpMessage = null;
-
-		if (BrowserSnifferUtil.isWindows(request)) {
-			webDavHelpMessage = LanguageUtil.format(request, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
-		}
-		else {
-			webDavHelpMessage = LanguageUtil.format(request, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
-		}
-		%>
-
-		<liferay-ui:message key="<%= webDavHelpMessage %>" />
-
-		<br /><br />
-
-		<aui:input cssClass="webdav-url-resource" name="webDavURL" type="resource" value="<%= DLUtil.getWebDavURL(themeDisplay, folder, null) %>" />
-	</div>
-</div>
-
-<aui:script use="uploader,liferay-util-window">
+<aui:script use="uploader">
 	if (!A.UA.ios && (A.Uploader.TYPE != 'none')) {
 		var uploadMultipleDocumentsIcon = A.all('.upload-multiple-documents:hidden');
 
@@ -465,49 +432,6 @@ String iconMenuId = null;
 				var slideShowWindow = window.open('<%= viewSlideShowURL %>', 'slideShow', 'directories=no,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no');
 
 				slideShowWindow.focus();
-			}
-		);
-	}
-
-	var webdavAction = A.one('.<%= randomNamespace %>-webdav-action');
-
-	if (webdavAction) {
-		webdavAction.on(
-			'click',
-			function(event) {
-				event.preventDefault();
-
-				var webdavDialog = Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
-							destroyOnHide: true
-						},
-						title: '<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>'
-					}
-				);
-
-				webdavDialog.after(
-					'render',
-					function(event) {
-						var webdavURLInput = webdavDialog.get('boundingBox').one('.webdav-url-resource');
-
-						webdavURLInput.focus();
-					}
-				);
-
-				webdavDialog.on(
-					'close',
-					function(event) {
-						var trigger = A.one('#<portlet:namespace /><%= iconMenuId %>Button');
-
-						if (trigger) {
-							trigger.focus();
-						}
-					}
-				);
-
-				webdavDialog.render();
 			}
 		);
 	}

@@ -55,7 +55,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280 main-content-body">
 	<aui:form action="<%= portletURL.toString() %>" cssClass="row" method="get" name="fm">
 		<div class="user-notifications">
 			<liferay-ui:search-container

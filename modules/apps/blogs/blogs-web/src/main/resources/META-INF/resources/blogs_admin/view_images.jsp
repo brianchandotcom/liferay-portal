@@ -91,7 +91,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280 main-content-body">
 	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
 
 	<aui:form action="<%= editImageURL %>" cssClass="row" name="fm">

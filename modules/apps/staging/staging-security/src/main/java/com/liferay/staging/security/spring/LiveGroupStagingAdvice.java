@@ -90,7 +90,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 			_log.debug("Registering " + customMethod);
 		}
 
-		_customMethods.put(customMethod, new Integer[] {index});
+		_customMethods.put(customMethod, index);
 	}
 
 	public void initGroupServiceBuilderMethods() {
@@ -272,17 +272,15 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 
 		Method method = methodInvocation.getMethod();
 
-		Integer[] argumentIndexes = _customMethods.get(method);
+		Integer argumentIndex = _customMethods.get(method);
 
-		if (argumentIndexes == null) {
+		if (argumentIndex == null) {
 			return;
 		}
 
 		Object[] arguments = methodInvocation.getArguments();
 
-		for (Integer argumentIndex : argumentIndexes) {
-			replaceArgument(arguments, argumentIndex);
-		}
+		replaceArgument(arguments, argumentIndex);
 	}
 
 	protected void replaceStagingGroupIdsInServiceBuilderGeneratedMethod(
@@ -334,7 +332,7 @@ public abstract class LiveGroupStagingAdvice implements MethodInterceptor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiveGroupStagingAdvice.class);
 
-	private final Map<Method, Integer[]> _customMethods = new HashMap<>();
+	private final Map<Method, Integer> _customMethods = new HashMap<>();
 	private final Class _localServiceClass;
 	private final List<Method> _serviceBuilderGeneratedMethods =
 		new ArrayList<>();

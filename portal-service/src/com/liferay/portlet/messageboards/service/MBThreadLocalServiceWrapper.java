@@ -263,61 +263,12 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		return _mbThreadLocalService.getGroupThreads(groupId, queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, int status, int start, int end) {
-		return _mbThreadLocalService.getGroupThreads(groupId, status, start, end);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBThread> queryDefinition) {
 		return _mbThreadLocalService.getGroupThreads(groupId, userId,
 			queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, long userId, int status, int start, int end) {
-		return _mbThreadLocalService.getGroupThreads(groupId, userId, status,
-			start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	boolean, boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, long userId, int status, boolean subscribed,
-		boolean includeAnonymous, int start, int end) {
-		return _mbThreadLocalService.getGroupThreads(groupId, userId, status,
-			subscribed, includeAnonymous, start, end);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
-	boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
-		long groupId, long userId, int status, boolean subscribed, int start,
-		int end) {
-		return _mbThreadLocalService.getGroupThreads(groupId, userId, status,
-			subscribed, start, end);
 	}
 
 	@Override
@@ -344,56 +295,11 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 			queryDefinition);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(long groupId, int status) {
-		return _mbThreadLocalService.getGroupThreadsCount(groupId, status);
-	}
-
 	@Override
 	public int getGroupThreadsCount(long groupId, long userId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.messageboards.model.MBThread> queryDefinition) {
 		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
 			queryDefinition);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	long, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(long groupId, long userId, int status) {
-		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
-			status);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	long, boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(long groupId, long userId, int status,
-		boolean subscribed) {
-		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
-			status, subscribed);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
-	long, boolean, boolean, QueryDefinition)}
-	*/
-	@Deprecated
-	@Override
-	public int getGroupThreadsCount(long groupId, long userId, int status,
-		boolean subscribed, boolean includeAnonymous) {
-		return _mbThreadLocalService.getGroupThreadsCount(groupId, userId,
-			status, subscribed, includeAnonymous);
 	}
 
 	@Override
@@ -695,18 +601,6 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		long userId, long threadId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.updateStatus(userId, threadId, status);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
-	int)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portlet.messageboards.model.MBThread updateThread(
-		long threadId, int viewCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThreadLocalService.updateThread(threadId, viewCount);
 	}
 
 	@Override

@@ -43,8 +43,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -71,8 +71,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -103,8 +103,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -133,8 +132,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -163,8 +161,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -191,8 +189,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -223,8 +221,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -252,8 +249,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  request the request used to determine the current locale
@@ -282,8 +278,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  locale the locale to translate to
@@ -307,8 +303,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  locale the locale to translate to
@@ -337,8 +333,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  locale the locale to translate to
@@ -363,8 +358,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  locale the locale to translate to
@@ -393,8 +387,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  resourceBundle the requested key's resource bundle
@@ -420,8 +414,8 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 *
 	 * <p>
 	 * The substitute placeholder (e.g. <code>{0}</code>) is replaced with the
-	 * argument, following the standard Java <code>ResourceBundle</code> notion
-	 * of index based substitution.
+	 * argument, following the standard Java {@link ResourceBundle} notion of
+	 * index based substitution.
 	 * </p>
 	 *
 	 * @param  resourceBundle the requested key's resource bundle
@@ -451,8 +445,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  resourceBundle the requested key's resource bundle
@@ -479,8 +472,7 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 	 * <p>
 	 * The substitute placeholders (e.g. <code>{0}</code>, <code>{1}</code>,
 	 * <code>{2}</code>, etc.) are replaced with the arguments, following the
-	 * standard Java <code>ResourceBundle</code> notion of index based
-	 * substitution.
+	 * standard Java {@link ResourceBundle} notion of index based substitution.
 	 * </p>
 	 *
 	 * @param  resourceBundle the requested key's resource bundle

@@ -6,7 +6,6 @@ buildService {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
-	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
 	// @formatter:off
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion

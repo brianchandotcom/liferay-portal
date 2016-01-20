@@ -112,7 +112,7 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsCallback.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsConstants.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/model/ModelHintsUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/auth/PrincipalException.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/auth/PrincipalException.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProvider.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\

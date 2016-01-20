@@ -237,6 +237,14 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public List<PortletPreferences> getPortletPreferencesByPortletInstanceKey(
+		String portletInstanceKey) {
+
+		return portletPreferencesPersistence.findByPortletId(
+			portletInstanceKey);
+	}
+
+	@Override
 	public long getPortletPreferencesCount(
 		int ownerType, long plid, String portletId) {
 

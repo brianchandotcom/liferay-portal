@@ -18,6 +18,7 @@ dependencies {
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compile project(":core:osgi-service-tracker-collections")
 	compile project(":portal:portal-metatype")
+	compile project(":portal:portal-instance-lifecycle")
 	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion

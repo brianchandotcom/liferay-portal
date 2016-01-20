@@ -233,6 +233,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
 			portletPreferences, groupIds, null, null);
 
+		assetEntryQuery.setGroupIds(groupIds);
+
 		long[] classNameIds = AssetPublisherUtil.getClassNameIds(
 			portletPreferences,
 			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true));
@@ -245,20 +247,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		assetEntryQuery.setClassTypeIds(classTypeIds);
 
 		assetEntryQuery.setEnablePermissions(false);
-
-		int end = AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_LIMIT;
-		int start = 0;
-
-		if (end == 0) {
-			start = QueryUtil.ALL_POS;
-			end = QueryUtil.ALL_POS;
-		}
-
-		assetEntryQuery.setEnd(end);
-
 		assetEntryQuery.setExcludeZeroViewCount(false);
-
-		assetEntryQuery.setGroupIds(groupIds);
 
 		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
 			portletPreferences.getValue("showOnlyLayoutAssets", null));
@@ -287,6 +276,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		assetEntryQuery.setOrderByType2(orderByType2);
 
+		int end = AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_LIMIT;
+		int start = 0;
+
+		if (end == 0) {
+			start = QueryUtil.ALL_POS;
+			end = QueryUtil.ALL_POS;
+		}
+
+		assetEntryQuery.setEnd(end);
 		assetEntryQuery.setStart(start);
 
 		return assetEntryQuery;

@@ -22,6 +22,10 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -259,12 +263,25 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public FileCollection doCall() {
 					Project project = abstractCopyTask.getProject();
 
-					File configsDir = workspaceExtension.getConfigsDir();
+					Map<String, Object> args = new HashMap<>();
 
-					return project.files(
-						new File(configsDir, "common"),
-						new File(
-							configsDir, workspaceExtension.getEnvironment()));
+					args.put("dir", workspaceExtension.getConfigsDir());
+					args.put("exclude", "**/.touch");
+
+					List<String> includes = Arrays.asList(
+						"common/", workspaceExtension.getEnvironment() + "/");
+
+					args.put("includes", includes);
+
+					return project.fileTree(args);
+				}
+
+			},
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(new StripPathSegmentsAction(1));
 				}
 
 			});

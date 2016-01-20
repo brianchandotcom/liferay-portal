@@ -114,14 +114,12 @@
 			<var name="sitePageName" value="Welcome" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
@@ -142,21 +140,22 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page1 Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page2 Name" />
-			<var name="siteScopeSelected" value="true" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -298,13 +297,9 @@
 			<var name="page" value="My Profile" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoAddPage" />
-
-		<execute macro="Page#addPageTitle">
+		<execute macro="Page#add">
 			<var name="pageName" value="Page Name" />
 		</execute>
-
-		<execute macro="Page#saveAddPage" />
 
 		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet&amp;p_p_state=maximized" />
 
@@ -515,9 +510,13 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Private Page" />
 			<var name="siteName" value="Liferay" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -1226,46 +1225,50 @@
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Blank Page" />
 			<var name="siteName" value="Page Type Test Site Name" />
-			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Link to URL Page" />
 			<var name="pageTypeURL" value="https://www.google.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageType" value="Link to URL" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="SitePage#firstPageCanNotBeOfTypeLinkToURL">
 			<var name="sitePageName" value="Blank Page" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Embedded Page" />
 			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageType" value="Embedded" />
-			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="componentName" value="Community" />
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Panel Page" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageType" value="Panel" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="SitePage#viewPanelPortletListCP">

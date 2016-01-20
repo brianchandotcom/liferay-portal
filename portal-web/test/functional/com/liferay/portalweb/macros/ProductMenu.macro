@@ -133,7 +133,7 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<execute function="AssertClick" locator1="ProductMenu#PUBLIC_PAGES" value1="Public Pages" />
+		<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>

@@ -231,15 +231,13 @@
 			<var name="siteName" value="Site1 Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -250,15 +248,13 @@
 			<var name="siteName" value="Site2 Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="page" value="Public Pages" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

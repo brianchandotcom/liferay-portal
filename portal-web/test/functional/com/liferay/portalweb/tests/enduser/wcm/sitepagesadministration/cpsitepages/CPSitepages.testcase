@@ -112,9 +112,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -154,9 +154,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
@@ -183,9 +183,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -193,9 +193,9 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
@@ -301,15 +301,18 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -359,15 +362,17 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Blog Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

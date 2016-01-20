@@ -33,6 +33,12 @@ public class AssetPublisherWebConfigurationValues {
 	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
 		AssetPublisherWebConfigurationUtil.get("display.templates.config"));
 
+	public static final boolean DYNAMIC_EXPORT_ENABLED = GetterUtil.getBoolean(
+		AssetPublisherWebConfigurationUtil.get("dynamic.export.enabled"));
+
+	public static final int DYNAMIC_EXPORT_LIMIT = GetterUtil.getInteger(
+		AssetPublisherWebConfigurationUtil.get("dynamic.export.limit"));
+
 	public static final int DYNAMIC_SUBSCRIPTION_LIMIT = GetterUtil.getInteger(
 		AssetPublisherWebConfigurationUtil.get("dynamic.subscription.limit"));
 
@@ -56,6 +62,9 @@ public class AssetPublisherWebConfigurationValues {
 
 	public static final String EMAIL_FROM_NAME = GetterUtil.getString(
 		AssetPublisherWebConfigurationUtil.get("email.from.name"));
+
+	public static final boolean MANUAL_EXPORT_ENABLED = GetterUtil.getBoolean(
+		AssetPublisherWebConfigurationUtil.get("manual.export.enabled"));
 
 	public static final boolean PERMISSION_CHECKING_CONFIGURABLE =
 		GetterUtil.getBoolean(

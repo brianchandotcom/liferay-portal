@@ -18,10 +18,10 @@ import com.liferay.portal.exception.NoSuchListTypeException;
 import com.liferay.portal.exception.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.OrgLaborService;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 

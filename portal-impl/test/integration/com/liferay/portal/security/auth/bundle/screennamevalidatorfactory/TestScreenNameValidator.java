@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auth.bundle.screennamevalidatorfactory;
 
-import com.liferay.portal.security.auth.ScreenNameValidator;
+import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 
 import java.util.Locale;
 

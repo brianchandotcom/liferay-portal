@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auth.bundle.emailaddressvalidatorfactory;
 
-import com.liferay.portal.security.auth.EmailAddressValidator;
+import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 
 import org.osgi.service.component.annotations.Component;
 

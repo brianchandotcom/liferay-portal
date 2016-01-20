@@ -15,11 +15,11 @@
 package com.liferay.portal.kernel.security.access.control;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.AccessControlContext;
+import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.security.auth.AccessControlContext;
-import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

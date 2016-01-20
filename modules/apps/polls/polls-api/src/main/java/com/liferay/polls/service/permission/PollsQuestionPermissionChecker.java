@@ -18,7 +18,7 @@ import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;

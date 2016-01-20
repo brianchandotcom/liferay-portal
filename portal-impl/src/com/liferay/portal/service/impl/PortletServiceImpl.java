@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.base.PortletServiceBaseImpl;
 
 import java.util.List;

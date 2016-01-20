@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auth.bundle.screennamegeneratorfactory;
 
-import com.liferay.portal.security.auth.ScreenNameGenerator;
+import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 
 import org.osgi.service.component.annotations.Component;
 

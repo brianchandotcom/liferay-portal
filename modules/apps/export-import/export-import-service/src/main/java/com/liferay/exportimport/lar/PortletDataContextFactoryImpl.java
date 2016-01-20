@@ -15,6 +15,7 @@
 package com.liferay.exportimport.lar;
 
 import com.liferay.portal.kernel.lock.LockManager;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;

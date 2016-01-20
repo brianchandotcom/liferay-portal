@@ -20,7 +20,7 @@ import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.base.PollsVoteServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsQuestionPermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 

@@ -14,8 +14,8 @@
 
 package com.liferay.shopping.web.portlet.action;
 
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.shopping.exception.NoSuchCategoryException;
 

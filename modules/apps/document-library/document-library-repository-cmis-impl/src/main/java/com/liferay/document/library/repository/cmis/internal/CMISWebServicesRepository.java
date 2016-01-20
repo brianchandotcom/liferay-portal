@@ -19,9 +19,9 @@ import com.liferay.document.library.repository.cmis.Session;
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
 import com.liferay.portal.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 
 import java.util.HashMap;
 import java.util.Locale;

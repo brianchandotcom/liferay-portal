@@ -70,6 +70,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 	iteratorURL.setParameter("title", wikiPage.getTitle());
 	iteratorURL.setWindowState(LiferayWindowState.POP_UP);
 
+	boolean paginate = false;
 	boolean showPageAttachmentAction = true;
 	int status = WorkflowConstants.STATUS_IN_TRASH;
 	%>

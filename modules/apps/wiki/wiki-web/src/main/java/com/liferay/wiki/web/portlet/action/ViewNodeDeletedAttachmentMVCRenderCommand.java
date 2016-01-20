@@ -16,7 +16,6 @@ package com.liferay.wiki.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
@@ -30,17 +29,18 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"mvc.command.name=/wiki/edit_node"
+		"mvc.command.name=/wiki/view_node_deleted_attachments"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditNodeMVCRenderCommand implements MVCRenderCommand {
+public class ViewNodeDeletedAttachmentMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -48,13 +48,9 @@ public class EditNodeMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			long nodeId = ParamUtil.getLong(renderRequest, "nodeId");
+			WikiNode node = ActionUtil.getNode(renderRequest);
 
-			if (nodeId > 0) {
-				WikiNode node = ActionUtil.getNode(renderRequest);
-
-				renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
-			}
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||
@@ -69,7 +65,7 @@ public class EditNodeMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/wiki_admin/edit_node.jsp";
+		return "/wiki_admin/view_node_deleted_attachments.jsp";
 	}
 
 }

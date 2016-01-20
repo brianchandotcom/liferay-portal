@@ -17,8 +17,6 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
@@ -54,8 +52,9 @@ iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 iteratorURL.setParameter("title", wikiPage.getTitle());
 
-boolean showPageAttachmentAction = false;
+boolean paginate = false;
 int status = WorkflowConstants.STATUS_APPROVED;
+boolean showPageAttachmentAction = false;
 %>
 
 <%@ include file="/wiki/attachments_list.jspf" %>

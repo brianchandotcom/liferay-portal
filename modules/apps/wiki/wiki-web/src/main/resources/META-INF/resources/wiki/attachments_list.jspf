@@ -23,7 +23,7 @@
 >
 
 	<liferay-ui:search-container-results
-		results="<%= attachmentsFileEntries %>"
+		results="<%= paginate ? ListUtil.subList(attachmentsFileEntries, searchContainer.getStart(), searchContainer.getEnd()) : attachmentsFileEntries %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -58,5 +58,5 @@
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= paginate %>" />
 </liferay-ui:search-container>

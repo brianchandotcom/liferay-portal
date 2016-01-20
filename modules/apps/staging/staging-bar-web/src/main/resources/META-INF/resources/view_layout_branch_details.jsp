@@ -77,7 +77,12 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 					destroyOnHide: true
 				},
 				id: 'pagesVariationsDialog',
-				title: '<liferay-ui:message key="page-variations" />',
+
+				<liferay-util:buffer var="helpIcon">
+					<liferay-ui:icon-help message="page-variations-help" />
+				</liferay-util:buffer>
+
+				title: '<liferay-ui:message arguments="<%= helpIcon %>" key="page-variations-x" />',
 
 				<liferay-portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />

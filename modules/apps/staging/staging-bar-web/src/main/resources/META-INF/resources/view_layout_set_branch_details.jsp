@@ -72,7 +72,12 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 						destroyOnHide: true
 					},
 					id: 'sitePagesVariationDialog',
-					title: '<liferay-ui:message key="site-pages-variation" />',
+
+					<liferay-util:buffer var="helpIcon">
+						<liferay-ui:icon-help message="pages-variations-help" />
+					</liferay-util:buffer>
+
+					title: '<liferay-ui:message arguments="<%= helpIcon %>" key="site-pages-variation-x" />',
 
 					<liferay-portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />

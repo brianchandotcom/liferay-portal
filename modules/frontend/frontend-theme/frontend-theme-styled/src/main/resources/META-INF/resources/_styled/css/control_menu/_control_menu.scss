@@ -39,6 +39,10 @@
 	.staging-variation-label {
 		font-weight: 500;
 
+		&:hover {
+			text-decoration: none;
+		}
+
 		@media screen and (min-width: 768px) {
 			color: #869CAD;
 			font-size: 14px;

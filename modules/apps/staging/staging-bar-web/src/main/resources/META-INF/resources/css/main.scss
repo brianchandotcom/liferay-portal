@@ -55,6 +55,7 @@
 
 	&.open {
 		@include media-query(0, $screen-xs-max) {
+			background-color: rgba(75, 91, 101, 0.95);
 			display: block;
 			overflow: auto;
 		}

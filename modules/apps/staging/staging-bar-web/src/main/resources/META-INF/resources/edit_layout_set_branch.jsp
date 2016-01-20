@@ -59,14 +59,11 @@ if (layoutSetBranch != null) {
 }
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= true %>"
-	showBackURL="<%= true %>"
-	title="<%= title %>"
-/>
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="navigationName" value="<%= title %>" />
+</liferay-util:include>
 
-<div data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
+<div class="container-fluid-1280" data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
 	<aui:model-context bean="<%= layoutSetBranch %>" model="<%= LayoutSetBranch.class %>" />
 
 	<portlet:actionURL name="editLayoutSetBranch" var="editLayoutSetBranchURL">

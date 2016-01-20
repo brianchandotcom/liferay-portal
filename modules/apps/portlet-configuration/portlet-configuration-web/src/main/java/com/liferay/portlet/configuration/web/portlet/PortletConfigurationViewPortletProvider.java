@@ -17,8 +17,8 @@ package com.liferay.portlet.configuration.web.portlet;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 import com.liferay.portlet.configuration.web.constants.PortletConfigurationPortletKeys;
-import com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType;
 
 import org.osgi.service.component.annotations.Component;
 

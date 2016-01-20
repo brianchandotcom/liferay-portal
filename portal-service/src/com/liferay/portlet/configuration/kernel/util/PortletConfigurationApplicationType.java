@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portletconfiguration.util;
+package com.liferay.portlet.configuration.kernel.util;
 
 /**
  * @author Juergen Kappler
@@ -22,7 +22,7 @@ public class PortletConfigurationApplicationType {
 	public interface PortletConfiguration {
 
 		public static final String CLASS_NAME =
-			"com.liferay.portlet.portletconfiguration.util." +
+			"com.liferay.portlet.configuration.kernel.util." +
 				"PortletConfigurationApplicationType$PortletConfiguration";
 
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.util;
+package com.liferay.layouts.admin.kernel.util;
 
 import aQute.bnd.annotation.ProviderType;
 

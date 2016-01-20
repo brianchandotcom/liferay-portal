@@ -17,6 +17,8 @@ package com.liferay.journal.util.impl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,8 +29,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.layoutsadmin.util.SitemapURLProvider;
-import com.liferay.portlet.layoutsadmin.util.SitemapUtil;
 
 import java.util.HashSet;
 import java.util.List;

@@ -3411,8 +3411,53 @@ To keep the previous behavior in Velocity:
 To keep the previous behavior in FreeMarker:
 
     <@liferay_theme["layout-icon"] layout=nav_item_layout />
- 
+
 #### Why was this change made?
 
 The API was forcing developers to have a dependency on a taglib, which didn't
 allow for much flexibility.
+
+---------------------------------------
+
+### Renamed packages to fix the split packages problem
+- **Date:** 2016-Jan-19
+- **JIRA Ticket:** LPS-61952
+
+#### What changed?
+
+A split packages is caused where two or more bundles export the same package
+name and version. When the classloader loads a package, exactly one exporter of
+that package is chosen, so if a package is split across multiple bundles then an
+importer will only ever see a subset of the package.
+
+#### Who is affected?
+
+Portal-Service and Portal-Impl has many packages with the same package name.
+All of these packages will be affected by the split package problem.
+
+#### How should I update my code?
+
+You should rename duplicated package names if they currently exist somewhere
+else.
+
+**Example**
+
+`com.liferay.portal.jdbc.pool.metrics` renamed to `com.liferay.portal.kernel.jdbc.pool.metrics`
+
+`com.liferay.portal.webserver` renamed to `com.liferay.portal.kernel.webserver`
+
+`com.liferay.portlet.backgroundtask` renamed to `com.liferay.background.task.kernel`
+
+`com.liferay.portlet.dynamicdatamapping` renamed to `com.liferay.dynamic.data.mapping.kernel`
+
+`com.liferay.portlet.imagegallerydisplay.display.context` renamed to `com.liferay.image.gallery.display.kernel.display.context`
+
+`com.liferay.portlet.rolesadmin.util` renamed to `com.liferay.roles.admin.kernel.util`
+
+`com.liferay.portlet.sites.util` renamed to `com.liferay.sites.kernel.util`
+
+`com.liferay.portlet.useradmin.util` renamed to `com.liferay.users.admin.kernel.util`
+
+#### Why was this change made?
+
+This change was necessary to solve and prevent future split package problems.

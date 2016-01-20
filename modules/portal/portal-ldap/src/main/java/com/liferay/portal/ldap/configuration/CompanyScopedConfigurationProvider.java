@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.constants.LDAPConstants;
+import com.liferay.portal.model.CompanyConstants;
 
 import java.io.IOException;
 
@@ -79,17 +80,8 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId) {
-		return getConfiguration(companyId, true);
-	}
-
-	@Override
-	public T getConfiguration(long companyId, boolean useDefault) {
 		Dictionary<String, Object> properties = getConfigurationProperties(
-			companyId, useDefault);
-
-		if (properties == null) {
-			return null;
-		}
+			companyId);
 
 		T configurable = Configurable.createConfigurable(
 			getMetatype(), properties);
@@ -99,36 +91,27 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId, long index) {
-		return getConfiguration(companyId, true);
-	}
-
-	@Override
-	public T getConfiguration(long companyId, long index, boolean useDefault) {
-		return getConfiguration(companyId, useDefault);
+		return getConfiguration(companyId);
 	}
 
 	@Override
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId) {
 
-		return getConfigurationProperties(companyId, true);
-	}
-
-	@Override
-	public Dictionary<String, Object> getConfigurationProperties(
-		long companyId, boolean useDefault) {
-
 		Configuration configuration = _configurations.get(companyId);
 
 		if (configuration == null) {
-			configuration = _configurations.get(LDAPConstants.SYSTEM_DEFAULT);
-
-			if (configuration == null) {
-				return new HashMapDictionary<>();
-			}
+			configuration = _configurations.get(CompanyConstants.SYSTEM);
 		}
 
-		Dictionary<String, Object> properties = configuration.getProperties();
+		Dictionary<String, Object> properties = null;
+
+		if (configuration == null) {
+			properties = new HashMapDictionary<>();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
 
 		return properties;
 	}
@@ -137,14 +120,7 @@ public abstract class CompanyScopedConfigurationProvider
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long index) {
 
-		return getConfigurationProperties(companyId, index, true);
-	}
-
-	@Override
-	public Dictionary<String, Object> getConfigurationProperties(
-		long companyId, long index, boolean useDefault) {
-
-		return getConfigurationProperties(companyId, useDefault);
+		return getConfigurationProperties(companyId);
 	}
 
 	@Override
@@ -155,26 +131,22 @@ public abstract class CompanyScopedConfigurationProvider
 	@Override
 	public List<T> getConfigurations(long companyId, boolean useDefault) {
 		List<Dictionary<String, Object>> configurationsProperties =
-			getConfigurationsProperties(companyId);
+			getConfigurationsProperties(companyId, useDefault);
+
+		if (ListUtil.isEmpty(configurationsProperties)) {
+			return Collections.emptyList();
+		}
 
 		List<T> configurables = new ArrayList<>(
 			configurationsProperties.size());
 
-		if (ListUtil.isEmpty(configurationsProperties)) {
+		for (Dictionary<String, Object> configurationProperties :
+				configurationsProperties) {
+
 			T configurable = Configurable.createConfigurable(
-				getMetatype(), new HashMapDictionary<>());
+				getMetatype(), configurationProperties);
 
 			configurables.add(configurable);
-		}
-		else {
-			for (Dictionary<String, Object> configurationProperties :
-					configurationsProperties) {
-
-				T configurable = Configurable.createConfigurable(
-					getMetatype(), configurationProperties);
-
-				configurables.add(configurable);
-			}
 		}
 
 		return configurables;
@@ -184,18 +156,32 @@ public abstract class CompanyScopedConfigurationProvider
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId) {
 
+		return getConfigurationsProperties(companyId, true);
+	}
+
+	@Override
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId, boolean useDefault) {
+
 		Configuration configuration = _configurations.get(companyId);
 
-		if (configuration == null) {
-			return Collections.emptyList();
+		if ((configuration == null) && useDefault) {
+			configuration = _configurations.get(CompanyConstants.SYSTEM);
 		}
 
 		List<Dictionary<String, Object>> configurationsProperties =
 			new ArrayList<>();
 
-		Dictionary<String, Object> properties = configuration.getProperties();
+		if ((configuration == null) && useDefault) {
+			configurationsProperties.add(
+				new HashMapDictionary<String, Object>());
+		}
+		else if (configuration != null) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
 
-		configurationsProperties.add(properties);
+			configurationsProperties.add(properties);
+		}
 
 		return configurationsProperties;
 	}

@@ -149,7 +149,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 		</liferay-util:buffer>
 
 		<liferay-ui:alert
-			message="<%= HtmlUtil.escapeJS(alertMessage) %>"
+			message="<%= alertMessage %>"
 			timeout="0"
 			type="success"
 		/>

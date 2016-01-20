@@ -1750,6 +1750,8 @@
 	</command>
 
 	<command name="viewCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
@@ -1760,7 +1762,9 @@
 				</not>
 			</and>
 			<then>
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#VERSION_HISTORY_TABLE_SIZE" value1="${dmDocumentSize}" />
+				<var name="key_dmDocumentSize" value="${dmDocumentSize}" />
+
+				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize}KB)" />
 			</then>
 		</if>
 	</command>
@@ -1865,6 +1869,9 @@
 	<command name="viewDocumentDetailsCmdPG">
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DATE" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" />
+
+		<var name="key_dmDocumentSize" value="${dmDocumentSize}" />
+
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DOWNLOAD_DOCUMENT" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA" value1="Automatically Extracted Metadata" />
@@ -1887,6 +1894,8 @@
 	</command>
 
 	<command name="viewDocumentTitleCmdPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
@@ -2137,7 +2146,7 @@
 	</command>
 
 	<command name="viewOlderVersionPG">
-		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_dmDocumentDescription" value="${dmDocumentDescription}" />
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 

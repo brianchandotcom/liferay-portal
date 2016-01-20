@@ -67,7 +67,7 @@
 <!--DOCUMENT_INFO-->
 <tr>
 	<td>DOCUMENT_INFO_TITLE</td>
-	<td>//div[@class='document-info']/h2[@class='document-title']</td>
+	<td>//div[contains(@class,'document-info')]/h2[contains(@title,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RATING</td>
-	<td>//div[@class='document-info']/span[@class='lfr-asset-ratings']</td>
+	<td>//div[contains(@class,'document-info')]/span[@class='lfr-asset-ratings']</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,22 +97,22 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_LINKS</td>
-	<td>//div[@class='document-info']/div[@class='entry-links']</td>
+	<td>//div[contains(@class,'document-info')]/div[@class='entry-links']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_DESCRIPTION</td>
-	<td>//div[@class='document-info']/span[@class='document-description']</td>
+	<td>//div[contains(@class,'document-info')]/span[@class='document-description']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_CATEGORIES</td>
-	<td>//div[@class='document-info']/div[@class='lfr-asset-categories']</td>
+	<td>//div[contains(@class,'document-info')]/div[@class='lfr-asset-categories']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_TAGS</td>
-	<td>//div[@class='document-info']/div[@class='lfr-asset-tags']</td>
+	<td>//div[contains(@class,'document-info')]/div[@class='lfr-asset-tags']</td>
 	<td></td>
 </tr>
 <tr>
@@ -188,7 +188,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
-	<td>//div[@class='asset-details-content']//span[@class='download-document']/span/a/span</td>
+	<td>//span[@class='download-document']/span/a/span[contains(.,'Download (${key_dmDocumentSize}KB)')]</td>
 	<td></td>
 </tr>
 <tr>

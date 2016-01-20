@@ -24,17 +24,22 @@ import com.germinus.easyconf.JndiURL;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
+import java.lang.reflect.Field;
 
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.FileConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.apache.commons.configuration.SubsetConfiguration;
 import org.apache.commons.configuration.SystemConfiguration;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
@@ -307,15 +312,36 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		throws ConfigurationException {
 
 		try {
-			FileConfiguration newFileConfiguration =
+			PropertiesConfiguration propertiesConfiguration =
 				new PropertiesConfiguration(url);
+
+			PropertiesConfigurationLayout propertiesConfigurationLayout =
+				propertiesConfiguration.getLayout();
+
+			try {
+				Map<String, Object> layoutData =
+					(Map<String, Object>)_layoutDataField.get(
+						propertiesConfigurationLayout);
+
+				for (Object propertyLayoutData : layoutData.values()) {
+					_commentField.set(propertyLayoutData, null);
+				}
+			}
+			catch (ReflectiveOperationException roe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to clear out comments from " +
+							propertiesConfiguration,
+						roe);
+				}
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Adding resource " + url);
 			}
 
 			Long delay = _getReloadDelay(
-				loadedCompositeConfiguration, newFileConfiguration);
+				loadedCompositeConfiguration, propertiesConfiguration);
 
 			if (delay != null) {
 				FileChangedReloadingStrategy fileChangedReloadingStrategy =
@@ -331,14 +357,14 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 				fileChangedReloadingStrategy.setRefreshDelay(milliseconds);
 
-				newFileConfiguration.setReloadingStrategy(
+				propertiesConfiguration.setReloadingStrategy(
 					fileChangedReloadingStrategy);
 			}
 
 			_addIncludedPropertiesSources(
-				newFileConfiguration, loadedCompositeConfiguration);
+				propertiesConfiguration, loadedCompositeConfiguration);
 
-			return newFileConfiguration;
+			return propertiesConfiguration;
 		}
 		catch (org.apache.commons.configuration.ConfigurationException ce) {
 			if (_log.isDebugEnabled()) {
@@ -370,6 +396,29 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClassLoaderAggregateProperties.class);
+
+	private static final Field _commentField;
+	private static final Field _layoutDataField;
+
+	static {
+		try {
+			_layoutDataField = ReflectionUtil.getDeclaredField(
+				PropertiesConfigurationLayout.class, "layoutData");
+
+			ClassLoader classLoader =
+				PropertiesConfigurationLayout.class.getClassLoader();
+
+			Class<?> propertyLayoutDataClass = classLoader.loadClass(
+				PropertiesConfigurationLayout.class.getName() +
+					"$PropertyLayoutData");
+
+			_commentField = ReflectionUtil.getDeclaredField(
+				propertyLayoutDataClass, "comment");
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
 
 	private final CompositeConfiguration _baseCompositeConfiguration =
 		new CompositeConfiguration();

@@ -79,7 +79,6 @@ AUI.add(
 			{
 				DEFAULTS: {
 					centered: true,
-					headerContent: '&nbsp;',
 					modal: true,
 					visible: true,
 					zIndex: Liferay.zIndex.WINDOW
@@ -362,7 +361,7 @@ AUI.add(
 					}
 
 					if (!Lang.isValue(config.title)) {
-						config.title = instance.DEFAULTS.headerContent;
+						config.title = '&nbsp;';
 					}
 
 					modal.titleNode.html(config.title);

@@ -18,8 +18,8 @@ import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.security.auth.PrincipalException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

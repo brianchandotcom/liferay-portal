@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auth.bundle.fullnamegeneratorfactory;
 
-import com.liferay.portal.security.auth.FullNameGenerator;
+import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 
 import java.util.Locale;
 

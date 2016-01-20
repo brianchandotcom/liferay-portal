@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow;
 
-import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 

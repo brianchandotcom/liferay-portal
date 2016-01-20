@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.test.rule.callback;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
 
 import org.junit.runner.Description;
 

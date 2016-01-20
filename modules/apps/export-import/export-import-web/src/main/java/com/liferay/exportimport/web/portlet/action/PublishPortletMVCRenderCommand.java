@@ -16,9 +16,9 @@ package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.auth.PrincipalException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

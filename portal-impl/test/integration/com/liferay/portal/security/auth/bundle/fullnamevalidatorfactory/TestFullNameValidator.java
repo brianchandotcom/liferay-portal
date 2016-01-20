@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auth.bundle.fullnamevalidatorfactory;
 
-import com.liferay.portal.security.auth.FullNameValidator;
+import com.liferay.portal.kernel.security.auth.FullNameValidator;
 
 import org.osgi.service.component.annotations.Component;
 

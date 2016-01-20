@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.security.auth.tunnel;
 
-import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;

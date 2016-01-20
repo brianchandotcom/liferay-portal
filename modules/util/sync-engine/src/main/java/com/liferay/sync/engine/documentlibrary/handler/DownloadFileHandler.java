@@ -130,7 +130,7 @@ public class DownloadFileHandler extends BaseHandler {
 		}
 
 		if (exception.equals(
-				"com.liferay.portal.security.auth.PrincipalException")) {
+				"com.liferay.portal.kernel.security.auth.PrincipalException")) {
 
 			syncFile.setState(SyncFile.STATE_ERROR);
 			syncFile.setUiEvent(SyncFile.UI_EVENT_INVALID_PERMISSIONS);

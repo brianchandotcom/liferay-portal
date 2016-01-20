@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.pacl.test;
 
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupWrapper;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserWrapper;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.PACLTestRule;

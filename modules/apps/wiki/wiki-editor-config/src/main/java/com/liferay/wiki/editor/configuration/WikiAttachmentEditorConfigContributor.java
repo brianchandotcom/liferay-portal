@@ -22,6 +22,8 @@ import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,6 +33,7 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -82,6 +85,8 @@ public class WikiAttachmentEditorConfigContributor
 		}
 
 		if (wikiPageResourcePrimKey == 0) {
+			removeImageButton(jsonObject);
+
 			return;
 		}
 
@@ -142,6 +147,41 @@ public class WikiAttachmentEditorConfigContributor
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+	}
+
+	protected void removeImageButton(JSONObject jsonObject) {
+		JSONObject toolbars = jsonObject.getJSONObject("toolbars");
+
+		if (toolbars == null) {
+			return;
+		}
+
+		JSONObject addJSONObject = toolbars.getJSONObject("add");
+
+		if (addJSONObject == null) {
+			return;
+		}
+
+		JSONArray oldButtonsJSONArray = addJSONObject.getJSONArray(
+			"buttons");
+
+		if (oldButtonsJSONArray == null) {
+			return;
+		}
+
+		Iterator iterator = oldButtonsJSONArray.iterator();
+
+		JSONArray buttonsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		while (iterator.hasNext()) {
+			String buttonString = (String)iterator.next();
+
+			if (!buttonString.equals("image")) {
+				buttonsJSONArray.put(buttonString);
+			}
+		}
+
+		addJSONObject.put("buttons", buttonsJSONArray);
 	}
 
 	@Reference(unbind = "-")

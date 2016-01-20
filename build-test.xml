@@ -1688,6 +1688,12 @@ tell application "Safari" to quit
 
 							<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
+							<ant dir="portal-service" target="install-portal-snapshots" inheritAll="false" />
+
+							<ant dir="util-java" target="install-portal-snapshots" inheritAll="false" />
+
+							<ant dir="portal-impl" target="install-portal-snapshots" inheritAll="false" />
+
 							<gradle-execute dir="${project.dir}/modules/core" task="deploy">
 								<arg value="-Dportal.build=true" />
 							</gradle-execute>

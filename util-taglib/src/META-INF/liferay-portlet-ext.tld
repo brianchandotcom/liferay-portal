@@ -490,6 +490,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>persistSettings</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>portletName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

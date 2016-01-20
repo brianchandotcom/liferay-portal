@@ -41,6 +41,7 @@ if (Validator.isNull(width)) {
 	<div class="preview" id="<%= randomNamespace %>">
 		<div style="margin: 3px; width: <%= Validator.isNotNull(previewWidth) ? ((GetterUtil.getInteger(previewWidth) + 20) + "px") : "100%" %>;">
 			<liferay-portlet:runtime
+				persistSettings="<%= false %>"
 				portletName="<%= portletResource %>"
 				queryString="<%= queryString %>"
 			/>

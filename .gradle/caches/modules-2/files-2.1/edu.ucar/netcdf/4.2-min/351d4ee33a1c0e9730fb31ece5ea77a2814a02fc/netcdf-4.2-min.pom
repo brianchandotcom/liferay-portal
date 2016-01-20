@@ -1,0 +1,147 @@
+ <project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.ucar</groupId>
+  <artifactId>netcdf</artifactId>
+  <packaging>jar</packaging>
+  <name>The NetCDF-Java Library</name>
+  <version>4.2-min</version>
+  <description>The NetCDF-Java Library is a Java interface to NetCDF files,
+   as well as to many other types of scientific data formats.
+  </description>
+  <url>http://www.unidata.ucar.edu/software/netcdf-java/</url>
+  <licenses>
+    <license>
+      <name>(MIT-style) netCDF C library license.</name>
+      <url>http://www.unidata.ucar.edu/software/netcdf/copyright.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>http://svn.unidata.ucar.edu/repos/thredds/trunk</url>
+    <connection>http://svn.unidata.ucar.edu/repos/thredds/trunk/</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>campbell</id>
+      <name>Tina Campbell</name>
+      <email>campbell@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+      <id>caron</id>
+      <name>John Caron</name>
+      <email>caron@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+      <id>chastang</id>
+      <name>Julien Chastang</name>
+      <email>chastang@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+      <id>edavis</id>
+      <name>Ethan Davis</name>
+      <email>edavis@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+      <id>ddirks</id>
+      <name>Dirks Douglas</name>
+      <email>ddirks@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>ben</id>
+       <name>Ben Domenico</name>
+       <email>ben@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>gemery</id>
+       <name>Emery Ginger</name>
+       <email>gemery@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>steve</id>
+       <name>Steven Emmerson</name>
+       <email>steve@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>fulker</id>
+       <name>David Fulker</name>
+       <email>fulker@unidata.ucar.edu</email> 
+    </developer>
+    <developer>
+       <id>ed</id>
+       <name>Ed Hartnett</name>
+       <email>ed@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>dmh</id>
+       <name>Dennis Heimbigner</name>
+       <email>dmh@unidata.ucar.edu</email> 
+    </developer>
+    <developer>
+       <id>yuanho</id>
+       <name>Ho Yuan</name>
+       <email>yuanho@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>mjames</id>
+       <name>Michael James</name>
+       <email>mjames@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+        <id>rkambic</id>
+        <name>Robb Kambic</name>
+        <email>rkambic@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>bkelly</id>
+       <name>Brian Kelly</name>
+       <email>bkelly@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>lmiller</id>
+       <name>Linda Miller</name>
+       <email>lmiller@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>tmitchel</id>
+       <name>Terry Mitchell</name>
+       <email>tmitchel@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+       <id>oxelson</id>
+       <name>Jennifer Ganter Oxelson</name>
+       <email>oxelson@unidata.ucar.edu</email> 
+    </developer> 
+    <developer>
+       <id>mohan</id>
+       <name>Mohan Ramamurthy</name>
+       <email>mohan@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+        <id>russ</id>
+        <name>Russel Rew</name>
+        <email>russ@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+        <id>mschmidt</id>
+        <name>Michael Schmidt</name>
+        <email>mschmidt@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+         <id>jweber</id>
+         <name>Jeff Weber</name>
+         <email>jweber@unidata.ucar.edu</email>
+    </developer>
+    <developer>
+         <id>yoksas</id>
+         <name>Tom Yoksas</name>
+         <email>yoksas@unidata.ucar.edu</email>
+    </developer>
+  </developers>
+  <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+  </dependencies>
+</project>

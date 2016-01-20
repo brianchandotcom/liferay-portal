@@ -19,6 +19,8 @@ import com.liferay.gradle.plugins.workspace.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.Collections;
+
 import org.gradle.api.GradleException;
 import org.gradle.api.initialization.Settings;
 
@@ -43,6 +45,10 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 	@Override
 	public Iterable<File> getProjectDirs(File rootDir) {
 		try {
+			if (!rootDir.exists()) {
+				return Collections.emptySet();
+			}
+
 			return doGetProjectDirs(rootDir);
 		}
 		catch (Exception e) {

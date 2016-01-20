@@ -40,6 +40,29 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 		<aui:fieldset label="pages-options">
 			<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">
 				<c:choose>
+					<c:when test="<%= privateLayout %>">
+						<li>
+							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutURL">
+								<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+								<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
+							</liferay-portlet:renderURL>
+
+							<aui:button href="<%= changeToPublicLayoutURL %>" value="change-to-public-pages" />
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutURL">
+								<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+								<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
+							</liferay-portlet:renderURL>
+
+							<aui:button href="<%= changeToPrivateLayoutURL %>" value="change-to-private-pages" />
+						</li>
+					</c:otherwise>
+				</c:choose>
+
+				<c:choose>
 					<c:when test="<%= layoutSetBranchId > 0 %>">
 						<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
 					</c:when>

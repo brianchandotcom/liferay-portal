@@ -6,7 +6,7 @@ Export-Package:\
 	com.liferay.marketplace.util.*
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Store
+Liferay-Releng-Module-Group-Title:
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

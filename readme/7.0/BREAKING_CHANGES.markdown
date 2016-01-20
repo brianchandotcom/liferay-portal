@@ -3444,6 +3444,12 @@ else.
 
 `com.liferay.portal.jdbc.pool.metrics` renamed to `com.liferay.portal.kernel.jdbc.pool.metrics`
 
+`com.liferay.portal.layoutconfiguration.util` renamed to `com.liferay.portal.kernel.layoutconfiguration.util`
+
+`com.liferay.portal.layoutconfiguration.util.xml` renamed to `com.liferay.portal.kernel.layoutconfiguration.util.xml`
+
+`com.liferay.portal.repository.proxy` renamed to `com.liferay.portal.kernel.repository.proxy`
+
 `com.liferay.portal.webserver` renamed to `com.liferay.portal.kernel.webserver`
 
 `com.liferay.portlet.backgroundtask` renamed to `com.liferay.background.task.kernel`

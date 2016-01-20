@@ -38,10 +38,6 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectFolderFm">
-		<liferay-ui:header
-			title="home"
-		/>
-
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
 		<aui:button-row>

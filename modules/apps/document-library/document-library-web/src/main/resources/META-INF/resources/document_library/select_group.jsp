@@ -22,9 +22,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectGroupFm">
-		<liferay-ui:header
-			title="sites"
-		/>
 
 		<%
 		PortletURL portletURL = renderResponse.createRenderURL();

@@ -31,10 +31,6 @@ if (folder != null) {
 
 <div class="container-fluid-1280">
 	<aui:form method="post" name="selectFileEntryFm">
-		<liferay-ui:header
-			title="home"
-		/>
-
 		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
 		<%
@@ -106,10 +102,6 @@ if (folder != null) {
 		</liferay-ui:search-container>
 
 		<br />
-
-		<liferay-ui:header
-			title="documents"
-		/>
 
 		<liferay-ui:search-container
 			iteratorURL="<%= portletURL %>"

@@ -83,9 +83,9 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		Task createLiferayThemeJsonTask = addTaskCreateLiferayThemeJson(
 			project, workspaceExtension);
 
+		addTaskDeploy(project);
 		configureTaskAssemble(project);
 		configureTaskClean(project);
-		configureTaskDeploy(project);
 		configureTasksExecuteGulp(project, createLiferayThemeJsonTask);
 
 		configureRootTaskDistBundle(
@@ -167,6 +167,14 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		return task;
 	}
 
+	protected Task addTaskDeploy(Project project) {
+		Task task = project.task(LiferayJavaPlugin.DEPLOY_TASK_NAME);
+
+		task.dependsOn(_GULP_DEPLOY_TASK_NAME);
+
+		return task;
+	}
+
 	protected void configureRootTaskDistBundle(
 		final Project project, String rootTaskName) {
 
@@ -204,12 +212,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		delete.dependsOn(
 			BasePlugin.CLEAN_TASK_NAME +
 				StringUtil.capitalize(NodePlugin.NPM_INSTALL_TASK_NAME));
-	}
-
-	protected void configureTaskDeploy(Project project) {
-		Task task = project.task(LiferayJavaPlugin.DEPLOY_TASK_NAME);
-
-		task.dependsOn(_GULP_DEPLOY_TASK_NAME);
 	}
 
 	protected void configureTaskExecuteGulp(

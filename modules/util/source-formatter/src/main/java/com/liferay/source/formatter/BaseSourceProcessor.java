@@ -1241,7 +1241,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected File getFile(String fileName, int level) {
 		for (int i = 0; i < level; i++) {
-			File file = new File(fileName);
+			File file = new File(
+				sourceFormatterArgs.getBaseDirName() + fileName);
 
 			if (file.exists()) {
 				return file;
@@ -1951,7 +1952,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		for (int i = 0; i <= level; i++) {
 			try {
-				InputStream inputStream = new FileInputStream(fileName);
+				InputStream inputStream = new FileInputStream(
+					sourceFormatterArgs.getBaseDirName() + fileName);
 
 				Properties props = new Properties();
 

@@ -104,7 +104,7 @@ liferay {
 
 	appServerParentDir = rootProject.file("../bundles")
 	appServerType = project.properties["app.server.type"] ?: "tomcat"
-	deployDir = project.properties["auto.deploy.dir"] ?: "${->liferay.appServerParentDir}/deploy"
+	deployDir = project.properties["auto.deploy.dir"] ?: "${->liferay.appServerParentDir}/osgi/modules"
 	jmxRemotePort = project.properties["jmx.remote.port"] ?: 8099
 	liferayHome = project.properties["liferay.home"] ?: "${->liferay.appServerParentDir}"
 	portalVersion = project.properties["liferay.portal.version"] ?: "7.0.0-SNAPSHOT"

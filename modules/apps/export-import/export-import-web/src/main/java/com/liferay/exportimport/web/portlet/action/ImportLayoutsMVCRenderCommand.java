@@ -34,7 +34,7 @@ public class ImportLayoutsMVCRenderCommand extends GetGroupMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/import/view.jsp";
+		return "/import/new_import/import_layouts.jsp";
 	}
 
 }

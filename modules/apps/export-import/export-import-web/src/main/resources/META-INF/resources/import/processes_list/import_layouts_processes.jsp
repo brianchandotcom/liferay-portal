@@ -22,7 +22,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "importLayouts");
+portletURL.setParameter("mvcRenderCommandName", "importLayoutsView");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 

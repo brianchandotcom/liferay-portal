@@ -255,6 +255,31 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		return true;
 	}
 
+	public boolean isShowStagingProcessMessage() throws PortalException {
+		Group group = getSelGroup();
+
+		if (group.isStagingGroup()) {
+			return false;
+		}
+
+		if (!GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), group,
+				ActionKeys.PUBLISH_STAGING)) {
+
+			return false;
+		}
+
+		// TO DO by Mate
+
+		/*
+		if (there is a staging process for this site in progress) {
+			return true;
+		}
+		*/
+
+		return false;
+	}
+
 	protected LayoutSetBranch getLayoutSetBranch() throws PortalException {
 		if (_layoutSetBranch != null) {
 			return _layoutSetBranch;

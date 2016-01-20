@@ -3452,6 +3452,12 @@ else.
 
 `com.liferay.portlet.imagegallerydisplay.display.context` renamed to `com.liferay.image.gallery.display.kernel.display.context`
 
+`com.liferay.portlet.layoutsadmin.util` renamed to `com.liferay.layouts.admin.kernel.util`
+
+`com.liferay.portlet.mobiledevicerules` renamed to `com.liferay.mobile.device.rules`
+
+`com.liferay.portlet.portletconfiguration.util` renamed to `com.liferay.portlet.configuration.kernel.util`
+
 `com.liferay.portlet.rolesadmin.util` renamed to `com.liferay.roles.admin.kernel.util`
 
 `com.liferay.portlet.sites.util` renamed to `com.liferay.sites.kernel.util`

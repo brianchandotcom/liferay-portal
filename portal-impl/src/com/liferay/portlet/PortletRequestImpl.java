@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
@@ -299,6 +300,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	public PortletContext getPortletContext() {
 		return _portletContext;
+	}
+
+	public PortletInstance getPortletInstance() {
+		return _portletInstance;
 	}
 
 	@Override
@@ -668,6 +673,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		_portlet = portlet;
 		_portletName = portlet.getPortletId();
+		_portletInstance = PortletInstance.fromPortletInstanceKey(
+			portlet.getPortletId());
 
 		PortletApp portletApp = portlet.getPortletApp();
 
@@ -975,6 +982,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private PortalContext _portalContext;
 	private Portlet _portlet;
 	private PortletContext _portletContext;
+	private PortletInstance _portletInstance;
 	private PortletMode _portletMode;
 	private String _portletName;
 	private HttpServletRequest _portletRequestDispatcherRequest;

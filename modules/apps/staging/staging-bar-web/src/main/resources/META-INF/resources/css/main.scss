@@ -9,13 +9,13 @@
 
 	.staging-message {
 		margin: 0 auto;
-		width: 61%;
+		width: 75%;
 	}
 }
 
 .control-menu-level-2 {
-	padding-bottom: 5px;
-	padding-top: 5px;
+	padding-bottom: 7px;
+	padding-top: 6px;
 
 	@include sm() {
 		left: 0;
@@ -97,33 +97,5 @@
 
 	@include sm() {
 		font-size: 14px;
-	}
-}
-
-.live-link, .staging-link {
-	font-size: 14px;
-
-	a, a:focus, a:hover {
-		color: #869CAD;
-	}
-
-	&.active {
-		position: relative;
-
-		&:after {
-			bottom: -13px;
-			content: "";
-			left: 0;
-			position: absolute;
-			right: 0;
-		}
-
-		a {
-			color: #FFF;
-		}
-	}
-
-	.lexicon-icon {
-		margin-top: -2px;
 	}
 }

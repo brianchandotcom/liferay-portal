@@ -21,7 +21,7 @@ String portletDescription = (String)request.getAttribute(ControlMenuWebKeys.PORT
 String portletTitle = (String)request.getAttribute(ControlMenuWebKeys.PORTLET_TITLE);
 %>
 
-<span class="header-toolbar-title" data-qa-id="headerOptions"><%= HtmlUtil.escape(portletTitle) %></span>
+<span class="control-menu-level-1-heading" data-qa-id="headerOptions"><%= HtmlUtil.escape(portletTitle) %></span>
 
 <c:if test="<%= Validator.isNotNull(portletDescription) %>">
 	<liferay-ui:icon-help message="<%= HtmlUtil.escape(portletDescription) %>" />

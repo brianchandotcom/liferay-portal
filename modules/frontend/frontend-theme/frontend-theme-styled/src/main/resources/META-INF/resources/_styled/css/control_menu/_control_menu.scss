@@ -10,6 +10,16 @@
 			text-decoration: none;
 		}
 	}
+
+	.taglib-icon-help {
+		margin-left: 6px;
+	}
+}
+
+.control-menu-level-1-heading {
+	color: #FFF;
+	font-size: 19px;
+	font-weight: 700;
 }
 
 .control-menu-level-2 {
@@ -39,6 +49,34 @@
 			background-color: $control-menu-level-1-active-border;
 			height: $control-menu-level-1-active-border-width;
 		}
+	}
+}
+
+.live-link, .staging-link {
+	font-size: 14px;
+
+	a, a:focus, a:hover {
+		color: #869CAD;
+	}
+
+	&.active {
+		position: relative;
+
+		&:after {
+			bottom: -13px;
+			content: "";
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+
+		a {
+			color: #FFF;
+		}
+	}
+
+	.lexicon-icon {
+		margin-top: -2px;
 	}
 }
 

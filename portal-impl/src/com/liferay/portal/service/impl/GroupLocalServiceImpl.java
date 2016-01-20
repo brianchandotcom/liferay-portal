@@ -589,6 +589,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					friendlyURL = GroupConstants.CONTROL_PANEL_FRIENDLY_URL;
 					site = false;
 				}
+				else if (groupKey.equals(GroupConstants.FORMS)) {
+					type = GroupConstants.TYPE_SITE_PRIVATE;
+					friendlyURL = GroupConstants.FORMS_FRIENDLY_URL;
+					site = false;
+				}
 				else if (groupKey.equals(GroupConstants.GUEST)) {
 					friendlyURL = "/guest";
 				}

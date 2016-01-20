@@ -71,7 +71,7 @@ public class WebBundleDeployer {
 
 		try {
 			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
-				bundle, contextPath, _properties, _saxParserFactory, _logger);
+				bundle, contextPath, _logger);
 
 			WabBundleProcessor oldWabBundleProcessor =
 				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
@@ -82,7 +82,7 @@ public class WebBundleDeployer {
 				return;
 			}
 
-			newWabBundleProcessor.init();
+			newWabBundleProcessor.init(_saxParserFactory, _properties);
 		}
 		catch (Exception e) {
 			_eventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);

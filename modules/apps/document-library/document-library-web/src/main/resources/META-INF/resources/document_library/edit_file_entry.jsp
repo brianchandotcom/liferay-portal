@@ -328,11 +328,7 @@ if (portletTitleBasedNavigation) {
 				<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 
 				<aui:input name="title">
-					<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="required">
-						function() {
-							return !A.one('#<portlet:namespace />file').val();
-						}
-					</aui:validator>
+					<aui:validator errorMessage="you-must-specify-a-title" name="required" />
 				</aui:input>
 
 				<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
@@ -594,6 +590,20 @@ if (portletTitleBasedNavigation) {
 		},
 		['document-library-checkin']
 	);
+
+	function <portlet:namespace />updateTitle() {
+		var title = $('#<portlet:namespace />title').val();
+
+		if (!title) {
+			var filePath = $('#<portlet:namespace />file').val();
+
+			var fileName = filePath.replace(/^.*[\\\/]/, '')
+
+			$('#<portlet:namespace />title').val(fileName);
+		}
+
+		<portlet:namespace />validateTitle();
+	}
 
 	function <portlet:namespace />validateTitle() {
 		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');

@@ -62,12 +62,9 @@ if (folder != null) {
 				</liferay-portlet:renderURL>
 
 				<%
-				int fileEntriesCount = 0;
-				int foldersCount = 0;
-
 				try{
-					fileEntriesCount = DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
-					foldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+					DLAppServiceUtil.getFoldersFileEntriesCount(curFolder.getRepositoryId(), Arrays.asList(curFolder.getFolderId()), WorkflowConstants.STATUS_APPROVED);
+					DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
 				}
 				catch (com.liferay.portal.kernel.repository.RepositoryException re) {
 					rowURL = null;
@@ -84,18 +81,6 @@ if (folder != null) {
 						<%= HtmlUtil.escape(curFolder.getName()) %>
 					</aui:a>
 				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="num-of-folders"
-					value="<%= String.valueOf(foldersCount) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="num-of-documents"
-					value="<%= String.valueOf(fileEntriesCount) %>"
-				/>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator markupView="lexicon" />
@@ -137,23 +122,6 @@ if (folder != null) {
 						<%= HtmlUtil.escape(curFile.getDescription()) %>
 					</c:if>
 				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-text
-					name="size"
-					value="<%= TextFormatter.formatStorageSize(curFile.getSize(), locale) %>"
-				/>
-
-				<c:if test="<%= PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED %>">
-					<liferay-ui:search-container-column-text
-						name="downloads"
-						value="<%= String.valueOf(curFile.getReadCount()) %>"
-					/>
-				</c:if>
-
-				<liferay-ui:search-container-column-text
-					name="locked"
-					value='<%= LanguageUtil.get(request, curFile.isCheckedOut() ? "yes" : "no") %>'
-				/>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator markupView="lexicon" />

@@ -45,9 +45,10 @@ public class SpringCompatibilityTest {
 		Class<?> filteredPropertyDescriptorsCacheClass =
 			filteredPropertyDescriptorsCacheField.getType();
 
+		Class<?> clazz = filteredPropertyDescriptorsCacheClass.getClass();
+
 		Assert.assertTrue(
-			filteredPropertyDescriptorsCacheClass.getClass().getName() +
-				" is not " + Map.class.getName(),
+			clazz.getName() + " is not " + Map.class.getName(),
 			Map.class.isAssignableFrom(filteredPropertyDescriptorsCacheClass));
 	}
 
@@ -63,9 +64,10 @@ public class SpringCompatibilityTest {
 
 		Class<?> shadowMatchCacheClass = shadowMatchCacheField.getType();
 
+		Class<?> clazz = shadowMatchCacheClass.getClass();
+
 		Assert.assertTrue(
-			shadowMatchCacheClass.getClass().getName() + " is not " +
-				Map.class.getName(),
+			clazz.getName() + " is not " + Map.class.getName(),
 			Map.class.isAssignableFrom(shadowMatchCacheClass));
 	}
 
@@ -79,9 +81,10 @@ public class SpringCompatibilityTest {
 
 		Class<?> advisedSupportClass = advisedField.getType();
 
+		Class<?> clazz = advisedSupportClass.getClass();
+
 		Assert.assertTrue(
-			advisedSupportClass.getClass().getName() + " is not " +
-				AdvisedSupport.class.getName(),
+			clazz.getName() + " is not " + AdvisedSupport.class.getName(),
 			advisedSupportClass.equals(AdvisedSupport.class));
 	}
 

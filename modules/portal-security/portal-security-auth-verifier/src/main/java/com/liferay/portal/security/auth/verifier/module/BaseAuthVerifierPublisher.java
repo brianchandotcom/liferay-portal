@@ -41,9 +41,10 @@ public abstract class BaseAuthVerifierPublisher {
 
 		AuthVerifier authVerifier = getAuthVerifierInstance();
 
+		Class<?> clazz = authVerifier.getClass();
+
 		String authVerifierPropertyName =
-			AuthVerifierPipeline.getAuthVerifierPropertyName(
-				authVerifier.getClass().getName());
+			AuthVerifierPipeline.getAuthVerifierPropertyName(clazz.getName());
 
 		Dictionary<String, Object> authVerifierProperties = new Hashtable<>();
 

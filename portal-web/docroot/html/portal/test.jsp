@@ -28,7 +28,9 @@ request.setAttribute("users", users);
 </display:table>
 
 <%
-System.out.println(request.getClass().getName());
+Class<?> clazz = request.getClass();
+
+System.out.println(clazz.getName());
 System.out.println("request.getRemoteUser() " + request.getRemoteUser());
 
 PortalServiceUtil.testGetUserId();

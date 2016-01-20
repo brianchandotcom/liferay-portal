@@ -143,7 +143,9 @@ public class DialectDetector {
 		}
 		else if (dialectKey != null) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Found dialect " + dialect.getClass().getName());
+				Class<?> clazz = dialect.getClass();
+
+				_log.info("Found dialect " + clazz.getName());
 			}
 
 			_dialects.put(dialectKey, dialect);

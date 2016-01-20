@@ -47,7 +47,9 @@ public class LayoutCloneFactory {
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Return " + _layoutClone.getClass().getName());
+				Class<?> clazz = _layoutClone.getClass();
+
+				_log.debug("Return " + clazz.getName());
 			}
 		}
 

@@ -286,9 +286,12 @@ public class TableMapperTest {
 		PortalCache<Long, long[]> leftToRightPortalCache =
 			_tableMapperImpl.leftToRightPortalCache;
 
+		Class<?> clazz = leftToRightPortalCache.getClass();
+
 		Assert.assertEquals(
 			"com.liferay.portal.tools.ToolDependencies$TestPortalCache",
-			leftToRightPortalCache.getClass().getName());
+			clazz.getName());
+
 		Assert.assertEquals(
 			TableMapper.class.getName() + "-" + _TABLE_NAME + "-LeftToRight",
 			leftToRightPortalCache.getPortalCacheName());
@@ -301,9 +304,12 @@ public class TableMapperTest {
 		PortalCache<Long, long[]> rightToLeftPortalCache =
 			_tableMapperImpl.rightToLeftPortalCache;
 
+		clazz = rightToLeftPortalCache.getClass();
+
 		Assert.assertEquals(
 			"com.liferay.portal.tools.ToolDependencies$TestPortalCache",
-			rightToLeftPortalCache.getClass().getName());
+			clazz.getName());
+
 		Assert.assertEquals(
 			TableMapper.class.getName() + "-" + _TABLE_NAME + "-RightToLeft",
 			rightToLeftPortalCache.getPortalCacheName());

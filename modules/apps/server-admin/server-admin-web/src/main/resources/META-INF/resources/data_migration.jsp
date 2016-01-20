@@ -34,6 +34,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 		int i = 0;
 
 		for (ConvertProcess convertProcess : convertProcesses) {
+			Class<?> clazz = convertProcess.getClass();
 			String parameterDescription = convertProcess.getParameterDescription();
 			String[] parameterNames = convertProcess.getParameterNames();
 		%>
@@ -56,7 +57,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 										String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
 								%>
 
-									<aui:select label="<%= parameterPair[0] %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + parameterPair[0] %>">
+									<aui:select label="<%= parameterPair[0] %>" name="<%= clazz.getName() + StringPool.PERIOD + parameterPair[0] %>">
 
 										<%
 										for (String parameterSelectEntry : parameterSelectEntries) {
@@ -87,7 +88,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 										}
 								%>
 
-										<aui:input cssClass="lfr-input-text-container" label="<%= currentParameterName %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + currentParameterName %>" type='<%= currentParameterType != null ? currentParameterType : "" %>' />
+										<aui:input cssClass="lfr-input-text-container" label="<%= currentParameterName %>" name="<%= clazz.getName() + StringPool.PERIOD + currentParameterName %>" type='<%= currentParameterType != null ? currentParameterType : "" %>' />
 
 								<%
 									}
@@ -97,7 +98,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 							</aui:fieldset>
 
 							<aui:button-row>
-								<aui:button cssClass="btn-lg save-server-button" data-cmd='<%= "convertProcess." + convertProcess.getClass().getName() %>' value="execute" />
+								<aui:button cssClass="btn-lg save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />
 							</aui:button-row>
 						</c:otherwise>
 					</c:choose>

@@ -73,9 +73,9 @@ public class PortalJobStore extends JobStoreTX {
 			_driverDelegate = super.getDelegate();
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Using driver delegate " +
-						_driverDelegate.getClass().getName());
+				Class<?> clazz = _driverDelegate.getClass();
+
+				_log.info("Using driver delegate " + clazz.getName());
 			}
 
 			return _driverDelegate;

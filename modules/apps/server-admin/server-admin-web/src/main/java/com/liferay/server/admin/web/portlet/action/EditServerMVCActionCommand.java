@@ -558,8 +558,11 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		validateCaptcha(actionRequest);
 
 		if (SessionErrors.isEmpty(actionRequest)) {
+			Class<?> clazz = captcha.getClass();
+
 			portletPreferences.setValue(
-				PropsKeys.CAPTCHA_ENGINE_IMPL, captcha.getClass().getName());
+				PropsKeys.CAPTCHA_ENGINE_IMPL, clazz.getName());
+
 			portletPreferences.setValue(
 				PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE,
 				reCaptchaPrivateKey);

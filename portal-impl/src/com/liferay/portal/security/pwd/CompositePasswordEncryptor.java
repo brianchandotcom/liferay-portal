@@ -54,9 +54,11 @@ public class CompositePasswordEncryptor
 				passwordEncryptor.getSupportedAlgorithmTypes();
 
 			if (_log.isDebugEnabled()) {
+				Class<?> clazz = passwordEncryptor.getClass();
+
 				_log.debug(
 					"Registering " + StringUtil.merge(supportedAlgorithmTypes) +
-						" for " + passwordEncryptor.getClass().getName());
+						" for " + clazz.getName());
 			}
 
 			for (String supportedAlgorithmType : supportedAlgorithmTypes) {

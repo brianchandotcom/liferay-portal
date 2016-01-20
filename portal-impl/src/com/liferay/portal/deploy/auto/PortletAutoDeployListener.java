@@ -80,7 +80,9 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Using deployer " + autoDeployer.getClass().getName());
+			Class<?> clazz = autoDeployer.getClass();
+
+			_log.debug("Using deployer " + clazz.getName());
 		}
 
 		autoDeployer = new ThreadSafeAutoDeployer(autoDeployer);

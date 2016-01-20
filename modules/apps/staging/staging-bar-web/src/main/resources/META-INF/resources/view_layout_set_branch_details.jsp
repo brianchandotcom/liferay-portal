@@ -25,7 +25,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 	<li class="control-menu-nav-item">
-		<a class="staging-variation-label" href="javascript:;" id="manageLayoutSetRevisions" onclick='<%= renderResponse.getNamespace() + "openSitePagesVariationsDialog();" %>'>
+		<a class="control-menu-label staging-variation-label" href="javascript:;" id="manageLayoutSetRevisions" onclick='<%= renderResponse.getNamespace() + "openSitePagesVariationsDialog();" %>'>
 			<liferay-ui:message key="site-pages-variation" />
 		</a>
 

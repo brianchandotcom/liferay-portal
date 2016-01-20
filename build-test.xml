@@ -7162,9 +7162,9 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<antcall target="deploy-specified-plugins" />
-
 		<antcall target="deploy-osgi-modules" />
+
+		<antcall target="deploy-specified-plugins" />
 
 		<antcall target="deploy-extra-apps" />
 

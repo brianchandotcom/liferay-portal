@@ -23,7 +23,7 @@
 >
 
 	<liferay-ui:search-container-results
-		results="<%= attachmentsFileEntries %>"
+		results="<%= paginate ? ListUtil.subList(attachmentsFileEntries, searchContainer.getStart(), searchContainer.getEnd()) : attachmentsFileEntries %>"
 	/>
 
 	<liferay-ui:search-container-row

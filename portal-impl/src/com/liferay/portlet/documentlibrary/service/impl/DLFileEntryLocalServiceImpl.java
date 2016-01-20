@@ -162,12 +162,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
-			if (Validator.isNull(sourceFileName)) {
-				throw new FileNameException("Title is null");
-			}
-			else {
-				title = sourceFileName;
-			}
+			throw new FileNameException("Title is null");
 		}
 
 		// File entry

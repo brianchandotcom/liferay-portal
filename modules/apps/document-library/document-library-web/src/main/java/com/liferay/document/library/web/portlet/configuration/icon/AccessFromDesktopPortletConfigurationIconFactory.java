@@ -16,14 +16,17 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 import com.liferay.portal.kernel.repository.model.Folder;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -32,20 +35,19 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/edit_folder",
 		"path=/document_library/view_folder"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class FolderPermissionPortletConfigurationIconFactory
-	extends BasePortletConfigurationIconFactory {
+public class AccessFromDesktopPortletConfigurationIconFactory
+	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
 		try {
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			return new FolderPermissionPortletConfigurationIcon(
+			return new AccessFromDesktopPortletConfigurationIcon(
 				portletRequest, folder);
 		}
 		catch (Exception e) {
@@ -55,8 +57,22 @@ public class FolderPermissionPortletConfigurationIconFactory
 	}
 
 	@Override
+	public String getJspPath() {
+		return "/document_library/access_from_desktop.jsp";
+	}
+
+	@Override
 	public double getWeight() {
-		return 101.0;
+		return 102.0;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

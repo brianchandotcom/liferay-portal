@@ -32,12 +32,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/edit_folder",
 		"path=/document_library/view_folder"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class FolderPermissionPortletConfigurationIconFactory
+public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
@@ -45,8 +44,9 @@ public class FolderPermissionPortletConfigurationIconFactory
 		try {
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			return new FolderPermissionPortletConfigurationIcon(
-				portletRequest, folder);
+			return
+				new DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon(
+					portletRequest, folder);
 		}
 		catch (Exception e) {
 		}
@@ -56,7 +56,7 @@ public class FolderPermissionPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 101.0;
+		return 103.0;
 	}
 
 }

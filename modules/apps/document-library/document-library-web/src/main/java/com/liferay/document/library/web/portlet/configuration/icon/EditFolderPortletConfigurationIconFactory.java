@@ -32,12 +32,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/edit_folder",
-		"path=/document_library/view_folder"
+		"path=/document_library/view", "path=/document_library/view_folder"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class FolderPermissionPortletConfigurationIconFactory
+public class EditFolderPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
@@ -45,7 +44,7 @@ public class FolderPermissionPortletConfigurationIconFactory
 		try {
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			return new FolderPermissionPortletConfigurationIcon(
+			return new EditFolderPortletConfigurationIcon(
 				portletRequest, folder);
 		}
 		catch (Exception e) {
@@ -56,7 +55,7 @@ public class FolderPermissionPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 101.0;
+		return 106.0;
 	}
 
 }

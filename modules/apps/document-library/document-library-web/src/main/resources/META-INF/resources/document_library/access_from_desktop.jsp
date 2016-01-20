@@ -19,7 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Folder folder = (Folder)row.getObject();
+Folder folder = null;
+
+if (row != null) {
+	folder = (Folder)row.getObject();
+}
+else {
+	folder = ActionUtil.getFolder(liferayPortletRequest);
+}
 
 String randomNamespace = null;
 

@@ -501,6 +501,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected void checkChaining(String line, String fileName, int lineCount) {
+		if (line.startsWith("this(")) {
+			return;
+		}
+
+		if (line.contains(".getClass().")) {
+			processErrorMessage(
+				fileName, "chaining: " + fileName + " " + lineCount);
+		}
+	}
+
 	protected void checkStringBundler(
 		String line, String fileName, int lineCount) {
 

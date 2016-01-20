@@ -598,6 +598,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				String trimmedPreviousLine = StringUtil.trimLeading(
 					previousLine);
 
+				checkChaining(trimmedLine, fileName, lineCount);
+
 				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);

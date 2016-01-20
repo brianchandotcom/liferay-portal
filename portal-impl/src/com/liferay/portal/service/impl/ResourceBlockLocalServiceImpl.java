@@ -39,6 +39,7 @@ import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -742,6 +743,10 @@ public class ResourceBlockLocalServiceImpl
 
 			PermissionCacheUtil.clearResourceBlockCache(
 				companyId, groupId, name);
+
+			PermissionCacheUtil.clearResourcePermissionCache(
+				ResourceConstants.SCOPE_INDIVIDUAL, name,
+				String.valueOf(primKey));
 		}
 	}
 

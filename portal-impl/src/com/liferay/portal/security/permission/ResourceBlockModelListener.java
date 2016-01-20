@@ -16,6 +16,7 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ResourceBlock;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.impl.ResourceBlockModelImpl;
 
 /**
@@ -59,6 +60,10 @@ public class ResourceBlockModelListener
 			PermissionCacheUtil.clearResourceBlockCache(
 				resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
 				resourceBlock.getName());
+
+			PermissionCacheUtil.clearResourcePermissionCache(
+				ResourceConstants.SCOPE_INDIVIDUAL, resourceBlock.getName(),
+				String.valueOf(resourceBlock.getPrimaryKey()));
 		}
 	}
 

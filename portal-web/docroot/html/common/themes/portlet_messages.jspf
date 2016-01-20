@@ -84,17 +84,9 @@ else if (group.isStagingGroup()) {
 		</c:if>
 	</liferay-util:buffer>
 
-	<%
-	String message = successHtml.toString();
-
-	message = StringUtil.replace(message, StringPool.RETURN_NEW_LINE, StringPool.BLANK);
-	message = StringUtil.replace(message, StringPool.NEW_LINE, StringPool.BLANK);
-	message = StringUtil.replace(message, StringPool.TAB, StringPool.BLANK);
-	%>
-
 	<liferay-ui:success
 		key="requestProcessed"
-		message="<%= message %>"
+		message="<%= successHtml %>"
 	/>
 </c:if>
 

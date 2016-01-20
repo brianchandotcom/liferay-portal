@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>HEADER</td>
-	<td>//header[@data-qa-id="header"]//span[@class='header-toolbar-title']</td>
+	<td>//*[@data-qa-id='header']</td>
 	<td></td>
 </tr>
 <tr>

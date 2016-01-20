@@ -69,96 +69,6 @@ public class SocialActivityCounterLocalServiceImpl
 	extends SocialActivityCounterLocalServiceBaseImpl {
 
 	/**
-	 * Adds an activity counter with a default period length.
-	 *
-	 * <p>
-	 * This method uses the lock service to guard against multiple threads
-	 * trying to insert the same counter because this service is called
-	 * asynchronously from the social activity service.
-	 * </p>
-	 *
-	 * @param      groupId the primary key of the group
-	 * @param      classNameId the primary key of the entity's class this
-	 *             counter belongs to
-	 * @param      classPK the primary key of the entity this counter belongs to
-	 * @param      name the counter's name
-	 * @param      ownerType the counter's owner type. Acceptable values are
-	 *             <code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
-	 *             <code>TYPE_CREATOR</code> defined in {@link
-	 *             SocialActivityCounterConstants}.
-	 * @param      currentValue the counter's current value (optionally
-	 *             <code>0</code>)
-	 * @param      totalValue the counter's total value (optionally
-	 *             <code>0</code>)
-	 * @param      startPeriod the counter's start period
-	 * @param      endPeriod the counter's end period
-	 * @return     the added activity counter
-	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
-	 *             long, long, String, int, int, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public SocialActivityCounter addActivityCounter(
-			long groupId, long classNameId, long classPK, String name,
-			int ownerType, int currentValue, int totalValue, int startPeriod,
-			int endPeriod)
-		throws PortalException {
-
-		return addActivityCounter(
-			groupId, classNameId, classPK, name, ownerType, totalValue, 0, 0);
-	}
-
-	/**
-	 * Adds an activity counter specifying a previous activity and period
-	 * length.
-	 *
-	 * <p>
-	 * This method uses the lock service to guard against multiple threads
-	 * trying to insert the same counter because this service is called
-	 * asynchronously from the social activity service.
-	 * </p>
-	 *
-	 * @param      groupId the primary key of the group
-	 * @param      classNameId the primary key of the entity's class this
-	 *             counter belongs to
-	 * @param      classPK the primary key of the entity this counter belongs to
-	 * @param      name the counter name
-	 * @param      ownerType the counter's owner type. Acceptable values are
-	 *             <code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
-	 *             <code>TYPE_CREATOR</code> defined in {@link
-	 *             SocialActivityCounterConstants}.
-	 * @param      currentValue the current value of the counter (optionally
-	 *             <code>0</code>)
-	 * @param      totalValue the counter's total value (optionally
-	 *             <code>0</code>)
-	 * @param      startPeriod the counter's start period
-	 * @param      endPeriod the counter's end period
-	 * @param      previousActivityCounterId the primary key of the activity
-	 *             counter for the previous time period (optionally
-	 *             <code>0</code>, if this is the first)
-	 * @param      periodLength the period length in days,
-	 *             <code>PERIOD_LENGTH_INFINITE</code> for never ending counters
-	 *             or <code>PERIOD_LENGTH_SYSTEM</code> for the period length
-	 *             defined in <code>portal-ext.properties</code>. For more
-	 *             information see {@link SocialActivityCounterConstants}.
-	 * @return     the added activity counter
-	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
-	 *             long, long, String, int, int, long, int)}
-	 */
-	@Deprecated
-	@Override
-	public SocialActivityCounter addActivityCounter(
-			long groupId, long classNameId, long classPK, String name,
-			int ownerType, int currentValue, int totalValue, int startPeriod,
-			int endPeriod, long previousActivityCounterId, int periodLength)
-		throws PortalException {
-
-		return addActivityCounter(
-			groupId, classNameId, classPK, name, ownerType, totalValue,
-			previousActivityCounterId, periodLength);
-	}
-
-	/**
 	 * Adds an activity counter specifying a previous activity and period
 	 * length.
 	 *
@@ -402,92 +312,6 @@ public class SocialActivityCounterLocalServiceImpl
 
 			achievement.processActivity(activity);
 		}
-	}
-
-	/**
-	 * Creates an activity counter with a default period length, adding it into
-	 * the database.
-	 *
-	 * @param      groupId the primary key of the group
-	 * @param      classNameId the primary key of the entity's class this
-	 *             counter belongs to
-	 * @param      classPK the primary key of the entity this counter belongs to
-	 * @param      name the counter's name
-	 * @param      ownerType the counter's owner type. Acceptable values are
-	 *             <code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
-	 *             <code>TYPE_CREATOR</code> defined in {@link
-	 *             SocialActivityCounterConstants}.
-	 * @param      currentValue the counter's current value (optionally
-	 *             <code>0</code>)
-	 * @param      totalValue the counter's total value (optionally
-	 *             <code>0</code>)
-	 * @param      startPeriod the counter's start period
-	 * @param      endPeriod the counter's end period
-	 * @return     the created activity counter
-	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
-	 *             long, long, String, int, int, long, int)}
-	 */
-	@Deprecated
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public SocialActivityCounter createActivityCounter(
-			long groupId, long classNameId, long classPK, String name,
-			int ownerType, int currentValue, int totalValue, int startPeriod,
-			int endPeriod)
-		throws PortalException {
-
-		return addActivityCounter(
-			groupId, classNameId, classPK, name, ownerType, totalValue, 0, 0);
-	}
-
-	/**
-	 * Creates an activity counter, adding it into the database.
-	 *
-	 * <p>
-	 * This method actually creates the counter in the database. It requires a
-	 * new transaction so that other threads can find the new counter when the
-	 * lock in the calling method is released.
-	 * </p>
-	 *
-	 * @param      groupId the primary key of the group
-	 * @param      classNameId the primary key of the entity's class this
-	 *             counter belongs to
-	 * @param      classPK the primary key of the entity this counter belongs to
-	 * @param      name the counter's name
-	 * @param      ownerType the counter's owner type. Acceptable values are
-	 *             <code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
-	 *             <code>TYPE_CREATOR</code> defined in {@link
-	 *             SocialActivityCounterConstants}.
-	 * @param      currentValue the counter's current value (optionally
-	 *             <code>0</code>)
-	 * @param      totalValue the counter's total value of the counter
-	 *             (optionally <code>0</code>)
-	 * @param      startPeriod the counter's start period
-	 * @param      endPeriod the counter's end period
-	 * @param      previousActivityCounterId the primary key of the activity
-	 *             counter for the previous time period (optionally
-	 *             <code>0</code>, if this is the first)
-	 * @param      periodLength the period length in days,
-	 *             <code>PERIOD_LENGTH_INFINITE</code> for never ending counters
-	 *             or <code>PERIOD_LENGTH_SYSTEM</code> for the period length
-	 *             defined in <code>portal-ext.properties</code>. For more
-	 *             information see {@link SocialActivityConstants}.
-	 * @return     the created activity counter
-	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
-	 *             long, long, String, int, int, long, int)}
-	 */
-	@Deprecated
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public SocialActivityCounter createActivityCounter(
-			long groupId, long classNameId, long classPK, String name,
-			int ownerType, int currentValue, int totalValue, int startPeriod,
-			int endPeriod, long previousActivityCounterId, int periodLength)
-		throws PortalException {
-
-		return addActivityCounter(
-			groupId, classNameId, classPK, name, ownerType, totalValue,
-			previousActivityCounterId, periodLength);
 	}
 
 	/**
@@ -1106,10 +930,8 @@ public class SocialActivityCounterLocalServiceImpl
 				latestContributionActivityCounter.getClassNameId(),
 				latestContributionActivityCounter.getClassPK(),
 				latestContributionActivityCounter.getName(),
-				latestContributionActivityCounter.getOwnerType(), 0,
+				latestContributionActivityCounter.getOwnerType(),
 				latestContributionActivityCounter.getTotalValue(),
-				SocialCounterPeriodUtil.getStartPeriod(),
-				SocialActivityCounterConstants.END_PERIOD_UNDEFINED,
 				latestContributionActivityCounter.getActivityCounterId(),
 				SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM);
 		}

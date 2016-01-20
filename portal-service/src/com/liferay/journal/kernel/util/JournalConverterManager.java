@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.journal.kernel.util;
 
 import java.util.Locale;
 

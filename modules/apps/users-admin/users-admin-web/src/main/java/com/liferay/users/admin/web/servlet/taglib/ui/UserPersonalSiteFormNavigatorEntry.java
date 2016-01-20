@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.web.servlet.taglib.ui;
 
+import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
@@ -23,7 +24,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 
 import org.osgi.service.component.annotations.Component;
 

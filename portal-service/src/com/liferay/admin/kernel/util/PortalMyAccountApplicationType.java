@@ -12,10 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.admin.kernel.util;
 
 /**
- * @author Miguel Pastor
+ * @author Eudaldo Alonso
  */
-public interface VerifiableUUIDModel extends VerifiableModel {
+public class PortalMyAccountApplicationType {
+
+	public interface MyAccount {
+
+		public static final String CLASS_NAME =
+			"com.liferay.admin.kernel.util." +
+				"PortalMyAccountApplicationType$MyAccount";
+
+	}
+
 }

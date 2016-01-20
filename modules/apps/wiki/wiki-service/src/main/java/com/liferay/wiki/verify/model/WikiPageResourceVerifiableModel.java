@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.verify.model;
 
-import com.liferay.portal.verify.model.VerifiableUUIDModel;
+import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor

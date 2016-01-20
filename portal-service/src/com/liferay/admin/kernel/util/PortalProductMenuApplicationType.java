@@ -12,21 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.admin.kernel.util;
 
 /**
- * @author Miguel Pastor
+ * @author Eudaldo Alonso
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
+public class PortalProductMenuApplicationType {
 
-	public String getModelName();
+	public interface ProductMenu {
 
-	@Override
-	public String getPrimaryKeyColumnName();
+		public static final String CLASS_NAME =
+			"com.liferay.admin.kernel.util." +
+				"PortalProductMenuApplicationType$ProductMenu";
 
-	@Override
-	public String getTableName();
-
-	public String getUserIdColumnName();
+	}
 
 }

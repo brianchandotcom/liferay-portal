@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.admin.util;
+package com.liferay.portal.kernel.verify.model;
 
 /**
- * @author Eudaldo Alonso
+ * @author Miguel Pastor
  */
-public class PortalMyAccountApplicationType {
+public interface VerifiableAuditedModel extends VerifiableModel {
 
-	public interface MyAccount {
+	public String getJoinByTableName();
 
-		public static final String CLASS_NAME =
-			"com.liferay.portlet.admin.util." +
-				"PortalMyAccountApplicationType$MyAccount";
+	public String getRelatedModelName();
 
-	}
+	public String getRelatedPKColumnName();
+
+	public boolean isAnonymousUserAllowed();
+
+	public boolean isUpdateDates();
 
 }

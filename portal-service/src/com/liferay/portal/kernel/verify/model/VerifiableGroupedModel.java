@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.admin.util;
+package com.liferay.portal.kernel.verify.model;
 
 /**
- * @author Eudaldo Alonso
+ * @author Miguel Pastor
  */
-public class PortalSearchApplicationType {
+public interface VerifiableGroupedModel extends VerifiableModel {
 
-	public interface Search {
+	public String getRelatedPrimaryKeyColumnName();
 
-		public static final String CLASS_NAME =
-			"com.liferay.portlet.admin.util.PortalSearchApplicationType$Search";
-
-	}
+	public String getRelatedTableName();
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.polls.verify.model;
 
-import com.liferay.portal.verify.model.VerifiableAuditedModel;
-import com.liferay.portal.verify.model.VerifiableGroupedModel;
+import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
+import com.liferay.portal.kernel.verify.model.VerifiableGroupedModel;
 
 /**
  * @author Miguel Pastor

@@ -12,15 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.journal.kernel.util;
+
+import com.liferay.portal.kernel.util.ProxyFactory;
+
+import java.util.Locale;
 
 /**
- * @author Miguel Pastor
+ * @author Marcellus Tavares
+ * @author Bruno Basto
+ * @author Leonardo Barros
  */
-public interface VerifiableGroupedModel extends VerifiableModel {
+public class JournalConverterManagerUtil {
 
-	public String getRelatedPrimaryKeyColumnName();
+	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
+		throws Exception {
 
-	public String getRelatedTableName();
+		return _journalConverterManager.getDDMXSD(journalXSD, defaultLocale);
+	}
+
+	private static final JournalConverterManager _journalConverterManager =
+		ProxyFactory.newServiceTrackedInstance(JournalConverterManager.class);
 
 }

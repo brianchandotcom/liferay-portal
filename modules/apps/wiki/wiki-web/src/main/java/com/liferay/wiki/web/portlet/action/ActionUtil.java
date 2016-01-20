@@ -370,6 +370,29 @@ public class ActionUtil {
 		}
 	}
 
+	public static List<WikiPage> getPages(PortletRequest portletRequest)
+		throws PortalException {
+
+		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
+
+		String[] titles = ParamUtil.getStringValues(
+			portletRequest, "rowIdsWikiPage");
+
+		if (titles.length == 0) {
+			return Collections.emptyList();
+		}
+
+		List<WikiPage> pages = new ArrayList<>();
+
+		for (String title : titles) {
+			if (Validator.isNotNull(title)) {
+				pages.add(WikiPageServiceUtil.getPage(nodeId, title));
+			}
+		}
+
+		return pages;
+	}
+
 	public static String viewNode(
 			RenderRequest renderRequest, String defaultForward)
 		throws PortletException {

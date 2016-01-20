@@ -465,6 +465,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		request.setAttribute("liferay-ui:icon-menu:data", _data);
 		request.setAttribute("liferay-ui:icon-menu:direction", _direction);
 		request.setAttribute("liferay-ui:icon-menu:icon", _icon);
+		request.setAttribute("liferay-ui:icon-menu:id", _id);
 
 		String message = _message;
 

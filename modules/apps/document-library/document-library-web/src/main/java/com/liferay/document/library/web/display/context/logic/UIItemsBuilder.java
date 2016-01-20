@@ -54,6 +54,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.display.context.DLUIItemKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -263,10 +264,18 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
-		portletURL.setParameter(
-			"folderId", String.valueOf(_fileEntry.getFolderId()));
+		long folderId = _fileEntry.getFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		StringBundler sb = new StringBundler(5);
 
@@ -376,10 +385,18 @@ public class UIItemsBuilder {
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
-		redirectURL.setParameter("folderId", String.valueOf(_folderId));
+		long folderId = _fileEntry.getFolderId();
 
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter("redirect", redirectURL.toString());
 
 		portletURL.setParameter(
@@ -417,8 +434,18 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
+		long folderId = _fileEntry.getFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 

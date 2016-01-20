@@ -389,7 +389,7 @@ String iconMenuId = null;
 
 			<c:if test="<%= hasDeletePermission && !folder.isMountPoint() %>">
 				<portlet:renderURL var="redirectURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+					<portlet:param name="mvcRenderCommandName" value='<%= folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID ? "/document_library/view" : "/document_library/view_folder" %>' />
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 
@@ -404,7 +404,7 @@ String iconMenuId = null;
 
 			<c:if test="<%= hasDeletePermission && folder.isMountPoint() %>">
 				<portlet:renderURL var="redirectURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+					<portlet:param name="mvcRenderCommandName" value='<%= folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID ? "/document_library/view" : "/document_library/view_folder" %>' />
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 

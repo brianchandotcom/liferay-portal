@@ -36,7 +36,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-displayStyleURL.setParameter("mvcRenderCommandName", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
+displayStyleURL.setParameter("mvcRenderCommandName", Validator.isNull(keywords) ? (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID ? "/document_library/view" : "/document_library/view_folder") : "/document_library/search");
 displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
 
 if (curEntry > 0) {

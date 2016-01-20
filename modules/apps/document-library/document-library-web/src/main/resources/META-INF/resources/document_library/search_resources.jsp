@@ -234,7 +234,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 							PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
-							tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view");
+							tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
 							tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 							tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 

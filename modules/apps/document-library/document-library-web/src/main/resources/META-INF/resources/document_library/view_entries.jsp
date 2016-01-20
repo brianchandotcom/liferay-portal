@@ -47,7 +47,7 @@ String displayStyle = GetterUtil.getString((String)request.getAttribute("view.js
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
+portletURL.setParameter("mvcRenderCommandName", folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID ? "/document_library/view" : "/document_library/view_folder");
 portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
@@ -471,7 +471,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-							rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
+							rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 							%>
@@ -497,7 +497,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 								<%
 								PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-								rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
+								rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
 								rowURL.setParameter("redirect", currentURL);
 								rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 								%>

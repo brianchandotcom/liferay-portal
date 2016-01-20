@@ -108,7 +108,7 @@ public class DLBreadcrumbUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
+			"mvcRenderCommandName", "/document_library/view_folder");
 
 		Map<String, Object> data = new HashMap<>();
 
@@ -233,8 +233,20 @@ public class DLBreadcrumbUtil {
 				ignoreRootFolder, portletURL);
 		}
 		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view");
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (folder != null) {
+				folderId = folder.getFolderId();
+			}
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				portletURL.setParameter(
+					"mvcRenderCommandName", "/document_library/view_folder");
+			}
+			else {
+				portletURL.setParameter(
+					"mvcRenderCommandName", "/document_library/view");
+			}
 		}
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);

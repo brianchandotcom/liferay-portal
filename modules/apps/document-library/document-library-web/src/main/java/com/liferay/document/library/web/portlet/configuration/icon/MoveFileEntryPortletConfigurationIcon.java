@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -56,10 +57,18 @@ public class MoveFileEntryPortletConfigurationIcon
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
-		redirectURL.setParameter(
-			"folderId", String.valueOf(_fileEntry.getFolderId()));
+		long folderId = _fileEntry.getFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			redirectURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+
+		redirectURL.setParameter("folderId", String.valueOf(folderId));
 
 		portletURL.setParameter("redirect", redirectURL.toString());
 

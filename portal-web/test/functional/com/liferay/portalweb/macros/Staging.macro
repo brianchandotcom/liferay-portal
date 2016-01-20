@@ -868,6 +868,7 @@
 		</if>
 
 		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
 
 		<if>

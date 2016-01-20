@@ -117,7 +117,9 @@ public class NodeList<E, F> extends TranslatedList<E, F> {
 			return (F)nodeImpl.getWrappedNode();
 		}
 
-		throw new IllegalArgumentException(o.getClass().getName());
+		Class<?> clazz = o.getClass();
+
+		throw new IllegalArgumentException(clazz.getName());
 	}
 
 }

@@ -115,9 +115,10 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 				if (e instanceof NoSuchListTypeException) {
 					NoSuchListTypeException nslte = (NoSuchListTypeException)e;
 
+					Class<?> clazz = e.getClass();
+
 					SessionErrors.add(
-						actionRequest,
-						e.getClass().getName() + nslte.getType());
+						actionRequest, clazz.getName() + nslte.getType());
 				}
 				else {
 					SessionErrors.add(actionRequest, e.getClass(), e);

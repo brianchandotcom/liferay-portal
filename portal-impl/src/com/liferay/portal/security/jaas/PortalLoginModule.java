@@ -80,7 +80,9 @@ public class PortalLoginModule implements LoginModule {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(loginModule.getClass().getName());
+			Class<?> clazz = loginModule.getClass();
+
+			_log.debug(clazz.getName());
 		}
 
 		_loginModule = loginModule;

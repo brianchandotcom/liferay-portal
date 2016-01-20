@@ -252,7 +252,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Override
 	public SystemException processException(Exception e) {
 		if (!(e instanceof ORMException)) {
-			_log.error("Caught unexpected exception " + e.getClass().getName());
+			Class<?> clazz = e.getClass();
+
+			_log.error("Caught unexpected exception " + clazz.getName());
 		}
 
 		if (_log.isDebugEnabled()) {

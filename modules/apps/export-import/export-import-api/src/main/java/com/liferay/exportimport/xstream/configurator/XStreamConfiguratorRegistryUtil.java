@@ -48,7 +48,9 @@ public class XStreamConfiguratorRegistryUtil {
 			_instance._getXStreamConfigurators();
 
 		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
-			classLoaders.add(xStreamConfigurator.getClass().getClassLoader());
+			Class<?> clazz = xStreamConfigurator.getClass();
+
+			classLoaders.add(clazz.getClassLoader());
 		}
 
 		// Temporary code to fetch class loaders from the old framework too

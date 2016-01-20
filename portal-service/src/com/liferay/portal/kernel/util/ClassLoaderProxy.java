@@ -95,8 +95,10 @@ public class ClassLoaderProxy {
 			for (int i = 0; i < args.length; i++) {
 				Object arg = args[i];
 
+				Class<?> argClazz = arg.getClass();
+
 				Class<?> argClass = Class.forName(
-					arg.getClass().getName(), true, _classLoader);
+					argClazz.getName(), true, _classLoader);
 
 				if (ClassUtil.isSubclass(argClass, PrimitiveWrapper.class)) {
 					MethodKey methodKey = new MethodKey(argClass, "getValue");

@@ -32,8 +32,10 @@ import java.util.List;
 public class BeanToXMLUtil {
 
 	public static void addBean(Object obj, Element parentEl) {
+		Class<?> clazz = obj.getClass();
+
 		String classNameWithoutPackage = getClassNameWithoutPackage(
-			obj.getClass().getName());
+			clazz.getName());
 
 		Element el = parentEl.addElement(classNameWithoutPackage);
 
@@ -41,7 +43,9 @@ public class BeanToXMLUtil {
 	}
 
 	public static void addFields(Object obj, Element parentEl) {
-		Method[] methods = obj.getClass().getMethods();
+		Class<?> clazz = obj.getClass();
+
+		Method[] methods = clazz.getMethods();
 
 		for (int i = 0; i < methods.length; i++) {
 			Method method = methods[i];

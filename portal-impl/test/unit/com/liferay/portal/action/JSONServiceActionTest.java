@@ -107,7 +107,9 @@ public class JSONServiceActionTest extends TestCase {
 			mockHttpServletRequest, GroupServiceUtil.class, method.getName(),
 			parameters[1], parameterTypes[1]);
 
-		assertTrue(value.getClass().isArray());
+		Class<?> clazz = value.getClass();
+
+		assertTrue(clazz.isArray());
 
 		long[] arrayValue = (long[])value;
 

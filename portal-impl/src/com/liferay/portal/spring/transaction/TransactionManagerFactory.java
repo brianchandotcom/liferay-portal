@@ -76,9 +76,9 @@ public class TransactionManagerFactory {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Created transaction manager " +
-					abstractPlatformTransactionManager.getClass().getName());
+			clazz = abstractPlatformTransactionManager.getClass();
+
+			_log.debug("Created transaction manager " + clazz.getName());
 
 			SortedProperties sortedProperties = new SortedProperties(
 				properties);

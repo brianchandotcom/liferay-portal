@@ -6449,7 +6449,11 @@ public class PortalImpl implements Portal {
 		sb.append("/portal/status?status=");
 		sb.append(status);
 		sb.append("&exception=");
-		sb.append(e.getClass().getName());
+
+		Class<?> clazz = e.getClass();
+
+		sb.append(clazz.getName());
+
 		sb.append("&previousURL=");
 		sb.append(HttpUtil.encodeURL(getCurrentURL(actionRequest)));
 
@@ -6503,7 +6507,9 @@ public class PortalImpl implements Portal {
 				status = HttpServletResponse.SC_FORBIDDEN;
 			}
 			else {
-				String name = e.getClass().getName();
+				Class<?> clazz = e.getClass();
+
+				String name = clazz.getName();
 
 				name = name.substring(name.lastIndexOf(CharPool.PERIOD) + 1);
 

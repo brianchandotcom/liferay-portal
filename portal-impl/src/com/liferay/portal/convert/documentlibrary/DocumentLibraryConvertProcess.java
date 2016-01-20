@@ -192,7 +192,9 @@ public class DocumentLibraryConvertProcess
 
 		Store sourceStore = storeFactory.getStore();
 
-		return sourceStore.getClass().getName();
+		Class<?> clazz = sourceStore.getClass();
+
+		return clazz.getName();
 	}
 
 	protected String getTargetStoreClassName() {

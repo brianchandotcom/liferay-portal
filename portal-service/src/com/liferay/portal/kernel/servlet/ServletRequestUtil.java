@@ -30,7 +30,9 @@ public class ServletRequestUtil {
 
 		while (true) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Request class " + tempRequest.getClass().getName());
+				Class<?> clazz = tempRequest.getClass();
+
+				_log.info("Request class " + clazz.getName());
 			}
 
 			if (tempRequest instanceof HttpServletRequestWrapper) {

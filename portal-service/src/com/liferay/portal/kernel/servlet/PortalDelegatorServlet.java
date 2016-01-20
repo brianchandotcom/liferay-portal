@@ -96,8 +96,9 @@ public class PortalDelegatorServlet extends HttpServlet {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			ClassLoader delegateClassLoader =
-				delegate.getClass().getClassLoader();
+			Class<?> clazz = delegate.getClass();
+
+			ClassLoader delegateClassLoader = clazz.getClassLoader();
 
 			currentThread.setContextClassLoader(delegateClassLoader);
 

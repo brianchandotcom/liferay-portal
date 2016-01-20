@@ -19,6 +19,8 @@
 			<then>
 				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.39
 
+liferay.home=${liferay.home}
+
 plugins.includes=marketplace-portlet</echo>
 
 				<antcall target="zip-portal-war" />

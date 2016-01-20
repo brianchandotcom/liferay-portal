@@ -23,6 +23,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeBackgroundTask;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCalEvent;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeContact;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeDLDisplayPortlet;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDLPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailAddress;
@@ -71,6 +72,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeCalEvent.class);
 		upgrade(UpgradeCompanyId.class);
 		upgrade(UpgradeContact.class);
+		upgrade(UpgradeDLDisplayPortlet.class);
 		upgrade(UpgradeDLPreferences.class);
 		upgrade(UpgradeDocumentLibrary.class);
 		upgrade(UpgradeEmailAddress.class);

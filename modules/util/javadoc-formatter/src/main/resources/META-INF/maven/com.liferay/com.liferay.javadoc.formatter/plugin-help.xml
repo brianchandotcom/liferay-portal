@@ -9,8 +9,6 @@
 	<artifactId>com.liferay.javadoc.formatter</artifactId>
 	<version>1.0.10</version>
 	<goalPrefix>com.liferay.javadoc.formatter</goalPrefix>
-	<isolatedRealm>false</isolatedRealm>
-	<inheritedByDefault>true</inheritedByDefault>
 	<mojos>
 		<mojo>
 			<goal>format-javadoc</goal>
@@ -32,13 +30,6 @@
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>
-					<description></description>
-				</parameter>
-				<parameter>
-					<name>baseDir</name>
-					<type>java$io$File</type>
-					<required>false</required>
-					<editable>false</editable>
 					<description></description>
 				</parameter>
 				<parameter>
@@ -91,47 +82,6 @@
 					<description></description>
 				</parameter>
 			</parameters>
-			<configuration>
-				<baseDir implementation="java$io$File" default-value="${project.basedir}" />
-			</configuration>
 		</mojo>
 	</mojos>
-	<dependencies>
-		<dependency>
-			<groupId>com.thoughtworks.qdox</groupId>
-			<artifactId>qdox</artifactId>
-			<type>jar</type>
-			<version>1.12.1</version>
-		</dependency>
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<type>jar</type>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<type>jar</type>
-			<version>1.0.b2</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<type>jar</type>
-			<version>1.2.17</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<type>jar</type>
-			<version>1.9.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant-launcher</artifactId>
-			<type>jar</type>
-			<version>1.9.4</version>
-		</dependency>
-	</dependencies>
 </plugin>

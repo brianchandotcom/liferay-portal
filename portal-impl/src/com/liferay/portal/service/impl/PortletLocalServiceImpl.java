@@ -148,41 +148,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	@Override
 	public void checkPortlet(Portlet portlet) throws PortalException {
-		long companyId = portlet.getCompanyId();
-		String name = portlet.getRootPortletId();
-
 		_initPortletResourcePermissions(portlet);
 
-		if (portlet.isSystem()) {
-			return;
-		}
-
-		String[] roleNames = portlet.getRolesArray();
-
-		if (roleNames.length == 0) {
-			return;
-		}
-
-		int scope = ResourceConstants.SCOPE_COMPANY;
-		String primKey = String.valueOf(companyId);
-		String actionId = ActionKeys.ADD_TO_PAGE;
-
-		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
-			name);
-
-		if (actionIds.contains(actionId)) {
-			for (String roleName : roleNames) {
-				Role role = roleLocalService.getRole(companyId, roleName);
-
-				resourcePermissionLocalService.addResourcePermission(
-					companyId, name, scope, primKey, role.getRoleId(),
-					actionId);
-			}
-		}
-
-		updatePortlet(
-			companyId, portlet.getPortletId(), StringPool.BLANK,
-			portlet.isActive());
+		_initPortletAddToPagePermissions(portlet);
 	}
 
 	@Override
@@ -1115,6 +1083,44 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		return configuration.get(propertyKey);
+	}
+
+	private void _initPortletAddToPagePermissions(Portlet portlet)
+		throws PortalException {
+
+		long companyId = portlet.getCompanyId();
+		String name = portlet.getRootPortletId();
+
+		if (portlet.isSystem()) {
+			return;
+		}
+
+		String[] roleNames = portlet.getRolesArray();
+
+		if (roleNames.length == 0) {
+			return;
+		}
+
+		int scope = ResourceConstants.SCOPE_COMPANY;
+		String primKey = String.valueOf(companyId);
+		String actionId = ActionKeys.ADD_TO_PAGE;
+
+		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
+			name);
+
+		if (actionIds.contains(actionId)) {
+			for (String roleName : roleNames) {
+				Role role = roleLocalService.getRole(companyId, roleName);
+
+				resourcePermissionLocalService.addResourcePermission(
+					companyId, name, scope, primKey, role.getRoleId(),
+					actionId);
+			}
+		}
+
+		updatePortlet(
+			companyId, portlet.getPortletId(), StringPool.BLANK,
+			portlet.isActive());
 	}
 
 	private void _initPortletResourcePermissions(Portlet portlet)

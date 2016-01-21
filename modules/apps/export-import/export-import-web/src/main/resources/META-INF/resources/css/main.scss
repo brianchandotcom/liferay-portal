@@ -113,6 +113,15 @@
 	}
 }
 
+.layout-selector {
+	padding-left: 0px;
+}
+
+.layout-selector-options {
+	list-style: none;
+	margin-right: auto;
+}
+
 .lfr-export-dialog {
 	.portlet-data-section, .portlet-type-data-section {
 		.control-label {
@@ -180,6 +189,11 @@
 .lfr-tree-loading-icon {
 	margin: 0 auto;
 	padding-top: 5px;
+}
+
+.pages-selector {
+	max-height: 300px;
+	overflow: auto;
 }
 
 .portlet-export-import {

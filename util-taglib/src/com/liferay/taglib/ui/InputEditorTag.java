@@ -59,6 +59,24 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class InputEditorTag extends IncludeTag {
 
+	public static Editor getEditor(
+		HttpServletRequest request, String editorName) {
+
+		if (!BrowserSnifferUtil.isRtf(request)) {
+			return _serviceTrackerMap.getService("simple");
+		}
+
+		if (Validator.isNull(editorName)) {
+			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
+		}
+
+		if (!_serviceTrackerMap.containsKey(editorName)) {
+			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
+		}
+
+		return _serviceTrackerMap.getService(editorName);
+	}
+
 	public void setAllowBrowseDocuments(boolean allowBrowseDocuments) {
 		_allowBrowseDocuments = allowBrowseDocuments;
 	}
@@ -275,19 +293,7 @@ public class InputEditorTag extends IncludeTag {
 	protected Editor getEditor(HttpServletRequest request) {
 		String editorName = _editorName;
 
-		if (!BrowserSnifferUtil.isRtf(request)) {
-			return _serviceTrackerMap.getService("simple");
-		}
-
-		if (Validator.isNull(editorName)) {
-			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
-		}
-
-		if (!_serviceTrackerMap.containsKey(editorName)) {
-			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
-		}
-
-		return _serviceTrackerMap.getService(editorName);
+		return getEditor(request, _editorName);
 	}
 
 	protected String getEditorName(HttpServletRequest request) {

@@ -32,6 +32,11 @@ public class SimpleEditor implements Editor {
 	}
 
 	@Override
+	public String[] getModules() {
+		return new String[] {};
+	}
+
+	@Override
 	public String getName() {
 		return "simple";
 	}

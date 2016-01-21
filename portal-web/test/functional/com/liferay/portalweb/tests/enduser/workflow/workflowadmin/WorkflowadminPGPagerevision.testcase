@@ -101,6 +101,13 @@
 
 		<execute macro="Staging#submitForPublicationPageRevision" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Pending (Review)" />
@@ -212,6 +219,13 @@
 		</execute>
 
 		<execute macro="Staging#submitForPublicationPageRevision" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />

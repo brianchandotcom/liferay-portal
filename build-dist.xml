@@ -987,7 +987,7 @@ release was successful.</echo>
 		<ant dir="portal-impl" inheritall="false" target="compile-test" />
 
 		<ant inheritall="false" target="format-javadoc">
-			<property name="xml" value="true" />
+			<property name="generate.xml" value="true" />
 		</ant>
 
 		<delete>
@@ -1000,7 +1000,7 @@ release was successful.</echo>
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="compile" />
 
 		<ant dir="${lp.plugins.dir}" inheritall="false" target="format-javadoc">
-			<property name="xml" value="true" />
+			<property name="generate.xml" value="true" />
 		</ant>
 
 		<parallel>

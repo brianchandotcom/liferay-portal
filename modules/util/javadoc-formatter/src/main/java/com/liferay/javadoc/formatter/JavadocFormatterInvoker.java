@@ -36,7 +36,7 @@ public class JavadocFormatterInvoker {
 
 		arguments.put("javadoc.author", javadocFormatterArgs.getAuthor());
 		arguments.put(
-			"javadoc.xml",
+			"javadoc.generate.xml",
 			String.valueOf(javadocFormatterArgs.isGenerateXml()));
 		arguments.put(
 			"javadoc.init",

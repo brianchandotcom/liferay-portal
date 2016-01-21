@@ -107,7 +107,8 @@ public class JavadocFormatter {
 
 		_author = author;
 
-		_generateXml = GetterUtil.getBoolean(arguments.get("javadoc.xml"));
+		_generateXml = GetterUtil.getBoolean(
+			arguments.get("javadoc.generate.xml"));
 
 		String init = arguments.get("javadoc.init");
 

@@ -1727,12 +1727,12 @@ rerun your task.
 			newenvironment="true"
 		>
 			<jvmarg value="-Xmx2048m" />
+			<arg value="javadoc.generate.xml=${generate.xml}" />
 			<arg value="javadoc.init=${init}" />
 			<arg value="javadoc.input.dir=${input.dir}" />
 			<arg value="javadoc.limit=${limit}" />
 			<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
 			<arg value="javadoc.update=${update}" />
-			<arg value="javadoc.xml=${xml}" />
 		</java>
 	</target>
 

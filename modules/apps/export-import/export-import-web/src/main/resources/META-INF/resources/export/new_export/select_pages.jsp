@@ -39,6 +39,30 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 <ul class="flex-container layout-selector" id="<portlet:namespace />pages">
 	<li class="layout-selector-options">
+		<c:choose>
+			<c:when test="<%= privateLayout %>">
+				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutURL">
+					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
+				</liferay-portlet:renderURL>
+
+				<aui:button href="<%= changeToPublicLayoutURL %>" value="change-to-public-pages" />
+			</c:when>
+			<c:otherwise>
+				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutURL">
+					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
+				</liferay-portlet:renderURL>
+
+				<aui:button href="<%= changeToPrivateLayoutURL %>" value="change-to-private-pages" />
+			</c:otherwise>
+		</c:choose>
 	</li>
 
 	<li class="layout-selector-options">

@@ -47,7 +47,7 @@ Here's the template to use for each breaking change (note how it ends with a
 horizontal rule):
 
 ```
-### [Title]
+### Title
 - **Date:**
 - **JIRA Ticket:**
 

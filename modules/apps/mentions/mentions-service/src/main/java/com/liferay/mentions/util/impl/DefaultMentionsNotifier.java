@@ -38,8 +38,6 @@ import com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -147,13 +145,9 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 				getSocialInteractionsConfiguration(
 					user.getCompanyId(), MentionsPortletKeys.MENTIONS);
 
-		Matcher matcher = _pattern.matcher(content);
-
 		Set<String> mentionedUsersScreenNames = new HashSet<>();
 
-		while (matcher.find()) {
-			String mentionedUserScreenName = matcher.group(2);
-
+		for (String mentionedUserScreenName : MentionsMatcher.match(content)) {
 			List<User> users = _mentionsUserFinder.getUsers(
 				user.getCompanyId(), userId, mentionedUserScreenName,
 				socialInteractionsConfiguration);
@@ -182,10 +176,6 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"(?:\\s|^|\\]|>)([@|&#64;]([^(?:@|&#64;|>|\\[|\\s|,|.|<)]+))",
-		Pattern.CASE_INSENSITIVE);
 
 	private MentionsUserFinder _mentionsUserFinder;
 	private UserLocalService _userLocalService;

@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>CONTENT_TITLE</td>
-	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
+	<td>//div[contains(@class,'list-group-item-content')]/h4[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -32,6 +32,8 @@
 	<command name="previewPG">
 		<execute function="Click" locator1="ControlMenu#SIMULATION" />
 
+		<execute function="AssertElementNotPresent" locator1="IFrame#LOADING_MESSAGE" />
+
 		<if>
 			<equals arg1="${deviceType}" arg2="smartphone" />
 			<then>

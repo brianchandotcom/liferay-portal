@@ -15,27 +15,27 @@
 </tr>
 <tr>
 	<td>PREVIEW_AUTOSIZE</td>
-	<td>//li[@data-device='autosize']/div</td>
+	<td>//div[@data-device='autosize']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_SMARTPHONE</td>
-	<td>//li[@data-device='smartphone']/div</td>
+	<td>//div[@data-device='smartphone']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_TABLET</td>
-	<td>//li[@data-device='tablet']/div</td>
+	<td>//div[@data-device='tablet']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_DESKTOP</td>
-	<td>//li[@data-device='desktop']/div</td>
+	<td>//div[@data-device='desktop']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_CUSTOM</td>
-	<td>//li[@data-device='custom']/div</td>
+	<td>//span[@data-device='custom']/i</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_MESSAGE</td>
-	<td>//div[contains(@id,'_simulationDeviceContainer')]/div[contains(@class,'alert-warning')]</td>
+	<td>//li[contains(@id,'_simulationDeviceContainer')]//div[contains(@class,'preview-info-message')]</td>
 	<td></td>
 </tr>
 </tbody>

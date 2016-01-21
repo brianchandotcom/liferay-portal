@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Import", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.exportimport.web.portlet.action",
+		"javax.portlet.init-param.mvc-command-names-default-views=importLayoutsView",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/import/view.jsp",
 		"javax.portlet.name=" + ExportImportPortletKeys.IMPORT,

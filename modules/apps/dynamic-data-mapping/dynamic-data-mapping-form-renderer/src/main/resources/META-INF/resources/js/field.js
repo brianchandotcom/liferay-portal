@@ -86,10 +86,6 @@ AUI.add(
 						value: ''
 					},
 
-					tooltip: {
-						value: ''
-					},
-
 					type: {
 						value: ''
 					},
@@ -304,7 +300,8 @@ AUI.add(
 								name: instance.getQualifiedName(),
 								readOnly: instance.get('readOnly'),
 								value: instance.getContextValue() || '',
-								visible: instance.get('visible')
+								visible: instance.get('visible'),
+								tip: instance.getLocalizedValue(instance.get('tip'))
 							}
 						);
 					},

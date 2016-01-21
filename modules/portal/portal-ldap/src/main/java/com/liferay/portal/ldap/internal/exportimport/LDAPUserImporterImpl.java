@@ -278,7 +278,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (Validator.isNull(providerUrl)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"No providerUrl defined for: " +
+						"No provider URL defined in " +
 							ldapServerConfiguration);
 				}
 

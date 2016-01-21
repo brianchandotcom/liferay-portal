@@ -116,7 +116,9 @@ public class ElasticsearchFixture {
 	}
 
 	public void destroyNode() throws Exception {
-		_embeddedElasticsearchConnection.close();
+		if (_embeddedElasticsearchConnection != null) {
+			_embeddedElasticsearchConnection.close();
+		}
 
 		deleteTmpDir();
 	}

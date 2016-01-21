@@ -48,6 +48,10 @@ public class JavadocFormatterArgs {
 		return _outputFilePrefix;
 	}
 
+	public boolean isGenerateXml() {
+		return _generateXml;
+	}
+
 	public boolean isInitializeMissingJavadocs() {
 		return _initializeMissingJavadocs;
 	}
@@ -58,6 +62,10 @@ public class JavadocFormatterArgs {
 
 	public void setAuthor(String author) {
 		_author = author;
+	}
+
+	public void setGenerateXml(boolean generateXml) {
+		_generateXml = generateXml;
 	}
 
 	public void setInitializeMissingJavadocs(
@@ -97,6 +105,7 @@ public class JavadocFormatterArgs {
 	}
 
 	private String _author = AUTHOR;
+	private boolean _generateXml;
 	private boolean _initializeMissingJavadocs;
 	private String _inputDirName = "./";
 	private String[] _limits = new String[0];

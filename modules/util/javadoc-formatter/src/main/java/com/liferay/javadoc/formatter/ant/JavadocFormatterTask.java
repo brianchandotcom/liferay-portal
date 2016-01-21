@@ -53,6 +53,10 @@ public class JavadocFormatterTask extends Task {
 		_javadocFormatterArgs.setAuthor(author);
 	}
 
+	public void setGenerateXml(boolean generateXml) {
+		_javadocFormatterArgs.setGenerateXml(generateXml);
+	}
+
 	public void setInitializeMissingJavadocs(
 		boolean initializeMissingJavadocs) {
 

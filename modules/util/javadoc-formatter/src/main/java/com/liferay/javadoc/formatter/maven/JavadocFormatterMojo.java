@@ -56,6 +56,10 @@ public class JavadocFormatterMojo extends AbstractMojo {
 		_javadocFormatterArgs.setAuthor(author);
 	}
 
+	public void setGenerateXml(boolean generateXml) {
+		_javadocFormatterArgs.setGenerateXml(generateXml);
+	}
+
 	public void setInitializeMissingJavadocs(
 		boolean initializeMissingJavadocs) {
 

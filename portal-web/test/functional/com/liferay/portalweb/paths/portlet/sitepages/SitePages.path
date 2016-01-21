@@ -158,7 +158,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_EDIT_COG</td>
-	<td>//span[a[contains(.,'${key_sitePageName}')]]//span/*[name()='svg'][contains(@class,'lexicon-icon-cog')]</td>
+	<td>//a[contains(@class,'tree-edit') and contains(@onmouseover,'${key_sitePageName}')]</td>
 	<td></td>
 </tr>
 <tr>

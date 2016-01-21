@@ -189,6 +189,8 @@
 	<command name="definePermissionPG">
 		<var name="key_roleName" value="${roleName}" />
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -728,6 +730,8 @@
 	<command name="removePermissionPG">
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Uncheck" locator1="Permissions#${permissionDefinitionKey}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

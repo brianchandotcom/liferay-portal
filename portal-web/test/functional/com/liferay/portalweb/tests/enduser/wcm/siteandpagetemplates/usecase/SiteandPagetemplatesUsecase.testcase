@@ -116,6 +116,11 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="home" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">
 			<var name="page" value="Public Pages" />
 			<var name="site" value="Site Name" />

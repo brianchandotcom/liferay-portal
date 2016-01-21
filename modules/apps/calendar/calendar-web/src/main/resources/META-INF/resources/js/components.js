@@ -909,38 +909,33 @@
 			var toInt = Lang.toInt;
 
 			Liferay.DatePickerUtil = {
-				syncUI: function(form, fieldName, date) {
+				syncUI: function(schedulerEvent, intervalSelector) {
 					var instance = this;
 
-					var amPmNode = form.one('select[name$=' + fieldName + 'AmPm]');
-					var hourNode = form.one('select[name$=' + fieldName + 'Hour]');
-					var minuteNode = form.one('select[name$=' + fieldName + 'Minute]');
+					intervalSelector.stopDurationPreservation();
 
-					var datePicker = Liferay.component(Liferay.CalendarUtil.PORTLET_NAMESPACE + fieldName + 'datePicker');
+					var startDate = schedulerEvent.get('startDate');
 
-					if (datePicker) {
-						datePicker.calendar.deselectDates();
-						datePicker.calendar.selectDates(date);
+					var startDatePicker = intervalSelector.get('startDatePicker');
 
-						datePicker.syncUI();
-					}
+					var startTimePicker = intervalSelector.get('startTimePicker');
 
-					var hours = date.getHours();
-					var minutes = date.getMinutes();
+					startDatePicker.deselectDates();
+					startDatePicker.selectDates([startDate]);
+					startTimePicker.selectDates([startDate]);
 
-					var amPm = hours < 12 ? 0 : 1;
+					var endDate = schedulerEvent.get('endDate');
 
-					if (amPm === 1) {
-						hours -= 12;
+					var endDatePicker = intervalSelector.get('endDatePicker');
 
-						if (hours === 12) {
-							hours = 0;
-						}
-					}
+					var endTimePicker = intervalSelector.get('endTimePicker');
 
-					amPmNode.val(amPm);
-					hourNode.val(hours);
-					minuteNode.val(minutes);
+					endDatePicker.deselectDates();
+					endDatePicker.selectDates([endDate]);
+					endTimePicker.selectDates([endDate]);
+
+					intervalSelector.startDurationPreservation()
+
 				},
 
 				linkToSchedulerEvent: function(datePickerContainer, schedulerEvent, dateAttr) {

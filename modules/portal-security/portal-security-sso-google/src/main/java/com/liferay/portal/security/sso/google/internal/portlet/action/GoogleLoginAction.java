@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google.portlet.action;
+package com.liferay.portal.security.sso.google.internal.portlet.action;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;

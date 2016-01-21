@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google.portlet.action;
+package com.liferay.portal.security.sso.google.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.internal.cluster.TestCluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.BaseIndexSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
 
@@ -75,9 +76,9 @@ public class CompanyIndexFactoryTest {
 	@Test
 	public void testAdditionalTypeMappings() throws Exception {
 		_companyIndexFactory.setAdditionalIndexConfigurations(
-			_readAdditionalAnalyzers());
+			loadAdditionalAnalyzers());
 		_companyIndexFactory.setAdditionalTypeMappings(
-			_readAdditionalTypeMappings());
+			loadAdditionalTypeMappings());
 
 		createIndices();
 
@@ -121,7 +122,7 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testIndexSettingsContributorTypeMappings() throws Exception {
-		final String mappings = _readAdditionalTypeMappings();
+		final String mappings = loadAdditionalTypeMappings();
 
 		_companyIndexFactory.addIndexSettingsContributor(
 			new BaseIndexSettingsContributor(1) {
@@ -129,13 +130,13 @@ public class CompanyIndexFactoryTest {
 				@Override
 				public void contribute(TypeMappingsHelper typeMappingsHelper) {
 					typeMappingsHelper.addTypeMappings(
-						_replaceAnalyzer(mappings, "brazilian"));
+						replaceAnalyzer(mappings, "brazilian"));
 				}
 
 			});
 
 		_companyIndexFactory.setAdditionalTypeMappings(
-			_replaceAnalyzer(mappings, "portuguese"));
+			replaceAnalyzer(mappings, "portuguese"));
 
 		createIndices();
 
@@ -148,7 +149,7 @@ public class CompanyIndexFactoryTest {
 		throws Exception {
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, LiferayTypeMappingsConstants.TYPE,
+			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
 			String.valueOf(_COMPANY_ID),
 			_elasticsearchFixture.getIndicesAdminClient());
 	}
@@ -175,7 +176,8 @@ public class CompanyIndexFactoryTest {
 		Client client = _elasticsearchFixture.getClient();
 
 		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
-			String.valueOf(_COMPANY_ID), LiferayTypeMappingsConstants.TYPE);
+			String.valueOf(_COMPANY_ID),
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		String field = RandomTestUtil.randomString() + "_ja";
 
@@ -186,23 +188,19 @@ public class CompanyIndexFactoryTest {
 		return field;
 	}
 
-	private static String _replaceAnalyzer(String mappings, String analyzer) {
+	protected String loadAdditionalAnalyzers() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(), "CompanyIndexFactoryTest-additionalAnalyzers.json");
+	}
+
+	protected String loadAdditionalTypeMappings() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(), "CompanyIndexFactoryTest-additionalTypeMappings.json");
+	}
+
+	protected String replaceAnalyzer(String mappings, String analyzer) {
 		return StringUtil.replace(
 			mappings, "kuromoji_liferay_custom", analyzer);
-	}
-
-	private String _read(String name) throws Exception {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(clazz.getResourceAsStream(name));
-	}
-
-	private String _readAdditionalAnalyzers() throws Exception {
-		return _read("CompanyIndexFactoryTest-additionalAnalyzers.json");
-	}
-
-	private String _readAdditionalTypeMappings() throws Exception {
-		return _read("CompanyIndexFactoryTest-additionalTypeMappings.json");
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();

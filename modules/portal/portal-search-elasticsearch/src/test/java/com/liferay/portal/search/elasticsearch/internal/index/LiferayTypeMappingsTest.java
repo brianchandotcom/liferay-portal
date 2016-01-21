@@ -57,7 +57,8 @@ public class LiferayTypeMappingsTest {
 		Client client = _elasticsearchFixture.getClient();
 
 		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
-			_index.getName(), LiferayTypeMappingsConstants.TYPE);
+			_index.getName(),
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		String field_pt = RandomTestUtil.randomString() + "_pt";
 		String field_pt_BR = RandomTestUtil.randomString() + "_pt_BR";
@@ -82,7 +83,7 @@ public class LiferayTypeMappingsTest {
 		throws Exception {
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, LiferayTypeMappingsConstants.TYPE,
+			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
 			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
 	}
 

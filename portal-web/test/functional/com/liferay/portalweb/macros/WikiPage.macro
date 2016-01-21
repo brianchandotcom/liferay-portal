@@ -406,13 +406,9 @@
 	</command>
 
 	<command name="addTagPGCmd">
-		<if>
-			<condition function="IsElementNotPresent" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
-			<then>
-				<execute function="AssertClick" locator1="AssetCategorization#PANEL_TOGGLE" value1="Categorization" />
-				<execute function="AssertElementPresent" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
 
 		<if>
 			<isset var="tagNameList" />

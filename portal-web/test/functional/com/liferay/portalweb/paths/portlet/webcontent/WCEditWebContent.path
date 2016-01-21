@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SELECT_STRUCTURE</td>
-	<td>//a[contains(.,'Select')]/span</td>
+	<td>//button[contains(.,'Select')]/span</td>
 	<td></td>
 </tr>
 <tr>

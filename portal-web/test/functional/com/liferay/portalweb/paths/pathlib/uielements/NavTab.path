@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>TAB_LINK</td>
-	<td>//ul[contains(@class,'nav-tabs')]//li[contains(.,'${key_tabName}')]/a</td>
+	<td>//ul[contains(@class,'nav-tabs')]//li[contains(.,'${key_tab}')]/a</td>
 	<td></td>
 </tr>
 <tr>

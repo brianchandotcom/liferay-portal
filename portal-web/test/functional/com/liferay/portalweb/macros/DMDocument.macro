@@ -331,12 +331,9 @@
 			<then>
 				<var name="key_categoryName" value="${categoryName}" />
 
-				<if>
-					<condition function="IsElementNotPresent#isNotVisible" locator1="AssetCategorization#TAGS_FIELD" />
-					<then>
-						<execute function="AssertClick" locator1="AssetCategorization#CATEGORIZATION_PANEL_COLLAPSED" value1="Categorization" />
-					</then>
-				</if>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Categorization" />
+				</execute>
 
 				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
@@ -485,13 +482,9 @@
 	</command>
 
 	<command name="addRelatedAssetPG">
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGDocumentsandmediaAdddocument#RELATED_ASSETS_SELECT" />
-			<then>
-				<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Related Assets" />
+		</execute>
 
 		<var name="key_assetType" value="${assetType}" />
 

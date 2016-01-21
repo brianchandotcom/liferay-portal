@@ -57,8 +57,8 @@
 			<var name="panelHeading" value="Feeds" />
 		</execute>
 
-		<execute function="Uncheck" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE" value1="Show Feed Title" />
-		<execute function="Uncheck" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION" value1="Show Feed Description" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE" value1="Show Feed Title" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION" value1="Show Feed Description" />
 	</command>
 
 	<command name="openFeed">

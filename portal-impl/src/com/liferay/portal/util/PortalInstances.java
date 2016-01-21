@@ -515,6 +515,16 @@ public class PortalInstances {
 	}
 
 	private void _removeCompanyId(long companyId) {
+		try {
+			EventsProcessorUtil.process(
+				PropsKeys.APPLICATION_SHUTDOWN_EVENTS,
+				PropsValues.APPLICATION_SHUTDOWN_EVENTS,
+				new String[] {String.valueOf(companyId)});
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		_companyIds = ArrayUtil.remove(_companyIds, companyId);
 		_webIds = null;
 

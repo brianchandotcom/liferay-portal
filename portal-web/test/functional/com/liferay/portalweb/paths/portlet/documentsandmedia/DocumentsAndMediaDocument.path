@@ -131,8 +131,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_INFO_DATE</td>
-	<td>//div[contains(@class,'lfr-asset-icon') and contains(@class,'icon-calendar')]</td>
+	<td>DOCUMENT_INFO_CREATED_DATE</td>
+	<td>//div[contains(@class,'sidebar-body') and contains(.,'Created')]//p</td>
 	<td></td>
 </tr>
 <tr>
@@ -327,6 +327,27 @@
 <tr>
 	<td>VERSION_HISTORY_TABLE_DROPDOWN</td>
 	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[5]/div/a</td>
+	<td></td>
+</tr>
+<!--SIDEBAR-->
+<tr>
+	<td>SIDEBAR_DROPDOWN</td>
+	<td>//div//li[contains(@class,'active dropdown')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_DROPDOWN_DETAILS</td>
+	<td>//div//li[contains(@class,'active dropdown')]//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_DROPDOWN_METADATA</td>
+	<td>//div//li[contains(@class,'active dropdown')]//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Metadata')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_DROPDOWN_VERSIONS</td>
+	<td>//div//li[contains(@class,'active dropdown')]//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Versions')]</td>
 	<td></td>
 </tr>
 </tbody>

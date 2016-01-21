@@ -1741,6 +1741,7 @@
 	</command>
 
 	<command name="viewWithStructureCP">
+		<var name="key_fieldName" value="Text" />
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute macro="Portlet#changeDisplayStyle">
@@ -1751,6 +1752,8 @@
 		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="DDMField#TEXT" value1="${webContentText}" />
 	</command>
 
 	<command name="viewWithWorkflowCP">

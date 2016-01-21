@@ -607,7 +607,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 *             attributes for the organization.
 	 * @return     the organization
 	 * @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
-	 *             long, String, String, long, long, int, String, boolean,
+	 *             long, String, String, long, long, long, String, boolean,
 	 *             byte[], boolean, List, List, List, List, List,
 	 *             ServiceContext)}
 	 */

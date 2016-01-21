@@ -161,6 +161,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new MarketplaceAppManagerResultRowSplitter() %>" />
 	</liferay-ui:search-container>
 </div>

@@ -5,6 +5,6 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: App Manager
+Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /marketplace-app-manager-web
 -include: ../../../../marketplace/marketplace/bnd.bnd

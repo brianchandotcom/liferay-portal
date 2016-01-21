@@ -4,5 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.marketplace.*
 Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Store
+Liferay-Releng-Module-Group-Title:
 -include: ../../../../marketplace/marketplace/bnd.bnd

@@ -2484,10 +2484,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #updateUser(long, String,
 	String, String, boolean, String, String, String, String,
 	long, String, boolean, byte[], String, String, String,
-	String, String, String, String, int, int, boolean, int, int,
-	int, String, String, String, String, String, String, String,
-	String, String, String, String, long[], long[], long[], List,
-	long[], ServiceContext)}
+	String, String, String, String, long, long, boolean, int,
+	int, int, String, String, String, String, String, String,
+	long[], long[], long[], List, long[], ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.model.User updateUser(long userId,

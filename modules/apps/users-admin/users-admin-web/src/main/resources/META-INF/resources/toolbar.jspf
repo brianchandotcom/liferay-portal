@@ -21,7 +21,7 @@
 				<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 					<aui:nav-item
 						label="users-and-suborganizations"
-						selected="true"
+						selected="<%= true %>"
 					/>
 				</c:when>
 				<c:otherwise>

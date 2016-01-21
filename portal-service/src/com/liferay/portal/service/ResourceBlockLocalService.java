@@ -275,12 +275,12 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getResourceBlockIds(
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag,
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag,
 		java.lang.String name, java.lang.String actionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.security.permission.ResourceBlockIdsBag getResourceBlockIdsBag(
+	public com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag getResourceBlockIdsBag(
 		long companyId, long groupId, java.lang.String name, long[] roleIds);
 
 	/**
@@ -315,13 +315,13 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public boolean hasPermission(java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		java.lang.String actionId,
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPermission(java.lang.String name, long primKey,
 		java.lang.String actionId,
-		com.liferay.portal.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
+		com.liferay.portal.kernel.security.permission.ResourceBlockIdsBag resourceBlockIdsBag)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

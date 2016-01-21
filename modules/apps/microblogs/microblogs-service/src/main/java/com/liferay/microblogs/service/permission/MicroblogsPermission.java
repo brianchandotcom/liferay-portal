@@ -16,9 +16,9 @@ package com.liferay.microblogs.service.permission;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Jonathan Lee

@@ -554,7 +554,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the permission propagator instance of the portlet
 	*/
-	public com.liferay.portal.security.permission.PermissionPropagator getPermissionPropagatorInstance();
+	public com.liferay.portal.kernel.security.permission.PermissionPropagator getPermissionPropagatorInstance();
 
 	/**
 	* Returns the plugin ID of the portlet.

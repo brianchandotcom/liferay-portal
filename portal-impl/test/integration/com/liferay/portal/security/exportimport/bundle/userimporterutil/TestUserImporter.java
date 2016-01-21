@@ -14,10 +14,10 @@
 
 package com.liferay.portal.security.exportimport.bundle.userimporterutil;
 
+import com.liferay.portal.kernel.security.exportimport.UserImporter;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserImpl;
-import com.liferay.portal.security.exportimport.UserImporter;
 
 import java.util.concurrent.atomic.AtomicReference;
 

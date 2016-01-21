@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.permission.PortletResourceActionsBag;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

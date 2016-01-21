@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.auth.bundle.authpipeline;
 
+import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.util.StackTraceUtil;
-import com.liferay.portal.security.auth.Authenticator;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;

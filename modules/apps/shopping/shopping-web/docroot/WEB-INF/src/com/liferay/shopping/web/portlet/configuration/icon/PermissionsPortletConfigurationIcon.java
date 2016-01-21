@@ -16,8 +16,8 @@ package com.liferay.shopping.web.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.shopping.service.permission.ShoppingPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 

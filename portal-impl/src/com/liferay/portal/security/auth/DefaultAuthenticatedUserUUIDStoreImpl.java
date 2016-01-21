@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStore;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 import java.util.Set;

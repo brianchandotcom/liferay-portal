@@ -20,8 +20,8 @@ import com.liferay.calendar.service.base.CalendarResourceServiceBaseImpl;
 import com.liferay.calendar.service.permission.CalendarPortletPermission;
 import com.liferay.calendar.service.permission.CalendarResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;

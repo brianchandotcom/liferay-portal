@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.membershippolicy.bundle.rolemembershippolicyfactoryimpl;
 
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.security.membershippolicy.RoleMembershipPolicy;
 
 import java.io.Serializable;
 

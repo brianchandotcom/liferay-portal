@@ -17,11 +17,11 @@ package com.liferay.portal.security.access.control;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.access.control.BaseAccessControlPolicy;
+import com.liferay.portal.kernel.security.auth.AccessControlContext;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyManager;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyManagerUtil;
-import com.liferay.portal.security.auth.AccessControlContext;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.lang.reflect.Method;
 

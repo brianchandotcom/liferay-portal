@@ -14,11 +14,11 @@
 
 package com.liferay.portal.security.membershippolicy.bundle.organizationmembershippolicyfactory;
 
+import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 

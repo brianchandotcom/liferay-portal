@@ -21,9 +21,9 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.security.auth.PrincipalException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

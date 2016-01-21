@@ -15,9 +15,9 @@
 package com.liferay.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.base.WikiNodeServiceBaseImpl;

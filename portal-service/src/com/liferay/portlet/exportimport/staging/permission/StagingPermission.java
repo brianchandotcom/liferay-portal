@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.exportimport.staging.permission;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Jorge Ferrer

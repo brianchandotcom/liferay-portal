@@ -3450,6 +3450,22 @@ else.
 
 `com.liferay.portal.repository.proxy` renamed to `com.liferay.portal.kernel.repository.proxy`
 
+`com.liferay.portal.security.auth` renamed to `com.liferay.portal.kernel.security.auth`
+
+`com.liferay.portal.security.exportimport` renamed to `com.liferay.portal.kernel.security.exportimport`
+
+`com.liferay.portal.security.ldap` renamed to com.liferay.portal.kernel.security.ldap`
+
+`com.liferay.portal.security.membershippolicy` renamed to com.liferay.portal.kernel.security.membershippolicy`
+
+`com.liferay.portal.security.permission` renamed to com.liferay.portal.kernel.security.permission`
+
+`com.liferay.portal.security.permission.comparator` renamed to com.liferay.portal.kernel.security.permission.comparator`
+
+`com.liferay.portal.security.pwd` renamed to com.liferay.portal.kernel.security.pwd`
+
+`com.liferay.portal.security.xml` renamed to com.liferay.portal.kernel.security.xml`
+
 `com.liferay.portal.webserver` renamed to `com.liferay.portal.kernel.webserver`
 
 `com.liferay.portlet.backgroundtask` renamed to `com.liferay.background.task.kernel`

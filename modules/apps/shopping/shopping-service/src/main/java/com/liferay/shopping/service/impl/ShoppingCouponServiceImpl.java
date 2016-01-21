@@ -15,7 +15,7 @@
 package com.liferay.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.service.base.ShoppingCouponServiceBaseImpl;

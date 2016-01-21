@@ -14,10 +14,10 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
-import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portlet.PortletPreferencesFactoryImpl;

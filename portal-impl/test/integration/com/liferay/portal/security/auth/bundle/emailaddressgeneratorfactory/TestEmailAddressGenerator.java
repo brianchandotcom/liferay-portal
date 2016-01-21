@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auth.bundle.emailaddressgeneratorfactory;
 
-import com.liferay.portal.security.auth.EmailAddressGenerator;
+import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
 
 import org.osgi.service.component.annotations.Component;
 

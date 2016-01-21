@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.service.impl.bundle.socialactivityinterpreterlocalserviceimpl;
 
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;

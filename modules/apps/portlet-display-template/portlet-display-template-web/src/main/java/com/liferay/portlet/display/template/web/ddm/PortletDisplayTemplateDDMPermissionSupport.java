@@ -15,10 +15,10 @@
 package com.liferay.portlet.display.template.web.ddm;
 
 import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.permission.ActionKeys;
 
 import org.osgi.service.component.annotations.Component;
 

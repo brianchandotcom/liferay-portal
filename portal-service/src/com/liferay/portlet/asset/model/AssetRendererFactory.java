@@ -17,8 +17,8 @@ package com.liferay.portlet.asset.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
 import java.util.Locale;

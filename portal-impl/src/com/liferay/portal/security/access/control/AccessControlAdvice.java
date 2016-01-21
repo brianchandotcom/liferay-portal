@@ -17,7 +17,7 @@ package com.liferay.portal.security.access.control;
 import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
-import com.liferay.portal.security.auth.AccessControlContext;
+import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.util.Map;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.workflow.permission;
 
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Jorge Ferrer

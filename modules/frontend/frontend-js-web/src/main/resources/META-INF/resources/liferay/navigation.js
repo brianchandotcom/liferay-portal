@@ -150,9 +150,6 @@ AUI.add(
 
 							instance._tempTab = instance._createTempTab(TPL_TAB_LINK);
 							instance._tempChildTab = instance._createTempTab(TPL_LINK);
-
-							Liferay.on('dockbaraddpage:addPage', instance._onAddPage, instance);
-							Liferay.on('dockbaraddpage:previewPageTitle', instance._onPreviewPageTitle, instance);
 						}
 					},
 

@@ -54,15 +54,20 @@ public interface DDMRESTDataProviderSettings {
 
 	@DDMFormField(
 		label = "%displayed-json-attribute",
-		properties = {"placeholder=%enter-the-attribute-to-be-displayed"},
-		required = true,
-		tip = "%the-attribute-whose-value-is-displayed-to-the-end-user-for-selection"
+		properties = {
+			"placeholder=%enter-the-attribute-to-be-displayed",
+			"tooltip=%the-attribute-whose-value-is-displayed-to-the-end-user-for-selection"
+		},
+		required = true
 	)
 	public String key();
 
 	@DDMFormField(
-		label = "%password", properties = {"placeholder=%enter-a-password"},
-		tip = "%provide-the-password-for-authenticating-to-the-rest-provider"
+		label = "%password",
+		properties = {
+			"placeholder=%enter-a-password",
+			"tooltip=%provide-the-password-for-authenticating-to-the-rest-provider"
+		}
 	)
 	public String password();
 
@@ -74,16 +79,21 @@ public interface DDMRESTDataProviderSettings {
 	public String url();
 
 	@DDMFormField(
-		label = "%user-name", properties = {"placeholder=%enter-a-user-name"},
-		tip = "%provide-the-user-name-for-authenticating-to-the-rest-provider"
+		label = "%user-name",
+		properties = {
+			"placeholder=%enter-a-user-name",
+			"tooltip=%provide-the-user-name-for-authenticating-to-the-rest-provider"
+		}
 	)
 	public String username();
 
 	@DDMFormField(
 		label = "%stored-json-attribute",
-		properties = {"placeholder=%enter-the-attribute-to-be-stored"},
-		required = true,
-		tip = "%the-attribute-whose-value-is-stored-in-the-database-when-selected-by-a-user"
+		properties = {
+			"placeholder=%enter-the-attribute-to-be-stored",
+			"tooltip=%the-attribute-whose-value-is-stored-in-the-database-when-selected-by-a-user"
+		},
+		required = true
 	)
 	public String value();
 

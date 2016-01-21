@@ -80,10 +80,12 @@ public interface DefaultDDMFormFieldTypeSettings
 	public String indexType();
 
 	@DDMFormField(
-		label = "%label", properties = {"placeholder=%enter-a-field-label"},
-		required = true,
-		tip = "%enter-a-descriptive-field-label-that-guides-users-to-enter-the-information-you-want",
-		type = "key-value"
+		label = "%label",
+		properties = {
+			"placeholder=%enter-a-field-label",
+			"tooltip=%enter-a-descriptive-field-label-that-guides-users-to-enter-the-information-you-want"
+		},
+		required = true, type = "key-value"
 	)
 	public LocalizedValue label();
 
@@ -92,8 +94,10 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%predefined-value",
-		properties = {"placeholder=%enter-a-default-value"},
-		tip = "%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered",
+		properties = {
+			"placeholder=%enter-a-default-value",
+			"tooltip=%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered"
+		},
 		type = "text"
 	)
 	public LocalizedValue predefinedValue();
@@ -114,8 +118,10 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%help-text",
-		properties = {"placeholder=%enter-text-to-help-users-understand"},
-		tip = "%type-a-short-comment-to-help-users-understand-the-question",
+		properties = {
+			"placeholder=%enter-text-to-help-users-understand",
+			"tooltip=%type-a-short-comment-to-help-users-understand-the-question"
+		},
 		type = "text"
 	)
 	public LocalizedValue tip();
@@ -127,8 +133,10 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%field-visibility-expression",
-		properties = {"placeholder=%Country.equals(\"US\")"},
-		tip = "%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
+		properties = {
+			"placeholder=%Country.equals(\"US\")",
+			"tooltip=%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
+		}
 	)
 	public String visibilityExpression();
 

@@ -54,7 +54,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 								"visibilityExpression", "validation",
 								"fieldNamespace", "indexType", "localizable",
 								"readOnly", "dataType", "type", "name",
-								"showLabel", "repeatable"
+								"showLabel", "repeatable", "tooltip"
 							}
 						)
 					}
@@ -76,10 +76,15 @@ public interface TextDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",
-		properties = {"placeholder=%enter-placeholder-text"},
-		tip = "%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-vaue",
+		properties = {
+			"placeholder=%enter-placeholder-text",
+			"tooltip=%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-vaue"
+		},
 		type = "text"
 	)
 	public LocalizedValue placeholder();
+
+	@DDMFormField(visibilityExpression = "false")
+	public LocalizedValue tooltip();
 
 }

@@ -35,12 +35,7 @@ if (Validator.isNotNull(keywords)) {
 
 <div class="display-style-bar">
 	<span class="dropdown" id="<portlet:namespace />numItemsContainer">
-		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-			<span class="item-title"><%= delta %></span>
-			<span class="icon-sort"></span>
-		</a>
-
-		<ul class="dropdown-menu">
+		<liferay-ui:icon-menu message="<%= String.valueOf(delta) %>">
 
 			<%
 			for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
@@ -51,17 +46,26 @@ if (Validator.isNotNull(keywords)) {
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("delta", curDelta);
+
+				String cssClass = "num-item";
+
+				if (delta == curDelta) {
+					cssClass += " active";
+				}
 			%>
 
-				<li class="num-item <%= (delta == curDelta) ? "active" : StringPool.BLANK %>">
-					<aui:a cssClass="num-item" data="<%= data %>" href="javascript:;" label="<%= String.valueOf(curDelta) %>" />
-				</li>
+				<liferay-ui:icon
+					cssClass="<%= cssClass %>"
+					data="<%= data %>"
+					message="<%= String.valueOf(curDelta) %>"
+					url="javascript:;"
+				/>
 
 			<%
 			}
 			%>
 
-		</ul>
+		</liferay-ui:icon-menu>
 	</span>
 
 	<span class="pull-right" id="<portlet:namespace />displayStyleContainer">

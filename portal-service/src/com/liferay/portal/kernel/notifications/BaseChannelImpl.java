@@ -17,9 +17,10 @@ package com.liferay.portal.kernel.notifications;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Edward Han
@@ -28,23 +29,27 @@ public abstract class BaseChannelImpl implements Channel {
 
 	@Override
 	public void cleanUp() throws ChannelException {
-		long currentTime = System.currentTimeMillis();
+		lock.lock();
 
-		long nextCleanUpTime = _nextCleanUpTime.get();
+		try {
+			long currentTime = System.currentTimeMillis();
 
-		if ((currentTime > nextCleanUpTime) &&
-			_nextCleanUpTime.compareAndSet(
-				nextCleanUpTime, currentTime + _cleanUpInterval)) {
+			if (currentTime > _nextCleanUpTime) {
+				_nextCleanUpTime = currentTime + _cleanUpInterval;
 
-			try {
-				doCleanUp();
+				try {
+					doCleanUp();
+				}
+				catch (ChannelException ce) {
+					throw ce;
+				}
+				catch (Exception e) {
+					throw new ChannelException(e);
+				}
 			}
-			catch (ChannelException ce) {
-				throw ce;
-			}
-			catch (Exception e) {
-				throw new ChannelException(e);
-			}
+		}
+		finally {
+			lock.unlock();
 		}
 	}
 
@@ -89,10 +94,19 @@ public abstract class BaseChannelImpl implements Channel {
 
 	@Override
 	public void registerChannelListener(ChannelListener channelListener) {
-		_channelListeners.add(channelListener);
+		lock.lock();
 
-		if (hasNotificationEvents()) {
-			notifyChannelListeners();
+		try {
+			List<ChannelListener> channelListeners = _getChannelListeners();
+
+			channelListeners.add(channelListener);
+
+			if (hasNotificationEvents()) {
+				notifyChannelListeners();
+			}
+		}
+		finally {
+			lock.unlock();
 		}
 	}
 
@@ -102,7 +116,16 @@ public abstract class BaseChannelImpl implements Channel {
 
 	@Override
 	public void unregisterChannelListener(ChannelListener channelListener) {
-		_channelListeners.remove(channelListener);
+		lock.lock();
+
+		try {
+			List<ChannelListener> channelListeners = _getChannelListeners();
+
+			channelListeners.remove(channelListener);
+		}
+		finally {
+			lock.unlock();
+		}
 
 		channelListener.channelListenerRemoved(_userId);
 	}
@@ -115,19 +138,28 @@ public abstract class BaseChannelImpl implements Channel {
 	protected abstract void doCleanUp() throws Exception;
 
 	protected void notifyChannelListeners() {
-		for (ChannelListener channelListener : _channelListeners) {
+		for (ChannelListener channelListener : _getChannelListeners()) {
 			channelListener.notificationEventsAvailable(_userId);
 		}
+	}
+
+	protected final Lock lock = new ReentrantLock();
+
+	private List<ChannelListener> _getChannelListeners() {
+		if (_channelListeners == null) {
+			_channelListeners = new ArrayList<>();
+		}
+
+		return _channelListeners;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseChannelImpl.class);
 
-	private final List<ChannelListener> _channelListeners =
-		new CopyOnWriteArrayList<>();
+	private List<ChannelListener> _channelListeners;
 	private long _cleanUpInterval;
 	private final long _companyId;
-	private final AtomicLong _nextCleanUpTime = new AtomicLong();
+	private long _nextCleanUpTime;
 	private final long _userId;
 
 }

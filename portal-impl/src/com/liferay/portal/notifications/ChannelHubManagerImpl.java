@@ -94,7 +94,7 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 
 	@Override
 	public ChannelHub createChannelHub(long companyId) throws ChannelException {
-		ChannelHub channelHub = _channelHub.clone(companyId);
+		ChannelHub channelHub = new ChannelHubImpl(companyId);
 
 		if (_channelHubs.putIfAbsent(companyId, channelHub) != null) {
 			throw new DuplicateChannelHubException(
@@ -365,10 +365,6 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		channelHub.sendNotificationEvents(userId, notificationEvents);
 	}
 
-	public void setChannelHubPrototype(ChannelHub channelHub) {
-		_channelHub = channelHub;
-	}
-
 	@Override
 	public void storeNotificationEvent(
 			long companyId, long userId, NotificationEvent notificationEvent)
@@ -396,7 +392,6 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 			ChannelHubManagerUtil.class, "storeNotificationEvent", long.class,
 			long.class, NotificationEvent.class);
 
-	private ChannelHub _channelHub;
 	private final ConcurrentMap<Long, ChannelHub> _channelHubs =
 		new ConcurrentHashMap<>();
 

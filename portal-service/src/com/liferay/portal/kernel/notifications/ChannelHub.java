@@ -26,8 +26,6 @@ public interface ChannelHub {
 
 	public void cleanUp(long userId) throws ChannelException;
 
-	public ChannelHub clone(long companyId);
-
 	public void confirmDelivery(
 			long userId, Collection<String> notificationEventUuids)
 		throws ChannelException;

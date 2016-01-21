@@ -11,15 +11,7 @@
 	<bean id="com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil" class="com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil">
 		<property name="notificationEventFactory" ref="com.liferay.portal.kernel.notifications.NotificationEventFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.notifications.ChannelHubManager" class="com.liferay.portal.notifications.ChannelHubManagerImpl">
-		<property name="channelHubPrototype">
-			<bean class="com.liferay.portal.notifications.ChannelHubImpl">
-				<property name="channelPrototype">
-					<bean class="com.liferay.portal.notifications.ChannelImpl" />
-				</property>
-			</bean>
-		</property>
-	</bean>
+	<bean id="com.liferay.portal.kernel.notifications.ChannelHubManager" class="com.liferay.portal.notifications.ChannelHubManagerImpl" />
 	<bean id="com.liferay.portal.kernel.notifications.ChannelHubManagerUtil" class="com.liferay.portal.kernel.notifications.ChannelHubManagerUtil">
 		<property name="channelHubManager" ref="com.liferay.portal.kernel.notifications.ChannelHubManager" />
 	</bean>

@@ -24,8 +24,6 @@ public interface Channel {
 
 	public void cleanUp() throws ChannelException;
 
-	public Channel clone(long companyId, long userId);
-
 	public void close() throws ChannelException;
 
 	public void confirmDelivery(Collection<String> notificationEventUuids)

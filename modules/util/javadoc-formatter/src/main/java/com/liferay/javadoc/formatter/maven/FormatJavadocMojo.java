@@ -27,7 +27,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Runs Liferay Javadoc Formatter to format files.
+ *
  * @author Andrea Di Giorgi
+ * @goal format-javadoc
  */
 public class FormatJavadocMojo extends AbstractMojo {
 
@@ -52,14 +55,23 @@ public class FormatJavadocMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setAuthor(String author) {
 		_javadocFormatterArgs.setAuthor(author);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setGenerateXml(boolean generateXml) {
 		_javadocFormatterArgs.setGenerateXml(generateXml);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setInitializeMissingJavadocs(
 		boolean initializeMissingJavadocs) {
 
@@ -67,14 +79,23 @@ public class FormatJavadocMojo extends AbstractMojo {
 			initializeMissingJavadocs);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setInputDirName(String inputDirName) {
 		_javadocFormatterArgs.setInputDirName(inputDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setLimits(String limits) {
 		_javadocFormatterArgs.setLimits(limits);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setLowestSupportedJavaVersion(
 		double lowestSupportedJavaVersion) {
 
@@ -82,10 +103,16 @@ public class FormatJavadocMojo extends AbstractMojo {
 			lowestSupportedJavaVersion);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setOutputFilePrefix(String outputFilePrefix) {
 		_javadocFormatterArgs.setOutputFilePrefix(outputFilePrefix);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setUpdateJavadocs(boolean updateJavadocs) {
 		_javadocFormatterArgs.setUpdateJavadocs(updateJavadocs);
 	}

@@ -83,7 +83,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		emptyLayoutSetURL.setParameter(
 			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
 
-		Group liveGroup = getLiveGroup();
+		Group liveGroup = getSelGroup();
 
 		emptyLayoutSetURL.setParameter(
 			"groupId", String.valueOf(liveGroup.getGroupId()));

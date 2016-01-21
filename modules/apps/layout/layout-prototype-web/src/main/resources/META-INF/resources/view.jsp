@@ -124,6 +124,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="name"
 			>
 				<aui:a href="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>" target="_blank"><%= layoutPrototype.getName(locale) %></aui:a>
@@ -148,14 +149,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="checkbox-cell"
+				cssClass="list-group-item-field"
 				name="active"
 			>
 				<%= LanguageUtil.get(request, layoutPrototype.isActive()? "yes" : "no") %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="checkbox-cell entry-action"
+				cssClass="list-group-item-field"
 				path="/layout_prototype_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

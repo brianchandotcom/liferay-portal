@@ -42,22 +42,22 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 				<c:choose>
 					<c:when test="<%= privateLayout %>">
 						<li>
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutURL">
+							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
 								<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 								<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
 							</liferay-portlet:renderURL>
 
-							<aui:button href="<%= changeToPublicLayoutURL %>" value="change-to-public-pages" />
+							<aui:button href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li>
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutURL">
+							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
 								<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 								<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
 							</liferay-portlet:renderURL>
 
-							<aui:button href="<%= changeToPrivateLayoutURL %>" value="change-to-private-pages" />
+							<aui:button href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
 						</li>
 					</c:otherwise>
 				</c:choose>

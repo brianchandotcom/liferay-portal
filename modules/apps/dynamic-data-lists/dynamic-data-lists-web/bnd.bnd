@@ -5,9 +5,6 @@ Export-Package:\
 	com.liferay.dynamic.data.lists.web.asset,\
 	com.liferay.dynamic.data.lists.web.constants,\
 	com.liferay.dynamic.data.lists.web.lar
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Lists
 Web-ContextPath: /dynamic-data-lists-web

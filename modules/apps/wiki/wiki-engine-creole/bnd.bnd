@@ -2,7 +2,6 @@ Bundle-Name: Liferay Wiki Engine Creole
 Bundle-SymbolicName: com.liferay.wiki.engine.creole
 Bundle-Version: 1.0.0
 Include-Resource:\
-	classes,\
 	@../../../../lib/portal/antlr2.jar,\
 	@../../../../lib/portal/antlr3.jar,\
 	@../../../../lib/portal/stringtemplate.jar

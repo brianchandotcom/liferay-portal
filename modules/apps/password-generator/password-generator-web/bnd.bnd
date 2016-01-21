@@ -2,6 +2,4 @@ Bundle-Name: Liferay Password Generator Web
 Bundle-SymbolicName: com.liferay.password.generator.web
 Bundle-Version: 1.0.0
 Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/PwdGenerator.class

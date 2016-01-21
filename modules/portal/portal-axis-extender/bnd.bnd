@@ -13,7 +13,6 @@ Import-Package:\
 	!sun.awt.image.codec,\
 	*
 Include-Resource:\
-	classes,\
 	@../../../lib/portal/axis.jar,\
 	@../../../lib/portal/wsdl4j.jar
 Liferay-Releng-Module-Group-Description:

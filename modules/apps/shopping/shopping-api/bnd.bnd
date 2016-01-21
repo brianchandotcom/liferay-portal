@@ -10,4 +10,3 @@ Export-Package:	\
 	com.liferay.shopping.service,\
 	com.liferay.shopping.service.persistence,\
 	com.liferay.shopping.util.comparator
-Include-Resource: classes

@@ -6,7 +6,6 @@ Import-Package:\
 	com.liferay.asset.tags.navigation.web.constants,\
 	com.liferay.search.web.constants,\
 	*
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
 -include: ../../../../marketplace/web-content-management/bnd.bnd

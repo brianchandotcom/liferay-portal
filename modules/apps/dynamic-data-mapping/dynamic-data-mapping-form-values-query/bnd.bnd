@@ -8,7 +8,6 @@ Import-Package:\
 	!javax.swing.*,\
 	*
 Include-Resource:\
-	classes,\
 	@lib/antlr4-runtime.jar,\
 	@lib/org.abego.treelayout.core.jar
 Liferay-Releng-Module-Group-Description:

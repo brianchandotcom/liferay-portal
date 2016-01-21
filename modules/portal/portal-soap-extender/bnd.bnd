@@ -31,7 +31,6 @@ Import-Package:\
 	!net.sf.cglib.proxy.*,\
 	*
 Include-Resource:\
-	classes,\
 	lib/=lib/cxf-rt-bindings-xml.jar,\
 	lib/=lib/cxf-rt-frontend-jaxws.jar,\
 	lib/=lib/cxf-rt-frontend-simple.jar,\

@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.item.selector.criteria.upload.criterion,\
 	com.liferay.item.selector.criteria.video.criterion,\
 	com.liferay.item.selector.criteria.url.criterion
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector
 -include: ../../../../marketplace/collaboration/bnd.bnd

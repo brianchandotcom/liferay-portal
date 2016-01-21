@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.mentions.configuration,\
 	com.liferay.mentions.constants,\
 	com.liferay.mentions.util
-Include-Resource: classes
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mentions
 -include: ../../../../marketplace/collaboration/bnd.bnd

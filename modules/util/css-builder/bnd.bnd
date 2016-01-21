@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.css.builder
 Bundle-Version: 1.0.14
 Export-Package: com.liferay.css.builder
 Include-Resource:\
-	classes,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/AggregateUtil.class,\

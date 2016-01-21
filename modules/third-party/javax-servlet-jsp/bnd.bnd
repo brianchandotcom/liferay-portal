@@ -1,3 +1,2 @@
 Bundle-SymbolicName: javax.servlet.jsp
 Bundle-Version: 2.3.3-b02.LIFERAY-PATCHED-1
-Include-Resource: classes

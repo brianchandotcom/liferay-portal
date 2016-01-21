@@ -182,8 +182,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 				<c:if test="<%= userSessionAlive && !session.getId().equals(sessionId) %>">
 					<aui:button cssClass="btn-lg" type="submit" value="kill-session" />
 				</c:if>
-
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 			</aui:button-row>
 		</c:otherwise>
 	</c:choose>

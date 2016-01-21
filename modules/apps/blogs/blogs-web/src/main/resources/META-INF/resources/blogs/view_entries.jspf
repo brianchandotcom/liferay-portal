@@ -71,6 +71,8 @@
 	portletURL="<%= portletURL %>"
 />
 
+<liferay-util:include page="/blogs/my_entries.jsp" servletContext="<%= application %>" />
+
 <%
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 

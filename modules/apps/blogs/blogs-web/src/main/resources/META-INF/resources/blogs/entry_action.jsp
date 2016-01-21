@@ -18,9 +18,15 @@
 
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
+
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+if (row != null) {
+	entry = (BlogsEntry)row.getObject();
+}
 %>
 
-<liferay-ui:icon-menu cssClass="entry-options inline" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu cssClass='<%= row == null ? "entry-options inline" : StringPool.BLANK %>' direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />

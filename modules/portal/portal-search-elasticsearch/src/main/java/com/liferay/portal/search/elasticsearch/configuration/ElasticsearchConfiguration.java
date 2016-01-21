@@ -30,22 +30,15 @@ import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 )
 public interface ElasticsearchConfiguration {
 
-	@Meta.AD(
-		description = "Custom settings for the local node, in YML format (elasticsearch.yml)",
-		required = false
-	)
+	@Meta.AD(description = "%additional-configurations-help", required = false)
 	public String additionalConfigurations();
 
 	@Meta.AD(
-		description = "Custom settings for the Liferay index, in JSON or YML format (Elasticsearch Create Index API)",
-		required = false
+		description = "%additional-index-configurations-help", required = false
 	)
 	public String additionalIndexConfigurations();
 
-	@Meta.AD(
-		description = "Custom mappings for LiferayDocumentType, in JSON format (Elasticsearch Put Mapping API)",
-		required = false
-	)
+	@Meta.AD(description = "%additional-type-mappings-help", required = false)
 	public String additionalTypeMappings();
 
 	@Meta.AD(deflt = "false", required = false)
@@ -69,10 +62,7 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "/https?:\\/\\/localhost(:[0-9]+)?/", required = false)
 	public String httpCORSAllowOrigin();
 
-	@Meta.AD(
-		description = "Custom settings for HTTP CORS, in YML format (elasticsearch.yml)",
-		required = false
-	)
+	@Meta.AD(description = "%http-cors-configurations-help", required = false)
 	public String httpCORSConfigurations();
 
 	@Meta.AD(deflt = "true", required = false)
@@ -82,8 +72,7 @@ public interface ElasticsearchConfiguration {
 	public boolean httpEnabled();
 
 	@Meta.AD(
-		deflt = "true",
-		description = "Set to true to only log exceptions from Elasticsearch and not rethrow them.",
+		deflt = "true", description = "%log-exceptions-only-help",
 		required = false
 	)
 	public boolean logExceptionsOnly();

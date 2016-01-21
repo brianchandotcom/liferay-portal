@@ -29,7 +29,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * @author Andrea Di Giorgi
  */
-public class JavadocFormatterMojo extends AbstractMojo {
+public class FormatJavadocMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {

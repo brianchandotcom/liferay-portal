@@ -27,7 +27,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class JavadocFormatterTask extends Task {
+public class FormatJavadocTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

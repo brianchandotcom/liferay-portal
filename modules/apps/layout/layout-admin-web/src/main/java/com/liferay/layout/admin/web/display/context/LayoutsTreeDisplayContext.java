@@ -18,13 +18,11 @@ import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -91,15 +89,6 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			"privateLayout", String.valueOf(privateLayout));
 
 		return emptyLayoutSetURL;
-	}
-
-	public String getJSSafeEditLayoutTitle() {
-		String value = UnicodeLanguageUtil.format(
-			getHttpServletRequest(), "edit-x", "{label}", false);
-
-		return StringUtil.replace(
-			value, UnicodeLanguageUtil.get(getHttpServletRequest(), "{label}"),
-			"{label}");
 	}
 
 	public String getLayoutSetBranchCssClass(LayoutSetBranch layoutSetBranch)

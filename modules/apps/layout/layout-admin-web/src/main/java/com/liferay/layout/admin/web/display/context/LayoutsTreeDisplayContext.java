@@ -81,6 +81,22 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 
 		deleteLayoutURL.setParameter(ActionRequest.ACTION_NAME, "deleteLayout");
 
+		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			RenderRequest.RENDER_PHASE);
+
+		redirectURL.setParameter(
+			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+		redirectURL.setParameter("mvcPath", "/panel/app/layouts_tree.jsp");
+
+		try {
+			redirectURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+		}
+		catch (WindowStateException e) {
+		}
+
+		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
+
 		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
 			deleteLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 		}

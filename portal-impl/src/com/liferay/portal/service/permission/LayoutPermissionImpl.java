@@ -318,6 +318,10 @@ public class LayoutPermissionImpl
 
 			if (layout.isPrivateLayout()) {
 				addGuestPermission = false;
+
+				if (group.isUser() || group.isUserGroup()) {
+					addGroupPermission = false;
+				}
 			}
 
 			ResourceLocalServiceUtil.addResources(

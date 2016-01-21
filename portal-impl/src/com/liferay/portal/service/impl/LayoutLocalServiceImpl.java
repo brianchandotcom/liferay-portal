@@ -296,7 +296,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		if (privateLayout && group.isUser()) {
+		if (privateLayout && (group.isUser() || group.isUserGroup())) {
 			addGroupPermissions = false;
 		}
 

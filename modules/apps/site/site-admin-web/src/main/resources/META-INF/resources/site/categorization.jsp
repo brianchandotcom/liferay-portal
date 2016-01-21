@@ -31,9 +31,3 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 <aui:input name="categories" type="assetCategories" />
 
 <aui:input name="tags" type="assetTags" />
-
-<aui:script>
-	function <portlet:namespace />getSuggestionsContent() {
-		return document.<portlet:namespace />fm.<portlet:namespace />description.value;
-	}
-</aui:script>

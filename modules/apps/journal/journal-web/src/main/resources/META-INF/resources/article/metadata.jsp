@@ -77,9 +77,3 @@ if (article != null) {
 		label="<%= true %>"
 	/>
 </c:if>
-
-<aui:script>
-	function <portlet:namespace />getSuggestionsContent() {
-		return document.<portlet:namespace />fm1.<portlet:namespace />title_<%= defaultLanguageId %>.value;
-	}
-</aui:script>

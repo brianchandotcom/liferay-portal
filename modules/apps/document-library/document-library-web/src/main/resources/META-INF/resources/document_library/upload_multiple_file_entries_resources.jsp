@@ -251,11 +251,3 @@ else {
 
 	<aui:button type="submit" value="<%= dlEditFileEntryDisplayContext.getPublishButtonLabel() %>" />
 </aui:form>
-
-<aui:script>
-	<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
-		function <portlet:namespace />getSuggestionsContent() {
-			return document.<portlet:namespace />fm2.<portlet:namespace />description.value;
-		}
-	</c:if>
-</aui:script>

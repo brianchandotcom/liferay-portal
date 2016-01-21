@@ -51,10 +51,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setContentCallback(String contentCallback) {
-		_contentCallback = contentCallback;
-	}
-
 	public void setCurTags(String curTags) {
 		_curTags = curTags;
 	}
@@ -86,7 +82,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_autoFocus = false;
 		_className = null;
 		_classPK = 0;
-		_contentCallback = null;
 		_curTags = null;
 		_groupIds = null;
 		_hiddenInput = "assetTagNames";
@@ -123,9 +118,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-ui:asset-tags-selector:className", _className);
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:classPK", String.valueOf(_classPK));
-		request.setAttribute(
-			"liferay-ui:asset-tags-selector:contentCallback",
-			String.valueOf(_contentCallback));
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:curTags", _curTags);
 		request.setAttribute(
@@ -174,7 +166,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private boolean _autoFocus;
 	private String _className;
 	private long _classPK;
-	private String _contentCallback;
 	private String _curTags;
 	private long[] _groupIds;
 	private String _hiddenInput = "assetTagNames";

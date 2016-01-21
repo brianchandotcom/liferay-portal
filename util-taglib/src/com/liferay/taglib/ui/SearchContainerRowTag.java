@@ -295,10 +295,11 @@ public class SearchContainerRowTag<R>
 			primaryKey = String.valueOf(model);
 		}
 		else if (isStringKey()) {
-			primaryKey = BeanPropertiesUtil.getString(model, _keyProperty);
+			primaryKey = BeanPropertiesUtil.getStringSilent(
+				model, _keyProperty);
 		}
 		else {
-			Object primaryKeyObj = BeanPropertiesUtil.getObject(
+			Object primaryKeyObj = BeanPropertiesUtil.getObjectSilent(
 				model, _keyProperty);
 
 			primaryKey = String.valueOf(primaryKeyObj);
@@ -310,7 +311,7 @@ public class SearchContainerRowTag<R>
 			rowId = String.valueOf(_rowIndex + 1);
 		}
 		else {
-			Object rowIdObj = BeanPropertiesUtil.getObject(
+			Object rowIdObj = BeanPropertiesUtil.getObjectSilent(
 				model, _rowIdProperty);
 
 			if (Validator.isNull(rowIdObj)) {

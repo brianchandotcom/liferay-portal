@@ -118,9 +118,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -481,19 +481,6 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public Object[] deleteLayout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		return deleteLayout(request, response);
-	}
-
-	@Override
-	public Object[] deleteLayout(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -577,6 +564,19 @@ public class SitesImpl implements Sites {
 		}
 
 		return new Object[] {group, oldFriendlyURL, newPlid};
+	}
+
+	@Override
+	public Object[] deleteLayout(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			portletResponse);
+
+		return deleteLayout(request, response);
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.jsp.compiler.internal.JspBundleClassloader;
+import com.liferay.portal.servlet.jsp.compiler.internal.JspTagHandlerPool;
 import com.liferay.taglib.servlet.JspFactorySwapper;
 
 import java.io.File;
@@ -206,6 +207,10 @@ public class JspServlet extends HttpServlet {
 		sb.append(_bundle.getVersion());
 
 		defaults.put("scratchdir", sb.toString());
+
+		defaults.put(
+			JspTagHandlerPool.OPTION_TAGPOOL,
+			JspTagHandlerPool.class.getName());
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
 		Set<String> nameSet = new HashSet<>(Collections.list(names));

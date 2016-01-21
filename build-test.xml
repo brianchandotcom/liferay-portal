@@ -1255,13 +1255,14 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
 				additionalConfigurations=\
-					cluster.routing.allocation.disk.threshold_enabled: false,\
-					cluster.service.slow_task_logging_threshold: 600s, \
-					index.indexing.slowlog.threshold.index.warn: 600s,\
-					index.search.slowlog.threshold.fetch.warn: 600s,\
-					index.search.slowlog.threshold.query.warn: 600s,\
-					monitor.jvm.gc.old.warn: 600s,\
+					cluster.routing.allocation.disk.threshold_enabled: false\n\
+					cluster.service.slow_task_logging_threshold: 600s\n\
+					index.indexing.slowlog.threshold.index.warn: 600s\n\
+					index.search.slowlog.threshold.fetch.warn: 600s\n\
+					index.search.slowlog.threshold.query.warn: 600s\n\
+					monitor.jvm.gc.old.warn: 600s\n\
 					monitor.jvm.gc.young.warn: 600s
+				logExceptionsOnly=false
 			</echo>
 		</sequential>
 	</macrodef>

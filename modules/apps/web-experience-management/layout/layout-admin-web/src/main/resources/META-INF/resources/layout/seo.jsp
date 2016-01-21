@@ -51,7 +51,7 @@ if (selLayout != null) {
 	boolean sitemapInclude = GetterUtil.getBoolean(layoutTypeSettings.getProperty("sitemap-include"), true);
 	%>
 
-	<aui:select label="include" name="TypeSettingsProperties--sitemap-include--">
+	<aui:select disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="include" name="TypeSettingsProperties--sitemap-include--">
 		<aui:option label="yes" selected="<%= sitemapInclude %>" value="1" />
 		<aui:option label="no" selected="<%= !sitemapInclude %>" value="0" />
 	</aui:select>
@@ -60,7 +60,7 @@ if (selLayout != null) {
 	String sitemapPriority = layoutTypeSettings.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY);
 	%>
 
-	<aui:input helpMessage="(0.0 - 1.0)" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value="<%= sitemapPriority %>">
+	<aui:input disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="(0.0 - 1.0)" label="page-priority" name="TypeSettingsProperties--sitemap-priority--" placeholder="0.0" size="3" type="text" value="<%= sitemapPriority %>">
 		<aui:validator name="number" />
 		<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
 	</aui:input>
@@ -69,7 +69,7 @@ if (selLayout != null) {
 	String siteMapChangeFrequency = layoutTypeSettings.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY);
 	%>
 
-	<aui:select label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value="<%= siteMapChangeFrequency %>">
+	<aui:select disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="change-frequency" name="TypeSettingsProperties--sitemap-changefreq--" value="<%= siteMapChangeFrequency %>">
 		<aui:option label="always" />
 		<aui:option label="hourly" />
 		<aui:option label="daily" />

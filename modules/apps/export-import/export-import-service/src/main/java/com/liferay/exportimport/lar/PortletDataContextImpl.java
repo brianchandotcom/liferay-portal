@@ -2499,7 +2499,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		_xStream.allowTypes(types);
 
-		_xStream.allowTypes(allowedTypeNames.toArray(new String[] {}));
+		_xStream.allowTypes(allowedTypeNames.toArray(new String[0]));
 
 		_xStream.allowTypesByWildcard(
 			new String[] {

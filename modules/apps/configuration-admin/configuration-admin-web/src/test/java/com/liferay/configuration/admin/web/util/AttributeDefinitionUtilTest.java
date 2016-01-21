@@ -65,7 +65,7 @@ public class AttributeDefinitionUtilTest {
 	@Test
 	public void testDefaultValueEmpty() {
 		Mockito.doReturn(
-			new String[] {}
+			new String[0]
 		).when(
 			_attributeDefinition
 		).getDefaultValue();

@@ -109,7 +109,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280 main-content-body">
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />

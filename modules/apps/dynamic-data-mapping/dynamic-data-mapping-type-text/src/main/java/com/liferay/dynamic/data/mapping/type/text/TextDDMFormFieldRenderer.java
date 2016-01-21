@@ -82,6 +82,18 @@ public class TextDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		}
 
 		template.put("placeholder", placeholderString);
+
+		String tooltipString = StringPool.BLANK;
+
+		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
+			"tooltip");
+
+		if (tooltip != null) {
+			tooltipString = tooltip.getString(
+				ddmFormFieldRenderingContext.getLocale());
+		}
+
+		template.put("tooltip", tooltipString);
 	}
 
 	private TemplateResource _templateResource;

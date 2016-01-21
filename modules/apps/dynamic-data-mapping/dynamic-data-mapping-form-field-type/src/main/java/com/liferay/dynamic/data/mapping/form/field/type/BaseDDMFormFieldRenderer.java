@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -30,6 +31,7 @@ import java.io.Writer;
 import java.net.URL;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -94,6 +96,13 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.put("showLabel", ddmFormField.isShowLabel());
 		template.put("value", ddmFormFieldRenderingContext.getValue());
 		template.put("visible", ddmFormFieldRenderingContext.isVisible());
+
+		LocalizedValue tip = ddmFormField.getTip();
+		Map<Locale, String> tipValues = tip.getValues();
+
+		if (tipValues.containsKey(locale)) {
+			template.put("tip", tipValues.get(locale));
+		}
 	}
 
 	protected String render(Template template) throws PortalException {

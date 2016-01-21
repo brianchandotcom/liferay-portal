@@ -3473,4 +3473,5 @@ else.
 
 #### Why was this change made?
 
-This change was necessary to solve and prevent future split package problems.
+This change was necessary to solve the current split package problems and
+prevent future ones.

@@ -37,10 +37,6 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 <aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(groupId, privateLayout, selectedLayoutIds) %>" />
 
-<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
-
-<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
-
 <div id="<portlet:namespace />pages">
 	<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 		<div class="selected-pages" id="<portlet:namespace />pane">

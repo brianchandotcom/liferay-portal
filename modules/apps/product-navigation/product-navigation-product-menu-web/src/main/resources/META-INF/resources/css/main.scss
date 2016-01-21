@@ -253,6 +253,10 @@ body {
 				opacity: 1;
 			}
 		}
+
+		.layout-tree-add[data-parentable="false"], .layout-tree-edit[data-updateable="false"] {
+			display: none;
+		}
 	}
 
 	.layout-set-tabs {

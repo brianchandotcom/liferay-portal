@@ -117,7 +117,7 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
 							%>
 
-							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
+							<liferay-util:include page="/export/new_export/select_pages.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

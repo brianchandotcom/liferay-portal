@@ -149,6 +149,11 @@ public class WikiAttachmentEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
+	@Reference(unbind = "-")
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
 	protected void removeImageButton(JSONObject jsonObject) {
 		JSONObject toolbars = jsonObject.getJSONObject("toolbars");
 
@@ -162,8 +167,7 @@ public class WikiAttachmentEditorConfigContributor
 			return;
 		}
 
-		JSONArray oldButtonsJSONArray = addJSONObject.getJSONArray(
-			"buttons");
+		JSONArray oldButtonsJSONArray = addJSONObject.getJSONArray("buttons");
 
 		if (oldButtonsJSONArray == null) {
 			return;
@@ -182,11 +186,6 @@ public class WikiAttachmentEditorConfigContributor
 		}
 
 		addJSONObject.put("buttons", buttonsJSONArray);
-	}
-
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
 	}
 
 	private ItemSelector _itemSelector;

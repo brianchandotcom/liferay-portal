@@ -402,9 +402,9 @@
 			</map>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.layoutconfiguration.util.RuntimePage" class="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" />
-	<bean id="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" class="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil">
-		<property name="runtimePage" ref="com.liferay.portal.layoutconfiguration.util.RuntimePage" />
+	<bean id="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage" class="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" />
+	<bean id="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" class="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil">
+		<property name="runtimePage" ref="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage" />
 	</bean>
 	<bean id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean id="com.liferay.portal.plugin.PluginPackageIndexer" class="com.liferay.portal.plugin.PluginPackageIndexer" />

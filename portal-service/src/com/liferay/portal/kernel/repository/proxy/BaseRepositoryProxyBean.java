@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.proxy;
+package com.liferay.portal.kernel.repository.proxy;
 
 import aQute.bnd.annotation.ProviderType;
 

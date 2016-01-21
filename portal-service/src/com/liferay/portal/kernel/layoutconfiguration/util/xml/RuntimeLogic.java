@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.layoutconfiguration.util.xml;
+package com.liferay.portal.kernel.layoutconfiguration.util.xml;
 
 /**
  * @author Brian Wing Shun Chan

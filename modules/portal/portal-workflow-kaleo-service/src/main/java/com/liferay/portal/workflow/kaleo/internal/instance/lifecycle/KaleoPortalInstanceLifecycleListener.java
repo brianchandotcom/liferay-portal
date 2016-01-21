@@ -18,6 +18,11 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,6 +37,31 @@ public class KaleoPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_portalKaleoManager.deployKaleoDefaults(company.getCompanyId());
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoConditionLocalService(
+		KaleoConditionLocalService kaleoConditionLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoDefinitionLocalService(
+		KaleoDefinitionLocalService kaleoDefinitionLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoNodeLocalService(
+		KaleoNodeLocalService kaleoNodeLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoTaskLocalService(
+		KaleoTaskLocalService kaleoTaskLocalService) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoTransitionLocalService(
+		KaleoTransitionLocalService kaleoTransitionLocalService) {
 	}
 
 	@Reference(unbind = "-")

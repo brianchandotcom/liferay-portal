@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `3231563`.*
+*This document has been reviewed through commit `e03599b`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -47,7 +47,7 @@ Here's the template to use for each breaking change (note how it ends with a
 horizontal rule):
 
 ```
-### [Title]
+### Title
 - **Date:**
 - **JIRA Ticket:**
 
@@ -3330,13 +3330,13 @@ following behaviors based on the portlet type:
 configuration options are only displayed for that particular view when invoking
 a URL with a parameter `struts_action` with the value indicated in the
 `view-action` init parameter and also in the default view of the portlet (when
-there is no `struts_action` parameter in the request)
+there is no `struts_action` parameter in the request).
 
 - **Liferay MVC Portlet:** If you've defined a `view-template` init parameter,
 the configuration options are only displayed when that template is rendered by
 invoking a URL with a parameter `mvcPath` with the value indicated in the
 `view-template` init parameter. and also in the default view of the portlet
-(when there is no `mvcPath` parameter in the request)
+(when there is no `mvcPath` parameter in the request).
 
 - If it's a portlet using any other framework, the configuration options are
 always displayed.
@@ -3419,21 +3419,22 @@ allow for much flexibility.
 
 ---------------------------------------
 
-### Renamed packages to fix the split packages problem
+### Renamed Packages to Fix the Split Packages Problem
 - **Date:** 2016-Jan-19
 - **JIRA Ticket:** LPS-61952
 
 #### What changed?
 
-A split packages is caused where two or more bundles export the same package
-name and version. When the classloader loads a package, exactly one exporter of
-that package is chosen, so if a package is split across multiple bundles then an
-importer will only ever see a subset of the package.
+Split packages are caused when two or more bundles export the same package name
+and version. When the classloader loads a package, exactly one exporter of that
+package is chosen; so if a package is split across multiple bundles, then an
+importer only sees a subset of the package.
 
 #### Who is affected?
 
-Portal-Service and Portal-Impl has many packages with the same package name.
-All of these packages will be affected by the split package problem.
+The `portal-service` and `portal-impl` folders have many packages with the same
+name. Therefore, all of these packages are affected by the split package
+problem.
 
 #### How should I update my code?
 
@@ -3442,34 +3443,35 @@ else.
 
 **Example**
 
-`com.liferay.portal.jdbc.pool.metrics` renamed to `com.liferay.portal.kernel.jdbc.pool.metrics`
+- `com.liferay.portal.jdbc.pool.metrics` &rarr; `com.liferay.portal.kernel.jdbc.pool.metrics`
 
-`com.liferay.portal.layoutconfiguration.util` renamed to `com.liferay.portal.kernel.layoutconfiguration.util`
+- `com.liferay.portal.layoutconfiguration.util` &rarr; `com.liferay.portal.kernel.layoutconfiguration.util`
 
-`com.liferay.portal.layoutconfiguration.util.xml` renamed to `com.liferay.portal.kernel.layoutconfiguration.util.xml`
+- `com.liferay.portal.layoutconfiguration.util.xml` &rarr; `com.liferay.portal.kernel.layoutconfiguration.util.xml`
 
-`com.liferay.portal.repository.proxy` renamed to `com.liferay.portal.kernel.repository.proxy`
+- `com.liferay.portal.repository.proxy` &rarr; `com.liferay.portal.kernel.repository.proxy`
 
-`com.liferay.portal.webserver` renamed to `com.liferay.portal.kernel.webserver`
+- `com.liferay.portal.webserver` &rarr; `com.liferay.portal.kernel.webserver`
 
-`com.liferay.portlet.backgroundtask` renamed to `com.liferay.background.task.kernel`
+- `com.liferay.portlet.backgroundtask` &rarr; `com.liferay.background.task.kernel`
 
-`com.liferay.portlet.dynamicdatamapping` renamed to `com.liferay.dynamic.data.mapping.kernel`
+- `com.liferay.portlet.dynamicdatamapping` &rarr; `com.liferay.dynamic.data.mapping.kernel`
 
-`com.liferay.portlet.imagegallerydisplay.display.context` renamed to `com.liferay.image.gallery.display.kernel.display.context`
+- `com.liferay.portlet.imagegallerydisplay.display.context` &rarr; `com.liferay.image.gallery.display.kernel.display.context`
 
-`com.liferay.portlet.layoutsadmin.util` renamed to `com.liferay.layouts.admin.kernel.util`
+- `com.liferay.portlet.layoutsadmin.util` &rarr; `com.liferay.layouts.admin.kernel.util`
 
-`com.liferay.portlet.mobiledevicerules` renamed to `com.liferay.mobile.device.rules`
+- `com.liferay.portlet.mobiledevicerules` &rarr; `com.liferay.mobile.device.rules`
 
-`com.liferay.portlet.portletconfiguration.util` renamed to `com.liferay.portlet.configuration.kernel.util`
+- `com.liferay.portlet.portletconfiguration.util` &rarr; `com.liferay.portlet.configuration.kernel.util`
 
-`com.liferay.portlet.rolesadmin.util` renamed to `com.liferay.roles.admin.kernel.util`
+- `com.liferay.portlet.rolesadmin.util` &rarr; `com.liferay.roles.admin.kernel.util`
 
-`com.liferay.portlet.sites.util` renamed to `com.liferay.sites.kernel.util`
+- `com.liferay.portlet.sites.util` &rarr; `com.liferay.sites.kernel.util`
 
-`com.liferay.portlet.useradmin.util` renamed to `com.liferay.users.admin.kernel.util`
+- `com.liferay.portlet.useradmin.util` &rarr; `com.liferay.users.admin.kernel.util`
 
 #### Why was this change made?
 
-This change was necessary to solve and prevent future split package problems.
+This change was necessary to solve the current split package problems and
+prevent future ones.

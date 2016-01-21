@@ -190,8 +190,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		}
 
 		List<LDAPServerConfiguration> ldapServerConfigurations =
-			_ldapServerConfigurationProvider.getConfigurations(
-				companyId, false);
+			_ldapServerConfigurationProvider.getConfigurations(companyId);
 
 		for (LDAPServerConfiguration ldapServerConfiguration :
 				ldapServerConfigurations) {

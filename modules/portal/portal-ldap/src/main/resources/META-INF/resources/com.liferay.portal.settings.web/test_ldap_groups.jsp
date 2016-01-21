@@ -26,7 +26,7 @@ String principal = ParamUtil.getString(request, "principal");
 String credentials = request.getParameter("credentials");
 
 if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
-	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId, true);
+	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId);
 
 	credentials = ldapServerConfiguration.securityCredential();
 }

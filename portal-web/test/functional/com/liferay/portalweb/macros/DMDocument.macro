@@ -1867,7 +1867,7 @@
 	</command>
 
 	<command name="viewDocumentDetailsCmdPG">
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DATE" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_CREATED_DATE" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" />
 
 		<var name="key_dmDocumentSize" value="${dmDocumentSize}" />

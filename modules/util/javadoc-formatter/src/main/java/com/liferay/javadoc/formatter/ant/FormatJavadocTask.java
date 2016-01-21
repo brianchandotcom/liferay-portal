@@ -12,48 +12,49 @@
  * details.
  */
 
-package com.liferay.javadoc.formatter.maven;
+package com.liferay.javadoc.formatter.ant;
 
 import com.liferay.javadoc.formatter.JavadocFormatter;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 import com.liferay.javadoc.formatter.JavadocFormatterInvoker;
 
-import java.io.File;
-
-import java.util.Map;
 import java.util.Set;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class JavadocFormatterMojo extends AbstractMojo {
+public class FormatJavadocTask extends Task {
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute() throws BuildException {
 		try {
-			@SuppressWarnings("rawtypes")
-			Map pluginContext = getPluginContext();
+			Project project = getProject();
 
 			JavadocFormatter javadocFormatter = JavadocFormatterInvoker.invoke(
-				baseDir, _javadocFormatterArgs);
+				project.getBaseDir(), _javadocFormatterArgs);
 
 			Set<String> modifiedFileNames =
 				javadocFormatter.getModifiedFileNames();
 
-			pluginContext.put(
+			project.addIdReference(
 				JavadocFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
 				modifiedFileNames);
 		}
 		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			throw new BuildException(e);
 		}
 	}
 
 	public void setAuthor(String author) {
 		_javadocFormatterArgs.setAuthor(author);
+	}
+
+	public void setGenerateXml(boolean generateXml) {
+		_javadocFormatterArgs.setGenerateXml(generateXml);
 	}
 
 	public void setInitializeMissingJavadocs(
@@ -85,12 +86,6 @@ public class JavadocFormatterMojo extends AbstractMojo {
 	public void setUpdateJavadocs(boolean updateJavadocs) {
 		_javadocFormatterArgs.setUpdateJavadocs(updateJavadocs);
 	}
-
-	/**
-	 * @parameter default-value="${project.basedir}
-	 * @readonly
-	 */
-	protected File baseDir;
 
 	private final JavadocFormatterArgs _javadocFormatterArgs =
 		new JavadocFormatterArgs();

@@ -10,6 +10,6 @@
 	<taskdef classpathref="javadoc.formatter.classpath" resource="com/liferay/javadoc/formatter/ant/taskdefs.properties" />
 
 	<target name="format-javadoc">
-		<javadoc-formatter />
+		<format-javadoc />
 	</target>
 </project>

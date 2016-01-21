@@ -65,6 +65,11 @@ public class FormatJavadocTask extends JavaExec {
 	}
 
 	@Input
+	public boolean isGenerateXml() {
+		return _generateXml;
+	}
+
+	@Input
 	public boolean isInitializeMissingJavadocs() {
 		return _initializeMissingJavadocs;
 	}
@@ -86,6 +91,10 @@ public class FormatJavadocTask extends JavaExec {
 
 	public void setAuthor(Object author) {
 		_author = author;
+	}
+
+	public void setGenerateXml(boolean generateXml) {
+		_generateXml = generateXml;
 	}
 
 	public void setInitializeMissingJavadocs(
@@ -122,6 +131,7 @@ public class FormatJavadocTask extends JavaExec {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("javadoc.author=" + getAuthor());
+		args.add("javadoc.generate.xml=" + isGenerateXml());
 		args.add("javadoc.init=" + isInitializeMissingJavadocs());
 		args.add("javadoc.input.dir=./");
 		args.add("javadoc.limit=" + CollectionUtils.join(",", getLimits()));
@@ -135,6 +145,7 @@ public class FormatJavadocTask extends JavaExec {
 	}
 
 	private Object _author = JavadocFormatterArgs.AUTHOR;
+	private boolean _generateXml;
 	private boolean _initializeMissingJavadocs;
 	private final Set<Object> _limits = new LinkedHashSet<>();
 	private double _lowestSupportedJavaVersion =

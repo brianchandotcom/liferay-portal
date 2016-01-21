@@ -74,6 +74,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ORGANIZATION_TABLE_HEADER-->
+<tr>
+	<td>ORGANIZATION_TABLE_HEADER_PARENT_ORGANIZATION</td>
+	<td>//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Parent Organization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
@@ -103,6 +114,17 @@
 <tr>
 	<td>USER_TABLE_IMPERSONATE</td>
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]/span/a[contains(.,'Impersonate User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_TABLE_HEADER-->
+<tr>
+	<td>USER_TABLE_HEADER_FIRST_NAME</td>
+	<td>//div[contains(@id,'usersSearchContainer')]//th[contains(.,'First Name')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -1,19 +1,27 @@
 <definition>
 	<command name="gotoOrganizations">
+		<execute function="Pause" locator1="1000" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="NavBar#ORGANIZATIONS" />
 			<then>
 				<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 			</then>
 		</if>
+
+		<execute function="AssertVisible" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_HEADER_PARENT_ORGANIZATION" />
 	</command>
 
 	<command name="gotoUsers">
+		<execute function="Pause" locator1="1000" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="NavBar#USERS" />
 			<then>
 				<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
 			</then>
 		</if>
+
+		<execute function="AssertVisible" locator1="UsersAndOrganizations#USER_TABLE_HEADER_FIRST_NAME" />
 	</command>
 </definition>

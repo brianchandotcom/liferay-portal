@@ -409,6 +409,8 @@
 	</command>
 
 	<command name="gotoActionsCmd">
+		<execute function="Pause" locator1="1000" />
+
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${orgName}" />
 
 		<execute function="Click" locator1="Button#SUBMIT" />

@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
@@ -47,7 +47,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 			_indicesAdminClient.preparePutMapping(_indexName);
 
 		putMappingRequestBuilder.setSource(source);
-		putMappingRequestBuilder.setType(LiferayTypeMappingsConstants.TYPE);
+		putMappingRequestBuilder.setType(
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		PutMappingResponse putMappingResponse = putMappingRequestBuilder.get();
 
@@ -61,33 +62,34 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 	public void createOptionalDefaultTypeMappings() {
 		String name = StringUtil.replace(
-			LiferayTypeMappingsConstants.FILE, ".json",
-			"-optional-defaults.json");
+			LiferayTypeMappingsConstants.
+				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME,
+			".json", "-optional-defaults.json");
 
-		addTypeMappings(_read(name));
+		String optionalDefaultTypeMappings = ResourceUtil.getResourceAsString(
+			getClass(), name);
+
+		addTypeMappings(optionalDefaultTypeMappings);
 	}
 
 	public void createRequiredDefaultAnalyzers(Settings.Builder builder) {
-		builder.loadFromSource(_read(IndexSettingsConstants.FILE));
+		String requiredDefaultAnalyzers = ResourceUtil.getResourceAsString(
+			getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME);
+
+		builder.loadFromSource(requiredDefaultAnalyzers);
 	}
 
 	public void createRequiredDefaultTypeMappings(
 		CreateIndexRequestBuilder createIndexRequestBuilder) {
 
+		String requiredDefaultMappings = ResourceUtil.getResourceAsString(
+			getClass(),
+			LiferayTypeMappingsConstants.
+				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME);
+
 		createIndexRequestBuilder.addMapping(
-			LiferayTypeMappingsConstants.TYPE,
-			_read(LiferayTypeMappingsConstants.FILE));
-	}
-
-	private String _read(String name) {
-		Class<?> clazz = getClass();
-
-		try (InputStream inputStream = clazz.getResourceAsStream(name)) {
-			return StringUtil.read(inputStream);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			requiredDefaultMappings);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

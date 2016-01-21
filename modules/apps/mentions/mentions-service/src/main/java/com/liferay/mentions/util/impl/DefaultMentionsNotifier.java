@@ -184,7 +184,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(?:\\s|^|\\]|>)(@([^(?:@|>|\\[|\\s|,|.|<)]+))",
+		"(?:\\s|^|\\]|>)(&#64;([^(?:&#64;|>|\\[|\\s|,|.|<)]+))",
 		Pattern.CASE_INSENSITIVE);
 
 	private MentionsUserFinder _mentionsUserFinder;

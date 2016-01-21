@@ -1103,7 +1103,7 @@ public class DLImpl implements DL {
 
 		try {
 			Object[] plidAndPortletId = findActionHelper.getPlidAndPortletId(
-				themeDisplay, themeDisplay.getScopeGroupId(), plid);
+				themeDisplay, themeDisplay.getSiteGroupId(), plid);
 
 			plid = (Long)plidAndPortletId[0];
 			portletId = (String)plidAndPortletId[1];

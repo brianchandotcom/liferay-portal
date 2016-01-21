@@ -23,11 +23,13 @@ import com.liferay.portal.search.elasticsearch.settings.BaseIndexSettingsContrib
 import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
 
@@ -88,13 +90,47 @@ public class CompanyIndexFactoryTest {
 	}
 
 	@Test
-	public void testDefaults() throws Exception {
+	public void testDefaultIndexSettings() throws Exception {
 		createIndices();
 
 		Settings settings = getIndexSettings();
 
 		Assert.assertEquals("0", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("1", settings.get("index.number_of_shards"));
+	}
+
+	@Test
+	public void testDefaultIndices() throws Exception {
+		HashMap<String, Object> properties = new HashMap<>();
+
+		properties.put(
+			"typeMappings.KeywordQueryDocumentType",
+			"/META-INF/mappings/keyword-query-type-mappings.json");
+		properties.put(
+			"typeMappings.SpellCheckDocumentType",
+			"/META-INF/mappings/spellcheck-type-mappings.json");
+
+		_companyIndexFactory.activate(properties);
+
+		createIndices();
+
+		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
+			String.valueOf(_COMPANY_ID));
+
+		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
+			mappings = getIndexResponse.mappings();
+
+		Iterator<ImmutableOpenMap<String, MappingMetaData>> iterator =
+			mappings.valuesIt();
+
+		ImmutableOpenMap<String, MappingMetaData> map = iterator.next();
+
+		Assert.assertTrue(
+			map.containsKey(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE));
+
+		Assert.assertTrue(map.containsKey("KeywordQueryDocumentType"));
+		Assert.assertTrue(map.containsKey("SpellCheckDocumentType"));
 	}
 
 	@Test

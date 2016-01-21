@@ -39,6 +39,9 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 <ul class="flex-container layout-selector" id="<portlet:namespace />pages">
 	<li class="layout-selector-options">
+	</li>
+
+	<li class="layout-selector-options">
 		<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 			<div class="selected-pages" id="<portlet:namespace />pane">
 

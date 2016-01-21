@@ -66,6 +66,7 @@ import javax.servlet.http.HttpSessionListener;
 import javax.servlet.jsp.JspFactory;
 
 import org.apache.jasper.runtime.JspFactoryImpl;
+import org.apache.jasper.runtime.TagHandlerPool;
 import org.apache.jasper.xmlparser.ParserUtils;
 import org.apache.jasper.xmlparser.TreeNode;
 
@@ -209,8 +210,7 @@ public class JspServlet extends HttpServlet {
 		defaults.put("scratchdir", sb.toString());
 
 		defaults.put(
-			JspTagHandlerPool.OPTION_TAGPOOL,
-			JspTagHandlerPool.class.getName());
+			TagHandlerPool.OPTION_TAGPOOL, JspTagHandlerPool.class.getName());
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
 		Set<String> nameSet = new HashSet<>(Collections.list(names));

@@ -220,7 +220,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_UNAPPROVED</td>
-	<td>//div[@class='portlet-body']/div[contains(@class,'alert-block')]</td>
+	<td>//div[@class='portlet-body']/div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
 </tbody>

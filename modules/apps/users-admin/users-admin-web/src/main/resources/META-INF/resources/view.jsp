@@ -41,6 +41,35 @@ String portletURLString = portletURL.toString();
 request.setAttribute("view.jsp-portletURL", portletURL);
 
 request.setAttribute("view.jsp-usersListView", usersListView);
+
+long organizationGroupId = 0;
+
+int inactiveUsersCount = 0;
+int usersCount = 0;
+
+long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+Organization organization = null;
+
+if (organizationId != 0) {
+	organization = OrganizationServiceUtil.getOrganization(organizationId);
+}
+
+if (organization != null) {
+	inactiveUsersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_INACTIVE);
+	usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_APPROVED);
+}
+else {
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+	if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
+		userParams.put("noOrganizations", Boolean.TRUE);
+		userParams.put("usersOrgsCount", 0);
+	}
+
+	inactiveUsersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_INACTIVE, userParams);
+	usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+}
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-activate-user-because-that-would-exceed-the-maximum-number-of-users-allowed" />
@@ -54,37 +83,6 @@ request.setAttribute("view.jsp-usersListView", usersListView);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
-
-	<%
-	long organizationGroupId = 0;
-
-	int inactiveUsersCount = 0;
-	int usersCount = 0;
-
-	long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
-
-	Organization organization = null;
-
-	if (organizationId != 0) {
-		organization = OrganizationServiceUtil.getOrganization(organizationId);
-	}
-
-	if (organization != null) {
-		inactiveUsersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_INACTIVE);
-		usersCount = UserLocalServiceUtil.getOrganizationUsersCount(organizationId, WorkflowConstants.STATUS_APPROVED);
-	}
-	else {
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-		if (!usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) {
-			userParams.put("noOrganizations", Boolean.TRUE);
-			userParams.put("usersOrgsCount", 0);
-		}
-
-		inactiveUsersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_INACTIVE, userParams);
-		usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
-	}
-	%>
 
 	<c:choose>
 		<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
@@ -236,7 +234,7 @@ request.setAttribute("view.jsp-usersListView", usersListView);
 		showUsersURL.setParameter("toolbarItem", toolbarItem);
 		showUsersURL.setParameter("usersListView", usersListView);
 
-		long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+		organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
 		if (organizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 			showUsersURL.setParameter("organizationId", String.valueOf(organizationId));

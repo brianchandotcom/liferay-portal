@@ -229,16 +229,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 				<h6 class="text-default">
 					<%= description %>
 				</h6>
-
-				<div class="additional-info text-default">
-					<div class="additional-info-item">
-						<strong>
-							<liferay-ui:message key="version" />:
-						</strong>
-
-						<%= version %>
-					</div>
-				</div>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

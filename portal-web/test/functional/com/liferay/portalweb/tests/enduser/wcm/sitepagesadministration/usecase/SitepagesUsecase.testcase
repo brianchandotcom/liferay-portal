@@ -503,7 +503,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Private Page" />
+			<var name="pageName" value="Test Private Page" />
 			<var name="siteName" value="Liferay" />
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
@@ -687,6 +687,10 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 			<var name="userFirstName" value="userfn2" />
@@ -736,8 +740,9 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
-			<var name="pageName" value="Private Page" />
+			<var name="pageName" value="Test Private Page" />
 			<var name="siteName" value="Liferay" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -881,7 +886,7 @@
 		</execute>
 
 		<execute macro="Page#viewSpecificPG">
-			<var name="pageNameList" value="Private Page" />
+			<var name="pageNameList" value="Test Private Page" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
@@ -937,6 +942,10 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 			<var name="userFirstName" value="userfn2" />
@@ -977,7 +986,7 @@
 
 		<execute macro="Page#add">
 			<var name="page" value="Private Pages" />
-			<var name="pageName" value="Private Page" />
+			<var name="pageName" value="Test Private Page" />
 			<var name="siteName" value="Liferay" />
 		</execute>
 

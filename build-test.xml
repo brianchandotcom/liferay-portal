@@ -491,6 +491,38 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-class">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<var name="test.batch.run.type" unset="true" />
+			<var name="test.portal.instance" unset="true" />
+
+			<property name="test.batch.name" value="functional-tomcat-mysql" />
+			<property name="test.batch.run.type" value="sequential" />
+			<property name="test.portal.instance" value="true" />
+
+			<propertycopy from="test.batch.run.property.names[${test.batch.name}]" name="test.batch.run.property.names" override="true" />
+			<propertycopy from="test.batch.run.property.values[${test.batch.name}]" name="test.batch.run.property.values" override="true" />
+
+			<antcall target="record-test-case-method-names">
+				<param name="test.batch.max.group.size" value="25" />
+				<param name="test.batch.property.names" value="${test.batch.run.property.names}" />
+				<param name="test.batch.property.values" value="${test.batch.run.property.values}" />
+			</antcall>
+
+			<loadproperties srcFile="${project.dir}/test.case.method.names.properties">
+				<filterchain>
+					<linecontains>
+						<contains value="RUN_TEST_CASE_METHOD_GROUP_${test.class}" />
+					</linecontains>
+				</filterchain>
+			</loadproperties>
+
+			<propertycopy from="RUN_TEST_CASE_METHOD_GROUP_${test.class}" name="test.class" override="true" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />

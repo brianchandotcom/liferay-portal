@@ -14,7 +14,7 @@
 
 package com.liferay.portal.ldap.internal;
 
-import com.liferay.portal.security.ldap.AttributesTransformer;
+import com.liferay.portal.kernel.security.ldap.AttributesTransformer;
 
 import javax.naming.directory.Attributes;
 

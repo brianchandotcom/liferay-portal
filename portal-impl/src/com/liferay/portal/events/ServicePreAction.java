@@ -339,6 +339,24 @@ public class ServicePreAction extends Action {
 		}
 
 		if (layout != null) {
+			Group layoutGroup = layout.getGroup();
+
+			if (layoutGroup.isUser() &&
+				((layout.isPrivateLayout() &&
+				  !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
+				 (layout.isPublicLayout() &&
+				  !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED))) {
+
+				User layoutUser = UserLocalServiceUtil.getUserById(
+					companyId, layoutGroup.getClassPK());
+
+				updateUserLayouts(layoutUser);
+
+				layout = LayoutLocalServiceUtil.fetchLayout(layout.getPlid());
+			}
+		}
+
+		if (layout != null) {
 			long sourceGroupId = ParamUtil.getLong(request, "p_v_l_s_g_id");
 
 			if ((sourceGroupId > 0) && (sourceGroupId != layout.getGroupId())) {

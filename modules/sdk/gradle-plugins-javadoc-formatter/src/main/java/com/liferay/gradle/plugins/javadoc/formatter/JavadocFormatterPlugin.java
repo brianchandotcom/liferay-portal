@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.javadoc.formatter;
 
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -107,10 +108,39 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		configuration.extendsFrom(compileConfiguration);
 	}
 
-	protected void configureTaskFormatJavadocClasspath(
-		FormatJavadocTask formatJavadocTask, FileCollection fileCollection) {
+	protected void configureTaskFormatJavadoc(
+		FormatJavadocTask formatJavadocTask, FileCollection classpath) {
 
-		formatJavadocTask.setClasspath(fileCollection);
+		formatJavadocTask.setClasspath(classpath);
+
+		String generateXml = GradleUtil.getTaskPrefixedProperty(
+			formatJavadocTask, "generate.xml");
+
+		if (Validator.isNotNull(generateXml)) {
+			formatJavadocTask.setGenerateXml(Boolean.parseBoolean(generateXml));
+		}
+
+		String init = GradleUtil.getTaskPrefixedProperty(
+			formatJavadocTask, "init");
+
+		if (Validator.isNotNull(init)) {
+			formatJavadocTask.setInitializeMissingJavadocs(
+				Boolean.parseBoolean(init));
+		}
+
+		String limit = GradleUtil.getTaskPrefixedProperty(
+			formatJavadocTask, "limit");
+
+		if (Validator.isNotNull(limit)) {
+			formatJavadocTask.setLimits((Object[])limit.split(","));
+		}
+
+		String update = GradleUtil.getTaskPrefixedProperty(
+			formatJavadocTask, "update");
+
+		if (Validator.isNotNull(update)) {
+			formatJavadocTask.setUpdateJavadocs(Boolean.parseBoolean(update));
+		}
 	}
 
 	protected void configureTasksFormatJavadoc(
@@ -124,7 +154,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatJavadocTask formatJavadoc) {
-					configureTaskFormatJavadocClasspath(
+					configureTaskFormatJavadoc(
 						formatJavadoc, javadocFormatterConfiguration);
 				}
 

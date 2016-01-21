@@ -77,7 +77,7 @@ public interface LiferaySelenium {
 
 	public void assertLiferayErrors() throws Exception;
 
-	public void assertLocation(String pattern);
+	public void assertLocation(String pattern) throws Exception;
 
 	public void assertNoJavaScriptExceptions() throws Exception;
 
@@ -141,13 +141,14 @@ public interface LiferaySelenium {
 
 	public void chooseOkOnNextConfirmation();
 
-	public void click(String locator);
+	public void click(String locator) throws Exception;
 
-	public void clickAndWait(String locator);
+	public void clickAndWait(String locator) throws Exception;
 
-	public void clickAt(String locator, String coordString);
+	public void clickAt(String locator, String coordString) throws Exception;
 
-	public void clickAtAndWait(String locator, String coordString);
+	public void clickAtAndWait(String locator, String coordString)
+		throws Exception;
 
 	public void close();
 
@@ -262,7 +263,7 @@ public interface LiferaySelenium {
 
 	public String getHtmlSource();
 
-	public String getLocation();
+	public String getLocation() throws Exception;
 
 	public String getLog();
 
@@ -440,11 +441,11 @@ public interface LiferaySelenium {
 
 	public void mouseUpRightAt(String locator, String coordString);
 
-	public void open(String url);
+	public void open(String url) throws Exception;
 
 	public void open(String url, String ignoreResponseCode);
 
-	public void openWindow(String url, String windowID);
+	public void openWindow(String url, String windowID) throws Exception;
 
 	public void paste(String locator);
 

@@ -33,7 +33,7 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 	}
 
 	@Override
-	public void click(String locator) {
+	public void click(String locator) throws Exception {
 		if (locator.contains("x:")) {
 			String url = getHtmlNodeHref(locator);
 

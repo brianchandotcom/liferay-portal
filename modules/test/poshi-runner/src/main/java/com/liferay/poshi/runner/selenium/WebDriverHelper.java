@@ -27,6 +27,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +50,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -431,8 +434,75 @@ public class WebDriverHelper {
 		return point.getY();
 	}
 
-	public static String getLocation(WebDriver webDriver) {
-		return webDriver.getCurrentUrl();
+	public static String getLocation(WebDriver webDriver) throws Exception {
+		List<Exception> exceptions = new ArrayList<>();
+
+		int totalRetries = 3;
+
+		for (int i = 0; i < totalRetries; i++) {
+			FutureTask<String> futureTask = new FutureTask<>(
+				new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _webDriver.getCurrentUrl();
+				}
+
+				private Callable<String> init(WebDriver webDriver)
+					throws Exception {
+
+					_webDriver = webDriver;
+
+					return this;
+				}
+
+				private WebDriver _webDriver;
+
+			}.init(webDriver));
+
+			Thread getCurrentUrlThread = new Thread(futureTask);
+
+			getCurrentUrlThread.start();
+
+			try {
+				String location = futureTask.get(
+					PropsValues.TIMEOUT_EXPLICIT_WAIT, TimeUnit.SECONDS);
+
+				return location;
+			}
+			catch (CancellationException ce) {
+				exceptions.add(ce);
+			}
+			catch (ExecutionException ee) {
+				exceptions.add(ee);
+			}
+			catch (InterruptedException ie) {
+				exceptions.add(ie);
+			}
+			catch (java.util.concurrent.TimeoutException te) {
+				exceptions.add(te);
+			}
+			finally {
+				getCurrentUrlThread.interrupt();
+			}
+
+			System.out.println("WebDriverHelper.getLocation(webDriver) failed");
+
+			System.out.println(webDriver.toString());
+
+			Set<String> windowHandles = webDriver.getWindowHandles();
+
+			for (String windowHandle : windowHandles) {
+				System.out.println(windowHandle);
+			}
+		}
+
+		if (!exceptions.isEmpty()) {
+			throw new Exception(exceptions.get(0));
+		}
+		else {
+			throw new java.util.concurrent.TimeoutException();
+		}
 	}
 
 	public static int getNavigationBarHeight() {
@@ -638,7 +708,7 @@ public class WebDriverHelper {
 		javascriptExecutor.executeScript(sb.toString(), locatorWebElement);
 	}
 
-	public static void open(WebDriver webDriver, String url) {
+	public static void open(WebDriver webDriver, String url) throws Exception {
 		String targetURL = "";
 
 		if (url.startsWith("/")) {
@@ -657,7 +727,7 @@ public class WebDriverHelper {
 				}
 
 				if (targetURL.equals(getLocation(webDriver))) {
-					break;
+					return;
 				}
 
 				Thread.sleep(1000);
@@ -665,6 +735,8 @@ public class WebDriverHelper {
 			catch (Exception e) {
 			}
 		}
+
+		throw new Exception("Unable to open " + url);
 	}
 
 	public static void refresh(WebDriver webDriver) {
@@ -955,7 +1027,7 @@ public class WebDriverHelper {
 
 			return true;
 		}
-		catch (TimeoutException te) {
+		catch (org.openqa.selenium.TimeoutException te) {
 			return false;
 		}
 	}

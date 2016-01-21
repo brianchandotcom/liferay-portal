@@ -251,7 +251,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void assertLocation(String pattern) {
+	public void assertLocation(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertLocation(this, pattern);
 	}
 
@@ -281,7 +281,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void assertNotLocation(String pattern) {
+	public void assertNotLocation(String pattern) throws Exception {
 		LiferaySeleniumHelper.assertNotLocation(this, pattern);
 	}
 
@@ -412,7 +412,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void click(String locator) {
+	public void click(String locator) throws Exception {
 		if (locator.contains("x:")) {
 			String url = getHtmlNodeHref(locator);
 
@@ -435,18 +435,19 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void clickAndWait(String locator) {
+	public void clickAndWait(String locator) throws Exception {
 		click(locator);
 		waitForPageToLoad("30000");
 	}
 
 	@Override
-	public void clickAt(String locator, String coordString) {
+	public void clickAt(String locator, String coordString) throws Exception {
 		clickAt(locator, coordString, true);
 	}
 
 	public void clickAt(
-		String locator, String coordString, boolean scrollIntoView) {
+			String locator, String coordString, boolean scrollIntoView)
+		throws Exception {
 
 		int offsetX = 0;
 		int offsetY = 0;
@@ -514,7 +515,9 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void clickAtAndWait(String locator, String coordString) {
+	public void clickAtAndWait(String locator, String coordString)
+		throws Exception {
+
 		clickAt(locator, coordString);
 		waitForPageToLoad("30000");
 	}
@@ -1037,7 +1040,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public String getLocation() {
+	public String getLocation() throws Exception {
 		return WebDriverHelper.getLocation(this);
 	}
 
@@ -1766,7 +1769,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void open(String url) {
+	public void open(String url) throws Exception {
 		WebDriverHelper.open(this, url);
 	}
 
@@ -1776,7 +1779,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void openWindow(String url, String windowID) {
+	public void openWindow(String url, String windowID) throws Exception {
 		open(url);
 	}
 

@@ -306,7 +306,8 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void assertLocation(
-		LiferaySelenium liferaySelenium, String pattern) {
+			LiferaySelenium liferaySelenium, String pattern)
+		throws Exception {
 
 		TestCase.assertEquals(pattern, liferaySelenium.getLocation());
 	}
@@ -485,7 +486,8 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void assertNotLocation(
-		LiferaySelenium liferaySelenium, String pattern) {
+			LiferaySelenium liferaySelenium, String pattern)
+		throws Exception {
 
 		TestCase.assertTrue(
 			Validator.equals(pattern, liferaySelenium.getLocation()));

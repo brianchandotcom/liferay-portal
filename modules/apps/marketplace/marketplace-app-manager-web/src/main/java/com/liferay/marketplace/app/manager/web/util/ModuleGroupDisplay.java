@@ -26,7 +26,7 @@ import org.osgi.framework.Bundle;
 public interface ModuleGroupDisplay extends Comparable<ModuleGroupDisplay> {
 
 	public static final String MODULE_GROUP_TITLE_UNCATEGORIZED =
-		"Uncategorized";
+		"Independent Modules";
 
 	public void addBundle(Bundle bundle);
 

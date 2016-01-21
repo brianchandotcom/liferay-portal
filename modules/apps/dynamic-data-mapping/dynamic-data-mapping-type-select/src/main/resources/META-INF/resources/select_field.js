@@ -17,7 +17,7 @@ AUI.add(
 					},
 
 					dataSourceURL: {
-						value: '/o/dynamic-data-mapping-data-provider'
+						value: '/o/dynamic-data-mapping-data-provider/'
 					},
 
 					ddmDataProviderInstanceId: {

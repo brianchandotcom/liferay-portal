@@ -220,7 +220,7 @@ body {
 	}
 
 	.tree-node-content {
-		.layout-tree-add, .layout-tree-edit, .layout-set-tree-add, .layout-set-tree-edit {
+		.layout-tree-add, .layout-tree-delete, .layout-tree-edit, .layout-set-tree-add, .layout-set-tree-edit {
 			opacity: 0;
 
 			&:focus {
@@ -230,14 +230,14 @@ body {
 
 		&.tree-node-selected, &:active, &.active, &:hover {
 			.tree-label {
-				> .layout-tree-edit, > .layout-tree-add {
+				> .layout-tree-add, > .layout-tree-delete, > .layout-tree-edit {
 					opacity: 1;
 				}
 			}
 		}
 
-		.layout-tree:focus, .layout-tree-add:focus, .layout-tree-edit:focus {
-			~ .layout-tree-add, ~ .layout-tree-edit {
+		.layout-tree:focus, .layout-tree-add:focus, .layout-tree-delete:focus, .layout-tree-edit:focus {
+			~ .layout-tree-add, ~ .layout-tree-delete, ~ .layout-tree-edit {
 				opacity: 1;
 			}
 		}

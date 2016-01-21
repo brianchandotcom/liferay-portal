@@ -135,15 +135,18 @@
 	<command name="addEntryWithUploadedCoverImage">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
+		<execute macro="BlogsEntry#addTitle">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addCoverImage" />
-
-		<execute macro="ItemSelector#uploadFile">
+		<execute macro="BlogsEntry#addContentWithInlineImage">
+			<var name="entryContent" value="${entryContent}" />
 			<var name="navTab" value="${navTab}" />
 			<var name="uploadFileName" value="${uploadFileName}" />
 		</execute>
@@ -501,13 +504,6 @@
 		<execute function="AssertTextEquals" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 		<execute function="AssertTextEquals" locator1="Link#SUBSCRIBE" value1="Subscribe" />
 		<execute function="AssertTextEquals" locator1="Link#RSS" value1="RSS" />
-	</command>
-
-	<command name="viewDraftStatusViaAdmin">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Draft" />
 	</command>
 
 	<command name="viewNoEntryCP">

@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FLAG_MODAL</td>
+	<td>//div[contains(@class,'modal-body')]/div/form[contains(@id,'flagsForm')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RELATED_ASSETS_LINK_IMAGE</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a/i</td>
 	<td></td>

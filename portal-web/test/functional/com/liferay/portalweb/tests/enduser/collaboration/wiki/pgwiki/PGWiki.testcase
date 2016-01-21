@@ -375,21 +375,21 @@
 	</command>
 
 	<command name="AddWikiFrontPageContentNoJavascript" priority="4">
-		<var name="wikiPageContent">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiPage#_editEmptyFrontPage">
+			<var name="wikiPageContent">
 			<![CDATA[
 				<p id="demo">PASS</p><script type="text/javascript">document.getElementById('demo').innerHTML="this code should not be read by the client";</script>
 			]]>
-		</var>
-		<var name="wikiPageRevision" value="1.1" />
-		<var name="wikiPageText" value="PASS" />
-		<var name="wikiPageTitle" value="FrontPage" />
-		<var name="wikiPageUsername" value="Test Test" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			</var>
 		</execute>
 
-		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="HTML" />
@@ -397,23 +397,17 @@
 
 		<execute macro="WikiEntry#confirmHTML" />
 
-		<execute function="Click#clickAt" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
-
-		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${wikiPageContent}" />
-
 		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
 		<execute macro="WikiNavigator#gotoFrontPagePG" />
 
 		<execute macro="WikiPage#viewFrontPagePG">
-			<var name="wikiPageContent" value="${wikiPageText}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageContent" value="PASS" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 	</command>
 
@@ -447,10 +441,19 @@
 
 	<command name="AddWikiFrontPageFormatHTML" priority="5">
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtAndPause" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
+		<execute macro="WikiPage#_editEmptyFrontPage">
+			<var name="wikiPageContent">
+			<![CDATA[<p><a href="/">Home</a></p>
+			]]>
+			</var>
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="HTML" />
@@ -458,18 +461,10 @@
 
 		<execute macro="WikiEntry#confirmHTML" />
 
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
-
-		<var name="home"><![CDATA[<p><a href="/">Home</a></p>]]></var>
-
-		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${home}" />
-
 		<execute macro="WikiEntry#publish" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
 		<execute macro="WikiNavigator#gotoPG">
@@ -585,15 +580,17 @@
 
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
+		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="This page does not exist yet. Use the form below to create it." />
 
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="HTML" />
 		</execute>
 
 		<execute macro="WikiEntry#confirmHTML" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
 
 		<execute function="Click#clickAt" locator1="AlloyEditor#CONTENT_FIELD" />
 

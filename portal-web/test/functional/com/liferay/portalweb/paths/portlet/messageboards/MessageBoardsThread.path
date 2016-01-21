@@ -18,6 +18,32 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--THREAD-->
+<tr>
+	<td>THREAD_BODY</td>
+	<td>//div[@class='message-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_REPLY_BUTTON</td>
+	<td>//div[contains(@class,'message-container') and contains(.,'${key_threadSubject}')]//a[contains(@class,'btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_SUBJECT</td>
+	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h4[contains(.,'${key_threadSubject}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_USERNAME</td>
+	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--THREAD_CONTROLS-->
 <tr>
 	<td>THREAD_CONTROLS_BACK</td>

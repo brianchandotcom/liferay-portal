@@ -653,9 +653,12 @@
 
 		<execute function="Click" locator1="Icon#BACK" />
 
-		<execute macro="Blogs#viewDraftStatusViaAdmin">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_ICON" />
+
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="Blogs Entry Title" />
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Draft" />
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -665,7 +668,7 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="uploadFileName" value="Document_1.jpg" />
+			<var name="uploadFileName" value="Document_1" />
 		</execute>
 	</command>
 

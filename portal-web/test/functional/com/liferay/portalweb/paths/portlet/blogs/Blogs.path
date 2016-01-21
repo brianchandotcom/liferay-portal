@@ -74,22 +74,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--LIST_VIEW-->
-<tr>
-	<td>LIST_VIEW_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'list-group-item-content')]//a[contains(.,'${key_entryTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
-	<td>//div[contains(@class,'container') and contains(.,'${key_entryTitle}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_VIEW-->
 <tr>
 	<td>PAGE_VIEW_ENTRY_TITLE</td>

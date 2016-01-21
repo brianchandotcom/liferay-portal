@@ -66,7 +66,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${attachmentFileName}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -114,7 +114,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${attachmentFileName1}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -128,7 +128,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${attachmentFileName2}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -142,7 +142,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${attachmentFileName3}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -1720,7 +1720,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${documentName1}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -1734,7 +1734,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${documentName2}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -1763,7 +1763,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${documentName3}" />
 			<var name="wikiPageTitle" value="${wikiChildPageTitle1}" />
 		</execute>
@@ -3208,7 +3208,7 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="${attachmentFileName}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>

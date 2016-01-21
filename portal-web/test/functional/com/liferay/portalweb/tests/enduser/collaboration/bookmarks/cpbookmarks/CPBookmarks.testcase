@@ -297,7 +297,7 @@
 	<command name="DeleteSecondBookmark" priority="4">
 		<var name="bookmark2Description" value="This is another test bookmark!" />
 		<var name="bookmark2Name" value="Test Bookmark 2" />
-		<var name="bookmark2URL" value="http://www.digg.com" />
+		<var name="bookmark2URL" value="http://digg.com" />
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -624,7 +624,7 @@
 	<command name="SearchBookmark" priority="3">
 		<var name="bookmark2Description" value="This is another test bookmark!" />
 		<var name="bookmark2Name" value="Test Bookmark 2" />
-		<var name="bookmark2URL" value="http://www.digg.com" />
+		<var name="bookmark2URL" value="http://digg.com" />
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -669,7 +669,7 @@
 		<var name="bookmark1URL" value="http://www.liferay.com" />
 		<var name="bookmark2Description" value="This is another test bookmark!" />
 		<var name="bookmark2Name" value="Test Bookmark 2" />
-		<var name="bookmark2URL" value="http://www.digg.com" />
+		<var name="bookmark2URL" value="http://digg.com" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -741,7 +741,7 @@
 	<command name="SearchNullBookmark" priority="3">
 		<var name="bookmark2Description" value="This is another test bookmark!" />
 		<var name="bookmark2Name" value="Test Bookmark 2" />
-		<var name="bookmark2URL" value="http://www.digg.com" />
+		<var name="bookmark2URL" value="http://digg.com" />
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />

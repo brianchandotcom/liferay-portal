@@ -323,7 +323,7 @@
 	<command name="MoveFolderBookmarkToFolder" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
-		<var name="bookmarkURL" value="http://liferay.com" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
 		<var name="bookmarkURLEdit" value="http://www.alloyui.com" />
 		<var name="folderDescription1" value="Test Folder Description 1" />
 		<var name="folderDescription2" value="Test Folder Description 2" />

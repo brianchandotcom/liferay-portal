@@ -7,24 +7,22 @@
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="addAttachmentViaPageDetailsPG">
+	<command name="addAttachmentViaPageEdit">
+		<execute function="AssertClick" locator1="Wiki#LINK_EDIT" value1="Edit" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Attachments" />
+		</execute>
+
+		<execute function="Click" locator1="Button#SELECT_FILES" />
+
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute function="AssertClick" locator1="Wiki#LINK_DETAILS" value1="Details" />
-
-		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_ATTACHMENTS" value1="Attachments" />
-
-		<execute function="AssertClick" locator1="Button#ADD_ATTACHMENTS" value1="Add Attachments" />
-		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
 
 		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${attachmentFileName}" />
 
-		<execute function="AssertChecked" locator1="Wiki#FILES_READY_TO_BE_SAVED_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="Wiki#FILES_READY_TO_BE_SAVED_TITLE" value1="${attachmentFileName}" />
-		<execute function="AssertClick" locator1="Button#SAVE_ATTACHMENT" value1="Save" />
+		<execute function="Click" locator1="Button#PUBLISH" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 	</command>
 
 	<command name="addChildPagePG">
@@ -197,6 +195,10 @@
 		<if>
 			<equals arg1="${creoleSource}" arg2="true" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Configuration" />
+				</execute>
+
 				<execute function="Select#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
 
 				<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
@@ -840,6 +842,12 @@
 		<execute function="AssertTextNotPresent" locator1="Portlet#H3_HEADER" value1="${wikiPage2Title}" />
 		<execute function="AssertTextNotPresent" locator1="Wiki#BODY" value1="${wikiPage2Content}" />
 		<execute function="AssertClick" locator1="Wiki#LINK_EDIT" value1="Edit" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
 
 		<execute function="Select" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
 

@@ -277,8 +277,8 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="PGBookmarksEditBookmark#NAME_FIELD" value1="${bookmarkNameEdit}" />
-		<execute function="Type" locator1="PGBookmarksEditBookmark#URL_FIELD" value1="${bookmarkURLEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${bookmarkNameEdit}" />
+		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURLEdit}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
@@ -556,7 +556,7 @@
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute function="AssertElementNotPresent" locator1="CPBookmarksAddbookmark#CATEGORIZATION_SELECT" />
+		<execute function="AssertElementNotPresent" locator1="Categories#VOCABULARY_CATEGORY" />
 	</command>
 
 	<command name="viewNoPG">

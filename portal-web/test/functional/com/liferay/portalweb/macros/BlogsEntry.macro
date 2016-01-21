@@ -112,10 +112,6 @@
 		</execute>
 	</command>
 
-	<command name="addCoverImage">
-		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
-	</command>
-
 	<command name="addCP">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
@@ -765,7 +761,7 @@
 
 		<execute function="AssertClick" locator1="BlogsEntry#FLAG_LINK" value1="Flag" />
 
-		<execute function="AssertTextEquals" locator1="ReportContent#HEADER" value1="Report Inappropriate Content" />
+		<execute function="AssertElementPresent#assertVisible" locator1="BlogsEntry#FLAG_MODAL" />
 		<execute function="AssertTextEquals" locator1="ReportContent#WARNING" value1="You are about to report a violation of our Terms of Use. All reports are strictly confidential." />
 		<execute function="AssertTextEquals" locator1="ReportContent#WARNING_TERMS_OF_USE_LINK" value1="Terms of Use" />
 
@@ -1343,7 +1339,9 @@
 		<if>
 			<isset var="uploadFileName" />
 			<then>
-				<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE" />
+				<execute macro="BlogsEntry#viewInlineImage">
+					<var name="uploadFileName" value="${uploadFileName}" />
+				</execute>
 			</then>
 		</if>
 

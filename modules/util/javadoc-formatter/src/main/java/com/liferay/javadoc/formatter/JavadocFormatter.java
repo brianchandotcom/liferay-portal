@@ -244,7 +244,9 @@ public class JavadocFormatter {
 		}
 
 		if (_generateXml) {
-			for (Map.Entry<String, Tuple> entry : _javadocxXmlTuples.entrySet()) {
+			for (Map.Entry<String, Tuple> entry :
+					_javadocxXmlTuples.entrySet()) {
+
 				Tuple tuple = entry.getValue();
 
 				File javadocsXmlFile = (File)tuple.getObject(1);
@@ -275,7 +277,8 @@ public class JavadocFormatter {
 				String oldJavadocsRuntimeXmlContent = StringPool.BLANK;
 
 				if (javadocsRuntimeXmlFile.exists()) {
-					oldJavadocsRuntimeXmlContent = _read(javadocsRuntimeXmlFile);
+					oldJavadocsRuntimeXmlContent = _read(
+						javadocsRuntimeXmlFile);
 				}
 
 				String newJavadocsRuntimeXmlContent = _compactString(
@@ -284,7 +287,8 @@ public class JavadocFormatter {
 				if (!oldJavadocsRuntimeXmlContent.equals(
 						newJavadocsRuntimeXmlContent)) {
 
-					_write(javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
+					_write(javadocsRuntimeXmlFile,
+						newJavadocsRuntimeXmlContent);
 
 					_modifiedFileNames.add(
 						javadocsRuntimeXmlFile.getAbsolutePath());

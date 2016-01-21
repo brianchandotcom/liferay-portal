@@ -969,7 +969,9 @@
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#HEADER_TITLE" value1="${entryTitle}" />
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Permissions#ASSET_TITLE" value1="${entryTitle}" />
 
 		<execute function="Uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 
@@ -1514,7 +1516,9 @@
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${entryTitle}" />
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${entryTitle}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -1827,7 +1831,9 @@
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${entryTitle}" />
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${entryTitle}" />
 
 		<if>
 			<equals arg1="${viewPermissionValue}" arg2="checked" />

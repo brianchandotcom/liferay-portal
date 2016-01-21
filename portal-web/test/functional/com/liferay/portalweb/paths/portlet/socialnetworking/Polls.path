@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACTIONS_DROPDOWN_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//span[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>	
+<tr>
 	<td>ADD_QUESTION</td>
 	<td>//div[contains(@class,'lfr-icon-actions')]/span[2]/a</td>
 	<td></td>

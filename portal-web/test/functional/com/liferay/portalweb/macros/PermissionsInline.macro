@@ -296,7 +296,8 @@
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
 		<execute function="Click" locator1="Polls#POLLS_TABLE_ACTION" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+
+		<execute function="AssertClick" locator1="Polls#ACTIONS_DROPDOWN_PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 	</command>
@@ -364,7 +365,10 @@
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${webContentTitle}" />
+
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Permissions#ASSET_TITLE" value1="${webContentTitle}" />
 	</command>
 
 	<command name="viewPermissionsChecked">

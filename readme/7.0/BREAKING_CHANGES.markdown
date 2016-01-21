@@ -3451,6 +3451,22 @@ else.
 
 - `com.liferay.portal.repository.proxy` &rarr; `com.liferay.portal.kernel.repository.proxy`
 
+- `com.liferay.portal.security.auth` &rarr; `com.liferay.portal.kernel.security.auth`
+
+- `com.liferay.portal.security.exportimport` &rarr; `com.liferay.portal.kernel.security.exportimport`
+
+- `com.liferay.portal.security.ldap` &rarr; `com.liferay.portal.kernel.security.ldap`
+
+- `com.liferay.portal.security.membershippolicy` &rarr; `com.liferay.portal.kernel.security.membershippolicy`
+
+- `com.liferay.portal.security.permission` &rarr; `com.liferay.portal.kernel.security.permission`
+
+- `com.liferay.portal.security.permission.comparator` &rarr; `com.liferay.portal.kernel.security.permission.comparator`
+
+- `com.liferay.portal.security.pwd` &rarr; `com.liferay.portal.kernel.security.pwd`
+
+- `com.liferay.portal.security.xml` &rarr; `com.liferay.portal.kernel.security.xml`
+
 - `com.liferay.portal.webserver` &rarr; `com.liferay.portal.kernel.webserver`
 
 - `com.liferay.portlet.backgroundtask` &rarr; `com.liferay.background.task.kernel`

@@ -287,8 +287,8 @@ public class JavadocFormatter {
 				if (!oldJavadocsRuntimeXmlContent.equals(
 						newJavadocsRuntimeXmlContent)) {
 
-					_write(javadocsRuntimeXmlFile,
-						newJavadocsRuntimeXmlContent);
+					_write(
+						javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
 
 					_modifiedFileNames.add(
 						javadocsRuntimeXmlFile.getAbsolutePath());

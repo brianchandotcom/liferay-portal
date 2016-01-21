@@ -54,6 +54,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,

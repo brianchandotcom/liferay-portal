@@ -65,19 +65,21 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 			long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 			%>
 
-			<liferay-layout:layouts-tree
-				defaultStateChecked="<%= true %>"
-				draggableTree="<%= false %>"
-				groupId="<%= groupId %>"
-				incomplete="<%= false %>"
-				portletURL="<%= renderResponse.createRenderURL() %>"
-				privateLayout="<%= privateLayout %>"
-				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
-				selectableTree="<%= true %>"
-				selectedLayoutIds="<%= selectedLayoutIds %>"
-				selPlid="<%= selPlid %>"
-				treeId="<%= treeId %>"
-			/>
+			<div class="pages-selector">
+				<liferay-layout:layouts-tree
+					defaultStateChecked="<%= true %>"
+					draggableTree="<%= false %>"
+					groupId="<%= groupId %>"
+					incomplete="<%= false %>"
+					portletURL="<%= renderResponse.createRenderURL() %>"
+					privateLayout="<%= privateLayout %>"
+					rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+					selectableTree="<%= true %>"
+					selectedLayoutIds="<%= selectedLayoutIds %>"
+					selPlid="<%= selPlid %>"
+					treeId="<%= treeId %>"
+				/>
+			</div>
 		</aui:fieldset>
 	</li>
 

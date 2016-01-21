@@ -14,6 +14,7 @@
 
 package com.liferay.my.account.web.portlet.action;
 
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
 import com.liferay.portal.exception.UserPasswordException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -26,7 +27,6 @@ import com.liferay.portal.service.ListTypeLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import java.util.HashMap;

@@ -14,6 +14,7 @@
 
 package com.liferay.announcements.web.messaging;
 
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

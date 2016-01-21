@@ -20,6 +20,6 @@ package com.liferay.announcements.kernel.constants;
 public class AnnouncementsConstants {
 
 	public static final String CLASS_NAME_ALERTS_ENTRY =
-		"com.liferay.portlet.announcements.model.AlertsEntry";
+		"com.liferay.announcements.kernel.model.AlertsEntry";
 
 }

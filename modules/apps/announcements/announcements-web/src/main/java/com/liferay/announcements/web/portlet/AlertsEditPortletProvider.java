@@ -14,12 +14,12 @@
 
 package com.liferay.announcements.web.portlet;
 
+import com.liferay.announcements.kernel.constants.AnnouncementsConstants;
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portlet.announcements.constants.AnnouncementsConstants;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.ldap.bundle.ldapsettingsutil;
 
-import com.liferay.portal.security.ldap.LDAPSettings;
+import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 
 import java.util.Properties;
 

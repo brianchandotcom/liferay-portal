@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.ldap.bundle.portalldaputil;
 
+import com.liferay.portal.kernel.security.ldap.PortalLDAP;
 import com.liferay.portal.kernel.util.StackTraceUtil;
-import com.liferay.portal.security.ldap.PortalLDAP;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;

@@ -29,8 +29,7 @@ public class MentionsMatcher {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(?:\\s|^|\\]|>)([@|&#64;]([^(?:@|&#64;|>|\\[|\\s|,|.|<)]+))",
-		Pattern.CASE_INSENSITIVE);
+		"(?:\\s|^|\\]|>)(?:@|&#64;)((?:&(?!#64;)|[^@<>.,\\[\\]\\s])+)");
 
 	private static class MentionsIterable implements Iterable<String> {
 
@@ -76,7 +75,7 @@ public class MentionsMatcher {
 
 			_hasNext = null;
 
-			return _matcher.group(2);
+			return _matcher.group(1);
 		}
 
 		@Override

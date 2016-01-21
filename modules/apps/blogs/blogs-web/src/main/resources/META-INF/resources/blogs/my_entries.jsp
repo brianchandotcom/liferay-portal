@@ -25,9 +25,12 @@ int myEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId
 <c:if test="<%= myEntriesCount > 0 %>">
 
 	<%
+	boolean collapsed = ParamUtil.getBoolean(request, "collapsed", true);
+
 	PortletURL iteratorURL = renderResponse.createRenderURL();
 
 	iteratorURL.setParameter("mvcRenderCommandName", "/blogs/view");
+	iteratorURL.setParameter("collapsed", StringPool.FALSE);
 
 	SearchContainer myEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "myEntriesCur", 5, iteratorURL, null, null);
 
@@ -38,7 +41,7 @@ int myEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId
 	myEntriesSearchContainer.setResults(myEntries);
 	%>
 
-	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="my-pending-entries" markupView="lexicon">
+	<aui:fieldset collapsed="<%= collapsed %>" collapsible="<%= true %>" label="my-pending-entries" markupView="lexicon">
 		<liferay-ui:search-container
 			searchContainer="<%= myEntriesSearchContainer %>"
 			totalVar="mineTotal"

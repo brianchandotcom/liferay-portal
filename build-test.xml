@@ -5067,6 +5067,13 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium">
+		<if>
+			<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
+			<then>
+				<get-test-class />
+			</then>
+		</if>
+
 		<delete file="${test.ext.properties.file}" />
 
 		<get-testcase-property property.name="browser.type" />

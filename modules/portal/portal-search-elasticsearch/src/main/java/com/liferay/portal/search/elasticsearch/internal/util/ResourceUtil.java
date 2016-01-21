@@ -12,14 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.index;
+package com.liferay.portal.search.elasticsearch.internal.util;
+
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
- * @author André de Oliveira
+ * @author Michael C. Han
  */
-public class IndexSettingsConstants {
+public class ResourceUtil {
 
-	public static final String INDEX_SETTINGS_FILE_NAME =
-		"/META-INF/index-settings.json";
+	public static String getResourceAsString(
+		Class<?> clazz, String resourceName) {
+
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				resourceName)) {
+
+			return StringUtil.read(inputStream);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to load resource: " + resourceName, ioe);
+		}
+	}
 
 }

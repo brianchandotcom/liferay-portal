@@ -330,9 +330,9 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		long plid = ParamUtil.getLong(actionRequest, "plid");
+		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
-		if (plid <= 0) {
+		if (selPlid <= 0) {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
 				actionRequest, "privateLayout");
@@ -341,13 +341,13 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			Layout layout = layoutLocalService.getLayout(
 				groupId, privateLayout, layoutId);
 
-			plid = layout.getPlid();
+			selPlid = layout.getPlid();
 		}
 
 		Object[] returnValue = SitesUtil.deleteLayout(
 			actionRequest, actionResponse);
 
-		if (plid == themeDisplay.getRefererPlid()) {
+		if (selPlid == themeDisplay.getRefererPlid()) {
 			long newRefererPlid = (Long)returnValue[2];
 
 			redirect = HttpUtil.setParameter(

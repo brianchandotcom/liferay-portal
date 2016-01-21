@@ -196,11 +196,6 @@ AUI.add(
 						value: null
 					},
 
-					listViewContainer: {
-						validator: A.one,
-						value: {}
-					},
-
 					maxFileSize: {
 						validator: function(val) {
 							return isNumber(val) && val > 0;
@@ -466,6 +461,8 @@ AUI.add(
 							entryNode = instance._createEntryRow(name, size);
 						}
 						else {
+							entriesContainer = entriesContainer.one('ul');
+
 							var invisibleEntry = instance._invisibleDescriptiveEntry;
 
 							var hiddenCheckbox = sub(TPL_HIDDEN_CHECK_BOX, [instance.get(STR_HOST).ns('rowIdsFileEntry')]);
@@ -845,7 +842,7 @@ AUI.add(
 
 							createNavigationOverlay(entriesContainer.one(SELECTOR_DOCUMENT_ENTRIES_PAGINATION));
 							createNavigationOverlay(entriesContainer.one('.app-view-taglib.lfr-header-row'));
-							createNavigationOverlay(instance.get('listViewContainer'));
+							createNavigationOverlay(instance.get('.searchcontainer'));
 
 							instance._navigationOverlays = navigationOverlays;
 						}
@@ -1328,6 +1325,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-parse-content', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
+		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-parse-content', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-history-manager', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
 	}
 );

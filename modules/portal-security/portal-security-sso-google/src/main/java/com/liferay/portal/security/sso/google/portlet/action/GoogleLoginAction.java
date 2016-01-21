@@ -49,8 +49,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.expando.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -224,14 +222,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 		String googleClientSecret = PrefsPropsUtil.getString(
 			companyId, "google-client-secret");
 
-		List<String> scopes = null;
-
-		if (DeployManagerUtil.isDeployed(_GOOGLE_DRIVE_CONTEXT)) {
-			scopes = _SCOPES_DRIVE;
-		}
-		else {
-			scopes = _SCOPES_LOGIN;
-		}
+		List<String> scopes = _SCOPES_LOGIN;
 
 		GoogleAuthorizationCodeFlow.Builder builder =
 			new GoogleAuthorizationCodeFlow.Builder(
@@ -239,10 +230,6 @@ public class GoogleLoginAction extends BaseStrutsAction {
 				scopes);
 
 		String accessType = "online";
-
-		if (DeployManagerUtil.isDeployed(_GOOGLE_DRIVE_CONTEXT)) {
-			accessType = "offline";
-		}
 
 		builder.setAccessType(accessType);
 
@@ -394,46 +381,12 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			user = addUser(session, companyId, userinfoplus);
 		}
 
-		if (DeployManagerUtil.isDeployed(_GOOGLE_DRIVE_CONTEXT)) {
-			updateExpandoValues(
-				user, userinfoplus, credential.getAccessToken(),
-				credential.getRefreshToken());
-		}
-
 		return user;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-
-		_expandoValueLocalService = expandoValueLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	protected void updateExpandoValues(
-			User user, Userinfoplus userinfoplus, String accessToken,
-			String refreshToken)
-		throws Exception {
-
-		_expandoValueLocalService.addValue(
-			user.getCompanyId(), User.class.getName(),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME, "googleAccessToken",
-			user.getUserId(), accessToken);
-
-		_expandoValueLocalService.addValue(
-			user.getCompanyId(), User.class.getName(),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME, "googleRefreshToken",
-			user.getUserId(), refreshToken);
-
-		_expandoValueLocalService.addValue(
-			user.getCompanyId(), User.class.getName(),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME, "googleUserId",
-			user.getUserId(), userinfoplus.getId());
 	}
 
 	protected User updateUser(User user, Userinfoplus userinfoplus)
@@ -497,18 +450,12 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			userGroupRoles, userGroupIds, serviceContext);
 	}
 
-	private static final String _GOOGLE_DRIVE_CONTEXT = "google-drive-hook";
-
 	private static final String _REDIRECT_URI =
 		"/portal/google_login?cmd=token";
-
-	private static final List<String> _SCOPES_DRIVE = Arrays.asList(
-		"https://www.googleapis.com/auth/drive", "email", "profile");
 
 	private static final List<String> _SCOPES_LOGIN = Arrays.asList(
 		"email", "profile");
 
-	private ExpandoValueLocalService _expandoValueLocalService;
 	private UserLocalService _userLocalService;
 
 }

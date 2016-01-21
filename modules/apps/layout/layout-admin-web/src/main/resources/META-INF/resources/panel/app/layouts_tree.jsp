@@ -51,14 +51,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	</ul>
 </c:if>
 
-<liferay-util:buffer var="linkTemplate">
-	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
-
-	<a class="layout-tree-add" data-parentable="{parentable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="add-child-page" unicode="<%= true %>" />')"><aui:icon image="plus" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message key="add-child-page" /></span></a>
-
-	<a class="layout-tree-edit" data-plid="{plid}" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= layoutsTreeDisplayContext.getJSSafeEditLayoutTitle() %>')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
-</liferay-util:buffer>
-
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutTabs() %>">
 
 	<%
@@ -175,6 +167,14 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		</c:if>
 	</div>
 </c:if>
+
+<liferay-util:buffer var="linkTemplate">
+	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
+
+	<a class="layout-tree-add" data-parentable="{parentable}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{addLayoutURL}" id="{id}Add" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="add-child-page" unicode="<%= true %>" />')"><aui:icon image="plus" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message key="add-child-page" /></span></a>
+
+	<a class="layout-tree-edit" data-plid="{plid}" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= layoutsTreeDisplayContext.getJSSafeEditLayoutTitle() %>')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
+</liferay-util:buffer>
 
 <liferay-layout:layouts-tree
 	expandFirstNode="<%= true %>"

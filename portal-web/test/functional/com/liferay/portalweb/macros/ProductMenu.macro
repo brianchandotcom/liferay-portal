@@ -51,6 +51,8 @@
 
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
+		<execute macro="ProductMenuHelper#expandPageTree" />
+
 		<var name="key_page" value="${page}" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
@@ -112,6 +114,8 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="ProductMenu#PRIVATE_PAGES" value1="Private Pages" />
+
+		<execute function="Pause" locator1="5000" />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
 	</command>

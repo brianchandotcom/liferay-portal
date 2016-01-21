@@ -1437,6 +1437,12 @@
 			<var name="teamName" value="Site Team Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPublicPages" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Blog Page Template" />
 			<var name="pageTemplateName" value="Blog" />

@@ -12,6 +12,17 @@
 		</if>
 	</command>
 
+	<command name="expandPageTree">
+		<if>
+			<condition function="IsElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />
+
+				<execute function="AssertElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
 	<command name="expandPanelControlPanel">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 

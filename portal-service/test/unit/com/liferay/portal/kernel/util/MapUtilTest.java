@@ -95,7 +95,7 @@ public class MapUtilTest {
 		@Test
 		public void shouldReturnMapWithDelimiterCustom() {
 			Map<String, String> map = MapUtil.toLinkedHashMap(
-				new String[] {}, ",");
+				new String[0], ",");
 
 			Assert.assertTrue(map.isEmpty());
 
@@ -112,7 +112,7 @@ public class MapUtilTest {
 
 		@Test
 		public void shouldReturnMapWithDelimiterDefault() {
-			Map<String, String> map = MapUtil.toLinkedHashMap(new String[] {});
+			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
 
 			Assert.assertTrue(map.isEmpty());
 
@@ -343,7 +343,7 @@ public class MapUtilTest {
 
 		@Test
 		public void shouldReturnEmptyMapWithZeroLength() {
-			Map<String, String> map = MapUtil.fromArray(new String[] {});
+			Map<String, String> map = MapUtil.fromArray(new String[0]);
 
 			Assert.assertTrue(map.isEmpty());
 		}

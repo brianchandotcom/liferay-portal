@@ -60,7 +60,7 @@ public class BeanToXMLUtil {
 				memberName = TextFormatter.format(memberName, TextFormatter.K);
 
 				try {
-					Object returnValue = method.invoke(obj, new Object[] {});
+					Object returnValue = method.invoke(obj, new Object[0]);
 
 					if (returnValue instanceof List<?>) {
 						List<Object> list = (List<Object>)returnValue;

@@ -77,7 +77,7 @@ public class JournalArticleIndexableTest {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
 				_group.getGroupId(), JournalArticle.class.getName(), null, null,
-				new long[] {}, null);
+				new long[0], null);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());

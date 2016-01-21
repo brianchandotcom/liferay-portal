@@ -241,7 +241,7 @@ public class DocumentImplTest {
 
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
 		searchContext.setKeywords(keywords);
-		searchContext.setGroupIds(new long[] {});
+		searchContext.setGroupIds(new long[0]);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

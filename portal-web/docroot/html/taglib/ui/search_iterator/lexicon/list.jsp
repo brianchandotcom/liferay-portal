@@ -209,7 +209,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 						String columnClassName = entry.getCssClass();
 					%>
 
-						<td class="<%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
+						<td class="<%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %> text-default" colspan="<%= entry.getColspan() %>">
 
 						<c:choose>
 							<c:when test="<%= entry.isTruncate() %>">

@@ -211,6 +211,22 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	treeId="layoutsTree"
 />
 
+<aui:script position="auto" use="aui-base">
+	A.one('#<portlet:namespace />layoutsTreeOutput').delegate(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			if (confirm('<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+	        	var link = event.currentTarget;
+
+				submitForm(document.hrefFm, link.attr('href'));
+			}
+		},
+		'.layout-tree-delete'
+	);
+</aui:script>
+
 <liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
 </liferay-portlet:renderURL>

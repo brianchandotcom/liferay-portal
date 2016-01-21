@@ -128,8 +128,6 @@ public class LDAPConstants {
 
 	public static final String SERVER_NAME = "serverName";
 
-	public static final long SYSTEM_DEFAULT = 0;
-
 	public static final String USER_CUSTOM_MAPPINGS = "userCustomMappings";
 
 	public static final String USER_DEFAULT_OBJECT_CLASSES =

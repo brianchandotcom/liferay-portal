@@ -175,7 +175,7 @@ public class LDAPServerConfigurationProviderImpl
 			!MapUtil.isEmpty(defaultCompanyConfigurations)) {
 
 			configuration = defaultCompanyConfigurations.get(
-				LDAPConstants.SYSTEM_DEFAULT);
+				LDAPServerConfiguration.DEFAULT_LDAP_SERVER_ID);
 		}
 
 		if (configuration == null) {

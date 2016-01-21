@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD);
-
 long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = null;
@@ -26,8 +24,6 @@ Group group = null;
 if (groupId > 0) {
 	group = GroupLocalServiceUtil.getGroup(groupId);
 }
-
-long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
@@ -43,9 +39,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 			<c:when test="<%= privateLayout %>">
 				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutURL">
 					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
 				</liferay-portlet:renderURL>
 
@@ -54,9 +48,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 			<c:otherwise>
 				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutURL">
 					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
 				</liferay-portlet:renderURL>
 
@@ -67,62 +59,25 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 	<li class="layout-selector-options">
 		<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
-			<div class="selected-pages" id="<portlet:namespace />pane">
 
-				<%
-				String treeId = ParamUtil.getString(request, "treeId");
-				long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
-				%>
+			<%
+			String treeId = ParamUtil.getString(request, "treeId");
+			long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
+			%>
 
-				<liferay-layout:layouts-tree
-					defaultStateChecked="<%= true %>"
-					draggableTree="<%= false %>"
-					groupId="<%= groupId %>"
-					incomplete="<%= false %>"
-					portletURL="<%= renderResponse.createRenderURL() %>"
-					privateLayout="<%= privateLayout %>"
-					rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
-					selectableTree="<%= true %>"
-					selectedLayoutIds="<%= selectedLayoutIds %>"
-					selPlid="<%= selPlid %>"
-					treeId="<%= treeId %>"
-				/>
-			</div>
-
-			<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">
-				<c:choose>
-					<c:when test="<%= layoutSetBranchId > 0 %>">
-						<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
-					</c:when>
-					<c:otherwise>
-						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
-
-							<%
-							List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
-							%>
-
-							<aui:select label="site-pages-variation" name="layoutSetBranchId">
-
-								<%
-								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-									boolean selected = false;
-
-									if (layoutSetBranch.isMaster()) {
-										selected = true;
-									}
-								%>
-
-									<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</c:if>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
+			<liferay-layout:layouts-tree
+				defaultStateChecked="<%= true %>"
+				draggableTree="<%= false %>"
+				groupId="<%= groupId %>"
+				incomplete="<%= false %>"
+				portletURL="<%= renderResponse.createRenderURL() %>"
+				privateLayout="<%= privateLayout %>"
+				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+				selectableTree="<%= true %>"
+				selectedLayoutIds="<%= selectedLayoutIds %>"
+				selPlid="<%= selPlid %>"
+				treeId="<%= treeId %>"
+			/>
 		</aui:fieldset>
 	</li>
 

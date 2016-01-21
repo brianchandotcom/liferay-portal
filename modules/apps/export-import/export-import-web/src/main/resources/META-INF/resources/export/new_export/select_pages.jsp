@@ -38,72 +38,76 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 <aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(groupId, privateLayout, selectedLayoutIds) %>" />
 
 <ul class="flex-container layout-selector" id="<portlet:namespace />pages">
-	<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
-		<div class="selected-pages" id="<portlet:namespace />pane">
+	<li class="layout-selector-options">
+		<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
+			<div class="selected-pages" id="<portlet:namespace />pane">
 
-			<%
-			String treeId = ParamUtil.getString(request, "treeId");
-			long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
-			%>
+				<%
+				String treeId = ParamUtil.getString(request, "treeId");
+				long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
+				%>
 
-			<liferay-layout:layouts-tree
-				defaultStateChecked="<%= true %>"
-				draggableTree="<%= false %>"
-				groupId="<%= groupId %>"
-				incomplete="<%= false %>"
-				portletURL="<%= renderResponse.createRenderURL() %>"
-				privateLayout="<%= privateLayout %>"
-				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
-				selectableTree="<%= true %>"
-				selectedLayoutIds="<%= selectedLayoutIds %>"
-				selPlid="<%= selPlid %>"
-				treeId="<%= treeId %>"
-			/>
-		</div>
+				<liferay-layout:layouts-tree
+					defaultStateChecked="<%= true %>"
+					draggableTree="<%= false %>"
+					groupId="<%= groupId %>"
+					incomplete="<%= false %>"
+					portletURL="<%= renderResponse.createRenderURL() %>"
+					privateLayout="<%= privateLayout %>"
+					rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+					selectableTree="<%= true %>"
+					selectedLayoutIds="<%= selectedLayoutIds %>"
+					selPlid="<%= selPlid %>"
+					treeId="<%= treeId %>"
+				/>
+			</div>
 
-		<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">
-			<c:choose>
-				<c:when test="<%= layoutSetBranchId > 0 %>">
-					<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
-				</c:when>
-				<c:otherwise>
-					<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
-
-						<%
-						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
-						%>
-
-						<aui:select label="site-pages-variation" name="layoutSetBranchId">
+			<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">
+				<c:choose>
+					<c:when test="<%= layoutSetBranchId > 0 %>">
+						<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
+					</c:when>
+					<c:otherwise>
+						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
 
 							<%
-							for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-								boolean selected = false;
+							List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
+							%>
 
-								if (layoutSetBranch.isMaster()) {
-									selected = true;
+							<aui:select label="site-pages-variation" name="layoutSetBranchId">
+
+								<%
+								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+									boolean selected = false;
+
+									if (layoutSetBranch.isMaster()) {
+										selected = true;
+									}
+								%>
+
+									<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+
+								<%
 								}
-							%>
+								%>
 
-								<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
+							</aui:select>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
 
-							<%
-							}
-							%>
+				<aui:input helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS) %>" />
+			</c:if>
 
-						</aui:select>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
+			<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true) %>" />
+		</aui:fieldset>
+	</li>
 
-			<aui:input helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS) %>" />
-		</c:if>
+	<li class="layout-selector-options">
+		<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
+			<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, true) %>" />
 
-		<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true) %>" />
-	</aui:fieldset>
-
-	<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
-		<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, true) %>" />
-
-		<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />
-	</aui:fieldset>
+			<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />
+		</aui:fieldset>
+	</li>
 </ul>

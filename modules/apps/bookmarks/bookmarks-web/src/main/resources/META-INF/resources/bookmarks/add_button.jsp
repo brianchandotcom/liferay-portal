@@ -19,7 +19,7 @@
 <%
 BookmarksPortletToolbarContributor bookmarksPortletToolbarContributor = (BookmarksPortletToolbarContributor)request.getAttribute(BookmarksWebKeys.BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR);
 
-List<Menu> menus = bookmarksPortletToolbarContributor.getPortletTitleMenus(renderRequest);
+List<Menu> menus = bookmarksPortletToolbarContributor.getPortletTitleMenus(renderRequest, renderResponse);
 %>
 
 <div id="addButtonContainer">

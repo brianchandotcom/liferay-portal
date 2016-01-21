@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -33,9 +34,11 @@ public abstract class BasePortletToolbarContributor
 	implements PortletToolbarContributor {
 
 	@Override
-	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
+	public List<Menu> getPortletTitleMenus(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		List<MenuItem> portletTitleMenuItems = getPortletTitleMenuItems(
-			portletRequest);
+			portletRequest, portletResponse);
 
 		if (ListUtil.isEmpty(portletTitleMenuItems)) {
 			return Collections.emptyList();
@@ -64,6 +67,6 @@ public abstract class BasePortletToolbarContributor
 	}
 
 	protected abstract List<MenuItem> getPortletTitleMenuItems(
-		PortletRequest portletRequest);
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 }

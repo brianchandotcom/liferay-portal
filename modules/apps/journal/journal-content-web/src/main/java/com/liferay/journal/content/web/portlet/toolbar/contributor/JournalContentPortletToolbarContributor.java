@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -129,7 +130,7 @@ public class JournalContentPortletToolbarContributor
 
 	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

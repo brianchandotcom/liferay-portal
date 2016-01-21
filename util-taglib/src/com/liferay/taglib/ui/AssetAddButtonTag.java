@@ -54,6 +54,10 @@ public class AssetAddButtonTag extends IncludeTag {
 		return _addDisplayPageParameter;
 	}
 
+	public boolean isUseDialog() {
+		return _useDialog;
+	}
+
 	public void setAddDisplayPageParameter(boolean addDisplayPageParameter) {
 		_addDisplayPageParameter = addDisplayPageParameter;
 	}
@@ -82,6 +86,10 @@ public class AssetAddButtonTag extends IncludeTag {
 		_redirect = redirect;
 	}
 
+	public void setUseDialog(boolean useDialog) {
+		_useDialog = useDialog;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_addDisplayPageParameter = false;
@@ -91,6 +99,7 @@ public class AssetAddButtonTag extends IncludeTag {
 		_classTypeIds = null;
 		_groupIds = null;
 		_redirect = null;
+		_useDialog = true;
 	}
 
 	@Override
@@ -134,6 +143,9 @@ public class AssetAddButtonTag extends IncludeTag {
 		request.setAttribute("liferay-ui:asset-add-button:groupIds", groupIds);
 
 		request.setAttribute("liferay-ui:asset-add-button:redirect", _redirect);
+
+		request.setAttribute(
+			"liferay-ui:asset-add-button:useDialog", _useDialog);
 	}
 
 	private static final String _PAGE =
@@ -146,5 +158,6 @@ public class AssetAddButtonTag extends IncludeTag {
 	private long[] _classTypeIds;
 	private long[] _groupIds;
 	private String _redirect;
+	private boolean _useDialog;
 
 }

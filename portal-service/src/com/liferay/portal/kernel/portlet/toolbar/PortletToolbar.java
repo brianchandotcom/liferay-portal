@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * Provides elements to be rendered in the portlet toolbar. To obtain those
@@ -52,9 +53,12 @@ public class PortletToolbar {
 	}
 
 	public List<Menu> getPortletTitleMenus(
-		String portletId, PortletRequest portletRequest) {
+		String portletId, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
-		if ((portletRequest == null) || Validator.isNull(portletId)) {
+		if ((portletRequest == null) || (portletResponse == null) ||
+			Validator.isNull(portletId)) {
+
 			return Collections.emptyList();
 		}
 
@@ -77,7 +81,7 @@ public class PortletToolbar {
 
 				List<Menu> curPortletTitleMenus =
 					portletToolbarContributor.getPortletTitleMenus(
-						portletRequest);
+						portletRequest, portletResponse);
 
 				if (ListUtil.isEmpty(curPortletTitleMenus)) {
 					continue;

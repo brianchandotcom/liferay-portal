@@ -17,7 +17,7 @@
 				<span class="portlet-name-text">${portlet_display_name}</span>
 			</div>
 
-			<#foreach portletTitleMenu in portlet_toolbar.getPortletTitleMenus(portlet_display_root_portlet_id, renderRequest)>
+			<#foreach portletTitleMenu in portlet_toolbar.getPortletTitleMenus(portlet_display_root_portlet_id, renderRequest, renderResponse)>
 				<menu class="icon-monospaced portlet-title-menu portlet-topper-toolbar" id="portlet-title-menu_${portlet_id}_${portletTitleMenu_index}" type="toolbar">
 					<@liferay_ui["menu"] menu=portletTitleMenu />
 				</menu>

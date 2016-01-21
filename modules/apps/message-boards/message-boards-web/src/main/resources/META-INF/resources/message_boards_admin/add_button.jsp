@@ -19,7 +19,7 @@
 <%
 MBPortletToolbarContributor mbPortletToolbarContributor = (MBPortletToolbarContributor)request.getAttribute(MBWebKeys.MESSAGE_BOARDS_PORTLET_TOOLBAR_CONTRIBUTOR);
 
-List<Menu> menus = mbPortletToolbarContributor.getPortletTitleMenus(renderRequest);
+List<Menu> menus = mbPortletToolbarContributor.getPortletTitleMenus(renderRequest, renderResponse);
 %>
 
 <div id="addButtonContainer">

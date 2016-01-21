@@ -19,7 +19,7 @@
 <%
 WikiPortletToolbarContributor wikiPortletToolbarContributor = (WikiPortletToolbarContributor)request.getAttribute(WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR);
 
-List<Menu> menus = wikiPortletToolbarContributor.getPortletTitleMenus(renderRequest);
+List<Menu> menus = wikiPortletToolbarContributor.getPortletTitleMenus(renderRequest, renderResponse);
 %>
 
 <div id="addButtonContainer">

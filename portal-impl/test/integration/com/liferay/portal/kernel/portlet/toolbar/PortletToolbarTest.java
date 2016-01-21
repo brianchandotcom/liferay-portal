@@ -26,6 +26,7 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -59,7 +60,8 @@ public class PortletToolbarTest {
 		serviceDependencyManager.waitForDependencies(1000);
 
 		List<Menu> menus = portletToolbar.getPortletTitleMenus(
-			RandomTestUtil.randomString(), Mockito.mock(PortletRequest.class));
+			RandomTestUtil.randomString(), Mockito.mock(PortletRequest.class),
+			Mockito.mock(PortletResponse.class));
 
 		for (Menu menu : menus) {
 			String label = menu.getLabel();

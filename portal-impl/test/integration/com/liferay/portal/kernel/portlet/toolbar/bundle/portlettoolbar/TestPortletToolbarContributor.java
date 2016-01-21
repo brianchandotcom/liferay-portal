@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Philip Jones
@@ -31,7 +32,9 @@ public class TestPortletToolbarContributor
 	public static final String LABEL = "LABEL";
 
 	@Override
-	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
+	public List<Menu> getPortletTitleMenus(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		List<Menu> portletTitleMenus = new ArrayList<>();
 
 		Menu menu = new Menu();

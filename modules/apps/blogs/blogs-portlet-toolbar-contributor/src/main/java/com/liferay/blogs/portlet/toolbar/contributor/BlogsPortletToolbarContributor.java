@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,7 +50,9 @@ public class BlogsPortletToolbarContributor
 	implements PortletToolbarContributor {
 
 	@Override
-	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest) {
+	public List<Menu> getPortletTitleMenus(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		Menu addEntryPortletTitleMenu = getAddEntryPortletTitleMenu(
 			portletRequest);
 

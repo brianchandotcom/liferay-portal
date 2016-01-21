@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * Provides an interface responsible for extending the portlet toolbar by adding
@@ -42,6 +43,7 @@ public interface PortletToolbarContributor {
 	 * @param  portletRequest the portlet request
 	 * @return menus to be rendered in the portlet toolbar
 	 */
-	public List<Menu> getPortletTitleMenus(PortletRequest portletRequest);
+	public List<Menu> getPortletTitleMenus(
+		PortletRequest portletRequest, PortletResponse portletResponse);
 
 }

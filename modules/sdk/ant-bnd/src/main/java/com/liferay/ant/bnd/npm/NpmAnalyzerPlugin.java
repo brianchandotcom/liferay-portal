@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ant.bnd.bower;
+package com.liferay.ant.bnd.npm;
 
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 /**
  * @author Raymond Augé
  */
-public class BowerAnalyzerPlugin implements AnalyzerPlugin {
+public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 
 	public static final String WEB_CONTEXT_PATH = "Web-ContextPath";
 

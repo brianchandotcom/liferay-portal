@@ -31,7 +31,7 @@ import org.junit.Test;
 /**
  * @author Raymond Augé
  */
-public class BowerAnalyzerPluginTest {
+public class NpmAnalyzerPluginTest {
 
 	@Test
 	public void testConversion() throws Exception {

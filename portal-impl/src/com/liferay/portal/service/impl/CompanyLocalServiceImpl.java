@@ -1392,8 +1392,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			public Void call() throws Exception {
 				PortalInstances.removeCompany(companyId);
 
-				SearchEngineHelperUtil.removeCompany(companyId);
-
 				synchronized (_companyServiceRegistrations) {
 					ServiceRegistration<Company> serviceRegistration =
 						_companyServiceRegistrations.remove(companyId);

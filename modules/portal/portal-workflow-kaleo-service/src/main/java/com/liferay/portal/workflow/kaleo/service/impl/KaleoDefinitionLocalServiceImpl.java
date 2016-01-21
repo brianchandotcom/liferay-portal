@@ -216,6 +216,22 @@ public class KaleoDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public KaleoDefinition fetchLatestKaleoDefinition(
+			String name, ServiceContext serviceContext)
+		throws PortalException {
+
+		List<KaleoDefinition> kaleoDefinitions =
+			kaleoDefinitionPersistence.findByC_N(
+				serviceContext.getCompanyId(), name, 0, 1);
+
+		if (kaleoDefinitions.isEmpty()) {
+			return null;
+		}
+
+		return kaleoDefinitions.get(0);
+	}
+
+	@Override
 	public KaleoDefinition getKaleoDefinition(
 			String name, int version, ServiceContext serviceContext)
 		throws PortalException {
@@ -301,15 +317,14 @@ public class KaleoDefinitionLocalServiceImpl
 			String name, ServiceContext serviceContext)
 		throws PortalException {
 
-		List<KaleoDefinition> kaleoDefinitions =
-			kaleoDefinitionPersistence.findByC_N(
-				serviceContext.getCompanyId(), name, 0, 1);
+		KaleoDefinition kaleoDefinition = fetchLatestKaleoDefinition(
+			name, serviceContext);
 
-		if (kaleoDefinitions.isEmpty()) {
+		if (kaleoDefinition == null) {
 			throw new NoSuchDefinitionException();
 		}
 
-		return kaleoDefinitions.get(0);
+		return kaleoDefinition;
 	}
 
 	@Override

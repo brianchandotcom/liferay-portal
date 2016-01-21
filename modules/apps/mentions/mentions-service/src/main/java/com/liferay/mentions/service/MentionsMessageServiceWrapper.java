@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -114,9 +116,15 @@ public class MentionsMessageServiceWrapper
 				"contentURL", workflowContext.get("url"));
 		}
 
+		String title = message.getSubject();
+
+		if (message.isDiscussion()) {
+			title = StringUtil.shorten(HtmlUtil.extractText(content), 100);
+		}
+
 		_mentionsNotifier.notify(
-			message.getUserId(), message.getGroupId(), message.getSubject(),
-			content, message.getModelClassName(), message.getMessageId(),
+			message.getUserId(), message.getGroupId(), title, content,
+			message.getModelClassName(), message.getMessageId(),
 			subjectLocalizedValuesMap, bodyLocalizedValuesMap, serviceContext);
 
 		return message;

@@ -349,6 +349,19 @@ public class GoogleLoginAction extends BaseStrutsAction {
 
 		User user = null;
 
+		String googleId = userinfoplus.getId();
+
+		if (Validator.isNotNull(googleId)) {
+			user = _userLocalService.fetchUserByGoogleId(companyId, googleId);
+
+			if ((user != null) &&
+				(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
+
+				session.setAttribute(
+					GoogleWebKeys.GOOGLE_USER_ID, String.valueOf(googleId));
+			}
+		}
+
 		String emailAddress = userinfoplus.getEmail();
 
 		if ((user == null) && Validator.isNotNull(emailAddress)) {

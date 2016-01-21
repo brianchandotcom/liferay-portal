@@ -126,7 +126,7 @@
 	</command>
 
 	<command name="addLocalizedPGViaWCD">
-		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
+		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
 
 		<var name="key_localizedBasicWebContent" value="${localizedBasicWebContent}" />
 
@@ -243,7 +243,7 @@
 	</command>
 
 	<command name="addStructuredPGViaWCD">
-		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
+		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
 
 		<var name="key_structureName" value="${structureName}" />
 
@@ -416,7 +416,7 @@
 	<command name="addWithGlobalStructurePGViaWCD">
 		<var name="key_selectStructureName" value="${selectStructureName}" />
 
-		<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
 		<execute function="AssertClick" locator1="WCD#ADD_MENU_WEB_CONTENT_STRUCTURE" value1="${selectStructureName}" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
@@ -705,16 +705,16 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaWCD">
+		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
+
 		<if>
 			<isset var="selectStructureName" />
 			<then>
 				<var name="key_selectStructureName" value="${selectStructureName}" />
 
-				<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
 				<execute function="AssertClick" locator1="WCD#ADD_MENU_WEB_CONTENT_STRUCTURE" value1="${selectStructureName}" />
 			</then>
 			<else>
-				<execute function="Click" locator1="WCD#ADD_WEB_CONTENT" />
 				<execute function="Click" locator1="WCD#ADD_BASIC_WEB_CONTENT" />
 			</else>
 		</if>

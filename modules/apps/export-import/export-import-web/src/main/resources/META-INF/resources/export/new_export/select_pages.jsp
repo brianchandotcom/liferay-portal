@@ -37,7 +37,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 <aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(groupId, privateLayout, selectedLayoutIds) %>" />
 
-<div id="<portlet:namespace />pages">
+<ul class="flex-container layout-selector" id="<portlet:namespace />pages">
 	<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 		<div class="selected-pages" id="<portlet:namespace />pane">
 
@@ -106,4 +106,4 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 		<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />
 	</aui:fieldset>
-</div>
+</ul>

@@ -62,6 +62,10 @@ public class ProductMenuTemplateContextContributor
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay.isImpersonated()) {
+			return true;
+		}
+
 		if (!themeDisplay.isSignedIn()) {
 			return false;
 		}

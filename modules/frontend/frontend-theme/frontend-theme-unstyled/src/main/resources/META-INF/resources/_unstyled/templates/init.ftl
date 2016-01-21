@@ -4,6 +4,7 @@
 <#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
 <#assign liferay_util=PortalJspTagLibs["/WEB-INF/tld/liferay-util.tld"]>
 <#assign liferay_theme=PortalJspTagLibs["/WEB-INF/tld/liferay-theme.tld"]>
+<#assign liferay_control_menu=PortalJspTagLibs["/META-INF/resources/liferay-control-menu.tld"]>
 
 <#assign theme_display = themeDisplay />
 <#assign portlet_display = portletDisplay />

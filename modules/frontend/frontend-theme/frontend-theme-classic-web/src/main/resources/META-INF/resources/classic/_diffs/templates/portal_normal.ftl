@@ -20,7 +20,7 @@ ${theme.include(body_top_include)}
 
 <@liferay.product_menu_sidebar state="${liferay_product_menu_state!}" />
 
-<#if is_setup_complete && is_signed_in>
+<#if themeDisplay.isImpersonated() || (is_setup_complete && is_signed_in)>
 	<@liferay_control_menu["control-menu"] />
 </#if>
 

@@ -20,7 +20,9 @@ ${theme.include(body_top_include)}
 
 <@liferay.product_menu_sidebar state="${liferay_product_menu_state!}" />
 
-<@liferay.control_menu />
+<#if themeDisplay.isImpersonated() || (is_setup_complete && is_signed_in)>
+	<@liferay_control_menu["control-menu"] />
+</#if>
 
 <div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">

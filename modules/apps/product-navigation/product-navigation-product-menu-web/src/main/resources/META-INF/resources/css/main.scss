@@ -242,7 +242,7 @@ body {
 			}
 		}
 
-		.layout-tree-add[data-parentable="false"], .layout-tree-edit[data-updateable="false"] {
+		.layout-tree-add[data-parentable="false"], .layout-tree-delete[data-deleteable="false"], .layout-tree-edit[data-updateable="false"] {
 			display: none;
 		}
 	}

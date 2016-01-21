@@ -56,6 +56,7 @@
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 			<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
+				<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 				<aui:input name="mvcRenderCommandName" type="hidden" value='<%= "/users_admin/view" %>' />
 				<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
 			</c:if>

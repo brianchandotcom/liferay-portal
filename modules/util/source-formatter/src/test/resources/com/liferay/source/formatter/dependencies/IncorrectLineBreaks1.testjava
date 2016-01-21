@@ -64,6 +64,10 @@ public class IncorrectLineBreaks1 {
 
 		if (test1.equals(test2)) {
 			System.out.println(test1);
+		} else if (test1.equals("Hello World Hello World") ||
+			test1.equals("World Hello World Hello")) {
+
+			System.out.println(test2);
 		} else {
 			System.out.println(test3);
 		}

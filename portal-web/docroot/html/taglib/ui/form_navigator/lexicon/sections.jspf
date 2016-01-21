@@ -36,6 +36,12 @@
 				}
 
 			});
+
+		String errorSection = (String)request.getAttribute("errorSection");
+
+		if (Validator.equals(formNavigatorEntry.getKey(), errorSection)) {
+			request.setAttribute("errorSection", null);
+		}
 		%>
 
 	</aui:fieldset>

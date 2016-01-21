@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `762e1e9`.*
+*This document has been reviewed through commit `e03599b`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -3445,11 +3445,11 @@ else.
 
 - `com.liferay.portal.jdbc.pool.metrics` &rarr; `com.liferay.portal.kernel.jdbc.pool.metrics`
 
-`com.liferay.portal.layoutconfiguration.util` renamed to `com.liferay.portal.kernel.layoutconfiguration.util`
+- `com.liferay.portal.layoutconfiguration.util` &rarr; `com.liferay.portal.kernel.layoutconfiguration.util`
 
-`com.liferay.portal.layoutconfiguration.util.xml` renamed to `com.liferay.portal.kernel.layoutconfiguration.util.xml`
+- `com.liferay.portal.layoutconfiguration.util.xml` &rarr; `com.liferay.portal.kernel.layoutconfiguration.util.xml`
 
-`com.liferay.portal.repository.proxy` renamed to `com.liferay.portal.kernel.repository.proxy`
+- `com.liferay.portal.repository.proxy` &rarr; `com.liferay.portal.kernel.repository.proxy`
 
 - `com.liferay.portal.webserver` &rarr; `com.liferay.portal.kernel.webserver`
 
@@ -3459,11 +3459,11 @@ else.
 
 - `com.liferay.portlet.imagegallerydisplay.display.context` &rarr; `com.liferay.image.gallery.display.kernel.display.context`
 
-`com.liferay.portlet.layoutsadmin.util` renamed to `com.liferay.layouts.admin.kernel.util`
+- `com.liferay.portlet.layoutsadmin.util` &rarr; `com.liferay.layouts.admin.kernel.util`
 
-`com.liferay.portlet.mobiledevicerules` renamed to `com.liferay.mobile.device.rules`
+- `com.liferay.portlet.mobiledevicerules` &rarr; `com.liferay.mobile.device.rules`
 
-`com.liferay.portlet.portletconfiguration.util` renamed to `com.liferay.portlet.configuration.kernel.util`
+- `com.liferay.portlet.portletconfiguration.util` &rarr; `com.liferay.portlet.configuration.kernel.util`
 
 - `com.liferay.portlet.rolesadmin.util` &rarr; `com.liferay.roles.admin.kernel.util`
 

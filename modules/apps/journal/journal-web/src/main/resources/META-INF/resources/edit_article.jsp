@@ -14,7 +14,6 @@
  */
 --%>
 
-<%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@ include file="/init.jsp" %>
 
 <%
@@ -104,22 +103,17 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 	<%
 	portletDisplay.setShowBackIcon(true);
-	
+
 	if (Validator.isNotNull(redirect)) {
 		portletDisplay.setURLBack(redirect);
 	}
-	else {
-		if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) && 
-				(article != null)) {
-			PortletURL backURL = liferayPortletResponse.createRenderURL();
-	
-			backURL.setParameter("groupId",
-					String.valueOf(article.getGroupId()));
-			backURL.setParameter("folderId",
-					String.valueOf(article.getFolderId()));
-	
-			portletDisplay.setURLBack(backURL.toString());
-		}
+	else if ((classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) && (article != null)) {
+		PortletURL backURL = liferayPortletResponse.createRenderURL();
+
+		backURL.setParameter("groupId", String.valueOf(article.getGroupId()));
+		backURL.setParameter("folderId", String.valueOf(article.getFolderId()));
+
+		portletDisplay.setURLBack(backURL.toString());
 	}
 
 	String title = StringPool.BLANK;

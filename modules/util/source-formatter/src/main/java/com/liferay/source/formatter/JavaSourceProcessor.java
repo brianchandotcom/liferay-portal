@@ -671,6 +671,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixMissingEmptyLines(newContent);
 
+		newContent = fixRedundantEmptyLines(newContent);
+
 		while (true) {
 			Matcher matcher = _incorrectLineBreakPattern1.matcher(newContent);
 
@@ -1240,6 +1242,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if ((x != -1) && (x != y)) {
 				content = StringUtil.replaceFirst(content, "\n", "\n\n", x + 1);
 			}
+		}
+
+		return content;
+	}
+
+	protected String fixRedundantEmptyLines(String content) {
+		Matcher matcher = _redundantEmptyLines1.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "\n", StringPool.BLANK, matcher.start());
+		}
+
+		matcher = _redundantEmptyLines2.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "\n", StringPool.BLANK, matcher.end() - 1);
 		}
 
 		return content;
@@ -3869,6 +3889,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private Pattern _redundantEmptyLines1 = Pattern.compile(
+		"\n\npublic ((abstract|static) )*(class|enum|interface) ");
+	private Pattern _redundantEmptyLines2 = Pattern.compile(
+		" \\* @author .*\n \\*\\/\n\n");
 	private Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private Pattern _referenceMethodPattern = Pattern.compile(

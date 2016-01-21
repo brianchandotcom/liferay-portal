@@ -159,7 +159,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasks">
+		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Created Form Name" />
 			<var name="workflowAssetType" value="Form Record" />
 			<var name="workflowTask" value="Review" />

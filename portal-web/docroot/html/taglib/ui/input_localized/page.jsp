@@ -277,6 +277,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 
 <c:choose>
 	<c:when test="<%= !availableLocales.isEmpty() && Validator.isNull(languageId) %>">
+
 		<%
 			String modules = "liferay-input-localized";
 

@@ -375,6 +375,12 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_U_SArrayable() throws Exception {
+		_persistence.countByG_U_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), new int[] { RandomTestUtil.nextInt(), 0 });
+	}
+
+	@Test
 	public void testCountByG_U_NotS() throws Exception {
 		_persistence.countByG_U_NotS(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());

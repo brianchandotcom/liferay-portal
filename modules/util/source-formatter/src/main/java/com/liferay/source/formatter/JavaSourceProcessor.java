@@ -1706,6 +1706,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
 
+				line = formatEmptyArray(line);
+
 				// LPS-58529
 
 				checkResourceUtil(line, fileName, lineCount);

@@ -604,6 +604,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
 
+				line = formatEmptyArray(line);
+
 				if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
 					javaSource = true;
 				}

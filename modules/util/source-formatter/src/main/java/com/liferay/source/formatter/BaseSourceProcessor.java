@@ -820,6 +820,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
+	protected String formatEmptyArray(String line) {
+		int pos = line.indexOf("[] {}");
+
+		if ((pos != -1) && !ToolsUtil.isInsideQuotes(line, pos)) {
+			return StringUtil.replaceFirst(line, "[] {}", "[0]", pos - 1);
+		}
+
+		return line;
+	}
+
 	protected String formatIncorrectSyntax(
 		String line, String incorrectSyntax, String correctSyntax,
 		boolean lineStart) {

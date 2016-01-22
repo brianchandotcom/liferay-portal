@@ -32,7 +32,7 @@ ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayCont
 		userId="<%= user.getUserId() %>"
 	/>
 
-	<span class="user-name">
+	<span class="truncate-text user-name">
 		<%= HtmlUtil.escape(user.getFirstName()) %>
 
 		<c:if test="<%= themeDisplay.isImpersonated() %>">

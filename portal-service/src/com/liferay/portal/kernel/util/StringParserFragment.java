@@ -40,6 +40,28 @@ public class StringParserFragment {
 		return stringParserFragment;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public String getPattern() {
+		return _pattern.toString();
+	}
+
+	public String getToken() {
+		return _token;
+	}
+
+	public boolean isRaw() {
+		return _raw;
+	}
+
+	public boolean matches(String parameter) {
+		Matcher matcher = _pattern.matcher(parameter);
+
+		return matcher.matches();
+	}
+
 	protected StringParserFragment(String chunk) {
 		chunk = chunk.substring(1, chunk.length() - 1);
 
@@ -87,28 +109,6 @@ public class StringParserFragment {
 
 		_token = StringPool.OPEN_CURLY_BRACE.concat(_name).concat(
 			StringPool.CLOSE_CURLY_BRACE);
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getPattern() {
-		return _pattern.toString();
-	}
-
-	public String getToken() {
-		return _token;
-	}
-
-	public boolean isRaw() {
-		return _raw;
-	}
-
-	public boolean matches(String parameter) {
-		Matcher matcher = _pattern.matcher(parameter);
-
-		return matcher.matches();
 	}
 
 	private static final Pattern _defaultPattern = Pattern.compile("[^/\\.]+");

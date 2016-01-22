@@ -66,6 +66,105 @@ public class StringParser {
 	}
 
 	/**
+	 * Builds a string from the parameter map if this parser is appropriate.
+	 *
+	 * <p>
+	 * A parser is appropriate if each parameter matches the format of its
+	 * accompanying fragment.
+	 * </p>
+	 *
+	 * <p>
+	 * If this parser is appropriate, all the parameters used in the pattern
+	 * will be removed from the parameter map. If this parser is not
+	 * appropriate, the parameter map will not be modified.
+	 * </p>
+	 *
+	 * @param  parameters the parameter map to build the string from
+	 * @return the string, or <code>null</code> if this parser is not
+	 *         appropriate
+	 */
+	public String build(Map<String, String> parameters) {
+		String s = _builder;
+
+		for (StringParserFragment stringParserFragment :
+				_stringParserFragments) {
+
+			String value = parameters.get(stringParserFragment.getName());
+
+			if (value == null) {
+				return null;
+			}
+
+			if ((_stringEncoder != null) && !stringParserFragment.isRaw()) {
+				value = _stringEncoder.encode(value);
+			}
+
+			if (!stringParserFragment.matches(value)) {
+				return null;
+			}
+
+			s = s.replace(stringParserFragment.getToken(), value);
+		}
+
+		for (StringParserFragment stringParserFragment :
+				_stringParserFragments) {
+
+			parameters.remove(stringParserFragment.getName());
+		}
+
+		return s;
+	}
+
+	/**
+	 * Populates the parameter map with values parsed from the string if this
+	 * parser matches.
+	 *
+	 * @param  s the string to parse
+	 * @param  parameters the parameter map to populate if this parser matches
+	 *         the string
+	 * @return <code>true</code> if this parser matches; <code>false</code>
+	 *         otherwise
+	 */
+	public boolean parse(String s, Map<String, String> parameters) {
+		Matcher matcher = _pattern.matcher(s);
+
+		if (!matcher.matches()) {
+			return false;
+		}
+
+		for (int i = 1; i <= _stringParserFragments.size(); i++) {
+			StringParserFragment stringParserFragment =
+				_stringParserFragments.get(i - 1);
+
+			String value = matcher.group(i);
+
+			if ((_stringEncoder != null) && !stringParserFragment.isRaw()) {
+				value = _stringEncoder.decode(value);
+			}
+
+			parameters.put(stringParserFragment.getName(), value);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Sets the string encoder to use for parsing or building a string.
+	 *
+	 * <p>
+	 * The string encoder will not be used for fragments marked as raw. A
+	 * fragment can be marked as raw by prefixing its name with a percent sign.
+	 * </p>
+	 *
+	 * @param stringEncoder the string encoder to use for parsing or building a
+	 *        string
+	 * @see   StringEncoder
+	 */
+	public void setStringEncoder(StringEncoder stringEncoder) {
+		_stringEncoder = stringEncoder;
+	}
+
+	/**
 	 * Constructs a new string parser from the pattern.
 	 *
 	 * <p>
@@ -167,105 +266,6 @@ public class StringParser {
 		_builder = pattern;
 
 		_pattern = Pattern.compile(regex);
-	}
-
-	/**
-	 * Builds a string from the parameter map if this parser is appropriate.
-	 *
-	 * <p>
-	 * A parser is appropriate if each parameter matches the format of its
-	 * accompanying fragment.
-	 * </p>
-	 *
-	 * <p>
-	 * If this parser is appropriate, all the parameters used in the pattern
-	 * will be removed from the parameter map. If this parser is not
-	 * appropriate, the parameter map will not be modified.
-	 * </p>
-	 *
-	 * @param  parameters the parameter map to build the string from
-	 * @return the string, or <code>null</code> if this parser is not
-	 *         appropriate
-	 */
-	public String build(Map<String, String> parameters) {
-		String s = _builder;
-
-		for (StringParserFragment stringParserFragment :
-				_stringParserFragments) {
-
-			String value = parameters.get(stringParserFragment.getName());
-
-			if (value == null) {
-				return null;
-			}
-
-			if ((_stringEncoder != null) && !stringParserFragment.isRaw()) {
-				value = _stringEncoder.encode(value);
-			}
-
-			if (!stringParserFragment.matches(value)) {
-				return null;
-			}
-
-			s = s.replace(stringParserFragment.getToken(), value);
-		}
-
-		for (StringParserFragment stringParserFragment :
-				_stringParserFragments) {
-
-			parameters.remove(stringParserFragment.getName());
-		}
-
-		return s;
-	}
-
-	/**
-	 * Populates the parameter map with values parsed from the string if this
-	 * parser matches.
-	 *
-	 * @param  s the string to parse
-	 * @param  parameters the parameter map to populate if this parser matches
-	 *         the string
-	 * @return <code>true</code> if this parser matches; <code>false</code>
-	 *         otherwise
-	 */
-	public boolean parse(String s, Map<String, String> parameters) {
-		Matcher matcher = _pattern.matcher(s);
-
-		if (!matcher.matches()) {
-			return false;
-		}
-
-		for (int i = 1; i <= _stringParserFragments.size(); i++) {
-			StringParserFragment stringParserFragment =
-				_stringParserFragments.get(i - 1);
-
-			String value = matcher.group(i);
-
-			if ((_stringEncoder != null) && !stringParserFragment.isRaw()) {
-				value = _stringEncoder.decode(value);
-			}
-
-			parameters.put(stringParserFragment.getName(), value);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Sets the string encoder to use for parsing or building a string.
-	 *
-	 * <p>
-	 * The string encoder will not be used for fragments marked as raw. A
-	 * fragment can be marked as raw by prefixing its name with a percent sign.
-	 * </p>
-	 *
-	 * @param stringEncoder the string encoder to use for parsing or building a
-	 *        string
-	 * @see   StringEncoder
-	 */
-	public void setStringEncoder(StringEncoder stringEncoder) {
-		_stringEncoder = stringEncoder;
 	}
 
 	private static final Pattern _escapeRegexPattern = Pattern.compile(

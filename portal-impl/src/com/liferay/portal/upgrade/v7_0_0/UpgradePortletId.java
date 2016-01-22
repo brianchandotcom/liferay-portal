@@ -25,7 +25,6 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"110", PortletKeys.DOCUMENT_LIBRARY},
 			new String[] {"115", PortletKeys.BLOGS_AGGREGATOR},
 			new String[] {"125", PortletKeys.USERS_ADMIN},
 			new String[] {"127", PortletKeys.USER_GROUPS_ADMIN},

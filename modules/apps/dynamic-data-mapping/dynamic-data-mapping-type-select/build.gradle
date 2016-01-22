@@ -4,12 +4,6 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-data-provider")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
-
-	// @formatter:off
-	testCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	testCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
-	// @formatter:on
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }
 
 liferay {

@@ -166,9 +166,9 @@ refererURL.setParameter("updateLayout", "true");
 			PortletURL marketplaceURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MARKETPLACE_STORE, PortletRequest.RENDER_PHASE);
 			%>
 
-			<aui:button-row>
+			<div class="button-holder">
 				<aui:button cssClass="btn-lg btn-primary" href="<%= marketplaceURL.toString() %>" value="install-more-applications" />
-			</aui:button-row>
+			</div>
 		</c:if>
 	</div>
 </aui:form>

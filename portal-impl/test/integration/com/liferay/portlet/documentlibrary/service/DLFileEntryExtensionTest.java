@@ -211,11 +211,6 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testAddFileEntryBasic04() throws Exception {
-		testAddFileEntryBasic(_FILE_NAME, "", "txt", _FILE_NAME);
-	}
-
-	@Test
 	public void testAddFileEntryBasic05() throws Exception {
 		testAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
@@ -225,11 +220,6 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 	public void testAddFileEntryBasic06() throws Exception {
 		testAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
-	}
-
-	@Test
-	public void testAddFileEntryBasic07() throws Exception {
-		testAddFileEntryBasic(_STRIPPED_FILE_NAME, "", "", _STRIPPED_FILE_NAME);
 	}
 
 	@Test
@@ -319,14 +309,14 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		// "Test.txt" / ""
 
 		try {
-			addFileEntry(_FILE_NAME, "");
+			addFileEntry(_FILE_NAME, _FILE_NAME);
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileEntryException dfee) {
 		}
 
-		tempFileEntry = addFileEntry("Temp.txt", "");
+		tempFileEntry = addFileEntry("Temp.txt", "Temp.txt");
 
 		try {
 			DLAppServiceUtil.updateFileEntry(
@@ -412,14 +402,14 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		// "Test" / ""
 
 		try {
-			addFileEntry(_STRIPPED_FILE_NAME, "");
+			addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
 		catch (DuplicateFileEntryException dfee) {
 		}
 
-		FileEntry tempFileEntry = addFileEntry("Temp", "");
+		FileEntry tempFileEntry = addFileEntry("Temp", "Temp");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

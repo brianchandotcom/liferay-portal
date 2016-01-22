@@ -239,27 +239,6 @@
 }
 
 .product-menu {
-	.site-administration-toolbar {
-		margin-bottom: 0;
-		padding: 10px 15px 10px 25px;
-
-		a {
-			color: $product-menu-site-administration-link-color;
-		}
-
-		.active a {
-			background-color: $product-menu-site-administration-link-active-bg;
-			border-radius: $product-menu-site-administration-link-active-border-radius;
-			color: $product-menu-site-administration-link-active-color;
-		}
-
-		.site-administration-title {
-			color: $product-menu-site-administration-color;
-		}
-	}
-}
-
-.product-menu {
 	.user-icon, .sticker {
 		display: inline-block;
 		float: left;

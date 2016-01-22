@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>ADD_COLUMN_RIGHT</td>
-	<td>xpath=(//div[@class='layout-builder-resize-col-draggable-handle expand-right'])[${key_rowNumber}]</td>
+	<td>//div[@class='layout-row-container-row'][${key_rowNumber}]//div[contains(@class,'last-col')]/following-sibling::div[2]//div[contains(@class,'resize-col-draggable-handle')]</td>
 	<td></td>
 </tr>
 <tr>

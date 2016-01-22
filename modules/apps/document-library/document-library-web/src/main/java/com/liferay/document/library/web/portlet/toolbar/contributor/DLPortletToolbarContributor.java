@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -537,10 +536,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		String label = LanguageUtil.get(
 			PortalUtil.getHttpServletRequest(portletRequest),
-			HtmlUtil.escape(
-				fileEntryType.getUnambiguousName(
-					fileEntryTypes, themeDisplay.getScopeGroupId(),
-					themeDisplay.getLocale())));
+			fileEntryType.getUnambiguousName(
+				fileEntryTypes, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLocale()));
 
 		urlMenuItem.setLabel(label);
 

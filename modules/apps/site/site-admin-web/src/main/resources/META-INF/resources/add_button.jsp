@@ -48,7 +48,7 @@
 					addSiteURL.setParameter("layoutSetPrototypeId", String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
 				%>
 
-					<liferay-frontend:add-menu-item title="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" url="<%= addSiteURL.toString() %>" />
+					<liferay-frontend:add-menu-item title="<%= layoutSetPrototype.getName(locale) %>" url="<%= addSiteURL.toString() %>" />
 
 				<%
 				}

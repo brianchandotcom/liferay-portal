@@ -139,6 +139,10 @@
 			</execute>
 		</for>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content Display Page1" />
+		</execute>
+
 		<execute macro="WebContentDisplayPortlet#configureScopePG">
 			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
@@ -151,7 +155,7 @@
 			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
@@ -159,7 +163,7 @@
 			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
@@ -167,7 +171,7 @@
 			<var name="scopeSelection" value="Web Content Display Page1" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page3" />
 		</execute>
 
@@ -176,7 +180,7 @@
 			<var name="scopeSelectionDefault" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
 
@@ -189,7 +193,7 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
@@ -199,7 +203,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page2" />
 		</execute>
 
@@ -207,7 +211,7 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page3" />
 		</execute>
 

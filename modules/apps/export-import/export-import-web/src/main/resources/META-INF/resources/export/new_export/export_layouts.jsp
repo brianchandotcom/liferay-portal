@@ -117,7 +117,7 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
 							%>
 
-							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
+							<liferay-util:include page="/export/new_export/select_pages.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -153,9 +153,7 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 			exportLAR: true,
 			form: document.<portlet:namespace />fm1,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>',
 			locale: '<%= locale.toLanguageTag() %>',
-			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>',
 			namespace: '<portlet:namespace />',
 			pageTreeId: '<%= treeId %>',
 			rangeAllNode: '#rangeAll',
@@ -163,7 +161,6 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 			rangeLastNode: '#rangeLast',
 			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
 			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
-			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>',
 			timeZone: '<%= timeZone.getID() %>',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
 		}

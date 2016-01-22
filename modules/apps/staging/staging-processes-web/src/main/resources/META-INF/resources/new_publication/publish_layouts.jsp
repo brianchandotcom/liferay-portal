@@ -261,7 +261,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
 						<liferay-util:include page="/new_publication/select_pages.jsp" servletContext="<%= application %>">
 							<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-							<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+							<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 							<liferay-util:param name="treeId" value="<%= treeId %>" />
@@ -332,13 +332,10 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 	new Liferay.ExportImport(
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
-			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>',
 			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			form: document.<portlet:namespace />exportPagesFm,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>',
 			locale: '<%= locale.toLanguageTag() %>',
-			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>',
 			namespace: '<portlet:namespace />',
 			pageTreeId: '<%= treeId %>',
 			processesNode: '#publishProcesses',
@@ -354,7 +351,6 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			remotePortNode: '#<portlet:namespace />remotePort',
 			secureConnectionNode: '#secureConnection',
 			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
-			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>',
 			timeZone: '<%= timeZone.getID() %>',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
 		}

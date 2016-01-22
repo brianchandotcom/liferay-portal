@@ -68,6 +68,8 @@ public class UpgradeServicePackages extends UpgradeProcess {
 		updateSB.append(columnName);
 		updateSB.append(" = ?");
 
+		String updateSQL = updateSB.toString();
+
 		for (String[] className : getClassNames()) {
 			StringBundler selectSB = new StringBundler(9);
 
@@ -81,9 +83,7 @@ public class UpgradeServicePackages extends UpgradeProcess {
 			selectSB.append(className[0]);
 			selectSB.append("%'");
 
-			upgradeTable(
-				columnName, selectSB.toString(), updateSB.toString(),
-				className);
+			upgradeTable(columnName, selectSB.toString(), updateSQL, className);
 		}
 	}
 

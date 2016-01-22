@@ -51,7 +51,6 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
-import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -146,20 +145,6 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 					catch (IOException ioe) {
 						throw new GradleException(ioe.getMessage(), ioe);
 					}
-				}
-
-			});
-
-		task.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					if (liferayThemeJsonFile.exists()) {
-						return true;
-					}
-
-					return false;
 				}
 
 			});

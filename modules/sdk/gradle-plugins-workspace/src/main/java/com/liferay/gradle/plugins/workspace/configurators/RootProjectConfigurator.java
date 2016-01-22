@@ -39,6 +39,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.tasks.AbstractCopyTask;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Compression;
 import org.gradle.api.tasks.bundling.Tar;
@@ -51,6 +52,10 @@ import org.gradle.api.tasks.bundling.Zip;
 public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String BUNDLE_CONFIGURATION_NAME = "bundle";
+
+	public static final String BUNDLE_GROUP = "bundle";
+
+	public static final String CLEAN_TASK_NAME = "clean";
 
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
@@ -67,6 +72,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, workspaceExtension);
 
 		addRepositoryBundle(project, workspaceExtension);
+
+		addTaskClean(project);
 
 		Tar distBundleTarTask = addTaskDistBundle(
 			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, bundleConfiguration,
@@ -123,6 +130,25 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 	}
 
+	protected Delete addTaskClean(final Project project) {
+		Delete delete = GradleUtil.addTask(
+			project, CLEAN_TASK_NAME, Delete.class);
+
+		delete.delete(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return project.getBuildDir();
+				}
+
+			});
+
+		delete.setDescription("Deletes the build directory.");
+
+		return delete;
+	}
+
 	protected <T extends AbstractArchiveTask> T addTaskDistBundle(
 		Project project, String taskName, Class<T> clazz,
 		Configuration bundleConfiguration,
@@ -135,6 +161,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		task.setBaseName(project.getName());
 		task.setDestinationDir(project.getBuildDir());
 		task.setIncludeEmptyDirs(false);
+		task.setGroup(BUNDLE_GROUP);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -184,6 +211,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
+		copy.setGroup(BUNDLE_GROUP);
 		copy.setIncludeEmptyDirs(false);
 
 		project.afterEvaluate(

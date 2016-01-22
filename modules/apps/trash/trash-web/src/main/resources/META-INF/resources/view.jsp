@@ -74,7 +74,7 @@ if (Validator.isNotNull(keywords)) {
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280" id="<portlet:namespace />trashContainer">
 	<liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
 	<liferay-ui:error exception="<%= RestoreEntryException.class %>">
@@ -180,7 +180,14 @@ if (Validator.isNotNull(keywords)) {
 			if (trashRenderer != null) {
 				PortletURL viewContentURL = renderResponse.createRenderURL();
 
-				viewContentURL.setParameter("mvcPath", "/view_content.jsp");
+				if (!trashHandler.isContainerModel()) {
+					viewContentURL.setWindowState(LiferayWindowState.POP_UP);
+
+					viewContentURL.setParameter("mvcPath", "/preview.jsp");
+				}
+				else {
+					viewContentURL.setParameter("mvcPath", "/view_content.jsp");
+				}
 
 				if (entry.getRootEntry() != null) {
 					viewContentURL.setParameter("classNameId", String.valueOf(entry.getClassNameId()));
@@ -198,9 +205,26 @@ if (Validator.isNotNull(keywords)) {
 				cssClass="text-strong"
 				name="name"
 			>
-				<a href="<%= viewContentURLString %>">
-					<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
-				</a>
+				<c:choose>
+					<c:when test="<%= !trashHandler.isContainerModel() %>">
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("title", HtmlUtil.escape(trashRenderer.getTitle(locale)));
+						data.put("url", viewContentURLString);
+						%>
+
+						<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<aui:a href="<%= viewContentURLString %>">
+							<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+						</aui:a>
+					</c:otherwise>
+				</c:choose>
 
 				<c:if test="<%= entry.getRootEntry() != null %>">
 
@@ -290,3 +314,22 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:search-iterator markupView="lexicon" type='<%= approximate ? "more" : "regular" %>' />
 	</liferay-ui:search-container>
 </div>
+
+<aui:script use="liferay-url-preview">
+	A.one('#<portlet:namespace />trashContainer').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			var urlPreview = new Liferay.UrlPreview(
+				{
+					title: currentTarget.attr('data-title'),
+					url: currentTarget.attr('data-url')
+				}
+			);
+
+			urlPreview.open();
+		},
+		'.preview'
+	);
+</aui:script>

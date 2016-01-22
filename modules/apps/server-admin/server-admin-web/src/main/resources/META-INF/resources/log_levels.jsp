@@ -62,9 +62,9 @@ serverURL.setParameter("tabs2", tabs2);
 	<c:choose>
 		<c:when test='<%= tabs2.equals("add-category") %>'>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="" name="loggerName" type="text" />
+				<aui:input cssClass="lfr-input-text-container" label="logger-name" name="loggerName" type="text" />
 
-				<aui:select label="" name="priority">
+				<aui:select label="log-level" name="priority">
 
 					<%
 					for (int i = 0; i < Levels.ALL_LEVELS.length; i++) {

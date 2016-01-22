@@ -121,9 +121,15 @@
 	}
 
 	.list-group-heading,
-	.panel-title > .panel-toggler {
-		line-height: 32px;
-		padding: 10px 24px;
+	.panel-title {
+		> .panel-toggler {
+			line-height: 32px;
+			padding: 10px 40px 10px 24px;
+		}
+
+		.site-administration-toggler {
+			padding-right: 85px;
+		}
 	}
 
 	.list-group-heading {
@@ -256,6 +262,7 @@
 .product-menu {
 	.user-icon, .sticker {
 		display: inline-block;
+		float: left;
 		margin-right: 5px;
 		position: static;
 		vertical-align: middle;

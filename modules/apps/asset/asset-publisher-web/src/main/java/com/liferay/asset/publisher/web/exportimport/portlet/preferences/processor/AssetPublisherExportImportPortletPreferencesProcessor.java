@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.exportimport.portlet.preferences.processor;
 
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -26,13 +27,18 @@ import com.liferay.exportimport.portlet.preferences.processor.capability.Referen
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
@@ -41,6 +47,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
@@ -49,6 +56,7 @@ import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -56,6 +64,7 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -65,8 +74,11 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -143,16 +155,60 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		List<AssetEntry> assetEntries = null;
+
 		Layout layout = _layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
 		long[] groupIds = AssetPublisherUtil.getGroupIds(
 			portletPreferences, portletDataContext.getScopeGroupId(), layout);
 
-		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
-			null, portletPreferences,
-			PermissionThreadLocal.getPermissionChecker(), groupIds, false,
-			false);
+		String selectionStyle = portletPreferences.getValue(
+			"selectionStyle", "dynamic");
+
+		if (selectionStyle.equals("dynamic")) {
+			if (!AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_ENABLED) {
+				return;
+			}
+
+			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
+				layout, portletDataContext.getCompanyGroupId(), groupIds,
+				portletPreferences);
+
+			long assetVocabularyId = GetterUtil.getLong(
+				portletPreferences.getValue("assetVocabularyId", null));
+
+			if (assetVocabularyId > 0) {
+				mergeAnyCategoryIds(assetEntryQuery, assetVocabularyId);
+
+				if (ArrayUtil.isEmpty(assetEntryQuery.getAnyCategoryIds())) {
+					return;
+				}
+			}
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				AssetPublisherUtil.getAssetEntries(
+					assetEntryQuery, layout, portletPreferences,
+					AssetPublisherPortletKeys.ASSET_PUBLISHER,
+					LocaleUtil.getDefault(), TimeZoneUtil.getDefault(),
+					portletDataContext.getCompanyId(),
+					portletDataContext.getScopeGroupId(),
+					UserConstants.USER_ID_DEFAULT,
+					new HashMap<String, Serializable>(),
+					assetEntryQuery.getStart(), assetEntryQuery.getEnd());
+
+			assetEntries = baseModelSearchResult.getBaseModels();
+		}
+		else {
+			if (!AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_ENABLED) {
+				return;
+			}
+
+			assetEntries = AssetPublisherUtil.getAssetEntries(
+				null, portletPreferences,
+				PermissionThreadLocal.getPermissionChecker(), groupIds, false,
+				false);
+		}
 
 		for (AssetEntry assetEntry : assetEntries) {
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
@@ -167,6 +223,76 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletDataContext, portletDataContext.getPortletId(),
 				(StagedModel)assetRenderer.getAssetObject());
 		}
+	}
+
+	protected AssetEntryQuery getAssetEntryQuery(
+			Layout layout, long companyId, long[] groupIds,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			portletPreferences, groupIds, null, null);
+
+		long[] classNameIds = AssetPublisherUtil.getClassNameIds(
+			portletPreferences,
+			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true));
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+
+		long[] classTypeIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classTypeIds", null));
+
+		assetEntryQuery.setClassTypeIds(classTypeIds);
+
+		assetEntryQuery.setEnablePermissions(false);
+
+		int end = AssetPublisherWebConfigurationValues.DYNAMIC_EXPORT_LIMIT;
+
+		if (end == 0) {
+			end = QueryUtil.ALL_POS;
+		}
+
+		assetEntryQuery.setEnd(end);
+
+		assetEntryQuery.setExcludeZeroViewCount(false);
+		assetEntryQuery.setGroupIds(groupIds);
+
+		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
+			portletPreferences.getValue("showOnlyLayoutAssets", null));
+
+		if (showOnlyLayoutAssets) {
+			assetEntryQuery.setLayout(layout);
+		}
+
+		String orderByCol1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn1", "modifiedDate"));
+
+		assetEntryQuery.setOrderByCol1(orderByCol1);
+
+		String orderByCol2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByColumn2", "title"));
+
+		assetEntryQuery.setOrderByCol2(orderByCol2);
+
+		String orderByType1 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType1", "DESC"));
+
+		assetEntryQuery.setOrderByType1(orderByType1);
+
+		String orderByType2 = GetterUtil.getString(
+			portletPreferences.getValue("orderByType2", "ASC"));
+
+		assetEntryQuery.setOrderByType2(orderByType2);
+
+		int start = 0;
+
+		if (end == 0) {
+			start = QueryUtil.ALL_POS;
+		}
+
+		assetEntryQuery.setStart(start);
+
+		return assetEntryQuery;
 	}
 
 	@Override
@@ -335,6 +461,41 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 
 		return null;
+	}
+
+	protected void mergeAnyCategoryIds(
+		AssetEntryQuery assetEntryQuery, long assetVocabularyId) {
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getVocabularyRootCategories(
+				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		long[] vocabularyCategoryIds = new long[0];
+
+		for (AssetCategory assetCategory : assetCategories) {
+			vocabularyCategoryIds = ArrayUtil.append(
+				vocabularyCategoryIds, assetCategory.getCategoryId());
+		}
+
+		long[] originalAnyCategoryIds = assetEntryQuery.getAnyCategoryIds();
+
+		if (ArrayUtil.isEmpty(originalAnyCategoryIds)) {
+			assetEntryQuery.setAnyCategoryIds(vocabularyCategoryIds);
+		}
+		else {
+			long[] newAnyCategoryIds = new long[0];
+
+			for (int i = 0; i < originalAnyCategoryIds.length; i++) {
+				if (ArrayUtil.contains(
+						vocabularyCategoryIds, originalAnyCategoryIds[i])) {
+
+					newAnyCategoryIds = ArrayUtil.append(
+						newAnyCategoryIds, originalAnyCategoryIds[i]);
+				}
+			}
+
+			assetEntryQuery.setAnyCategoryIds(newAnyCategoryIds);
+		}
 	}
 
 	protected void restorePortletPreference(

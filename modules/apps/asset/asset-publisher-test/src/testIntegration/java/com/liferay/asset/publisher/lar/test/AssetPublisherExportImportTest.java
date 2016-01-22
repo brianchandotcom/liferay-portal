@@ -17,11 +17,16 @@ package com.liferay.asset.publisher.lar.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.test.util.AssetPublisherTestUtil;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
+import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -36,6 +41,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -50,10 +56,12 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
@@ -76,6 +84,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -88,6 +97,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
@@ -269,6 +279,179 @@ public class AssetPublisherExportImportTest
 			"The display style should not be null",
 			Validator.isNotNull(
 				portletPreferences.getValue("displayStyle", null)));
+	}
+
+	@Test
+	public void testDynamicExportImportAssetCategoryFiltering()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		List<AssetEntry> expectedAssetEntries = addAssetEntries(
+			group, 2, new ArrayList<AssetEntry>(), serviceContext);
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		preferenceMap.put("queryContains0", new String[] {"true"});
+		preferenceMap.put("queryName0", new String[] {"assetCategories"});
+		preferenceMap.put(
+			"queryValues0",
+			new String[] {String.valueOf(assetCategory.getCategoryId())});
+
+		testDynamicExportImport(preferenceMap, expectedAssetEntries, true);
+	}
+
+	@Test
+	public void testDynamicExportImportAssetTagFiltering() throws Exception {
+		AssetTag assetTag = AssetTestUtil.addTag(group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
+
+		List<AssetEntry> expectedAssetEntries = addAssetEntries(
+			group, 2, new ArrayList<AssetEntry>(), serviceContext);
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		preferenceMap.put(
+			"queryContains0", new String[] {Boolean.TRUE.toString()});
+		preferenceMap.put("queryValues0", new String[] {assetTag.getName()});
+
+		testDynamicExportImport(preferenceMap, expectedAssetEntries, true);
+	}
+
+	@Test
+	public void testDynamicExportImportAssetVocabularyFiltering()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory1.getCategoryId()});
+
+		List<AssetEntry> expectedAssetEntries = addAssetEntries(
+			group, 1, new ArrayList<AssetEntry>(), serviceContext);
+
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory2.getCategoryId()});
+
+		expectedAssetEntries = addAssetEntries(
+			group, 1, expectedAssetEntries, serviceContext);
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		preferenceMap.put(
+			"assetVocabularyId",
+			new String[] {String.valueOf(assetVocabulary.getVocabularyId())});
+
+		testDynamicExportImport(preferenceMap, expectedAssetEntries, true);
+	}
+
+	@Test
+	public void testDynamicExportImportClassTypeFiltering() throws Exception {
+		List<AssetEntry> expectedAssetEntries = new ArrayList<>();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(100),
+			ServiceContextTestUtil.getServiceContext());
+
+		expectedAssetEntries.add(getAssetEntry(journalArticle));
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		long journalArticleClassNameId = PortalUtil.getClassNameId(
+			JournalArticle.class);
+
+		preferenceMap.put(
+			"anyAssetType",
+			new String[] {String.valueOf(journalArticleClassNameId)});
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		preferenceMap.put(
+			"classTypeIds",
+			new String[] {String.valueOf(ddmStructure.getStructureId())});
+
+		testDynamicExportImport(preferenceMap, expectedAssetEntries, true);
+	}
+
+	@Test
+	public void testDynamicExportImportLayoutFiltering() throws Exception {
+		List<AssetEntry> expectedAssetEntries = new ArrayList<>();
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		Map<Locale, String> contentMap = new HashMap<>();
+
+		contentMap.put(
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(100));
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, titleMap, titleMap,
+			contentMap, layout.getUuid(), LocaleUtil.getDefault(), null, false,
+			false, ServiceContextTestUtil.getServiceContext());
+
+		expectedAssetEntries.add(getAssetEntry(journalArticle));
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		preferenceMap.put(
+			"showOnlyLayoutAssets", new String[] {Boolean.TRUE.toString()});
+
+		testDynamicExportImport(preferenceMap, expectedAssetEntries, true);
+	}
+
+	@Test
+	public void testDynamicExportImportOtherClassNameFiltering()
+		throws Exception {
+
+		Map<String, String[]> preferenceMap = new HashMap<>();
+
+		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
+			DLFileEntry.class);
+
+		preferenceMap.put(
+			"anyAssetType",
+			new String[] {String.valueOf(dlFileEntryClassNameId)});
+
+		testDynamicExportImport(
+			preferenceMap, new ArrayList<AssetEntry>(), true);
+	}
+
+	@Test
+	public void testDynamicExportImportWithNoFiltering() throws Exception {
+		List<AssetEntry> expectedAssetEntries = addAssetEntries(
+			group, 2, new ArrayList<AssetEntry>(),
+			ServiceContextTestUtil.getServiceContext());
+
+		testDynamicExportImport(
+			new HashMap<String, String[]>(), expectedAssetEntries, false);
 	}
 
 	@Test
@@ -736,22 +919,9 @@ public class AssetPublisherExportImportTest
 	}
 
 	protected List<AssetEntry> addAssetEntries(
-			Group group, int count, List<AssetEntry> assetEntries)
+			Group group, int count, List<AssetEntry> assetEntries,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		if (group.isLayout()) {
-
-			// Creating structures and templates in layout scope group is not
-			// possible
-
-			Company company = CompanyLocalServiceUtil.getCompany(
-				layout.getCompanyId());
-
-			serviceContext.setAttribute("ddmGroupId", company.getGroupId());
-		}
 
 		for (int i = 0; i < count; i++) {
 			JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -899,6 +1069,69 @@ public class AssetPublisherExportImportTest
 		return getExportParameterMap();
 	}
 
+	protected void testDynamicExportImport(
+			Map<String, String[]> preferenceMap,
+			List<AssetEntry> expectedAssetEntries, boolean filtering)
+		throws Exception {
+
+		if (filtering) {
+
+			// Creating entries to validate filtering
+
+			addAssetEntries(
+				group, 2, new ArrayList<AssetEntry>(),
+				ServiceContextTestUtil.getServiceContext());
+		}
+
+		String scopeId = AssetPublisherUtil.getScopeId(
+			group, group.getGroupId());
+
+		preferenceMap.put("scopeIds", new String[] {scopeId});
+
+		preferenceMap.put("selectionStyle", new String[] {"dynamic"});
+
+		PortletPreferences portletPreferences = getImportedPortletPreferences(
+			preferenceMap);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLayout(importedLayout);
+		themeDisplay.setScopeGroupId(importedGroup.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		AssetPublisherDisplayContext assetPublisherDisplayContext =
+			new AssetPublisherDisplayContext(
+				mockHttpServletRequest, portletPreferences);
+
+		SearchContainer<AssetEntry> searchContainer = new SearchContainer<>();
+
+		searchContainer.setTotal(10);
+
+		List<AssetEntryResult> actualAssetEntryResults =
+			AssetPublisherUtil.getAssetEntryResults(
+				assetPublisherDisplayContext, searchContainer,
+				portletPreferences);
+
+		List<AssetEntry> actualAssetEntries = new ArrayList<>();
+
+		for (AssetEntryResult assetEntryResult : actualAssetEntryResults) {
+			actualAssetEntries.addAll(assetEntryResult.getAssetEntries());
+		}
+
+		assertAssetEntries(expectedAssetEntries, actualAssetEntries);
+	}
+
 	protected void testExportImportAssetEntries(Group scopeGroup)
 		throws Exception {
 
@@ -916,7 +1149,22 @@ public class AssetPublisherExportImportTest
 		String[] scopeIds = new String[0];
 
 		for (Group scopeGroup : scopeGroups) {
-			assetEntries = addAssetEntries(scopeGroup, 3, assetEntries);
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			if (scopeGroup.isLayout()) {
+
+				// Creating structures and templates in layout scope group is
+				// not possible
+
+				Company company = CompanyLocalServiceUtil.getCompany(
+					layout.getCompanyId());
+
+				serviceContext.setAttribute("ddmGroupId", company.getGroupId());
+			}
+
+			assetEntries = addAssetEntries(
+				scopeGroup, 3, assetEntries, serviceContext);
 
 			String scopeId = AssetPublisherUtil.getScopeId(
 				scopeGroup, group.getGroupId());

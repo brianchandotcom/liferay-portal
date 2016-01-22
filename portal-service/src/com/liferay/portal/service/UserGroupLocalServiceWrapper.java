@@ -779,14 +779,14 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	user group's name or description (optionally <code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). For more
 	information see {@link
-	com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer}
+	com.liferay.user.groups.admin.web.search.UserGroupIndexer}
 	* @param start the lower bound of the range of user groups to return
 	* @param end the upper bound of the range of user groups to return (not
 	inclusive)
 	* @param sort the field and direction by which to sort (optionally
 	<code>null</code>)
 	* @return the matching user groups ordered by sort
-	* @see com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer
+	* @see com.liferay.user.groups.admin.web.search.UserGroupIndexer
 	*/
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
@@ -857,7 +857,7 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	<code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). For more
 	information see {@link
-	com.liferay.portlet.usergroupsadmin.util.UserGroupIndexer}
+	com.liferay.user.groups.admin.web.search.UserGroupIndexer}
 	* @param andSearch whether every field must match its keywords or just one
 	field
 	* @param start the lower bound of the range of user groups to return

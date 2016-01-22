@@ -85,7 +85,7 @@ else {
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 
 	<c:choose>
-		<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
+		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 
 			<%
 			request.setAttribute("view.jsp-backURL", backURL);
@@ -103,7 +103,7 @@ else {
 
 			<liferay-util:include page="/view_tree.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+		<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
 			<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">

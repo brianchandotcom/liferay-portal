@@ -688,7 +688,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListAndRecordWithToDoPredefinedDataDefinition" priority="4">
+	<command name="AddListAndRecordWithToDoPredefinedDataDefinition" priority="5">
 		<var name="ddlDataDefinitionName" value="To Do" />
 
 		<execute macro="Navigator#openURL" />

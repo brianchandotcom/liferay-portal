@@ -80,7 +80,7 @@ public class DefaultLayoutPrototypesUtil {
 
 	public static Layout addLayoutPrototype(
 			long companyId, long defaultUserId, String nameKey,
-			String descriptionKey, String layouteTemplateId,
+			String descriptionKey, String layoutTemplateId,
 			List<LayoutPrototype> layoutPrototypes, ClassLoader classLoader)
 		throws Exception {
 
@@ -122,7 +122,7 @@ public class DefaultLayoutPrototypesUtil {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
+		layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
 
 		return layout;
 	}

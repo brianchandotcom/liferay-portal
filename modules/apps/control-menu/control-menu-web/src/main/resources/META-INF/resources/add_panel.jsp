@@ -52,7 +52,7 @@
 							<div class="panel">
 								<div class="panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
 									<div class="panel-title">
-										<div aria-controls="#<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="collapse-icon panel-toggler <%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
+										<div aria-controls="#<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="applications" /></span>
 
 											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
@@ -74,7 +74,7 @@
 							<div class="panel">
 								<div class="panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
 									<div class="panel-title">
-										<div aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="collapse-icon panel-toggler <%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
+										<div aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="content" /></span>
 
 											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

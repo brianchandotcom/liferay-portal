@@ -6,11 +6,9 @@ dependencies {
 }
 
 repositories {
-	if (!Boolean.getBoolean("maven.local.ignore")) {
-		mavenLocal()
-	}
+	mavenLocal()
 
 	maven {
-		url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }

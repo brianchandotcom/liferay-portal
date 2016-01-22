@@ -22,7 +22,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "importLayouts");
+portletURL.setParameter("mvcRenderCommandName", "importLayoutsView");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
@@ -96,14 +96,8 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					Date completionDate = backgroundTask.getCompletionDate();
 					%>
 
-					<portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value="importLayouts" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					</portlet:renderURL>
-
 					<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
-						<portlet:param name="redirect" value="<%= redirectURL %>" />
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 					</portlet:actionURL>
 

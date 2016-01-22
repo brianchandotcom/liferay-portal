@@ -1,3 +1,7 @@
 dependencies {
 	compile group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.1"
 }
+
+liferay {
+	deployDir = "../../../tools/sdk/tmp/portal-tools/whip"
+}

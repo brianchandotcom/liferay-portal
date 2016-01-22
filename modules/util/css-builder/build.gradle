@@ -19,3 +19,7 @@ dependencies {
 	// @formatter:on
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }
+
+liferay {
+	deployDir = "../../../tools/sdk/tmp/portal-tools/css-builder"
+}

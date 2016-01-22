@@ -55,7 +55,7 @@ if (folder != null) {
 					<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 				</portlet:renderURL>
 
-				<liferay-frontend:add-menu-item title="<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale)) %>" url="<%= addArticleURL.toString() %>" />
+				<liferay-frontend:add-menu-item title="<%= ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale) %>" url="<%= addArticleURL.toString() %>" />
 
 			<%
 			}

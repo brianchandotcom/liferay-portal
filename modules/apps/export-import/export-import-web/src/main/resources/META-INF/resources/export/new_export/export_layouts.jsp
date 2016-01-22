@@ -129,9 +129,7 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 
 					<liferay-staging:content cmd="<%= Constants.EXPORT %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
-						<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" />
-					</aui:fieldset>
+					<liferay-staging:permissions gobal="<%= group.isCompany() %>" parameterMap="<%= parameterMap %>" />
 				</aui:fieldset-group>
 			</div>
 

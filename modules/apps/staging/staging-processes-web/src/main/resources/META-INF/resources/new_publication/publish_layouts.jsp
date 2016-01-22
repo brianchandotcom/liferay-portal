@@ -274,9 +274,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 				<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
 
-				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="permissions">
-					<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" />
-				</aui:fieldset>
+				<liferay-staging:permissions global="<%= group.isCompany() %>" parameterMap="<%= parameterMap %>" />
 
 				<c:if test="<%= !localPublishing %>">
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">

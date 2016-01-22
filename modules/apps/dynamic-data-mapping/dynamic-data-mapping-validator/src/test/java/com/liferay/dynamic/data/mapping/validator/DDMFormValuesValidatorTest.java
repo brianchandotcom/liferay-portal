@@ -14,6 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
+import static org.mockito.Mockito.mock;
+
+import static org.powermock.api.mockito.PowerMockito.field;
+import static org.powermock.api.mockito.PowerMockito.when;
+
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
@@ -49,7 +54,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
@@ -546,12 +550,13 @@ public class DDMFormValuesValidatorTest {
 	}
 
 	private void setUpDDMFormEvaluator() throws Exception {
-		DDMFormEvaluator _ddFormEvaluator = Mockito.mock(
-			DDMFormEvaluator.class);
+		DDMFormEvaluator _ddFormEvaluator = mock(DDMFormEvaluator.class);
 
-		PowerMockito.field(
+		field(
 			DDMFormValuesValidatorImpl.class, "_ddmFormEvaluator"
-		).set(_ddmFormValuesValidator, _ddFormEvaluator);
+		).set(
+			_ddmFormValuesValidator, _ddFormEvaluator
+		);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			new DDMFormEvaluationResult();
@@ -559,15 +564,19 @@ public class DDMFormValuesValidatorTest {
 		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
 			new ArrayList<DDMFormFieldEvaluationResult>());
 
-		Method evaluateMethod = _ddFormEvaluator.getClass().getMethod(
+		Class<?> clazz = _ddFormEvaluator.getClass();
+
+		Method evaluateMethod = clazz.getMethod(
 			"evaluate", DDMForm.class, DDMFormValues.class, Locale.class);
 
-		PowerMockito.when(
+		when(
 			_ddFormEvaluator, evaluateMethod
 		).withArguments(
 			Mockito.any(DDMForm.class), Mockito.any(DDMFormValues.class),
 			Mockito.any(Locale.class)
-		).thenReturn(ddmFormEvaluationResult);
+		).thenReturn(
+			ddmFormEvaluationResult
+		);
 	}
 
 	private final DDMFormValuesValidator _ddmFormValuesValidator =

@@ -52,7 +52,6 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 
 						<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 						<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
-
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.MustSetValidValues.class %>">

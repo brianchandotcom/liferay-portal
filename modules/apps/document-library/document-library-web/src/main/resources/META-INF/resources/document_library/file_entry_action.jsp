@@ -61,12 +61,12 @@ else {
 		}
 	}
 	else {
-		if (request.getAttribute("view_entries.jsp-fileEntry") != null) {
-			fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
+		if (request.getAttribute("info_panel.jsp-fileEntry") != null) {
+			fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
+		}
 
-			if (request.getAttribute("view_entries.jsp-fileShortcut") != null) {
-				fileShortcut = (FileShortcut)request.getAttribute("view_entries.jsp-fileShortcut");
-			}
+		if (request.getAttribute("info_panel.jsp-fileShortcut") != null) {
+			fileShortcut = (FileShortcut)request.getAttribute("info_panel.jsp-fileShortcut");
 		}
 	}
 }

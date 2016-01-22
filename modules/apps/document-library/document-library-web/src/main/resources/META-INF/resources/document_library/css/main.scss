@@ -132,6 +132,12 @@
 		clear: both;
 	}
 
+	.sidenav-right {
+		> .btn-group {
+			margin: 20px 0;
+		}
+	}
+
 	.folder.error:hover {
 		background-color: #FDD;
 	}
@@ -367,10 +373,6 @@
 
 .portlet-document-library, .portlet-document-library-display, .portlet-trash {
 	.document-info {
-		background: #D2DDE7;
-		border-bottom: 1px solid #6D6D6E;
-		padding: 10px;
-
 		&:after {
 			clear: both;
 			content: '';
@@ -501,6 +503,10 @@
 }
 
 .portlet-document-library {
+	.edit-toolbar {
+		padding-bottom: 15px;
+	}
+
 	.lfr-asset-column-details .lfr-panel {
 		margin-bottom: 0.5em;
 		padding-bottom: 0;
@@ -522,6 +528,10 @@
 
 	.upload-multiple-file-permissions {
 		overflow: auto;
+	}
+
+	.version-history-compare {
+		text-align: center;
 	}
 }
 

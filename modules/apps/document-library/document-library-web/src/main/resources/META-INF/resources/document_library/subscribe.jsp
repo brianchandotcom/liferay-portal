@@ -17,9 +17,13 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+Folder folder = (Folder)request.getAttribute("info_panel.jsp-folder");
 
-Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+if (folder != null) {
+	folderId = folder.getFolderId();
+}
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 %>
@@ -69,16 +73,16 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-star"
-							label="<%= true %>"
+							icon="star"
+							markupView="lexicon"
 							message="unsubscribe"
 							url="<%= unsubscribeURL %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
+							icon="star"
+							markupView="lexicon"
 							message="subscribed-to-a-parent-folder"
 						/>
 					</c:otherwise>
@@ -100,8 +104,8 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-star-empty"
-					label="<%= true %>"
+					icon="star-o"
+					markupView="lexicon"
 					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>

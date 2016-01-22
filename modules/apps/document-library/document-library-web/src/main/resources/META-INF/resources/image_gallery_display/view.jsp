@@ -226,6 +226,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 						<%
 						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+						request.setAttribute("info_panel.jsp-folder", folder);
 						%>
 
 						<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />

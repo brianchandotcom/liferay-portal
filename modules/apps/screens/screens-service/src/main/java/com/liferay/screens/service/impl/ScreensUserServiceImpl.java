@@ -16,27 +16,93 @@ package com.liferay.screens.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.screens.service.base.ScreensUserServiceBaseImpl;
 
 /**
- * The implementation of the screens user remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.screens.service.ScreensUserService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author José Manuel Navarro
- * @see ScreensUserServiceBaseImpl
- * @see com.liferay.screens.service.ScreensUserServiceUtil
  */
 @ProviderType
 public class ScreensUserServiceImpl extends ScreensUserServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.screens.service.ScreensUserServiceUtil} to access the screens user remote service.
-	 */
+
+	@Override
+	public User getCurrentUser() throws PortalException {
+		return getUser();
+	}
+
+	@Override
+	public boolean sendPasswordByEmailAddress(
+			long companyId, String emailAddress)
+		throws PortalException {
+
+		User user = userLocalService.getUserByEmailAddress(
+			companyId, emailAddress);
+
+		return sendPassword(user);
+	}
+
+	@Override
+	public boolean sendPasswordByScreenName(long companyId, String screenName)
+		throws PortalException {
+
+		User user = userLocalService.getUserByScreenName(companyId, screenName);
+
+		return sendPassword(user);
+	}
+
+	@Override
+	public boolean sendPasswordByUserId(long userId) throws PortalException {
+		User user = userLocalService.getUserById(userId);
+
+		return sendPassword(user);
+	}
+
+	protected void populateServiceContext(
+			long companyId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (serviceContext.getPathMain() == null) {
+			serviceContext.setPathMain(PortalUtil.getPathMain());
+		}
+
+		if (serviceContext.getPlid() == 0) {
+			long plid = LayoutLocalServiceUtil.getDefaultPlid(
+				serviceContext.getScopeGroupId(), false);
+
+			serviceContext.setPlid(plid);
+		}
+
+		if (serviceContext.getScopeGroupId() == 0) {
+			Group guestGroup = GroupLocalServiceUtil.getGroup(
+				companyId, GroupConstants.GUEST);
+
+			serviceContext.setScopeGroupId(guestGroup.getGroupId());
+		}
+	}
+
+	protected boolean sendPassword(User user) throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		populateServiceContext(user.getCompanyId(), serviceContext);
+
+		userLocalService.sendPassword(
+			user.getCompanyId(), user.getEmailAddress(), null, null, null, null,
+			serviceContext);
+
+		Company company = companyPersistence.findByPrimaryKey(
+			user.getCompanyId());
+
+		return company.isSendPassword();
+	}
+
 }

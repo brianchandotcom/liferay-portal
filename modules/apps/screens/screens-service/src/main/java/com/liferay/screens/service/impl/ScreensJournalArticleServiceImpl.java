@@ -14,30 +14,80 @@
 
 package com.liferay.screens.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.screens.service.base.ScreensJournalArticleServiceBaseImpl;
 
+import java.util.Locale;
+
 /**
- * The implementation of the screens journal article remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.screens.service.ScreensJournalArticleService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author José Manuel Navarro
- * @see ScreensJournalArticleServiceBaseImpl
- * @see com.liferay.screens.service.ScreensJournalArticleServiceUtil
+ * @author Javier Gamarra
  */
-@ProviderType
 public class ScreensJournalArticleServiceImpl
 	extends ScreensJournalArticleServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.screens.service.ScreensJournalArticleServiceUtil} to access the screens journal article remote service.
-	 */
+
+	@Override
+	public String getJournalArticleContent(long classPK, Locale locale)
+		throws PortalException {
+
+		JournalArticleResource journalArticleResource =
+			journalArticleResourceLocalService.getArticleResource(classPK);
+
+		return journalArticleLocalService.getArticleContent(
+			journalArticleResource.getGroupId(),
+			journalArticleResource.getArticleId(), null, null,
+			getLanguageId(locale), null, null);
+	}
+
+	@Override
+	public String getJournalArticleContent(
+			long classPK, long ddmTemplateId, Locale locale)
+		throws PortalException {
+
+		JournalArticleResource journalArticleResource =
+			journalArticleResourceLocalService.getArticleResource(classPK);
+
+		return journalArticleLocalService.getArticleContent(
+			journalArticleResource.getGroupId(),
+			journalArticleResource.getArticleId(), null,
+			getDDMTemplateKey(ddmTemplateId), getLanguageId(locale), null,
+			null);
+	}
+
+	@Override
+	public String getJournalArticleContent(
+			long groupId, String articleId, long ddmTemplateId, Locale locale)
+		throws PortalException {
+
+		return journalArticleLocalService.getArticleContent(
+			groupId, articleId, null, getDDMTemplateKey(ddmTemplateId),
+			getLanguageId(locale), null, null);
+	}
+
+	protected String getDDMTemplateKey(long ddmTemplateId)
+		throws PortalException {
+
+		String ddmTemplateKey = null;
+
+		DDMTemplate ddmTemplate = DDMTemplateManagerUtil.getTemplate(
+			ddmTemplateId);
+
+		if (ddmTemplate != null) {
+			ddmTemplateKey = ddmTemplate.getTemplateKey();
+		}
+
+		return ddmTemplateKey;
+	}
+
+	protected String getLanguageId(Locale locale) {
+		if (locale == null) {
+			locale = LocaleUtil.getSiteDefault();
+		}
+
+		return LocaleUtil.toLanguageId(locale);
+	}
+
 }

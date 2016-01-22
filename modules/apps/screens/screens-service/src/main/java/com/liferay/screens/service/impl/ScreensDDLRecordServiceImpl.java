@@ -16,27 +16,188 @@ package com.liferay.screens.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.FieldConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.screens.service.base.ScreensDDLRecordServiceBaseImpl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
 /**
- * The implementation of the screens d d l record remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.screens.service.ScreensDDLRecordService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author José Manuel Navarro
- * @see ScreensDDLRecordServiceBaseImpl
- * @see com.liferay.screens.service.ScreensDDLRecordServiceUtil
  */
 @ProviderType
-public class ScreensDDLRecordServiceImpl extends ScreensDDLRecordServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.screens.service.ScreensDDLRecordServiceUtil} to access the screens d d l record remote service.
-	 */
+public class ScreensDDLRecordServiceImpl
+	extends ScreensDDLRecordServiceBaseImpl {
+
+	@Override
+	public JSONObject getDDLRecord(long ddlRecordId, Locale locale)
+		throws PortalException {
+
+		DDLRecord ddlRecord = ddlRecordLocalService.getRecord(ddlRecordId);
+
+		Set<Locale> availableLocales =
+			ddlRecord.getDDMFormValues().getAvailableLocales();
+
+		if ((locale == null) || !availableLocales.contains(locale)) {
+			locale = ddlRecord.getDDMFormValues().getDefaultLocale();
+		}
+
+		return getDDLRecordJSONObject(ddlRecord, locale);
+	}
+
+	@Override
+	public JSONArray getDDLRecords(
+			long ddlRecordSetId, Locale locale, int start, int end)
+		throws PortalException {
+
+		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
+			ddlRecordSetId, start, end);
+
+		return getDDLRecordsJSONArray(ddlRecords, locale);
+	}
+
+	@Override
+	public JSONArray getDDLRecords(
+			long ddlRecordSetId, long userId, Locale locale, int start, int end)
+		throws PortalException {
+
+		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByR_U(
+			ddlRecordSetId, userId, start, end);
+
+		return getDDLRecordsJSONArray(ddlRecords, locale);
+	}
+
+	@Override
+	public int getDDLRecordsCount(long ddlRecordSetId) {
+		return ddlRecordPersistence.countByRecordSetId(ddlRecordSetId);
+	}
+
+	@Override
+	public int getDDLRecordsCount(long ddlRecordSetId, long userId) {
+		return ddlRecordPersistence.countByR_U(ddlRecordSetId, userId);
+	}
+
+	protected JSONObject getDDLRecordJSONObject(
+			DDLRecord ddlRecord, Locale locale)
+		throws PortalException {
+
+		JSONObject ddlRecordJSONObject = JSONFactoryUtil.createJSONObject();
+
+		ddlRecordJSONObject.put(
+			"modelAttributes",
+			JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(
+					ddlRecord.getModelAttributes())));
+
+		Map<String, Object> ddlRecordMap = new HashMap<>();
+
+		DDMFormValues ddmFormValues = ddlRecord.getDDMFormValues();
+
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
+
+		if ((locale == null) || !availableLocales.contains(locale)) {
+			locale = ddmFormValues.getDefaultLocale();
+		}
+
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
+
+			Object fieldValue = getFieldValue(ddmFormFieldValue, locale);
+
+			if (fieldValue != null) {
+				ddlRecordMap.put(ddmFormFieldValue.getName(), fieldValue);
+			}
+		}
+
+		ddlRecordJSONObject.put(
+			"modelValues",
+			JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(ddlRecordMap)));
+
+		return ddlRecordJSONObject;
+	}
+
+	protected JSONArray getDDLRecordsJSONArray(
+			List<DDLRecord> ddlRecords, Locale locale)
+		throws PortalException {
+
+		JSONArray ddlRecordsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (DDLRecord ddlRecord : ddlRecords) {
+			JSONObject ddlRecordJSONObject = getDDLRecordJSONObject(
+				ddlRecord, locale);
+
+			ddlRecordsJSONArray.put(ddlRecordJSONObject);
+		}
+
+		return ddlRecordsJSONArray;
+	}
+
+	protected Object getFieldValue(
+			DDMFormFieldValue ddmFormFieldValue, Locale locale)
+		throws PortalException {
+
+		String fieldValueString =
+			ddmFormFieldValue.getValue().getString(locale);
+
+		if (fieldValueString == null) {
+			return null;
+		}
+
+		if (fieldValueString.isEmpty()) {
+			return null;
+		}
+
+		String dataType = ddmFormFieldValue.getType();
+
+		switch (dataType) {
+			case FieldConstants.BOOLEAN:
+				return Boolean.valueOf(fieldValueString);
+			case FieldConstants.DATE:
+				return ddmFormFieldValue.getValue().getString(locale);
+			case FieldConstants.DOCUMENT_LIBRARY:
+				return JSONFactoryUtil.looseSerialize(
+					JSONFactoryUtil.looseDeserialize(fieldValueString));
+			case FieldConstants.FLOAT:
+			case FieldConstants.NUMBER:
+
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
+
+				return Float.valueOf(fieldValueString);
+			case FieldConstants.INTEGER:
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
+
+				return Integer.valueOf(fieldValueString);
+			case FieldConstants.LONG:
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
+
+				return Long.valueOf(fieldValueString);
+			case FieldConstants.SHORT:
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
+
+				return Short.valueOf(fieldValueString);
+		}
+
+		return fieldValueString;
+	}
+
 }

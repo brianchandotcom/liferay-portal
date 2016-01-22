@@ -16,6 +16,7 @@ package com.liferay.control.menu;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -34,6 +35,10 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseJSPControlMenuEntry
 	extends BaseControlMenuEntry implements ControlMenuEntry {
 
+	public String getBodyJspPath() {
+		return StringPool.BLANK;
+	}
+
 	public abstract String getJspPath();
 
 	@Override
@@ -51,29 +56,43 @@ public abstract class BaseJSPControlMenuEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		String jspPath = getJspPath();
+		return include(request, response, getJspPath());
+	}
+
+	@Override
+	public boolean includeBody(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return include(request, response, getBodyJspPath());
+	}
+
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	protected boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String jspPath)
+		throws IOException {
 
 		if (Validator.isNull(jspPath)) {
 			return false;
 		}
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getJspPath());
+			_servletContext.getRequestDispatcher(jspPath);
 
 		try {
 			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
-			_log.error("Unable to include " + getJspPath(), se);
+			_log.error("Unable to include " + jspPath, se);
 
 			return false;
 		}
 
 		return true;
-	}
-
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

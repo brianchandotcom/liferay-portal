@@ -73,6 +73,20 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 
 			</header>
 		</div>
+
+		<div class="control-menu-body">
+
+			<%
+			for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
+				List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+
+				for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+					controlMenuEntry.includeBody(request, new PipingServletResponse(pageContext));
+				}
+			}
+			%>
+
+		</div>
 	</div>
 
 	<aui:script use="liferay-control-menu">

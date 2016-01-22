@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -35,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
 
@@ -79,16 +77,13 @@ public class DefaultLayoutPrototypesUtil {
 	}
 
 	public static Layout addLayoutPrototype(
-			long companyId, long defaultUserId, String nameKey,
-			String descriptionKey, String layoutTemplateId,
-			List<LayoutPrototype> layoutPrototypes, ClassLoader classLoader)
+			long companyId, long defaultUserId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String layouteTemplateId,
+			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", LocaleUtil.getDefault(), classLoader);
-
-		String name = LanguageUtil.get(resourceBundle, nameKey);
-		String description = LanguageUtil.get(resourceBundle, descriptionKey);
+		String name = nameMap.get(LocaleUtil.getDefault());
+		String description = descriptionMap.get(LocaleUtil.getDefault());
 
 		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
 			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
@@ -98,18 +93,6 @@ public class DefaultLayoutPrototypesUtil {
 			if (name.equals(curName) && description.equals(curDescription)) {
 				return null;
 			}
-		}
-
-		Map<Locale, String> nameMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", locale, classLoader);
-
-			nameMap.put(locale, LanguageUtil.get(resourceBundle, nameKey));
-			descriptionMap.put(
-				locale, LanguageUtil.get(resourceBundle, descriptionKey));
 		}
 
 		LayoutPrototype layoutPrototype =
@@ -122,7 +105,7 @@ public class DefaultLayoutPrototypesUtil {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
+		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
 
 		return layout;
 	}

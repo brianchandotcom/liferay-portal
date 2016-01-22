@@ -18,6 +18,7 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
@@ -28,6 +29,8 @@ import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,10 +61,16 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
+		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
+			"content.Language", getClass(), "layout-prototype-wiki-title");
+		Map<Locale, String> descriptionMap =
+			ResourceBundleUtil.getLocalizationMap(
+				"content.Language", getClass(),
+				"layout-prototype-wiki-description");
+
 		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
-			companyId, defaultUserId, "layout-prototype-wiki-title",
-			"layout-prototype-wiki-description", "2_columns_iii",
-			layoutPrototypes, getClassLoader());
+			companyId, defaultUserId, nameMap, descriptionMap, "2_columns_iii",
+			layoutPrototypes);
 
 		if (layout == null) {
 			return;

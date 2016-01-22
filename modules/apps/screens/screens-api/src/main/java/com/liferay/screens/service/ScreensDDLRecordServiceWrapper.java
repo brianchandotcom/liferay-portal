@@ -33,6 +33,40 @@ public class ScreensDDLRecordServiceWrapper implements ScreensDDLRecordService,
 		_screensDDLRecordService = screensDDLRecordService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getDDLRecord(
+		long ddlRecordId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensDDLRecordService.getDDLRecord(ddlRecordId, locale);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray getDDLRecords(
+		long ddlRecordSetId, java.util.Locale locale, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensDDLRecordService.getDDLRecords(ddlRecordSetId, locale,
+			start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray getDDLRecords(
+		long ddlRecordSetId, long userId, java.util.Locale locale, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensDDLRecordService.getDDLRecords(ddlRecordSetId, userId,
+			locale, start, end);
+	}
+
+	@Override
+	public int getDDLRecordsCount(long ddlRecordSetId) {
+		return _screensDDLRecordService.getDDLRecordsCount(ddlRecordSetId);
+	}
+
+	@Override
+	public int getDDLRecordsCount(long ddlRecordSetId, long userId) {
+		return _screensDDLRecordService.getDDLRecordsCount(ddlRecordSetId,
+			userId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

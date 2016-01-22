@@ -34,6 +34,30 @@ public class ScreensJournalArticleServiceWrapper
 		_screensJournalArticleService = screensJournalArticleService;
 	}
 
+	@Override
+	public java.lang.String getJournalArticleContent(long classPK,
+		long ddmTemplateId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensJournalArticleService.getJournalArticleContent(classPK,
+			ddmTemplateId, locale);
+	}
+
+	@Override
+	public java.lang.String getJournalArticleContent(long classPK,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensJournalArticleService.getJournalArticleContent(classPK,
+			locale);
+	}
+
+	@Override
+	public java.lang.String getJournalArticleContent(long groupId,
+		java.lang.String articleId, long ddmTemplateId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensJournalArticleService.getJournalArticleContent(groupId,
+			articleId, ddmTemplateId, locale);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

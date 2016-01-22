@@ -16,9 +16,17 @@ package com.liferay.screens.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import com.liferay.screens.service.ScreensJournalArticleServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.screens.service.ScreensJournalArticleServiceUtil} service utility. The
+ * {@link ScreensJournalArticleServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -42,9 +50,56 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author José Manuel Navarro
  * @see ScreensJournalArticleServiceHttp
- * @see com.liferay.screens.service.ScreensJournalArticleServiceUtil
+ * @see ScreensJournalArticleServiceUtil
  * @generated
  */
 @ProviderType
 public class ScreensJournalArticleServiceSoap {
+	public static java.lang.String getJournalArticleContent(long classPK,
+		String locale) throws RemoteException {
+		try {
+			java.lang.String returnValue = ScreensJournalArticleServiceUtil.getJournalArticleContent(classPK,
+					LocaleUtil.fromLanguageId(locale));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getJournalArticleContent(long classPK,
+		long ddmTemplateId, String locale) throws RemoteException {
+		try {
+			java.lang.String returnValue = ScreensJournalArticleServiceUtil.getJournalArticleContent(classPK,
+					ddmTemplateId, LocaleUtil.fromLanguageId(locale));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getJournalArticleContent(long groupId,
+		java.lang.String articleId, long ddmTemplateId, String locale)
+		throws RemoteException {
+		try {
+			java.lang.String returnValue = ScreensJournalArticleServiceUtil.getJournalArticleContent(groupId,
+					articleId, ddmTemplateId, LocaleUtil.fromLanguageId(locale));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ScreensJournalArticleServiceSoap.class);
 }

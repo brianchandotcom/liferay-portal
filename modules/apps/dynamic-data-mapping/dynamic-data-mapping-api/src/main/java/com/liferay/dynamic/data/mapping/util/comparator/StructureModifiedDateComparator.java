@@ -31,4 +31,9 @@ public class StructureModifiedDateComparator
 		super(ascending);
 	}
 
+	@Override
+	public String getOrderBy() {
+		return "DDMStructure." + super.getOrderBy();
+	}
+
 }

@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class DataProviderNameComparator
 	extends OrderByComparator<DDMDataProviderInstance> {
 
-	public static final String ORDER_BY_ASC = "name ASC";
+	public static final String ORDER_BY_ASC =
+		"DDMDataProviderInstance.name ASC";
 
-	public static final String ORDER_BY_DESC = "name DESC";
+	public static final String ORDER_BY_DESC =
+		"DDMDataProviderInstance.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 

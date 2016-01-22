@@ -31,4 +31,9 @@ public class TemplateModifiedDateComparator
 		super(ascending);
 	}
 
+	@Override
+	public String getOrderBy() {
+		return "DDMTemplate." + super.getOrderBy();
+	}
+
 }

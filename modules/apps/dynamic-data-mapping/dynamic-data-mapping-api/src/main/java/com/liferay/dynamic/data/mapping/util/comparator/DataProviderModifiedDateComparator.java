@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class DataProviderModifiedDateComparator
 	extends OrderByComparator<DDMDataProviderInstance> {
 
-	public static final String ORDER_BY_ASC = "modifiedDate ASC";
+	public static final String ORDER_BY_ASC =
+		"DDMDataProviderInstance.modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "modifiedDate DESC";
+	public static final String ORDER_BY_DESC =
+		"DDMDataProviderInstance.modifiedDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 

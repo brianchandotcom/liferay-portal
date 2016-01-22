@@ -1,8 +1,8 @@
 dependencies {
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.95"
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.3"
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.0"
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.0.4"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "latest.release"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "latest.release"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "latest.release"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "latest.release"
 }
 
 repositories {

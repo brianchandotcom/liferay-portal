@@ -30,13 +30,15 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
+import org.springframework.beans.support.PropertyComparator;
+
 /**
  * @author Eudaldo Alonso
  */
 public class PortletConfigurationIconTracker {
 
 	public static List<PortletConfigurationIconFactory>
-		getPortletConfigurationIcons(
+		getPortletConfigurationFactories(
 			String portletId, PortletRequest portletRequest) {
 
 		List<PortletConfigurationIconFactory>

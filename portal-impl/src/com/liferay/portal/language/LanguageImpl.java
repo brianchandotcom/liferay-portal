@@ -60,6 +60,7 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 import java.io.Serializable;
 
 import java.text.MessageFormat;
+import java.text.NumberFormat;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -475,8 +476,8 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				MessageFormat messageFormat = getMessageFormat(
-					request, pattern);
+				MessageFormat messageFormat = decorateMessageFormat(
+					request, pattern, formattedArguments);
 
 				value = messageFormat.format(formattedArguments);
 			}
@@ -1613,11 +1614,24 @@ public class LanguageImpl implements Language, Serializable {
 		CookieKeys.addCookie(request, response, languageIdCookie);
 	}
 
-	protected MessageFormat getMessageFormat(
-			HttpServletRequest request, String pattern)
+	protected MessageFormat decorateMessageFormat(
+			HttpServletRequest request, String pattern,
+			Object[] formattedArguments)
 		throws PortalException {
 
-		return new MessageFormat(pattern, _getLocale(request));
+		Locale locale = _getLocale(request);
+
+		MessageFormat messageFormat = new MessageFormat(pattern, locale);
+
+		for (int i = 0; i < formattedArguments.length; i++) {
+			Object formattedArgument = formattedArguments[i];
+
+			if (formattedArgument instanceof Number) {
+				messageFormat.setFormat(i, NumberFormat.getInstance(locale));
+			}
+		}
+
+		return messageFormat;
 	}
 
 	private static CompanyLocalesBag _getCompanyLocalesBag() {

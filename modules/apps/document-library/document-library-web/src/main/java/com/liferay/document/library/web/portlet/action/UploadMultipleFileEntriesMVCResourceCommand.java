@@ -45,7 +45,7 @@ public class UploadMultipleFileEntriesMVCResourceCommand
 
 		include(
 			resourceRequest, resourceResponse,
-			"/document_library/upload_multiple_file_entries.jsp");
+			"/document_library/upload_multiple_file_entries_resources.jsp");
 	}
 
 }

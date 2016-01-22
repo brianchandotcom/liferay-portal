@@ -21,20 +21,22 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Leonardo Barros
  */
-public class DataProviderModifiedDateComparator
+public class DataProviderInstanceModifiedDateComparator
 	extends OrderByComparator<DDMDataProviderInstance> {
 
-	public static final String ORDER_BY_ASC = "modifiedDate ASC";
+	public static final String ORDER_BY_ASC =
+		"DDMDataProviderInstance.modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "modifiedDate DESC";
+	public static final String ORDER_BY_DESC =
+		"DDMDataProviderInstance.modifiedDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public DataProviderModifiedDateComparator() {
+	public DataProviderInstanceModifiedDateComparator() {
 		this(false);
 	}
 
-	public DataProviderModifiedDateComparator(boolean ascending) {
+	public DataProviderInstanceModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

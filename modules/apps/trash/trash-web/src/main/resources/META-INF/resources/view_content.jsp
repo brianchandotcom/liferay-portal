@@ -357,45 +357,4 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 			/>
 		</c:otherwise>
 	</c:choose>
-
-	<c:if test="<%= trashRenderer instanceof AssetRenderer %>">
-
-		<%
-		AssetRenderer assetRenderer = (AssetRenderer)trashRenderer;
-		%>
-
-		<div class="asset-ratings">
-			<liferay-ui:ratings
-				className="<%= className %>"
-				classPK="<%= classPK %>"
-			/>
-		</div>
-
-		<%
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
-		%>
-
-		<div class="asset-related-assets">
-			<liferay-ui:asset-links
-				assetEntryId="<%= assetEntry.getEntryId() %>"
-			/>
-		</div>
-
-		<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) %>">
-			<div class="alert alert-warning">
-				<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
-			</div>
-
-			<div class="asset-discussion">
-				<liferay-ui:discussion
-					className="<%= className %>"
-					classPK="<%= classPK %>"
-					formName='<%= "fm" + classPK %>'
-					hideControls="<%= true %>"
-					redirect="<%= currentURL %>"
-					userId="<%= assetEntry.getUserId() %>"
-				/>
-			</div>
-		</c:if>
-	</c:if>
 </div>

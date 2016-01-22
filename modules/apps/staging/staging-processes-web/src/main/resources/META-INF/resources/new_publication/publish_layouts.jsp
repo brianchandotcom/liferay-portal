@@ -270,7 +270,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 					</aui:fieldset>
 				</c:if>
 
-				<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= null %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+				<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 
 				<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
 

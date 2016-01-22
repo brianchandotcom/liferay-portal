@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.upgrade.util;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
@@ -40,7 +40,11 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 			DatabaseMetaData databaseMetaData, String tableName)
 		throws Exception {
 
-		tableName = normalizeName(tableName, databaseMetaData);
+		for (String excludeTableName : getExcludedTables()) {
+			if (excludeTableName.equals(tableName)) {
+				return;
+			}
+		}
 
 		ResultSet tableResultSet = databaseMetaData.getTables(
 			null, null, tableName, null);
@@ -113,6 +117,10 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("class");
+	}
+
+	protected String[] getExcludedTables() {
+		return new String[] {};
 	}
 
 	protected String[] getModuleTableNames() {

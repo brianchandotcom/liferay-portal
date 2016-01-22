@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.upgrade.util.UpgradeMVCCVersion;
 
 /**
  * @author Brian Wing Shun Chan

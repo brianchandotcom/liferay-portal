@@ -255,7 +255,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
+							message="add-folder"
 							url="<%= addFolderURL %>"
 						/>
 					</c:if>

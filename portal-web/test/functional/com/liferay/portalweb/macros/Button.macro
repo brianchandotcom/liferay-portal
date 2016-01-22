@@ -7,6 +7,10 @@
 		<execute function="AssertClick" locator1="Button#DELETE" value1="Delete" />
 	</command>
 
+	<command name="clickDone">
+		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+	</command>
+
 	<command name="clickPublish">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 	</command>

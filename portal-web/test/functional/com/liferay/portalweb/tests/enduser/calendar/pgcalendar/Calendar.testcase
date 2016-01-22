@@ -3406,6 +3406,42 @@
 		</execute>
 	</command>
 
+	<command name="EditLanguageSelectorAndViewEvent" priority="3">
+		<description message="This is a use case for LPS-58649." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Spanish (Spain)" />
+		</execute>
+
+		<execute macro="CalendarScheduler#addLocalizedEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="saveButton" value="Guardar" />
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewLocalizedEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="viewTypeLocalized" value="Semana" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewDay">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+	</command>
+
 	<command name="EditReminderEmailTemplateForCalendarResourceCalendar" priority="3">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarType" value="Other Calendars" />

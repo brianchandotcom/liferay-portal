@@ -664,6 +664,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Settings')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHORTCUT</td>
 	<td>//li[contains(@class,'open')]//a[contains(.,'Shortcut')] | //div[contains(@class,'open')]//a[contains(.,'Shortcut')]</td>
 	<td></td>

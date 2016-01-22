@@ -26,11 +26,11 @@ AUI.add(
 
 		var CSS_ENTRY_DISPLAY_STYLE = 'entry-display-style';
 
-		var CSS_ENTRY_LINK = 'entry-link';
+		var CSS_ENTRY_LINK = CSS_ENTRY_DISPLAY_STYLE + ' a';
 
 		var CSS_ENTRY_SELECTOR = 'entry-selector';
 
-		var CSS_ENTRY_TITLE_TEXT = 'entry-title-text';
+		var CSS_ENTRY_TITLE_TEXT = 'card-dm-text-large';
 
 		var CSS_ICON = 'icon';
 
@@ -403,7 +403,11 @@ AUI.add(
 								var dataTransferTypes = dataTransfer.types;
 
 								if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
-									var parentElement = event.target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
+									var parentElement = event.target.ancestor('[data-folder="true"]');
+
+									if (!parentElement) {
+										parentElement = event.target;
+									}
 
 									parentElement.toggleClass(CSS_ACTIVE_AREA, event.type == 'dragover');
 								}
@@ -453,7 +457,7 @@ AUI.add(
 
 						var entriesContainer = instance.get('entriesContainer');
 
-						if (displayStyle == STR_LIST) {
+						if (displayStyle === STR_LIST) {
 							var searchContainer = entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
 							entriesContainer = searchContainer.one('tbody');
@@ -461,13 +465,19 @@ AUI.add(
 							entryNode = instance._createEntryRow(name, size);
 						}
 						else {
-							entriesContainer = entriesContainer.one('ul');
+							var entriesContainerSelector = 'ul.tabular-list-group:last-of-type';
+
+							if (displayStyle === CSS_ICON) {
+								entriesContainerSelector = 'ul.list-unstyled:last-of-type';
+							}
+
+							entriesContainer = entriesContainer.one(entriesContainerSelector);
 
 							var invisibleEntry = instance._invisibleDescriptiveEntry;
 
 							var hiddenCheckbox = sub(TPL_HIDDEN_CHECK_BOX, [instance.get(STR_HOST).ns('rowIdsFileEntry')]);
 
-							if (displayStyle == CSS_ICON) {
+							if (displayStyle === CSS_ICON) {
 								invisibleEntry = instance._invisibleIconEntry;
 							}
 
@@ -475,9 +485,13 @@ AUI.add(
 
 							entryNode.append(hiddenCheckbox);
 
-							var entryLink = entryNode.one(SELECTOR_ENTRY_LINK);
+							var entryLink = entryNode.one('a');
 
-							var entryTitle = entryLink.one(SELECTOR_ENTRY_TITLE_TEXT);
+							var entryTitle = entryLink;
+
+							if (displayStyle === CSS_ICON) {
+								entryTitle = entryNode.one(SELECTOR_ENTRY_TITLE_TEXT);
+							}
 
 							entryLink.attr('title', name);
 
@@ -490,6 +504,23 @@ AUI.add(
 								id: A.guid()
 							}
 						);
+
+						if (displayStyle == CSS_ICON) {
+							wrapperTpl = '<li class="col-md-2 col-sm-4 col-xs-6" data-title="{title}"></li>';
+
+							var entryNodeWrapper = A.Node.create(
+								Lang.sub(
+									wrapperTpl,
+									{
+										title: name
+									}
+								)
+							);
+
+							entryNodeWrapper.append(entryNode);
+
+							entryNode = entryNodeWrapper;
+						}
 
 						entriesContainer.append(entryNode);
 
@@ -548,14 +579,12 @@ AUI.add(
 						return overlay;
 					},
 
-					_createProgressBar: function() {
+					_createProgressBar: function(target) {
 						var instance = this;
 
-						var dimensions = instance._dimensions;
+						var height = target.height() / 5;
 
-						var height = dimensions.height / 5;
-
-						var width = dimensions.width / 0.64;
+						var width = target.width() * 0.8;
 
 						return new A.ProgressBar(
 							{
@@ -577,7 +606,7 @@ AUI.add(
 						var instance = this;
 
 						var overlay = instance._createOverlay(target);
-						var progressBar = instance._createProgressBar();
+						var progressBar = instance._createProgressBar(target);
 
 						overlay.show();
 
@@ -1221,9 +1250,9 @@ AUI.add(
 							selector = SELECTOR_ENTRY_DISPLAY_STYLE + STR_SPACE + SELECTOR_TAGLIB_ICON;
 						}
 
-						var link = node.one(selector);
+						var link = node.all(selector);
 
-						if (link) {
+						if (link.size()) {
 							link.attr('href', Liferay.Util.addParams(id, instance.get('viewFileEntryURL')));
 						}
 					},
@@ -1286,6 +1315,10 @@ AUI.add(
 						var thumbnailPath = instance._getMediaThumbnail(fileName);
 
 						imageNode.attr('src', thumbnailPath);
+
+						if (instance._getDisplayStyle() === CSS_ICON) {
+							imageNode.ancestor('div').setStyle('backgroundImage', "url('" + thumbnailPath + "')");
+						}
 					},
 
 					_validateFiles: function(data) {

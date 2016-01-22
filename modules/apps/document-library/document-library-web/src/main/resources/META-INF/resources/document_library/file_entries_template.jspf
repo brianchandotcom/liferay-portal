@@ -20,21 +20,38 @@
 	String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/default.png";
 	%>
 
-	<liferay-ui:app-view-entry
-		displayStyle="icon"
-		showCheckbox="<%= Boolean.FALSE %>"
-		thumbnailSrc="<%= thumbnailSrc %>"
-		thumbnailStyle="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>"
+	<liferay-frontend:vertical-card
+		cssClass="display-icon entry-display-style"
+		imageUrl="<%= thumbnailSrc %>"
 		title="{title}"
 		url="<%= uploadURL %>"
-	/>
+	>
+		<liferay-frontend:vertical-card-header>
+			<liferay-ui:message key="right-now-by-x" arguments="<%= HtmlUtil.escape(user.getFullName()) %>" />
+		</liferay-frontend:vertical-card-header>
+	</liferay-frontend:vertical-card>
 
-	<liferay-ui:app-view-entry
-		displayStyle="descriptive"
-		showCheckbox="<%= Boolean.FALSE %>"
-		thumbnailSrc="<%= thumbnailSrc %>"
-		thumbnailStyle="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>"
-		title="{title}"
-		url="<%= uploadURL %>"
-	/>
+	<li class="display-descriptive entry-display-style list-group-item">
+		<div class="list-group-item-field"></div>
+
+		<div class="list-group-item-field">
+			<div class="click-selector user-icon user-icon-square user-icon-xl">
+				<img alt="thumbnail" class="img-responsive img-rounded" src="<%= thumbnailSrc %>">
+			</div>
+		</div>
+
+		<div class="list-group-item-content">
+			<h5 class="text-default">
+				<liferay-ui:message key="right-now-by-x" arguments="<%= HtmlUtil.escape(user.getFullName()) %>" />
+			</h5>
+
+			<h4>
+				<aui:a href="<%= uploadURL.toString() %>">
+					{title}
+				</aui:a>
+			</h4>
+		</div>
+
+		<div class="list-group-item-field"></div>
+	</li>
 </div>

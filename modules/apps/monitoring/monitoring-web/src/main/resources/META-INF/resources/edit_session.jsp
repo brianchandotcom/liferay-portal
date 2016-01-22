@@ -115,7 +115,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 						</dl>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="sessionAccessedURLsPanels" markupView="lexicon" persistState="<%= true %>" title="accessed-urls">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="sessionAccessedURLsPanels" markupView="lexicon" persistState="<%= true %>" title="accessed-urls">
 						<dl>
 
 							<%
@@ -137,7 +137,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 						</dl>
 					</liferay-ui:panel>
 
-					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionAttributesPanel" markupView="lexicon" persistState="<%= true %>" title="session-attributes">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="monitoringSessionAttributesPanel" markupView="lexicon" persistState="<%= true %>" title="session-attributes">
 						<dl>
 
 							<%

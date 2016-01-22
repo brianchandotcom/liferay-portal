@@ -104,8 +104,6 @@
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 	</command>
 
 	<command name="editViaDDLDisplayPG">

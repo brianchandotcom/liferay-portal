@@ -10,7 +10,6 @@ Import-Package:\
 	!org.fusesource.jansi.*,\
 	*
 Include-Resource:\
-	@lib/antlr.jar,\
 	@lib/groovy.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines

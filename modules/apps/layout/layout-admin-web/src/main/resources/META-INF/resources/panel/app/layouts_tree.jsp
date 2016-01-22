@@ -20,6 +20,10 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
+<span id="<portlet:namespace />-expand-pages-list">
+	<aui:icon image="expand" markupView="lexicon" />
+</span>
+
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutSetBranchesSelector() %>">
 	<ul class="nav nav-equal-height nav-nested">
 		<li>
@@ -186,3 +190,26 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	selPlid="<%= layoutsTreeDisplayContext.getCurSelPlid() %>"
 	treeId="layoutsTree"
 />
+
+<liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES%>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString()%>">
+    <portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
+</liferay-portlet:renderURL>
+
+<aui:script use="liferay-layout-tree-fullscreen">
+	var layoutTreeFullscreen = new Liferay.LayoutTreeFullscreen(
+		{
+			fullscreenButton: '#<portlet:namespace />-expand-pages-list',
+			url: '<%= treeURL.toString() %>'
+		}
+	);
+
+	var clearLayoutTreeFullscreen = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			layoutTreeFullscreen.destroy();
+
+			Liferay.detach('destroyPortlet', clearLayoutTreeFullscreen);
+		}
+	};
+
+	Liferay.on('destroyPortlet', clearLayoutTreeFullscreen);
+</aui:script>

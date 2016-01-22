@@ -34,14 +34,14 @@ import java.util.Set;
 public class RouteImpl implements Route {
 
 	public RouteImpl(String pattern) {
-		_stringParser = new StringParser(pattern);
+		_stringParser = StringParser.create(pattern);
 
 		_stringParser.setStringEncoder(_urlEncoder);
 	}
 
 	@Override
 	public void addGeneratedParameter(String name, String pattern) {
-		StringParser stringParser = new StringParser(pattern);
+		StringParser stringParser = StringParser.create(pattern);
 
 		_generatedParameters.put(name, stringParser);
 	}

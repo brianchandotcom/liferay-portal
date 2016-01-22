@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,18 @@ import java.util.regex.Pattern;
  * @see    Pattern
  */
 public class StringParser {
+
+	public static StringParser create(String chunk) {
+		StringParser stringParser = _stringParserFragmentsCache.get(chunk);
+
+		if (stringParser == null) {
+			stringParser = new StringParser(chunk);
+		}
+
+		_stringParserFragmentsCache.put(chunk, stringParser);
+
+		return stringParser;
+	}
 
 	/**
 	 * Escapes the special characters in the string so that they will have no
@@ -127,7 +142,7 @@ public class StringParser {
 	 *
 	 * @param pattern the pattern string
 	 */
-	public StringParser(String pattern) {
+	protected StringParser(String pattern) {
 		String regex = escapeRegex(pattern);
 
 		Matcher matcher = _fragmentPattern.matcher(pattern);
@@ -136,7 +151,7 @@ public class StringParser {
 			String chunk = matcher.group();
 
 			StringParserFragment stringParserFragment =
-				new StringParserFragment(chunk);
+				StringParserFragment.create(chunk);
 
 			_stringParserFragments.add(stringParserFragment);
 
@@ -257,6 +272,9 @@ public class StringParser {
 		"[\\{\\}\\(\\)\\[\\]\\*\\+\\?\\$\\^\\.\\#\\\\]");
 	private static final Pattern _fragmentPattern = Pattern.compile(
 		"\\{.+?\\}");
+	private static final Map<String, StringParser>
+		_stringParserFragmentsCache = new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 	private final String _builder;
 	private final Pattern _pattern;

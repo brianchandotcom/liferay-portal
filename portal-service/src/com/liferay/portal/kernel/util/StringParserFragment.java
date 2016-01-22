@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
+
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +27,20 @@ import java.util.regex.Pattern;
  */
 public class StringParserFragment {
 
-	public StringParserFragment(String chunk) {
+	public static StringParserFragment create(String chunk) {
+		StringParserFragment stringParserFragment =
+			_stringParserFragmentsCache.get(chunk);
+
+		if (stringParserFragment == null) {
+			stringParserFragment = new StringParserFragment(chunk);
+		}
+
+		_stringParserFragmentsCache.put(chunk, stringParserFragment);
+
+		return stringParserFragment;
+	}
+
+	protected StringParserFragment(String chunk) {
 		chunk = chunk.substring(1, chunk.length() - 1);
 
 		if (Validator.isNull(chunk)) {
@@ -95,6 +112,9 @@ public class StringParserFragment {
 	}
 
 	private static final Pattern _defaultPattern = Pattern.compile("[^/\\.]+");
+	private static final Map<String, StringParserFragment>
+		_stringParserFragmentsCache = new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 	private final String _name;
 	private final Pattern _pattern;

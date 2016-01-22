@@ -167,8 +167,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (DDMFormValuesValidationException.MustSetValidValues msvv)
-		{
+		catch (DDMFormValuesValidationException.MustSetValidValues msvv) {
 			List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 				msvv.getDDMFormFieldEvaluationResults();
 

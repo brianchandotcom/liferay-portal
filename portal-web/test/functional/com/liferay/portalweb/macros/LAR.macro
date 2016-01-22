@@ -1,9 +1,5 @@
 <definition>
 	<command name="addExportTemplateCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#EXPORT_TEMPLATES" value1="Export Templates" />
-
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateName}" />
@@ -462,10 +458,9 @@
 	</command>
 
 	<command name="moveToTheRecycleBinExportTemplate">
-		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATE_BUTTON" />
-
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS"/>
 		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The Export Import Template ${exportTemplateName} was moved to the Recycle Bin." />
 	</command>

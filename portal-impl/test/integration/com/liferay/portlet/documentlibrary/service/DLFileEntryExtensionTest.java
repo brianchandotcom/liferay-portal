@@ -195,45 +195,51 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testAddFileEntryBasic01() throws Exception {
+	public void testAddFileEntryTitleWithExtension() throws Exception {
 		testAddFileEntryBasic(_FILE_NAME, "Test.pdf", "txt", "Test.pdf.txt");
 	}
 
 	@Test
-	public void testAddFileEntryBasic02() throws Exception {
+	public void testAddFileEntryTitleEqualToFileName() throws Exception {
 		testAddFileEntryBasic(_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
-	public void testAddFileEntryBasic03() throws Exception {
+	public void testAddFileEntryTitleEqualToFileNameWithoutExtension()
+		throws Exception {
+
 		testAddFileEntryBasic(
 			_FILE_NAME, _STRIPPED_FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
-	public void testAddFileEntryBasic05() throws Exception {
+	public void testAddFileEntryTitleEqualToFileNamePlusExtension()
+		throws Exception {
+
 		testAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
-	public void testAddFileEntryBasic06() throws Exception {
+	public void testAddFileEntryTitleEqualToFileNameBothWithNoExtension()
+		throws Exception {
+
 		testAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
 	}
 
 	@Test
-	public void testAddFileEntryBasic08() throws Exception {
+	public void testAddFileEntryEmptyFileName() throws Exception {
 		testAddFileEntryBasic("", _FILE_NAME, "txt", _FILE_NAME);
 	}
 
 	@Test
-	public void testAddFileEntryBasic09() throws Exception {
+	public void testAddFileEntryEmptyFileNameAndExtension() throws Exception {
 		testAddFileEntryBasic("", _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
 	}
 
 	@Test
-	public void testAddFileEntryBasic10() throws Exception {
+	public void testAddFileEntryEmptyTitleAndFileName() throws Exception {
 		try {
 			addFileEntry("", "");
 

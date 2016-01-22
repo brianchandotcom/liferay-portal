@@ -14,10 +14,12 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
+import java.io.IOException;
+
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -58,6 +60,10 @@ public interface PortletConfigurationIcon {
 
 	public String getURL();
 
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
+
 	public boolean isLabel();
 
 	public boolean isLocalizeMessage();
@@ -67,9 +73,5 @@ public interface PortletConfigurationIcon {
 	public boolean isToolTip();
 
 	public boolean isUseDialog();
-
-	public boolean include(
-		HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
 
 }

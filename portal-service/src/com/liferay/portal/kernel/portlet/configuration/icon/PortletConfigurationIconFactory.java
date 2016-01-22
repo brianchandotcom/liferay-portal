@@ -14,12 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
-import java.io.IOException;
-
 import javax.portlet.PortletRequest;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso

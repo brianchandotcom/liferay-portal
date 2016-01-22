@@ -18,18 +18,21 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+
 import javax.portlet.PortletRequest;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author Eduardo Garcia
  */
-public abstract class BaseJSPPortletConfigurationIcon extends BasePortletConfigurationIcon {
+public abstract class BaseJSPPortletConfigurationIcon
+	extends BasePortletConfigurationIcon {
 
 	public BaseJSPPortletConfigurationIcon(
 		ServletContext servletContext, String jspPath,
@@ -43,7 +46,7 @@ public abstract class BaseJSPPortletConfigurationIcon extends BasePortletConfigu
 
 	@Override
 	public boolean include(
-		HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		if (Validator.isNull(_jspPath)) {

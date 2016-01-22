@@ -15,8 +15,8 @@ Include-Resource:\
 	@../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../util-java/util-java.jar!/com/liferay/util/EncryptorException.class,\
 	@../util-java/util-java.jar!/com/liferay/util/JS.class,\
-	@../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
-	@../util-java/util-java.jar!/com/liferay/util/PwdGenerator.class
+	@../util-java/util-java.jar!/com/liferay/util/PwdGenerator.class,\
+	@../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability:\

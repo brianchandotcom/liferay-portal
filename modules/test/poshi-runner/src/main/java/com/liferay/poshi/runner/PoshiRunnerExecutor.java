@@ -625,6 +625,8 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
+		XMLLoggerHandler.updateStatus(executeElement, "pending");
+
 		List<String> parameterList = new ArrayList<>();
 		List<Element> argElements = executeElement.elements("arg");
 
@@ -640,10 +642,19 @@ public class PoshiRunnerExecutor {
 		String[] parameters = parameterList.toArray(
 			new String[parameterList.size()]);
 
-		String returnValue = ExternalMethod.execute(
-			className, methodName, parameters);
+		try {
+			String returnValue = ExternalMethod.execute(
+				className, methodName, parameters);
 
-		PoshiRunnerVariablesUtil.putIntoCommandMap(returnVariable, returnValue);
+			PoshiRunnerVariablesUtil.putIntoCommandMap(returnVariable, returnValue);
+		}
+		catch (Throwable t) {
+			XMLLoggerHandler.updateStatus(executeElement, "fail");
+
+			throw t;
+		}
+
+		XMLLoggerHandler.updateStatus(executeElement, "pass");
 	}
 
 	public static void runReturnElement(Element returnElement)

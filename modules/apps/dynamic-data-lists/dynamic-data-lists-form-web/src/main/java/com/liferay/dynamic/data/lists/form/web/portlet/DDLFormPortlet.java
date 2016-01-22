@@ -242,8 +242,7 @@ public class DDLFormPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String submitLabel = getSubmitLabel(
-			recordSet.getRecordSetId(), themeDisplay);
+		String submitLabel = getSubmitLabel(recordSet, themeDisplay);
 
 		ddmFormRenderingContext.setSubmitLabel(submitLabel);
 
@@ -280,9 +279,9 @@ public class DDLFormPortlet extends MVCPortlet {
 	}
 
 	protected String getSubmitLabel(
-		long recordSetId, ThemeDisplay themeDisplay) {
+		DDLRecordSet recordSet, ThemeDisplay themeDisplay) {
 
-		boolean workflowEnabled = hasWorkflowEnabled(recordSetId, themeDisplay);
+		boolean workflowEnabled = hasWorkflowEnabled(recordSet, themeDisplay);
 
 		if (workflowEnabled) {
 			return LanguageUtil.get(
@@ -294,11 +293,11 @@ public class DDLFormPortlet extends MVCPortlet {
 	}
 
 	protected boolean hasWorkflowEnabled(
-		long recordSetId, ThemeDisplay themeDisplay) {
+		DDLRecordSet recordSet, ThemeDisplay themeDisplay) {
 
 		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-			DDLRecordSet.class.getName(), recordSetId);
+			themeDisplay.getCompanyId(), recordSet.getGroupId(),
+			DDLRecordSet.class.getName(), recordSet.getRecordSetId());
 	}
 
 	protected boolean isCaptchaRequired(DDLRecordSet recordSet) {

@@ -108,7 +108,7 @@ public class DLBreadcrumbUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_folder");
+			"mvcRenderCommandName", "/document_library/view");
 
 		Map<String, Object> data = new HashMap<>();
 
@@ -125,6 +125,9 @@ public class DLBreadcrumbUtil {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate("home"), portletURL.toString(),
 			data);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view_folder");
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}

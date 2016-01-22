@@ -14,15 +14,16 @@
 
 package com.liferay.taglib.portletext;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.ui.IconTag;
+import com.liferay.util.PropertyComparator;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -55,12 +56,13 @@ public class IconOptionsTag extends IconTag {
 		return "/html/taglib/portlet/icon_options/page.jsp";
 	}
 
-	protected List<PortletConfigurationIconFactory>
-		getPortletConfigurationIconFactories() {
+	protected List<PortletConfigurationIcon>
+		getPortletConfigurationIcons() {
 
-		return ListUtil.copy(
-			PortletConfigurationIconTracker.getPortletConfigurationIcons(
-				getPortletId(), getPortletRequest()));
+		Comparator comparator = new PropertyComparator("weight", false, false);
+
+		return PortletConfigurationIconTracker.getPortletConfigurationIcons(
+			getPortletId(), getPortletRequest(), comparator);
 	}
 
 	protected String getPortletId() {
@@ -84,10 +86,9 @@ public class IconOptionsTag extends IconTag {
 		request.setAttribute("liferay-ui:icon:direction", _direction);
 		request.setAttribute(
 			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
-
 		request.setAttribute(
-			"liferay-ui:icon-options:portletConfigurationIconFactories",
-			getPortletConfigurationIconFactories());
+			"liferay-ui:icon-options:portletConfigurationIcons",
+			getPortletConfigurationIcons());
 	}
 
 	private String _direction = "down";

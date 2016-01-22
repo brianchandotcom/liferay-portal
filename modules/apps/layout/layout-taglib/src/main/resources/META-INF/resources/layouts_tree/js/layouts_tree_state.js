@@ -137,8 +137,6 @@ AUI.add(
 						var target = event.target;
 
 						target.set('alwaysShowHitArea', event.newVal.length > 0);
-
-						target.eachChildren(A.bind(host.restoreSelectedNode, host));
 					},
 
 					_onNodeExpandedChange: function(event) {
@@ -219,6 +217,8 @@ AUI.add(
 								instance._invokeSessionClick(sessionClickData);
 							}
 						);
+
+						target.eachChildren(A.bind(host.restoreSelectedNode, host));
 					},
 
 					_onSelectableNodeCheckedChange: function(event) {

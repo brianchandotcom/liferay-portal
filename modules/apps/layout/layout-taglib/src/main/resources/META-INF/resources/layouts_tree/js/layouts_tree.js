@@ -145,6 +145,10 @@ AUI.add(
 				instance.restoreSelectedNode(rootNode);
 
 				rootNode.eachChildren(A.bind(instance.restoreSelectedNode, instance));
+
+				if (instance._selectedNodeId) {
+					instance.getNodeById(instance._selectedNodeId).select();
+				}
 			},
 
 			_bindUILTBase: function() {
@@ -256,6 +260,8 @@ AUI.add(
 
 				var maxChildren = instance.get('maxChildren');
 
+				var id = instance._createNodeId(node.groupId, node.layoutId, node.plid);
+
 				var newNode = {
 					alwaysShowHitArea: hasChildren,
 					cssClasses: {
@@ -263,7 +269,7 @@ AUI.add(
 					},
 					draggable: node.sortable,
 					expanded: expanded,
-					id: instance._createNodeId(node.groupId, node.layoutId, node.plid),
+					id: id,
 					io: instance._getNodeIOConfig(),
 					leaf: !node.parentable,
 					paginator: {
@@ -277,6 +283,10 @@ AUI.add(
 
 				if (nodeChildren && expanded) {
 					newNode.children = instance._formatJSONResults(nodeChildren);
+				}
+
+				if (instance.get('selPlid') == node.plid) {
+					instance._selectedNodeId = id;
 				}
 
 				var cssClass = STR_EMPTY;

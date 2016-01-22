@@ -1180,7 +1180,7 @@
 		<field name="classPK" type="long" />
 		<field name="workflowInstanceId" type="long" />
 	</model>
-	<model name="com.liferay.portlet.announcements.model.AnnouncementsDelivery">
+	<model name="com.liferay.announcements.kernel.model.AnnouncementsDelivery">
 		<field name="deliveryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -1189,7 +1189,7 @@
 		<field name="sms" type="boolean" />
 		<field name="website" type="boolean" />
 	</model>
-	<model name="com.liferay.portlet.announcements.model.AnnouncementsEntry">
+	<model name="com.liferay.announcements.kernel.model.AnnouncementsEntry">
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="companyId" type="long" />
@@ -1215,7 +1215,7 @@
 		<field name="priority" type="int" />
 		<field name="alert" type="boolean" />
 	</model>
-	<model name="com.liferay.portlet.announcements.model.AnnouncementsFlag">
+	<model name="com.liferay.announcements.kernel.model.AnnouncementsFlag">
 		<field name="flagId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

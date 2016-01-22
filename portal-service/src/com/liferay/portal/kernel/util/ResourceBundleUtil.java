@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
 
 import java.text.MessageFormat;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +57,20 @@ public class ResourceBundleUtil {
 
 		return ResourceBundle.getBundle(
 			baseName, locale, classLoader, UTF8Control.INSTANCE);
+	}
+
+	public static Map<Locale, String> getLocalizationMap(
+		String baseName, Class<?> clazz, String key) {
+
+		Map<Locale, String> map = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			ResourceBundle resourceBundle = getBundle(baseName, locale, clazz);
+
+			map.put(locale, getString(resourceBundle, key));
+		}
+
+		return map;
 	}
 
 	public static String getString(

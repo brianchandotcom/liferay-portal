@@ -85,7 +85,7 @@ public class ActionUtil {
 		getEmailAddress(request);
 	}
 
-	public static void getOrganization(HttpServletRequest request)
+	public static Organization getOrganization(HttpServletRequest request)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(request, "organizationId");
@@ -98,15 +98,17 @@ public class ActionUtil {
 		}
 
 		request.setAttribute(WebKeys.ORGANIZATION, organization);
+
+		return organization;
 	}
 
-	public static void getOrganization(PortletRequest portletRequest)
+	public static Organization getOrganization(PortletRequest portletRequest)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getOrganization(request);
+		return getOrganization(request);
 	}
 
 	public static void getOrgLabor(HttpServletRequest request)

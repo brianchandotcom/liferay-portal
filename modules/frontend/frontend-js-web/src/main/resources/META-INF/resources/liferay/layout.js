@@ -46,7 +46,13 @@ AUI.add(
 
 				nestedPortlets.each(
 					function(portlet) {
-						Liferay.Portlet.close(portlet, true);
+						Liferay.Portlet.close(
+							portlet,
+							true,
+							{
+								nestedPortlet: true
+							}
+						);
 					}
 				);
 			},

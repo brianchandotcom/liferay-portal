@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACK</td>
+	<td>//a[contains(.,'Back')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_EMAIL_ADDRESS</td>
 	<td>//div/a[contains(.,'Change Email Address')]</td>
 	<td></td>

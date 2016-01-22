@@ -238,16 +238,9 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		testAddFileEntryBasic("", _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
 	}
 
-	@Test
+	@Test(expected = FileNameException.class)
 	public void testAddFileEntryEmptyTitleAndFileName() throws Exception {
-		try {
-			addFileEntry("", "");
-
-			Assert.fail(
-				"Created document with blank source file name and blank title");
-		}
-		catch (FileNameException fne) {
-		}
+		addFileEntry("", "");
 	}
 
 	@Test
@@ -280,19 +273,27 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		addFileEntry(_FILE_NAME, "");
 	}
 
-	@Test
-	public void testAddFileEntryWithExtension() throws Exception {
-		FileEntry fileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testAddDuplicateFileEntryTitleEqualToFileNameWithoutExtension()
+		throws Exception {
 
-		// "Test.txt" / "Test"
+		addFileEntry(_FILE_NAME, _FILE_NAME);
+		addFileEntry(_FILE_NAME, _STRIPPED_FILE_NAME);
+	}
 
-		try {
-			addFileEntry(_FILE_NAME, _STRIPPED_FILE_NAME);
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testAddDuplicateFileEntryFileNameEqualToTitleWithoutExtension()
+		throws Exception {
 
-			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
+		addFileEntry(_FILE_NAME, _FILE_NAME);
+		addFileEntry(_STRIPPED_FILE_NAME, _FILE_NAME);
+	}
+
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testRenameDuplicateFileEntryTitleEqualToFileNameWithoutExtension()
+		throws Exception {
+
+		addFileEntry(_FILE_NAME, _FILE_NAME);
 
 		FileEntry tempFileEntry = addFileEntry("Temp.txt", "Temp");
 
@@ -307,56 +308,50 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 				StringPool.BLANK, false,
 				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
-
-			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
 				tempFileEntry.getFileEntryId());
 		}
+	}
 
-		// "Test.txt" / ""
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testRenameDuplicateFileEntryTitleEqualToFileName()
+		throws Exception {
 
-		try {
-			addFileEntry(_FILE_NAME, _FILE_NAME);
+		addFileEntry(_FILE_NAME, _FILE_NAME);
 
-			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
+		FileEntry tempFileEntry = addFileEntry("Temp.txt", "Temp");
 
-		tempFileEntry = addFileEntry("Temp.txt", "Temp.txt");
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		try {
 			DLAppServiceUtil.updateFileEntry(
 				tempFileEntry.getFileEntryId(), _FILE_NAME,
-				ContentTypes.TEXT_PLAIN, StringPool.BLANK, StringPool.BLANK,
+				ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
 				StringPool.BLANK, false,
 				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
-
-			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
 				tempFileEntry.getFileEntryId());
 		}
+	}
 
-		// "Test" / "Test.txt"
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testRenameDuplicateFileEntryFileNameEqualToTitleWithoutExtension()
+		throws Exception {
 
-		try {
-			addFileEntry(_STRIPPED_FILE_NAME, _FILE_NAME);
+		addFileEntry(_FILE_NAME, _FILE_NAME);
 
-			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
+		FileEntry tempFileEntry = addFileEntry("Temp.txt", "Temp");
 
-		tempFileEntry = addFileEntry( "Temp", "Temp.txt");
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		try {
 			DLAppServiceUtil.updateFileEntry(
@@ -365,44 +360,19 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 				StringPool.BLANK, false,
 				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
-
-			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
 				tempFileEntry.getFileEntryId());
 		}
+	}
 
-		// "" / "Test.txt"
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testAddDuplicateFileEntryTitleEqualToFileName()
+		throws Exception {
 
-		try {
-			addFileEntry("", _FILE_NAME);
-
-			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
-
-		tempFileEntry = addFileEntry("", "Temp.txt");
-
-		try {
-			DLAppServiceUtil.updateFileEntry(
-				tempFileEntry.getFileEntryId(), StringPool.BLANK,
-				ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
-				StringPool.BLANK, false, (byte[])null, serviceContext);
-
-			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
-		finally {
-			DLAppLocalServiceUtil.deleteFileEntry(
-				tempFileEntry.getFileEntryId());
-		}
-
-		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+		addFileEntry(_FILE_NAME, _FILE_NAME);
+		addFileEntry(_FILE_NAME, _FILE_NAME);
 	}
 
 	@Test

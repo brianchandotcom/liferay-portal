@@ -47,9 +47,9 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 	</span>
 
 	<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-		<aui:button-row>
+		<div class="button-holder">
 			<aui:button cssClass="btn-lg" id="selectStructure" value="select" />
-		</aui:button-row>
+		</div>
 	</c:if>
 </div>
 
@@ -71,7 +71,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 		</c:choose>
 	</span>
 
-	<aui:button-row>
+	<div class="button-holder">
 		<aui:button cssClass="btn-lg" id="selectTemplate" value="select" />
-	</aui:button-row>
+	</div>
 </div>

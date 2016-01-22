@@ -1,3 +1,17 @@
+.alert-trash-form {
+	display: inline-block;
+}
+
+.trash-undo-button.btn-link {
+	&:hover {
+		color: inherit;
+		text-decoration: underline;
+	}
+
+	padding: 0;
+	vertical-align: inherit;
+}
+
 .taglib-trash-empty, .taglib-trash-undo {
 	.trash-empty-button, .trash-undo-button {
 		display: inline;

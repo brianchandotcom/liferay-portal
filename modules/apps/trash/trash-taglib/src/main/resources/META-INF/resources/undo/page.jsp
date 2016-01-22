@@ -45,8 +45,8 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 		trashData.put("navigation", Boolean.TRUE.toString());
 %>
 
-		<div class="alert alert-success taglib-trash-undo">
-			<aui:form action="<%= portletURL %>" name="undoForm">
+		<liferay-util:buffer var="alertMessage">
+			<aui:form action="<%= portletURL %>" cssClass="alert-trash-form" name="undoForm">
 				<liferay-util:buffer var="trashLink">
 					<c:choose>
 						<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
@@ -129,10 +129,6 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 					</c:otherwise>
 				</c:choose>
 
-				<a class="btn btn-primary btn-sm trash-undo-link" href="javascript:;" id="<portlet:namespace />undo"><liferay-ui:message key="undo" /></a>
-
-				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-
 				<%
 				for (String key : keys) {
 					if (!key.endsWith("Ids")) {
@@ -148,18 +144,15 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 				}
 				%>
 
-				<aui:button cssClass="trash-undo-button" type="submit" value="undo" />
+				<aui:button cssClass="alert-link btn-link trash-undo-button" type="submit" value="undo" />
 			</aui:form>
-		</div>
+		</liferay-util:buffer>
 
-		<aui:script sandbox="<%= true %>">
-			$('#<portlet:namespace />undo').on(
-				'click',
-				function(event) {
-					submitForm(document.<portlet:namespace />undoForm);
-				}
-			);
-		</aui:script>
+		<liferay-ui:alert
+			message="<%= alertMessage %>"
+			timeout="0"
+			type="success"
+		/>
 
 <%
 	}

@@ -659,8 +659,6 @@
 				<execute function="AssertElementNotPresent" locator1="Wiki#ALL_PAGES_TABLE_PAGE_2" />
 			</else>
 		</if>
-
-		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="editComment">

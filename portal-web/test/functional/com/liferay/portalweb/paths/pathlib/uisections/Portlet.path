@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>HEADER</td>
-	<td>//*[@data-qa-id='header']</td>
+	<td>//*[@data-qa-id='headerTitle']</td>
 	<td></td>
 </tr>
 <tr>

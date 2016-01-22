@@ -39,7 +39,7 @@ public class TemplatesPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new StructuresPortletConfigurationIcon(portletRequest);
+		return new TemplatesPortletConfigurationIcon(portletRequest);
 	}
 
 	@Override

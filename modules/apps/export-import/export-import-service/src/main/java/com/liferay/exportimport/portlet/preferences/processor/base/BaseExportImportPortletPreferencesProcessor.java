@@ -123,7 +123,7 @@ public abstract class BaseExportImportPortletPreferencesProcessor
 					uuid);
 
 				if (Validator.isNull(newPrimaryKey)) {
-					if (_log.isWarnEnabled()) {
+					if (_log.isInfoEnabled()) {
 						StringBundler sb = new StringBundler(8);
 
 						sb.append("Unable to get primary key for ");
@@ -135,7 +135,7 @@ public abstract class BaseExportImportPortletPreferencesProcessor
 						sb.append(" or in group ");
 						sb.append(portletDataContext.getScopeGroupId());
 
-						_log.warn(sb.toString());
+						_log.info(sb.toString());
 					}
 				}
 				else {

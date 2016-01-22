@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -478,9 +479,14 @@ public class PortletTracker
 			createJspServlet(bundleContext, contextName, classLoader));
 		serviceRegistrations.addServiceRegistration(
 			createPortletServlet(bundleContext, contextName, classLoader));
-		serviceRegistrations.addServiceRegistration(
-			createRestrictPortletServletRequestFilter(
-				bundleContext, contextName));
+
+		if (GetterUtil.getBoolean(
+				_props.get(PropsKeys.PORTLET_CONTAINER_RESTRICT))) {
+
+			serviceRegistrations.addServiceRegistration(
+				createRestrictPortletServletRequestFilter(
+					bundleContext, contextName));
+		}
 	}
 
 	protected void collectApplicationTypes(
@@ -1352,6 +1358,11 @@ public class PortletTracker
 	}
 
 	@Reference(unbind = "-")
+	protected void setProps(Props props) {
+		_props = props;
+	}
+
+	@Reference(unbind = "-")
 	protected void setResourceActionLocalService(
 		ResourceActionLocalService resourceActionLocalService) {
 
@@ -1418,6 +1429,7 @@ public class PortletTracker
 	private PortletLocalService _portletLocalService;
 	private final PortletPropertyValidator _portletPropertyValidator =
 		new PortletPropertyValidator();
+	private Props _props;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceActions _resourceActions;
 	private SAXReader _saxReader;

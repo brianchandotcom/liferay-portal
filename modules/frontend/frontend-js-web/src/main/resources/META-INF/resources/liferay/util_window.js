@@ -380,11 +380,11 @@ AUI.add(
 
 					var width = modalConfig.width;
 
-					if (height === 'auto' || height === '' || height === undefined || height > DOM.winHeight()) {
+					if (height === '' || height === undefined || height > DOM.winHeight()) {
 						modalConfig.autoHeight = true;
 					}
 
-					if (width === 'auto' || width === '' || width === undefined || width > DOM.winWidth()) {
+					if (width === '' || width === undefined || width > DOM.winWidth()) {
 						modalConfig.autoWidth = true;
 					}
 

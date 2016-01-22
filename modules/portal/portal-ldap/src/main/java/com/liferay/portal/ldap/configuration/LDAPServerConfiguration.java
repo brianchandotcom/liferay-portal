@@ -32,6 +32,8 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 )
 public interface LDAPServerConfiguration {
 
+	public static final long DEFAULT_LDAP_SERVER_ID = 0;
+
 	@Meta.AD(deflt = "(mail=@email_address@)", required = false)
 	public String authSearchFilter();
 

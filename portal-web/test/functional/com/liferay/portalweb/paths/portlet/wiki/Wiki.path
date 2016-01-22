@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>PAGE_HEADER</td>
-	<td>//div[contains(@class,'taglib-header') and contains(.,'${key_wikiPageTitle}')]</td>
+	<td>//div//h2[contains(.,'${key_wikiPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,12 +209,12 @@
 <!--CHILD_PAGE-->
 <tr>
 	<td>CHILD_PAGE_HEADER</td>
-	<td>//div[@class='child-pages']/h2</td>
+	<td>//div[@class='child-pages']/h5</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHILD_PAGE_TITLE</td>
-	<td>//div[@class='child-pages']/ul/li/a[contains(.,'${key_wikiChildPageTitle}')]</td>
+	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_wikiChildPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

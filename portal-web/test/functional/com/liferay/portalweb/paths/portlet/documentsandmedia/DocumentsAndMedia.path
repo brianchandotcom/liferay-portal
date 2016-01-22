@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>ICON_FOLDER_TITLE</td>
-	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//h4/a</td>
+	<td>//span[@title='${key_dmFolderName}']//a</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/card/init.jsp" %>
+package com.liferay.document.library.display.context;
 
-<%
-String iconHTML = (String)request.getAttribute("liferay-frontend:card:iconHTML");
-String text = (String)request.getAttribute("liferay-frontend:card:text");
-%>
+/**
+ * @author Roberto Díaz
+ */
+public interface DLMimeTypeDisplayContext {
+
+	public String getCssClassFileMimeType(String mimeType);
+
+}

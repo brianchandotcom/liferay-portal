@@ -274,23 +274,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>icon</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A CSS class for styling the card image</description>
-			<name>imageCSSClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A URL for the card's image</description>
-			<name>imageUrl</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>If you pass in a <![CDATA[<code>rowChecker</code>]]> value, a result row is mandatory. A result row is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.ResultRow</code>]]>.</description>
 			<name>resultRow</name>
 			<required>false</required>
@@ -319,6 +302,11 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+	</tag>
+	<tag>
+		<name>horizontal-card-icon</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardIconTag</tag-class>
+		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<description>Creates a lexicon-based card component.</description>

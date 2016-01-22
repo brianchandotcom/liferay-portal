@@ -1270,8 +1270,6 @@
 	</command>
 
 	<command name="viewFrontPageCP">
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${wikiNodeName}" />
-
 		<var name="key_wikiPageTitle" value="FrontPage" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#PAGE_HEADER" value1="FrontPage" />

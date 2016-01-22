@@ -77,7 +77,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 %>
 
 	<div class="lfr-content-category panel-page-category">
-		<a class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelId %>">
+		<a class="collapse-icon collapse-icon-middle collapsed list-group-heading" data-toggle="collapse" href="#<%= panelId %>">
 			<%= title %>
 
 			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

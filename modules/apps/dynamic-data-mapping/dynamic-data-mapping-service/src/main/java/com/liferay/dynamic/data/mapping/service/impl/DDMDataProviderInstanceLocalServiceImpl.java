@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
@@ -89,9 +90,18 @@ public class DDMDataProviderInstanceLocalServiceImpl
 
 	@Override
 	public void deleteDataProviderInstance(
-		DDMDataProviderInstance dataProviderInstance) {
+			DDMDataProviderInstance dataProviderInstance)
+		throws PortalException {
 
 		ddmDataProviderInstancePersistence.remove(dataProviderInstance);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			dataProviderInstance.getCompanyId(),
+			DDMDataProviderInstance.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			dataProviderInstance.getDataProviderInstanceId());
 	}
 
 	@Override

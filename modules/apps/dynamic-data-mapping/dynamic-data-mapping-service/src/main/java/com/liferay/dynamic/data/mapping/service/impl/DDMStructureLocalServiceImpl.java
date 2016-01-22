@@ -509,8 +509,12 @@ public class DDMStructureLocalServiceImpl
 
 		// Resources
 
+		String resourceName =
+			DDMStructurePermission.getStructureModelResourceName(
+				structure.getClassNameId());
+
 		resourceLocalService.deleteResource(
-			structure.getCompanyId(), DDMStructure.class.getName(),
+			structure.getCompanyId(), resourceName,
 			ResourceConstants.SCOPE_INDIVIDUAL, structure.getStructureId());
 	}
 

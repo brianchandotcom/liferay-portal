@@ -100,7 +100,8 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 
 	@Override
 	public void deleteDataProviderInstance(
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance dataProviderInstance) {
+		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance dataProviderInstance)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddmDataProviderInstanceLocalService.deleteDataProviderInstance(dataProviderInstance);
 	}
 

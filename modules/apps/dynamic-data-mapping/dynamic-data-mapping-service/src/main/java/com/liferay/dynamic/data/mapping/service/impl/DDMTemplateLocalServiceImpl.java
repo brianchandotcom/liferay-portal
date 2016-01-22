@@ -417,8 +417,12 @@ public class DDMTemplateLocalServiceImpl
 
 		// Resources
 
+		String resourceName =
+			DDMTemplatePermission.getTemplateModelResourceName(
+				template.getResourceClassNameId());
+
 		resourceLocalService.deleteResource(
-			template.getCompanyId(), DDMTemplate.class.getName(),
+			template.getCompanyId(), resourceName,
 			ResourceConstants.SCOPE_INDIVIDUAL, template.getTemplateId());
 	}
 

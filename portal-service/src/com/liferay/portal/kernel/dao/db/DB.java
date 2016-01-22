@@ -59,6 +59,8 @@ public interface DB {
 
 	public int getMinorVersion();
 
+	public String getTemplateBlob();
+
 	public String getTemplateFalse();
 
 	public String getTemplateTrue();

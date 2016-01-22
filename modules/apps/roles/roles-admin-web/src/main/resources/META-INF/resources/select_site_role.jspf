@@ -16,7 +16,8 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-int step = ParamUtil.getInteger(request, "step");
+int step = ParamUtil.getInteger(request, "step", 1);
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSiteRole");
 String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncSiteRoles");
 
@@ -52,14 +53,39 @@ if (step == 1) {
 }
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="site-roles" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
+
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectSiteRoleFm">
 	<c:choose>
 		<c:when test="<%= step == 1 %>">
 			<aui:input name="groupId" type="hidden" />
-
-			<liferay-ui:header
-				title="site-roles"
-			/>
 
 			<div class="alert alert-info">
 				<liferay-ui:message key="please-select-a-site-to-which-you-will-assign-a-site-role" />
@@ -141,10 +167,6 @@ if (step == 1) {
 			<aui:input name="step" type="hidden" value="2" />
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 
-			<liferay-ui:header
-				title="site-roles"
-			/>
-
 			<%
 			Group group = GroupServiceUtil.getGroup(groupId);
 
@@ -171,16 +193,10 @@ if (step == 1) {
 				headerNames="name"
 				searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 			>
-				<liferay-ui:search-form
-					page="/role_search.jsp"
-					servletContext="<%= application %>"
-				/>
 
 				<%
 				RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
 				%>
-
-				<div class="separator"><!-- --></div>
 
 				<liferay-ui:search-container-results>
 

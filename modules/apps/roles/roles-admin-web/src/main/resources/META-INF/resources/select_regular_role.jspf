@@ -16,6 +16,7 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectRegularRole");
 String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncRegularRoles");
 
@@ -32,19 +33,40 @@ if (selUser != null) {
 portletURL.setParameter("eventName", eventName);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectRegularRoleFm">
-	<liferay-ui:header
-		title="roles"
-	/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="regular-roles" selected="<%= true %>" />
+	</aui:nav>
 
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
+
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectRegularRoleFm">
 	<liferay-ui:search-container
 		headerNames="name"
 		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 	>
-		<liferay-ui:search-form
-			page="/role_search.jsp"
-			servletContext="<%= application %>"
-		/>
 
 		<%
 		RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();

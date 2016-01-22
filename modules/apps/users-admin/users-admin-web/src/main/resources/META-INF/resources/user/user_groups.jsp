@@ -144,8 +144,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 					{
 						dialog: {
 							constrain: true,
-							modal: true,
-							width: 680
+							modal: true
 						},
 						id: '<portlet:namespace />selectUserGroup',
 						title: '<liferay-ui:message arguments="user-group" key="select-x" />',

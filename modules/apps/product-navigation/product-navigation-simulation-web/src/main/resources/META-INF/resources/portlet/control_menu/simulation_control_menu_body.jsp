@@ -17,9 +17,7 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <div class="closed lfr-admin-panel lfr-product-menu-panel lfr-simulation-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="simulationPanelId">
-	<div class="product-menu sidebar sidebar-body sidebar-inverse">
-		<div class="loading-animation"></div>
-	</div>
+	<div class="product-menu sidebar sidebar-body sidebar-inverse"></div>
 </div>
 
 <aui:script use="liferay-store,io-request,parse-content">

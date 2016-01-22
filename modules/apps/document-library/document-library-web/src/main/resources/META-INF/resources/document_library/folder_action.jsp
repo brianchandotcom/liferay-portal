@@ -136,32 +136,35 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
 					%>
 
-					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
-						<portlet:renderURL var="editURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						</portlet:renderURL>
+					<c:if test="<%= hasUpdatePermission %>">
+						<c:choose>
+							<c:when test="<%= !folder.isMountPoint() %>">
+								<portlet:renderURL var="editURL">
+									<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
+									<portlet:param name="redirect" value="<%= redirect %>" />
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+								</portlet:renderURL>
 
-						<liferay-ui:icon
-							message="edit"
-							url="<%= editURL %>"
-						/>
-					</c:if>
+								<liferay-ui:icon
+									message="edit"
+									url="<%= editURL %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<portlet:renderURL var="editURL">
+									<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
+									<portlet:param name="redirect" value="<%= redirect %>" />
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+								</portlet:renderURL>
 
-					<c:if test="<%= hasUpdatePermission && folder.isMountPoint() %>">
-						<portlet:renderURL var="editURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							message="edit"
-							url="<%= editURL %>"
-						/>
+								<liferay-ui:icon
+									message="edit"
+									url="<%= editURL %>"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</c:if>
 
 					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
@@ -353,41 +356,41 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			/>
 		</c:if>
 
-		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && (folder != null) %>">
+		<%
+		boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
+		%>
 
-			<%
-			boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
-			%>
+		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && (folder != null) && hasDeletePermission %>">
+			<c:choose>
+				<c:when test="<%= !folder.isMountPoint() %>">
+					<portlet:renderURL var="redirectURL">
+						<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
+						<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+					</portlet:renderURL>
 
-			<c:if test="<%= hasDeletePermission && !folder.isMountPoint() %>">
-				<portlet:renderURL var="redirectURL">
-					<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
-					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
-				</portlet:renderURL>
+					<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+						<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+					</portlet:actionURL>
 
-				<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-				</portlet:actionURL>
+					<liferay-ui:icon-delete trash="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) %>" url="<%= deleteURL %>" />
+				</c:when>
+				<c:otherwise>
+					<portlet:renderURL var="redirectURL">
+						<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
+						<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+					</portlet:renderURL>
 
-				<liferay-ui:icon-delete trash="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) %>" url="<%= deleteURL %>" />
-			</c:if>
+					<portlet:actionURL name="/document_library/edit_repository" var="deleteURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+						<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+					</portlet:actionURL>
 
-			<c:if test="<%= hasDeletePermission && folder.isMountPoint() %>">
-				<portlet:renderURL var="redirectURL">
-					<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
-					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
-				</portlet:renderURL>
-
-				<portlet:actionURL name="/document_library/edit_repository" var="deleteURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon-delete url="<%= deleteURL %>" />
-			</c:if>
+					<liferay-ui:icon-delete url="<%= deleteURL %>" />
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 	</liferay-ui:icon-menu>
 </liferay-util:buffer>

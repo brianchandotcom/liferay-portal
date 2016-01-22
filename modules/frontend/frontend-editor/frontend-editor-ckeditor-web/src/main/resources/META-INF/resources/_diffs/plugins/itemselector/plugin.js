@@ -203,12 +203,19 @@
 				var mediaPlugin = editor.plugins.media;
 
 				if (mediaPlugin) {
-					mediaPlugin.onOkCallback(
-						{
-							commitContent: instance._getCommitMediaValueFn(value, editor, type)
-						},
-						editor,
-						type
+					var eventName = editor.name + 'selectItem';
+
+					Liferay.Util.getWindow(eventName).onceAfter(
+						'destroy',
+						function() {
+							mediaPlugin.onOkCallback(
+								{
+									commitContent: instance._getCommitMediaValueFn(value, editor, type)
+								},
+								editor,
+								type
+							);
+						}
 					);
 				}
 			},
@@ -347,20 +354,27 @@
 				var selectedItem = event.newVal;
 
 				if (selectedItem) {
+					var eventName = editor.name + 'selectItem';
+
 					var imageSrc = instance._getItemSrc(editor, selectedItem);
 
-					if (imageSrc) {
-						if (callback) {
-							callback(imageSrc);
-						}
-						else {
-							var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
+					Liferay.Util.getWindow(eventName).onceAfter(
+						'destroy',
+						function() {
+							if (imageSrc) {
+								if (callback) {
+									callback(imageSrc);
+								}
+								else {
+									var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
-							editor.insertElement(el);
+									editor.insertElement(el);
 
-							editor.setData(editor.getData());
+									editor.setData(editor.getData());
+								}
+							}
 						}
-					}
+					);
 				}
 			},
 

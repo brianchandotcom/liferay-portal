@@ -5,26 +5,25 @@
 
 	var React = AlloyEditor.React;
 
-	var ButtonImage = React.createClass(
+	var ButtonVideo = React.createClass(
 		{
 
 			mixins: [AlloyEditor.ButtonCommand],
 
-			displayName: 'ButtonImage',
+			displayName: 'ButtonVideo',
 
 			propTypes: {
-				editor: React.PropTypes.object.isRequired,
-				imageTPL: React.PropTypes.string
+				editor: React.PropTypes.object.isRequired
 			},
 
 			getDefaultProps: function() {
 				return {
-					command: 'imageselector'
+					command: 'videoselector'
 				};
 			},
 
 			statics: {
-				key: 'image'
+				key: 'video'
 			},
 
 			render: function() {
@@ -32,14 +31,14 @@
 					'button',
 					{
 						className: 'ae-button',
-						'data-type': 'button-image',
+						'data-type': 'button-video',
 						onClick: this._handleClick,
 						tabIndex: this.props.tabIndex
 					},
 					React.createElement(
 						'span',
 						{
-							className: 'ae-icon-image'
+							className: 'icon-film'
 						}
 					)
 				);
@@ -51,5 +50,5 @@
 		}
 	);
 
-	AlloyEditor.Buttons[ButtonImage.key] = AlloyEditor.ButtonImage = ButtonImage;
+	AlloyEditor.Buttons[ButtonVideo.key] = AlloyEditor.ButtonVideo = ButtonVideo;
 }());

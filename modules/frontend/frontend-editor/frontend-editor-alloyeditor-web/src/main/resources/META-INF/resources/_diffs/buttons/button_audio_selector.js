@@ -5,26 +5,24 @@
 
 	var React = AlloyEditor.React;
 
-	var ButtonImage = React.createClass(
+	var ButtonAudio = React.createClass(
 		{
 
 			mixins: [AlloyEditor.ButtonCommand],
 
-			displayName: 'ButtonImage',
+			displayName: 'ButtonAudio',
 
 			propTypes: {
-				editor: React.PropTypes.object.isRequired,
-				imageTPL: React.PropTypes.string
+				editor: React.PropTypes.object.isRequired
 			},
-
 			getDefaultProps: function() {
 				return {
-					command: 'imageselector'
+					command: 'audioselector'
 				};
 			},
 
 			statics: {
-				key: 'image'
+				key: 'audio'
 			},
 
 			render: function() {
@@ -39,7 +37,7 @@
 					React.createElement(
 						'span',
 						{
-							className: 'ae-icon-image'
+							className: 'icon-headphones'
 						}
 					)
 				);
@@ -47,9 +45,10 @@
 
 			_handleClick: function() {
 				this.execCommand(null);
+
 			}
 		}
 	);
 
-	AlloyEditor.Buttons[ButtonImage.key] = AlloyEditor.ButtonImage = ButtonImage;
+	AlloyEditor.Buttons[ButtonAudio.key] = AlloyEditor.ButtonAudio = ButtonAudio;
 }());

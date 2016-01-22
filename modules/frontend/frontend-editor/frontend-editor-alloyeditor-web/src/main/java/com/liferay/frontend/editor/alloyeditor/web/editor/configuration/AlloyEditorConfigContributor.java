@@ -55,6 +55,17 @@ public class AlloyEditorConfigContributor
 
 		jsonObject.put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
+
+		String extraPlugins = jsonObject.getString("extraPlugins");
+
+		if (Validator.isNotNull(extraPlugins)) {
+			extraPlugins += ",itemselector,media";
+		}
+		else {
+			extraPlugins = "itemselector,media";
+		}
+
+		jsonObject.put("extraPlugins", extraPlugins);
 	}
 
 	protected JSONObject getStyleFormatJSONObject(
@@ -161,7 +172,6 @@ public class AlloyEditorConfigContributor
 
 	protected JSONObject getToolbarsAddJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		jsonObject.put("buttons", toJSONArray("['image', 'table', 'hline']"));
 		jsonObject.put("tabIndex", 2);
 

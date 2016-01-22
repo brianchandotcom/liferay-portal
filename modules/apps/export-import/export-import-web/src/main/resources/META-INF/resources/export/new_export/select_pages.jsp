@@ -37,22 +37,22 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 	<li class="layout-selector-options">
 		<c:choose>
 			<c:when test="<%= privateLayout %>">
-				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutURL">
+				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
 					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
 				</liferay-portlet:renderURL>
 
-				<aui:button href="<%= changeToPublicLayoutURL %>" value="change-to-public-pages" />
+				<aui:button href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
 			</c:when>
 			<c:otherwise>
-				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutURL">
+				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
 					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
 				</liferay-portlet:renderURL>
 
-				<aui:button href="<%= changeToPrivateLayoutURL %>" value="change-to-private-pages" />
+				<aui:button href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
 			</c:otherwise>
 		</c:choose>
 	</li>

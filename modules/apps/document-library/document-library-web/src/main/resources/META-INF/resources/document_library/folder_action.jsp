@@ -279,61 +279,59 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			</c:choose>
 		</c:if>
 
-		<c:choose>
-			<c:when test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
-					<portlet:renderURL var="editFileEntryURL">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
+		<c:if test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
+			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
+				<portlet:renderURL var="editFileEntryURL">
+					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				</portlet:renderURL>
+
+				<liferay-ui:icon
+					message="add-file-entry"
+					url="<%= editFileEntryURL %>"
+				/>
+
+				<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
+					<portlet:renderURL var="addMultipleFileEntriesURL">
+						<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						message="add-file-entry"
-						url="<%= editFileEntryURL %>"
-					/>
-
-					<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
-						<portlet:renderURL var="addMultipleFileEntriesURL">
-							<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="backURL" value="<%= currentURL %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							cssClass="hide upload-multiple-documents"
-							message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
-							url="<%= addMultipleFileEntriesURL %>"
-						/>
-					</c:if>
-				</c:if>
-
-				<c:if test="<%= hasViewPermission && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
-					<liferay-ui:icon
-						cssClass='<%= randomNamespace + "-slide-show" %>'
-						message="view-slide-show"
-						url="javascript:;"
+						cssClass="hide upload-multiple-documents"
+						message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
+						url="<%= addMultipleFileEntriesURL %>"
 					/>
 				</c:if>
+			</c:if>
 
-				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
-					<portlet:renderURL var="editFileShortcutURL">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					</portlet:renderURL>
+			<c:if test="<%= hasViewPermission && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
+				<liferay-ui:icon
+					cssClass='<%= randomNamespace + "-slide-show" %>'
+					message="view-slide-show"
+					url="javascript:;"
+				/>
+			</c:if>
 
-					<liferay-ui:icon
-						message="add-shortcut"
-						url="<%= editFileShortcutURL %>"
-					/>
-				</c:if>
-			</c:when>
-		</c:choose>
+			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
+				<portlet:renderURL var="editFileShortcutURL">
+					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				</portlet:renderURL>
+
+				<liferay-ui:icon
+					message="add-shortcut"
+					url="<%= editFileShortcutURL %>"
+				/>
+			</c:if>
+		</c:if>
 
 		<c:if test="<%= hasViewPermission && portletDisplay.isWebDAVEnabled() && ((folder == null) || (folder.getRepositoryId() == scopeGroupId)) %>">
 			<liferay-util:include page="/document_library/access_from_desktop.jsp" servletContext="<%= application %>" />

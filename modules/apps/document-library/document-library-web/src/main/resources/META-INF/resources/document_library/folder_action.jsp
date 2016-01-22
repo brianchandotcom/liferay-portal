@@ -108,292 +108,288 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 }
 %>
 
-<liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
-		<%
-		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
-		%>
+	<%
+	boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
+	%>
 
-		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-			<c:if test="<%= hasViewPermission %>">
-				<portlet:resourceURL id="/document_library/edit_folder" var="downloadURL">
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-				</portlet:resourceURL>
+	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+		<c:if test="<%= hasViewPermission %>">
+			<portlet:resourceURL id="/document_library/edit_folder" var="downloadURL">
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+			</portlet:resourceURL>
 
-				<liferay-ui:icon
-					message="download"
-					method="get"
-					url="<%= downloadURL %>"
-				/>
-			</c:if>
-
-			<c:choose>
-				<c:when test="<%= folder != null %>">
-
-					<%
-					boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
-					%>
-
-					<c:if test="<%= hasUpdatePermission %>">
-						<c:choose>
-							<c:when test="<%= !folder.isMountPoint() %>">
-								<portlet:renderURL var="editURL">
-									<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-									<portlet:param name="redirect" value="<%= redirect %>" />
-									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-								</portlet:renderURL>
-
-								<liferay-ui:icon
-									message="edit"
-									url="<%= editURL %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<portlet:renderURL var="editURL">
-									<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
-									<portlet:param name="redirect" value="<%= redirect %>" />
-									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-								</portlet:renderURL>
-
-								<liferay-ui:icon
-									message="edit"
-									url="<%= editURL %>"
-								/>
-							</c:otherwise>
-						</c:choose>
-					</c:if>
-
-					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
-						<portlet:renderURL var="moveURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							<portlet:param name="rowIdsFolder" value="<%= String.valueOf(folderId) %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							message="move"
-							url="<%= moveURL %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && !folder.isMountPoint() %>">
-						<portlet:renderURL var="addFolderURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							message="add-subfolder"
-							url="<%= addFolderURL %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= folder.isMountPoint() %>">
-
-						<%
-						LocalRepository localRepository = null;
-
-						try {
-							localRepository = RepositoryProviderUtil.getLocalRepository(folder.getRepositoryId());
-						}
-						catch (UndeployedExternalRepositoryException uere) {
-						}
-
-						if ((localRepository != null) && localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
-						%>
-
-							<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">
-								<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFileEntries" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="repositoryId" value="<%= String.valueOf(folder.getRepositoryId()) %>" />
-							</portlet:actionURL>
-
-							<liferay-ui:icon
-								message="delete-expired-temporary-files"
-								url="<%= deleteExpiredTemporaryFileEntriesURL %>"
-							/>
-
-						<%
-						}
-						%>
-
-					</c:if>
-				</c:when>
-				<c:otherwise>
-
-					<%
-					boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null);
-					%>
-
-					<c:if test="<%= workflowEnabled && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
-						<portlet:renderURL var="editURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							<portlet:param name="rootFolder" value="<%= Boolean.TRUE.toString() %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							message="edit"
-							url="<%= editURL %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
-						<portlet:renderURL var="addFolderURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							message="add-folder"
-							url="<%= addFolderURL %>"
-						/>
-					</c:if>
-
-					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
-						<portlet:renderURL var="addRepositoryURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							message="add-repository"
-							url="<%= addRepositoryURL %>"
-						/>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:icon
+				message="download"
+				method="get"
+				url="<%= downloadURL %>"
+			/>
 		</c:if>
 
-		<c:if test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || !folder.isMountPoint()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
-				<portlet:renderURL var="editFileEntryURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-				</portlet:renderURL>
+		<c:choose>
+			<c:when test="<%= folder != null %>">
 
-				<liferay-ui:icon
-					message="add-file-entry"
-					url="<%= editFileEntryURL %>"
-				/>
+				<%
+				boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
+				%>
 
-				<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
-					<portlet:renderURL var="addMultipleFileEntriesURL">
-						<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
+				<c:if test="<%= hasUpdatePermission %>">
+					<c:choose>
+						<c:when test="<%= !folder.isMountPoint() %>">
+							<portlet:renderURL var="editURL">
+								<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
+								<portlet:param name="redirect" value="<%= redirect %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							</portlet:renderURL>
+
+							<liferay-ui:icon
+								message="edit"
+								url="<%= editURL %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<portlet:renderURL var="editURL">
+								<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
+								<portlet:param name="redirect" value="<%= redirect %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							</portlet:renderURL>
+
+							<liferay-ui:icon
+								message="edit"
+								url="<%= editURL %>"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+
+				<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
+					<portlet:renderURL var="moveURL">
+						<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+						<portlet:param name="rowIdsFolder" value="<%= String.valueOf(folderId) %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						message="move"
+						url="<%= moveURL %>"
+					/>
+				</c:if>
+
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && !folder.isMountPoint() %>">
+					<portlet:renderURL var="addFolderURL">
+						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+						<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						message="add-subfolder"
+						url="<%= addFolderURL %>"
+					/>
+				</c:if>
+
+				<c:if test="<%= folder.isMountPoint() %>">
+
+					<%
+					LocalRepository localRepository = null;
+
+					try {
+						localRepository = RepositoryProviderUtil.getLocalRepository(folder.getRepositoryId());
+					}
+					catch (UndeployedExternalRepositoryException uere) {
+					}
+
+					if ((localRepository != null) && localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
+					%>
+
+						<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">
+							<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFileEntries" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="repositoryId" value="<%= String.valueOf(folder.getRepositoryId()) %>" />
+						</portlet:actionURL>
+
+						<liferay-ui:icon
+							message="delete-expired-temporary-files"
+							url="<%= deleteExpiredTemporaryFileEntriesURL %>"
+						/>
+
+					<%
+					}
+					%>
+
+				</c:if>
+			</c:when>
+			<c:otherwise>
+
+				<%
+				boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null);
+				%>
+
+				<c:if test="<%= workflowEnabled && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
+					<portlet:renderURL var="editURL">
+						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+						<portlet:param name="rootFolder" value="<%= Boolean.TRUE.toString() %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						message="edit"
+						url="<%= editURL %>"
+					/>
+				</c:if>
+
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+					<portlet:renderURL var="addFolderURL">
+						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+						<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						message="add-folder"
+						url="<%= addFolderURL %>"
+					/>
+				</c:if>
+
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
+					<portlet:renderURL var="addRepositoryURL">
+						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						cssClass="hide upload-multiple-documents"
-						message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
-						url="<%= addMultipleFileEntriesURL %>"
+						message="add-repository"
+						url="<%= addRepositoryURL %>"
 					/>
 				</c:if>
-			</c:if>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 
-			<c:if test="<%= hasViewPermission && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
-				<liferay-ui:icon
-					cssClass='<%= randomNamespace + "-slide-show" %>'
-					message="view-slide-show"
-					url="javascript:;"
-				/>
-			</c:if>
+	<c:if test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
+		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || !folder.isMountPoint()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
+			<portlet:renderURL var="editFileEntryURL">
+				<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+			</portlet:renderURL>
 
-			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
-				<portlet:renderURL var="editFileShortcutURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
+			<liferay-ui:icon
+				message="add-file-entry"
+				url="<%= editFileEntryURL %>"
+			/>
+
+			<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
+				<portlet:renderURL var="addMultipleFileEntriesURL">
+					<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				</portlet:renderURL>
 
 				<liferay-ui:icon
-					message="add-shortcut"
-					url="<%= editFileShortcutURL %>"
+					cssClass="hide upload-multiple-documents"
+					message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
+					url="<%= addMultipleFileEntriesURL %>"
 				/>
 			</c:if>
 		</c:if>
 
-		<c:if test="<%= hasViewPermission && portletDisplay.isWebDAVEnabled() && ((folder == null) || (folder.getRepositoryId() == scopeGroupId)) %>">
-			<liferay-util:include page="/document_library/access_from_desktop.jsp" servletContext="<%= application %>" />
+		<c:if test="<%= hasViewPermission && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
+			<liferay-ui:icon
+				cssClass='<%= randomNamespace + "-slide-show" %>'
+				message="view-slide-show"
+				url="javascript:;"
+			/>
 		</c:if>
 
-		<c:if test="<%= showPermissionsURL %>">
-			<liferay-security:permissionsURL
-				modelResource="<%= modelResource %>"
-				modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
-				resourcePrimKey="<%= resourcePrimKey %>"
-				var="permissionsURL"
-				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-			/>
+		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
+			<portlet:renderURL var="editFileShortcutURL">
+				<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+			</portlet:renderURL>
 
 			<liferay-ui:icon
-				message="permissions"
-				method="get"
-				url="<%= permissionsURL %>"
-				useDialog="<%= true %>"
+				message="add-shortcut"
+				url="<%= editFileShortcutURL %>"
 			/>
 		</c:if>
+	</c:if>
 
-		<%
-		boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
-		%>
+	<c:if test="<%= hasViewPermission && portletDisplay.isWebDAVEnabled() && ((folder == null) || (folder.getRepositoryId() == scopeGroupId)) %>">
+		<liferay-util:include page="/document_library/access_from_desktop.jsp" servletContext="<%= application %>" />
+	</c:if>
 
-		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && (folder != null) && hasDeletePermission %>">
-			<c:choose>
-				<c:when test="<%= !folder.isMountPoint() %>">
-					<portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
-						<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
-					</portlet:renderURL>
+	<c:if test="<%= showPermissionsURL %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= modelResource %>"
+			modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
+			resourcePrimKey="<%= resourcePrimKey %>"
+			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
 
-					<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
-						<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					</portlet:actionURL>
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
 
-					<liferay-ui:icon-delete trash="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) %>" url="<%= deleteURL %>" />
-				</c:when>
-				<c:otherwise>
-					<portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
-						<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
-					</portlet:renderURL>
+	<%
+	boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
+	%>
 
-					<portlet:actionURL name="/document_library/edit_repository" var="deleteURL">
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					</portlet:actionURL>
+	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && (folder != null) && hasDeletePermission %>">
+		<c:choose>
+			<c:when test="<%= !folder.isMountPoint() %>">
+				<portlet:renderURL var="redirectURL">
+					<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
+					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+				</portlet:renderURL>
 
-					<liferay-ui:icon-delete url="<%= deleteURL %>" />
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-	</liferay-ui:icon-menu>
-</liferay-util:buffer>
+				<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				</portlet:actionURL>
 
-<%= iconMenu %>
+				<liferay-ui:icon-delete trash="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) %>" url="<%= deleteURL %>" />
+			</c:when>
+			<c:otherwise>
+				<portlet:renderURL var="redirectURL">
+					<portlet:param name="mvcRenderCommandName" value='<%= (folder.getParentFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder" %>' />
+					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+				</portlet:renderURL>
+
+				<portlet:actionURL name="/document_library/edit_repository" var="deleteURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon-delete url="<%= deleteURL %>" />
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</liferay-ui:icon-menu>
 
 <aui:script use="uploader">
 	if (!A.UA.ios && (A.Uploader.TYPE != 'none')) {

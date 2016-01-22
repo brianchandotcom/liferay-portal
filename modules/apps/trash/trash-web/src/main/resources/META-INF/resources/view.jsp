@@ -195,14 +195,12 @@ if (Validator.isNotNull(keywords)) {
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="name"
 			>
-				<liferay-ui:icon
-					label="<%= true %>"
-					message="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>"
-					method="get"
-					url="<%= viewContentURLString %>"
-				/>
+				<a href="<%= viewContentURLString %>">
+					<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>
+				</a>
 
 				<c:if test="<%= entry.getRootEntry() != null %>">
 
@@ -240,46 +238,44 @@ if (Validator.isNotNull(keywords)) {
 
 			<liferay-ui:search-container-column-text
 				name="type"
-				orderable="<%= true %>"
 				value="<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
 				name="removed-date"
-				orderable="<%= true %>"
 				value="<%= entry.getCreateDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="removed-by"
-				orderable="<%= true %>"
 				value="<%= HtmlUtil.escape(entry.getUserName()) %>"
 			/>
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
 					<liferay-ui:search-container-column-jsp
-						cssClass="checkbox-cell entry-action"
+						cssClass="list-group-item-field"
 						path="<%= trashRenderer.renderActions(renderRequest, renderResponse) %>"
 					/>
 				</c:when>
 				<c:when test="<%= entry.getRootEntry() == null %>">
 					<liferay-ui:search-container-column-jsp
-						cssClass="checkbox-cell entry-action"
+						cssClass="list-group-item-field"
 						path="/entry_action.jsp"
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:search-container-column-text align="right" cssClass="entry-action">
 
-						<%
-						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+					<%
+					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-						request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
-						%>
+					request.setAttribute(WebKeys.TRASH_RENDERER, trashRenderer);
+					%>
 
-						<liferay-util:include page="/view_content_action.jsp" servletContext="<%= application %>" />
-					</liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-column-jsp
+						cssClass="list-group-item-field"
+						path="/view_content_action.jsp"
+					/>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

@@ -331,45 +331,32 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		addFileEntry(_FILE_NAME, _FILE_NAME);
 	}
 
-	@Test
-	public void testAddFileEntryWithoutExtension() throws Exception {
-		FileEntry fileEntry = addFileEntry(
-			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testAddDuplicateFileEntryWithNoExtension() throws Exception {
+		addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
+		addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
+	}
 
-		// "Test" / ""
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testRenameDuplicateFileEntryWithNoExtensionNorTitle()
+		throws Exception {
 
-		try {
-			addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
-
-			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
+		addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
 		FileEntry tempFileEntry = addFileEntry("Temp", "Temp");
 
-		try {
-			renameFileEntry(
-				tempFileEntry, _STRIPPED_FILE_NAME, StringPool.BLANK);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
+		renameFileEntry(tempFileEntry, _STRIPPED_FILE_NAME, StringPool.BLANK);
+	}
 
-		// "" / "Test"
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testRenameDuplicateFileEntryWithNoExtensionNorFileName()
+		throws Exception {
 
-		try {
-			addFileEntry("", _STRIPPED_FILE_NAME);
+		addFileEntry(_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME);
 
-			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
-		}
-		catch (DuplicateFileEntryException dfee) {
-		}
-
-		tempFileEntry = addFileEntry("", "Temp");
+		FileEntry tempFileEntry = addFileEntry("", "Temp");
 
 		renameFileEntry(tempFileEntry, StringPool.BLANK, _STRIPPED_FILE_NAME);
-
-		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
 	protected FileEntry addFileEntry(String sourceFileName, String title)

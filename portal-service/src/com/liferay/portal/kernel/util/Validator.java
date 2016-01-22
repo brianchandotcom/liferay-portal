@@ -1046,8 +1046,9 @@ public class Validator {
 
 	/**
 	 * Returns <code>true</code> if the string is not <code>null</code>, meaning
-	 * it is not a <code>null</code> reference, nothing but spaces, or the
-	 * string "<code>null</code>", with zero or more leading or trailing spaces.
+	 * it is not a <code>null</code> reference, not an empty string, nothing but
+	 * spaces, or the string "<code>null</code>", with zero or more leading or
+	 * trailing spaces.
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string is not <code>null</code>;
@@ -1108,8 +1109,9 @@ public class Validator {
 
 	/**
 	 * Returns <code>true</code> if the string is <code>null</code>, meaning it
-	 * is a <code>null</code> reference, nothing but spaces, or the string
-	 * "<code>null</code>", with zero or more leading or trailing spaces.
+	 * is a <code>null</code> reference, an empty string, nothing but spaces, or
+	 * the string "<code>null</code>", with zero or more leading or trailing
+	 * spaces.
 	 *
 	 * @param  s the string to check
 	 * @return <code>true</code> if the string is <code>null</code>;

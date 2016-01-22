@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type.checkbox;
+package com.liferay.dynamic.data.mapping.form.field.type.text;
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTest;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.type.checkbox.CheckboxDDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.type.text.TextDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -32,50 +32,42 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
 @PrepareForTest({PortalClassLoaderUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
-public class CheckboxDDMFormFieldTypeSettingsTest
+public class TextDDMFormFieldTypeSettingsTest
 	extends BaseDDMFormFieldTypeSettingsTest {
 
 	@Test
-	public void testCreateCheckboxDDMFormFieldTypeSettingsDDMForm() {
+	public void testCreateTextDDMFormFieldTypeSettingsDDMForm() {
 		DDMForm ddmForm = DDMFormFactory.create(
-			CheckboxDDMFormFieldTypeSettings.class);
+			TextDDMFormFieldTypeSettings.class);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
-		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
-			"predefinedValue");
+		DDMFormField displayStyleDDMFormField = ddmFormFieldsMap.get(
+			"displayStyle");
 
-		Assert.assertNotNull(predefinedValueDDMFormField);
+		Assert.assertNotNull(displayStyleDDMFormField);
+		Assert.assertNotNull(displayStyleDDMFormField.getLabel());
 		Assert.assertEquals(
-			"boolean", predefinedValueDDMFormField.getDataType());
-		Assert.assertEquals("checkbox", predefinedValueDDMFormField.getType());
-		Assert.assertEquals(true, predefinedValueDDMFormField.isLocalizable());
+			"true", displayStyleDDMFormField.getProperty("inline"));
+		Assert.assertEquals("radio", displayStyleDDMFormField.getType());
 
+		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
+			"placeholder");
+
+		Assert.assertNotNull(placeholderDDMFormField);
+		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
+		Assert.assertEquals("text", placeholderDDMFormField.getType());
+
+		DDMFormField tooltipDDMFormField = ddmFormFieldsMap.get("tooltip");
+
+		Assert.assertNotNull(tooltipDDMFormField);
 		Assert.assertEquals(
-			"true", predefinedValueDDMFormField.getProperty("showAsSwitcher"));
-
-		DDMFormField repeatableDDMFormField = ddmFormFieldsMap.get(
-			"repeatable");
-
-		Assert.assertNotNull(repeatableDDMFormField);
-		Assert.assertEquals(
-			"false", repeatableDDMFormField.getVisibilityExpression());
-
-		DDMFormField showAsSwitcherDDMFormField = ddmFormFieldsMap.get(
-			"showAsSwitcher");
-
-		Assert.assertNotNull(showAsSwitcherDDMFormField);
-		Assert.assertEquals("checkbox", showAsSwitcherDDMFormField.getType());
-		Assert.assertEquals(
-			"boolean", showAsSwitcherDDMFormField.getDataType());
-
-		Assert.assertEquals(
-			"true", showAsSwitcherDDMFormField.getProperty("showAsSwitcher"));
+			"false", tooltipDDMFormField.getVisibilityExpression());
 	}
 
 }

@@ -274,6 +274,29 @@
 }
 
 .product-menu {
+	.scope-selector {
+		span {
+			color: $product-menu-nav-link-active-color;
+			padding-bottom: 10px;
+		}
+
+		.dropdown-menu span {
+			color: inherit;
+		}
+
+		.scope-name {
+			display: inline-block;
+			min-width: 130px;
+			padding-left: 0;
+		}
+
+		border-bottom: 1px solid $product-menu-nav-link-active-color;
+		display: inline-block;
+		margin-bottom: 10px;
+	}
+}
+
+.product-menu {
 	.staging-links {
 		a, .links-separator {
 			color: $product-menu-nav-link-color;

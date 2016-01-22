@@ -689,6 +689,8 @@
 	</command>
 
 	<command name="AddListAndRecordWithToDoPredefinedDataDefinition" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="To Do" />
 
 		<execute macro="Navigator#openURL" />

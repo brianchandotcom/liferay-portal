@@ -280,7 +280,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		</c:if>
 
 		<c:if test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
+			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || !folder.isMountPoint()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 				<portlet:renderURL var="editFileEntryURL">
 					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

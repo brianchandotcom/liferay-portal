@@ -98,7 +98,8 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance ddmDataProviderInstance);
 
 	public void deleteDataProviderInstance(
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance dataProviderInstance);
+		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance dataProviderInstance)
+		throws PortalException;
 
 	public void deleteDataProviderInstance(long dataProviderInstanceId)
 		throws PortalException;

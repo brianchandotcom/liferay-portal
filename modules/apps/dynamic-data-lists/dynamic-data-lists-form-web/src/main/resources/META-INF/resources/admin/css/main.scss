@@ -278,6 +278,10 @@ $horizontal-spacing: 35px;
 		padding: 0;
 	}
 
+	.modal-title {
+		 text-transform: capitalize;
+	}
+
 	@include lg {
 		.modal-body {
 			max-height: 451px;

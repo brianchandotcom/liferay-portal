@@ -25,21 +25,19 @@
 	<div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
 		<c:choose>
 			<c:when test='<%= displayStyle.equals("menu") %>'>
-				<aui:button icon="icon-share" value="share">
+				<liferay-ui:icon-menu direction="right" icon="share-alt" markupView="lexicon" message="share" showWhenSingleIcon="<%= true %>">
 
 					<%
 					for (int i = 0; i < typesArray.length; i++) {
 					%>
 
-						<li>
-							<liferay-ui:social-bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
-						</li>
+						<liferay-ui:social-bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
 
 					<%
 					}
 					%>
 
-				</aui:button>
+				</liferay-ui:icon-menu>
 
 				<aui:script use="liferay-social-bookmarks">
 					new Liferay.SocialBookmarks(

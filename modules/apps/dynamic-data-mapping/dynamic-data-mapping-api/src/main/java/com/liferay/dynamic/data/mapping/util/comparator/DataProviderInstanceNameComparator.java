@@ -15,28 +15,28 @@
 package com.liferay.dynamic.data.mapping.util.comparator;
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Leonardo Barros
  */
-public class DataProviderModifiedDateComparator
+public class DataProviderInstanceNameComparator
 	extends OrderByComparator<DDMDataProviderInstance> {
 
 	public static final String ORDER_BY_ASC =
-		"DDMDataProviderInstance.modifiedDate ASC";
+		"DDMDataProviderInstance.name ASC";
 
 	public static final String ORDER_BY_DESC =
-		"DDMDataProviderInstance.modifiedDate DESC";
+		"DDMDataProviderInstance.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public DataProviderModifiedDateComparator() {
+	public DataProviderInstanceNameComparator() {
 		this(false);
 	}
 
-	public DataProviderModifiedDateComparator(boolean ascending) {
+	public DataProviderInstanceNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -45,9 +45,12 @@ public class DataProviderModifiedDateComparator
 		DDMDataProviderInstance ddmDataProviderInstance1,
 		DDMDataProviderInstance ddmDataProviderInstance2) {
 
-		int value = DateUtil.compareTo(
-			ddmDataProviderInstance1.getModifiedDate(),
-			ddmDataProviderInstance2.getModifiedDate());
+		String name1 = StringUtil.toLowerCase(
+			ddmDataProviderInstance1.getName());
+		String name2 = StringUtil.toLowerCase(
+			ddmDataProviderInstance2.getName());
+
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

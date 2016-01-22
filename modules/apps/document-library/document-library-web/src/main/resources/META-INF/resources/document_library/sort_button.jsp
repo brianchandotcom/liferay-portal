@@ -36,7 +36,7 @@ orderColumns.put("title", "title");
 
 PortletURL sortURL = renderResponse.createRenderURL();
 
-sortURL.setParameter("mvcRenderCommandName", folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID ? "/document_library/view" : "/document_library/view_folder");
+sortURL.setParameter("mvcRenderCommandName", (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder");
 sortURL.setParameter("navigation", navigation);
 sortURL.setParameter("folderId", String.valueOf(folderId));
 sortURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));

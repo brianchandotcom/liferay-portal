@@ -246,6 +246,8 @@ public class StringParser {
 
 		Matcher matcher = _fragmentPattern.matcher(pattern);
 
+		_stringParserFragments = new ArrayList<>(matcher.groupCount());
+
 		while (matcher.find()) {
 			String chunk = matcher.group();
 
@@ -279,7 +281,6 @@ public class StringParser {
 	private final String _builder;
 	private final Pattern _pattern;
 	private StringEncoder _stringEncoder;
-	private final List<StringParserFragment> _stringParserFragments =
-		new ArrayList<>();
+	private final List<StringParserFragment> _stringParserFragments;
 
 }

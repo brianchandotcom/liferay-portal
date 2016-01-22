@@ -75,7 +75,6 @@ import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -88,12 +87,10 @@ public class WorkflowTaskDisplayContext {
 
 	public WorkflowTaskDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletPreferences portletPreferences) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_portletPreferences = portletPreferences;
 
 		_request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
@@ -139,6 +136,14 @@ public class WorkflowTaskDisplayContext {
 			getAssetRendererFactory();
 
 		return assetRendererFactory.getAssetEntry(assetEntryId);
+	}
+
+	public String getAssetIconCssClass(WorkflowTask workflowTask)
+		throws PortalException {
+
+		WorkflowHandler<?> workflowHandler = getWorkflowHandler(workflowTask);
+
+		return workflowHandler.getIconCssClass();
 	}
 
 	public AssetRenderer<?> getAssetRenderer() throws PortalException {
@@ -1081,7 +1086,7 @@ public class WorkflowTaskDisplayContext {
 		}
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"list", "descriptive"};
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private final Format _dateFormatDateTime;
 	private String _displayStyle;
@@ -1092,7 +1097,6 @@ public class WorkflowTaskDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
-	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();

@@ -25,41 +25,46 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-			<portlet:renderURL var="viewAssignedToMeURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="tabs1" value="assigned-to-me" />
-			</portlet:renderURL>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="my-workflow-tasks" selected="<%= true %>" />
+	</aui:nav>
 
-			<aui:nav-item
-				href="<%= viewAssignedToMeURL %>"
-				label="assigned-to-me"
-				selected='<%= tabs1.equals("assigned-to-me") %>'
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<liferay-ui:search-form
+				page="/search.jsp"
+				servletContext="<%= application %>"
 			/>
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
-			<portlet:renderURL var="viewAssignedToMyRolesURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="tabs1" value="assigned-to-my-roles" />
-			</portlet:renderURL>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<portlet:renderURL var="viewAssignedToMeURL">
+			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="tabs1" value="assigned-to-me" />
+		</portlet:renderURL>
 
-			<aui:nav-item
-				href="<%= viewAssignedToMyRolesURL %>"
-				label="assigned-to-my-roles"
-				selected='<%= tabs1.equals("assigned-to-my-roles") %>'
-			/>
-		</aui:nav>
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm1">
-				<liferay-ui:search-form
-					page="/search.jsp"
-					servletContext="<%= application %>"
-				/>
-			</aui:form>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-</aui:form>
+		<aui:nav-item
+			href="<%= viewAssignedToMeURL %>"
+			label="assigned-to-me"
+			selected='<%= tabs1.equals("assigned-to-me") %>'
+		/>
+
+		<portlet:renderURL var="viewAssignedToMyRolesURL">
+			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="tabs1" value="assigned-to-my-roles" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewAssignedToMyRolesURL %>"
+			label="assigned-to-my-roles"
+			selected='<%= tabs1.equals("assigned-to-my-roles") %>'
+		/>
+	</aui:nav>
+</aui:nav-bar>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= false %>"

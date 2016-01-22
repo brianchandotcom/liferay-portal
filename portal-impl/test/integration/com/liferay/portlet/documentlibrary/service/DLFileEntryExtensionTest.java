@@ -269,6 +269,11 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
+	@Test(expected = FileNameException.class)
+	public void testAddFileEntryWithEmptyTitle() throws Exception {
+		addFileEntry(_FILE_NAME, "");
+	}
+
 	@Test
 	public void testAddFileEntryWithExtension() throws Exception {
 		FileEntry fileEntry = addFileEntry(_FILE_NAME, _FILE_NAME);

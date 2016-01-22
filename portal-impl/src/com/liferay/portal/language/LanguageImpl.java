@@ -475,7 +475,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = getMessageFormat(
+					request, pattern);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;
@@ -1608,6 +1611,13 @@ public class LanguageImpl implements Language, Serializable {
 		languageIdCookie.setMaxAge(CookieKeys.MAX_AGE);
 
 		CookieKeys.addCookie(request, response, languageIdCookie);
+	}
+
+	protected MessageFormat getMessageFormat(
+			HttpServletRequest request, String pattern)
+		throws PortalException {
+
+		return new MessageFormat(pattern, _getLocale(request));
 	}
 
 	private static CompanyLocalesBag _getCompanyLocalesBag() {

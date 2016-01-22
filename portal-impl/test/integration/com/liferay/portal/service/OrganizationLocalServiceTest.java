@@ -329,12 +329,11 @@ public class OrganizationLocalServiceTest {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			"Organization A", false);
 
-		_organizations.add(organizationA);
-
 		Organization organizationAA = OrganizationTestUtil.addOrganization(
 			organizationA.getOrganizationId(), "Organization AA", false);
 
 		_organizations.add(organizationAA);
+		_organizations.add(organizationA);
 
 		UserLocalServiceUtil.addOrganizationUser(
 			organizationAA.getOrganizationId(), TestPropsValues.getUserId());

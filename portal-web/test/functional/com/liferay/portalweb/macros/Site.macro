@@ -1069,19 +1069,10 @@
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
 
 		<if>
-			<equals arg1="${siteMember}" arg2="Organization" />
+			<equals arg1="${siteMember}" arg2="User" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_MEMBERS_ORGS" value1="1 ${siteMember}" />
+				<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_MEMBERS_USERS" value1="1 ${siteMember}" />
 			</then>
-			<elseif>
-				<equals arg1="${siteMember}" arg2="User" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_MEMBERS_USERS" value1="1 ${siteMember}" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var siteMember. Must be (Organization|User)." />
-			</else>
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />

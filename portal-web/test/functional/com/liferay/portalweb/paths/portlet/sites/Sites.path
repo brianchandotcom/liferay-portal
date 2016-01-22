@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_MEMBERS_USERS</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[4]/div[@class='user-count']</td>
+	<td>//tr[contains(.,'${key_siteName}')]//td/span/div[@class='user-count']</td>
 	<td></td>
 </tr>
 <tr>

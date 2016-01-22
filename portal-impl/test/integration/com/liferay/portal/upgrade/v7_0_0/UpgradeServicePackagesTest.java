@@ -141,7 +141,10 @@ public class UpgradeServicePackagesTest extends UpgradeServicePackages {
 				oldNameSB.toString());
 			ResultSet rs = ps.executeQuery()) {
 
-			Assert.assertTrue(rs.next());
+			Assert.assertTrue(
+				tableName + "does not have a row whose " + columnName +
+					"'s value contains " + _OLD_CLASS_NAME,
+				rs.next());
 
 			oldName = rs.getString(columnName);
 		}
@@ -167,7 +170,10 @@ public class UpgradeServicePackagesTest extends UpgradeServicePackages {
 				newNameSB.toString());
 			ResultSet rs = ps.executeQuery()) {
 
-			Assert.assertTrue(rs.next());
+			Assert.assertTrue(
+				tableName + "does not have a row whose " + columnName +
+					"'s value is " + newName,
+				rs.next());
 		}
 	}
 

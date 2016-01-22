@@ -77,7 +77,7 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 Provide-Capability:\
-	osgi.extender;osgi.extender="liferay.js";version:Version="${plugin.full.version}"
+	osgi.extender;osgi.extender="liferay.js";version:Version="${Bundle-Version}"
 Web-ContextPath: /frontend-js-web
 -donotcopy: (\.touch|.*_diffs.*)
 -include: ../../../marketplace/platform/bnd.bnd

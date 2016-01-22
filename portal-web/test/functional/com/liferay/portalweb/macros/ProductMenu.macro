@@ -140,6 +140,10 @@
 		<execute function="Click" locator1="ProductMenu#PUBLIC_PAGES" />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
 	</command>
 
 	<command name="gotoPublicSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">

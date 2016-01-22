@@ -1753,7 +1753,7 @@
 				<then>
 					<var method="selenium#getCurrentDayName()" name="today" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, On ${today}, ${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, on ${today}, ${numberOfOccurrences} Times" />
 				</then>
 			</elseif>
 			<elseif>

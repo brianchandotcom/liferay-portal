@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Screens API
+Bundle-SymbolicName: com.liferay.screens.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.screens,\
+	com.liferay.screens.service
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

@@ -45,6 +45,10 @@ public interface ControlMenuEntry {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 
+	public boolean includeBody(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
+
 	public boolean isShow(HttpServletRequest request) throws PortalException;
 
 	public boolean isUseDialog();

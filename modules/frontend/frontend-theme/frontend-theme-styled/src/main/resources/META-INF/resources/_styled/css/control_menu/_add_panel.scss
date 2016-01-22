@@ -1,90 +1,30 @@
+@import "bourbon";
+@import "mixins";
+
+body.open-admin-panel {
+	&, .control-menu {
+		@include sm() {
+			padding-right: $admin-panel-width;
+		}
+	}
+}
+
+body.open-admin-panel, body.sidenav-transition {
+	@include sm() {
+		overflow-x: hidden;
+	}
+}
+
+.lfr-admin-panel.sidenav-menu-slider {
+	z-index: 501;
+
+	&, .sidenav-menu {
+		width: $admin-panel-width;
+	}
+}
+
 .lfr-admin-panel {
-	bottom: 0;
-	overflow: auto;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 990;
-
-	a.close {
-		color: #FFF;
-		opacity: 1;
-		padding: 0 8px;
-
-		&:hover {
-			background: transparent;
-			border-width: 0;
-		}
-	}
-
-	.add-content-menu .content-link {
-		border-color: #488F06;
-		color: #488F06;
-
-		&:active, &:hover {
-			background-color: #488F06;
-			color: #F1FBD1;
-			text-decoration: none;
-		}
-	}
-
-	.lfr-page-layouts {
-		margin-left: 0;
-	}
-}
-
-@include md {
-	.lfr-has-add-content {
-		padding-right: $addContentPanelWidth;
-
-		.control-menu {
-			right: $addContentPanelWidth;
-		}
-	}
-
-	.lfr-has-simulation-panel {
-		padding-right: $devicePreviewPanelWidth;
-
-		.control-menu {
-			right: $devicePreviewPanelWidth;
-		}
-	}
-
-	.lfr-has-edit-layout {
-		padding-right: $editLayoutPanelWidth;
-
-		.control-menu {
-			right: $editLayoutPanelWidth;
-		}
-	}
-}
-
-.lfr-has-add-content, .lfr-has-simulation-panel, .lfr-has-edit-layout {
-	&.open {
-		padding-left: 0;
-
-		.lfr-product-menu-panel {
-			width: 0;
-		}
-
-		.control-menu {
-			left: 0;
-		}
-	}
-
-	@include prefixer(overflow-scrolling, touch, 'webkit');
-
-	@include md {
-		height: 100%;
-		position: fixed;
-		width: 100%;
-	}
-
-	#wrapper {
-		height: 100%;
-		overflow: auto;
-		width: 100%;
-
-		@include prefixer(overflow-scrolling, touch, 'webkit');
+	.sidebar-body {
+		padding: 0;
 	}
 }

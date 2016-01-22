@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -414,7 +413,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<>();
 
-		String layoutIdsJSON = ParamUtil.getString(portletRequest, "layoutIds");
+		String layoutIdsJSON = GetterUtil.getString(
+			portletRequest.getAttribute("layoutIds"));
 
 		if (Validator.isNull(layoutIdsJSON)) {
 			return layoutIdMap;

@@ -15,17 +15,23 @@
 package com.liferay.portal.search.elasticsearch.internal.index;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.internal.cluster.TestCluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.BaseIndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.AdminClient;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.Settings.Builder;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -59,22 +65,72 @@ public class CompanyIndexFactoryTest {
 	@Test
 	public void testAdditionalIndexConfigurations() throws Exception {
 		_companyIndexFactory.setAdditionalIndexConfigurations(
-			new String[] {
-				"index.number_of_replicas: 1", "index.number_of_shards: 2"
-			});
+			"index.number_of_replicas: 1\nindex.number_of_shards: 2");
 
-		Settings settings = createIndex();
+		createIndices();
+
+		Settings settings = getIndexSettings();
 
 		Assert.assertEquals("1", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("2", settings.get("index.number_of_shards"));
 	}
 
 	@Test
-	public void testDefaults() throws Exception {
-		Settings settings = createIndex();
+	public void testAdditionalTypeMappings() throws Exception {
+		_companyIndexFactory.setAdditionalIndexConfigurations(
+			loadAdditionalAnalyzers());
+		_companyIndexFactory.setAdditionalTypeMappings(
+			loadAdditionalTypeMappings());
+
+		createIndices();
+
+		String field = indexOneDocument();
+
+		assertAnalyzer(field, "kuromoji_liferay_custom");
+	}
+
+	@Test
+	public void testDefaultIndexSettings() throws Exception {
+		createIndices();
+
+		Settings settings = getIndexSettings();
 
 		Assert.assertEquals("0", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("1", settings.get("index.number_of_shards"));
+	}
+
+	@Test
+	public void testDefaultIndices() throws Exception {
+		HashMap<String, Object> properties = new HashMap<>();
+
+		properties.put(
+			"typeMappings.KeywordQueryDocumentType",
+			"/META-INF/mappings/keyword-query-type-mappings.json");
+		properties.put(
+			"typeMappings.SpellCheckDocumentType",
+			"/META-INF/mappings/spellcheck-type-mappings.json");
+
+		_companyIndexFactory.activate(properties);
+
+		createIndices();
+
+		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
+			String.valueOf(_COMPANY_ID));
+
+		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
+			mappings = getIndexResponse.mappings();
+
+		Iterator<ImmutableOpenMap<String, MappingMetaData>> iterator =
+			mappings.valuesIt();
+
+		ImmutableOpenMap<String, MappingMetaData> map = iterator.next();
+
+		Assert.assertTrue(
+			map.containsKey(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE));
+
+		Assert.assertTrue(map.containsKey("KeywordQueryDocumentType"));
+		Assert.assertTrue(map.containsKey("SpellCheckDocumentType"));
 	}
 
 	@Test
@@ -83,29 +139,61 @@ public class CompanyIndexFactoryTest {
 			new BaseIndexSettingsContributor(1) {
 
 				@Override
-				public void populate(Builder builder) {
+				public void populate(Settings.Builder builder) {
 					builder.put("index.number_of_replicas", "2");
 					builder.put("index.number_of_shards", "3");
 				}
 
 			});
 		_companyIndexFactory.setAdditionalIndexConfigurations(
-			new String[] {
-				"index.number_of_replicas: 0", "index.number_of_shards: 0"
-			});
+			"index.number_of_replicas: 0\nindex.number_of_shards: 0");
 
-		Settings settings = createIndex();
+		createIndices();
+
+		Settings settings = getIndexSettings();
 
 		Assert.assertEquals("2", settings.get("index.number_of_replicas"));
 		Assert.assertEquals("3", settings.get("index.number_of_shards"));
 	}
 
-	protected Settings createIndex() throws Exception {
+	@Test
+	public void testIndexSettingsContributorTypeMappings() throws Exception {
+		final String mappings = loadAdditionalTypeMappings();
+
+		_companyIndexFactory.addIndexSettingsContributor(
+			new BaseIndexSettingsContributor(1) {
+
+				@Override
+				public void contribute(TypeMappingsHelper typeMappingsHelper) {
+					typeMappingsHelper.addTypeMappings(
+						replaceAnalyzer(mappings, "brazilian"));
+				}
+
+			});
+
+		_companyIndexFactory.setAdditionalTypeMappings(
+			replaceAnalyzer(mappings, "portuguese"));
+
+		createIndices();
+
+		String field = indexOneDocument();
+
+		assertAnalyzer(field, "brazilian");
+	}
+
+	protected void assertAnalyzer(String field, String analyzer)
+		throws Exception {
+
+		FieldMappingAssert.assertAnalyzer(
+			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			String.valueOf(_COMPANY_ID),
+			_elasticsearchFixture.getIndicesAdminClient());
+	}
+
+	protected void createIndices() throws Exception {
 		AdminClient adminClient = _elasticsearchFixture.getAdminClient();
 
 		_companyIndexFactory.createIndices(adminClient, _COMPANY_ID);
-
-		return getIndexSettings();
 	}
 
 	protected Settings getIndexSettings() {
@@ -118,6 +206,37 @@ public class CompanyIndexFactoryTest {
 			getIndexResponse.getSettings();
 
 		return immutableOpenMap.get(name);
+	}
+
+	protected String indexOneDocument() {
+		Client client = _elasticsearchFixture.getClient();
+
+		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
+			String.valueOf(_COMPANY_ID),
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+
+		String field = RandomTestUtil.randomString() + "_ja";
+
+		indexRequestBuilder.setSource(field, RandomTestUtil.randomString());
+
+		indexRequestBuilder.get();
+
+		return field;
+	}
+
+	protected String loadAdditionalAnalyzers() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(), "CompanyIndexFactoryTest-additionalAnalyzers.json");
+	}
+
+	protected String loadAdditionalTypeMappings() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(), "CompanyIndexFactoryTest-additionalTypeMappings.json");
+	}
+
+	protected String replaceAnalyzer(String mappings, String analyzer) {
+		return StringUtil.replace(
+			mappings, "kuromoji_liferay_custom", analyzer);
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();

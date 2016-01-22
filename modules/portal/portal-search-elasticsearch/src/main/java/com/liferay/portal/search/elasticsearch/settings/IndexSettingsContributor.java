@@ -22,6 +22,8 @@ import org.elasticsearch.common.settings.Settings;
 public interface IndexSettingsContributor
 	extends Comparable<IndexSettingsContributor> {
 
+	public void contribute(TypeMappingsHelper typeMappingsHelper);
+
 	public int getPriority();
 
 	public void populate(Settings.Builder builder);

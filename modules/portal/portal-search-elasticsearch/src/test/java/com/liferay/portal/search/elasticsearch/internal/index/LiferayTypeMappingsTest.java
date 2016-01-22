@@ -14,26 +14,17 @@
 
 package com.liferay.portal.search.elasticsearch.internal.index;
 
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.Index;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreationHelper;
 
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
-
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse.FieldMappingMetaData;
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.IndicesAdminClient;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,7 +57,8 @@ public class LiferayTypeMappingsTest {
 		Client client = _elasticsearchFixture.getClient();
 
 		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
-			_index.getName(), LiferayTypeMappingsConstants.TYPE);
+			_index.getName(),
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
 		String field_pt = RandomTestUtil.randomString() + "_pt";
 		String field_pt_BR = RandomTestUtil.randomString() + "_pt_BR";
@@ -87,60 +79,23 @@ public class LiferayTypeMappingsTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	protected static String getAnalyzer(
-		FieldMappingMetaData fieldMappingMetaData, final String field) {
-
-		Map<String, Object> mappings = fieldMappingMetaData.sourceAsMap();
-
-		Map<String, Object> mapping = (Map<String, Object>)mappings.get(field);
-
-		return (String)mapping.get("analyzer");
-	}
-
-	protected static FieldMappingMetaData getFieldMapping(
-		AdminClient adminClient, String index, String type, String field) {
-
-		IndicesAdminClient indicesAdminClient = adminClient.indices();
-
-		GetFieldMappingsRequestBuilder getFieldMappingsRequestBuilder =
-			indicesAdminClient.prepareGetFieldMappings(index);
-
-		getFieldMappingsRequestBuilder.setFields(field);
-		getFieldMappingsRequestBuilder.setTypes(type);
-
-		GetFieldMappingsResponse getFieldMappingsResponse =
-			getFieldMappingsRequestBuilder.get();
-
-		return getFieldMappingsResponse.fieldMappings(index, type, field);
-	}
-
-	protected void assertAnalyzer(final String field, final String analyzer)
+	protected void assertAnalyzer(String field, String analyzer)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					Assert.assertEquals(
-						analyzer, getAnalyzer(getFieldMapping(field), field));
-
-					return null;
-				}
-
-			});
+		FieldMappingAssert.assertAnalyzer(
+			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			_index.getName(), _elasticsearchFixture.getIndicesAdminClient());
 	}
 
 	protected Index createIndex() {
-		return _elasticsearchFixture.createIndex(
-			testName.getMethodName(), new LiferayIndexCreationHelper());
-	}
+		IndexName indexName = new IndexName(testName.getMethodName());
 
-	protected FieldMappingMetaData getFieldMapping(final String field) {
-		return getFieldMapping(
-			_elasticsearchFixture.getAdminClient(), _index.getName(),
-			LiferayTypeMappingsConstants.TYPE, field);
+		IndexCreationHelper indexCreationHelper =
+			new LiferayIndexCreationHelper(
+				_elasticsearchFixture.getIndicesAdminClient(), indexName);
+
+		return _elasticsearchFixture.createIndex(
+			indexName, indexCreationHelper);
 	}
 
 	private ElasticsearchFixture _elasticsearchFixture;

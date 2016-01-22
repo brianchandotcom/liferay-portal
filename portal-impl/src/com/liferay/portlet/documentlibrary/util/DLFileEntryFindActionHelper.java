@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet.action;
+package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;

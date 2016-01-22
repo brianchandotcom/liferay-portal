@@ -17,6 +17,7 @@ package com.liferay.document.library.web.portlet.action;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portlet.documentlibrary.util.DLFileEntryFindActionHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

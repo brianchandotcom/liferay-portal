@@ -199,6 +199,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.expando.exception.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.social.model.SocialRelationConstants;
@@ -4843,6 +4844,16 @@ public class PortalImpl implements Portal {
 				Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
 
 			groups.addAll(doGetAncestorSiteGroups(groupId, true));
+		}
+
+		Iterator<Group> iterator = groups.iterator();
+
+		while (iterator.hasNext()) {
+			Group group = iterator.next();
+
+			if (!StagingUtil.isGroupVisible(group, siteGroup)) {
+				iterator.remove();
+			}
 		}
 
 		long[] groupIds = new long[groups.size()];

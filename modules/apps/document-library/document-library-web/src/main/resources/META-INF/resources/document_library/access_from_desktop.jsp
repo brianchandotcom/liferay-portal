@@ -23,7 +23,7 @@ Folder folder = (Folder)row.getObject();
 
 String randomNamespace = null;
 
-if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY)) {
+if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_folder_action") + StringPool.UNDERLINE;
 }
 else {

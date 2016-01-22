@@ -35,7 +35,7 @@
 		PortletConfigurationIcon portletConfigurationIcon = portletConfigurationIconFactory.create(portletRequest);
 
 		if ((portletConfigurationIcon != null) && portletConfigurationIcon.isShow()) {
-			boolean include = portletConfigurationIconFactory.include(request, new PipingServletResponse(pageContext));
+			boolean include = portletConfigurationIcon.include(request, new PipingServletResponse(pageContext));
 
 			if (!include) {
 		%>

@@ -30,8 +30,4 @@ public interface PortletConfigurationIconFactory {
 
 	public double getWeight();
 
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
 }

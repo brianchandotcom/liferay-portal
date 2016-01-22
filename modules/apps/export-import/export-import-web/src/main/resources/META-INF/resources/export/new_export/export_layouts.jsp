@@ -97,6 +97,7 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 			<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
 			<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
 			<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
+			<aui:input name="treeId" type="hidden" value="<%= treeId %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>"  />

@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.checkbox;
+package com.liferay.dynamic.data.mapping.form.field.type.checkbox;
 
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.type.checkbox.CheckboxDDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.type.checkbox.CheckboxDDMFormFieldValueRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;

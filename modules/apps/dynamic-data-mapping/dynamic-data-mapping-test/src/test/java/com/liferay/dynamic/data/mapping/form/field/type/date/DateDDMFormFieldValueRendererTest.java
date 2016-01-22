@@ -12,32 +12,36 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.radio;
+package com.liferay.dynamic.data.mapping.form.field.type.date;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.dynamic.data.mapping.type.date.DateDDMFormFieldValueRenderer;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.DateFormatFactoryImpl;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Renato Rego
+ * @author Bruno Basto
  */
-public class RadioDDMFormFieldValueRendererTest {
+public class DateDDMFormFieldValueRendererTest {
 
 	@Before
 	public void setUp() {
-		setUpJSONFactoryUtil();
+		setUpDateFormatFactoryUtil();
+		setUpFastDateFormatFactoryUtil();
 	}
 
 	@Test
@@ -45,15 +49,7 @@ public class RadioDDMFormFieldValueRendererTest {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			"Radio", "Radio", "radio", "string", false, false, false);
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
-
-		ddmFormFieldOptions.addOptionLabel(
-			"value 1", LocaleUtil.US, "option 1");
-		ddmFormFieldOptions.addOptionLabel(
-			"value 2", LocaleUtil.US, "option 2");
+			"birthday", "Birthday", "date", "string", false, false, false);
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -62,35 +58,43 @@ public class RadioDDMFormFieldValueRendererTest {
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Radio", new UnlocalizedValue("[\"value 1\"]"));
+				"birthday", new UnlocalizedValue("2015-01-25"));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
-			createRadioDDMFormFieldValueRenderer();
+		DateDDMFormFieldValueRenderer dateDDMFormFieldValueRenderer =
+			new DateDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
-			"option 1",
-			radioDDMFormFieldValueRenderer.render(
+			"1/25/15",
+			dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
+		Assert.assertEquals(
+			"25/01/15",
+			dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.BRAZIL));
+
+		ddmFormFieldValue.setValue(new UnlocalizedValue(""));
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected RadioDDMFormFieldValueRenderer
-		createRadioDDMFormFieldValueRenderer() {
+	protected void setUpDateFormatFactoryUtil() {
+		DateFormatFactoryUtil dateFormatFactoryUtil =
+			new DateFormatFactoryUtil();
 
-		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
-			new RadioDDMFormFieldValueRenderer();
-
-		radioDDMFormFieldValueRenderer.setRadioDDMFormFieldValueAccessor(
-			new RadioDDMFormFieldValueAccessor());
-
-		return radioDDMFormFieldValueRenderer;
+		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+	protected void setUpFastDateFormatFactoryUtil() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
 
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
 	}
 
 }

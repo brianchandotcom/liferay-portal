@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.radio;
+package com.liferay.dynamic.data.mapping.form.field.type.select;
 
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.type.select.SelectDDMFormFieldValueAccessor;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -28,32 +30,45 @@ import org.junit.Test;
 /**
  * @author Renato Rego
  */
-public class RadioDDMFormFieldValueAccessorTest {
+public class SelectDDMFormFieldValueAccessorTest {
 
 	@Before
 	public void setUp() {
 		setUpJSONFactoryUtil();
 	}
 
-	@Test
-	public void testGetRadioValue() {
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Radio", new UnlocalizedValue("[\"value 1\"]"));
-
-		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor =
-			new RadioDDMFormFieldValueAccessor();
-
-		Assert.assertEquals(
-			"value 1",
-			radioDDMFormFieldValueAccessor.getValue(
-				ddmFormFieldValue, LocaleUtil.US));
-	}
-
-	protected void setUpJSONFactoryUtil() {
+	public void setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	@Test
+	public void testGetSelectValue() throws Exception {
+		JSONArray expectedJSONArray = createJSONArray("value 1");
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Select", new UnlocalizedValue(expectedJSONArray.toString()));
+
+		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor =
+			new SelectDDMFormFieldValueAccessor();
+
+		JSONArray actualJSONArray = selectDDMFormFieldValueAccessor.getValue(
+			ddmFormFieldValue, LocaleUtil.US);
+
+		Assert.assertEquals(
+			expectedJSONArray.toString(), actualJSONArray.toString());
+	}
+
+	protected JSONArray createJSONArray(String... strings) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (String string : strings) {
+			jsonArray.put(string);
+		}
+
+		return jsonArray;
 	}
 
 }

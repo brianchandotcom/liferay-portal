@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.radio;
+package com.liferay.dynamic.data.mapping.form.field.type.radio;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.type.radio.RadioDDMFormFieldContextHelper;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;

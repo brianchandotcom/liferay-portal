@@ -33,33 +33,19 @@
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcRenderCommandName" value="/server_admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
 		</portlet:renderURL>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
-			<c:if test="<%= showTabs1 %>">
-				<liferay-ui:tabs
-					names="server,instances"
-					url="<%= portletURL.toString() %>"
-				/>
-			</c:if>
-
-			<c:choose>
-				<c:when test='<%= tabs1.equals("server") %>'>
-					<liferay-util:include page="/server.jsp" servletContext="<%= application %>" />
-				</c:when>
-			</c:choose>
+			<liferay-util:include page="/server.jsp" servletContext="<%= application %>" />
 		</aui:form>
 
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcRenderCommandName" value="/server_admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" />
 			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 		</portlet:renderURL>

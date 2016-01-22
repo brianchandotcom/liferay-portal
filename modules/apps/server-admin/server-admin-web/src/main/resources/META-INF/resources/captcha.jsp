@@ -19,13 +19,15 @@
 <liferay-ui:error key="reCaptchaPrivateKey" message="the-recaptcha-private-key-is-not-valid" />
 <liferay-ui:error key="reCaptchaPublicKey" message="the-recaptcha-public-key-is-not-valid" />
 
-<aui:fieldset>
-	<aui:input helpMessage='<%= LanguageUtil.format(request, "recaptcha-help", "https://www.google.com/recaptcha/admin/create", false) %>' label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
+<aui:fieldset-group markupView="lexicon">
+	<aui:fieldset>
+		<aui:input helpMessage='<%= LanguageUtil.format(request, "recaptcha-help", "https://www.google.com/recaptcha/admin/create", false) %>' label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="recaptcha-public-key" name="reCaptchaPublicKey" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" />
+		<aui:input cssClass="lfr-input-text-container" label="recaptcha-public-key" name="reCaptchaPublicKey" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="recaptcha-private-key" name="reCaptchaPrivateKey" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE) %>" />
-</aui:fieldset>
+		<aui:input cssClass="lfr-input-text-container" label="recaptcha-private-key" name="reCaptchaPrivateKey" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE) %>" />
+	</aui:fieldset>
+</aui:fieldset-group>
 
 <aui:button-row>
 	<aui:button cssClass="btn-lg save-server-button" data-cmd="updateCaptcha" value="save" />

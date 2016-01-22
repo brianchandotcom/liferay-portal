@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_BODY</td>
+	<td>//*[@data-qa-id='productMenuBody']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_PLUS_ICON_COLLAPSED</td>
 	<td>//ul[contains(@class,'tree-container')]//span[contains(@class,'icon-plus') and not (contains(@class,'hidden'))]</td>
 	<td></td>

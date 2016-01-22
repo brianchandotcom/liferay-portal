@@ -14,18 +14,28 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
-import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException.RequiredValue;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustNotSetValue;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidAvailableLocales;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidDefaultLocale;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidField;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValue;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValues;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +43,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -41,12 +52,16 @@ import org.osgi.service.component.annotations.Component;
 public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 	@Override
-	public void validate(DDMFormValues ddmFormValues) throws StorageException {
+	public void validate(DDMFormValues ddmFormValues)
+		throws DDMFormValuesValidationException {
+
 		DDMForm ddmForm = ddmFormValues.getDDMForm();
 
 		if (ddmForm == null) {
 			throw new NullPointerException("A DDM Form instance was never set");
 		}
+
+		evaluateDDMFormFieldValidationExpressions(ddmFormValues, ddmForm);
 
 		traverseDDMFormFields(
 			ddmForm.getDDMFormFields(),
@@ -55,6 +70,22 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		traverseDDMFormFieldValues(
 			ddmFormValues.getDDMFormFieldValues(),
 			ddmForm.getDDMFormFieldsMap(false));
+	}
+
+	protected void evaluateDDMFormFieldValidationExpressions(
+			DDMFormValues ddmFormValues, DDMForm ddmForm)
+		throws DDMFormValuesValidationException {
+
+		try {
+			DDMFormEvaluationResult ddmFormEvaluationResult =
+				_ddmFormEvaluator.evaluate(
+					ddmForm, ddmFormValues, ddmFormValues.getDefaultLocale());
+
+			inspectDDMFormEvaluationResult(ddmFormEvaluationResult);
+		}
+		catch (DDMFormEvaluationException ddmfee) {
+			throw new DDMFormValuesValidationException(ddmfee);
+		}
 	}
 
 	protected List<DDMFormFieldValue> getDDMFormFieldValuesByFieldName(
@@ -71,6 +102,30 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		return ddmFormFieldValues;
 	}
 
+	protected void inspectDDMFormEvaluationResult(
+			DDMFormEvaluationResult ddmFormEvaluationResult)
+		throws DDMFormValuesValidationException {
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultsMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			new ArrayList<>();
+
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResultsMap.values()) {
+
+			if (!ddmFormFieldEvaluationResult.isValid()) {
+				ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
+			}
+		}
+
+		if (!ddmFormFieldEvaluationResults.isEmpty()) {
+			throw new MustSetValidValues(ddmFormFieldEvaluationResults);
+		}
+	}
+
 	protected boolean isNull(Value value) {
 		if (value == null) {
 			return true;
@@ -85,10 +140,15 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
+		_ddmFormEvaluator = ddmFormEvaluator;
+	}
+
 	protected void traverseDDMFormFields(
 			List<DDMFormField> ddmFormFields,
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap)
-		throws StorageException {
+		throws DDMFormValuesValidationException {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			List<DDMFormFieldValue> ddmFormFieldValues =
@@ -108,7 +168,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	protected void traverseDDMFormFieldValues(
 			List<DDMFormFieldValue> ddmFormFieldValues,
 			Map<String, DDMFormField> ddmFormFieldsMap)
-		throws StorageException {
+		throws DDMFormValuesValidationException {
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(
@@ -128,12 +188,10 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 	protected void validateDDMFormFieldValue(
 			DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue)
-		throws StorageException {
+		throws DDMFormValuesValidationException {
 
 		if (ddmFormField == null) {
-			throw new StorageFieldNameException(
-				"There is no such field name defined on DDM Form " +
-					ddmFormFieldValue.getName());
+			throw new MustSetValidField(ddmFormFieldValue.getName());
 		}
 
 		DDMFormValues ddmFormValues = ddmFormFieldValue.getDDMFormValues();
@@ -150,13 +208,11 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	protected void validateDDMFormFieldValue(
 			DDMFormField ddmFormField, Set<Locale> availableLocales,
 			Locale defaultLocale, Value value)
-		throws StorageException {
+		throws DDMFormValuesValidationException {
 
 		if (Validator.isNull(ddmFormField.getDataType())) {
 			if (value != null) {
-				throw new StorageFieldValueException(
-					"Value should not be set for field " +
-						ddmFormField.getName());
+				throw new MustNotSetValue(ddmFormField.getName());
 			}
 		}
 		else {
@@ -169,8 +225,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			if ((ddmFormField.isLocalizable() && !value.isLocalized()) ||
 				(!ddmFormField.isLocalizable() && value.isLocalized())) {
 
-				throw new StorageFieldValueException(
-					"Invalid value set for field " + ddmFormField.getName());
+				throw new MustSetValidValue(ddmFormField.getName());
 			}
 
 			validateDDMFormFieldValueLocales(
@@ -181,39 +236,35 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	protected void validateDDMFormFieldValueLocales(
 			DDMFormField ddmFormField, Set<Locale> availableLocales,
 			Locale defaultLocale, Value value)
-		throws StorageException {
+		throws DDMFormValuesValidationException {
 
 		if (!value.isLocalized()) {
 			return;
 		}
 
 		if (!availableLocales.equals(value.getAvailableLocales())) {
-			throw new StorageFieldValueException(
-				"Invalid available locales set for field " +
-					ddmFormField.getName());
+			throw new MustSetValidAvailableLocales(ddmFormField.getName());
 		}
 
 		if (!defaultLocale.equals(value.getDefaultLocale())) {
-			throw new StorageFieldValueException(
-				"Invalid default locale set for field " +
-					ddmFormField.getName());
+			throw new MustSetValidDefaultLocale(ddmFormField.getName());
 		}
 	}
 
 	protected void validateDDMFormFieldValues(
 			DDMFormField ddmFormField,
 			List<DDMFormFieldValue> ddmFormFieldValues)
-		throws StorageException {
+		throws DDMFormValuesValidationException {
 
 		if (ddmFormField.isRequired() && (ddmFormFieldValues.size() == 0)) {
 			throw new RequiredValue(ddmFormField.getName());
 		}
 
 		if (!ddmFormField.isRepeatable() && (ddmFormFieldValues.size() > 1)) {
-			throw new StorageFieldValueException(
-				"Incorrect number of values set for field " +
-					ddmFormField.getName());
+			throw new MustSetValidValuesSize(ddmFormField.getName());
 		}
 	}
+
+	private DDMFormEvaluator _ddmFormEvaluator;
 
 }

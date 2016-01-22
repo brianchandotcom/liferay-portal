@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/view_factory_instances"
 	},
 	service = MVCRenderCommand.class
@@ -64,16 +64,16 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		String factoryPid = ParamUtil.getString(renderRequest, "factoryPid");
 
 		try {
+			ConfigurationModel factoryConfigurationModel =
+				configurationModels.get(factoryPid);
+
 			List<ConfigurationModel> factoryInstances =
 				_configurationModelRetriever.getFactoryInstances(
-					configurationModels, factoryPid);
+					factoryConfigurationModel);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 				new ConfigurationModelIterator(factoryInstances));
-
-			ConfigurationModel factoryConfigurationModel =
-				configurationModels.get(factoryPid);
 
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,

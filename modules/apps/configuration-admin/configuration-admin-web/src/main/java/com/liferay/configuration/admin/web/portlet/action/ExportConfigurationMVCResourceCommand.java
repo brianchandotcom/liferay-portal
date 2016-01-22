@@ -28,9 +28,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.io.FileInputStream;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -54,7 +59,7 @@ import org.osgi.service.metatype.AttributeDefinition;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" +
-			ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
+			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=export"
 	},
 	service = MVCResourceCommand.class
@@ -71,13 +76,19 @@ public class ExportConfigurationMVCResourceCommand
 			return false;
 		}
 
-		String fileName = getFileName(resourceRequest);
+		String pid = ParamUtil.getString(resourceRequest, "pid");
+		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
 
 		try {
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, fileName,
-				getPropertiesAsBytes(resourceRequest, resourceResponse),
-				ContentTypes.TEXT_XML_UTF8);
+			if (Validator.isNotNull(pid)) {
+				exportPid(resourceRequest, resourceResponse);
+			}
+			else if (Validator.isNotNull(factoryPid)) {
+				exportFactoryPid(resourceRequest, resourceResponse);
+			}
+			else {
+				exportAll(resourceRequest, resourceResponse);
+			}
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
@@ -86,10 +97,123 @@ public class ExportConfigurationMVCResourceCommand
 		return true;
 	}
 
-	protected String getFileName(ResourceRequest resourceRequest) {
+	protected void exportAll(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				themeDisplay.getLanguageId());
+
+		for (ConfigurationModel configurationModel :
+				configurationModels.values()) {
+
+			if (configurationModel.isFactory()) {
+				String curFactoryPid = configurationModel.getFactoryPid();
+
+				List<ConfigurationModel> factoryInstances =
+					_configurationModelRetriever.getFactoryInstances(
+						configurationModel);
+
+				for (ConfigurationModel factoryInstance : factoryInstances) {
+					String curPid = factoryInstance.getID();
+					String curFileName = getFileName(curFactoryPid, curPid);
+
+					zipWriter.addEntry(
+						curFileName,
+						getPropertiesAsBytes(
+							languageId, curFactoryPid, curPid));
+				}
+			}
+			else if (configurationModel.getConfiguration() != null) {
+				String curPid = configurationModel.getID();
+				String curFileName = getFileName(null, curPid);
+
+				zipWriter.addEntry(
+					curFileName,
+					getPropertiesAsBytes(languageId, curPid, curPid));
+			}
+		}
+
+		String fileName = "liferay-system-settings.zip";
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, fileName,
+			new FileInputStream(zipWriter.getFile()),
+			ContentTypes.TEXT_XML_UTF8);
+	}
+
+	protected void exportFactoryPid(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
+
+		Map<String, ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				themeDisplay.getLanguageId());
+
+		ConfigurationModel factoryConfigurationModel = configurationModels.get(
+			factoryPid);
+
+		List<ConfigurationModel> factoryInstances =
+			_configurationModelRetriever.getFactoryInstances(
+				factoryConfigurationModel);
+
+		for (ConfigurationModel factoryInstance : factoryInstances) {
+			String curPid = factoryInstance.getID();
+			String curFileName = getFileName(null, curPid);
+
+			zipWriter.addEntry(
+				curFileName,
+				getPropertiesAsBytes(languageId, factoryPid, curPid));
+		}
+
+		String fileName =
+			"liferay-system-settings-" +
+				factoryConfigurationModel.getFactoryPid() + ".zip";
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, fileName,
+			new FileInputStream(zipWriter.getFile()),
+			ContentTypes.TEXT_XML_UTF8);
+	}
+
+	protected void exportPid(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
 		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
 		String pid = ParamUtil.getString(resourceRequest, "pid");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String languageId = themeDisplay.getLanguageId();
+
+		String fileName = getFileName(factoryPid, pid);
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, fileName,
+			getPropertiesAsBytes(languageId, factoryPid, pid),
+			ContentTypes.TEXT_XML_UTF8);
+	}
+
+	protected String getFileName(String factoryPid, String pid) {
 		String fileName = pid;
 
 		if (Validator.isNotNull(factoryPid) && !factoryPid.equals(pid)) {
@@ -102,20 +226,13 @@ public class ExportConfigurationMVCResourceCommand
 	}
 
 	protected Properties getProperties(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			String languageId, String factoryPid, String pid)
 		throws Exception {
 
 		Properties properties = new Properties();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				themeDisplay.getLanguageId());
-
-		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
-		String pid = ParamUtil.getString(resourceRequest, "pid");
+			_configurationModelRetriever.getConfigurationModels(languageId);
 
 		ConfigurationModel configurationModel = configurationModels.get(pid);
 
@@ -152,6 +269,10 @@ public class ExportConfigurationMVCResourceCommand
 				value = StringUtil.merge(values, "\n");
 			}
 
+			if (value == null) {
+				value = StringPool.BLANK;
+			}
+
 			properties.setProperty(attributeDefinition.getID(), value);
 		}
 
@@ -159,18 +280,17 @@ public class ExportConfigurationMVCResourceCommand
 	}
 
 	protected byte[] getPropertiesAsBytes(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			String languageId, String factoryPid, String pid)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("##\n## To apply the configuration, deploy this file to a ");
 		sb.append("Liferay installation with the file name ");
-		sb.append(getFileName(resourceRequest));
+		sb.append(getFileName(factoryPid, pid));
 		sb.append(".\n##\n\n");
 
-		Properties properties = getProperties(
-			resourceRequest, resourceResponse);
+		Properties properties = getProperties(languageId, factoryPid, pid);
 
 		sb.append(PropertiesUtil.toString(properties));
 

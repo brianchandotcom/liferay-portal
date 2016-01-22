@@ -12,42 +12,39 @@
  * details.
  */
 
-package com.liferay.configuration.admin.web.application.list;
+package com.liferay.configuration.admin.web.portlet.configuration.icon;
 
-import com.liferay.application.list.BasePanelApp;
-import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
-import com.liferay.portal.model.Portlet;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jorge Ferrer
  */
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION,
-		"service.ranking:Integer=200"
+		"javax.portlet.name=" +
+			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS
 	},
-	service = PanelApp.class
+	service = PortletConfigurationIconFactory.class
 )
-public class ConfigurationAdminPanelApp extends BasePanelApp {
+public class ExportAllConfigurationIconFactory
+	extends BasePortletConfigurationIconFactory {
 
 	@Override
-	public String getPortletId() {
-		return ConfigurationAdminPortletKeys.SYSTEM_SETTINGS;
+	public PortletConfigurationIcon create(PortletRequest portletRequest) {
+		return new ExportAllConfigurationIcon(portletRequest);
 	}
 
 	@Override
-	@Reference(
-		target = "(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
+	public double getWeight() {
+		return 1;
 	}
 
 }

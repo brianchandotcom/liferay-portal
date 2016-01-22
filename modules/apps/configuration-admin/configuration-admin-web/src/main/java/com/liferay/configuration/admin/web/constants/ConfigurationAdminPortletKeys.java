@@ -19,7 +19,7 @@ package com.liferay.configuration.admin.web.constants;
  */
 public class ConfigurationAdminPortletKeys {
 
-	public static final String CONFIGURATION_ADMIN =
-		"com_liferay_configuration_admin_web_portlet_ConfigurationAdminPortlet";
+	public static final String SYSTEM_SETTINGS =
+		"com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet";
 
 }

@@ -47,8 +47,7 @@ public interface ConfigurationModelRetriever {
 		String locale);
 
 	public List<ConfigurationModel> getFactoryInstances(
-			Map<String, ConfigurationModel> configurationModels,
-			String factoryPid)
+			ConfigurationModel factoryConfigurationModel)
 		throws IOException;
 
 }

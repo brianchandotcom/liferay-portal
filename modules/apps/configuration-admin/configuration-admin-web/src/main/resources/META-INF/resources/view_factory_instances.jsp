@@ -31,7 +31,7 @@ renderResponse.setTitle(factoryConfigurationModel.getName());
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
-			label="entries"
+			label="configuration-entries"
 			selected="<%= true %>"
 		/>
 	</aui:nav>
@@ -45,14 +45,14 @@ renderResponse.setTitle(factoryConfigurationModel.getName());
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu-item
-		title='<%= LanguageUtil.format(request, "add-x", factoryConfigurationModel.getName()) %>'
+		title="add-entry"
 		url="<%= createFactoryConfigURL %>"
 	/>
 </liferay-frontend:add-menu>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-configurations-were-found"
+		emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet", factoryConfigurationModel.getName()) %>'
 		total="<%= configurationModelIterator.getTotal() %>"
 	>
 		<liferay-ui:search-container-results

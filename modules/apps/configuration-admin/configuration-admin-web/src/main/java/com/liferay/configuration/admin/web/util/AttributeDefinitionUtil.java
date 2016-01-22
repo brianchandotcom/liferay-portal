@@ -63,7 +63,12 @@ public class AttributeDefinitionUtil {
 		}
 
 		if (cardinality > 0) {
-			return ArrayUtil.toStringArray((Object[])property);
+			if (property instanceof Object[]) {
+				return ArrayUtil.toStringArray((Object[])property);
+			}
+			else {
+				return new String[] {String.valueOf(property)};
+			}
 		}
 
 		Vector<?> vector = (Vector<?>)property;

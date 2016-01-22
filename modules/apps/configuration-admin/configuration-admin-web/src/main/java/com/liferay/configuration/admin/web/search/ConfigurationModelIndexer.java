@@ -163,7 +163,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		Document document = newDocument();
 
 		document.addUID(
-			ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
+			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 			configurationModel.getFactoryPid());
 
 		IndexWriterHelperUtil.deleteDocument(
@@ -178,7 +178,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		Document document = newDocument();
 
 		document.addUID(
-			ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
+			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 			configurationModel.getID());
 		document.addKeyword(
 			FieldNames.CONFIGURATION_MODEL_CATEGORY,

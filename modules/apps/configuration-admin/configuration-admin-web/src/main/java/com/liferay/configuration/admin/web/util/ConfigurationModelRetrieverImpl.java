@@ -147,8 +147,7 @@ public class ConfigurationModelRetrieverImpl
 
 	@Override
 	public List<ConfigurationModel> getFactoryInstances(
-			Map<String, ConfigurationModel> configurationModels,
-			String factoryPid)
+			ConfigurationModel factoryConfigurationModel)
 		throws IOException {
 
 		StringBundler filter = new StringBundler(5);
@@ -156,7 +155,7 @@ public class ConfigurationModelRetrieverImpl
 		filter.append(StringPool.OPEN_PARENTHESIS);
 		filter.append(ConfigurationAdmin.SERVICE_FACTORYPID);
 		filter.append(StringPool.EQUAL);
-		filter.append(factoryPid);
+		filter.append(factoryConfigurationModel.getFactoryPid());
 		filter.append(StringPool.CLOSE_PARENTHESIS);
 
 		Configuration[] configurations = null;
@@ -173,14 +172,11 @@ public class ConfigurationModelRetrieverImpl
 			return Collections.emptyList();
 		}
 
-		ConfigurationModel configurationModel = configurationModels.get(
-			factoryPid);
-
 		List<ConfigurationModel> factoryInstances = new ArrayList<>();
 
 		for (Configuration configuration : configurations) {
 			ConfigurationModel curConfigurationModel = new ConfigurationModel(
-				configurationModel, configuration,
+				factoryConfigurationModel, configuration,
 				configuration.getBundleLocation(), false);
 
 			factoryInstances.add(curConfigurationModel);

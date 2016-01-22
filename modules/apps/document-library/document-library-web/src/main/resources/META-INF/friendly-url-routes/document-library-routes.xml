@@ -17,7 +17,7 @@
 	</route>
 	<route>
 		<pattern>/{instanceId}/view/{folderId:\d+}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/document_library/view</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/document_library/view_folder</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{instanceId}/view/{folderId:\d+}/{name}</pattern>

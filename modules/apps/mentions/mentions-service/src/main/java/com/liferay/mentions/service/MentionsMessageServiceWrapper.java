@@ -90,6 +90,12 @@ public class MentionsMessageServiceWrapper
 			content = BBCodeTranslatorUtil.getHTML(content);
 		}
 
+		String title = message.getSubject();
+
+		if (message.isDiscussion()) {
+			title = StringUtil.shorten(HtmlUtil.extractText(content), 100);
+		}
+
 		MentionsGroupServiceConfiguration mentionsGroupServiceConfiguration =
 			_configurationFactory.getConfiguration(
 				MentionsGroupServiceConfiguration.class,
@@ -114,12 +120,6 @@ public class MentionsMessageServiceWrapper
 		if (Validator.isNull(contentURL)) {
 			serviceContext.setAttribute(
 				"contentURL", workflowContext.get("url"));
-		}
-
-		String title = message.getSubject();
-
-		if (message.isDiscussion()) {
-			title = StringUtil.shorten(HtmlUtil.extractText(content), 100);
 		}
 
 		_mentionsNotifier.notify(

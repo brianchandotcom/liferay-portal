@@ -64,49 +64,49 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 				<liferay-ui:panel-container extended="<%= true %>" id="monitoringSessionHistoryPanelContainer" markupView="lexicon" persistState="<%= true %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionPanel" markupView="lexicon" persistState="<%= false %>" title="session">
 						<dl>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="session-id" />
 							</dt>
 							<dd>
 								<%= HtmlUtil.escape(sessionId) %>
 							</dd>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="user-id" />
 							</dt>
 							<dd>
 								<%= userTracker.getUserId() %>
 							</dd>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="name" />
 							</dt>
 							<dd>
 								<%= (user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available") %>
 							</dd>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="email-address" />
 							</dt>
 							<dd>
 								<%= (user2 != null) ? user2.getEmailAddress() : LanguageUtil.get(request, "not-available") %>
 							</dd>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="last-request" />
 							</dt>
 							<dd>
 								<%= dateFormatDateTime.format(userTracker.getModifiedDate()) %>
 							</dd>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="num-of-hits" />
 							</dt>
 							<dd>
 								<%= numHits %>
 							</dd>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="browser-os-type" />
 							</dt>
 							<dd>
 								<%= userTracker.getUserAgent() %>
 							</dd>
-							<dt>
+							<dt class="h4">
 								<liferay-ui:message key="remote-host-ip" />
 							</dt>
 							<dd>
@@ -123,7 +123,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 								UserTrackerPath userTrackerPath = paths.get(i);
 							%>
 
-							<dt>
+							<dt class="h4">
 								<%= StringUtil.replace(userTrackerPath.getPath(), "&", "& ") %>
 							</dt>
 							<dd>
@@ -160,7 +160,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 									for (String attrName : sortedAttrNames) {
 							%>
 
-										<dt>
+										<dt class="h4">
 											<%= HtmlUtil.escape(attrName) %>
 										</dt>
 

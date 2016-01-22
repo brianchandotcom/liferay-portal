@@ -137,6 +137,28 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>permissions</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.PermissionsTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>disableInputs</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>global</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>parameterMap</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>portlet-list</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.PortletListTag</tag-class>
 		<body-content>JSP</body-content>

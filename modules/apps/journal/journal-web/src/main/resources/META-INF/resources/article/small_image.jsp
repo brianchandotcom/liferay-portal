@@ -55,7 +55,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		<aui:row>
 			<c:if test="<%= smallImage && (article != null) %>">
 				<aui:col width="<%= 50 %>">
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-journal-small-image-preview" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" />
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-journal-small-image-preview img-responsive" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" />
 				</aui:col>
 			</c:if>
 

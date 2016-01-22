@@ -35,8 +35,30 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IconOptionsTag extends IconTag {
 
+	public List<PortletConfigurationIcon>
+		getPortletConfigurationIcons() {
+
+		if (_portletConfigurationIcons != null) {
+			return _portletConfigurationIcons;
+		}
+
+		Comparator comparator = new PropertyComparator("weight", false, false);
+
+		_portletConfigurationIcons =
+			PortletConfigurationIconTracker.getPortletConfigurationIcons(
+				getPortletId(), getPortletRequest(), comparator);
+
+		return _portletConfigurationIcons;
+	}
+
 	public void setDirection(String direction) {
 		_direction = direction;
+	}
+
+	public void setPortletConfigurationIcons(
+		List<PortletConfigurationIcon> portletConfigurationIcons) {
+
+		_portletConfigurationIcons = portletConfigurationIcons;
 	}
 
 	public void setShowArrow(boolean showArrow) {
@@ -48,21 +70,13 @@ public class IconOptionsTag extends IconTag {
 		super.cleanUp();
 
 		_direction = "down";
+		_portletConfigurationIcons = null;
 		_showArrow = true;
 	}
 
 	@Override
 	protected String getPage() {
 		return "/html/taglib/portlet/icon_options/page.jsp";
-	}
-
-	protected List<PortletConfigurationIcon>
-		getPortletConfigurationIcons() {
-
-		Comparator comparator = new PropertyComparator("weight", false, false);
-
-		return PortletConfigurationIconTracker.getPortletConfigurationIcons(
-			getPortletId(), getPortletRequest(), comparator);
 	}
 
 	protected String getPortletId() {
@@ -92,6 +106,7 @@ public class IconOptionsTag extends IconTag {
 	}
 
 	private String _direction = "down";
+	private List<PortletConfigurationIcon> _portletConfigurationIcons;
 	private boolean _showArrow = true;
 
 }

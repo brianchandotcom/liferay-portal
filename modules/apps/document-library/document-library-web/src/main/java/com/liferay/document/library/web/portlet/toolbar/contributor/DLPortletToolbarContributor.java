@@ -61,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"mvc.render.command.name=-",
-		"mvc.render.command.name=/document_library/view"
+		"mvc.render.command.name=/document_library/view",
+		"mvc.render.command.name=/document_library/view_folder"
 	},
 	service = {DLPortletToolbarContributor.class, PortletToolbarContributor.class}
 )

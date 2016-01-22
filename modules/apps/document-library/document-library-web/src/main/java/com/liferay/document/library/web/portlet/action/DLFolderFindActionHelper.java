@@ -78,7 +78,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 		}
 		else {
 			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view");
+				"mvcRenderCommandName", "/document_library/view_folder");
 		}
 	}
 

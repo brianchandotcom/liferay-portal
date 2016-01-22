@@ -240,8 +240,15 @@ public class DLImpl implements DL {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, portletId, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view_folder");
+		}
+
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();

@@ -16,6 +16,10 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.exception.NoSuchFlagException;
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -36,11 +40,8 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.announcements.exception.NoSuchFlagException;
-import com.liferay.portlet.announcements.model.AnnouncementsFlag;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagPersistence;
 
 import java.io.Serializable;
 
@@ -61,7 +62,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see AnnouncementsFlagPersistence
- * @see com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagUtil
+ * @see com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagUtil
  * @generated
  */
 @ProviderType
@@ -283,7 +284,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
+	 * @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByEntryId_First(long entryId,
@@ -334,7 +335,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
+	 * @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByEntryId_Last(long entryId,
@@ -392,7 +393,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements flag
-	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
+	 * @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a announcements flag with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
@@ -615,13 +616,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			});
 
 	/**
-	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link NoSuchFlagException} if it could not be found.
+	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link com.liferay.portlet.announcements.exception.NoSuchFlagException} if it could not be found.
 	 *
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
 	 * @return the matching announcements flag
-	 * @throws NoSuchFlagException if a matching announcements flag could not be found
+	 * @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByU_E_V(long userId, long entryId, int value)

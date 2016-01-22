@@ -186,16 +186,16 @@
 	<bean id="com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence" class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.WorkflowInstanceLinkLocalService" class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence" class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl" />
-	<bean id="com.liferay.portlet.announcements.service.AnnouncementsDeliveryService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl" />
-	<bean id="com.liferay.portlet.announcements.service.persistence.AnnouncementsDeliveryPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryLocalServiceImpl" />
-	<bean id="com.liferay.portlet.announcements.service.AnnouncementsEntryService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl" />
-	<bean id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" />
-	<bean id="com.liferay.portlet.announcements.service.AnnouncementsFlagService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl" />
-	<bean id="com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl" />
+	<bean id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl" />
+	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryLocalServiceImpl" />
+	<bean id="com.liferay.announcements.kernel.service.AnnouncementsEntryService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl" />
+	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryFinder" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" />
+	<bean id="com.liferay.announcements.kernel.service.AnnouncementsFlagService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl" />
+	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.AssetCategoryLocalService" class="com.liferay.portlet.asset.service.impl.AssetCategoryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.AssetCategoryService" class="com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPersistenceImpl" parent="basePersistence" />

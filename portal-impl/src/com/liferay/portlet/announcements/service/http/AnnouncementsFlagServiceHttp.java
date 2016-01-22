@@ -16,14 +16,14 @@ package com.liferay.portlet.announcements.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.service.AnnouncementsFlagServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.portlet.announcements.service.AnnouncementsFlagServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -108,7 +108,7 @@ public class AnnouncementsFlagServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.announcements.model.AnnouncementsFlag getFlag(
+	public static com.liferay.announcements.kernel.model.AnnouncementsFlag getFlag(
 		HttpPrincipal httpPrincipal, long entryId, int value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -131,7 +131,7 @@ public class AnnouncementsFlagServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.announcements.model.AnnouncementsFlag)returnObj;
+			return (com.liferay.announcements.kernel.model.AnnouncementsFlag)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

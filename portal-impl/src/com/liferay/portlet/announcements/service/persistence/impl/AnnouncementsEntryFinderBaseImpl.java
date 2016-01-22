@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.announcements.service.persistence.impl;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.portlet.announcements.model.AnnouncementsEntry;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryPersistence;
 
 import java.util.Set;
 

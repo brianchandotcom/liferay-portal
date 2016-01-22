@@ -168,10 +168,25 @@ public class BlogsEntryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
+		return getService()
+				   .getGroupUserEntries(groupId, userId, start, end, obc,
+			queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
 		return getService()
 				   .getGroupUserEntries(groupId, userId, status, start, end, obc);
+	}
+
+	public static int getGroupUserEntriesCount(long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
+		return getService()
+				   .getGroupUserEntriesCount(groupId, userId, queryDefinition);
 	}
 
 	public static int getGroupUserEntriesCount(long groupId, long userId,

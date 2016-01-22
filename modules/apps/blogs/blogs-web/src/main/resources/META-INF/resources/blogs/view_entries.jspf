@@ -14,6 +14,8 @@
  */
 --%>
 
+<liferay-util:include page="/blogs/my_entries.jsp" servletContext="<%= application %>" />
+
 <c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 	<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />

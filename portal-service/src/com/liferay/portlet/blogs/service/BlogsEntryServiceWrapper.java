@@ -175,10 +175,26 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryService.getGroupUserEntries(groupId, userId, start,
+			end, obc, queryDefinition);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
 		long groupId, long userId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
 		return _blogsEntryService.getGroupUserEntries(groupId, userId, status,
 			start, end, obc);
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition) {
+		return _blogsEntryService.getGroupUserEntriesCount(groupId, userId,
+			queryDefinition);
 	}
 
 	@Override

@@ -395,6 +395,22 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int start, int end,
+		OrderByComparator<BlogsEntry> obc,
+		QueryDefinition<BlogsEntry> queryDefinition) {
+
+		if (queryDefinition.isExcludeStatus()) {
+			return blogsEntryPersistence.filterFindByG_U_NotS(
+				groupId, userId, queryDefinition.getStatus(), start, end, obc);
+		}
+		else {
+			return blogsEntryPersistence.filterFindByG_U_NotS(
+				groupId, userId, queryDefinition.getStatus(), start, end, obc);
+		}
+	}
+
+	@Override
 	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterCountByG_U_NotS(
@@ -403,6 +419,21 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		else {
 			return blogsEntryPersistence.filterCountByG_U_S(
 				groupId, userId, status);
+		}
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(
+		long groupId, long userId,
+		QueryDefinition<BlogsEntry> queryDefinition) {
+
+		if (queryDefinition.isExcludeStatus()) {
+			return blogsEntryPersistence.filterCountByG_U_NotS(
+				groupId, userId, queryDefinition.getStatus());
+		}
+		else {
+			return blogsEntryPersistence.filterCountByG_U_S(
+				groupId, userId, queryDefinition.getStatus());
 		}
 	}
 

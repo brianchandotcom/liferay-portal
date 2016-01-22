@@ -243,6 +243,15 @@ public class KaleoDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition fetchLatestKaleoDefinition(
+		java.lang.String name,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDefinitionLocalService.fetchLatestKaleoDefinition(name,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _kaleoDefinitionLocalService.getActionableDynamicQuery();
 	}

@@ -91,15 +91,7 @@ else {
 	showPermissionsURL = DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
 
-boolean showWhenSingleIcon = false;
-
-DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
-
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
-if ((row == null) || dlVisualizationHelper.isShowWhenSingleIconActionButton()) {
-	showWhenSingleIcon = true;
-}
 
 boolean view = false;
 

@@ -89,18 +89,6 @@ public class DLVisualizationHelper {
 			_dlRequestHelper.getRequest(), "showMinimalActionButtons");
 	}
 
-	public boolean isShowWhenSingleIconActionButton() {
-		String portletName = _dlRequestHelper.getPortletName();
-
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private final DLRequestHelper _dlRequestHelper;
 
 }

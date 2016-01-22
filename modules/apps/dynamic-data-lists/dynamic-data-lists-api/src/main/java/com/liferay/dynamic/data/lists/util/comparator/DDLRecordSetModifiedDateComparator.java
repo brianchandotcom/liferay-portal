@@ -31,4 +31,9 @@ public class DDLRecordSetModifiedDateComparator
 		super(ascending);
 	}
 
+	@Override
+	public String getOrderBy() {
+		return "DDLRecordSet." + super.getOrderBy();
+	}
+
 }

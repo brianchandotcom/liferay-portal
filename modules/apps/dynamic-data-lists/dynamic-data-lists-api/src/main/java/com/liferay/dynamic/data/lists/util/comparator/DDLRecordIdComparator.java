@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  */
 public class DDLRecordIdComparator extends OrderByComparator<DDLRecord> {
 
-	public static final String ORDER_BY_ASC = "recordId ASC";
+	public static final String ORDER_BY_ASC = "DDLRecord.recordId ASC";
 
-	public static final String ORDER_BY_DESC = "recordId DESC";
+	public static final String ORDER_BY_DESC = "DDLRecord.recordId DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"recordId"};
 

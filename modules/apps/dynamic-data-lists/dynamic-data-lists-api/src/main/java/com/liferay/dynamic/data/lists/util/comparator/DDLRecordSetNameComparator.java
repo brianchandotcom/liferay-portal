@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class DDLRecordSetNameComparator
 	extends OrderByComparator<DDLRecordSet> {
 
-	public static final String ORDER_BY_ASC = "name ASC";
+	public static final String ORDER_BY_ASC = "DDLRecordSet.name ASC";
 
-	public static final String ORDER_BY_DESC = "name DESC";
+	public static final String ORDER_BY_DESC = "DDLRecordSet.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 

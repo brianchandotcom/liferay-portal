@@ -50,7 +50,7 @@ AUI.add(
 
 						var editor = host.getNativeEditor();
 
-						editor.on('imagedrop', instance._onImageDrop, instance);
+						editor.on('imageAdd', instance._onImageAdd, instance);
 
 						instance._editor = editor;
 
@@ -74,7 +74,7 @@ AUI.add(
 							instance._alert.destroy();
 						}
 
-						instance._editor.removeListener('imagedrop', instance._uploadImage);
+						instance._editor.removeListener('imageAdd', instance._uploadImage);
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
@@ -135,7 +135,7 @@ AUI.add(
 						return uploader;
 					},
 
-					_onImageDrop: function(event) {
+					_onImageAdd: function(event) {
 						var instance = this;
 
 						var eventData = event.data;

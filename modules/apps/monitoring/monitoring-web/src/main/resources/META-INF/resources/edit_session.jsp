@@ -60,130 +60,130 @@ renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, 
 			boolean userSessionAlive = false;
 			%>
 
-			<liferay-ui:panel-container extended="<%= true %>" id="monitoringSessionHistoryPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionPanel" markupView="lexicon" persistState="<%= false %>" title="session">
-					<dl>
-						<dt>
-							<liferay-ui:message key="session-id" />
-						</dt>
-						<dd>
-							<%= HtmlUtil.escape(sessionId) %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="user-id" />
-						</dt>
-						<dd>
-							<%= userTracker.getUserId() %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="name" />
-						</dt>
-						<dd>
-							<%= (user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available") %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="email-address" />
-						</dt>
-						<dd>
-							<%= (user2 != null) ? user2.getEmailAddress() : LanguageUtil.get(request, "not-available") %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="last-request" />
-						</dt>
-						<dd>
-							<%= dateFormatDateTime.format(userTracker.getModifiedDate()) %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="num-of-hits" />
-						</dt>
-						<dd>
-							<%= numHits %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="browser-os-type" />
-						</dt>
-						<dd>
-							<%= userTracker.getUserAgent() %>
-						</dd>
-						<dt>
-							<liferay-ui:message key="remote-host-ip" />
-						</dt>
-						<dd>
-							<%= userTracker.getRemoteAddr() %> / <%= userTracker.getRemoteHost() %>
-						</dd>
-					</dl>
-				</liferay-ui:panel>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-ui:panel-container extended="<%= true %>" id="monitoringSessionHistoryPanelContainer" markupView="lexicon" persistState="<%= true %>">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionPanel" markupView="lexicon" persistState="<%= false %>" title="session">
+						<dl>
+							<dt class="h4">
+								<liferay-ui:message key="session-id" />
+							</dt>
+							<dd>
+								<%= HtmlUtil.escape(sessionId) %>
+							</dd>
+							<dt class="h4">
+								<liferay-ui:message key="user-id" />
+							</dt>
+							<dd>
+								<%= userTracker.getUserId() %>
+							</dd>
+							<dt class="h4">
+								<liferay-ui:message key="name" />
+							</dt>
+							<dd>
+								<%= (user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available") %>
+							</dd>
+							<dt class="h4">
+								<liferay-ui:message key="email-address" />
+							</dt>
+							<dd>
+								<%= (user2 != null) ? user2.getEmailAddress() : LanguageUtil.get(request, "not-available") %>
+							</dd>
+							<dt class="h4">
+								<liferay-ui:message key="last-request" />
+							</dt>
+							<dd>
+								<%= dateFormatDateTime.format(userTracker.getModifiedDate()) %>
+							</dd>
+							<dt class="h4">
+								<liferay-ui:message key="num-of-hits" />
+							</dt>
+							<dd>
+								<%= numHits %>
+							</dd>
+							<dt class="h4">
+								<liferay-ui:message key="browser-os-type" />
+							</dt>
+							<dd>
+								<%= userTracker.getUserAgent() %>
+							</dd>
+							<dt class="h4">
+								<liferay-ui:message key="remote-host-ip" />
+							</dt>
+							<dd>
+								<%= userTracker.getRemoteAddr() %> / <%= userTracker.getRemoteHost() %>
+							</dd>
+						</dl>
+					</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="sessionAccessedURLsPanels" markupView="lexicon" persistState="<%= true %>" title="accessed-urls">
-					<dl>
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="sessionAccessedURLsPanels" markupView="lexicon" persistState="<%= true %>" title="accessed-urls">
+						<dl>
 
-						<%
-						for (int i = 0; i < paths.size(); i++) {
-							UserTrackerPath userTrackerPath = paths.get(i);
-						%>
+							<%
+							for (int i = 0; i < paths.size(); i++) {
+								UserTrackerPath userTrackerPath = paths.get(i);
+							%>
 
-						<dt>
-							<%= StringUtil.replace(userTrackerPath.getPath(), "&", "& ") %>
-						</dt>
-						<dd>
-							<%= dateFormatDateTime.format(userTrackerPath.getPathDate()) %>
-						</dd>
+							<dt class="h4">
+								<%= StringUtil.replace(userTrackerPath.getPath(), "&", "& ") %>
+							</dt>
+							<dd>
+								<%= dateFormatDateTime.format(userTrackerPath.getPathDate()) %>
+							</dd>
 
-						<%
-						}
-						%>
+							<%
+							}
+							%>
 
-					</dl>
-				</liferay-ui:panel>
+						</dl>
+					</liferay-ui:panel>
 
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="monitoringSessionAttributesPanel" markupView="lexicon" persistState="<%= true %>" title="session-attributes">
-					<dl>
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="monitoringSessionAttributesPanel" markupView="lexicon" persistState="<%= true %>" title="session-attributes">
+						<dl>
 
-						<%
-						userSessionAlive = true;
+							<%
+							userSessionAlive = true;
 
-						HttpSession userSession = PortalSessionContext.get(sessionId);
+							HttpSession userSession = PortalSessionContext.get(sessionId);
 
-						if (userSession != null) {
-							try {
-								Set<String> sortedAttrNames = new TreeSet<String>();
+							if (userSession != null) {
+								try {
+									Set<String> sortedAttrNames = new TreeSet<String>();
 
-								Enumeration<String> enu = userSession.getAttributeNames();
+									Enumeration<String> enu = userSession.getAttributeNames();
 
-								while (enu.hasMoreElements()) {
-									String attrName = enu.nextElement();
+									while (enu.hasMoreElements()) {
+										String attrName = enu.nextElement();
 
-									sortedAttrNames.add(attrName);
+										sortedAttrNames.add(attrName);
+									}
+
+									for (String attrName : sortedAttrNames) {
+							%>
+
+										<dt class="h4">
+											<%= HtmlUtil.escape(attrName) %>
+										</dt>
+
+							<%
+									}
 								}
+								catch (Exception e) {
+									userSessionAlive = false;
 
-								for (String attrName : sortedAttrNames) {
-						%>
-
-									<dt>
-										<%= HtmlUtil.escape(attrName) %>
-									</dt>
-
-						<%
+									e.printStackTrace();
 								}
 							}
-							catch (Exception e) {
-								userSessionAlive = false;
+							%>
 
-								e.printStackTrace();
-							}
-						}
-						%>
-
-					</dl>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
+						</dl>
+					</liferay-ui:panel>
+				</liferay-ui:panel-container>
+			</aui:fieldset-group>
 
 			<aui:button-row>
 				<c:if test="<%= userSessionAlive && !session.getId().equals(sessionId) %>">
 					<aui:button cssClass="btn-lg" type="submit" value="kill-session" />
 				</c:if>
-
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 			</aui:button-row>
 		</c:otherwise>
 	</c:choose>

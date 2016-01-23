@@ -83,7 +83,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		final LiferayExtension liferayExtension = addLiferayExtension(project);
 
-		addConfigurations(project, liferayExtension);
+		addConfigurationPortal(project, liferayExtension);
 
 		applyPlugins(project);
 
@@ -146,12 +146,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
-	}
-
-	protected void addConfigurations(
-		Project project, LiferayExtension liferayExtension) {
-
-		addConfigurationPortal(project, liferayExtension);
 	}
 
 	protected void addDependenciesPortal(

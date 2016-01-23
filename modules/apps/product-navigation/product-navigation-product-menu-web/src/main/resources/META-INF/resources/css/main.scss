@@ -29,7 +29,7 @@ body {
 		padding-top: 12px;
 
 		@include sm() {
-			padding: 19px 24px;
+			padding: 16px 24px;
 		}
 
 		.sidenav-close {
@@ -51,10 +51,10 @@ body {
 		padding: 0;
 		position: absolute;
 		right: 0;
-		top: 48px;
+		top: 55px;
 
 		@include sm() {
-			top: 63px;
+			top: 64px;
 		}
 
 		@include media-query(null, 320px) {

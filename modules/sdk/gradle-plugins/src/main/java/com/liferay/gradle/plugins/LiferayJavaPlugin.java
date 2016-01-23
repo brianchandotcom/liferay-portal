@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
@@ -27,12 +26,7 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.BuildSoyTask;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
-import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
-import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtension;
-import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
-import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
-import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -49,9 +43,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -101,14 +93,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
-		configureTestIntegrationTomcat(project, liferayExtension);
-
 		configureTaskClean(project);
-		configureTaskSetupTestableTomcat(project, liferayExtension);
-		configureTaskStartTestableTomcat(project, liferayExtension);
-		configureTaskStopTestableTomcat(project, liferayExtension);
 		configureTaskTest(project);
-		configureTaskTestIntegration(project);
+		configureTasksTest(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -267,6 +254,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, TestIntegrationDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
 		GradleUtil.applyPlugin(
 			project, UpgradeTableBuilderDefaultsPlugin.class);
@@ -476,84 +464,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskSetupTestableTomcat(
-		Project project, LiferayExtension liferayExtension) {
+	protected void configureTasksTest(Project project) {
+		TaskContainer taskContainer = project.getTasks();
 
-		SetupTestableTomcatTask setupTestableTomcatTask =
-			(SetupTestableTomcatTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.SETUP_TESTABLE_TOMCAT_TASK_NAME);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		setupTestableTomcatTask.setZipUrl(
-			new Callable<String>() {
+		taskContainer.withType(
+			Test.class,
+			new Action<Test>() {
 
 				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getZipUrl();
-				}
-
-			});
-	}
-
-	protected void configureTaskStartTestableTomcat(
-		Project project, LiferayExtension liferayExtension) {
-
-		StartTestableTomcatTask startTestableTomcatTask =
-			(StartTestableTomcatTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.START_TESTABLE_TOMCAT_TASK_NAME);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		startTestableTomcatTask.setExecutable(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getStartExecutable();
-				}
-
-			});
-
-		startTestableTomcatTask.setExecutableArgs(
-			new Callable<List<String>>() {
-
-				@Override
-				public List<String> call() throws Exception {
-					return tomcatAppServer.getStartExecutableArgs();
-				}
-
-			});
-	}
-
-	protected void configureTaskStopTestableTomcat(
-		Project project, LiferayExtension liferayExtension) {
-
-		StopAppServerTask stopAppServerTask =
-			(StopAppServerTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.STOP_TESTABLE_TOMCAT_TASK_NAME);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		stopAppServerTask.setExecutable(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getStopExecutable();
-				}
-
-			});
-
-		stopAppServerTask.setExecutableArgs(
-			new Callable<List<String>>() {
-
-				@Override
-				public List<String> call() throws Exception {
-					return tomcatAppServer.getStopExecutableArgs();
+				public void execute(Test test) {
+					configureTaskTestDefaultCharacterEncoding(test);
 				}
 
 			});
@@ -563,10 +483,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		final Test test = (Test)GradleUtil.getTask(
 			project, JavaPlugin.TEST_TASK_NAME);
 
-		test.setForkEvery(1L);
+		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
+		test.jvmArgs("-Dliferay.mode=test");
+		test.jvmArgs("-Duser.timezone=GMT");
 
-		configureTaskTestDefaultCharacterEncoding(test);
-		configureTaskTestJvmArgs(test);
+		test.setForkEvery(1L);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -589,100 +510,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		if (includes.isEmpty()) {
 			test.setIncludes(Collections.singleton("**/*Test.class"));
 		}
-	}
-
-	protected void configureTaskTestIntegration(Project project) {
-		Test test = (Test)GradleUtil.getTask(
-			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
-
-		configureTaskTestDefaultCharacterEncoding(test);
-	}
-
-	protected void configureTaskTestJvmArgs(Test test) {
-		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
-		test.jvmArgs("-Dliferay.mode=test");
-		test.jvmArgs("-Duser.timezone=GMT");
-	}
-
-	protected void configureTestIntegrationTomcat(
-		Project project, final LiferayExtension liferayExtension) {
-
-		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
-			GradleUtil.getExtension(
-				project, TestIntegrationTomcatExtension.class);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		testIntegrationTomcatExtension.setCheckPath(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getCheckPath();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setPortNumber(
-			new Callable<Integer>() {
-
-				@Override
-				public Integer call() throws Exception {
-					return tomcatAppServer.getPortNumber();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return tomcatAppServer.getDir();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setJmxRemotePort(
-			new Callable<Integer>() {
-
-				@Override
-				public Integer call() throws Exception {
-					return liferayExtension.getJmxRemotePort();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setLiferayHome(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return liferayExtension.getLiferayHome();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setManagerPassword(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getManagerPassword();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setManagerUserName(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getManagerUserName();
-				}
-
-			});
 	}
 
 	protected void configureVersion(

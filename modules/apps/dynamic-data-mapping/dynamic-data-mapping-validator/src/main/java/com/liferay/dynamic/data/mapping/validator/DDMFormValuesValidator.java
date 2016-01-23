@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
-import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 /**
@@ -22,6 +21,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
  */
 public interface DDMFormValuesValidator {
 
-	public void validate(DDMFormValues ddmFormValues) throws StorageException;
+	public void validate(DDMFormValues ddmFormValues)
+		throws DDMFormValuesValidationException;
 
 }

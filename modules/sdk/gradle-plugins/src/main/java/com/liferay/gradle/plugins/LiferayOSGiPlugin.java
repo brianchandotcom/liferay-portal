@@ -129,12 +129,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		delete.delete(closure);
 	}
 
-	@Override
-	protected LiferayExtension addLiferayExtension(Project project) {
-		return GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, LiferayOSGiExtension.class);
-	}
-
 	protected DirectDeployTask addTaskAutoUpdateXml(final Project project) {
 		final DirectDeployTask directDeployTask = GradleUtil.addTask(
 			project, AUTO_UPDATE_XML_TASK_NAME, DirectDeployTask.class);
@@ -600,6 +594,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return sourceFileName.replace(
 			"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
 			"." + Jar.DEFAULT_EXTENSION);
+	}
+
+	@Override
+	protected Class<? extends LiferayExtension> getLiferayExtensionClass() {
+		return LiferayOSGiExtension.class;
 	}
 
 	protected void replaceJarBuilderFactory(Project project) {

@@ -89,8 +89,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		addTaskDeploy(project);
 
-		applyConfigScripts(project);
-
 		configureConfigurations(project, liferayExtension);
 		configureTaskClean(project);
 		configureTaskTest(project);
@@ -193,8 +191,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected LiferayExtension addLiferayExtension(Project project) {
-		return GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
+		LiferayExtension liferayExtension = GradleUtil.addExtension(
+			project, LiferayPlugin.PLUGIN_NAME, getLiferayExtensionClass());
+
+		GradleUtil.applyScript(
+			project,
+			"com/liferay/gradle/plugins/dependencies/config-liferay.gradle",
+			project);
+
+		return liferayExtension;
 	}
 
 	protected Copy addTaskDeploy(Project project) {
@@ -207,13 +212,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.from(jar);
 
 		return copy;
-	}
-
-	protected void applyConfigScripts(Project project) {
-		GradleUtil.applyScript(
-			project,
-			"com/liferay/gradle/plugins/dependencies/config-liferay.gradle",
-			project);
 	}
 
 	protected void applyPlugins(Project project) {
@@ -495,6 +493,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected String getDeployedFileName(Project project, File sourceFile) {
 		return sourceFile.getName();
+	}
+
+	protected Class<? extends LiferayExtension> getLiferayExtensionClass() {
+		return LiferayExtension.class;
 	}
 
 	protected boolean isCleanDeployed(Delete delete) {

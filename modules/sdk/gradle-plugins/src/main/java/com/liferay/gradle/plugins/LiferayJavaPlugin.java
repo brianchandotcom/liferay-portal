@@ -256,6 +256,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureConfigurations(
 		Project project, final LiferayExtension liferayExtension) {
 
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
 		Action<Configuration> action = new Action<Configuration>() {
 
 			@Override
@@ -288,9 +291,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			}
 
 		};
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
 
 		configurationContainer.all(action);
 	}

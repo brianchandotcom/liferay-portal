@@ -33,7 +33,6 @@ import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -44,6 +43,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -95,6 +95,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureTaskClean(project);
 		configureTaskTest(project);
+		configureTasksDirectDeploy(project, liferayExtension);
 		configureTasksTest(project);
 
 		project.afterEvaluate(
@@ -102,7 +103,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTasks(project, liferayExtension);
+					configureTaskDeploy(project, liferayExtension);
 				}
 
 			});
@@ -393,51 +394,54 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.into(liferayExtension.getDeployDir());
 	}
 
-	protected void configureTaskDirectDeployAppServerDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+	protected void configureTaskDirectDeploy(
+		DirectDeployTask directDeployTask,
+		final LiferayExtension liferayExtension) {
 
-		if (directDeployTask.getAppServerDir() == null) {
-			directDeployTask.setAppServerDir(
-				liferayExtension.getAppServerDir());
-		}
+		directDeployTask.setAppServerDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getAppServerDir();
+				}
+
+			});
+
+		directDeployTask.setAppServerLibGlobalDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getAppServerLibGlobalDir();
+				}
+
+			});
+
+		directDeployTask.setAppServerPortalDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getAppServerPortalDir();
+				}
+
+			});
+
+		directDeployTask.setAppServerType(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return liferayExtension.getAppServerType();
+				}
+
+			});
 	}
 
-	protected void configureTaskDirectDeployAppServerLibGlobalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+	protected void configureTasksDirectDeploy(
+		Project project, final LiferayExtension liferayExtension) {
 
-		if (directDeployTask.getAppServerLibGlobalDir() == null) {
-			directDeployTask.setAppServerLibGlobalDir(
-				liferayExtension.getAppServerLibGlobalDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerPortalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (directDeployTask.getAppServerPortalDir() == null) {
-			directDeployTask.setAppServerPortalDir(
-				liferayExtension.getAppServerPortalDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerType(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (Validator.isNull(directDeployTask.getAppServerType())) {
-			directDeployTask.setAppServerType(
-				liferayExtension.getAppServerType());
-		}
-	}
-
-	protected void configureTasks(
-		Project project, LiferayExtension liferayExtension) {
-
-		configureTaskDeploy(project, liferayExtension);
-
-		configureTasksDirectDeploy(project);
-	}
-
-	protected void configureTasksDirectDeploy(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -446,16 +450,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DirectDeployTask directDeployTask) {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						directDeployTask.getProject(), LiferayExtension.class);
-
-					configureTaskDirectDeployAppServerDir(
-						directDeployTask, liferayExtension);
-					configureTaskDirectDeployAppServerLibGlobalDir(
-						directDeployTask, liferayExtension);
-					configureTaskDirectDeployAppServerPortalDir(
-						directDeployTask, liferayExtension);
-					configureTaskDirectDeployAppServerType(
+					configureTaskDirectDeploy(
 						directDeployTask, liferayExtension);
 				}
 

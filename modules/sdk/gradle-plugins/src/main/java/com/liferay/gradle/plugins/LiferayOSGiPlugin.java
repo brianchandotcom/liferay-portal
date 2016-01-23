@@ -434,6 +434,23 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
+	protected Copy addTaskDeploy(final Project project) {
+		Copy copy = super.addTaskDeploy(project);
+
+		copy.rename(
+			new Closure<String>(null) {
+
+				@SuppressWarnings("unused")
+				public String doCall(String fileName) {
+					return getDeployedFileName(project, fileName);
+				}
+
+			});
+
+		return copy;
+	}
+
+	@Override
 	protected void addTasks(Project project) {
 		super.addTasks(project);
 
@@ -552,36 +569,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			sourceSet.getResources();
 
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
-	}
-
-	@Override
-	protected void configureTaskDeploy(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.configureTaskDeploy(project, liferayExtension);
-
-		Task task = GradleUtil.getTask(project, DEPLOY_TASK_NAME);
-
-		if (!(task instanceof Copy)) {
-			return;
-		}
-
-		configureTaskDeployRename((Copy)task);
-	}
-
-	protected void configureTaskDeployRename(Copy copy) {
-		final Project project = copy.getProject();
-
-		Closure<String> closure = new Closure<String>(null) {
-
-			@SuppressWarnings("unused")
-			public String doCall(String fileName) {
-				return getDeployedFileName(project, fileName);
-			}
-
-		};
-
-		copy.rename(closure);
 	}
 
 	protected void configureVersion(Project project) {

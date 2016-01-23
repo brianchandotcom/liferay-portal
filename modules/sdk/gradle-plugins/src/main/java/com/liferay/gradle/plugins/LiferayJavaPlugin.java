@@ -87,7 +87,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyPlugins(project);
 
-		addTaskDeploy(project);
+		addTaskDeploy(project, liferayExtension);
 
 		configureConfigurations(project, liferayExtension);
 		configureTaskClean(project);
@@ -202,14 +202,24 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return liferayExtension;
 	}
 
-	protected Copy addTaskDeploy(Project project) {
+	protected Copy addTaskDeploy(
+		Project project, final LiferayExtension liferayExtension) {
+
 		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
 
+		copy.from(JavaPlugin.JAR_TASK_NAME);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getDeployDir();
+				}
+
+			});
+
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		copy.from(jar);
 
 		return copy;
 	}
@@ -359,11 +369,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Copy copy = (Copy)task;
-
-		configureTaskDeployInto(copy, liferayExtension);
-
-		configureTaskDeployFrom(copy);
+		configureTaskDeployFrom((Copy)task);
 	}
 
 	protected void configureTaskDeployFrom(Copy copy) {
@@ -372,12 +378,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		addCleanDeployedFile(project, jar.getArchivePath());
-	}
-
-	protected void configureTaskDeployInto(
-		Copy copy, LiferayExtension liferayExtension) {
-
-		copy.into(liferayExtension.getDeployDir());
 	}
 
 	protected void configureTaskDirectDeploy(

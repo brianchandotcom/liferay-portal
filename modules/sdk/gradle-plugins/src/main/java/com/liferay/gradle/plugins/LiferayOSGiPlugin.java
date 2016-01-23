@@ -431,8 +431,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected Copy addTaskDeploy(final Project project) {
-		Copy copy = super.addTaskDeploy(project);
+	protected Copy addTaskDeploy(
+		final Project project, LiferayExtension liferayExtension) {
+
+		Copy copy = super.addTaskDeploy(project, liferayExtension);
 
 		copy.rename(
 			new Closure<String>(null) {

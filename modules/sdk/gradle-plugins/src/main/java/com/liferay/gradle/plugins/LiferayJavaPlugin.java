@@ -87,12 +87,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyPlugins(project);
 
-		configureConfigurations(project);
-
 		addTaskDeploy(project);
 
 		applyConfigScripts(project);
 
+		configureConfigurations(project, liferayExtension);
 		configureTaskClean(project);
 		configureTaskTest(project);
 		configureTasksDirectDeploy(project, liferayExtension);
@@ -254,9 +253,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 	}
 
-	protected void configureConfigurations(final Project project) {
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+	protected void configureConfigurations(
+		Project project, final LiferayExtension liferayExtension) {
 
 		Action<Configuration> action = new Action<Configuration>() {
 

@@ -47,7 +47,7 @@ if (filterManageableOrganizations) {
 		<%
 		SearchContainer searchContainer = new OrganizationSearch(renderRequest, portletURL);
 
-		RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+		RowChecker rowChecker = new OrganizationChecker(renderResponse);
 
 		rowChecker.setRowIds("rowIdsOrganization");
 

@@ -16,8 +16,8 @@ package com.liferay.mobile.device.rules.service.permission;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.permission.PermissionUpdateHandler;
 
 import java.util.Date;
 

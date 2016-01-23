@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.pwd;
 
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
+
 /**
  * @author Michael C. Han
  * @author Tomas Polesovsky

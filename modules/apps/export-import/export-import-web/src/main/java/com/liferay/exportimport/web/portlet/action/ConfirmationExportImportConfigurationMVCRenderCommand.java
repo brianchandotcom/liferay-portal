@@ -18,9 +18,9 @@ import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationFactory;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 

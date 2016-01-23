@@ -14,9 +14,9 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * Represents the administrator control panel entry for portlets that shall only

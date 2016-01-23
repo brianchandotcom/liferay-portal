@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.security.ldap.LDAPUserImporterUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

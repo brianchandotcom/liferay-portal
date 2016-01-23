@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.permission.ResourceActionsBag;
+
 import java.util.HashSet;
 import java.util.Set;
 

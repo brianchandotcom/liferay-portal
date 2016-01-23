@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.security.membershippolicy.samples.TestRoleMembershipPolicy;
 import com.liferay.registry.Registry;

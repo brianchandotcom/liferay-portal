@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;

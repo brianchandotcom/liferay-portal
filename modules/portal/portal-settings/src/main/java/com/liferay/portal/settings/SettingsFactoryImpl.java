@@ -16,6 +16,7 @@ package com.liferay.portal.settings;
 
 import com.liferay.portal.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.FallbackKeys;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.PortletItemLocalService;
 import com.liferay.portal.settings.util.ConfigurationPidUtil;

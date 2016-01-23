@@ -14,8 +14,8 @@
 
 package com.liferay.portal.xml;
 
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;

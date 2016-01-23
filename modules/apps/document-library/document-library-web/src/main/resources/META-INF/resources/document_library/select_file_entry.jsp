@@ -77,7 +77,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 						catch (com.liferay.portal.kernel.repository.RepositoryException re) {
 							rowURL = null;
 						}
-						catch (com.liferay.portal.security.auth.PrincipalException pe) {
+						catch (com.liferay.portal.kernel.security.auth.PrincipalException pe) {
 							rowURL = null;
 						}
 						%>

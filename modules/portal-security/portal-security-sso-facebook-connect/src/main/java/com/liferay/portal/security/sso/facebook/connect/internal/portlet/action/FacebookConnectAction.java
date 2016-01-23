@@ -17,6 +17,7 @@ package com.liferay.portal.security.sso.facebook.connect.internal.portlet.action
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;

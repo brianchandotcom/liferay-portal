@@ -20,8 +20,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureVersionServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.security.permission.ActionKeys;
 
 import java.util.List;
 

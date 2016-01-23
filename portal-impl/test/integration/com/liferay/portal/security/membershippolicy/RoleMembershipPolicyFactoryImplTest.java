@@ -14,6 +14,10 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactory;
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
+import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.security.membershippolicy.bundle.rolemembershippolicyfactoryimpl.TestRoleMembershipPolicy;

@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.security.permission.ActionKeys;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

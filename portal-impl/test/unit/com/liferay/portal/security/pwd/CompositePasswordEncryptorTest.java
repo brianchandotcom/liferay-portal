@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pwd;
 
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.DigesterImpl;

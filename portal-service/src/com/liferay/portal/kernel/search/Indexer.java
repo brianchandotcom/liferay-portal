@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Collection;
 import java.util.Locale;

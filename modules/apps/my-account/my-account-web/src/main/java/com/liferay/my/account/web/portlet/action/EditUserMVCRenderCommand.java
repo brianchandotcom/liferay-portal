@@ -16,10 +16,10 @@ package com.liferay.my.account.web.portlet.action;
 
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.RenderRequestImpl;
 

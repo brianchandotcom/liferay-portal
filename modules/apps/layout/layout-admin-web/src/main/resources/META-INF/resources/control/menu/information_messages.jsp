@@ -27,10 +27,10 @@
 <%@ page import="com.liferay.layout.admin.web.control.menu.InformationMessagesControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
+<%@ page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="com.liferay.portal.model.Group" %>
-<%@ page import="com.liferay.portal.security.auth.AuthTokenUtil" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.sites.kernel.util.SitesUtil" %>
 

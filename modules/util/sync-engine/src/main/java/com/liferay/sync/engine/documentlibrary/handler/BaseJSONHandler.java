@@ -166,7 +166,8 @@ public class BaseJSONHandler extends BaseHandler {
 			SyncFileService.update(syncFile);
 		}
 		else if (exception.equals(
-					"com.liferay.portal.security.auth.PrincipalException")) {
+					"com.liferay.portal.kernel.security.auth." +
+						"PrincipalException")) {
 
 			SyncFileService.setStatuses(
 				getLocalSyncFile(), SyncFile.STATE_ERROR,

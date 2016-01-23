@@ -16,6 +16,7 @@ package com.liferay.portal.resiliency.spi.action;
 
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -29,7 +30,6 @@ import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentResponse;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import com.liferay.portal.util.PropsImpl;

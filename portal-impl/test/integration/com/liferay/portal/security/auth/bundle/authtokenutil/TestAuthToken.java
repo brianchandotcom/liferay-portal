@@ -15,9 +15,9 @@
 package com.liferay.portal.security.auth.bundle.authtokenutil;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.security.auth.AuthToken;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.auth.AuthToken;
 
 import javax.servlet.http.HttpServletRequest;
 

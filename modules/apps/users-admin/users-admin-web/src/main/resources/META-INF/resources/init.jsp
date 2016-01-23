@@ -162,6 +162,7 @@ page import="com.liferay.portlet.announcements.service.AnnouncementsDeliveryLoca
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
+page import="com.liferay.portlet.usersadmin.search.OrganizationChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@

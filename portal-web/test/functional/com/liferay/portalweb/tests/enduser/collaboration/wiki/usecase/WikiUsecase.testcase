@@ -20,6 +20,12 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Wiki" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -41,6 +47,25 @@
 	</tear-down>
 
 	<command name="ActivateInitialStagingWithWikiAttachment" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteType" value="Blank" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -48,6 +73,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
 			<var name="portletName" value="Wiki" />
 		</execute>
 
@@ -70,6 +101,7 @@
 
 		<execute macro="WikiPage#addAttachmentViaPageEdit">
 			<var name="attachmentFileName" value="Document_1.jpg" />
+			<var name="panelHeading" value="Attachments" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 

@@ -11,7 +11,7 @@
 		<execute function="AssertClick" locator1="Wiki#LINK_EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Attachments" />
+			<var name="panelHeading" value="${panelHeading}" />
 		</execute>
 
 		<execute function="Click" locator1="Button#SELECT_FILES" />
@@ -351,6 +351,10 @@
 
 	<command name="addPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="Click" locator1="Wiki#ADD_PAGE" />
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#TITLE_FIELD" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
 
@@ -1126,23 +1130,6 @@
 	<command name="viewAttachmentPG">
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<if>
-			<isset var="numberOfAttachments" />
-			<then>
-				<if>
-					<not>
-						<equals arg1="${numberOfAttachments}" arg2="1" />
-					</not>
-					<then>
-						<execute function="AssertTextEquals" locator1="Wiki#LINK_ATTACHMENTS" value1="${numberOfAttachments} Attachments" />
-					</then>
-				</if>
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="Wiki#LINK_ATTACHMENTS" value1="1 Attachment" />
-			</else>
-		</if>
 
 		<execute function="AssertClick" locator1="Wiki#LINK_DETAILS" value1="Details" />
 

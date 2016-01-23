@@ -16,7 +16,7 @@
 
 		<var name="key_folderName" value="${bookmarkFolderName}" />
 
-		<execute function="AssertClick" locator1="BookmarksSelectFolder#FOLDER_TABLE_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="Bookmarks#FOLDER_TABLE_CHOOSE" value1="Choose" />
 
 		<execute function="SelectFrameTop" />
 
@@ -321,7 +321,7 @@
 
 		<var name="key_folderName" value="${folderName2}" />
 
-		<execute function="AssertClick" locator1="BookmarksSelectFolder#FOLDER_TABLE_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="Bookmarks#FOLDER_TABLE_CHOOSE" value1="Choose" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -418,7 +418,7 @@
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
-		<execute function="AssertTextEquals" locator1="BookmarksSearch#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
+		<execute function="AssertTextEquals" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
 	</command>
 
 	<command name="searchNullCP">
@@ -428,8 +428,8 @@
 
 		<var name="key_bookmarkName" value="${nullBookmarkName}" />
 
-		<execute function="AssertTextNotPresent" locator1="BookmarksSearch#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
-		<execute function="AssertTextNotPresent" locator1="BookmarksSearch#SEARCH_TABLE_ENTRY_NAME" value1="${bookmar2Name}" />
+		<execute function="AssertTextNotPresent" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
+		<execute function="AssertTextNotPresent" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmar2Name}" />
 	</command>
 
 	<command name="searchPG">
@@ -444,7 +444,7 @@
 
 				<var name="key_bookmarkName" value="${bookmarkName}" />
 
-				<execute function="AssertTextEquals" locator1="BookmarksSearch#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
+				<execute function="AssertTextEquals" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
 			</then>
 			<elseif>
 				<equals arg1="${bookmarkSearch}" arg2="Null" />
@@ -469,7 +469,7 @@
 
 					<var name="key_bookmarkName" value="${bookmarkName}" />
 
-					<execute function="AssertTextEquals" locator1="BookmarksSearch#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
+					<execute function="AssertTextEquals" locator1="Bookmarks#SEARCH_TABLE_ENTRY_NAME" value1="${bookmarkName}" />
 				</then>
 			</elseif>
 		</if>
@@ -543,8 +543,12 @@
 	</command>
 
 	<command name="viewEntry">
-		<execute function="AssertTextEquals" locator1="BookmarksEntry#NAME" value1="${bookmarkName}" />
-		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARK_ASSET_URL" value1="${bookmarkURL}" />
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
+		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
 	</command>
 
 	<command name="viewNoCategoryCP">

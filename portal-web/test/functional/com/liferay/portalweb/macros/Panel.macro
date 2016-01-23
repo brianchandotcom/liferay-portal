@@ -4,13 +4,13 @@
 
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
-				<condition function="IsVisible" locator1="Panel#PANEL_HEADING_COLLAPSED" />
+				<condition function="IsElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+				<condition function="IsVisible" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
 			</and>
 			<then>
 				<execute function="AssertClick" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
 
-				<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_EXPANDED" />
+				<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_EXPANDED" value1="${panelHeading}" />
 			</then>
 		</if>
 	</command>

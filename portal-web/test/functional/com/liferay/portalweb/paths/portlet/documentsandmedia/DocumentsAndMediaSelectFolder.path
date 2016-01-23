@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>FOLDER</td>
-	<td>//tbody[@class='table-data']//a[contains(.,'${key_dmFolderName}')]/span</td>
+	<td>//a[contains(.,'${key_dmFolderName}')]//span[contains(@class,'taglib-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CHOOSE_BUTTON</td>
-	<td>//tbody[@class='table-data']//button[contains(@data-foldername,'${key_dmFolderName}')]</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

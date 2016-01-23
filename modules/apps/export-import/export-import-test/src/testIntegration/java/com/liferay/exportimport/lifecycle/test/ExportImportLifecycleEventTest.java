@@ -166,18 +166,25 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutLocalPublishing() throws Exception {
-		try (CaptureAppender captureAppender =
+		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR)) {
+					Level.ERROR);
+			CaptureAppender captureAppender2 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.exportimport.background.task." +
+						"LayoutStagingBackgroundTaskExecutor",
+					Level.WARN)) {
+
+			long targetGroupId = RandomTestUtil.nextLong();
 
 			StagingUtil.publishLayouts(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.nextInt(), false, new long[0], _parameterMap);
+				TestPropsValues.getUserId(), _group.getGroupId(), targetGroupId,
+				false, new long[0], _parameterMap);
 
 			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
+				captureAppender1.getLoggingEvents();
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
@@ -191,6 +198,15 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.assertSame(
 				NoSuchLayoutSetException.class, throwable.getClass());
+
+			loggingEvents = captureAppender2.getLoggingEvents();
+
+			loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to publish layout: No LayoutSet exists with the key " +
+					"{groupId=" + targetGroupId + ", privateLayout=false}",
+				loggingEvent.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -270,18 +286,23 @@ public class ExportImportLifecycleEventTest {
 	public void testFailedPortletLocalPublishing() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		try (CaptureAppender captureAppender =
+		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR)) {
+					Level.ERROR);
+			CaptureAppender captureAppender2 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.exportimport.background.task." +
+						"PortletStagingBackgroundTaskExecutor",
+					Level.WARN)) {
 
 			StagingUtil.publishPortlet(
 				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
 				0, 0, StringPool.BLANK, _parameterMap);
 
 			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
+				captureAppender1.getLoggingEvents();
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
@@ -295,6 +316,15 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.assertSame(
 				NoSuchLayoutException.class, throwable.getClass());
+
+			loggingEvents = captureAppender2.getLoggingEvents();
+
+			loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to publish portlet: No Layout exists with the " +
+					"primary key 0",
+				loggingEvent.getMessage());
 		}
 
 		Assert.assertTrue(

@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
@@ -194,6 +195,9 @@ public class PortletRequestDispatcherImplTest {
 		private TestPortletRequest(String contextPath, Portlet portlet) {
 			_contextPath = contextPath;
 			_portlet = portlet;
+
+			ReflectionTestUtil.setFieldValue(
+				this, "_request", new MockHttpServletRequest());
 		}
 
 		private final String _contextPath;

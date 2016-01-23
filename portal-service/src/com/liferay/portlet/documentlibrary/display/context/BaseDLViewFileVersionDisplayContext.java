@@ -65,6 +65,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public int getDDMStructuresCount() throws PortalException {
+		return parentDisplayContext.getDDMStructuresCount();
+	}
+
+	@Override
 	public Menu getMenu() throws PortalException {
 		return parentDisplayContext.getMenu();
 	}

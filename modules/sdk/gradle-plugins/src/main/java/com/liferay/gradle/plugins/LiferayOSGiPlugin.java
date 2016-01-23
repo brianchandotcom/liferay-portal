@@ -591,11 +591,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		project.setVersion(bundleVersion);
 	}
 
-	@Override
-	protected void configureVersion(
-		Project project, LiferayExtension liferayExtension) {
-	}
-
 	protected String getBundleInstruction(Project project, String key) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 

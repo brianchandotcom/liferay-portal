@@ -102,8 +102,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureVersion(project, liferayExtension);
-
 					configureTasks(project, liferayExtension);
 				}
 
@@ -510,13 +508,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		if (includes.isEmpty()) {
 			test.setIncludes(Collections.singleton("**/*Test.class"));
 		}
-	}
-
-	protected void configureVersion(
-		Project project, LiferayExtension liferayExtension) {
-
-		project.setVersion(
-			liferayExtension.getVersionPrefix() + "." + project.getVersion());
 	}
 
 	protected String getDeployedFileName(Project project, File sourceFile) {

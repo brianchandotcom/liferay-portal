@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
@@ -27,19 +26,13 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.BuildSoyTask;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
-import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
-import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtension;
-import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
-import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
-import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -49,7 +42,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -91,36 +83,17 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		final LiferayExtension liferayExtension = addLiferayExtension(project);
 
-		addConfigurations(project, liferayExtension);
+		addConfigurationPortal(project, liferayExtension);
 
 		applyPlugins(project);
 
-		configureConfigurations(project);
+		addTaskDeploy(project, liferayExtension);
 
-		addTasks(project);
-
-		applyConfigScripts(project);
-
-		configureTestIntegrationTomcat(project, liferayExtension);
-
+		configureConfigurations(project, liferayExtension);
 		configureTaskClean(project);
-		configureTaskSetupTestableTomcat(project, liferayExtension);
-		configureTaskStartTestableTomcat(project, liferayExtension);
-		configureTaskStopTestableTomcat(project, liferayExtension);
 		configureTaskTest(project);
-		configureTaskTestIntegration(project);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureVersion(project, liferayExtension);
-
-					configureTasks(project, liferayExtension);
-				}
-
-			});
+		configureTasksDirectDeploy(project, liferayExtension);
+		configureTasksTest(project);
 	}
 
 	protected void addCleanDeployedFile(Project project, File sourceFile) {
@@ -160,12 +133,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
-	}
-
-	protected void addConfigurations(
-		Project project, LiferayExtension liferayExtension) {
-
-		addConfigurationPortal(project, liferayExtension);
 	}
 
 	protected void addDependenciesPortal(
@@ -214,31 +181,50 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected LiferayExtension addLiferayExtension(Project project) {
-		return GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
-	}
+		LiferayExtension liferayExtension = GradleUtil.addExtension(
+			project, LiferayPlugin.PLUGIN_NAME, getLiferayExtensionClass());
 
-	protected Copy addTaskDeploy(Project project) {
-		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
-
-		copy.setDescription("Assembles the project and deploys it to Liferay.");
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		copy.from(jar);
-
-		return copy;
-	}
-
-	protected void addTasks(Project project) {
-		addTaskDeploy(project);
-	}
-
-	protected void applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
 			project,
 			"com/liferay/gradle/plugins/dependencies/config-liferay.gradle",
 			project);
+
+		return liferayExtension;
+	}
+
+	protected Copy addTaskDeploy(
+		Project project, final LiferayExtension liferayExtension) {
+
+		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
+
+		final Jar jar = (Jar)GradleUtil.getTask(
+			project, JavaPlugin.JAR_TASK_NAME);
+
+		copy.from(jar);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getDeployDir();
+				}
+
+			});
+
+		copy.setDescription("Assembles the project and deploys it to Liferay.");
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					addCleanDeployedFile(project, jar.getArchivePath());
+				}
+
+			});
+
+		return copy;
 	}
 
 	protected void applyPlugins(Project project) {
@@ -267,6 +253,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, TestIntegrationDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
 		GradleUtil.applyPlugin(
 			project, UpgradeTableBuilderDefaultsPlugin.class);
@@ -277,9 +264,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 	}
 
-	protected void configureConfigurations(final Project project) {
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+	protected void configureConfigurations(
+		Project project, final LiferayExtension liferayExtension) {
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
 
 		Action<Configuration> action = new Action<Configuration>() {
 
@@ -313,9 +302,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			}
 
 		};
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
 
 		configurationContainer.all(action);
 	}
@@ -377,81 +363,54 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		delete.dependsOn(closure);
 	}
 
-	protected void configureTaskDeploy(
-		Project project, LiferayExtension liferayExtension) {
+	protected void configureTaskDirectDeploy(
+		DirectDeployTask directDeployTask,
+		final LiferayExtension liferayExtension) {
 
-		Task task = GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+		directDeployTask.setAppServerDir(
+			new Callable<File>() {
 
-		if (!(task instanceof Copy)) {
-			return;
-		}
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getAppServerDir();
+				}
 
-		Copy copy = (Copy)task;
+			});
 
-		configureTaskDeployInto(copy, liferayExtension);
+		directDeployTask.setAppServerLibGlobalDir(
+			new Callable<File>() {
 
-		configureTaskDeployFrom(copy);
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getAppServerLibGlobalDir();
+				}
+
+			});
+
+		directDeployTask.setAppServerPortalDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getAppServerPortalDir();
+				}
+
+			});
+
+		directDeployTask.setAppServerType(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return liferayExtension.getAppServerType();
+				}
+
+			});
 	}
 
-	protected void configureTaskDeployFrom(Copy copy) {
-		Project project = copy.getProject();
+	protected void configureTasksDirectDeploy(
+		Project project, final LiferayExtension liferayExtension) {
 
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		addCleanDeployedFile(project, jar.getArchivePath());
-	}
-
-	protected void configureTaskDeployInto(
-		Copy copy, LiferayExtension liferayExtension) {
-
-		copy.into(liferayExtension.getDeployDir());
-	}
-
-	protected void configureTaskDirectDeployAppServerDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (directDeployTask.getAppServerDir() == null) {
-			directDeployTask.setAppServerDir(
-				liferayExtension.getAppServerDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerLibGlobalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (directDeployTask.getAppServerLibGlobalDir() == null) {
-			directDeployTask.setAppServerLibGlobalDir(
-				liferayExtension.getAppServerLibGlobalDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerPortalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (directDeployTask.getAppServerPortalDir() == null) {
-			directDeployTask.setAppServerPortalDir(
-				liferayExtension.getAppServerPortalDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerType(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (Validator.isNull(directDeployTask.getAppServerType())) {
-			directDeployTask.setAppServerType(
-				liferayExtension.getAppServerType());
-		}
-	}
-
-	protected void configureTasks(
-		Project project, LiferayExtension liferayExtension) {
-
-		configureTaskDeploy(project, liferayExtension);
-
-		configureTasksDirectDeploy(project);
-	}
-
-	protected void configureTasksDirectDeploy(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -460,100 +419,23 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DirectDeployTask directDeployTask) {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						directDeployTask.getProject(), LiferayExtension.class);
-
-					configureTaskDirectDeployAppServerDir(
-						directDeployTask, liferayExtension);
-					configureTaskDirectDeployAppServerLibGlobalDir(
-						directDeployTask, liferayExtension);
-					configureTaskDirectDeployAppServerPortalDir(
-						directDeployTask, liferayExtension);
-					configureTaskDirectDeployAppServerType(
+					configureTaskDirectDeploy(
 						directDeployTask, liferayExtension);
 				}
 
 			});
 	}
 
-	protected void configureTaskSetupTestableTomcat(
-		Project project, LiferayExtension liferayExtension) {
+	protected void configureTasksTest(Project project) {
+		TaskContainer taskContainer = project.getTasks();
 
-		SetupTestableTomcatTask setupTestableTomcatTask =
-			(SetupTestableTomcatTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.SETUP_TESTABLE_TOMCAT_TASK_NAME);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		setupTestableTomcatTask.setZipUrl(
-			new Callable<String>() {
+		taskContainer.withType(
+			Test.class,
+			new Action<Test>() {
 
 				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getZipUrl();
-				}
-
-			});
-	}
-
-	protected void configureTaskStartTestableTomcat(
-		Project project, LiferayExtension liferayExtension) {
-
-		StartTestableTomcatTask startTestableTomcatTask =
-			(StartTestableTomcatTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.START_TESTABLE_TOMCAT_TASK_NAME);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		startTestableTomcatTask.setExecutable(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getStartExecutable();
-				}
-
-			});
-
-		startTestableTomcatTask.setExecutableArgs(
-			new Callable<List<String>>() {
-
-				@Override
-				public List<String> call() throws Exception {
-					return tomcatAppServer.getStartExecutableArgs();
-				}
-
-			});
-	}
-
-	protected void configureTaskStopTestableTomcat(
-		Project project, LiferayExtension liferayExtension) {
-
-		StopAppServerTask stopAppServerTask =
-			(StopAppServerTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.STOP_TESTABLE_TOMCAT_TASK_NAME);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		stopAppServerTask.setExecutable(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getStopExecutable();
-				}
-
-			});
-
-		stopAppServerTask.setExecutableArgs(
-			new Callable<List<String>>() {
-
-				@Override
-				public List<String> call() throws Exception {
-					return tomcatAppServer.getStopExecutableArgs();
+				public void execute(Test test) {
+					configureTaskTestDefaultCharacterEncoding(test);
 				}
 
 			});
@@ -563,10 +445,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		final Test test = (Test)GradleUtil.getTask(
 			project, JavaPlugin.TEST_TASK_NAME);
 
-		test.setForkEvery(1L);
+		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
+		test.jvmArgs("-Dliferay.mode=test");
+		test.jvmArgs("-Duser.timezone=GMT");
 
-		configureTaskTestDefaultCharacterEncoding(test);
-		configureTaskTestJvmArgs(test);
+		test.setForkEvery(1L);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -591,109 +474,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskTestIntegration(Project project) {
-		Test test = (Test)GradleUtil.getTask(
-			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
-
-		configureTaskTestDefaultCharacterEncoding(test);
-	}
-
-	protected void configureTaskTestJvmArgs(Test test) {
-		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
-		test.jvmArgs("-Dliferay.mode=test");
-		test.jvmArgs("-Duser.timezone=GMT");
-	}
-
-	protected void configureTestIntegrationTomcat(
-		Project project, final LiferayExtension liferayExtension) {
-
-		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
-			GradleUtil.getExtension(
-				project, TestIntegrationTomcatExtension.class);
-
-		final TomcatAppServer tomcatAppServer =
-			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
-
-		testIntegrationTomcatExtension.setCheckPath(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getCheckPath();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setPortNumber(
-			new Callable<Integer>() {
-
-				@Override
-				public Integer call() throws Exception {
-					return tomcatAppServer.getPortNumber();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return tomcatAppServer.getDir();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setJmxRemotePort(
-			new Callable<Integer>() {
-
-				@Override
-				public Integer call() throws Exception {
-					return liferayExtension.getJmxRemotePort();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setLiferayHome(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return liferayExtension.getLiferayHome();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setManagerPassword(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getManagerPassword();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setManagerUserName(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getManagerUserName();
-				}
-
-			});
-	}
-
-	protected void configureVersion(
-		Project project, LiferayExtension liferayExtension) {
-
-		project.setVersion(
-			liferayExtension.getVersionPrefix() + "." + project.getVersion());
-	}
-
 	protected String getDeployedFileName(Project project, File sourceFile) {
 		return sourceFile.getName();
+	}
+
+	protected Class<? extends LiferayExtension> getLiferayExtensionClass() {
+		return LiferayExtension.class;
 	}
 
 	protected boolean isCleanDeployed(Delete delete) {

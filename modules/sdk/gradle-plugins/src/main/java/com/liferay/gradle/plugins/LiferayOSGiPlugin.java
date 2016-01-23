@@ -79,6 +79,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	public void apply(Project project) {
 		super.apply(project);
 
+		addTaskAutoUpdateXml(project);
+		addTasksBuildWSDDJar(project);
+
 		configureArchivesBaseName(project);
 		configureDescription(project);
 		configureSourceSetMain(project);
@@ -124,12 +127,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		};
 
 		delete.delete(closure);
-	}
-
-	@Override
-	protected LiferayExtension addLiferayExtension(Project project) {
-		return GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, LiferayOSGiExtension.class);
 	}
 
 	protected DirectDeployTask addTaskAutoUpdateXml(final Project project) {
@@ -434,11 +431,25 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void addTasks(Project project) {
-		super.addTasks(project);
+	protected Copy addTaskDeploy(
+		final Project project, LiferayExtension liferayExtension) {
 
-		addTaskAutoUpdateXml(project);
+		Copy copy = super.addTaskDeploy(project, liferayExtension);
 
+		copy.rename(
+			new Closure<String>(null) {
+
+				@SuppressWarnings("unused")
+				public String doCall(String fileName) {
+					return getDeployedFileName(project, fileName);
+				}
+
+			});
+
+		return copy;
+	}
+
+	protected void addTasksBuildWSDDJar(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -554,46 +565,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
 	}
 
-	@Override
-	protected void configureTaskDeploy(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.configureTaskDeploy(project, liferayExtension);
-
-		Task task = GradleUtil.getTask(project, DEPLOY_TASK_NAME);
-
-		if (!(task instanceof Copy)) {
-			return;
-		}
-
-		configureTaskDeployRename((Copy)task);
-	}
-
-	protected void configureTaskDeployRename(Copy copy) {
-		final Project project = copy.getProject();
-
-		Closure<String> closure = new Closure<String>(null) {
-
-			@SuppressWarnings("unused")
-			public String doCall(String fileName) {
-				return getDeployedFileName(project, fileName);
-			}
-
-		};
-
-		copy.rename(closure);
-	}
-
 	protected void configureVersion(Project project) {
 		String bundleVersion = getBundleInstruction(
 			project, Constants.BUNDLE_VERSION);
 
 		project.setVersion(bundleVersion);
-	}
-
-	@Override
-	protected void configureVersion(
-		Project project, LiferayExtension liferayExtension) {
 	}
 
 	protected String getBundleInstruction(Project project, String key) {
@@ -620,6 +596,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return sourceFileName.replace(
 			"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
 			"." + Jar.DEFAULT_EXTENSION);
+	}
+
+	@Override
+	protected Class<? extends LiferayExtension> getLiferayExtensionClass() {
+		return LiferayOSGiExtension.class;
 	}
 
 	protected void replaceJarBuilderFactory(Project project) {

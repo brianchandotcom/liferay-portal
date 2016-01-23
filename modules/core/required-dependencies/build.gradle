@@ -25,9 +25,6 @@ deploy {
 	}
 
 	from configurations.compile
+	into new File(liferay.liferayHome, "osgi/static")
 	rename new RenameDependencyClosure(project, "compile")
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/static")
 }

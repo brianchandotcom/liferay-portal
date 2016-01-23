@@ -4,7 +4,7 @@ import com.liferay.gradle.util.FileUtil
 apply plugin: "com.liferay.patcher"
 
 task patch(type: PatchTask)
-task war(type: Zip, overwrite: true)
+task war(type: Zip)
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"

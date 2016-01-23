@@ -95,8 +95,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addFileEntry(
-			userId, repositoryId, folderId, sourceFileName, mimeType, null,
-			StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+			userId, repositoryId, folderId, sourceFileName, mimeType,
+			sourceFileName, StringPool.BLANK, StringPool.BLANK, bytes,
+			serviceContext);
 	}
 
 	/**

@@ -1590,6 +1590,7 @@
 		<field name="mimeType" type="String" />
 		<field name="title" type="String">
 			<hint name="max-length">255</hint>
+			<validator name="required" />
 		</field>
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />

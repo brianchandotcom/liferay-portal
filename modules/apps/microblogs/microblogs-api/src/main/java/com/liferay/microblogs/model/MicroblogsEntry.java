@@ -16,6 +16,7 @@ package com.liferay.microblogs.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
@@ -29,6 +30,7 @@ import com.liferay.portal.model.PersistedModel;
  * @generated
  */
 @ProviderType
+@ImplementationClassName("com.liferay.microblogs.model.impl.MicroblogsEntryImpl")
 public interface MicroblogsEntry extends MicroblogsEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:

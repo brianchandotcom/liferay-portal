@@ -16,6 +16,7 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.Accessor;
  * @generated
  */
 @ProviderType
+@ImplementationClassName("com.liferay.portal.model.impl.RecentLayoutRevisionImpl")
 public interface RecentLayoutRevision extends RecentLayoutRevisionModel,
 	PersistedModel {
 	/*

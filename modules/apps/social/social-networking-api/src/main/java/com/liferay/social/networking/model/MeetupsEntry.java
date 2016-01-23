@@ -16,6 +16,7 @@ package com.liferay.social.networking.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
@@ -29,6 +30,7 @@ import com.liferay.portal.model.PersistedModel;
  * @generated
  */
 @ProviderType
+@ImplementationClassName("com.liferay.social.networking.model.impl.MeetupsEntryImpl")
 public interface MeetupsEntry extends MeetupsEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:

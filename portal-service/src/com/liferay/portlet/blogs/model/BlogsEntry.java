@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
@@ -29,6 +30,7 @@ import com.liferay.portal.model.PersistedModel;
  * @generated
  */
 @ProviderType
+@ImplementationClassName("com.liferay.portlet.blogs.model.impl.BlogsEntryImpl")
 public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:

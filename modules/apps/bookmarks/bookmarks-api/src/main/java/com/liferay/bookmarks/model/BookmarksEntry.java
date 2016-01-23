@@ -16,6 +16,7 @@ package com.liferay.bookmarks.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.TreeModel;
@@ -30,6 +31,7 @@ import com.liferay.portal.model.TreeModel;
  * @generated
  */
 @ProviderType
+@ImplementationClassName("com.liferay.bookmarks.model.impl.BookmarksEntryImpl")
 public interface BookmarksEntry extends BookmarksEntryModel, PermissionedModel,
 	TreeModel {
 	/*

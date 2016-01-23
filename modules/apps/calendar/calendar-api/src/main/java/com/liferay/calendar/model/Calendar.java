@@ -16,6 +16,7 @@ package com.liferay.calendar.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PermissionedModel;
 
@@ -29,6 +30,7 @@ import com.liferay.portal.model.PermissionedModel;
  * @generated
  */
 @ProviderType
+@ImplementationClassName("com.liferay.calendar.model.impl.CalendarImpl")
 public interface Calendar extends CalendarModel, PermissionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:

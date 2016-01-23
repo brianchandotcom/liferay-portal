@@ -631,7 +631,11 @@ public class PoshiRunnerExecutor {
 		List<Element> argElements = executeElement.elements("arg");
 
 		for (Element argElement : argElements) {
-			parameterList.add(argElement.attributeValue("value"));
+			String parameter = argElement.attributeValue("value");
+
+			parameter = PoshiRunnerVariablesUtil.replaceCommandVars(parameter);
+
+			parameterList.add(parameter);
 		}
 
 		Element returnElement = executeElement.element("return");
@@ -639,6 +643,7 @@ public class PoshiRunnerExecutor {
 		String returnVariable = returnElement.attributeValue("name");
 		String className = executeElement.attributeValue("class");
 		String methodName = executeElement.attributeValue("method");
+
 		String[] parameters = parameterList.toArray(
 			new String[parameterList.size()]);
 

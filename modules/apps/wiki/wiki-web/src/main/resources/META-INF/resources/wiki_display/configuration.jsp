@@ -34,78 +34,80 @@ boolean nodeInGroup = false;
 
 	<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= !nodes.isEmpty() %>">
-				<aui:select label="node" name="preferences--nodeId--">
-					<aui:option value="" />
-
-					<%
-					for (WikiNode node : nodes) {
-						node = node.toEscapedModel();
-
-						if (nodeId == node.getNodeId()) {
-							nodeInGroup = true;
-						}
-					%>
-
-						<aui:option label="<%= node.getName() %>" selected="<%= nodeId == node.getNodeId() %>" value="<%= node.getNodeId() %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-are-no-available-nodes-for-selection" />
-				</div>
-			</c:otherwise>
-		</c:choose>
-
-		<c:choose>
-			<c:when test="<%= nodeInGroup %>">
-				<div id="<portlet:namespace />pageSelectorContainer">
-					<aui:select label="page" name="preferences--title--">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<c:choose>
+				<c:when test="<%= !nodes.isEmpty() %>">
+					<aui:select label="node" name="preferences--nodeId--">
+						<aui:option value="" />
 
 						<%
-						int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
+						for (WikiNode node : nodes) {
+							node = node.toEscapedModel();
 
-						List pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
-
-						for (int i = 0; i < pages.size(); i++) {
-							WikiPage wikiPage = (WikiPage)pages.get(i);
+							if (nodeId == node.getNodeId()) {
+								nodeInGroup = true;
+							}
 						%>
 
-								<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) %>" />
+							<aui:option label="<%= node.getName() %>" selected="<%= nodeId == node.getNodeId() %>" value="<%= node.getNodeId() %>" />
 
 						<%
 						}
 						%>
 
 					</aui:select>
-				</div>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-are-no-available-nodes-for-selection" />
+					</div>
+				</c:otherwise>
+			</c:choose>
 
-				<aui:script sandbox="<%= true %>">
-					var nodeIdSelect = $('#<portlet:namespace/>nodeId');
-					var pageSelectorContainer = $('#<portlet:namespace />pageSelectorContainer');
+			<c:choose>
+				<c:when test="<%= nodeInGroup %>">
+					<div id="<portlet:namespace />pageSelectorContainer">
+						<aui:select label="page" name="preferences--title--">
 
-					var nodeIdValue = nodeIdSelect.val();
+							<%
+							int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
 
-					nodeIdSelect.on(
-						'change',
-						function() {
-							pageSelectorContainer.toggleClass('hide', nodeIdSelect.val() !== nodeIdValue);
-						}
-					);
-				</aui:script>
-			</c:when>
-			<c:otherwise>
-				<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
-			</c:otherwise>
-		</c:choose>
-	</aui:fieldset>
+							List pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
+
+							for (int i = 0; i < pages.size(); i++) {
+								WikiPage wikiPage = (WikiPage)pages.get(i);
+							%>
+
+									<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+
+					<aui:script sandbox="<%= true %>">
+						var nodeIdSelect = $('#<portlet:namespace/>nodeId');
+						var pageSelectorContainer = $('#<portlet:namespace />pageSelectorContainer');
+
+						var nodeIdValue = nodeIdSelect.val();
+
+						nodeIdSelect.on(
+							'change',
+							function() {
+								pageSelectorContainer.toggleClass('hide', nodeIdSelect.val() !== nodeIdValue);
+							}
+						);
+					</aui:script>
+				</c:when>
+				<c:otherwise>
+					<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
+				</c:otherwise>
+			</c:choose>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" disabled="<%= nodes.isEmpty() %>" type="submit" />

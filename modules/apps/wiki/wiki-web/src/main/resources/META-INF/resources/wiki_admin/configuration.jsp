@@ -42,6 +42,7 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"
 		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
 	>
 		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
@@ -51,34 +52,36 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 		<liferay-ui:error key="emailPageUpdatedSubject" message="please-enter-a-valid-subject" />
 
 		<liferay-ui:section>
-			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromName() %>" />
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromAddress() %>" />
-			</aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromAddress() %>" />
+				</aui:fieldset>
 
-			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
-				<dl>
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="definition-of-terms">
+					<dl>
 
-					<%
-					Map<String, String> definitionTerms = mailTemplatesHelper.getEmailFromDefinitionTerms();
+						<%
+						Map<String, String> definitionTerms = mailTemplatesHelper.getEmailFromDefinitionTerms();
 
-					for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
-					%>
+						for (Map.Entry<String, String> definitionTerm : definitionTerms.entrySet()) {
+						%>
 
-						<dt>
-							<%= definitionTerm.getKey() %>
-						</dt>
-						<dd>
-							<%= definitionTerm.getValue() %>
-						</dd>
+							<dt>
+								<%= definitionTerm.getKey() %>
+							</dt>
+							<dd>
+								<%= definitionTerm.getValue() %>
+							</dd>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</dl>
-			</aui:fieldset>
+					</dl>
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<%
@@ -86,33 +89,39 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 		%>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedBodyXml() %>"
-				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() %>"
-				emailParam="emailPageAdded"
-				emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedSubjectXml() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedBodyXml() %>"
+					emailDefinitionTerms="<%= definitionTerms %>"
+					emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() %>"
+					emailParam="emailPageAdded"
+					emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedSubjectXml() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedBodyXml() %>"
-				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled() %>"
-				emailParam="emailPageUpdated"
-				emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedSubjectXml() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedBodyXml() %>"
+					emailDefinitionTerms="<%= definitionTerms %>"
+					emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled() %>"
+					emailParam="emailPageUpdated"
+					emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedSubjectXml() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 			<liferay-ui:section>
-				<liferay-ui:rss-settings
-					delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
-					displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
-					enabled="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>"
-					feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"
-				/>
+				<aui:fieldset-group markupView="lexicon">
+					<liferay-ui:rss-settings
+						delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
+						displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
+						enabled="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>"
+						feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"
+					/>
+				</aui:fieldset-group>
 			</liferay-ui:section>
 		</c:if>
 	</liferay-ui:tabs>

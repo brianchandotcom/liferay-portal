@@ -32,7 +32,6 @@ import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.JavaCompile;
 
@@ -47,15 +46,8 @@ public class JspCDefaultsPlugin
 
 	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	protected void addDependenciesJspC(Project project) {
-		PluginContainer pluginContainer = project.getPlugins();
-
-		if (!pluginContainer.hasPlugin(LiferayPlugin.class)) {
-			return;
-		}
-
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+	protected void addDependenciesJspC(
+		Project project, LiferayExtension liferayExtension) {
 
 		GradleUtil.addDependency(
 			project, JspCPlugin.CONFIGURATION_NAME,
@@ -144,7 +136,7 @@ public class JspCDefaultsPlugin
 
 				@Override
 				public void execute(Project project) {
-					addDependenciesJspC(project);
+					addDependenciesJspC(project, liferayExtension);
 					configureTaskCompileJSP(project, liferayExtension);
 				}
 

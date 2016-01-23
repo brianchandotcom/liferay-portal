@@ -328,9 +328,7 @@ if (portletTitleBasedNavigation) {
 
 				<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 
-				<aui:input name="title">
-					<aui:validator errorMessage="you-must-specify-a-title" name="required" />
-				</aui:input>
+				<aui:input name="title" />
 
 				<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 					<aui:input name="description" />

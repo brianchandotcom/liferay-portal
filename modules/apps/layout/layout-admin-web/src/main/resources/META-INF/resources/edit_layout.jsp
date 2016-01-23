@@ -85,7 +85,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 	<portlet:actionURL name="deleteLayout" var="deleteLayoutURL">
 		<portlet:param name="mvcPath" value="/view.jsp" />
 		<portlet:param name="redirect" value="<%= deleteRedirectURL.toString() %>" />
-		<portlet:param name="plid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+		<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
 	</portlet:actionURL>
 
 	<aui:script use="aui-base">

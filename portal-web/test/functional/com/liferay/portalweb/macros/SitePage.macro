@@ -1,10 +1,10 @@
 <definition>
 	<command name="addJavaScript">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="JavaScript" />
@@ -49,11 +49,11 @@
 	<command name="changePageTypeLayoutCP">
 		<var name="key_pageType" value="${pageType}" />
 
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" value1="${pageType}" />
 
@@ -98,12 +98,12 @@
 	</command>
 
 	<command name="deletePrivatePageCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+			<condition function="IsElementPresent" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
-				<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 				<execute function="ClickNoError" locator1="SitePages#TOOLBAR_DELETE" />
 
@@ -119,12 +119,12 @@
 	</command>
 
 	<command name="deletePublicPageCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<if>
-			<condition function="IsVisible" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+			<condition function="IsVisible" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
-				<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 				<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 			</then>
@@ -143,12 +143,12 @@
 	</command>
 
 	<command name="deleteSitepagesCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+			<condition function="IsElementPresent" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
-				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+				<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
 				<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
@@ -159,7 +159,7 @@
 	</command>
 
 	<command name="disallowEditViaSiteAdminEditCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}"  />
 
@@ -168,9 +168,9 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${sitePageNameEdit}" />
 
@@ -203,10 +203,10 @@
 	</command>
 
 	<command name="expandRootCP">
-		<execute function="AssertElementPresent#assertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="ProductMenu#EDIT_PAGE" />
 
 		<if>
-			<condition function="IsNotVisible" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+			<condition function="IsNotVisible" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
 				<execute function="Click" locator1="SitePages#PAGE_TREE_ROOT_ARROW" />
 			</then>
@@ -214,9 +214,9 @@
 	</command>
 
 	<command name="firstPageCanNotBeOfTypeLinkToURL">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 
@@ -333,9 +333,9 @@
 		<execute function="Pause" locator1="5000" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+			<condition function="IsElementPresent" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
-				<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 				<execute function="Click" locator1="SitePages#TOOLBAR_DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
@@ -345,7 +345,7 @@
 	</command>
 
 	<command name="viewChildPage">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="AssertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_TO_PAGE" />
 
@@ -409,11 +409,11 @@
 	</command>
 
 	<command name="viewCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${sitePageName}" />
 	</command>
@@ -466,15 +466,15 @@
 	</command>
 
 	<command name="viewFriendlyURLCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="AssertTextEquals" locator1="SitePages#DETAILS_FRIENDLY_BASE_URL" value1="http://localhost:8080/web${siteFriendlyURL}" />
 	</command>
 
 	<command name="viewIncompletePageViaStagingPageVariationCP">
-		<var name="key_sitePageName" value="${pageName}" />
+		<var name="key_page" value="${pageName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_INFO_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 		<execute function="AssertTextEquals" locator1="SitePages#INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
@@ -559,7 +559,7 @@
 	</command>
 
 	<command name="viewPagesOrderCP">
-		<var name="key_sitePageName" value="${pageName1}" />
+		<var name="key_page" value="${pageName1}" />
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName1}" />
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" value1="${pageName2}" />
 		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="${pageName3}" />
@@ -591,11 +591,11 @@
 	<command name="viewPanelPortletListCP">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
 
 		<var name="key_componentName" value="${componentName}" />
 

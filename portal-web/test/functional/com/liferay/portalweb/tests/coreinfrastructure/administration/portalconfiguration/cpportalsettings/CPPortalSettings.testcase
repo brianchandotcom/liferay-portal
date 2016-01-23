@@ -563,7 +563,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="entryContent" value="Blogs Entry Content" />

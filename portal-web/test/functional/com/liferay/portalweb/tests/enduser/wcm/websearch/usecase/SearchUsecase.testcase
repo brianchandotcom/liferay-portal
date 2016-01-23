@@ -65,7 +65,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />
@@ -265,7 +265,7 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="${searchPageName}" />

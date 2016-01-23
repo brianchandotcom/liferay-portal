@@ -59,7 +59,7 @@
 
 		<execute function="AssertTextEquals" locator1="Polls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Polls Page" />
@@ -171,7 +171,7 @@
 
 		<execute function="AssertTextEquals" locator1="Polls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Polls Page" />

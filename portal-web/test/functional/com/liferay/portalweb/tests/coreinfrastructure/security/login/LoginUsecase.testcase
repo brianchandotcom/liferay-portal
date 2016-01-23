@@ -24,7 +24,7 @@
 	<command name="SessionTimeout" priority="4">
 		<property name="web.xml.timeout" value="1" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 
@@ -40,7 +40,7 @@
 			<var name="rememberMeChecked" value="true" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="Pause" locator1="60000" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
@@ -54,7 +54,7 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 

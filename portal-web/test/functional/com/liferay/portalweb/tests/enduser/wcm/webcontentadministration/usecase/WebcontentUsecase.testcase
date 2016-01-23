@@ -373,7 +373,7 @@
 
 		<execute macro="Portlet#startServer" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#firstLoginPG" />
 

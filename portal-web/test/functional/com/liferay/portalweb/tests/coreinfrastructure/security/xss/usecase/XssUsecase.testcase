@@ -84,7 +84,7 @@
 			<var name="userLastNameEdit" value="${userLastNameEdit}" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT_USER_NAME" value1="${userLastNameEdit}" />
 
@@ -92,7 +92,7 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="RelatedAssets#gotoBookmarksSelectionPG">
 			<var name="assetType" value="Bookmarks Entry" />
@@ -149,7 +149,7 @@
 			<var name="googleAnalyticsID"><![CDATA[']);alert(/googleAnalyticsId/);//]]></var>
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
@@ -181,7 +181,7 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertAlertNotPresent" />
 	</command>

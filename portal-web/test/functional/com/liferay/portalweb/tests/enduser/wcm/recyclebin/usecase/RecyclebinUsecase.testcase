@@ -546,7 +546,7 @@
 			<var name="dmDocumentTitle" value="DM Document Title 1" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
@@ -564,7 +564,7 @@
 			<var name="dmDocumentTitle" value="DM Document Title 2" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />

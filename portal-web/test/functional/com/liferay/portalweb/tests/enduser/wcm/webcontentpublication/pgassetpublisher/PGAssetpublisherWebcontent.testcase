@@ -77,21 +77,10 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="WC WebContent Content" />
-			<var name="webContentTitle" value="WC WebContent Title" />
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page 1" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -164,6 +153,8 @@
 			<var name="siteScopeName" value="Global" />
 			<var name="webContentTitle" value="WC WebContent Title Edit" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page 1" />

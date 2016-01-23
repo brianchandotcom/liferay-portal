@@ -44,7 +44,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertElementNotPresent" locator1="ControlMenu#SIMULATION" />
 
@@ -56,7 +56,7 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="smartphone" />
@@ -70,7 +70,7 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertElementNotPresent" locator1="ControlMenu#SIMULATION" />
 	</command>

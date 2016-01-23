@@ -72,7 +72,7 @@
 		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_1" value1="You have successfully logged out of the Central Authentication Service." />
 		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_2" value1="For security reasons, exit your web browser." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 

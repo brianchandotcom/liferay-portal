@@ -545,7 +545,7 @@
 
 		<execute macro="Portlet#startServer" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -564,7 +564,7 @@
 
 		<execute macro="Portlet#startServer" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />

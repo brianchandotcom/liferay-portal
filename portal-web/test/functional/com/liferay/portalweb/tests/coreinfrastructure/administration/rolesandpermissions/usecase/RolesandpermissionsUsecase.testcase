@@ -224,7 +224,7 @@
 
 		<execute function="AssertTextEquals" locator1="Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME" value1="Site Team Name" />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="PermissionsInline#gotoSiteTeamsCP">
 			<var name="portletName" value="Site Teams" />
@@ -1989,7 +1989,7 @@
 			<var name="roleType" value="Organization" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Sign In" />

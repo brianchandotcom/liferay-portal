@@ -18,7 +18,8 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="Page#openURL" />
+				<execute macro="Navigator#openURL" />
+
 				<execute macro="User#logoutAndLoginPG">
 					<var name="password" value="test" />
 					<var name="userLoginEmailAddress" value="test@liferay.com" />

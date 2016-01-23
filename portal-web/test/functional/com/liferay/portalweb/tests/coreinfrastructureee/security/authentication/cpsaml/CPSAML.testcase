@@ -36,7 +36,7 @@
 
 		<!-- Verify IdP is logged in -->
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#viewLoggedInPG">
 			<var name="userFirstName" value="Test" />
@@ -53,7 +53,7 @@
 
 		<!-- Verify IdP is also logged out -->
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#viewLoginPG" />
 	</command>
@@ -78,7 +78,7 @@
 
 		<!-- Verify IdP is logged in -->
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#viewLoggedInPG">
 			<var name="userFirstName" value="Test" />
@@ -95,7 +95,7 @@
 
 		<!-- Verify IdP is also logged out -->
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#viewLoginPG" />
 	</command>
@@ -162,7 +162,7 @@
 
 		<!-- Verify IdP is logged in -->
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#viewLoggedInPG">
 			<var name="userFirstName" value="Test" />
@@ -179,7 +179,7 @@
 
 		<!-- Verify IdP is also logged out -->
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#viewLoginPG" />
 	</command>

@@ -160,7 +160,7 @@
 			<var name="webId" value="www.able.com" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />

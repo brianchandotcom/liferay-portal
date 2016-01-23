@@ -1064,7 +1064,7 @@
 			<var name="allowManualMembershipManagement" value="false" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Liferay" />

@@ -24,7 +24,7 @@
 	</tear-down>
 
 	<command name="AddPageFromExistingPage" priority="3">
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page" />
@@ -51,7 +51,7 @@
 	</command>
 
 	<command name="EditSitePage" priority="4">
-		<execute macro="Page#openURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page" />

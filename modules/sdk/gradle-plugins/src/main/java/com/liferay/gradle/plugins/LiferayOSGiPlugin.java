@@ -79,6 +79,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	public void apply(Project project) {
 		super.apply(project);
 
+		addTaskAutoUpdateXml(project);
+		addTasksBuildWSDDJar(project);
+
 		configureArchivesBaseName(project);
 		configureDescription(project);
 		configureSourceSetMain(project);
@@ -450,12 +453,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return copy;
 	}
 
-	@Override
-	protected void addTasks(Project project) {
-		super.addTasks(project);
-
-		addTaskAutoUpdateXml(project);
-
+	protected void addTasksBuildWSDDJar(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(

@@ -89,7 +89,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureConfigurations(project);
 
-		addTasks(project);
+		addTaskDeploy(project);
 
 		applyConfigScripts(project);
 
@@ -214,10 +214,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.from(jar);
 
 		return copy;
-	}
-
-	protected void addTasks(Project project) {
-		addTaskDeploy(project);
 	}
 
 	protected void applyConfigScripts(Project project) {

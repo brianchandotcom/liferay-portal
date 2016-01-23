@@ -646,7 +646,13 @@ public class PoshiRunnerExecutor {
 			String returnValue = ExternalMethod.execute(
 				className, methodName, parameters);
 
-			PoshiRunnerVariablesUtil.putIntoCommandMap(returnVariable, returnValue);
+			if (returnVariable != null) {
+				PoshiRunnerVariablesUtil.putIntoCommandMap(
+					returnVariable, returnValue);
+			}
+
+			CommandLoggerHandler.logExternalMethodCommand(
+				executeElement, parameterList, returnValue);
 		}
 		catch (Throwable t) {
 			XMLLoggerHandler.updateStatus(executeElement, "fail");

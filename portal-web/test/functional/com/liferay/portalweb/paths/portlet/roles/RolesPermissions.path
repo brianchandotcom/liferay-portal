@@ -179,7 +179,7 @@
 </tr>
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_PREVIEW_IN_DEVICE_CHECKBOX</td>
-	<td>//input[contains(@value,'GroupPREVIEW_IN_DEVICE')]</td>
+	<td>//tbody//input[contains(@value,'GroupPREVIEW_IN_DEVICE')]</td>
 	<td></td>
 </tr>
 <tr>

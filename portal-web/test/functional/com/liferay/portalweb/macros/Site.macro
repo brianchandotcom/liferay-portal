@@ -24,6 +24,7 @@
 		<execute macro="Site#addCP">
 			<var name="membershipType" value="${membershipType}" />
 			<var name="parentSiteName" value="${parentSiteName}" />
+			<var name="singleSiteTypePermission" value="${singleSiteTypePermission}" />
 			<var name="siteLimitMembership" value="${siteLimitMembership}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
@@ -48,33 +49,40 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<if>
-			<equals arg1="${siteType}" arg2="Blank" />
+			<not>
+				<equals arg1="${singleSiteTypePermission}" arg2="true" />
+			</not>
 			<then>
-				<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
-			</then>
-			<elseif>
-				<equals arg1="${siteType}" arg2="Community" />
-				<then>
-					<execute function="AssertClick" locator1="MenuItem#COMMUNITY_SITE" value1="Community Site" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${siteType}" arg2="Intranet" />
-				<then>
-					<execute function="AssertClick" locator1="MenuItem#INTRANET_SITE" value1="Intranet Site" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${siteType}" arg2="Site Template" />
-				<then>
-					<var name="key_siteTemplateName" value="${siteTemplateName}" />
+				<if>
+					<equals arg1="${siteType}" arg2="Blank" />
+					<then>
+						<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
+					</then>
+					<elseif>
+						<equals arg1="${siteType}" arg2="Community" />
+						<then>
+							<execute function="AssertClick" locator1="MenuItem#COMMUNITY_SITE" value1="Community Site" />
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${siteType}" arg2="Intranet" />
+						<then>
+							<execute function="AssertClick" locator1="MenuItem#INTRANET_SITE" value1="Intranet Site" />
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${siteType}" arg2="Site Template" />
+						<then>
+							<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-					<execute function="Click" locator1="MenuItem#SITE_TEMPLATE_SITE" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var siteType. Must be (Blank|Community|Intranet|Site Template)." />
-			</else>
+							<execute function="Click" locator1="MenuItem#SITE_TEMPLATE_SITE" />
+						</then>
+					</elseif>
+					<else>
+						<fail message="Invalid var siteType. Must be (Blank|Community|Intranet|Site Template)." />
+					</else>
+				</if>
+			</then>
 		</if>
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteName}" />

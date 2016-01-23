@@ -98,6 +98,7 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
+			<var name="singleSiteTypePermission" value="true" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -113,7 +114,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Button#ADD" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="Button#ADD" />
 	</command>
 
 	<command name="SearchPermissions" priority="4">

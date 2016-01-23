@@ -951,63 +951,49 @@
 	</command>
 
 	<command name="AddUsers" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<var name="count" value="1" />
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="4" />
+			</not>
+			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
+				<execute macro="User#addCP">
+					<var name="userEmailAddress" value="userea${count}@liferay.com" />
+					<var name="userFirstName" value="userfn${count}" />
+					<var name="userLastName" value="userln${count}" />
+					<var name="userScreenName" value="usersn${count}" />
+				</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea3@liferay.com" />
-			<var name="userFirstName" value="userfn3" />
-			<var name="userLastName" value="userln3" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<var name="count" value="1" />
 
-		<execute macro="User#viewCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="4" />
+			</not>
+			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+				<execute macro="User#viewCP">
+					<var name="userEmailAddress" value="userea${count}@liferay.com" />
+					<var name="userFirstName" value="userfn${count}" />
+					<var name="userLastName" value="userln${count}" />
+					<var name="userScreenName" value="usersn${count}" />
+				</execute>
 
-		<execute macro="User#viewCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#viewCP">
-			<var name="userEmailAddress" value="userea3@liferay.com" />
-			<var name="userFirstName" value="userfn3" />
-			<var name="userLastName" value="userln3" />
-			<var name="userScreenName" value="usersn3" />
-		</execute>
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 	</command>
 
 	<command name="AddUserScreenNameInvalid" priority="3">
@@ -1059,203 +1045,6 @@
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="11111" />
-		</execute>
-	</command>
-
-	<command name="AdvancedSearchOrganizationAddress" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addAddressCP">
-			<var name="orgAddressCity" value="Diamond Bar" />
-			<var name="orgAddressCountry" value="United States" />
-			<var name="orgAddressPostal" value="41111" />
-			<var name="orgAddressRegion" value="California" />
-			<var name="orgAddressStreet" value="12345 Organization Name St" />
-			<var name="orgAddressType" value="Billing" />
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#viewAddressCP">
-			<var name="orgAddressCity" value="Diamond Bar" />
-			<var name="orgAddressCountry" value="United States" />
-			<var name="orgAddressPostal" value="41111" />
-			<var name="orgAddressRegion" value="California" />
-			<var name="orgAddressStreet" value="12345 Organization Name St" />
-			<var name="orgAddressType" value="Billing" />
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#advancedSearchCP">
-			<var name="orgAddressCity" value="Diamond Bar" />
-			<var name="orgAddressCountry" value="United States" />
-			<var name="orgAddressPostal" value="41111" />
-			<var name="orgAddressRegion" value="California" />
-			<var name="orgAddressStreet" value="12345 Organization Name St" />
-			<var name="orgAdvancedSearch" value="City" />
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#advancedSearchCP">
-			<var name="orgAddressCity" value="Diamond Bar" />
-			<var name="orgAddressCountry" value="United States" />
-			<var name="orgAddressPostal" value="41111" />
-			<var name="orgAddressRegion" value="California" />
-			<var name="orgAddressStreet" value="12345 Organization Name St" />
-			<var name="orgAdvancedSearch" value="Street" />
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#advancedSearchCP">
-			<var name="orgAddressCity" value="Diamond Bar" />
-			<var name="orgAddressCountry" value="United States" />
-			<var name="orgAddressPostal" value="41111" />
-			<var name="orgAddressRegion" value="California" />
-			<var name="orgAddressStreet" value="12345 Organization Name St" />
-			<var name="orgAdvancedSearch" value="Postal" />
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-	</command>
-
-	<command name="AdvancedSearchOrganizationName" priority="3">
-		<var name="orgName" value="Organization Name" />
-		<var name="orgType" value="Regular Organization" />
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#advancedSearchCP">
-			<var name="orgAdvancedSearch" value="Name" />
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
-		</execute>
-	</command>
-
-	<command name="AdvancedSearchUser" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserMiddleNameCP">
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#advancedSearchCP">
-			<var name="userAdvancedSearch" value="First Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#advancedSearchCP">
-			<var name="userAdvancedSearch" value="Middle Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#advancedSearchCP">
-			<var name="userAdvancedSearch" value="Last Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#advancedSearchCP">
-			<var name="userAdvancedSearch" value="Screen Name" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#advancedSearchCP">
-			<var name="userAdvancedSearch" value="Email Address" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="usermn" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 
@@ -1946,6 +1735,10 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 			<var name="userFirstName" value="userfn2" />
@@ -1994,6 +1787,10 @@
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCP">
@@ -2050,6 +1847,10 @@
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditOrganization#BACK" />

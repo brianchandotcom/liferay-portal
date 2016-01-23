@@ -300,10 +300,6 @@
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
 		<var name="count" value="1" />
 
 		<while>
@@ -311,6 +307,10 @@
 				<equals arg1="${count}" arg2="6" />
 			</not>
 			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
+
 				<execute macro="User#addCP">
 					<var name="userEmailAddress" value="userea${count}@liferay.com" />
 					<var name="userFirstName" value="userfn${count}" />

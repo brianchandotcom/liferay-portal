@@ -136,6 +136,11 @@
 		background-color: $product-menu-list-group-heading-bg;
 		border-color: transparent;
 		font-weight: 500;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		@include word-wrap(normal);
 
 		&:after {
 			background-color: $product-menu-list-group-heading-border;

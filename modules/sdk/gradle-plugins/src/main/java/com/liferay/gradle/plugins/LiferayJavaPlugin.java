@@ -94,16 +94,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskTest(project);
 		configureTasksDirectDeploy(project, liferayExtension);
 		configureTasksTest(project);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureTaskDeploy(project, liferayExtension);
-				}
-
-			});
 	}
 
 	protected void addCleanDeployedFile(Project project, File sourceFile) {
@@ -207,7 +197,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
 
-		copy.from(JavaPlugin.JAR_TASK_NAME);
+		final Jar jar = (Jar)GradleUtil.getTask(
+			project, JavaPlugin.JAR_TASK_NAME);
+
+		copy.from(jar);
 
 		copy.into(
 			new Callable<File>() {
@@ -220,6 +213,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					addCleanDeployedFile(project, jar.getArchivePath());
+				}
+
+			});
 
 		return copy;
 	}
@@ -358,26 +361,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		};
 
 		delete.dependsOn(closure);
-	}
-
-	protected void configureTaskDeploy(
-		Project project, LiferayExtension liferayExtension) {
-
-		Task task = GradleUtil.getTask(project, DEPLOY_TASK_NAME);
-
-		if (!(task instanceof Copy)) {
-			return;
-		}
-
-		configureTaskDeployFrom((Copy)task);
-	}
-
-	protected void configureTaskDeployFrom(Copy copy) {
-		Project project = copy.getProject();
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		addCleanDeployedFile(project, jar.getArchivePath());
 	}
 
 	protected void configureTaskDirectDeploy(

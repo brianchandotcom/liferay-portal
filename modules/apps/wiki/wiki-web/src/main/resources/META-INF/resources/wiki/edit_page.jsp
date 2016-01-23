@@ -205,9 +205,11 @@ if (portletTitleBasedNavigation) {
 							</div>
 						</c:if>
 
-						<div class="alert alert-info">
-							<liferay-ui:message key="this-page-does-not-exist-yet-use-the-form-below-to-create-it" />
-						</div>
+						<c:if test="<%= newPage && Validator.isNotNull(title) %>">
+							<div class="alert alert-info">
+								<liferay-ui:message key="this-page-does-not-exist-yet-use-the-form-below-to-create-it" />
+							</div>
+						</c:if>
 
 						<c:choose>
 							<c:when test="<%= editTitle %>">

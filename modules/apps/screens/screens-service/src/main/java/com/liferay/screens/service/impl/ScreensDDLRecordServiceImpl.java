@@ -15,15 +15,14 @@
 package com.liferay.screens.service.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.screens.service.base.ScreensDDLRecordServiceBaseImpl;
 
 import java.util.HashMap;
@@ -44,12 +43,11 @@ public class ScreensDDLRecordServiceImpl
 
 		DDLRecord ddlRecord = ddlRecordLocalService.getRecord(ddlRecordId);
 
-		Fields fields = ddlRecord.getFields();
-
-		Set<Locale> availableLocales = fields.getAvailableLocales();
+		Set<Locale> availableLocales =
+			ddlRecord.getDDMFormValues().getAvailableLocales();
 
 		if ((locale == null) || !availableLocales.contains(locale)) {
-			locale = fields.getDefaultLocale();
+			locale = ddlRecord.getDDMFormValues().getDefaultLocale();
 		}
 
 		return getDDLRecordJSONObject(ddlRecord, locale);
@@ -99,21 +97,23 @@ public class ScreensDDLRecordServiceImpl
 				JSONFactoryUtil.looseSerialize(
 					ddlRecord.getModelAttributes())));
 
-		Map<String, Object> ddlRecordMap = new HashMap<String, Object>();
+		Map<String, Object> ddlRecordMap = new HashMap<>();
 
-		Fields fields = ddlRecord.getFields();
+		DDMFormValues ddmFormValues = ddlRecord.getDDMFormValues();
 
-		Set<Locale> availableLocales = fields.getAvailableLocales();
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
 
 		if ((locale == null) || !availableLocales.contains(locale)) {
-			locale = fields.getDefaultLocale();
+			locale = ddmFormValues.getDefaultLocale();
 		}
 
-		for (Field field : fields) {
-			Object fieldValue = getFieldValue(field, locale);
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
+
+			Object fieldValue = getFieldValue(ddmFormFieldValue, locale);
 
 			if (fieldValue != null) {
-				ddlRecordMap.put(field.getName(), fieldValue);
+				ddlRecordMap.put(ddmFormFieldValue.getName(), fieldValue);
 			}
 		}
 
@@ -141,10 +141,12 @@ public class ScreensDDLRecordServiceImpl
 		return ddlRecordsJSONArray;
 	}
 
-	protected Object getFieldValue(Field field, Locale locale)
-		throws PortalException, SystemException {
+	protected Object getFieldValue(
+			DDMFormFieldValue ddmFormFieldValue, Locale locale)
+		throws PortalException {
 
-		String fieldValueString = StringUtil.valueOf(field.getValue(locale));
+		String fieldValueString =
+			ddmFormFieldValue.getValue().getString(locale);
 
 		if (fieldValueString == null) {
 			return null;
@@ -154,47 +156,42 @@ public class ScreensDDLRecordServiceImpl
 			return null;
 		}
 
-		String dataType = field.getDataType();
+		String dataType = ddmFormFieldValue.getType();
 
-		if (dataType.equals(FieldConstants.BOOLEAN)) {
-			return Boolean.valueOf(fieldValueString);
-		}
-		else if (dataType.equals(FieldConstants.DATE)) {
-			return field.getRenderedValue(locale);
-		}
-		else if (dataType.equals(FieldConstants.DOCUMENT_LIBRARY)) {
-			return JSONFactoryUtil.looseSerialize(
-				JSONFactoryUtil.looseDeserialize(fieldValueString));
-		}
-		else if (dataType.equals(FieldConstants.FLOAT) ||
-				 dataType.equals(FieldConstants.NUMBER)) {
+		switch (dataType) {
+			case FieldConstants.BOOLEAN:
+				return Boolean.valueOf(fieldValueString);
+			case FieldConstants.DATE:
+				return ddmFormFieldValue.getValue().getString(locale);
+			case FieldConstants.DOCUMENT_LIBRARY:
+				return JSONFactoryUtil.looseSerialize(
+					JSONFactoryUtil.looseDeserialize(fieldValueString));
+			case FieldConstants.FLOAT:
+			case FieldConstants.NUMBER:
 
-			if (Validator.isNull(fieldValueString)) {
-				return null;
-			}
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
 
-			return Float.valueOf(fieldValueString);
-		}
-		else if (dataType.equals(FieldConstants.INTEGER)) {
-			if (Validator.isNull(fieldValueString)) {
-				return null;
-			}
+				return Float.valueOf(fieldValueString);
+			case FieldConstants.INTEGER:
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
 
-			return Integer.valueOf(fieldValueString);
-		}
-		else if (dataType.equals(FieldConstants.LONG)) {
-			if (Validator.isNull(fieldValueString)) {
-				return null;
-			}
+				return Integer.valueOf(fieldValueString);
+			case FieldConstants.LONG:
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
 
-			return Long.valueOf(fieldValueString);
-		}
-		else if (dataType.equals(FieldConstants.SHORT)) {
-			if (Validator.isNull(fieldValueString)) {
-				return null;
-			}
+				return Long.valueOf(fieldValueString);
+			case FieldConstants.SHORT:
+				if (Validator.isNull(fieldValueString)) {
+					return null;
+				}
 
-			return Short.valueOf(fieldValueString);
+				return Short.valueOf(fieldValueString);
 		}
 
 		return fieldValueString;

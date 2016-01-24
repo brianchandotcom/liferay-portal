@@ -43,7 +43,7 @@ public class PortletOptionsControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/entries/portlet_options.jsp";
 	}
 

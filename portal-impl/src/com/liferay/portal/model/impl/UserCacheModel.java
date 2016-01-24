@@ -79,7 +79,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(83);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -123,6 +123,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		sb.append(ldapServerId);
 		sb.append(", openId=");
 		sb.append(openId);
+		sb.append(", googleId=");
+		sb.append(googleId);
 		sb.append(", portraitId=");
 		sb.append(portraitId);
 		sb.append(", languageId=");
@@ -265,6 +267,13 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 			userImpl.setOpenId(openId);
 		}
 
+		if (googleId == null) {
+			userImpl.setGoogleId(StringPool.BLANK);
+		}
+		else {
+			userImpl.setGoogleId(googleId);
+		}
+
 		userImpl.setPortraitId(portraitId);
 
 		if (languageId == null) {
@@ -400,6 +409,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		facebookId = objectInput.readLong();
 		ldapServerId = objectInput.readLong();
 		openId = objectInput.readUTF();
+		googleId = objectInput.readUTF();
 		portraitId = objectInput.readLong();
 		languageId = objectInput.readUTF();
 		timeZoneId = objectInput.readUTF();
@@ -497,6 +507,13 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 		else {
 			objectOutput.writeUTF(openId);
+		}
+
+		if (googleId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(googleId);
 		}
 
 		objectOutput.writeLong(portraitId);
@@ -605,6 +622,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	public long facebookId;
 	public long ldapServerId;
 	public String openId;
+	public String googleId;
 	public long portraitId;
 	public String languageId;
 	public String timeZoneId;

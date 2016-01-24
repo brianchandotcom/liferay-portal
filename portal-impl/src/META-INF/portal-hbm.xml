@@ -983,6 +983,7 @@
 		<property name="facebookId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ldapServerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="openId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="googleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="portraitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="timeZoneId" type="com.liferay.portal.dao.orm.hibernate.StringType" />

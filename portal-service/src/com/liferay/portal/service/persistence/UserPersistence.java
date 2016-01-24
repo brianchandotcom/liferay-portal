@@ -1251,6 +1251,56 @@ public interface UserPersistence extends BasePersistence<User> {
 	public int countByC_O(long companyId, java.lang.String openId);
 
 	/**
+	* Returns the user where companyId = &#63; and googleId = &#63; or throws a {@link NoSuchUserException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the matching user
+	* @throws NoSuchUserException if a matching user could not be found
+	*/
+	public User findByC_GID(long companyId, java.lang.String googleId)
+		throws com.liferay.portal.exception.NoSuchUserException;
+
+	/**
+	* Returns the user where companyId = &#63; and googleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the matching user, or <code>null</code> if a matching user could not be found
+	*/
+	public User fetchByC_GID(long companyId, java.lang.String googleId);
+
+	/**
+	* Returns the user where companyId = &#63; and googleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching user, or <code>null</code> if a matching user could not be found
+	*/
+	public User fetchByC_GID(long companyId, java.lang.String googleId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the user where companyId = &#63; and googleId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the user that was removed
+	*/
+	public User removeByC_GID(long companyId, java.lang.String googleId)
+		throws com.liferay.portal.exception.NoSuchUserException;
+
+	/**
+	* Returns the number of users where companyId = &#63; and googleId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the number of matching users
+	*/
+	public int countByC_GID(long companyId, java.lang.String googleId);
+
+	/**
 	* Returns all the users where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID

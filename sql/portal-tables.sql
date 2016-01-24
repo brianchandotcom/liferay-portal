@@ -1603,6 +1603,7 @@ create table User_ (
 	facebookId LONG,
 	ldapServerId LONG,
 	openId VARCHAR(1024) null,
+	googleId VARCHAR(75) null,
 	portraitId LONG,
 	languageId VARCHAR(75) null,
 	timeZoneId VARCHAR(75) null,

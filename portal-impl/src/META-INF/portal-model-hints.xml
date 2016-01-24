@@ -1025,6 +1025,7 @@
 			<hint name="max-length">1024</hint>
 			<hint name="display-width">400</hint>
 		</field>
+		<field name="googleId" type="String" />
 		<field name="portraitId" type="long" />
 		<field name="languageId" type="String" />
 		<field name="timeZoneId" type="String" />

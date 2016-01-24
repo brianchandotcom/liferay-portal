@@ -43,7 +43,7 @@ public class StagingControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/control_menu/entry.jsp";
 	}
 

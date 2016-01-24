@@ -39,7 +39,7 @@ public abstract class BaseJSPControlMenuEntry
 		return StringPool.BLANK;
 	}
 
-	public abstract String getJspPath();
+	public abstract String getIconJspPath();
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -52,19 +52,19 @@ public abstract class BaseJSPControlMenuEntry
 	}
 
 	@Override
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		return include(request, response, getJspPath());
-	}
-
-	@Override
 	public boolean includeBody(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		return include(request, response, getBodyJspPath());
+	}
+
+	@Override
+	public boolean includeIcon(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return include(request, response, getIconJspPath());
 	}
 
 	public void setServletContext(ServletContext servletContext) {

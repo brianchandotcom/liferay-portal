@@ -50,7 +50,7 @@ public class SimulationControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/portlet/control_menu/simulation_control_menu_entry.jsp";
 	}
 

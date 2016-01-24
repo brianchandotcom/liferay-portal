@@ -48,12 +48,12 @@ public class PortletHeaderControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/entries/portlet_header.jsp";
 	}
 
 	@Override
-	public boolean include(
+	public boolean includeIcon(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
@@ -68,7 +68,7 @@ public class PortletHeaderControlMenuEntry
 		request.setAttribute(
 			ControlMenuWebKeys.PORTLET_TITLE, portletDisplay.getTitle());
 
-		return super.include(request, response);
+		return super.includeIcon(request, response);
 	}
 
 	@Override

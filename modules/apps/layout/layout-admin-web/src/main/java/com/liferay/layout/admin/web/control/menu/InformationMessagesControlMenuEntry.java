@@ -53,7 +53,7 @@ public class InformationMessagesControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/control/menu/information_messages.jsp";
 	}
 
@@ -71,7 +71,7 @@ public class InformationMessagesControlMenuEntry
 	}
 
 	@Override
-	public boolean include(
+	public boolean includeIcon(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 

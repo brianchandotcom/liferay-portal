@@ -15,7 +15,6 @@
 package com.liferay.screens.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -33,14 +32,14 @@ import com.liferay.screens.service.base.ScreensUserServiceBaseImpl;
 public class ScreensUserServiceImpl extends ScreensUserServiceBaseImpl {
 
 	@Override
-	public User getCurrentUser() throws PortalException, SystemException {
+	public User getCurrentUser() throws PortalException {
 		return getUser();
 	}
 
 	@Override
 	public boolean sendPasswordByEmailAddress(
 			long companyId, String emailAddress)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userLocalService.getUserByEmailAddress(
 			companyId, emailAddress);
@@ -50,7 +49,7 @@ public class ScreensUserServiceImpl extends ScreensUserServiceBaseImpl {
 
 	@Override
 	public boolean sendPasswordByScreenName(long companyId, String screenName)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userLocalService.getUserByScreenName(companyId, screenName);
 
@@ -58,9 +57,7 @@ public class ScreensUserServiceImpl extends ScreensUserServiceBaseImpl {
 	}
 
 	@Override
-	public boolean sendPasswordByUserId(long userId)
-		throws PortalException, SystemException {
-
+	public boolean sendPasswordByUserId(long userId) throws PortalException {
 		User user = userLocalService.getUserById(userId);
 
 		return sendPassword(user);
@@ -68,7 +65,7 @@ public class ScreensUserServiceImpl extends ScreensUserServiceBaseImpl {
 
 	protected void populateServiceContext(
 			long companyId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (serviceContext.getPathMain() == null) {
 			serviceContext.setPathMain(PortalUtil.getPathMain());
@@ -89,9 +86,7 @@ public class ScreensUserServiceImpl extends ScreensUserServiceBaseImpl {
 		}
 	}
 
-	protected boolean sendPassword(User user)
-		throws PortalException, SystemException {
-
+	protected boolean sendPassword(User user) throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 

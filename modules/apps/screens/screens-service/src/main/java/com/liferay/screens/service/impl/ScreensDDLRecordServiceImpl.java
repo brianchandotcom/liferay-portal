@@ -14,14 +14,13 @@
 
 package com.liferay.screens.service.impl;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -41,10 +40,9 @@ public class ScreensDDLRecordServiceImpl
 
 	@Override
 	public JSONObject getDDLRecord(long ddlRecordId, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		DDLRecord ddlRecord = ddlRecordPersistence.findByPrimaryKey(
-			ddlRecordId);
+		DDLRecord ddlRecord = ddlRecordLocalService.getRecord(ddlRecordId);
 
 		Fields fields = ddlRecord.getFields();
 
@@ -60,7 +58,7 @@ public class ScreensDDLRecordServiceImpl
 	@Override
 	public JSONArray getDDLRecords(
 			long ddlRecordSetId, Locale locale, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
 			ddlRecordSetId, start, end);
@@ -71,7 +69,7 @@ public class ScreensDDLRecordServiceImpl
 	@Override
 	public JSONArray getDDLRecords(
 			long ddlRecordSetId, long userId, Locale locale, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByR_U(
 			ddlRecordSetId, userId, start, end);
@@ -80,20 +78,18 @@ public class ScreensDDLRecordServiceImpl
 	}
 
 	@Override
-	public int getDDLRecordsCount(long ddlRecordSetId) throws SystemException {
+	public int getDDLRecordsCount(long ddlRecordSetId) {
 		return ddlRecordPersistence.countByRecordSetId(ddlRecordSetId);
 	}
 
 	@Override
-	public int getDDLRecordsCount(long ddlRecordSetId, long userId)
-		throws SystemException {
-
+	public int getDDLRecordsCount(long ddlRecordSetId, long userId) {
 		return ddlRecordPersistence.countByR_U(ddlRecordSetId, userId);
 	}
 
 	protected JSONObject getDDLRecordJSONObject(
 			DDLRecord ddlRecord, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONObject ddlRecordJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -131,7 +127,7 @@ public class ScreensDDLRecordServiceImpl
 
 	protected JSONArray getDDLRecordsJSONArray(
 			List<DDLRecord> ddlRecords, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONArray ddlRecordsJSONArray = JSONFactoryUtil.createJSONArray();
 

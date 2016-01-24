@@ -14,6 +14,10 @@
 
 package com.liferay.screens.service.impl;
 
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -24,6 +28,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -31,19 +37,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletItem;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.screens.service.base.ScreensAssetEntryServiceBaseImpl;
 
 import java.util.List;
@@ -60,7 +59,7 @@ public class ScreensAssetEntryServiceImpl
 	@Override
 	public JSONArray getAssetEntries(
 			AssetEntryQuery assetEntryQuery, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AssetEntry> assetEntries = assetEntryLocalService.getEntries(
 			assetEntryQuery);
@@ -72,7 +71,7 @@ public class ScreensAssetEntryServiceImpl
 	public JSONArray getAssetEntries(
 			long companyId, long groupId, String portletItemName, Locale locale,
 			int max)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			PortletItem.class);
@@ -129,18 +128,12 @@ public class ScreensAssetEntryServiceImpl
 				List<AssetEntry> assetEntries =
 					AssetPublisherUtil.getAssetEntries(
 						null, portletPreferences, permissionChecker,
-						new long[] { groupId },
-						portletPreferences.getValues(
-							"assetEntryXml", new String[0]),
-						false, false);
+						new long[] {groupId}, false, false, false);
 
 				return toJSONArray(assetEntries, locale);
 			}
-			catch (PortalException pe) {
+			catch (PortalException | SystemException pe) {
 				throw pe;
-			}
-			catch (SystemException se) {
-				throw se;
 			}
 			catch (Exception e) {
 				throw new PortalException(e);
@@ -149,7 +142,7 @@ public class ScreensAssetEntryServiceImpl
 	}
 
 	protected JSONObject getAssetObjectJSONObject(AssetEntry assetEntry)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		String className = assetEntry.getClassName();
 
@@ -168,14 +161,13 @@ public class ScreensAssetEntryServiceImpl
 	}
 
 	protected JSONObject getFileEntryJSONObject(AssetEntry assetEntry)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 			assetEntry.getClassPK());
 
-		JSONObject fileEntryJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(fileEntry));
+		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONFactoryUtil.looseSerialize(fileEntry));
 
 		fileEntryJSONObject.put("url", getFileEntryPreviewURL(fileEntry));
 
@@ -199,7 +191,7 @@ public class ScreensAssetEntryServiceImpl
 	}
 
 	protected JSONObject getJournalArticleJSONObject(AssetEntry assetEntry)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JournalArticle journalArticle = null;
 
@@ -207,7 +199,7 @@ public class ScreensAssetEntryServiceImpl
 			journalArticle = journalArticleLocalService.getArticle(
 				assetEntry.getClassPK());
 		}
-		catch (NoSuchArticleException nsae) {
+		catch (Exception nsae) {
 			JournalArticleResource journalArticleResource =
 				JournalArticleResourceLocalServiceUtil.getArticleResource(
 					assetEntry.getClassPK());
@@ -217,9 +209,8 @@ public class ScreensAssetEntryServiceImpl
 				journalArticleResource.getArticleId());
 		}
 
-		JSONObject journalArticleJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(journalArticle));
+		JSONObject journalArticleJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONFactoryUtil.looseSerialize(journalArticle));
 
 		journalArticleJSONObject.remove("content");
 
@@ -228,7 +219,7 @@ public class ScreensAssetEntryServiceImpl
 
 	protected JSONArray toJSONArray(
 			List<AssetEntry> assetEntries, Locale locale)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

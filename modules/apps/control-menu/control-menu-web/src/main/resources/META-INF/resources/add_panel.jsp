@@ -110,5 +110,12 @@
 </c:choose>
 
 <aui:script use="liferay-control-menu">
-	A.one('#<portlet:namespace />closePanelAdd').on('click', Liferay.ControlMenu.toggleAddPanel, Liferay.ControlMenu);
+	A.one('#<portlet:namespace />closePanelAdd').on(
+		'click',
+		function(event) {
+			var addToggle = $('#addToggleId');
+
+			addToggle.sideNavigation('hide');
+		}
+	);
 </aui:script>

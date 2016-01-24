@@ -30,7 +30,7 @@ boolean showEmailEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-f
 boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:email-notification-settings:showSubject"));
 %>
 
-<aui:fieldset>
+<aui:fieldset markupView="lexicon">
 	<c:if test="<%= showEmailEnabled %>">
 		<aui:input label="enabled" name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Enabled" + fieldPrefixSeparator %>' type="checkbox" value="<%= emailEnabled %>" />
 	</c:if>
@@ -76,7 +76,7 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-fronte
 </aui:fieldset>
 
 <c:if test="<%= (emailDefinitionTerms != null) && !emailDefinitionTerms.isEmpty() %>">
-	<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
+	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="definition-of-terms" markupView="lexicon">
 		<dl>
 
 			<%

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -90,7 +89,9 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 
 	@Override
 	public void destroy() {
-		_serviceRegistration.unregister();
+		if (_enabled) {
+			_serviceRegistration.unregister();
+		}
 
 		super.destroy();
 	}
@@ -151,13 +152,6 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e.getMessage());
 			}
-		}
-
-		if (!_enabled && ServerDetector.isWebLogic() && _log.isInfoEnabled()) {
-			_log.info(
-				"WebProxyPortlet will not be enabled unless Liferay's " +
-					"serializer.jar and xalan.jar files are copied to the " +
-						"JDK's endorsed directory");
 		}
 	}
 

@@ -47,7 +47,7 @@ public class AddContentControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/entries/add_content.jsp";
 	}
 

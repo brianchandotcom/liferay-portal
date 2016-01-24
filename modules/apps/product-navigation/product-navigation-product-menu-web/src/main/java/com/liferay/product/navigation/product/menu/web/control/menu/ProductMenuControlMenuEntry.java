@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/portlet/control_menu/product_menu_control_menu_entry.jsp";
 	}
 

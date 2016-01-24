@@ -79,7 +79,7 @@ public abstract class BaseControlMenuEntry implements ControlMenuEntry {
 	}
 
 	@Override
-	public boolean include(
+	public boolean includeBody(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
@@ -87,7 +87,7 @@ public abstract class BaseControlMenuEntry implements ControlMenuEntry {
 	}
 
 	@Override
-	public boolean includeBody(
+	public boolean includeIcon(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 

@@ -36,78 +36,78 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 		<aui:input name="preferences--displayViews--" type="hidden" />
 		<aui:input name="preferences--entryColumns--" type="hidden" />
 
-			<aui:fieldset collapsible="<%= true %>" id="documentLibraryDisplay" label="display-settings">
-				<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
+		<aui:fieldset collapsible="<%= true %>" id="documentLibraryDisplay" label="display-settings">
+			<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
 
-				<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFolderMenu() %>" />
+			<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFolderMenu() %>" />
 
-				<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowTabs() %>" />
+			<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowTabs() %>" />
 
-				<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>" />
+			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>" />
 
-				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRelatedAssets() %>" />
+			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRelatedAssets() %>" />
 
-				<aui:select label="maximum-entries-to-display" name="preferences--entriesPerPage--">
+			<aui:select label="maximum-entries-to-display" name="preferences--entriesPerPage--">
+
+				<%
+				for (int pageDeltaValue : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+				%>
+
+					<aui:option label="<%= pageDeltaValue %>" selected="<%= dlPortletInstanceSettings.getEntriesPerPage() == pageDeltaValue %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:field-wrapper label="display-style-views">
+				<liferay-ui:input-move-boxes
+					leftBoxName="currentDisplayViews"
+					leftList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
+					leftReorder="true"
+					leftTitle="current"
+					rightBoxName="availableDisplayViews"
+					rightList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
+					rightTitle="available"
+				/>
+			</aui:field-wrapper>
+		</aui:fieldset>
+
+		<aui:fieldset collapsible="<%= true %>" id="documentLibraryItemsListingPanel" label="folders-listing">
+				<div class="form-group">
+					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+
+					<aui:button name="selectFolderButton" value="select" />
 
 					<%
-					for (int pageDeltaValue : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
 					%>
 
-						<aui:option label="<%= pageDeltaValue %>" selected="<%= dlPortletInstanceSettings.getEntriesPerPage() == pageDeltaValue %>" />
+					<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+				</div>
+		</aui:fieldset>
 
-					<%
-					}
-					%>
-
-				</aui:select>
-
-				<aui:field-wrapper label="display-style-views">
+		<aui:fieldset collapsible="<%= true %>" id="documentLibraryEntriesListingPanel" label="entries-listing-for-list-display-style">
+			<aui:fieldset>
+				<aui:field-wrapper label="show-columns">
 					<liferay-ui:input-move-boxes
-						leftBoxName="currentDisplayViews"
-						leftList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
+						leftBoxName="currentEntryColumns"
+						leftList="<%= dlPortletInstanceSettingsHelper.getCurrentEntryColumns() %>"
 						leftReorder="true"
 						leftTitle="current"
-						rightBoxName="availableDisplayViews"
-						rightList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
+						rightBoxName="availableEntryColumns"
+						rightList="<%= dlPortletInstanceSettingsHelper.getAvailableEntryColumns() %>"
 						rightTitle="available"
 					/>
 				</aui:field-wrapper>
 			</aui:fieldset>
+		</aui:fieldset>
 
-			<aui:fieldset collapsible="<%= true %>" id="documentLibraryItemsListingPanel" label="folders-listing">
-					<div class="form-group">
-						<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
-
-						<aui:button name="selectFolderButton" value="select" />
-
-						<%
-						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + renderResponse.getNamespace() + "');";
-						%>
-
-						<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-					</div>
-			</aui:fieldset>
-
-			<aui:fieldset collapsible="<%= true %>" id="documentLibraryEntriesListingPanel" label="entries-listing-for-list-display-style">
-				<aui:fieldset>
-					<aui:field-wrapper label="show-columns">
-						<liferay-ui:input-move-boxes
-							leftBoxName="currentEntryColumns"
-							leftList="<%= dlPortletInstanceSettingsHelper.getCurrentEntryColumns() %>"
-							leftReorder="true"
-							leftTitle="current"
-							rightBoxName="availableEntryColumns"
-							rightList="<%= dlPortletInstanceSettingsHelper.getAvailableEntryColumns() %>"
-							rightTitle="available"
-						/>
-					</aui:field-wrapper>
-				</aui:fieldset>
-			</aui:fieldset>
-
-			<aui:fieldset collapsible="<%= true %>" id="documentLibraryDocumentsRatingsPanel" label="ratings">
-				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRatings() %>" />
-				<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>" />
-			</aui:fieldset>
+		<aui:fieldset collapsible="<%= true %>" id="documentLibraryDocumentsRatingsPanel" label="ratings">
+			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRatings() %>" />
+			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>" />
+		</aui:fieldset>
 
 		<aui:script>
 			AUI.$('#<portlet:namespace />selectFolderButton').on(

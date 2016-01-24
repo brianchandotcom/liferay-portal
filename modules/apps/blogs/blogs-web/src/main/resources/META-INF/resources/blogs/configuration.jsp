@@ -40,7 +40,7 @@ blogsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(Bl
 				for (int pageDeltaValue : PropsValues.BLOGS_ENTRY_PAGE_DELTA_VALUES) {
 				%>
 
-				<aui:option label="<%= pageDeltaValue %>" selected="<%= GetterUtil.getInteger(blogsPortletInstanceConfiguration.pageDelta()) == pageDeltaValue %>" />
+					<aui:option label="<%= pageDeltaValue %>" selected="<%= GetterUtil.getInteger(blogsPortletInstanceConfiguration.pageDelta()) == pageDeltaValue %>" />
 
 				<%
 				}
@@ -88,9 +88,9 @@ blogsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(Bl
 				types="<%= blogsPortletInstanceConfiguration.socialBookmarksTypes() %>"
 			/>
 		</aui:fieldset>
-
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" />
-		</aui:button-row>
 	</aui:fieldset-group>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
 </aui:form>

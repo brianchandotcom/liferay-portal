@@ -166,28 +166,28 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 				<aui:fieldset>
 					<table class="lfr-table">
 						<tr>
-						<td>
-							<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
-						</td>
-						<td>
-							<aui:select label="localized-language" name="prioritiesLanguageId" onChange='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
+							<td>
+								<aui:input name="defaultLanguage" type="resource" value="<%= defaultLocale.getDisplayName(defaultLocale) %>" />
+							</td>
+							<td>
+								<aui:select label="localized-language" name="prioritiesLanguageId" onChange='<%= renderResponse.getNamespace() + "updatePrioritiesLanguage();" %>' showEmptyOption="<%= true %>">
 
-								<%
-									for (Locale curLocale : locales) {
-										if (curLocale.equals(defaultLocale)) {
-											continue;
+									<%
+										for (Locale curLocale : locales) {
+											if (curLocale.equals(defaultLocale)) {
+												continue;
+											}
+									%>
+
+									<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+
+									<%
 										}
-								%>
+									%>
 
-								<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
-
-								<%
-									}
-								%>
-
-							</aui:select>
-						</td>
-					</tr>
+								</aui:select>
+							</td>
+						</tr>
 						<tr>
 							<td colspan="2">
 								<br />
@@ -209,44 +209,44 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 									</tr>
 
 									<%
-										priorities = mbGroupServiceSettings.getPriorities(defaultLanguageId);
+									priorities = mbGroupServiceSettings.getPriorities(defaultLanguageId);
 
-										for (int i = 0; i < 10; i++) {
-											String name = StringPool.BLANK;
-											String image = StringPool.BLANK;
-											String value = StringPool.BLANK;
+									for (int i = 0; i < 10; i++) {
+										String name = StringPool.BLANK;
+										String image = StringPool.BLANK;
+										String value = StringPool.BLANK;
 
-											if (priorities.length > i) {
-												String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
+										if (priorities.length > i) {
+											String[] priority = StringUtil.split(priorities[i], StringPool.PIPE);
 
-												try {
-													name = priority[0];
-													image = priority[1];
-													value = priority[2];
-												}
-												catch (Exception e) {
-												}
-
-												if (Validator.isNull(name) && Validator.isNull(image)) {
-													value = StringPool.BLANK;
-												}
+											try {
+												name = priority[0];
+												image = priority[1];
+												value = priority[2];
 											}
+											catch (Exception e) {
+											}
+
+											if (Validator.isNull(name) && Validator.isNull(image)) {
+												value = StringPool.BLANK;
+											}
+										}
 									%>
 
-									<tr>
-										<td>
-											<aui:input label="" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" title="priority-name" value="<%= name %>" />
-										</td>
-										<td>
-											<aui:input label="" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" title="priority-image" value="<%= image %>" />
-										</td>
-										<td>
-											<aui:input label="" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" title="priority-value" value="<%= value %>" />
-										</td>
-									</tr>
+										<tr>
+											<td>
+												<aui:input label="" name='<%= "priorityName" + i + "_" + defaultLanguageId %>' size="15" title="priority-name" value="<%= name %>" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityImage" + i + "_" + defaultLanguageId %>' size="40" title="priority-image" value="<%= image %>" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityValue" + i + "_" + defaultLanguageId %>' size="4" title="priority-value" value="<%= value %>" />
+											</td>
+										</tr>
 
 									<%
-										}
+									}
 									%>
 
 								</table>
@@ -266,64 +266,64 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 									</tr>
 
 									<%
-										for (int i = 0; i < 10; i++) {
+									for (int i = 0; i < 10; i++) {
 									%>
 
-									<tr>
-										<td>
-											<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" title="priority-name" />
-										</td>
-										<td>
-											<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" title="priority-image" />
-										</td>
-										<td>
-											<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" title="priority-value" />
-										</td>
-									</tr>
+										<tr>
+											<td>
+												<aui:input label="" name='<%= "priorityName" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="15" title="priority-name" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityImage" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="40" title="priority-image" />
+											</td>
+											<td>
+												<aui:input label="" name='<%= "priorityValue" + i + "_temp" %>' onChange='<%= renderResponse.getNamespace() + "onPrioritiesChanged();" %>' size="4" title="priority-value" />
+											</td>
+										</tr>
 
 									<%
-										}
+									}
 									%>
 
 								</table>
 
 								<%
-									for (Locale curLocale : locales) {
-										if (curLocale.equals(defaultLocale)) {
-											continue;
-										}
+								for (Locale curLocale : locales) {
+									if (curLocale.equals(defaultLocale)) {
+										continue;
+									}
 
-										String[] tempPriorities = mbGroupServiceSettings.getPriorities(LocaleUtil.toLanguageId(curLocale));
+									String[] tempPriorities = mbGroupServiceSettings.getPriorities(LocaleUtil.toLanguageId(curLocale));
 
-										for (int j = 0; j < 10; j++) {
-											String name = StringPool.BLANK;
-											String image = StringPool.BLANK;
-											String value = StringPool.BLANK;
+									for (int j = 0; j < 10; j++) {
+										String name = StringPool.BLANK;
+										String image = StringPool.BLANK;
+										String value = StringPool.BLANK;
 
-											if (tempPriorities.length > j) {
-												String[] priority = StringUtil.split(tempPriorities[j], StringPool.PIPE);
+										if (tempPriorities.length > j) {
+											String[] priority = StringUtil.split(tempPriorities[j], StringPool.PIPE);
 
-												try {
-													name = priority[0];
-													image = priority[1];
-													value = priority[2];
-												}
-												catch (Exception e) {
-												}
-
-												if (Validator.isNull(name) && Validator.isNull(image)) {
-													value = StringPool.BLANK;
-												}
+											try {
+												name = priority[0];
+												image = priority[1];
+												value = priority[2];
 											}
+											catch (Exception e) {
+											}
+
+											if (Validator.isNull(name) && Validator.isNull(image)) {
+												value = StringPool.BLANK;
+											}
+										}
 								%>
 
-								<aui:input name='<%= "priorityName" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= name %>" />
-								<aui:input name='<%= "priorityImage" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= image %>" />
-								<aui:input name='<%= "priorityValue" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= value %>" />
+										<aui:input name='<%= "priorityName" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= name %>" />
+										<aui:input name='<%= "priorityImage" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= image %>" />
+										<aui:input name='<%= "priorityValue" + j + "_" + LocaleUtil.toLanguageId(curLocale) %>' type="hidden" value="<%= value %>" />
 
 								<%
-										}
 									}
+								}
 								%>
 
 							</td>
@@ -399,7 +399,6 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-
 			<div class="alert alert-info">
 				<liferay-ui:message key="enter-rank-and-minimum-post-pairs-per-line" />
 			</div>

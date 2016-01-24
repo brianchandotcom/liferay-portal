@@ -41,6 +41,21 @@ public class ScreensAssetEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensAssetEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.json.JSONArray getAssetEntries(
+		com.liferay.portlet.asset.service.persistence.AssetEntryQuery assetEntryQuery,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetEntries(assetEntryQuery, locale);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getAssetEntries(
+		long companyId, long groupId, java.lang.String portletItemName,
+		java.util.Locale locale, int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAssetEntries(companyId, groupId, portletItemName,
+			locale, max);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
@@ -49,6 +50,9 @@ public interface ScreensUserService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ScreensUserServiceUtil} to access the screens user remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensUserServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.User getCurrentUser()
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +60,12 @@ public interface ScreensUserService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public boolean sendPasswordByEmailAddress(long companyId,
+		java.lang.String emailAddress) throws PortalException;
+
+	public boolean sendPasswordByScreenName(long companyId,
+		java.lang.String screenName) throws PortalException;
+
+	public boolean sendPasswordByUserId(long userId) throws PortalException;
 }

@@ -32,6 +32,12 @@ public class ScreensUserServiceWrapper implements ScreensUserService,
 		_screensUserService = screensUserService;
 	}
 
+	@Override
+	public com.liferay.portal.model.User getCurrentUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensUserService.getCurrentUser();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -40,6 +46,28 @@ public class ScreensUserServiceWrapper implements ScreensUserService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _screensUserService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public boolean sendPasswordByEmailAddress(long companyId,
+		java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensUserService.sendPasswordByEmailAddress(companyId,
+			emailAddress);
+	}
+
+	@Override
+	public boolean sendPasswordByScreenName(long companyId,
+		java.lang.String screenName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensUserService.sendPasswordByScreenName(companyId,
+			screenName);
+	}
+
+	@Override
+	public boolean sendPasswordByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensUserService.sendPasswordByUserId(userId);
 	}
 
 	@Override

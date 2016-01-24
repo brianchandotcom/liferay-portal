@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
@@ -49,6 +50,15 @@ public interface ScreensAssetEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ScreensAssetEntryServiceUtil} to access the screens asset entry remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensAssetEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.json.JSONArray getAssetEntries(
+		com.liferay.portlet.asset.service.persistence.AssetEntryQuery assetEntryQuery,
+		java.util.Locale locale) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.json.JSONArray getAssetEntries(
+		long companyId, long groupId, java.lang.String portletItemName,
+		java.util.Locale locale, int max) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

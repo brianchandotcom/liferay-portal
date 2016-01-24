@@ -41,6 +41,32 @@ public class ScreensDDLRecordServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensDDLRecordServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.json.JSONObject getDDLRecord(
+		long ddlRecordId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDLRecord(ddlRecordId, locale);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getDDLRecords(
+		long ddlRecordSetId, java.util.Locale locale, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDLRecords(ddlRecordSetId, locale, start, end);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getDDLRecords(
+		long ddlRecordSetId, long userId, java.util.Locale locale, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getDDLRecords(ddlRecordSetId, userId, locale, start, end);
+	}
+
+	public static int getDDLRecordsCount(long ddlRecordSetId) {
+		return getService().getDDLRecordsCount(ddlRecordSetId);
+	}
+
+	public static int getDDLRecordsCount(long ddlRecordSetId, long userId) {
+		return getService().getDDLRecordsCount(ddlRecordSetId, userId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

@@ -41,6 +41,10 @@ public class ScreensUserServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensUserServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.model.User getCurrentUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCurrentUser();
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +53,23 @@ public class ScreensUserServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static boolean sendPasswordByEmailAddress(long companyId,
+		java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().sendPasswordByEmailAddress(companyId, emailAddress);
+	}
+
+	public static boolean sendPasswordByScreenName(long companyId,
+		java.lang.String screenName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().sendPasswordByScreenName(companyId, screenName);
+	}
+
+	public static boolean sendPasswordByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().sendPasswordByUserId(userId);
 	}
 
 	public static ScreensUserService getService() {

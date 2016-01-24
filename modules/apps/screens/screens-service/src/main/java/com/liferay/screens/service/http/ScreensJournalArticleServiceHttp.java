@@ -16,12 +16,21 @@ package com.liferay.screens.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.service.http.TunnelUtil;
+
+import com.liferay.screens.service.ScreensJournalArticleServiceUtil;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.screens.service.ScreensJournalArticleServiceUtil} service utility. The
+ * {@link ScreensJournalArticleServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,122 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author José Manuel Navarro
  * @see ScreensJournalArticleServiceSoap
- * @see com.liferay.portal.security.auth.HttpPrincipal
- * @see com.liferay.screens.service.ScreensJournalArticleServiceUtil
+ * @see HttpPrincipal
+ * @see ScreensJournalArticleServiceUtil
  * @generated
  */
 @ProviderType
 public class ScreensJournalArticleServiceHttp {
+	public static java.lang.String getJournalArticleContent(
+		HttpPrincipal httpPrincipal, long classPK, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(ScreensJournalArticleServiceUtil.class,
+					"getJournalArticleContent",
+					_getJournalArticleContentParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					locale);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.lang.String)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.lang.String getJournalArticleContent(
+		HttpPrincipal httpPrincipal, long classPK, long ddmTemplateId,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(ScreensJournalArticleServiceUtil.class,
+					"getJournalArticleContent",
+					_getJournalArticleContentParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					ddmTemplateId, locale);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.lang.String)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.lang.String getJournalArticleContent(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String articleId,
+		long ddmTemplateId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(ScreensJournalArticleServiceUtil.class,
+					"getJournalArticleContent",
+					_getJournalArticleContentParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					articleId, ddmTemplateId, locale);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.lang.String)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ScreensJournalArticleServiceHttp.class);
+	private static final Class<?>[] _getJournalArticleContentParameterTypes0 = new Class[] {
+			long.class, java.util.Locale.class
+		};
+	private static final Class<?>[] _getJournalArticleContentParameterTypes1 = new Class[] {
+			long.class, long.class, java.util.Locale.class
+		};
+	private static final Class<?>[] _getJournalArticleContentParameterTypes2 = new Class[] {
+			long.class, java.lang.String.class, long.class,
+			java.util.Locale.class
+		};
 }

@@ -125,8 +125,12 @@ AUI.add(
 			restoreSelectedNode: function() {
 				var instance = this;
 
-				if (instance._selectedNodeId) {
-					instance.getNodeById(instance._selectedNodeId).select();
+				var pendingSelectedNodeId = instance._pendingSelectedNodeId;
+
+				if (pendingSelectedNodeId) {
+					instance.getNodeById(pendingSelectedNodeId).select();
+
+					instance._pendingSelectedNodeId = null;
 				}
 			},
 
@@ -273,7 +277,7 @@ AUI.add(
 				}
 
 				if (instance.get('selPlid') == node.plid) {
-					instance._selectedNodeId = id;
+					instance._pendingSelectedNodeId = id;
 				}
 
 				var cssClass = STR_EMPTY;

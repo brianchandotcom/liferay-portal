@@ -4,6 +4,7 @@ dependencies {
 	compile group: "org.apache.struts", name: "struts-core", version: "1.3.10"
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:users-admin:users-admin-api")
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
 }
 

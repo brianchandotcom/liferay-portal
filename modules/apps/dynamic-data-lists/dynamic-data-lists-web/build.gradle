@@ -7,6 +7,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
 }
 

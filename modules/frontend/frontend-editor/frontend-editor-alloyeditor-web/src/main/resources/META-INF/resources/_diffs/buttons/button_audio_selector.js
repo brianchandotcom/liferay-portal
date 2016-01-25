@@ -30,7 +30,7 @@
 					'button',
 					{
 						className: 'ae-button',
-						'data-type': 'button-image',
+						'data-type': 'button-audio',
 						onClick: this._handleClick,
 						tabIndex: this.props.tabIndex
 					},

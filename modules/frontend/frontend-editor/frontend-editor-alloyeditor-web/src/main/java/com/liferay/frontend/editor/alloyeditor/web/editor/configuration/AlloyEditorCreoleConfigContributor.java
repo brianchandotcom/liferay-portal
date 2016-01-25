@@ -69,7 +69,7 @@ public class AlloyEditorCreoleConfigContributor
 
 		extraPlugins = extraPlugins.replace(
 			",ae_tableresize", StringPool.BLANK);
-		extraPlugins = extraPlugins.concat(",creole");
+		extraPlugins = extraPlugins.concat(",creole,itemselector,media");
 
 		jsonObject.put("extraPlugins", extraPlugins);
 

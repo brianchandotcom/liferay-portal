@@ -148,7 +148,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 								request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
 								%>
 
-								<liferay-util:include page="/select_pages.jsp" portletId="<%= PortletKeys.EXPORT_IMPORT %>">
+								<liferay-util:include page="/publish_templates/select_pages.jsp" servletContext="<%= application %>">
 									<liferay-util:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 									<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 									<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />

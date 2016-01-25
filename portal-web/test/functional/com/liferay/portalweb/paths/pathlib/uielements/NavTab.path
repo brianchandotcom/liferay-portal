@@ -94,11 +94,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTERNAL_SERVICES</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'External Services')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FACEBOOK</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Facebook')]</td>
 	<td></td>
@@ -106,11 +101,6 @@
 <tr>
 	<td>FIELDS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Fields')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILE_UPLOADS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'File Uploads')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -131,11 +121,6 @@
 <tr>
 	<td>LOG_LEVELS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Log Levels')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MAIL</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Mail')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -196,11 +181,6 @@
 <tr>
 	<td>RESERVED_CREDENTIALS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Reserved Credentials')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Resources')]</td>
 	<td></td>
 </tr>
 <tr>

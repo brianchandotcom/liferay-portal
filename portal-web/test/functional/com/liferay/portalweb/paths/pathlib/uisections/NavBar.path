@@ -69,6 +69,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTERNAL_SERVICES</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'External Services')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'File Uploads')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDERS</td>
 	<td>//*[@data-qa-id='navigation']//a[contains(.,'Folders')]</td>
 	<td></td>
@@ -81,6 +91,11 @@
 <tr>
 	<td>RECENT</td>
 	<td>//*[@data-qa-id='navigation']//a[contains(.,'Recent')] | //div[contains(@class,'navbar-default')]//a/span[contains(.,'Recent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIL</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Mail')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,6 +121,11 @@
 <tr>
 	<td>PERMISSIONS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'navbar-nav')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCES</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Resources')]</td>
 	<td></td>
 </tr>
 <tr>

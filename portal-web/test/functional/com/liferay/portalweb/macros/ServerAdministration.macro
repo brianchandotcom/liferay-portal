@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="configureExternalServices">
-		<execute function="AssertClick" locator1="NavTab#EXTERNAL_SERVICES" value1="External Services" />
+		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="External Services" />
 
 		<if>
 			<equals arg1="${enableOpenOfficeIntegration}" arg2="true" />
@@ -61,14 +61,14 @@
 	</command>
 
 	<command name="configureFileUploadOverallMaximumFileSize">
-		<execute function="AssertClick" locator1="NavTab#FILE_UPLOADS" value1="File Uploads" />
+		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
 		<execute function="Type" locator1="CPServeradministrationFileuploads#FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
 		<execute function="AssertClick" locator1="CPServeradministrationFileuploads#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPServeradministrationFileuploads#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureMailServerSettings">
-		<execute function="AssertClick" locator1="NavTab#MAIL" value1="Mail" />
+		<execute function="AssertClick" locator1="NavBar#MAIL" value1="Mail" />
 
 		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_POP_SERVER" value1="pop.gmail.com" />
 		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_PORT" value1="995" />
@@ -88,7 +88,7 @@
 	<command name="executeServerResourcesActions">
 		<var name="key_actionsDescription" value="${actionsDescription}" />
 
-		<execute function="AssertClick" locator1="NavTab#RESOURCES" value1="Resources" />
+		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="ServerAdministrationResources#ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
 		<execute function="AssertClick" locator1="ServerAdministrationResources#ACTIONS_TABLE_EXECUTE" value1="Execute" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -123,7 +123,7 @@
 			<var name="portlet" value="Server Administration" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#FILE_UPLOADS" value1="File Uploads" />
+		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
 		<execute function="Type" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="" />
 		<execute function="AssertClick" locator1="CPServeradministrationFileuploads#SAVE_BUTTON" value1="Save" />
 	</command>
@@ -133,7 +133,7 @@
 			<var name="portlet" value="Server Administration" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#MAIL" value1="Mail" />
+		<execute function="AssertClick" locator1="NavBar#MAIL" value1="Mail" />
 
 		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_POP_SERVER" value1="localhost" />
 		<execute function="Type" locator1="ServerAdministrationMail#INCOMING_PORT" value1="110" />

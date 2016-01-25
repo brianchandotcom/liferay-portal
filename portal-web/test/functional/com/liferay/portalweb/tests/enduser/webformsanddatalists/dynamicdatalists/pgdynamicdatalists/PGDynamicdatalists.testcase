@@ -59,6 +59,12 @@
 			<var name="fieldName" value="Boolean" />
 		</execute>
 
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
 		<execute macro="DDLDataDefinition#saveViaDDLDisplayPG" />
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG" />
@@ -75,6 +81,10 @@
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
 			<var name="field" value="Boolean" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCannotAddField">
+			<var name="field" value="Text" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#deleteField">
@@ -115,6 +125,14 @@
 			<var name="field" value="Paragraph" />
 			<var name="fieldText" value="Paragraph" />
 		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#publish" />
 	</command>
 
 	<command name="AddList" priority="4">

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -36,6 +37,8 @@ public class PortletPreferencesModelListener
 	@Override
 	public void onAfterRemove(PortletPreferences portletPreferences) {
 		clearCache(portletPreferences);
+
+		removeSubscriptions(portletPreferences);
 	}
 
 	@Override
@@ -77,6 +80,22 @@ public class PortletPreferencesModelListener
 		}
 		catch (Exception e) {
 			CacheUtil.clearCache();
+		}
+	}
+
+	protected void removeSubscriptions(PortletPreferences portletPreferences) {
+		if (portletPreferences == null) {
+			return;
+		}
+
+		try {
+			SubscriptionLocalServiceUtil.deleteSubscriptions(
+				portletPreferences.getCompanyId(),
+				portletPreferences.getModelClassName(),
+				portletPreferences.getPortletPreferencesId());
+		}
+		catch (Exception e) {
+			_log.error("Unable to remove subscriptions", e);
 		}
 	}
 

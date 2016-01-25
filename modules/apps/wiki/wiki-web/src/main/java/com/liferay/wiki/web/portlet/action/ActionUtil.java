@@ -402,10 +402,7 @@ public class ActionUtil {
 
 			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 
-			WikiPage page = ActionUtil.getFirstVisiblePage(
-				node.getNodeId(), renderRequest);
-
-			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
+			ActionUtil.getFirstVisiblePage(node.getNodeId(), renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

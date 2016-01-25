@@ -6,8 +6,6 @@ Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class
 JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Web-ContextPath: /dynamic-data-mapping-web
 -include: ../../../../marketplace/business-productivity/bnd.bnd

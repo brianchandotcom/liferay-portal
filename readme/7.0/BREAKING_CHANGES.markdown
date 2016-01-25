@@ -3491,3 +3491,32 @@ else.
 
 This change was necessary to solve the current split package problems and
 prevent future ones.
+
+---------------------------------------
+
+### The title field of FileEntry models is now mandatory
+- **Date:** 2016-Jan-25
+- **JIRA Ticket:** LPS-62251
+
+#### What changed?
+
+The `title` field of file entries was optional as long as a source
+file name was provided. To avoid confusion, the title is now required
+by the API, as is filled automatically by the UI when a source file
+name is present.
+
+#### Who is affected?
+
+Any user of the local or remote API. Users of the Web UI are unaffected.
+
+#### How should I update my code?
+
+You should pass a non null, non empty string in the title parameter of
+the `addFileEntry` and `updateFileEntry` methods.
+
+#### Why was this change made?
+
+The `title` field was marked as mandatory, but it was possible to
+create a document without filling it, as the backend would infer a
+value from the source file name automatically. This was considered
+confusing from an UX prespective.

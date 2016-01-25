@@ -17,9 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
-page import="com.liferay.util.PropertyComparator" %>
+page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <liferay-theme:defineObjects />
 
@@ -28,5 +26,5 @@ String direction = (String)request.getAttribute("liferay-ui:icon:direction");
 String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");
 boolean showArrow = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:showArrow"));
 
-List<PortletConfigurationIconFactory> portletConfigurationIconFactories = (List<PortletConfigurationIconFactory>)request.getAttribute("liferay-ui:icon-options:portletConfigurationIconFactories");
+List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigurationIcon>)request.getAttribute("liferay-ui:icon-options:portletConfigurationIcons");
 %>

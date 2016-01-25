@@ -15,16 +15,13 @@
 package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
-import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Douglas Wong
@@ -38,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIconFactory.class
 )
 public class InstallFromURLPortletConfigurationIconFactory
-	extends BaseJSPPortletConfigurationIconFactory {
+	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
@@ -46,22 +43,8 @@ public class InstallFromURLPortletConfigurationIconFactory
 	}
 
 	@Override
-	public String getJspPath() {
-		return "/configuration/icon/install_from_url.jsp";
-	}
-
-	@Override
 	public double getWeight() {
 		return 102;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.marketplace.app.manager.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 }

@@ -14,20 +14,29 @@
 
 package com.liferay.trash.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import aQute.bnd.annotation.component.Reference;
+
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Eudaldo Alonso
  */
 public class EmptyTrashPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public EmptyTrashPortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/empty_trash.jsp";
 	}
 
 	@Override
@@ -39,6 +48,14 @@ public class EmptyTrashPortletConfigurationIcon
 		}
 
 		return true;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.trash.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

@@ -14,8 +14,10 @@
 
 package com.liferay.users.admin.web.portlet.configuration.icon;
 
+import aQute.bnd.annotation.component.Reference;
+
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
@@ -24,14 +26,21 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Pei-Jung Lan
  */
 public class ExportUsersPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public ExportUsersPortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/export_users.jsp";
 	}
 
 	@Override
@@ -64,6 +73,15 @@ public class ExportUsersPortletConfigurationIcon
 		}
 
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.users.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

@@ -14,19 +14,28 @@
 
 package com.liferay.journal.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import aQute.bnd.annotation.component.Reference;
+
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class TemplatesPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public TemplatesPortletConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/templates.jsp";
 	}
 
 	@Override
@@ -53,6 +62,14 @@ public class TemplatesPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

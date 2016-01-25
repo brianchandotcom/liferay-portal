@@ -14,21 +14,30 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import aQute.bnd.annotation.component.Reference;
+
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Sergio González
  */
 public class DocumentTypesPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public DocumentTypesPortletConfigurationIcon(
 		PortletRequest portletRequest) {
 
 		super(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/document_library/configuration/icon/document_types.jsp";
 	}
 
 	@Override
@@ -55,6 +64,15 @@ public class DocumentTypesPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

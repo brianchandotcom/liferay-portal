@@ -14,17 +14,21 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
+import aQute.bnd.annotation.component.Reference;
+
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Roberto Díaz
  */
 public class CheckinFileEntryPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public CheckinFileEntryPortletConfigurationIcon(
 		PortletRequest portletRequest, FileEntry fileEntry) {
@@ -32,6 +36,11 @@ public class CheckinFileEntryPortletConfigurationIcon
 		super(portletRequest);
 
 		_fileEntry = fileEntry;
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/document_library/configuration/icon/checkin.jsp";
 	}
 
 	@Override
@@ -62,6 +71,15 @@ public class CheckinFileEntryPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	private final FileEntry _fileEntry;

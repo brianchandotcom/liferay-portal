@@ -14,7 +14,9 @@
 
 package com.liferay.layout.admin.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import aQute.bnd.annotation.component.Reference;
+
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Group;
@@ -28,11 +30,13 @@ import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Eudaldo Alonso
  */
 public class CopyApplicationsPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public CopyApplicationsPortletConfigurationIcon(
 		PortletRequest portletRequest, LayoutLocalService layoutLocalService) {
@@ -45,6 +49,11 @@ public class CopyApplicationsPortletConfigurationIcon
 	@Override
 	public String getId() {
 		return "copyApplications";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/copy_applications.jsp";
 	}
 
 	@Override
@@ -108,6 +117,14 @@ public class CopyApplicationsPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected Layout getLayout() throws Exception {

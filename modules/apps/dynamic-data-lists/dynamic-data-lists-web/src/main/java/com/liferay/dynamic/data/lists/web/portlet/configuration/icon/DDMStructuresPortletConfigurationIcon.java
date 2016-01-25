@@ -14,23 +14,32 @@
 
 package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
+import aQute.bnd.annotation.component.Reference;
+
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Rafael Praxedes
  */
 public class DDMStructuresPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public DDMStructuresPortletConfigurationIcon(
 		PortletRequest portletRequest) {
 
 		super(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/structures.jsp";
 	}
 
 	@Override
@@ -59,6 +68,15 @@ public class DDMStructuresPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

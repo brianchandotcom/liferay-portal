@@ -14,25 +14,34 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
+import aQute.bnd.annotation.component.Reference;
+
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Rafael Praxedes
  */
 public class ExportDDLRecordSetPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public ExportDDLRecordSetPortletConfigurationIcon(
 		PortletRequest portletRequest) {
 
 		super(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/admin/configuration/icon/export_record_set.jsp";
 	}
 
 	@Override
@@ -72,6 +81,15 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

@@ -14,22 +14,28 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
+import java.util.Comparator;
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-public class BasePortletConfigurationIconFactory
-	implements PortletConfigurationIconFactory {
+public class PortletConfigurationIconMenu {
 
-	@Override
-	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return null;
+	public List<PortletConfigurationIcon>
+		getPortletConfigurationIcons(
+			String portletId, PortletRequest portletRequest) {
+
+		return PortletConfigurationIconTracker.getPortletConfigurationIcons(
+			portletId, portletRequest, _comparator);
 	}
 
-	@Override
-	public double getWeight() {
-		return 0;
+	public void setComparator(Comparator comparator) {
+		_comparator = comparator;
 	}
+
+	private Comparator _comparator;
 
 }

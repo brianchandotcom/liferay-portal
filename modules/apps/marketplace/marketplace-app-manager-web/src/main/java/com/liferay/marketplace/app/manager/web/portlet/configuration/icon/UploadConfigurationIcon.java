@@ -14,18 +14,27 @@
 
 package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import aQute.bnd.annotation.component.Reference;
+
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Enoch Chu
  */
-public class UploadConfigurationIcon extends BasePortletConfigurationIcon {
+public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 
 	public UploadConfigurationIcon(PortletRequest portletRequest) {
 		super(portletRequest);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/install_from_file.jsp";
 	}
 
 	@Override
@@ -52,6 +61,15 @@ public class UploadConfigurationIcon extends BasePortletConfigurationIcon {
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.marketplace.app.manager.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

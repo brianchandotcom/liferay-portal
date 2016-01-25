@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
+long layoutSetBranchId = GetterUtil.getLong(request.getAttribute("view.jsp-layoutSetBranchId"));
+String layoutSetBranchName = GetterUtil.getString(request.getAttribute("view.jsp-layoutSetBranchName"));
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 

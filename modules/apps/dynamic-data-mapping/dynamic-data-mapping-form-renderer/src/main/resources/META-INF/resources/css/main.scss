@@ -9,6 +9,14 @@
 		font-size: inherit;
 	}
 
+	.required-warning{
+		margin-bottom: 40px;
+
+		.icon-asterisk {
+			margin-left: 4px;
+		}
+	}
+
 	.lfr-ddm-form-field-container {
 		position: relative;
 

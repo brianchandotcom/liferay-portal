@@ -168,11 +168,8 @@ public class AssetPublisherPortletToolbarContributor
 		data.put(
 			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
 
-		Class<?> clazz = getClass();
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(),
-			clazz.getClassLoader());
+			"content.Language", themeDisplay.getLocale(), getClass());
 
 		String title = LanguageUtil.get(
 			resourceBundle, "add-content-select-scope-and-type");

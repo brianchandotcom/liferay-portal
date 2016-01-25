@@ -40,7 +40,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 				<c:when test="<%= privateLayout %>">
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
-							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
 							<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
 						</liferay-portlet:renderURL>
 
@@ -50,7 +50,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 				<c:otherwise>
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
-							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
 							<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
 						</liferay-portlet:renderURL>
 

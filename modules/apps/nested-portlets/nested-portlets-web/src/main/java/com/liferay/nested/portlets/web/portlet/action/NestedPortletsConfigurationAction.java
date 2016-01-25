@@ -15,7 +15,6 @@
 package com.liferay.nested.portlets.web.portlet.action;
 
 import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
-import com.liferay.nested.portlets.web.display.context.NestedPortletsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -78,15 +77,11 @@ public class NestedPortletsConfigurationAction
 		String layoutTemplateId = getParameter(
 			actionRequest, "layoutTemplateId");
 
+		String oldLayoutTemplateId = ParamUtil.getString(
+			actionRequest, "oldLayoutTemplateId");
+
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");
-
-		NestedPortletsDisplayContext nestedPortletsDisplayContext =
-			new NestedPortletsDisplayContext(
-				PortalUtil.getHttpServletRequest(actionRequest));
-
-		String oldLayoutTemplateId =
-			nestedPortletsDisplayContext.getLayoutTemplateId();
 
 		if (!oldLayoutTemplateId.equals(layoutTemplateId)) {
 			reorganizeNestedColumns(

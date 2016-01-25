@@ -334,7 +334,7 @@
 				DLFileVersion
 			WHERE
 				(DLFileVersion.groupId = ?) AND
-				([$STATUS$]) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
 				[$FILE_VERSION_FOLDER_ID$]
 		]]>
 	</sql>
@@ -388,7 +388,7 @@
 			[$JOIN$]
 			WHERE
 				(DLFileEntry.groupId = ?) AND
-				([$STATUS$]) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
 				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
 	</sql>

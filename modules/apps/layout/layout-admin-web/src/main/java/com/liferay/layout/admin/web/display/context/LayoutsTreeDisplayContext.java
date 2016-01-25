@@ -119,7 +119,8 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		LayoutSetBranch layoutSetBranch = getLayoutSetBranch();
 
 		return LanguageUtil.get(
-			getHttpServletRequest(), layoutSetBranch.getName());
+			PortalUtil.getHttpServletRequest(liferayPortletRequest),
+			layoutSetBranch.getName());
 	}
 
 	public String getLayoutSetBranchURL(LayoutSetBranch layoutSetBranch)

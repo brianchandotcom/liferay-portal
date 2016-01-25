@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.language.UTF8Control;
 import java.text.MessageFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,6 +36,21 @@ import java.util.ResourceBundle;
  * @author Neil Griffin
  */
 public class ResourceBundleUtil {
+
+	public static final ResourceBundle EMPTY_RESOURCE_BUNDLE =
+		new ResourceBundle() {
+
+			@Override
+			protected Object handleGetObject(String key) {
+				return key;
+			}
+
+			@Override
+			public Enumeration<String> getKeys() {
+				return Collections.emptyEnumeration();
+			}
+
+		};
 
 	public static ResourceBundle getBundle(String baseName, Class<?> clazz) {
 		return getBundle(baseName, clazz.getClassLoader());

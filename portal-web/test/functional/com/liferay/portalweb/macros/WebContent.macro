@@ -15,6 +15,19 @@
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 	</command>
 
+	<command name="_gotoAddPGViaWCD">
+		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
+
+		<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
 	<command name="addAbstractSummary">
 		<execute function="Type" locator1="TextArea#SUMMARY" value1="${abstractSummary}" />
 	</command>
@@ -202,13 +215,7 @@
 	</command>
 
 	<command name="addPGViaWCD">
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
-
-		<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#_gotoAddPGViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -705,23 +712,7 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaWCD">
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
-
-		<if>
-			<isset var="selectStructureName" />
-			<then>
-				<var name="key_selectStructureName" value="${selectStructureName}" />
-
-				<execute function="AssertClick" locator1="WCD#ADD_MENU_WEB_CONTENT_STRUCTURE" value1="${selectStructureName}" />
-			</then>
-			<else>
-				<execute function="Click" locator1="WCD#ADD_BASIC_WEB_CONTENT" />
-			</else>
-		</if>
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#_gotoAddPGViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>

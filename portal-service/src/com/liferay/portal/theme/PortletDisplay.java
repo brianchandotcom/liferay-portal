@@ -113,6 +113,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_urlBack = master.getURLBack();
 		_urlClose = master.getURLClose();
 		_urlConfiguration = master.getURLConfiguration();
+		_urlConfigurationJS = master.getURLConfigurationJS();
 		_urlEdit = master.getURLEdit();
 		_urlEditDefaults = master.getURLEditDefaults();
 		_urlEditGuest = master.getURLEditGuest();
@@ -183,6 +184,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		slave.setURLBack(_urlBack);
 		slave.setURLClose(_urlClose);
 		slave.setURLConfiguration(_urlConfiguration);
+		slave.setURLConfigurationJS(_urlConfigurationJS);
 		slave.setURLEdit(_urlEdit);
 		slave.setURLEditDefaults(_urlEditDefaults);
 		slave.setURLEditGuest(_urlEditGuest);

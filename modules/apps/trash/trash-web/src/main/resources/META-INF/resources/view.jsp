@@ -72,24 +72,7 @@ if (Validator.isNotNull(keywords)) {
 }
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="entries" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL" />
-
-		<aui:form action="<%= searchURL.toString() %>" method="get" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="deleteTrashEntryIds" type="hidden" />
-			<aui:input name="restoreTrashEntryIds" type="hidden" />
-
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

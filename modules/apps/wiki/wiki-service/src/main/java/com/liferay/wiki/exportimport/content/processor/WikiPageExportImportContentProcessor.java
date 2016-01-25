@@ -15,7 +15,7 @@
 package com.liferay.wiki.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.base.BaseExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	}
 )
 public class WikiPageExportImportContentProcessor
-	extends BaseExportImportContentProcessor {
+	extends BaseTextExportImportContentProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageExportImportContentProcessor.class);

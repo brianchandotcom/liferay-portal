@@ -122,16 +122,11 @@ AUI.add(
 				return match && match[1];
 			},
 
-			restoreSelectedNode: function(node) {
+			restoreSelectedNode: function() {
 				var instance = this;
 
-				var plid = instance.extractPlid(node);
-
-				if (plid === instance.get('selPlid')) {
-					node.select();
-				}
-				else {
-					node.unselect();
+				if (instance._selectedNodeId) {
+					instance.getNodeById(instance._selectedNodeId).select();
 				}
 			},
 
@@ -140,15 +135,7 @@ AUI.add(
 
 				instance._treeLoadingElement.hide();
 
-				var rootNode = instance.getChildren()[0];
-
-				instance.restoreSelectedNode(rootNode);
-
-				rootNode.eachChildren(A.bind(instance.restoreSelectedNode, instance));
-
-				if (instance._selectedNodeId) {
-					instance.getNodeById(instance._selectedNodeId).select();
-				}
+				instance.restoreSelectedNode();
 			},
 
 			_bindUILTBase: function() {

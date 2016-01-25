@@ -124,9 +124,7 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
-						host.restoreSelectedNode(node);
-
-						node.eachChildren(A.bind(host.restoreSelectedNode, host));
+						host.restoreSelectedNode();
 					},
 
 					_onNodeChildrenChange: function(event) {
@@ -218,7 +216,7 @@ AUI.add(
 							}
 						);
 
-						target.eachChildren(A.bind(host.restoreSelectedNode, host));
+						host.restoreSelectedNode();
 					},
 
 					_onSelectableNodeCheckedChange: function(event) {

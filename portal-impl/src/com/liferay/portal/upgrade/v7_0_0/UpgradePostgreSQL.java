@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -123,25 +121,6 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 		}
 	}
 
-	protected void updatePostgreSQLLargeObjects() throws Exception {
-		PreparedStatement ps = null;
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("select lo_unlink (l.oid) from pg_largeobject_metadata l ");
-		sb.append("where (not exists (select 1 from dlcontent t where ");
-		sb.append("t.data_ = l.oid))");
-
-		try {
-			ps = connection.prepareStatement(sb.toString());
-
-			ps.execute();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
-
 	protected void updatePostgreSQLRules(Map<String, String> columnsWithOids)
 		throws Exception {
 
@@ -162,8 +141,5 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradePostgreSQL.class);
 
 }

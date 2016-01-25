@@ -15,9 +15,9 @@
 package com.liferay.portal.instance.lifecycle.internal;
 
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.model.Company;
 
@@ -33,21 +33,29 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true)
-public class PortalInstanceLifecycleListenerManagerImpl {
+@Component(immediate = true, service = PortalInstanceLifecycleManager.class)
+public class PortalInstanceLifecycleListenerManagerImpl
+	implements PortalInstanceLifecycleManager {
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "removeCompany"
-	)
-	protected void addCompany(Company company) {
+	@Override
+	public void registerCompany(Company company) {
 		_companies.add(company);
 
 		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
 				_portalInstanceLifecycleListeners) {
 
-			portalInstanceRegistered(portalInstanceLifecycleListener, company);
+			registerCompany(portalInstanceLifecycleListener, company);
+		}
+	}
+
+	@Override
+	public void unregisterCompany(Company company) {
+		_companies.remove(company);
+
+		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
+				_portalInstanceLifecycleListeners) {
+
+			unregisterCompany(portalInstanceLifecycleListener, company);
 		}
 	}
 
@@ -67,11 +75,11 @@ public class PortalInstanceLifecycleListenerManagerImpl {
 		}
 
 		for (Company company : _companies) {
-			portalInstanceRegistered(portalInstanceLifecycleListener, company);
+			registerCompany(portalInstanceLifecycleListener, company);
 		}
 	}
 
-	protected void portalInstanceRegistered(
+	protected void registerCompany(
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
 
@@ -92,10 +100,6 @@ public class PortalInstanceLifecycleListenerManagerImpl {
 		}
 	}
 
-	protected void removeCompany(Company company) {
-		_companies.remove(company);
-	}
-
 	protected void removePortalInstanceLifecycleListener(
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener) {
 
@@ -103,9 +107,25 @@ public class PortalInstanceLifecycleListenerManagerImpl {
 			portalInstanceLifecycleListener);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	protected void unregisterCompany(
+		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
+		Company company) {
+
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
+			portalInstanceLifecycleListener.portalInstanceUnregistered(company);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to register portal instance " + company, e);
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyId);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

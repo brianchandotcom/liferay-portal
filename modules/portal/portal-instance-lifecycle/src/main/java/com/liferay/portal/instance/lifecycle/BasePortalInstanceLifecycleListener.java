@@ -14,11 +14,21 @@
 
 package com.liferay.portal.instance.lifecycle;
 
+import com.liferay.portal.model.Company;
+
 /**
  * @author Michael C. Han
  */
 public abstract class BasePortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+	}
+
+	@Override
+	public void portalInstanceUnregistered(Company company) throws Exception {
+	}
 
 	protected ClassLoader getClassLoader() {
 		Class<?> clazz = getClass();

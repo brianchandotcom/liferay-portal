@@ -390,10 +390,10 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="Staging Test Page" />
+			<var name="pageName" value="Staging Page Versioning" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>
 

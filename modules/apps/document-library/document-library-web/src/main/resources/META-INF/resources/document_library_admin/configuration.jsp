@@ -30,7 +30,9 @@
 	<liferay-ui:tabs
 		names="email-from,document-added-email,document-updated-email"
 		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
 	>
+
 		<liferay-ui:error key="emailFileEntryAddedBody" message="please-enter-a-valid-body" />
 		<liferay-ui:error key="emailFileEntryAddedSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailFileEntryUpdatedBody" message="please-enter-a-valid-body" />
@@ -39,34 +41,36 @@
 		<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
 		<liferay-ui:section>
-			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= dlGroupServiceSettings.getEmailFromName() %>" />
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= dlGroupServiceSettings.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= dlGroupServiceSettings.getEmailFromAddress() %>" />
-			</aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= dlGroupServiceSettings.getEmailFromAddress() %>" />
+				</aui:fieldset>
 
-			<aui:fieldset cssClass="definition-of-terms" label="definition-of-terms">
-				<dl>
+				<aui:fieldset collapsible="<%= true %>" label="definition-of-terms">
+					<dl>
 
-					<%
-					Map<String, String> emailDefinitionTerms = DLUtil.getEmailFromDefinitionTerms(renderRequest, dlGroupServiceSettings.getEmailFromAddress(), dlGroupServiceSettings.getEmailFromName());
+						<%
+						Map<String, String> emailDefinitionTerms = DLUtil.getEmailFromDefinitionTerms(renderRequest, dlGroupServiceSettings.getEmailFromAddress(), dlGroupServiceSettings.getEmailFromName());
 
-					for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
-					%>
+						for (Map.Entry<String, String> entry : emailDefinitionTerms.entrySet()) {
+						%>
 
-						<dt>
-							<%= entry.getKey() %>
-						</dt>
-						<dd>
-							<%= entry.getValue() %>
-						</dd>
+							<dt>
+								<%= entry.getKey() %>
+							</dt>
+							<dd>
+								<%= entry.getValue() %>
+							</dd>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</dl>
-			</aui:fieldset>
+					</dl>
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<%
@@ -74,23 +78,27 @@
 		%>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBody="<%= dlGroupServiceSettings.getEmailFileEntryAddedBodyXml() %>"
-				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryAddedEnabled() %>"
-				emailParam="emailFileEntryAdded"
-				emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryAddedSubjectXml() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= dlGroupServiceSettings.getEmailFileEntryAddedBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryAddedEnabled() %>"
+					emailParam="emailFileEntryAdded"
+					emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryAddedSubjectXml() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-frontend:email-notification-settings
-				emailBody="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedBodyXml() %>"
-				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled() %>"
-				emailParam="emailFileEntryUpdated"
-				emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedSubjectXml() %>"
-			/>
+			<aui:fieldset-group markupView="lexicon">
+				<liferay-frontend:email-notification-settings
+					emailBody="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedBodyXml() %>"
+					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailEnabled="<%= dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled() %>"
+					emailParam="emailFileEntryUpdated"
+					emailSubject="<%= dlGroupServiceSettings.getEmailFileEntryUpdatedSubjectXml() %>"
+				/>
+			</aui:fieldset-group>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 

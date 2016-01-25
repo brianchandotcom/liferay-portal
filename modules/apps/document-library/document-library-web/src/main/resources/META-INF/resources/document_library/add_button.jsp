@@ -22,7 +22,7 @@ DLPortletToolbarContributor dlPortletToolbarContributor = (DLPortletToolbarContr
 List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(renderRequest, renderResponse);
 %>
 
-<div id="addButtonContainer">
+<div id="<portlet:namespace />addButtonContainer">
 
 	<%
 	for (Menu menu : menus) {

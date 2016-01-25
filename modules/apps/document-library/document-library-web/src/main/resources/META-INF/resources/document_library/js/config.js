@@ -25,6 +25,7 @@
 								'aui-progressbar',
 								'aui-template-deprecated',
 								'aui-tooltip',
+								'liferay-history-manager',
 								'liferay-search-container',
 								'liferay-storage-formatter',
 								'querystring-parse-simple',

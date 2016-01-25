@@ -171,7 +171,6 @@ AUI.add(
 								displayStyle: config.displayStyle,
 								entriesContainer: instance._entriesContainer,
 								folderId: instance._folderId,
-								listViewContainer: instance.byId('listViewContainer'),
 								maxFileSize: config.maxFileSize,
 								redirect: config.redirect,
 								scopeGroupId: config.scopeGroupId,

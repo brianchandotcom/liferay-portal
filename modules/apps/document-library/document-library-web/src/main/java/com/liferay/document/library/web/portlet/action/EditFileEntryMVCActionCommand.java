@@ -946,6 +946,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		InputStream inputStream = null;
 
+		if (cmd.equals(Constants.ADD_DYNAMIC)) {
+			title = uploadPortletRequest.getFileName("file");
+		}
+
 		try {
 			String contentType = uploadPortletRequest.getContentType("file");
 			long size = uploadPortletRequest.getSize("file");

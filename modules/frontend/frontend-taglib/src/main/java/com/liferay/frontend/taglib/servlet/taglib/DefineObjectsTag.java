@@ -14,11 +14,17 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -32,6 +38,14 @@ public class DefineObjectsTag extends TagSupport {
 	@Override
 	public int doStartTag() throws JspException {
 		pageContext.setAttribute("resourceBundle", getResourceBundle());
+		pageContext.setAttribute("windowState", getWindowState());
+
+		PortletURL currentURLObj = getCurrentURLObj();
+
+		if (currentURLObj != null) {
+			pageContext.setAttribute("currentURLObj", currentURLObj);
+			pageContext.setAttribute("currentURL", currentURLObj.toString());
+		}
 
 		return SKIP_BODY;
 	}
@@ -46,6 +60,25 @@ public class DefineObjectsTag extends TagSupport {
 		_resourceBundleBaseName = resourceBundleBaseName;
 	}
 
+	protected PortletURL getCurrentURLObj() {
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)pageContext.getAttribute(
+				"liferayPortletRequest");
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)pageContext.getAttribute(
+				"liferayPortletResponse");
+
+		if ((liferayPortletRequest == null) ||
+			(liferayPortletResponse == null)) {
+
+			return null;
+		}
+
+		return PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+	}
+
 	protected ResourceBundle getResourceBundle() {
 		if (_overrideResourceBundle != null) {
 			return _overrideResourceBundle;
@@ -58,6 +91,18 @@ public class DefineObjectsTag extends TagSupport {
 
 		return TagResourceBundleUtil.getResourceBundle(
 			pageContext, _resourceBundleBaseName, locale);
+	}
+
+	protected WindowState getWindowState() {
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)pageContext.getAttribute(
+				"liferayPortletRequest");
+
+		if (liferayPortletRequest == null) {
+			return null;
+		}
+
+		return liferayPortletRequest.getWindowState();
 	}
 
 	private static final String _DEFAULT_RESOURCE_BUNDLE_BASE_NAME =

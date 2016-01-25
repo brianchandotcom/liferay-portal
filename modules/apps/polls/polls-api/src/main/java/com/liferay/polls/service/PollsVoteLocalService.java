@@ -180,6 +180,10 @@ public interface PollsVoteLocalService extends BaseLocalService,
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.polls.model.PollsVote fetchQuestionUserVote(
+		long questionId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -286,10 +290,6 @@ public interface PollsVoteLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getQuestionVotesCount(long questionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsVote getVote(long questionId,
-		long userId) throws PortalException;
 
 	/**
 	* Updates the polls vote in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

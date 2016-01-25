@@ -20,7 +20,6 @@ import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.base.PollsVoteServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsQuestionPermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 
@@ -35,20 +34,11 @@ public class PollsVoteServiceImpl extends PollsVoteServiceBaseImpl {
 			long questionId, long choiceId, ServiceContext serviceContext)
 		throws PortalException {
 
-		long userId = 0;
-
-		try {
-			userId = getUserId();
-		}
-		catch (PrincipalException pe) {
-			userId = counterLocalService.increment();
-		}
-
 		PollsQuestionPermissionChecker.check(
 			getPermissionChecker(), questionId, ActionKeys.ADD_VOTE);
 
 		return pollsVoteLocalService.addVote(
-			userId, questionId, choiceId, serviceContext);
+			getUserId(), questionId, choiceId, serviceContext);
 	}
 
 }

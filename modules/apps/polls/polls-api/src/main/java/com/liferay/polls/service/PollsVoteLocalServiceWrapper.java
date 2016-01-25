@@ -204,6 +204,12 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	}
 
 	@Override
+	public com.liferay.polls.model.PollsVote fetchQuestionUserVote(
+		long questionId, long userId) {
+		return _pollsVoteLocalService.fetchQuestionUserVote(questionId, userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _pollsVoteLocalService.getActionableDynamicQuery();
 	}
@@ -343,12 +349,6 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	@Override
 	public int getQuestionVotesCount(long questionId) {
 		return _pollsVoteLocalService.getQuestionVotesCount(questionId);
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsVote getVote(long questionId,
-		long userId) throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsVoteLocalService.getVote(questionId, userId);
 	}
 
 	/**

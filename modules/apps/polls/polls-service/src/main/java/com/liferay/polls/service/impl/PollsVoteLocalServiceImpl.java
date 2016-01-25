@@ -67,7 +67,13 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 
 		// Vote
 
-		PollsVote vote = pollsVotePersistence.fetchByQ_U(questionId, userId);
+		PollsVote vote = null;
+
+		User user = userPersistence.fetchByPrimaryKey(userId);
+
+		if (!user.isDefaultUser()) {
+			vote = fetchQuestionUserVote(questionId, userId);
+		}
 
 		if (vote != null) {
 			StringBundler sb = new StringBundler(5);
@@ -81,14 +87,9 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 			throw new DuplicateVoteException(sb.toString());
 		}
 
-		String userName = null;
+		String userName = user.getFullName();
 
-		User user = userPersistence.fetchByPrimaryKey(userId);
-
-		if (user != null) {
-			userName = user.getFullName();
-		}
-		else {
+		if (user.isDefaultUser()) {
 			userName = serviceContext.translate("anonymous");
 		}
 
@@ -111,6 +112,18 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 	}
 
 	@Override
+	public PollsVote fetchQuestionUserVote(long questionId, long userId) {
+		List<PollsVote> votes = pollsVotePersistence.findByQ_U(
+			questionId, userId);
+
+		if (votes.isEmpty()) {
+			return null;
+		}
+
+		return votes.get(0);
+	}
+
+	@Override
 	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end) {
 		return pollsVotePersistence.findByChoiceId(choiceId, start, end);
 	}
@@ -130,13 +143,6 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 	@Override
 	public int getQuestionVotesCount(long questionId) {
 		return pollsVotePersistence.countByQuestionId(questionId);
-	}
-
-	@Override
-	public PollsVote getVote(long questionId, long userId)
-		throws PortalException {
-
-		return pollsVotePersistence.findByQ_U(questionId, userId);
 	}
 
 }

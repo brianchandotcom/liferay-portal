@@ -34,4 +34,7 @@ public class IncorrectLineBreaks2 {
 			});
 	}
 
+	public void method2() {
+	}
+
 }

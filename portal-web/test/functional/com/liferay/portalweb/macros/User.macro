@@ -1287,8 +1287,8 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ORGANIZATIONS_SELECT_LINK" value1="Select" />
 		<execute function="SelectFrame" locator1="UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
 
-		<execute function="Type" locator1="UsersAndOrganizationsSelectOrganization#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizationsSelectOrganization#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${orgName}" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_CHOOSE_BUTTON" value1="Choose" />
 

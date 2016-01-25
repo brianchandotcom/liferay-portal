@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -203,11 +204,29 @@ public class AssetPublisherPortletToolbarContributor
 
 		Menu menu = new Menu();
 
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("qa-id", "addButton");
+
+		menu.setData(data);
+
 		menu.setDirection("down");
 		menu.setExtended(false);
 		menu.setIcon("../aui/plus-sign-2");
 		menu.setMenuItems(portletTitleMenuItems);
 		menu.setShowArrow(false);
+
+		boolean showWhenSingleIcon = true;
+
+		if (portletTitleMenuItems.size() == 1) {
+			MenuItem menuItem = portletTitleMenuItems.get(0);
+
+			if (Validator.isNull(menuItem.getLabel())) {
+				showWhenSingleIcon = false;
+			}
+		}
+
+		menu.setShowWhenSingleIcon(showWhenSingleIcon);
 
 		return menu;
 	}

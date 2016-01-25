@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -97,6 +98,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -356,10 +358,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				if (parentStructureId > 0) {
 					DDMForm parentDDMForm = getDDMForm(parentStructureId);
 
-					List<DDMFormField> ddmFormFields =
-						ddmForm.getDDMFormFields();
+					Set<String> commonDDMFormFieldNames = SetUtil.intersect(
+						getDDMFormFieldsNames(parentDDMForm),
+						getDDMFormFieldsNames(ddmForm));
 
-					ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
+					if (!commonDDMFormFieldNames.isEmpty()) {
+						throw new UpgradeException(
+							"Duplicate DDM form field names: " +
+								StringUtil.merge(commonDDMFormFieldNames));
+					}
 				}
 
 				_ddmForms.put(structureId, ddmForm);
@@ -374,6 +381,19 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(ps, rs);
 		}
+	}
+
+	protected Set<String> getDDMFormFieldsNames(DDMForm ddmForm) {
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		Set<String> ddmFormFieldsNames = new HashSet<>(ddmFormFieldsMap.size());
+
+		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
+			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));
+		}
+
+		return ddmFormFieldsNames;
 	}
 
 	protected DDMFormValues getDDMFormValues(

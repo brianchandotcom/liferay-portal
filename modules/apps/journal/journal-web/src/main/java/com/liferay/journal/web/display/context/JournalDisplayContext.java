@@ -145,7 +145,7 @@ public class JournalDisplayContext {
 		return _ddmStructureKey;
 	}
 
-	public String getDdmStructureName() throws PortalException {
+	public String getDDMStructureName() throws PortalException {
 		if (_ddmStructureName != null) {
 			return _ddmStructureName;
 		}

@@ -42,6 +42,39 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		super(SyncFile.class);
 	}
 
+	public boolean containsChildState(String parentFilePathName, int state)
+		throws SQLException {
+
+		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
+
+		queryBuilder.limit(1L);
+
+		Where<SyncFile, Long> where = queryBuilder.where();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		parentFilePathName = StringUtils.replace(
+			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
+
+		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
+		where.eq("state", state);
+		where.ne("uiEvent", SyncFile.UI_EVENT_DELETED_LOCAL);
+		where.ne("uiEvent", SyncFile.UI_EVENT_DELETED_REMOTE);
+		where.ne("uiEvent", SyncFile.UI_EVENT_TRASHED_LOCAL);
+		where.ne("uiEvent", SyncFile.UI_EVENT_TRASHED_REMOTE);
+
+		where.and(6);
+
+		SyncFile syncFile = where.queryForFirst();
+
+		if (syncFile != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public long countByS_U(long syncAccountId, int uiEvent)
 		throws SQLException {
 

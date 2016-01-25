@@ -73,7 +73,7 @@ if (portletTitleBasedNavigation) {
 		</aui:nav>
 	</c:if>
 
-	<aui:nav-bar>
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 
 			<%
@@ -133,7 +133,7 @@ if (portletTitleBasedNavigation) {
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 
-					<liferay-ui:input-search id="keywords1" />
+					<liferay-ui:input-search id="keywords1" markupView="lexicon" />
 				</aui:form>
 			</div>
 		</aui:nav-bar-search>

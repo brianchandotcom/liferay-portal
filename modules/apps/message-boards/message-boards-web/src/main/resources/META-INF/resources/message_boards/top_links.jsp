@@ -24,7 +24,7 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 long categoryId = MBUtil.getCategoryId(request, category);
 %>
 
-<aui:nav-bar>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%
@@ -99,7 +99,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 					<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
 					<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
 
-					<liferay-ui:input-search id="keywords1" />
+					<liferay-ui:input-search id="keywords1" markupView="lexicon" />
 				</aui:form>
 			</div>
 		</aui:nav-bar-search>

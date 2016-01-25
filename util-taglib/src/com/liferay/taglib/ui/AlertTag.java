@@ -58,7 +58,7 @@ public class AlertTag extends IncludeTag {
 		_icon = icon;
 
 		setScopedAttribute("icon", icon);
-	}	
+	}
 
 	public void setMessage(String message) {
 		_message = message;

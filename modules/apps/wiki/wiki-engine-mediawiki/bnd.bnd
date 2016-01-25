@@ -7,8 +7,7 @@ Import-Package:\
 	!org.apache.commons.pool.impl.*,\
 	!org.incava.util.diff.*,\
 	*
-Include-Resource:\
-	@lib/org.jamwiki.jar
+Include-Resource: @lib/org.jamwiki.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-mediawiki

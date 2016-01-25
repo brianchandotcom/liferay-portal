@@ -1,8 +1,7 @@
 Bundle-Name: Liferay Frontend JS Metal Web
 Bundle-SymbolicName: com.liferay.frontend.js.metal.web
 Bundle-Version: 1.0.0
-Include-Resource:\
-	bower.json
+Include-Resource: bower.json
 JS-Submodules: true
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure

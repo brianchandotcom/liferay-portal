@@ -6,8 +6,7 @@ Import-Package:\
 	!javax.swing.*,\
 	!org.apache.xmlbeans.*,\
 	*
-Include-Resource:\
-	@lib/rhino.jar
+Include-Resource: @lib/rhino.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -include: ../../../marketplace/platform/bnd.bnd

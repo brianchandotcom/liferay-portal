@@ -14,8 +14,7 @@ Import-Package: \
 	!sun.io.*,\
 	!sun.misc.*,\
 	*
-Include-Resource:\
-	lib/jython-standalone.jar=lib/jython-standalone.jar
+Include-Resource: lib/jython-standalone.jar=lib/jython-standalone.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -fixupmessages:\

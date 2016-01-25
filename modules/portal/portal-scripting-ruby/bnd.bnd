@@ -10,8 +10,7 @@ Import-Package:\
 	!sun.misc.*,\
 	!sun.nio.cs*,\
 	*
-Include-Resource:\
-	@lib/jruby-complete.jar
+Include-Resource: @lib/jruby-complete.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
 -fixupmessages:\

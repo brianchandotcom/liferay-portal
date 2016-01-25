@@ -4,8 +4,7 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.map.taglib.servlet.taglib,\
 	*
-Include-Resource:\
-	@../../../../util-java/util-java.jar!/com/liferay/util/PKParser.class
+Include-Resource: @../../../../util-java/util-java.jar!/com/liferay/util/PKParser.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /sites-admin-web

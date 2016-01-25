@@ -1,11 +1,11 @@
 <definition>
 	<command name="enableSectionCustomizableCP">
 		<var name="key_columnId" value="${columnId}" />
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="MouseOver" locator1="SitePages#PAGE_TREE_PAGE_LINK" />
 
-		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="AssertClick" locator1="NavListItem#CUSTOMIZATION_SETTINGS" value1="Customization Settings" />
 

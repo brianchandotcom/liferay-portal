@@ -11,9 +11,9 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="Pause" locator1="3000" />
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
@@ -59,7 +59,7 @@
 			<var name="category" value="Pages" />
 		</execute>
 
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
@@ -96,7 +96,7 @@
 	</command>
 
 	<command name="allowChangesToPageTemplateCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
 
@@ -114,7 +114,7 @@
 	</command>
 
 	<command name="allowSiteAdminsToEditThisPageCP">
-		<var name="key_sitePageName" value="${sitePageName}" />
+		<var name="key_page" value="${sitePageName}" />
 
 		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
 

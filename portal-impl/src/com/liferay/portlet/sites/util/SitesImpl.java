@@ -500,7 +500,7 @@ public class SitesImpl implements Sites {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long plid = ParamUtil.getLong(request, "plid");
+		long selPlid = ParamUtil.getLong(request, "selPlid");
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
@@ -508,12 +508,12 @@ public class SitesImpl implements Sites {
 
 		Layout layout = null;
 
-		if (plid <= 0) {
+		if (selPlid <= 0) {
 			layout = LayoutLocalServiceUtil.getLayout(
 				groupId, privateLayout, layoutId);
 		}
 		else {
-			layout = LayoutLocalServiceUtil.getLayout(plid);
+			layout = LayoutLocalServiceUtil.getLayout(selPlid);
 
 			groupId = layout.getGroupId();
 			privateLayout = layout.isPrivateLayout();

@@ -31,7 +31,6 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -414,11 +413,11 @@ public class LayoutsTreeUtil {
 			jsonObject.put("hasChildren", layout.hasChildren());
 			jsonObject.put("layoutId", layout.getLayoutId());
 			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
-
-			LayoutType layoutType = layout.getLayoutType();
-
-			jsonObject.put("parentable", layoutType.isParentable());
-
+			jsonObject.put(
+				"parentable",
+				LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.ADD_LAYOUT));
 			jsonObject.put("parentLayoutId", layout.getParentLayoutId());
 			jsonObject.put("plid", layout.getPlid());
 			jsonObject.put("priority", layout.getPriority());

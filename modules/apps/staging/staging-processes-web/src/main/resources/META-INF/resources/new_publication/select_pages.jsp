@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD);
-
 groupId = ParamUtil.getLong(request, "groupId");
 
 group = null;
@@ -40,63 +38,61 @@ boolean disableInputs = ParamUtil.getBoolean(request, "disableInputs");
 <ul class="flex-container layout-selector" id="<portlet:namespace />pages">
 	<li class="layout-selector-options">
 		<aui:fieldset label="pages-options">
-			<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">
-				<c:choose>
-					<c:when test="<%= privateLayout %>">
-						<li>
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
-								<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-								<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
-							</liferay-portlet:renderURL>
+			<c:choose>
+				<c:when test="<%= privateLayout %>">
+					<li>
+						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
+							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+							<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
+						</liferay-portlet:renderURL>
 
-							<aui:button disabled="<%= disableInputs %>" href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
-								<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-								<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
-							</liferay-portlet:renderURL>
+						<aui:button disabled="<%= disableInputs %>" href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
+							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+							<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
+						</liferay-portlet:renderURL>
 
-							<aui:button disabled="<%= disableInputs %>" href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
-						</li>
-					</c:otherwise>
-				</c:choose>
+						<aui:button disabled="<%= disableInputs %>" href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
+					</li>
+				</c:otherwise>
+			</c:choose>
 
-				<c:choose>
-					<c:when test="<%= layoutSetBranchId > 0 %>">
-						<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
-					</c:when>
-					<c:otherwise>
-						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
+			<c:choose>
+				<c:when test="<%= layoutSetBranchId > 0 %>">
+					<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
+				</c:when>
+				<c:otherwise>
+					<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(group, privateLayout) %>">
+
+						<%
+						List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
+						%>
+
+						<aui:select label="site-pages-variation" name="layoutSetBranchId">
 
 							<%
-							List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(group.getGroupId(), privateLayout);
+							for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+								boolean selected = false;
+
+								if (layoutSetBranch.isMaster()) {
+									selected = true;
+								}
 							%>
 
-							<aui:select label="site-pages-variation" name="layoutSetBranchId">
+							<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
 
-								<%
-								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-									boolean selected = false;
+							<%
+							}
+							%>
 
-									if (layoutSetBranch.isMaster()) {
-										selected = true;
-									}
-								%>
-
-								<aui:option label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutSetBranch.getLayoutSetBranchId() %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</c:if>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
+						</aui:select>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
 		</aui:fieldset>
 	</li>
 

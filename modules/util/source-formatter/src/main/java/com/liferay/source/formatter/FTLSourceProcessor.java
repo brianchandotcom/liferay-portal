@@ -43,7 +43,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = sortLiferayVariables(content);
 
-		Matcher matcher = _singleParameterTag.matcher(content);
+		Matcher matcher = _singleParameterTagPattern.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -68,7 +68,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			content = StringUtil.replace(content, match, replacement);
 		}
 
-		matcher = _multiParameterTag.matcher(content);
+		matcher = _multiParameterTagPattern.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -155,8 +155,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	private Pattern _liferayVariablesPattern = Pattern.compile(
 		"(^<#assign liferay_.*>\n)+", Pattern.MULTILINE);
-	private Pattern _multiParameterTag = Pattern.compile("\n(\t*)<@.+=.+=.+/>");
-	private Pattern _singleParameterTag = Pattern.compile(
+	private Pattern _multiParameterTagPattern = Pattern.compile(
+		"\n(\t*)<@.+=.+=.+/>");
+	private Pattern _singleParameterTagPattern = Pattern.compile(
 		"(<@[\\w\\.]+ \\w+)( )?=([^=]+?)/>");
 
 }

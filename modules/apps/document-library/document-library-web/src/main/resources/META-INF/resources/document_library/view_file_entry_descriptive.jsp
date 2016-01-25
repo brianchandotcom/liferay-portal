@@ -60,6 +60,12 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	<aui:a href="<%= rowURL.toString() %>">
 		<%= latestFileVersion.getTitle() %>
 	</aui:a>
+
+	<c:if test="<%= fileEntry.hasLock() %>">
+		<span>
+			<aui:icon cssClass="icon-monospaced" image="lock" markupView="lexicon" message="locked"/>
+		</span>
+	</c:if>
 </h4>
 
 <h5 class="text-default">

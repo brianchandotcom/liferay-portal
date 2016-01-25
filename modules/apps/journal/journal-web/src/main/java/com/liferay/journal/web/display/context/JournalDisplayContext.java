@@ -39,15 +39,23 @@ import com.liferay.journal.web.search.EntriesChecker;
 import com.liferay.journal.web.search.EntriesMover;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -62,6 +70,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -100,6 +110,44 @@ public class JournalDisplayContext {
 		_article = ActionUtil.getArticle(_request);
 
 		return _article;
+	}
+
+	public SearchContainer<MBMessage> getCommentsSearchContainer()
+		throws PortalException {
+
+		SearchContainer<MBMessage> searchContainer = new SearchContainer(
+			_liferayPortletRequest, _liferayPortletResponse.createRenderURL(),
+			null, null);
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			_liferayPortletRequest.getHttpServletRequest());
+
+		searchContext.setAttribute(
+			Field.CLASS_NAME_ID,
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		searchContext.setAttribute("discussion", true);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		List<MBMessage> mbMessages = new ArrayList<>();
+
+		for (Document document : hits.getDocs()) {
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+				entryClassPK);
+
+			mbMessages.add(mbMessage);
+		}
+
+		searchContainer.setTotal(hits.getLength());
+		searchContainer.setResults(mbMessages);
+
+		return searchContainer;
 	}
 
 	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
@@ -623,6 +671,17 @@ public class JournalDisplayContext {
 		_status = ParamUtil.getInteger(_request, "status", defaultStatus);
 
 		return _status;
+	}
+
+	public boolean hasCommentsResults() throws PortalException {
+		SearchContainer<MBMessage> commentsSearchContainer =
+			getCommentsSearchContainer();
+
+		if (commentsSearchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean hasResults() throws PortalException {

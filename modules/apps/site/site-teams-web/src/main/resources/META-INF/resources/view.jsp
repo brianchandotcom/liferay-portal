@@ -156,6 +156,7 @@ teamSearchContainer.setTotal(teamsCount);
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="text-strong"
 						href="<%= rowURL %>"
 						name="name"
 						property="name"

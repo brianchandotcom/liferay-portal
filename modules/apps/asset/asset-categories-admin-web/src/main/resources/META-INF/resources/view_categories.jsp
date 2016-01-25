@@ -196,6 +196,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, curCategory.getCategoryId(), vocabularyId) > 0) ? rowURL : null %>"
 				name="category"
 				value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"

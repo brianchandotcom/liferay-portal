@@ -132,10 +132,10 @@ tagsSearchContainer.setResults(tags);
 			modelVar="tag"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="name"
-			>
-				<strong><%= tag.getName() %></strong>
-			</liferay-ui:search-container-column-text>
+				value="<%= tag.getName() %>"
+			/>
 
 			<liferay-ui:search-container-column-text
 				name="usages"

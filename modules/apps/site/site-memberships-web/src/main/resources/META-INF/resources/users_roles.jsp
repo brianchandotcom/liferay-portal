@@ -88,6 +88,7 @@ roleSearch.setResults(roles);
 			modelVar="role"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="title"
 				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 			/>

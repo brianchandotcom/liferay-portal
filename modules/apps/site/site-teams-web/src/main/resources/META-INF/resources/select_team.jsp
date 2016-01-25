@@ -83,6 +83,7 @@ teamSearch.setTotal(teamsCount);
 			rowVar="row"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="name"
 			>
 

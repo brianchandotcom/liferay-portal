@@ -131,6 +131,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				name="name"
 			>
 

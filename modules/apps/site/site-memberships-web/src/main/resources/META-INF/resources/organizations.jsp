@@ -52,6 +52,10 @@ List<Organization> organizations = OrganizationLocalServiceUtil.search(company.g
 organizationSearch.setResults(organizations);
 %>
 
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf((organizationsCount > 0) || searchTerms.isSearch()) %>" />
+</liferay-util:include>
+
 <liferay-frontend:management-bar
 	disabled="<%= organizationsCount <= 0 %>"
 	includeCheckBox="<%= true %>"

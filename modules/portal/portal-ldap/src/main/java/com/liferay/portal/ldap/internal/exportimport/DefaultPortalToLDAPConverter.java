@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserOperation;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.security.ldap.Modifications;
@@ -299,8 +300,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		Modifications modifications = getModifications(
 			user, userMappings, _reservedUserFieldNames);
 
-		if (user.isPasswordModified() &&
-			Validator.isNotNull(user.getPasswordUnencrypted())) {
+		if (PrincipalThreadLocal.getPasswordModified() &&
+			Validator.isNotNull(
+				PrincipalThreadLocal.getPasswordUnencrypted())) {
 
 			String newPassword = getEncryptedPasswordForLDAP(
 				user, userMappings);
@@ -412,7 +414,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	protected String getEncryptedPasswordForLDAP(
 		User user, Properties userMappings) {
 
-		String password = user.getPasswordUnencrypted();
+		String password = PrincipalThreadLocal.getPasswordUnencrypted();
 
 		if (Validator.isNull(password)) {
 			return password;

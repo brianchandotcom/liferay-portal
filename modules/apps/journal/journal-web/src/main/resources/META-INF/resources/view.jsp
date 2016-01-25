@@ -96,17 +96,35 @@ data.put("qa-id", "navigation");
 							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
+
+							<%
+							String[] tabsNames = new String[0];
+
+							if (journalDisplayContext.hasResults()) {
+								tabsNames = ArrayUtil.append(tabsNames, "web-content");
+							}
+
+							if (journalDisplayContext.hasCommentsResults()) {
+								tabsNames = ArrayUtil.append(tabsNames, "comments");
+							}
+							%>
+
 							<liferay-ui:tabs
-								names="web-content,comments"
+								names="<%= StringUtil.merge(tabsNames) %>"
 								portletURL="<%= portletURL %>"
 								type="tabs nav-tabs-default"
 							>
-								<liferay-ui:section>
-									<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
-								</liferay-ui:section>
-								<liferay-ui:section>
-									<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
-								</liferay-ui:section>
+								<c:if test="<%= journalDisplayContext.hasResults() %>">
+									<liferay-ui:section>
+										<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+									</liferay-ui:section>
+								</c:if>
+
+								<c:if test="<%= journalDisplayContext.hasCommentsResults() %>">
+									<liferay-ui:section>
+										<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
+									</liferay-ui:section>
+								</c:if>
 							</liferay-ui:tabs>
 						</c:otherwise>
 					</c:choose>

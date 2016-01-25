@@ -4851,7 +4851,7 @@ public class PortalImpl implements Portal {
 		while (iterator.hasNext()) {
 			Group group = iterator.next();
 
-			if (!StagingUtil.isGroupVisible(group, siteGroup)) {
+			if (!StagingUtil.isGroupAccesible(group, siteGroup)) {
 				iterator.remove();
 			}
 		}

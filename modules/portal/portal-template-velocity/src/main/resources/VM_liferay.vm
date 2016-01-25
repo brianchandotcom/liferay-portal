@@ -78,7 +78,7 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #end
 
 #macro (user_personal_bar)
-	#if ($themeDisplay.isImpersonated() || ($is_setup_complete && $is_signed_in))
+	#if ($themeDisplay.isImpersonated() || $is_setup_complete || !$is_signed_in))
 		#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
 
 		$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)

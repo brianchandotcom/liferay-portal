@@ -460,8 +460,8 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	}
 
 	protected HttpSession getSession() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_portletRequest);
+		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
+			PortalUtil.getHttpServletRequest(_portletRequest));
 
 		return request.getSession();
 	}

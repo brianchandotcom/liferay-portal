@@ -84,6 +84,8 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(trashRenderer.getTitle(locale));
 %>
 
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
 <div class="asset-content container-fluid-1280" id="<portlet:namespace />trashContainer">

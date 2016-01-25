@@ -344,7 +344,8 @@ public class WorkflowTaskDisplayContext {
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = _portalPreferences.getValue(
-				PortletKeys.MY_WORKFLOW_TASK, "order-by-col", "asset-type");
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
+				"last-activity-date");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");

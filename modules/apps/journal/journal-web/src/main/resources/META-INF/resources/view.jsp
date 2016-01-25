@@ -101,11 +101,15 @@ data.put("qa-id", "navigation");
 							String[] tabsNames = new String[0];
 
 							if (journalDisplayContext.hasResults()) {
-								tabsNames = ArrayUtil.append(tabsNames, "web-content");
+								String tabName = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, "web-content"), journalDisplayContext.getTotal());
+
+								tabsNames = ArrayUtil.append(tabsNames, tabName);
 							}
 
 							if (journalDisplayContext.hasCommentsResults()) {
-								tabsNames = ArrayUtil.append(tabsNames, "comments");
+								String tabName = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, "comments"), journalDisplayContext.getCommentsTotal());
+
+								tabsNames = ArrayUtil.append(tabsNames, tabName);
 							}
 							%>
 

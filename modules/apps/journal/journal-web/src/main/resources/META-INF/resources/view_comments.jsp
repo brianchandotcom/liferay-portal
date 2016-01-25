@@ -18,39 +18,13 @@
 
 <%
 String displayStyle = journalDisplayContext.getDisplayStyle();
+SearchContainer<MBMessage> commentsSearchContainer = journalDisplayContext.getCommentsSearchContainer();
 %>
 
-<liferay-ui:search-container>
-	<liferay-ui:search-container-results
-		resultsVar="articleSearchContainerResults"
-	>
-
-		<%
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setAttribute(Field.CLASS_NAME_ID, PortalUtil.getClassNameId(JournalArticle.class));
-
-		searchContext.setAttribute("discussion", true);
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		List<MBMessage> mbMessages = new ArrayList<MBMessage>();
-
-		for (Document document : hits.getDocs()) {
-			long entryClassPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
-
-			MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(entryClassPK);
-
-			mbMessages.add(mbMessage);
-		}
-
-		searchContainer.setTotal(hits.getLength());
-		searchContainer.setResults(mbMessages);
-		%>
-
-	</liferay-ui:search-container-results>
+<liferay-ui:search-container
+	emptyResultsMessage="no-comment-was-found"
+	searchContainer="<%= commentsSearchContainer %>"
+>
 
 	<liferay-ui:search-container-row
 		className="MBMessage"

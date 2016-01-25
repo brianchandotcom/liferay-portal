@@ -21,6 +21,10 @@ AUI.add(
 				value: false
 			},
 
+			showRequiredFieldsWarning: {
+				value: false
+			},
+
 			submitLabel: {
 				value: Liferay.Language.get('submit')
 			},
@@ -49,6 +53,7 @@ AUI.add(
 				return {
 					pages: normalizedLayout.pages,
 					readOnly: instance.get('readOnly'),
+					showRequiredFieldsWarning: instance.get('showRequiredFieldsWarning'),
 					strings: instance.get('strings'),
 					submitLabel: instance.get('submitLabel')
 				};

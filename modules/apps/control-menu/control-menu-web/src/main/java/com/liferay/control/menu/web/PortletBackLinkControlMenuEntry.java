@@ -48,19 +48,19 @@ public class PortletBackLinkControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getJspPath() {
+	public String getIconJspPath() {
 		return "/entries/portlet_back_link.jsp";
 	}
 
 	@Override
-	public boolean include(
+	public boolean includeIcon(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		request.setAttribute(
 			ControlMenuWebKeys.PORTLET_BACK_URL, getPortletBackURL(request));
 
-		return super.include(request, response);
+		return super.includeIcon(request, response);
 	}
 
 	@Override

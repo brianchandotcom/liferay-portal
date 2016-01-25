@@ -206,7 +206,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 	public boolean isShowLayoutSetBranchesSelector() {
 		Group stagingGroup = getStagingGroup();
 
-		if (!stagingGroup.isStaged() ||
+		if ((stagingGroup == null) || !stagingGroup.isStaged() ||
 			(getSelGroupId() != stagingGroup.getGroupId())) {
 
 			return false;

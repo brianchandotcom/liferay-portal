@@ -31,6 +31,39 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
+boolean approximate = false;
+
+EntrySearch entrySearch = new EntrySearch(renderRequest, portletURL);
+
+EntrySearchTerms searchTerms = (EntrySearchTerms)entrySearch.getSearchTerms();
+
+List trashEntries = null;
+
+if (Validator.isNotNull(searchTerms.getKeywords())) {
+	Sort sort = SortFactoryUtil.getSort(TrashEntry.class, entrySearch.getOrderByCol(), entrySearch.getOrderByType());
+
+	BaseModelSearchResult<TrashEntry> baseModelSearchResult = TrashEntryLocalServiceUtil.searchTrashEntries(company.getCompanyId(), themeDisplay.getScopeGroupId(), user.getUserId(), searchTerms.getKeywords(), entrySearch.getStart(), entrySearch.getEnd(), sort);
+
+	entrySearch.setTotal(baseModelSearchResult.getLength());
+
+	trashEntries = baseModelSearchResult.getBaseModels();
+}
+else {
+	TrashEntryList trashEntryList = TrashEntryServiceUtil.getEntries(themeDisplay.getScopeGroupId(), entrySearch.getStart(), entrySearch.getEnd(), entrySearch.getOrderByComparator());
+
+	entrySearch.setTotal(trashEntryList.getCount());
+
+	trashEntries = TrashEntryImpl.toModels(trashEntryList.getArray());
+
+	approximate = trashEntryList.isApproximate();
+}
+
+entrySearch.setResults(trashEntries);
+
+if ((entrySearch.getTotal() == 0) && Validator.isNotNull(searchTerms.getKeywords())) {
+	entrySearch.setEmptyResultsMessage(LanguageUtil.format(request, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>", false));
+}
+
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
 
 if (Validator.isNotNull(keywords)) {
@@ -69,6 +102,13 @@ if (Validator.isNotNull(keywords)) {
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= entrySearch.getOrderByCol() %>"
+			orderByType="<%= entrySearch.getOrderByType() %>"
+			orderColumns='<%= new String[] {"removed-date"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -124,46 +164,8 @@ if (Validator.isNotNull(keywords)) {
 	</liferay-ui:error>
 
 	<liferay-ui:search-container
-		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
+		searchContainer="<%= entrySearch %>"
 	>
-
-		<%
-		boolean approximate = false;
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
-
-			if (Validator.isNotNull(searchTerms.getKeywords())) {
-				Sort sort = SortFactoryUtil.getSort(TrashEntry.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
-
-				BaseModelSearchResult<TrashEntry> baseModelSearchResult = TrashEntryLocalServiceUtil.searchTrashEntries(company.getCompanyId(), themeDisplay.getScopeGroupId(), user.getUserId(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), sort);
-
-				searchContainer.setTotal(baseModelSearchResult.getLength());
-
-				results = baseModelSearchResult.getBaseModels();
-			}
-			else {
-				TrashEntryList trashEntryList = TrashEntryServiceUtil.getEntries(themeDisplay.getScopeGroupId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-				searchContainer.setTotal(trashEntryList.getCount());
-
-				results = TrashEntryImpl.toModels(trashEntryList.getArray());
-
-				approximate = trashEntryList.isApproximate();
-			}
-
-			searchContainer.setResults(results);
-
-			if ((searchContainer.getTotal() == 0) && Validator.isNotNull(searchTerms.getKeywords())) {
-				searchContainer.setEmptyResultsMessage(LanguageUtil.format(request, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>", false));
-			}
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.trash.model.TrashEntry"
 			keyProperty="entryId"

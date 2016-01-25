@@ -19,10 +19,10 @@
 <%
 int[] statuses = {WorkflowConstants.STATUS_DRAFT, WorkflowConstants.STATUS_SCHEDULED};
 
-int myEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), statuses);
+int myPendingEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), statuses);
 %>
 
-<c:if test="<%= myEntriesCount > 0 %>">
+<c:if test="<%= myPendingEntriesCount > 0 %>">
 
 	<%
 	boolean collapsed = ParamUtil.getBoolean(request, "collapsed", true);
@@ -31,24 +31,17 @@ int myEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId
 
 	iteratorURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	iteratorURL.setParameter("collapsed", StringPool.FALSE);
-
-	SearchContainer myEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "myEntriesCur", 5, iteratorURL, null, null);
-
-	myEntriesSearchContainer.setTotal(myEntriesCount);
-
-	List myEntries = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), statuses, myEntriesSearchContainer.getStart(), myEntriesSearchContainer.getEnd(), new EntryModifiedDateComparator());
-
-	myEntriesSearchContainer.setResults(myEntries);
 	%>
 
 	<aui:fieldset collapsed="<%= collapsed %>" collapsible="<%= true %>" label="my-pending-entries" markupView="lexicon">
 		<liferay-ui:search-container
-			searchContainer="<%= myEntriesSearchContainer %>"
-			totalVar="mineTotal"
-			var="mineSearchContainer"
+			curParam="myPendingEntriesCur"
+			delta="5"
+			iteratorURL="<%= iteratorURL %>"
+			total="<%= myPendingEntriesCount %>"
 		>
 			<liferay-ui:search-container-results
-				resultsVar="mineEntriesResults"
+				results="<%= BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), statuses, searchContainer.getStart(), searchContainer.getEnd(), new EntryModifiedDateComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -56,7 +49,6 @@ int myEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId
 				keyProperty="entryId"
 				modelVar="entry"
 			>
-
 				<portlet:renderURL var="viewEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -80,7 +72,8 @@ int myEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId
 					path="/blogs/entry_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= myEntriesSearchContainer %>" />
+
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:fieldset>
 </c:if>

@@ -17,6 +17,7 @@ package com.liferay.document.library.web.portlet.action;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
@@ -43,9 +44,15 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ActionUtil.getFileEntries(resourceRequest);
-		ActionUtil.getFileShortcuts(resourceRequest);
-		ActionUtil.getFolders(resourceRequest);
+		resourceRequest.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES,
+			ActionUtil.getFileEntries(resourceRequest));
+		resourceRequest.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS,
+			ActionUtil.getFileShortcuts(resourceRequest));
+		resourceRequest.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FOLDERS,
+			ActionUtil.getFolders(resourceRequest));
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			getPortletRequestDispatcher(

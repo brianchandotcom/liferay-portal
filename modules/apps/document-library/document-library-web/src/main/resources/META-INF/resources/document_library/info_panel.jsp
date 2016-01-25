@@ -357,7 +357,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						</portlet:renderURL>
 
 						<a href="<%= targetFolderURL %>">
-							<%= HtmlUtil.escape(folder.getName()) %>
+							<c:choose>
+								<c:when test="<%= folder.getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+									<liferay-ui:message key="home" />
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(folder.getName()) %>
+								</c:otherwise>
+							</c:choose>
 						</a>
 					</p>
 

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class PortalInstanceLifecycleListenerManager {
+public class PortalInstanceLifecycleListenerManagerImpl {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
@@ -109,7 +109,7 @@ public class PortalInstanceLifecycleListenerManager {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalInstanceLifecycleListenerManager.class);
+		PortalInstanceLifecycleListenerManagerImpl.class);
 
 	private final Set<Company> _companies = new CopyOnWriteArraySet<>();
 	private final Set<PortalInstanceLifecycleListener>

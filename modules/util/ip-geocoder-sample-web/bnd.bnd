@@ -23,5 +23,4 @@ Import-Package:\
 Web-ContextPath: /ip-geocoder-sample-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot
--wablib:\
-	${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+-wablib: ${app.server.portal.dir}/WEB-INF/lib/util-java.jar

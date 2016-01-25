@@ -21,6 +21,7 @@ import com.liferay.portal.exception.CompanyVirtualHostException;
 import com.liferay.portal.exception.CompanyWebIdException;
 import com.liferay.portal.exception.NoSuchVirtualHostException;
 import com.liferay.portal.exception.RequiredCompanyException;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -84,7 +85,9 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 
@@ -95,10 +98,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
@@ -113,6 +117,14 @@ import javax.portlet.PortletPreferences;
  * @author Julio Camarero
  */
 public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
+
+	public CompanyLocalServiceImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			PortalInstanceLifecycleManager.class,
+			new PortalInstanceLifecycleManagerServiceTrackerCustomizer());
+	}
 
 	/**
 	 * Adds a company.
@@ -426,22 +438,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					@Override
 					public Void call() throws Exception {
-
-						synchronized (_companyServiceRegistrations) {
-							if (!_companyServiceRegistrations.containsKey(
-									companyId)) {
-
-								Registry registry = RegistryUtil.getRegistry();
-
-								ServiceRegistration<Company>
-									serviceRegistration =
-										registry.registerService(
-											Company.class, finalCompany);
-
-								_companyServiceRegistrations.put(
-									companyId, serviceRegistration);
-							}
-						}
+						registerCompany(finalCompany);
 
 						return null;
 					}
@@ -1195,11 +1192,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			preferences.store();
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		catch (PortletException pe) {
-			throw new SystemException(pe);
+		catch (IOException | PortletException e)  {
+			throw new SystemException(e);
 		}
 	}
 
@@ -1224,7 +1218,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
-		Company company = companyPersistence.remove(companyId);
+		final Company company = companyPersistence.remove(companyId);
 
 		// Account
 
@@ -1392,14 +1386,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			public Void call() throws Exception {
 				PortalInstances.removeCompany(companyId);
 
-				synchronized (_companyServiceRegistrations) {
-					ServiceRegistration<Company> serviceRegistration =
-						_companyServiceRegistrations.remove(companyId);
-
-					if (serviceRegistration != null) {
-						serviceRegistration.unregister();
-					}
-				}
+				unregisterCompany(company);
 
 				return null;
 			}
@@ -1409,6 +1396,29 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 
 		return company;
+	}
+
+	protected void registerCompany(Company company) {
+		PortalInstanceLifecycleManager portalInstanceLifecycleManager =
+			_serviceTracker.getService();
+
+		if (portalInstanceLifecycleManager != null) {
+			portalInstanceLifecycleManager.registerCompany(company);
+		}
+		else {
+			synchronized (_pendingCompanies) {
+				_pendingCompanies.add(company);
+			}
+		}
+	}
+
+	protected void unregisterCompany(Company company) {
+		PortalInstanceLifecycleManager portalInstanceLifecycleManager =
+			_serviceTracker.getService();
+
+		if (portalInstanceLifecycleManager != null) {
+			portalInstanceLifecycleManager.unregisterCompany(company);
+		}
 	}
 
 	protected void updateAccount(
@@ -1699,8 +1709,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@BeanReference(type = CompanyProviderWrapper.class)
 	private CompanyProviderWrapper _companyProviderWrapper;
 
-	private final Map<Long, ServiceRegistration<Company>>
-		_companyServiceRegistrations = new HashMap<>();
+	private final Set<Company> _pendingCompanies = new HashSet<>();
+	private final ServiceTracker
+		<PortalInstanceLifecycleManager, PortalInstanceLifecycleManager>
+			_serviceTracker;
 
 	private class CustomCompanyProvider implements CompanyProvider {
 
@@ -1719,6 +1731,48 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		private final long _companyId;
+
+	}
+
+	private class PortalInstanceLifecycleManagerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<PortalInstanceLifecycleManager, PortalInstanceLifecycleManager> {
+
+		@Override
+		public PortalInstanceLifecycleManager addingService(
+			ServiceReference<PortalInstanceLifecycleManager> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			PortalInstanceLifecycleManager portalInstanceLifecycleManager =
+				registry.getService(serviceReference);
+
+			synchronized (_pendingCompanies) {
+				for (Company company : _pendingCompanies) {
+					portalInstanceLifecycleManager.registerCompany(company);
+				}
+
+				_pendingCompanies.clear();
+			}
+
+			return portalInstanceLifecycleManager;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<PortalInstanceLifecycleManager> serviceReference,
+			PortalInstanceLifecycleManager portalInstanceLifecycleManager) {
+
+			removedService(serviceReference, portalInstanceLifecycleManager);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<PortalInstanceLifecycleManager> serviceReference,
+			PortalInstanceLifecycleManager service) {
+		}
 
 	}
 

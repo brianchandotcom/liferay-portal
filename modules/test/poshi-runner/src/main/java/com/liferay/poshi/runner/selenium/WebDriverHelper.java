@@ -706,35 +706,18 @@ public class WebDriverHelper {
 		javascriptExecutor.executeScript(sb.toString(), locatorWebElement);
 	}
 
-	public static void open(WebDriver webDriver, String url) throws Exception {
-		String targetURL = "";
+	public static void open(WebDriver webDriver, String url) {
+		String targetURL = url.trim();
 
-		if (url.startsWith("/")) {
-			targetURL = PropsValues.PORTAL_URL + url;
-		}
-		else {
-			targetURL = url;
+		if (targetURL.startsWith("/")) {
+			targetURL = PropsValues.PORTAL_URL + targetURL;
 		}
 
-		for (int i = 0; i < 2; i++) {
-			try {
-				webDriver.get(targetURL);
+		webDriver.get(targetURL);
 
-				if (PropsValues.BROWSER_TYPE.equals("internetexplorer")) {
-					refresh(webDriver);
-				}
-
-				if (targetURL.equals(getLocation(webDriver))) {
-					return;
-				}
-
-				Thread.sleep(1000);
-			}
-			catch (Exception e) {
-			}
+		if (PropsValues.BROWSER_TYPE.equals("internetexplorer")) {
+			refresh(webDriver);
 		}
-
-		throw new Exception("Unable to open " + url);
 	}
 
 	public static void refresh(WebDriver webDriver) {

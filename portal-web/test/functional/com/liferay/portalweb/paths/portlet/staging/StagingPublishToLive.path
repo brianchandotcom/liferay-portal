@@ -119,7 +119,12 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
-	<td>//label[contains(.,'Deletions')]/input</td>
+	<td>//input[contains(@name,'ExportImportPortlet_DELETIONS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_DELETION_HEADER</td>
+	<td>//div[contains(@id,'deletionsTitle')]/a</td>
 	<td></td>
 </tr>
 <tr>

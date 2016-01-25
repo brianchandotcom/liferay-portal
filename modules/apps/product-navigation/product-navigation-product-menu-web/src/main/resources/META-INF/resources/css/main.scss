@@ -219,6 +219,18 @@ body {
 		}
 	}
 
+	$increase-left: -20px;
+	$initial-left: -20px;
+	$nodeSelected: ".tree-container";
+
+	@for $i from 1 through 10 {
+		$node: if($i == 1, $nodeSelected, selector-nest($node, $nodeSelected));
+
+		#{$node} .layout-tree-delete {
+			left: $initial-left + ($increase-left * $i);
+		}
+	}
+
 	.tree-node-content {
 		.layout-tree-add, .layout-tree-delete, .layout-tree-edit, .layout-set-tree-add, .layout-set-tree-edit {
 			opacity: 0;
@@ -226,6 +238,10 @@ body {
 			&:focus {
 				opacity: 1;
 			}
+		}
+
+		.layout-tree-delete {
+			position: absolute;
 		}
 
 		&.tree-node-selected, &:active, &.active, &:hover {

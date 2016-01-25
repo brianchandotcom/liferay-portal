@@ -150,6 +150,13 @@ public class JournalDisplayContext {
 		return searchContainer;
 	}
 
+	public int getCommentsTotal() throws PortalException {
+		SearchContainer<MBMessage> commentsSearchContainer =
+			getCommentsSearchContainer();
+
+		return commentsSearchContainer.getTotal();
+	}
+
 	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
 		throws PortalException {
 
@@ -673,11 +680,14 @@ public class JournalDisplayContext {
 		return _status;
 	}
 
-	public boolean hasCommentsResults() throws PortalException {
-		SearchContainer<MBMessage> commentsSearchContainer =
-			getCommentsSearchContainer();
+	public int getTotal() throws PortalException {
+		ArticleSearch articleSearch = getSearchContainer();
 
-		if (commentsSearchContainer.getTotal() > 0) {
+		return articleSearch.getTotal();
+	}
+
+	public boolean hasCommentsResults() throws PortalException {
+		if (getCommentsTotal() > 0) {
 			return true;
 		}
 
@@ -685,9 +695,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean hasResults() throws PortalException {
-		ArticleSearch articleSearch = getSearchContainer();
-
-		if (articleSearch.getTotal() > 0) {
+		if (getTotal() > 0) {
 			return true;
 		}
 

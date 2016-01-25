@@ -17,25 +17,42 @@
 <%@ include file="/export/init.jsp" %>
 
 <%
+long groupId = GetterUtil.getLong(request.getAttribute("view.jsp-groupId"));
 long liveGroupId = GetterUtil.getLong(request.getAttribute("view.jsp-liveGroupId"));
+boolean privateLayout = GetterUtil.getBoolean(request.getAttribute("view.jsp-privateLayout"));
+long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("view.jsp-exportImportConfigurationId"));
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)row.getObject();
 %>
 
-<portlet:renderURL var="deleteRedirectURL">
-	<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
-</portlet:renderURL>
-
-<portlet:actionURL name="editExportConfiguration" var="deleteExportConfigurationURL">
-	<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(liveGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-	<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
-	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-</portlet:actionURL>
-
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<portlet:renderURL var="newExportProcessURL">
+		<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfigurationId) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="export"
+		url="<%= newExportProcessURL %>"
+	/>
+
+	<portlet:renderURL var="deleteRedirectURL">
+		<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
+	</portlet:renderURL>
+
+	<portlet:actionURL name="editExportConfiguration" var="deleteExportConfigurationURL">
+		<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(liveGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+		<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
+		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+	</portlet:actionURL>
+
 	<liferay-ui:icon-delete
 		trash="<%= TrashUtil.isTrashEnabled(liveGroupId) %>"
 		url="<%= deleteExportConfigurationURL %>"

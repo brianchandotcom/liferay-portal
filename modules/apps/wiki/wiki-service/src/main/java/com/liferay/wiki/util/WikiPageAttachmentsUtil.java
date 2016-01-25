@@ -15,10 +15,10 @@
 package com.liferay.wiki.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 

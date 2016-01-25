@@ -15,11 +15,11 @@
 package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 
 /**
  * @author Roberto Díaz

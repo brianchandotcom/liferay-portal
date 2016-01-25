@@ -41,7 +41,7 @@ teamSearchContainer.setTotal(teamsCount);
 		<aui:nav-item label="teams" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= teamsCount > 0 %>">
+	<c:if test="<%= (teamsCount) > 0 || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -52,49 +52,48 @@ teamSearchContainer.setTotal(teamsCount);
 	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= teamsCount > 0 %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="teams"
-	>
+<liferay-frontend:management-bar
+	disabled="<%= teamsCount <= 0 %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="teams"
+>
 
-		<%
-		PortletURL displayStyleURL = renderResponse.createRenderURL();
-		%>
+	<%
+	PortletURL displayStyleURL = renderResponse.createRenderURL();
+	%>
 
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"descriptive", "list"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			portletURL="<%= displayStyleURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-		<%
-		PortletURL iteratorURL = renderResponse.createRenderURL();
+	<%
+	PortletURL iteratorURL = renderResponse.createRenderURL();
 
-		iteratorURL.setParameter("displayStyle", displayStyle);
-		%>
+	iteratorURL.setParameter("displayStyle", displayStyle);
+	%>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= renderResponse.createRenderURL() %>"
-			/>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= teamSearchContainer.getOrderByCol() %>"
-				orderByType="<%= teamSearchContainer.getOrderByType() %>"
-				orderColumns='<%= new String[] {"name"} %>'
-				portletURL="<%= iteratorURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= teamSearchContainer.getOrderByCol() %>"
+			orderByType="<%= teamSearchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= iteratorURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedTeams" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedTeams" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />

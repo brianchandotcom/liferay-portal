@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Date;
 import java.util.List;
@@ -67,12 +68,16 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		pollsQuestionPersistence.update(question);
 
 		// Vote
-		
+
 		PollsVote vote = null;
-		if(serviceContext.getThemeDisplay().isSignedIn()){
-			vote = pollsVotePersistence.fetchByQ_U_First(questionId, userId, null);
-		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 		
+		if (Validator.isNotNull(themeDisplay) && themeDisplay.isSignedIn()) {
+			vote = pollsVotePersistence.fetchByQ_U_First(
+				questionId, userId, null);
+		}
+
 		if (vote != null) {
 			StringBundler sb = new StringBundler(5);
 
@@ -92,8 +97,8 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		if (Validator.isNotNull(user)) {
 			userName = user.getFullName();
 		}
-		
-		if(Validator.isNull(userName)) {
+
+		if (Validator.isNull(userName)) {
 			userName = serviceContext.translate("anonymous");
 		}
 

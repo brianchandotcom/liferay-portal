@@ -162,7 +162,6 @@ page import="com.liferay.portlet.announcements.service.AnnouncementsDeliveryLoca
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
@@ -174,7 +173,8 @@ page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.search.SearchEntry" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
+page import="com.liferay.users.admin.web.search.OrganizationChecker" %>
 
 <%@ page import="java.text.Format" %>
 

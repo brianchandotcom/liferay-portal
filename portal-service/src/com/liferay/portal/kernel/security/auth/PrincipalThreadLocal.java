@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,6 +37,14 @@ public class PrincipalThreadLocal {
 
 	public static String getPassword() {
 		return _password.get();
+	}
+
+	public static boolean getPasswordModified() {
+		return _passwordModified.get();
+	}
+
+	public static String getPasswordUnencrypted() {
+		return _passwordUnencrypted.get();
 	}
 
 	public static long getUserId() {
@@ -58,6 +67,14 @@ public class PrincipalThreadLocal {
 		_password.set(password);
 	}
 
+	public static void setPasswordModified(boolean passwordModified) {
+		_passwordModified.set(passwordModified);
+	}
+
+	public static void setPasswordUnencrypted(String passwordUnencrypted) {
+		_passwordUnencrypted.set(passwordUnencrypted);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PrincipalThreadLocal.class);
 
@@ -65,5 +82,12 @@ public class PrincipalThreadLocal {
 		PrincipalThreadLocal.class + "._name");
 	private static final ThreadLocal<String> _password =
 		new AutoResetThreadLocal<>(PrincipalThreadLocal.class + "._password");
+	private static final ThreadLocal<Boolean> _passwordModified =
+		new AutoResetThreadLocal<>(
+			PrincipalThreadLocal.class + "._passwordModified", false);
+	private static final ThreadLocal<String> _passwordUnencrypted =
+		new AutoResetThreadLocal<>(
+			PrincipalThreadLocal.class + "._passwordUnencrypted",
+			StringPool.BLANK);
 
 }

@@ -7,5 +7,5 @@ Import-Package:\
 Include-Resource: @lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mobile Device Rules
--include: ../../../../marketplace/platform/bnd.bnd
 Web-ContextPath: /mdr-web
+-include: ../../../../marketplace/platform/bnd.bnd

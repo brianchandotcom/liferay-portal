@@ -1,13 +1,13 @@
 Bundle-Name: Liferay Dynamic Data Mapping Web
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.web
 Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Include-Resource:\
 	META-INF/resources/content=src/main/resources/content,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class
 JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Web-ContextPath: /dynamic-data-mapping-web
 -include: ../../../../marketplace/business-productivity/bnd.bnd

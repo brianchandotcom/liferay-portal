@@ -6,8 +6,7 @@ Import-Package:\
 	com.sun.syndication.feed,\
 	com.sun.syndication.feed.module,\
 	*
-Include-Resource:\
-	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
+Include-Resource: @../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Publication Tools
 Web-ContextPath: /rss-web

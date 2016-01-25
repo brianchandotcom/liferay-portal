@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Service
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.service
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.portal.xml,\
-	*
 Export-Package:\
 	com.liferay.dynamic.data.mapping.configuration,\
 	com.liferay.dynamic.data.mapping.model.impl,\
@@ -14,6 +11,9 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.util.impl,\
 	com.liferay.dynamic.data.mapping.verify,\
 	com.liferay.dynamic.data.mapping.webdav
+Import-Package:\
+	com.liferay.portal.xml,\
+	*
 Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
@@ -27,5 +27,5 @@ Require-Capability:\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
 Require-SchemaVersion: 1.0.0
 Spring-Context: META-INF/spring
--spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference
 -include: ../../../../marketplace/business-productivity/bnd.bnd
+-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

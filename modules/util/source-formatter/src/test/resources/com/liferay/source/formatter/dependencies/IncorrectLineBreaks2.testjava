@@ -32,4 +32,6 @@ public class IncorrectLineBreaks2 {
 				CharPool.NEW_LINE, CharPool.NO_BREAK_SPACE, CharPool.TAB});
 	}
 
+	public void method2() {}
+
 }

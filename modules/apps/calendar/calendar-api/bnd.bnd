@@ -17,8 +17,7 @@ Export-Package:\
 Import-Package:\
 	!org.joda.*,\
 	*
-Include-Resource:\
-	@lib/com.google.ical.jar
+Include-Resource: @lib/com.google.ical.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
 -include: ../../../../marketplace/business-productivity/bnd.bnd

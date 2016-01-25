@@ -4,8 +4,7 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.message.boards.web.constants,\
 	*
-Include-Resource:\
-	test-classes/integration
+Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Message Boards
 -include: ../../../../marketplace/collaboration/bnd.bnd

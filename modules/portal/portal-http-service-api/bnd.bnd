@@ -8,8 +8,7 @@ Export-Package:\
 	org.osgi.service.http.runtime,\
 	org.osgi.service.http.runtime.dto,\
 	org.osgi.service.http.whiteboard
-Include-Resource:\
-	@lib/org.eclipse.osgi.services.jar!/org/osgi/service/http/**
+Include-Resource: @lib/org.eclipse.osgi.services.jar!/org/osgi/service/http/**
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 -include: ../../../marketplace/platform/bnd.bnd

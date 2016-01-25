@@ -21,6 +21,7 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,7 +41,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Matcher matcher = _singleParameterTag.matcher(content);
+		content = sortLiferayVariables(content);
+
+		Matcher matcher = _singleParameterTagPattern.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -65,7 +68,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			content = StringUtil.replace(content, match, replacement);
 		}
 
-		matcher = _multiParameterTag.matcher(content);
+		matcher = _multiParameterTagPattern.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -130,10 +133,31 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(excludes, getIncludes());
 	}
 
+	protected String sortLiferayVariables(String content) {
+		Matcher matcher = _liferayVariablesPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String match = matcher.group();
+
+		String[] lines = StringUtil.splitLines(match);
+
+		Arrays.sort(lines);
+
+		String replacement = StringUtil.merge(lines, "\n") + "\n";
+
+		return StringUtil.replace(content, match, replacement);
+	}
+
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
-	private Pattern _multiParameterTag = Pattern.compile("\n(\t*)<@.+=.+=.+/>");
-	private Pattern _singleParameterTag = Pattern.compile(
+	private Pattern _liferayVariablesPattern = Pattern.compile(
+		"(^<#assign liferay_.*>\n)+", Pattern.MULTILINE);
+	private Pattern _multiParameterTagPattern = Pattern.compile(
+		"\n(\t*)<@.+=.+=.+/>");
+	private Pattern _singleParameterTagPattern = Pattern.compile(
 		"(<@[\\w\\.]+ \\w+)( )?=([^=]+?)/>");
 
 }

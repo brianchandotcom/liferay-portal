@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="integer" fieldNamespace="ddm" indexType="keyword" localizable="true" name="Integer" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-integer" width="small">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Integer Label]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

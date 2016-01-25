@@ -15,9 +15,23 @@
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.service.DDMContentLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.upgrade.DDMServiceUpgrade;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -26,11 +40,15 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.registry.Registry;
@@ -43,6 +61,8 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,6 +73,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
+ * @author Inácio Nery
  */
 @RunWith(Arquillian.class)
 public class UpgradeDynamicDataMappingTest {
@@ -64,20 +85,207 @@ public class UpgradeDynamicDataMappingTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_classNameId = PortalUtil.getClassNameId(
+		_classNameIdDDLRecordSet = PortalUtil.getClassNameId(
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
+		_classNameIdDDMStructure = PortalUtil.getClassNameId(
+			"com.liferay.dynamic.data.mapping.model.DDMStructure");
+		_classNameIdDDMContent = PortalUtil.getClassNameId(
+			"com.liferay.dynamic.data.mapping.model.DDMContent");
+		_classNameDDMStorageLink =
+			"com.liferay.dynamic.data.mapping.model.DDMStorageLink";
 		_group = GroupTestUtil.addGroup();
 		_now = new Timestamp(System.currentTimeMillis());
+
+		_structureId = RandomTestUtil.randomLong();
+		_parentStructureId = RandomTestUtil.randomLong();
+		_templateId = RandomTestUtil.randomLong();
+		_storageLinkId = RandomTestUtil.randomLong();
+		_contentId = RandomTestUtil.randomLong();
 
 		setUpUpgradeDynamicDataMapping();
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		deleteStructure(_structureId);
+		deleteStructure(_parentStructureId);
+		deleteTemplate(_templateId);
+		deleteContent(_contentId);
+		deleteStorageLink(_storageLinkId);
+	}
+
 	@Test
-	public void testUpgradeStructureWithFileUploadField() throws Exception {
-		long structureId = RandomTestUtil.randomLong();
+	public void testCreateStructureLayout() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			null, read("ddm-structure-text-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		getDDMFormLayout(_structureId, DDMStructureConstants.VERSION_DEFAULT);
+	}
+
+	@Test
+	public void testCreateStructureVersion() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			null, read("ddm-structure-text-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		getStructureVersion(
+			_structureId, DDMStructureConstants.VERSION_DEFAULT);
+	}
+
+	@Test
+	public void testCreateTemplateVersion() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			null, read("ddm-structure-text-field.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, null,
+			read("ddm-template-text-field.ftl"), "ftl",
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		getTemplateVersion(_templateId, DDMTemplateConstants.VERSION_DEFAULT);
+	}
+
+	@Test
+	public void testUpgradeStructureLocalized() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-localized.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-localized.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructurePermissions() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-boolean-field.xsd"), "xml");
+
+		long resourcePermissionId = RandomTestUtil.randomLong();
+
+		addResourcePermission(
+			resourcePermissionId, _structureId, DDMStructure.class.getName());
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedResourceName =
+			DDMStructurePermission.getStructureModelResourceName(
+				_classNameIdDDLRecordSet);
+
+		ResourcePermission resourcePermission =
+			ResourcePermissionLocalServiceUtil.getResourcePermission(
+				resourcePermissionId);
+
+		String actualResourceName = resourcePermission.getName();
+
+		Assert.assertEquals(expectedResourceName, actualResourceName);
+	}
+
+	@Test
+	public void testUpgradeStructureReferencesDueUpdatedStructureFieldName()
+		throws Exception {
 
 		addStructure(
-			structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-references-field-name.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read(
+			"ddm-structure-references-field-name.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithBooleanField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-boolean-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-boolean-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithDateField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-date-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-date-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithDecimalField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-decimal-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-decimal-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithDocumentLibraryField()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-document-library-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read(
+			"ddm-structure-document-library-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithFileUploadField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			DDMStructureConstants.VERSION_DEFAULT,
 			read("ddm-structure-file-upload-field.xsd"), "xml");
 
@@ -86,9 +294,587 @@ public class UpgradeDynamicDataMappingTest {
 		String expectedDefinition = read(
 			"ddm-structure-file-upload-field.json");
 
-		String actualDefinition = getStructureDefinition(structureId);
+		String actualDefinition = getStructureDefinition(_structureId);
 
 		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithGeolocationField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-geolocation-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read(
+			"ddm-structure-geolocation-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithHtmlField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-html-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-html-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithImageField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-image-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-image-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithIntegerField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-integer-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-integer-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test(expected = UpgradeException.class)
+	public void testUpgradeStructureWithInvalidFieldNameCharacters1()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-invalid-field-name-characters-1.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+	}
+
+	@Test(expected = UpgradeException.class)
+	public void testUpgradeStructureWithInvalidFieldNameCharacters2()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-invalid-field-name-characters-2.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+	}
+
+	@Test(expected = UpgradeException.class)
+	public void testUpgradeStructureWithInvalidFieldNameCharacters3()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-invalid-field-name-characters-3.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+	}
+
+	@Test(expected = UpgradeException.class)
+	public void testUpgradeStructureWithInvalidFieldNameCharacters4()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-invalid-field-name-characters-4.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+	}
+
+	@Test(expected = UpgradeException.class)
+	public void testUpgradeStructureWithInvalidFieldNameCharacters5()
+		throws Exception {
+
+		addStructure(
+			_parentStructureId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-parent.xsd"), "xml");
+
+		addStructure(
+			_structureId, _parentStructureId,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-invalid-field-name-characters-5.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+	}
+
+	@Test
+	public void testUpgradeStructureWithLinkToPageField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-link-to-page-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read(
+			"ddm-structure-link-to-page-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithNestedFields() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-nested-fields.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-nested-fields.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithNumberField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-number-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-number-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithParentStructure() throws Exception {
+		addStructure(
+			_parentStructureId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-parent.xsd"), "xml");
+
+		addStructure(
+			_structureId, _parentStructureId,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-child.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-parent.json");
+
+		String actualDefinition = getStructureDefinition(_parentStructureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+
+		expectedDefinition = read("ddm-structure-child.json");
+
+		actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithRadioField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-radio-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-radio-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test(expected = UpgradeException.class)
+	public void testUpgradeStructureWithSameStructure() throws Exception {
+		addStructure(
+			_parentStructureId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-parent.xsd"), "xml");
+
+		addStructure(
+			_structureId, _parentStructureId,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-parent.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+	}
+
+	@Test
+	public void testUpgradeStructureWithSelectField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-select-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-select-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithSeparatorField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-separator-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-separator-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithTextAreaField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-text-area-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-text-area-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeStructureWithTextField() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-text-field.xsd"), "xml");
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read("ddm-structure-text-field.json");
+
+		String actualDefinition = getStructureDefinition(_structureId);
+
+		JSONAssert.assertEquals(expectedDefinition, actualDefinition, false);
+	}
+
+	@Test
+	public void testUpgradeTemplatePermissions() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			null, read("ddm-structure-text-field.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, null,
+			read("ddm-template-text-field.ftl"), "ftl",
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+
+		long resourcePermissionId = RandomTestUtil.randomLong();
+
+		addResourcePermission(
+			resourcePermissionId, _templateId, DDMTemplate.class.getName());
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedResourceName =
+			DDMTemplatePermission.getTemplateModelResourceName(
+				_classNameIdDDLRecordSet);
+
+		ResourcePermission resourcePermission =
+			ResourcePermissionLocalServiceUtil.getResourcePermission(
+				resourcePermissionId);
+
+		String actualResourceName = resourcePermission.getName();
+
+		Assert.assertEquals(expectedResourceName, actualResourceName);
+	}
+
+	@Test
+	public void testUpgradeTemplateReferencesDueUpdatedStructureFieldName1()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-references-field-name.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, DDMTemplateConstants.VERSION_DEFAULT,
+			read("ddm-template-references-field-name-1.ftl"), "ftl",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read(
+			"ddm-template-references-valid-field-name-1.ftl");
+
+		String actualDefinition = getTemplateScript(_templateId);
+
+		Assert.assertEquals(expectedDefinition, actualDefinition);
+	}
+
+	@Test
+	public void testUpgradeTemplateReferencesDueUpdatedStructureFieldName2()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-references-field-name.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, DDMTemplateConstants.VERSION_DEFAULT,
+			read("ddm-template-references-field-name-2.vm"), "ftl",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedDefinition = read(
+			"ddm-template-references-valid-field-name-2.vm");
+
+		String actualDefinition = getTemplateScript(_templateId);
+
+		Assert.assertEquals(expectedDefinition, actualDefinition);
+	}
+
+	@Test
+	public void testUpgradeXMLStorageAdapterWithNestedAndRepeatableFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-nested-repeatable.xsd"), "xml");
+
+		addContent(_contentId, read("ddm-content-nested-repeatable.xsd"));
+
+		addStorageLink(_storageLinkId, _contentId, _structureId);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read("ddm-content-nested-repeatable.json");
+
+		String actualData = getContentData(_contentId);
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
+	}
+
+	@Test
+	public void testUpgradeXMLStorageAdapterWithRepeatableFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-text-repeatable-field.xsd"), "xml");
+
+		addContent(_contentId, read("ddm-content-text-repeatable-field.xsd"));
+
+		addStorageLink(_storageLinkId, _contentId, _structureId);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read("ddm-content-text-repeatable-field.json");
+
+		String actualData = getContentData(_contentId);
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
+	}
+
+	@Test
+	public void testUpgradeXMLStorageAdapterWithSimpleFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-text-field.xsd"), "xml");
+
+		addContent(_contentId, read("ddm-content-text-field.xsd"));
+
+		addStorageLink(_storageLinkId, _contentId, _structureId);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read("ddm-content-text-field.json");
+
+		String actualData = getContentData(_contentId);
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
+	}
+
+	@Test
+	public void testUpgradeXMLStorageAdapterWithTransientRepeatableParent()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-transient-repeatable-parent.xsd"), "xml");
+
+		addContent(
+			_contentId, read("ddm-content-transient-repeatable-parent.xsd"));
+
+		addStorageLink(_storageLinkId, _contentId, _structureId);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read(
+			"ddm-content-transient-repeatable-parent.json");
+
+		String actualData = getContentData(_contentId);
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
+	}
+
+	protected void addContent(long contentId, String data) throws Exception {
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("insert into DDMContent (contentId, groupId, ");
+			sb.append("companyId, userId, userName, createDate, ");
+			sb.append("modifiedDate, name, description, data_) values (?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, contentId);
+			ps.setLong(2, _group.getGroupId());
+			ps.setLong(3, _group.getCompanyId());
+			ps.setLong(4, TestPropsValues.getUserId());
+			ps.setString(5, null);
+			ps.setTimestamp(6, _now);
+			ps.setTimestamp(7, _now);
+			ps.setString(8, _classNameDDMStorageLink);
+			ps.setString(9, StringPool.BLANK);
+			ps.setString(10, data);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void addResourcePermission(
+			long resourcePermissionId, long structureId, String name)
+		throws Exception {
+
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("insert into ResourcePermission (mvccVersion, ");
+			sb.append("resourcePermissionId, companyId, name, scope,  ");
+			sb.append("primKey, primKeyId, roleId, ownerId, actionIds ) ");
+			sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, 0);
+			ps.setLong(2, resourcePermissionId);
+			ps.setLong(3, _group.getCompanyId());
+			ps.setString(4, name);
+			ps.setInt(5, ResourceConstants.SCOPE_INDIVIDUAL);
+			ps.setString(6, String.valueOf(structureId));
+			ps.setLong(7, structureId);
+			ps.setLong(8, RandomTestUtil.randomLong());
+			ps.setLong(9, TestPropsValues.getUserId());
+			ps.setLong(10, 1);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void addStorageLink(
+			long storageLinkId, long classPK, long structureId)
+		throws Exception {
+
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("insert into DDMStorageLink (storageLinkId, companyId, ");
+			sb.append("classNameId, classPK, structureId) values (?, ?, ?, ");
+			sb.append("?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, storageLinkId);
+			ps.setLong(2, _group.getCompanyId());
+			ps.setLong(3, _classNameIdDDMContent);
+			ps.setLong(4, classPK);
+			ps.setLong(5, structureId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
 	}
 
 	protected void addStructure(
@@ -125,7 +911,7 @@ public class UpgradeDynamicDataMappingTest {
 			ps.setTimestamp(8, _now);
 			ps.setTimestamp(9, _now);
 			ps.setLong(10, parentStructureId);
-			ps.setLong(11, _classNameId);
+			ps.setLong(11, _classNameIdDDLRecordSet);
 			ps.setString(12, StringUtil.randomString());
 			ps.setString(13, version);
 			ps.setString(14, StringUtil.randomString());
@@ -141,11 +927,185 @@ public class UpgradeDynamicDataMappingTest {
 		}
 	}
 
+	protected void addTemplate(
+			Long templateId, long structureId, String version, String script,
+			String language, String type)
+		throws Exception {
+
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("insert into DDMTemplate (templateId, groupId, ");
+			sb.append("companyId, userId, userName, versionUserId, ");
+			sb.append("versionUserName, createDate, modifiedDate, ");
+			sb.append("classNameId, classPK, resourceClassNameId, ");
+			sb.append("templateKey, version, name, mode_, language, script, ");
+			sb.append("type_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, templateId);
+			ps.setLong(2, _group.getGroupId());
+			ps.setLong(3, _group.getCompanyId());
+			ps.setLong(4, TestPropsValues.getUserId());
+			ps.setString(5, null);
+			ps.setLong(6, TestPropsValues.getUserId());
+			ps.setString(7, null);
+			ps.setTimestamp(8, _now);
+			ps.setTimestamp(9, _now);
+			ps.setLong(10, _classNameIdDDMStructure);
+			ps.setLong(11, structureId);
+			ps.setLong(12, _classNameIdDDLRecordSet);
+			ps.setString(13, StringUtil.randomString());
+			ps.setString(14, version);
+			ps.setString(15, StringUtil.randomString());
+			ps.setString(16, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+			ps.setString(17, language);
+			ps.setString(18, script);
+			ps.setString(19, type);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void deleteContent(long contentId) throws Exception {
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			String sql = "delete from DDMContent where contentID = ?";
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, contentId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void deleteStorageLink(long storageLinkId) throws Exception {
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			String sql = "delete from DDMStorageLink where storageLinkId = ?";
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, storageLinkId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void deleteStructure(long structureId) throws Exception {
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			String sql = "delete from DDMStructure where structureId = ?";
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, structureId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void deleteTemplate(long templateId) throws Exception {
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		PreparedStatement ps = null;
+
+		try {
+			String sql = "delete from DDMTemplate where templateId = ?";
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, templateId);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected String getBasePath() {
+		return "com/liferay/dynamic/data/mapping/dependencies/upgrade/v1_0_0/";
+	}
+
+	protected String getContentData(long contentId) throws Exception {
+		DDMContent content = DDMContentLocalServiceUtil.getContent(contentId);
+
+		return content.getData();
+	}
+
+	protected DDMFormLayout getDDMFormLayout(long structureId, String version)
+		throws Exception {
+
+		DDMStructureVersion structureVersion = getStructureVersion(
+			structureId, version);
+
+		DDMStructureLayout ddmStructureLayout =
+			DDMStructureLayoutLocalServiceUtil.
+				getStructureLayoutByStructureVersionId(
+					structureVersion.getStructureVersionId());
+
+		return ddmStructureLayout.getDDMFormLayout();
+	}
+
 	protected String getStructureDefinition(long structureId) throws Exception {
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 			structureId);
 
 		return structure.getDefinition();
+	}
+
+	protected DDMStructureVersion getStructureVersion(
+			long structureId, String version)
+		throws Exception {
+
+		return DDMStructureVersionLocalServiceUtil.getStructureVersion(
+			structureId, version);
+	}
+
+	protected String getTemplateScript(long templateId) throws Exception {
+		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
+			templateId);
+
+		return template.getScript();
+	}
+
+	protected DDMTemplateVersion getTemplateVersion(
+			long templateId, String version)
+		throws Exception {
+
+		return DDMTemplateVersionLocalServiceUtil.getTemplateVersion(
+			templateId, version);
 	}
 
 	protected Map<Class<?>, UpgradeStep> mapByClass(
@@ -164,9 +1124,7 @@ public class UpgradeDynamicDataMappingTest {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(
-			clazz.getClassLoader(),
-			"com/liferay/dynamic/data/mapping/dependencies/upgrade/v1_0_0/" +
-				fileName);
+			clazz.getClassLoader(), getBasePath() + fileName);
 	}
 
 	protected void setUpUpgradeDynamicDataMapping() {
@@ -183,12 +1141,20 @@ public class UpgradeDynamicDataMappingTest {
 				UpgradeDynamicDataMapping.class);
 	}
 
-	private long _classNameId;
+	private String _classNameDDMStorageLink;
+	private long _classNameIdDDLRecordSet;
+	private long _classNameIdDDMContent;
+	private long _classNameIdDDMStructure;
+	private long _contentId;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Timestamp _now;
+	private long _parentStructureId;
+	private long _storageLinkId;
+	private long _structureId;
+	private long _templateId;
 	private UpgradeDynamicDataMapping _upgradeDynamicDataMapping;
 
 }

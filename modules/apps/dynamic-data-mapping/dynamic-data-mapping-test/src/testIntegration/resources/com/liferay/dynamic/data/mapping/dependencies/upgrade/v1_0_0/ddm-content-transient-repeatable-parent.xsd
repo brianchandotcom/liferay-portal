@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element default-language-id="en_US" name="Text">
+		<dynamic-content language-id="en_US"><![CDATA[Pellentesque libero tortor]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Pellentesque ut neque]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Quisque malesuada placerat nis]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="_fieldsDisplay">
+		<dynamic-content language-id="en_US"><![CDATA[SeparatorRepeatable_INSTANCE_fjjg,Text_INSTANCE_aiuk,SeparatorRepeatable_INSTANCE_nkek,Text_INSTANCE_xxym,SeparatorRepeatable_INSTANCE_unbf,Text_INSTANCE_lcuq]]></dynamic-content>
+	</dynamic-element>
+</root>

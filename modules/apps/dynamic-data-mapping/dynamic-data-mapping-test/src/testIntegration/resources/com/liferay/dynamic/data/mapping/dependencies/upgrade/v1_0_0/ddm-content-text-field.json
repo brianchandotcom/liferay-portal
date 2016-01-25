@@ -1,0 +1,15 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"name": "Text",
+			"value": {
+				"en_US": "Donec tincidunt"
+			},
+			"instanceId": "yjnj"
+		}
+	]
+}

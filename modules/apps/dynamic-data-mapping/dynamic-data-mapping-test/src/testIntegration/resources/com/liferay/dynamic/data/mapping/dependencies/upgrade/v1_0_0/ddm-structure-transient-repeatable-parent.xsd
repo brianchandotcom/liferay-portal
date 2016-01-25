@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element fieldNamespace="ddm" indexType="keyword" localizable="true" name="SeparatorRepeatable" readOnly="false" repeatable="true" required="false" showLabel="true" type="ddm-separator" width="">
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="Text" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Text]]></entry>
+				<entry name="predefinedValue" />
+				<entry name="tip" />
+			</meta-data>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Separator]]></entry>
+			<entry name="predefinedValue" />
+			<entry name="tip" />
+			<entry name="style" />
+		</meta-data>
+	</dynamic-element>
+</root>

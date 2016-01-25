@@ -1,0 +1,49 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"label": {
+				"en_US": "Select Label"
+			},
+			"options": [
+				{
+					"value": "value 1",
+					"label": {
+						"en_US": "option 1"
+					}
+				},
+				{
+					"value": "value 2",
+					"label": {
+						"en_US": "option 2"
+					}
+				},
+				{
+					"value": "value 3",
+					"label": {
+						"en_US": "option 3"
+					}
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[\"\"]"
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"dataType": "string",
+			"indexType": "keyword",
+			"localizable": true,
+			"multiple": false,
+			"name": "Select",
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"type": "select"
+		}
+	]
+}

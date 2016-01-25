@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+<dynamic-element dataType="string" indexType="keyword" localizable="true" multiple="true" name="Supported-Versions" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+	<dynamic-element name="CE61GA2" type="option" value="CE61GA2">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Liferay Portal 6.1 CE GA2 (6.1.1+)]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element name="EE61GA2" type="option" value="EE61GA2">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Liferay Portal 6.1 EE GA2 (6.1.20+)]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<meta-data locale="en_US">
+		<entry name="label"><![CDATA[Supported Versions]]></entry>
+		<entry name="predefinedValue"><![CDATA[[""]]]></entry>
+		<entry name="tip"><![CDATA[]]></entry>
+	</meta-data>
+	</dynamic-element>
+</root>

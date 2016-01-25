@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element default-language-id="en_US" name="Text">
+		<dynamic-content language-id="en_US"><![CDATA[Donec tincidunt]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="_fieldsDisplay">
+		<dynamic-content language-id="en_US"><![CDATA[Text_INSTANCE_yjnj]]></dynamic-content>
+	</dynamic-element>
+</root>

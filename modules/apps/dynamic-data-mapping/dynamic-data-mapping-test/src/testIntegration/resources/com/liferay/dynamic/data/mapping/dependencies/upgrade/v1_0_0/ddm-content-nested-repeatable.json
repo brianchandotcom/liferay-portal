@@ -1,0 +1,52 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"nestedFieldValues": [
+				{
+					"name": "TextNestedUpper",
+					"value": {
+						"en_US": "Praesent turpis"
+					},
+					"instanceId": "neoi"
+				},
+				{
+					"name": "TextRepeateable",
+					"value": {
+						"en_US": "Quisque rutrum"
+					},
+					"instanceId": "woyi"
+				},
+				{
+					"name": "TextRepeateable",
+					"value": {
+						"en_US": "Etiam sit amet orci eget eros faucibus tincidunt"
+					},
+					"instanceId": "rlgw"
+				},
+				{
+					"name": "TextRepeateable",
+					"value": {
+						"en_US": "Sed libero"
+					},
+					"instanceId": "ysgc"
+				},
+				{
+					"name": "TextNestedBottom",
+					"value": {
+						"en_US": "Duis vel nibh at velit scelerisque suscipit"
+					},
+					"instanceId": "qagd"
+				}
+			],
+			"name": "TextParent",
+			"value": {
+				"en_US": "In ut quam vitae odio lacinia tincidunt"
+			},
+			"instanceId": "zhow"
+		}
+	]
+}

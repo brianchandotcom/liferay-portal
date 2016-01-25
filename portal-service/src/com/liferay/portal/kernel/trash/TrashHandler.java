@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.TrashedModel;
@@ -468,6 +469,12 @@ public interface TrashHandler {
 		throws PortalException;
 
 	public TrashEntry getTrashEntry(long classPK) throws PortalException;
+
+	public int getTrashModelsCount(long classPK) throws PortalException;
+
+	public List<TrashRenderer> getTrashModelTrashRenderers(
+			long classPK, int start, int end, OrderByComparator obc)
+		throws PortalException;
 
 	/**
 	 * Returns the trash renderer associated to the model entity with the

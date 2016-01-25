@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.resources.importer.messaging.DestinationNames;
+import com.liferay.exportimport.resources.importer.messaging.DestinationNames;
 
 import java.util.Dictionary;
 

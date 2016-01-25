@@ -74,6 +74,18 @@ public class LanguageImplTest {
 			_BIG_INTEGER, false);
 
 		Assert.assertEquals("1,234,567,890 Hours", format);
+
+		format = _languageImpl.format(
+			mockLanguageServletRequest.getRequest(), _LANG_KEY_WITH_ARGUMENT,
+			_BIG_DOUBLE, false);
+
+		Assert.assertEquals("1,234,567,890.12 Hours", format);
+
+		format = _languageImpl.format(
+			mockLanguageServletRequest.getRequest(), _LANG_KEY_WITH_ARGUMENT,
+			_BIG_FLOAT, false);
+
+		Assert.assertEquals("1,234,567.875 Hours", format);
 	}
 
 	@Test
@@ -86,6 +98,18 @@ public class LanguageImplTest {
 			_BIG_INTEGER, false);
 
 		Assert.assertEquals("1.234.567.890 horas", format);
+
+		format = _languageImpl.format(
+			mockLanguageServletRequest.getRequest(), _LANG_KEY_WITH_ARGUMENT,
+			_BIG_DOUBLE, false);
+
+		Assert.assertEquals("1.234.567.890,12 horas", format);
+
+		format = _languageImpl.format(
+			mockLanguageServletRequest.getRequest(), _LANG_KEY_WITH_ARGUMENT,
+			_BIG_FLOAT, false);
+
+		Assert.assertEquals("1.234.567,875 horas", format);
 	}
 
 	@Test
@@ -116,6 +140,10 @@ public class LanguageImplTest {
 
 		Assert.assertEquals("aAa has invited you to join bBb.", format);
 	}
+
+	private static final Double _BIG_DOUBLE = 1234567890.12D;
+
+	private static final Float _BIG_FLOAT = 1234567.85F;
 
 	private static final Integer _BIG_INTEGER = 1234567890;
 

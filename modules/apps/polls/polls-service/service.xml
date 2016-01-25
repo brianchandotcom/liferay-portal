@@ -79,7 +79,6 @@
 		<!-- Order -->
 
 		<order by="desc">
-
 			<order-column name="createDate" />
 		</order>
 

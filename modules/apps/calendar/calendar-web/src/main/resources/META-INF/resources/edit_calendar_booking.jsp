@@ -410,10 +410,6 @@ while (manageableCalendarsIterator.hasNext()) {
 		return <%= calendarBookingId %> !== calendarBooking.calendarBookingId;
 	}
 
-	function <portlet:namespace />getSuggestionsContent() {
-		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + window.<portlet:namespace />description.getHTML();
-	}
-
 	function <portlet:namespace />resolver(data) {
 		var A = AUI();
 

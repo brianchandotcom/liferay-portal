@@ -58,8 +58,6 @@ AUI.add(
 				'<input class="form-control lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
 			'</form>';
 
-		var TPL_SUGGESTIONS_QUERY = 'select * from contentanalysis.analyze where context="{0}"';
-
 		var TPL_TAG = new A.Template(
 			'<div class="lfr-tag-selector-tags {[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
 				'<tpl for="tags">',
@@ -86,9 +84,6 @@ AUI.add(
 		 * Optional
 		 * focus {boolean}: Whether the text input should be focused.
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
-		 *
-		 * Callbacks
-		 * contentCallback {function}: Called to get suggested tags.
 		 */
 
 		var AssetTagsSelector = A.Component.create(
@@ -102,15 +97,7 @@ AUI.add(
 						value: true
 					},
 
-					allowSuggestions: {
-						value: false
-					},
-
 					className: {
-						value: null
-					},
-
-					contentCallback: {
 						value: null
 					},
 
@@ -466,18 +453,6 @@ AUI.add(
 							);
 						}
 
-						if (instance.get('contentCallback')) {
-							buttonGroup.push(
-								{
-									label: Liferay.Language.get('suggestions'),
-									on: {
-										click: A.bind('_showSuggestionsPopup', instance)
-									},
-									title: Liferay.Language.get('suggestions')
-								}
-							);
-						}
-
 						instance.icons = new A.Toolbar(
 							{
 								children: [buttonGroup]
@@ -541,60 +516,6 @@ AUI.add(
 						);
 					},
 
-					_showSuggestionsPopup: function(event) {
-						var instance = this;
-
-						instance._showPopup(event);
-
-						instance._popup.titleNode.html(Liferay.Language.get('suggestions'));
-
-						var contentCallback = instance.get('contentCallback');
-
-						var context = STR_BLANK;
-
-						if (contentCallback) {
-							context = contentCallback();
-
-							context = String(context);
-						}
-
-						context = LString.stripTags(context);
-						context = LString.escapeHTML(context);
-
-						var query = Lang.sub(TPL_SUGGESTIONS_QUERY, [context]);
-
-						var protocol = 'http';
-
-						if (A.UA.secure) {
-							protocol = 'https';
-						}
-
-						A.YQL(
-							query,
-							function(response) {
-								var results = response.query && response.query.results;
-
-								var data = [];
-
-								if (results) {
-									data = AArray(results.Result).map(
-										function(item, index) {
-											return {
-												name: item
-											};
-										}
-									);
-								}
-
-								instance._updateSelectList(AArray.unique(data));
-							},
-							null,
-							{
-								proto: protocol
-							}
-						);
-					},
-
 					_updateHiddenInput: function(event) {
 						var instance = this;
 
@@ -638,6 +559,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window', 'yql']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window']
 	}
 );

@@ -24,7 +24,6 @@ boolean allowAddEntry = GetterUtil.getBoolean((String)request.getAttribute("life
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-selector:autoFocus"));
 String className = (String)request.getAttribute("liferay-ui:asset-tags-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-tags-selector:classPK"));
-String contentCallback = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:contentCallback"));
 String curTags = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-selector:curTags"));
 long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-tags-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-tags-selector:hiddenInput");
@@ -59,17 +58,7 @@ if (!ignoreRequestValue) {
 	var assetTagsSelector = new Liferay.AssetTagsSelector(
 		{
 			allowAddEntry: <%= allowAddEntry %>,
-			allowSuggestions: <%= PropsValues.ASSET_TAG_SUGGESTIONS_ENABLED %>,
 			contentBox: '#<%= namespace + id %>assetTagsSelector',
-
-			<c:if test="<%= PropsValues.ASSET_TAG_SUGGESTIONS_ENABLED && Validator.isNotNull(contentCallback) %>">
-				contentCallback: function() {
-					if (window.<%= contentCallback %>) {
-						return <%= contentCallback %>();
-					}
-				},
-			</c:if>
-
 			curEntries: '<%= HtmlUtil.escapeJS(curTags) %>',
 
 			<c:if test="<%= groupIds != null %>">

@@ -489,10 +489,6 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	function <portlet:namespace />getSuggestionsContent() {
-		return AUI.$(document.<portlet:namespace />fm).fm('subject').val() + ' ' + <portlet:namespace />getHTML();
-	}
-
 	function <portlet:namespace />saveMessage(draft) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 

@@ -539,12 +539,6 @@ if (portletTitleBasedNavigation) {
 		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
 	}
 
-	function <portlet:namespace />getSuggestionsContent() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		return form.fm('title').val() + ' ' + form.fm('description').val();
-	}
-
 	function <portlet:namespace />saveFileEntry(draft) {
 		var $ = AUI.$;
 

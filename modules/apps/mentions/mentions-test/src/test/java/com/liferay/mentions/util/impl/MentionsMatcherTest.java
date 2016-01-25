@@ -90,19 +90,17 @@ public class MentionsMatcherTest {
 		int pos = 0;
 
 		while (iterator1.hasNext()) {
-			if (!iterator2.hasNext()) {
-				String message = String.format(
-					"The second iterator has fewer elements than the first " +
-						"one (exhausted at position %d)",
-					pos);
+			String message = String.format(
+				"The second iterator has fewer elements than the first " +
+					"one (exhausted at position %d)",
+				pos);
 
-				Assert.fail(message);
-			}
+			Assert.assertTrue(message, iterator2.hasNext());
 
 			T value1 = iterator1.next();
 			T value2 = iterator2.next();
 
-			String message = String.format(
+			message = String.format(
 				"Elements differ at position %d because '%s' does not equal " +
 					"'%s'",
 				pos, value1, value2);

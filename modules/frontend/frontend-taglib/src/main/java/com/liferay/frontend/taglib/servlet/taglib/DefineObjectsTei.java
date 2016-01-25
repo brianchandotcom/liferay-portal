@@ -16,6 +16,9 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+
 import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.VariableInfo;
@@ -32,7 +35,15 @@ public class DefineObjectsTei extends TagExtraInfo {
 
 	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
 		new VariableInfo(
+			"currentURL", String.class.getName(), true, VariableInfo.AT_END),
+		new VariableInfo(
+			"currentURLObj", PortletURL.class.getName(), true,
+			VariableInfo.AT_END),
+		new VariableInfo(
 			"resourceBundle", ResourceBundle.class.getName(), true,
+			VariableInfo.AT_END),
+		new VariableInfo(
+			"windowState", WindowState.class.getName(), true,
 			VariableInfo.AT_END)
 	};
 

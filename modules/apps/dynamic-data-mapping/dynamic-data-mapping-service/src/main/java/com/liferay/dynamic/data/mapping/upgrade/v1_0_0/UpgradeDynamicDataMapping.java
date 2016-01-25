@@ -788,7 +788,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			Long classNameId = _structureClassNameIds.get(
-				resourcePermission.getPrimKey());
+				Long.valueOf(resourcePermission.getPrimKey()));
 
 			if (classNameId == null) {
 				continue;
@@ -909,7 +909,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			Long classNameId = _templateResourceClassNameIds.get(
-				resourcePermission.getPrimKey());
+				Long.valueOf(resourcePermission.getPrimKey()));
 
 			if (classNameId == null) {
 				continue;

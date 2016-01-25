@@ -21,13 +21,16 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.pwd.PwdAuthenticator;
+import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.service.ListTypeLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -88,6 +91,7 @@ public class EditUserMVCActionCommand
 	@Override
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 		super.setUserLocalService(userLocalService);
 	}
 
@@ -116,22 +120,29 @@ public class EditUserMVCActionCommand
 
 			String authType = company.getAuthType();
 
-			String login = null;
+			Map<String, String[]> headerMap = new HashMap<>();
+			Map<String, String[]> parameterMap = new HashMap<>();
+			Map<String, Object> resultsMap = new HashMap<>();
+
+			int authResult = Authenticator.FAILURE;
 
 			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				login = user.getEmailAddress();
+				authResult = _userLocalService.authenticateByEmailAddress(
+					company.getCompanyId(), user.getEmailAddress(),
+					currentPassword, headerMap, parameterMap, resultsMap);
 			}
 			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				login = String.valueOf(user.getUserId());
+				authResult = _userLocalService.authenticateByUserId(
+					company.getCompanyId(), user.getUserId(), currentPassword,
+					headerMap, parameterMap, resultsMap);
 			}
 			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				login = user.getScreenName();
+				authResult = _userLocalService.authenticateByScreenName(
+					company.getCompanyId(), user.getScreenName(),
+					currentPassword, headerMap, parameterMap, resultsMap);
 			}
 
-			boolean validPassword = PwdAuthenticator.authenticate(
-				login, currentPassword, user.getPassword());
-
-			if (!validPassword) {
+			if (authResult == Authenticator.FAILURE) {
 				throw new UserPasswordException.MustMatchCurrentPassword(
 					user.getUserId());
 			}
@@ -142,5 +153,7 @@ public class EditUserMVCActionCommand
 
 		return super.updateUser(actionRequest, actionResponse);
 	}
+
+	private UserLocalService _userLocalService;
 
 }

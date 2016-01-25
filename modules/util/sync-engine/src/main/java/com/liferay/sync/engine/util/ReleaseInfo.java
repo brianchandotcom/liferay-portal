@@ -80,11 +80,11 @@ public class ReleaseInfo {
 		return true;
 	}
 
-	private static final String _BUILD = "3011";
+	private static final String _BUILD = "3013";
 
 	private static final int _BUILD_NUMBER = Integer.parseInt(_BUILD);
 
-	private static final String _VERSION = "3.0.11";
+	private static final String _VERSION = "3.0.13";
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(?:[0-9]+\\.){3}([0-9]+)");

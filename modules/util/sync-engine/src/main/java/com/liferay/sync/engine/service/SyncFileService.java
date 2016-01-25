@@ -492,6 +492,20 @@ public class SyncFileService {
 		}
 	}
 
+	public static boolean hasChildState(String parentFilePathName, int state) {
+		try {
+			return _syncFilePersistence.containsChildState(
+				parentFilePathName, state);
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return false;
+		}
+	}
+
 	public static SyncFile moveFileSyncFile(
 			Path filePath, long folderId, long syncAccountId, SyncFile syncFile)
 		throws Exception {

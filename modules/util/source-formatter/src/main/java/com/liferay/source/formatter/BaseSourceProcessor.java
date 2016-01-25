@@ -1466,16 +1466,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String moduleLocation = StringUtil.replaceLast(
 			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
 
-		int pos1 = moduleLocation.lastIndexOf(StringPool.SLASH);
-		int pos2 = moduleLocation.indexOf(StringPool.DASH, pos1);
+		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
 
-		String baseModuleName = moduleLocation.substring(pos1 + 1, pos2);
+		int y = moduleLocation.indexOf(StringPool.DASH, x);
+
+		String baseModuleName = moduleLocation.substring(x + 1, y);
 
 		String moduleLangName = baseModuleName.concat("-lang");
 
 		String moduleLangLanguagePath =
-			moduleLocation.substring(0, pos1 + 1).concat(moduleLangName).concat(
-				"/src/main/resources/content/Language.properties");
+			moduleLocation.substring(0, x + 1) + moduleLangName +
+				"/src/main/resources/content/Language.properties";
 
 		File file = new File(moduleLangLanguagePath);
 
@@ -2007,8 +2008,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern bndContentDirPattern = Pattern.compile(
 		"\tcontent=(.*?)(,\\\\|\n)");
 	protected static Pattern langMergerPluginPattern = Pattern.compile(
-		"^apply\\p{Blank}+plugin\\p{Blank}*:\\p{Blank}+".concat(
-			"\"com.liferay.lang.merger\"$"),
+		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
 		Pattern.MULTILINE);
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");

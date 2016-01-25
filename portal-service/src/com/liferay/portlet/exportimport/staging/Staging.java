@@ -250,6 +250,11 @@ public interface Staging {
 	public boolean hasWorkflowTask(long userId, LayoutRevision layoutRevision)
 		throws PortalException;
 
+	public boolean isGroupAccesible(Group group, Group fromGroup);
+
+	public boolean isGroupAccesible(long groupId, long fromGroupId)
+		throws PortalException;
+
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId);
 
 	/**

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -90,17 +89,6 @@ public class WikiAttachmentEditorConfigContributor
 
 			return;
 		}
-
-		String extraPlugins = jsonObject.getString("extraPlugins");
-
-		if (Validator.isNotNull(extraPlugins)) {
-			extraPlugins += ",itemselector,media";
-		}
-		else {
-			extraPlugins = "itemselector,media";
-		}
-
-		jsonObject.put("extraPlugins", extraPlugins);
 
 		ItemSelectorCriterion attachmentItemSelectorCriterion =
 			new WikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);

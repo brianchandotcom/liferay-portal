@@ -1303,7 +1303,7 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ORGANIZATIONS_TABLE_NAME" value1="${orgName}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 

@@ -60,7 +60,7 @@
 			</then>
 			<else>
 				<execute macro="Workflow#gotoAssignedToMyRoles" />
-				
+
 				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
 			</else>
 		</if>

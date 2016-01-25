@@ -22,9 +22,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,8 +36,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.Project;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,13 +44,13 @@ import org.json.JSONObject;
  */
 public class LoadBalancerUtil {
 
-	public static String getMostAvailableMasterURL(Project project)
+	public static String getMostAvailableMasterURL(Properties properties)
 		throws Exception {
 
 		int retryCount = 0;
 
 		while (true) {
-			String baseInvocationURL = project.getProperty(
+			String baseInvocationURL = properties.getProperty(
 				"base.invocation.url");
 
 			String hostNamePrefix = getHostNamePrefix(baseInvocationURL);
@@ -59,37 +59,36 @@ public class LoadBalancerUtil {
 				return baseInvocationURL;
 			}
 
-			int hostNameCount = getHostNameCount(project, hostNamePrefix);
+			List<String> hostNames = getHostNames(properties, hostNamePrefix);
 
-			if (hostNameCount == 1) {
+			if (hostNames.size() == 1) {
 				return "http://" + hostNamePrefix + "-1";
 			}
 
 			File baseDir = new File(
-				project.getProperty("jenkins.shared.dir") + "/" +
+				properties.getProperty("jenkins.shared.dir") + "/" +
 					hostNamePrefix);
 
 			File semaphoreFile = new File(
 				baseDir, hostNamePrefix + ".semaphore");
 
-			waitForTurn(semaphoreFile, hostNameCount);
+			waitForTurn(semaphoreFile, hostNames.size());
 
 			JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
 
 			Map<String, Integer> recentJobMap = getRecentJobCountMap(
 				new File(baseDir, "recentJob"));
 
-			List<String> hostNames = new ArrayList<>(hostNameCount);
 			int maxAvailableSlaveCount = Integer.MIN_VALUE;
 			int x = -1;
 
 			try {
 				List<FutureTask<Integer>> futureTasks = new ArrayList<>(
-					hostNameCount);
+					hostNames.size());
 
 				startParallelTasks(
-					recentJobMap, hostNames, hostNamePrefix, hostNameCount,
-					project, futureTasks);
+					recentJobMap, hostNames, hostNamePrefix, properties,
+					futureTasks);
 
 				List<Integer> badIndices = new ArrayList<>(futureTasks.size());
 				List<Integer> maxIndices = new ArrayList<>(futureTasks.size());
@@ -153,7 +152,7 @@ public class LoadBalancerUtil {
 				}
 				else {
 					while (true) {
-						x = getRandomValue(0, hostNameCount - 1);
+						x = getRandomValue(0, hostNames.size() - 1);
 
 						if (badIndices.contains(x)) {
 							continue;
@@ -188,7 +187,7 @@ public class LoadBalancerUtil {
 						}
 					}
 
-					String invokedJobBatchSize = project.getProperty(
+					String invokedJobBatchSize = properties.getProperty(
 						"invoked.job.batch.size");
 
 					if ((invokedJobBatchSize == null) ||
@@ -210,23 +209,23 @@ public class LoadBalancerUtil {
 		}
 	}
 
-	protected static int getHostNameCount(
-		Project project, String hostNamePrefix) {
+	protected static List<String> getBlackList(Properties properties) {
+		String blackListString = properties.getProperty(
+			"jenkins.load.balancer.blacklist", "");
 
-		int i = 1;
-
-		while (true) {
-			String jenkinsLocalURL = project.getProperty(
-				"jenkins.local.url[" + hostNamePrefix + "-" + i + "]");
-
-			if ((jenkinsLocalURL != null) && (jenkinsLocalURL.length() > 0)) {
-				i++;
-
-				continue;
-			}
-
-			return i - 1;
+		if (blackListString.isEmpty()) {
+			return Collections.emptyList();
 		}
+
+		String[] blackListArray = blackListString.split(",");
+
+		List<String> blackList = new ArrayList<>(blackListArray.length);
+
+		for (String blackListItem : blackListArray) {
+			blackList.add(blackListItem.trim());
+		}
+
+		return blackList;
 	}
 
 	protected static String getHostNamePrefix(String baseInvocationURL) {
@@ -237,6 +236,39 @@ public class LoadBalancerUtil {
 		}
 
 		return matcher.group("hostNamePrefix");
+	}
+
+	protected static List<String> getHostNames(
+		Properties properties, String hostNamePrefix) {
+
+		List<String> blackList = getBlackList(properties);
+
+		int i = 1;
+		List<String> hostNames = new ArrayList<>();
+
+		while (true) {
+			String jenkinsLocalURL = properties.getProperty(
+				"jenkins.local.url[" + hostNamePrefix + "-" + i + "]");
+
+			if ((jenkinsLocalURL != null) && (jenkinsLocalURL.length() > 0)) {
+				Matcher matcher = _hostnamePattern.matcher(jenkinsLocalURL);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				String jenkinsLocalHostName = matcher.group("hostname");
+
+				if (!blackList.contains(jenkinsLocalHostName)) {
+					hostNames.add(jenkinsLocalHostName);
+				}
+
+				i++;
+				continue;
+			}
+
+			return hostNames;
+		}
 	}
 
 	protected static int getRandomValue(int start, int end) {
@@ -315,22 +347,18 @@ public class LoadBalancerUtil {
 
 	protected static void startParallelTasks(
 			Map<String, Integer> recentJobMap, List<String> hostNames,
-			String hostNamePrefix, int hostNameCount, Project project,
+			String hostNamePrefix, Properties properties,
 			List<FutureTask<Integer>> futureTasks)
 		throws Exception {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			hostNameCount);
+			hostNames.size());
 
-		for (int i = 1; i <= hostNameCount; i++) {
-			String targetHostName = hostNamePrefix + "-" + i;
-
-			hostNames.add(targetHostName);
-
+		for (String targetHostName : hostNames) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
 					recentJobMap.get(targetHostName),
-					project.getProperty(
+					properties.getProperty(
 						"jenkins.local.url[" + targetHostName + "]")));
 
 			executorService.execute(futureTask);
@@ -369,6 +397,8 @@ public class LoadBalancerUtil {
 
 	private static final String _MY_HOST_NAME;
 
+	private static final Pattern _hostnamePattern =
+		Pattern.compile(".*/(?<hostname>[^/]+)/?");
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
 

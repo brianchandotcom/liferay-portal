@@ -82,6 +82,7 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 		fileEntryJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 		fileEntryJSONObject.put("groupId", fileEntry.getGroupId());
 		fileEntryJSONObject.put("title", fileEntry.getTitle());
+		fileEntryJSONObject.put("type", "document");
 		fileEntryJSONObject.put(
 			"url",
 			DLUtil.getPreviewURL(

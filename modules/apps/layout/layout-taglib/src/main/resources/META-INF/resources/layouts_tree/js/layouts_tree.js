@@ -122,16 +122,15 @@ AUI.add(
 				return match && match[1];
 			},
 
-			restoreSelectedNode: function(node) {
+			restoreSelectedNode: function() {
 				var instance = this;
 
-				var plid = instance.extractPlid(node);
+				var pendingSelectedNodeId = instance._pendingSelectedNodeId;
 
-				if (plid === instance.get('selPlid')) {
-					node.select();
-				}
-				else {
-					node.unselect();
+				if (pendingSelectedNodeId) {
+					instance.getNodeById(pendingSelectedNodeId).select();
+
+					instance._pendingSelectedNodeId = null;
 				}
 			},
 
@@ -140,11 +139,7 @@ AUI.add(
 
 				instance._treeLoadingElement.hide();
 
-				var rootNode = instance.getChildren()[0];
-
-				instance.restoreSelectedNode(rootNode);
-
-				rootNode.eachChildren(A.bind(instance.restoreSelectedNode, instance));
+				instance.restoreSelectedNode();
 			},
 
 			_bindUILTBase: function() {
@@ -256,6 +251,8 @@ AUI.add(
 
 				var maxChildren = instance.get('maxChildren');
 
+				var id = instance._createNodeId(node.groupId, node.layoutId, node.plid);
+
 				var newNode = {
 					alwaysShowHitArea: hasChildren,
 					cssClasses: {
@@ -263,7 +260,7 @@ AUI.add(
 					},
 					draggable: node.sortable,
 					expanded: expanded,
-					id: instance._createNodeId(node.groupId, node.layoutId, node.plid),
+					id: id,
 					io: instance._getNodeIOConfig(),
 					leaf: !node.parentable,
 					paginator: {
@@ -277,6 +274,10 @@ AUI.add(
 
 				if (nodeChildren && expanded) {
 					newNode.children = instance._formatJSONResults(nodeChildren);
+				}
+
+				if (instance.get('selPlid') == node.plid) {
+					instance._pendingSelectedNodeId = id;
 				}
 
 				var cssClass = STR_EMPTY;

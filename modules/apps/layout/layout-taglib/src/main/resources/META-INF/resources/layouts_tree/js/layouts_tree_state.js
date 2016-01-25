@@ -124,9 +124,7 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
-						host.restoreSelectedNode(node);
-
-						node.eachChildren(A.bind(host.restoreSelectedNode, host));
+						host.restoreSelectedNode();
 					},
 
 					_onNodeChildrenChange: function(event) {
@@ -137,8 +135,6 @@ AUI.add(
 						var target = event.target;
 
 						target.set('alwaysShowHitArea', event.newVal.length > 0);
-
-						target.eachChildren(A.bind(host.restoreSelectedNode, host));
 					},
 
 					_onNodeExpandedChange: function(event) {
@@ -219,6 +215,8 @@ AUI.add(
 								instance._invokeSessionClick(sessionClickData);
 							}
 						);
+
+						host.restoreSelectedNode();
 					},
 
 					_onSelectableNodeCheckedChange: function(event) {

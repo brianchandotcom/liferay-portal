@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
@@ -85,6 +87,23 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 %>
 
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(containerModelURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(containerModelURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 

@@ -376,6 +376,14 @@ public class BookmarksFolderLocalServiceUtil {
 				   .getFoldersAndEntries(groupId, folderId, status, start, end);
 	}
 
+	public static java.util.List<java.lang.Object> getFoldersAndEntries(
+		long groupId, long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return getService()
+				   .getFoldersAndEntries(groupId, folderId, status, start, end,
+			obc);
+	}
+
 	public static int getFoldersAndEntriesCount(long groupId, long folderId,
 		int status) {
 		return getService().getFoldersAndEntriesCount(groupId, folderId, status);

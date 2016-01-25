@@ -14,9 +14,9 @@
 
 package com.liferay.polls.web.util;
 
-import com.liferay.polls.exception.NoSuchVoteException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.polls.service.PollsVoteLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,11 +69,10 @@ public class PollsUtil {
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isSignedIn()) {
-			try {
-				PollsVoteLocalServiceUtil.getVote(
-					questionId, themeDisplay.getUserId());
-			}
-			catch (NoSuchVoteException nsve) {
+			PollsVote vote = PollsVoteLocalServiceUtil.fetchQuestionUserVote(
+				questionId, themeDisplay.getUserId());
+
+			if (vote == null) {
 				return false;
 			}
 

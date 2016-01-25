@@ -23,10 +23,8 @@ import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.base.PollsVoteLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Date;
 import java.util.List;
@@ -71,11 +69,10 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 
 		PollsVote vote = null;
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-		
-		if (Validator.isNotNull(themeDisplay) && themeDisplay.isSignedIn()) {
-			vote = pollsVotePersistence.fetchByQ_U_First(
-				questionId, userId, null);
+		User user = userPersistence.fetchByPrimaryKey(userId);
+
+		if (!user.isDefaultUser()) {
+			vote = fetchQuestionUserVote(questionId, userId);
 		}
 
 		if (vote != null) {
@@ -90,15 +87,9 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 			throw new DuplicateVoteException(sb.toString());
 		}
 
-		String userName = null;
+		String userName = user.getFullName();
 
-		User user = userPersistence.fetchByPrimaryKey(userId);
-
-		if (Validator.isNotNull(user)) {
-			userName = user.getFullName();
-		}
-
-		if (Validator.isNull(userName)) {
+		if (user.isDefaultUser()) {
 			userName = serviceContext.translate("anonymous");
 		}
 
@@ -121,6 +112,18 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 	}
 
 	@Override
+	public PollsVote fetchQuestionUserVote(long questionId, long userId) {
+		List<PollsVote> votes = pollsVotePersistence.findByQ_U(
+			questionId, userId);
+
+		if (votes.isEmpty()) {
+			return null;
+		}
+
+		return votes.get(0);
+	}
+
+	@Override
 	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end) {
 		return pollsVotePersistence.findByChoiceId(choiceId, start, end);
 	}
@@ -140,13 +143,6 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 	@Override
 	public int getQuestionVotesCount(long questionId) {
 		return pollsVotePersistence.countByQuestionId(questionId);
-	}
-
-	@Override
-	public PollsVote getVote(long questionId, long userId)
-		throws PortalException {
-
-		return pollsVotePersistence.findByQ_U_First(questionId, userId, null);
 	}
 
 }

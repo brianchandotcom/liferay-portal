@@ -40,7 +40,9 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${subcategoryName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a unique name." />
 	</command>
 

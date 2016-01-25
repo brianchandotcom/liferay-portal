@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.resources.importer.util;
+package com.liferay.exportimport.resources.importer.util;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;

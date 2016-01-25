@@ -12,14 +12,28 @@
  * details.
  */
 
-package com.liferay.resources.importer.messaging;
+package com.liferay.exportimport.resources.importer.util;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Daniel Kocsis
+ * @author Brian Wing Shun Chan
  */
-public interface DestinationNames {
+public class ImporterException extends PortalException {
 
-	public static final String RESOURCES_IMPORTER =
-		"liferay/resources_importer";
+	public ImporterException() {
+	}
+
+	public ImporterException(String msg) {
+		super(msg);
+	}
+
+	public ImporterException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public ImporterException(Throwable cause) {
+		super(cause);
+	}
 
 }

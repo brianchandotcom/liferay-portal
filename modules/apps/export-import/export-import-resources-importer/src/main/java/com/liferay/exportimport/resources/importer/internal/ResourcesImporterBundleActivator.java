@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.resources.importer.internal;
+package com.liferay.exportimport.resources.importer.internal;
 
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;

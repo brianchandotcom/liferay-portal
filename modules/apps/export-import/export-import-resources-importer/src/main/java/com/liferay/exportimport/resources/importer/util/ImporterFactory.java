@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.resources.importer.util;
+package com.liferay.exportimport.resources.importer.util;
 
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;

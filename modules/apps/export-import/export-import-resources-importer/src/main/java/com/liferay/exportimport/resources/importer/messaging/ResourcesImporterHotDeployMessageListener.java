@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.resources.importer.messaging;
+package com.liferay.exportimport.resources.importer.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

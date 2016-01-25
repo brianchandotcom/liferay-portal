@@ -80,10 +80,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:button-row cssClass="text-center">
-	<aui:button cssClass="btn-lg btn-primary" id="addUsers" value="add-team-members" />
-</aui:button-row>
-
 <portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />
 
 <aui:form action="<%= deleteTeamUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
@@ -124,6 +120,10 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
 </aui:form>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-team-members") %>' url="javascript:;" />
+</liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
 	var Util = Liferay.Util;

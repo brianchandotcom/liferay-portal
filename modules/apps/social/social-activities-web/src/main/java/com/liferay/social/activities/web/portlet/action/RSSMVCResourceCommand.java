@@ -16,9 +16,8 @@ package com.liferay.social.activities.web.portlet.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseRSSMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,8 +51,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.MimeResponse;
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -76,48 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class RSSMVCResourceCommand implements MVCResourceCommand {
-
-	@Override
-	public boolean serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
-
-		if (!(resourceResponse instanceof MimeResponse)) {
-			return false;
-		}
-
-		PortletPreferences portletPreferences =
-			resourceRequest.getPreferences();
-
-		boolean enableRss = GetterUtil.getBoolean(
-			portletPreferences.getValue("enableRss", null), true);
-
-		if (!PortalUtil.isRSSFeedsEnabled() || !enableRss) {
-			try {
-				PortalUtil.sendRSSFeedsDisabledError(
-					resourceRequest, resourceResponse);
-			}
-			catch (Exception e) {
-			}
-
-			return false;
-		}
-
-		MimeResponse mimeResponse = (MimeResponse)resourceResponse;
-
-		try {
-			PortletResponseUtil.sendFile(
-				resourceRequest, mimeResponse, null,
-				getRSS(resourceRequest, resourceResponse),
-				ContentTypes.TEXT_XML_UTF8);
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-
-		return true;
-	}
+public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 
 	protected String exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
@@ -214,6 +170,7 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 		return RSSUtil.export(syndFeed);
 	}
 
+	@Override
 	protected byte[] getRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -267,6 +224,19 @@ public class RSSMVCResourceCommand implements MVCResourceCommand {
 		}
 
 		return Collections.emptyList();
+	}
+
+	@Override
+	protected boolean isRSSFeedsEnabled(ResourceRequest resourceRequest) {
+		if (!super.isRSSFeedsEnabled(resourceRequest)) {
+			return false;
+		}
+
+		PortletPreferences portletPreferences =
+			resourceRequest.getPreferences();
+
+		return GetterUtil.getBoolean(
+			portletPreferences.getValue("enableRss", null), true);
 	}
 
 	@Reference(unbind = "-")

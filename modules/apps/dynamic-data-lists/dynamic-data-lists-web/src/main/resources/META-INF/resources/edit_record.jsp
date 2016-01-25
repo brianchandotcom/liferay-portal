@@ -96,6 +96,7 @@ else {
 	<aui:input name="recordId" type="hidden" value="<%= recordId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
+	<aui:input name="formDDMTemplateId" type="hidden" value="<%= formDDMTemplateId %>" />
 	<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
 	<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />

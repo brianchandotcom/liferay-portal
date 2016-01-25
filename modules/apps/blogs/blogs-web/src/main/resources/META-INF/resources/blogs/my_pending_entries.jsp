@@ -36,7 +36,7 @@ int myPendingEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scope
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= extended %>" markupView="lexicon" persistState="<%= true %>" title="my-pending-entries">
 		<liferay-ui:search-container
 			curParam="myPendingEntriesCur"
-			delta="5"
+			delta="<%= 5 %>"
 			iteratorURL="<%= iteratorURL %>"
 			total="<%= myPendingEntriesCount %>"
 		>

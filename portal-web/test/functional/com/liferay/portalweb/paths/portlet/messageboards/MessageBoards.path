@@ -189,7 +189,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_LIST_CATEGORY</td>
-	<td>//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_categoryName}')]</td>
+	<td>//*[@data-qa-id='headerTitle']</td>
 	<td></td>
 </tr>
 <tr>

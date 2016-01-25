@@ -90,7 +90,7 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
-Map<String, String[]> parameterMap = Collections.emptyMap();
+renderResponse.setTitle((!configuredExport) ? LanguageUtil.get(request, "new-export") : LanguageUtil.format(request, "new-export-based-on-x", exportImportConfiguration.getName(), false));
 %>
 
 <liferay-util:include page="/export/new_export/navigation.jsp" servletContext="<%= application %>">
@@ -156,13 +156,14 @@ Map<String, String[]> parameterMap = Collections.emptyMap();
 								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 								<liferay-util:param name="treeId" value="<%= treeId %>" />
 								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+								<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredExport) %>" />
 							</liferay-util:include>
 						</aui:fieldset>
 					</c:if>
 
-					<liferay-staging:content cmd="<%= Constants.EXPORT %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+					<liferay-staging:content cmd="<%= Constants.EXPORT %>" disableInputs="<%= configuredExport %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
-					<liferay-staging:permissions gobal="<%= group.isCompany() %>" parameterMap="<%= parameterMap %>" />
+					<liferay-staging:permissions disableInputs="<%= configuredExport %>" global="<%= group.isCompany() %>" parameterMap="<%= parameterMap %>" />
 				</aui:fieldset-group>
 			</div>
 

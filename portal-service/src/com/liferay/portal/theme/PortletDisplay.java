@@ -82,6 +82,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_portletDecoratorId = master.getPortletDecoratorId();
 		_portletDisplayName = master.getPortletDisplayName();
 		_portletName = master.getPortletName();
+		_portletResource = master.getPortletResource();
 		_portletSetup = master.getPortletSetup();
 		_portletToolbar = master.getPortletToolbar();
 		_resourcePK = master.getResourcePK();

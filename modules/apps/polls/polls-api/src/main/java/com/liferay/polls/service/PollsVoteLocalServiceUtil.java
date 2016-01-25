@@ -196,6 +196,11 @@ public class PollsVoteLocalServiceUtil {
 		return getService().fetchPollsVoteByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.polls.model.PollsVote fetchQuestionUserVote(
+		long questionId, long userId) {
+		return getService().fetchQuestionUserVote(questionId, userId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -321,11 +326,6 @@ public class PollsVoteLocalServiceUtil {
 
 	public static int getQuestionVotesCount(long questionId) {
 		return getService().getQuestionVotesCount(questionId);
-	}
-
-	public static com.liferay.polls.model.PollsVote getVote(long questionId,
-		long userId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVote(questionId, userId);
 	}
 
 	/**

@@ -2474,9 +2474,18 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	}
 
 	private static final String _FINDER_COLUMN_CHOICEID_CHOICEID_2 = "pollsVote.choiceId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_Q_U = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_Q_U = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByQ_U",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByQ_U",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_Q_U = new FinderPath(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
+			PollsVoteModelImpl.FINDER_CACHE_ENABLED, PollsVoteImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByQ_U",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			PollsVoteModelImpl.QUESTIONID_COLUMN_BITMASK |
 			PollsVoteModelImpl.USERID_COLUMN_BITMASK);
@@ -2486,90 +2495,138 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the polls vote where questionId = &#63; and userId = &#63; or throws a {@link NoSuchVoteException} if it could not be found.
+	 * Returns all the polls votes where questionId = &#63; and userId = &#63;.
 	 *
 	 * @param questionId the question ID
 	 * @param userId the user ID
-	 * @return the matching polls vote
-	 * @throws NoSuchVoteException if a matching polls vote could not be found
+	 * @return the matching polls votes
 	 */
 	@Override
-	public PollsVote findByQ_U(long questionId, long userId)
-		throws NoSuchVoteException {
-		PollsVote pollsVote = fetchByQ_U(questionId, userId);
+	public List<PollsVote> findByQ_U(long questionId, long userId) {
+		return findByQ_U(questionId, userId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
 
-		if (pollsVote == null) {
-			StringBundler msg = new StringBundler(6);
+	/**
+	 * Returns a range of all the polls votes where questionId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @return the range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByQ_U(long questionId, long userId, int start,
+		int end) {
+		return findByQ_U(questionId, userId, start, end, null);
+	}
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+	/**
+	 * Returns an ordered range of all the polls votes where questionId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByQ_U(long questionId, long userId, int start,
+		int end, OrderByComparator<PollsVote> orderByComparator) {
+		return findByQ_U(questionId, userId, start, end, orderByComparator, true);
+	}
 
-			msg.append("questionId=");
-			msg.append(questionId);
+	/**
+	 * Returns an ordered range of all the polls votes where questionId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PollsVoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching polls votes
+	 */
+	@Override
+	public List<PollsVote> findByQ_U(long questionId, long userId, int start,
+		int end, OrderByComparator<PollsVote> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			msg.append(", userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchVoteException(msg.toString());
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_Q_U;
+			finderArgs = new Object[] { questionId, userId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_Q_U;
+			finderArgs = new Object[] {
+					questionId, userId,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		return pollsVote;
-	}
-
-	/**
-	 * Returns the polls vote where questionId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param questionId the question ID
-	 * @param userId the user ID
-	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	 */
-	@Override
-	public PollsVote fetchByQ_U(long questionId, long userId) {
-		return fetchByQ_U(questionId, userId, true);
-	}
-
-	/**
-	 * Returns the polls vote where questionId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param questionId the question ID
-	 * @param userId the user ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	 */
-	@Override
-	public PollsVote fetchByQ_U(long questionId, long userId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { questionId, userId };
-
-		Object result = null;
+		List<PollsVote> list = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_Q_U,
+			list = (List<PollsVote>)finderCache.getResult(finderPath,
 					finderArgs, this);
-		}
 
-		if (result instanceof PollsVote) {
-			PollsVote pollsVote = (PollsVote)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (PollsVote pollsVote : list) {
+					if ((questionId != pollsVote.getQuestionId()) ||
+							(userId != pollsVote.getUserId())) {
+						list = null;
 
-			if ((questionId != pollsVote.getQuestionId()) ||
-					(userId != pollsVote.getUserId())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
 
 			query.append(_SQL_SELECT_POLLSVOTE_WHERE);
 
 			query.append(_FINDER_COLUMN_Q_U_QUESTIONID_2);
 
 			query.append(_FINDER_COLUMN_Q_U_USERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(PollsVoteModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = query.toString();
 
@@ -2586,28 +2643,25 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				qPos.add(userId);
 
-				List<PollsVote> list = q.list();
+				if (!pagination) {
+					list = (List<PollsVote>)QueryUtil.list(q, getDialect(),
+							start, end, false);
 
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U, finderArgs,
-						list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					PollsVote pollsVote = list.get(0);
-
-					result = pollsVote;
-
-					cacheResult(pollsVote);
-
-					if ((pollsVote.getQuestionId() != questionId) ||
-							(pollsVote.getUserId() != userId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U,
-							finderArgs, pollsVote);
-					}
+					list = (List<PollsVote>)QueryUtil.list(q, getDialect(),
+							start, end);
 				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_Q_U, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2616,27 +2670,289 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 			}
 		}
 
-		if (result instanceof List<?>) {
+		return list;
+	}
+
+	/**
+	 * Returns the first polls vote in the ordered set where questionId = &#63; and userId = &#63;.
+	 *
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching polls vote
+	 * @throws NoSuchVoteException if a matching polls vote could not be found
+	 */
+	@Override
+	public PollsVote findByQ_U_First(long questionId, long userId,
+		OrderByComparator<PollsVote> orderByComparator)
+		throws NoSuchVoteException {
+		PollsVote pollsVote = fetchByQ_U_First(questionId, userId,
+				orderByComparator);
+
+		if (pollsVote != null) {
+			return pollsVote;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("questionId=");
+		msg.append(questionId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the first polls vote in the ordered set where questionId = &#63; and userId = &#63;.
+	 *
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	 */
+	@Override
+	public PollsVote fetchByQ_U_First(long questionId, long userId,
+		OrderByComparator<PollsVote> orderByComparator) {
+		List<PollsVote> list = findByQ_U(questionId, userId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last polls vote in the ordered set where questionId = &#63; and userId = &#63;.
+	 *
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching polls vote
+	 * @throws NoSuchVoteException if a matching polls vote could not be found
+	 */
+	@Override
+	public PollsVote findByQ_U_Last(long questionId, long userId,
+		OrderByComparator<PollsVote> orderByComparator)
+		throws NoSuchVoteException {
+		PollsVote pollsVote = fetchByQ_U_Last(questionId, userId,
+				orderByComparator);
+
+		if (pollsVote != null) {
+			return pollsVote;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("questionId=");
+		msg.append(questionId);
+
+		msg.append(", userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchVoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the last polls vote in the ordered set where questionId = &#63; and userId = &#63;.
+	 *
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
+	 */
+	@Override
+	public PollsVote fetchByQ_U_Last(long questionId, long userId,
+		OrderByComparator<PollsVote> orderByComparator) {
+		int count = countByQ_U(questionId, userId);
+
+		if (count == 0) {
 			return null;
 		}
+
+		List<PollsVote> list = findByQ_U(questionId, userId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the polls votes before and after the current polls vote in the ordered set where questionId = &#63; and userId = &#63;.
+	 *
+	 * @param voteId the primary key of the current polls vote
+	 * @param questionId the question ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next polls vote
+	 * @throws NoSuchVoteException if a polls vote with the primary key could not be found
+	 */
+	@Override
+	public PollsVote[] findByQ_U_PrevAndNext(long voteId, long questionId,
+		long userId, OrderByComparator<PollsVote> orderByComparator)
+		throws NoSuchVoteException {
+		PollsVote pollsVote = findByPrimaryKey(voteId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			PollsVote[] array = new PollsVoteImpl[3];
+
+			array[0] = getByQ_U_PrevAndNext(session, pollsVote, questionId,
+					userId, orderByComparator, true);
+
+			array[1] = pollsVote;
+
+			array[2] = getByQ_U_PrevAndNext(session, pollsVote, questionId,
+					userId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected PollsVote getByQ_U_PrevAndNext(Session session,
+		PollsVote pollsVote, long questionId, long userId,
+		OrderByComparator<PollsVote> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
 		else {
-			return (PollsVote)result;
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_POLLSVOTE_WHERE);
+
+		query.append(_FINDER_COLUMN_Q_U_QUESTIONID_2);
+
+		query.append(_FINDER_COLUMN_Q_U_USERID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(PollsVoteModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(questionId);
+
+		qPos.add(userId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(pollsVote);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<PollsVote> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
 		}
 	}
 
 	/**
-	 * Removes the polls vote where questionId = &#63; and userId = &#63; from the database.
+	 * Removes all the polls votes where questionId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param questionId the question ID
 	 * @param userId the user ID
-	 * @return the polls vote that was removed
 	 */
 	@Override
-	public PollsVote removeByQ_U(long questionId, long userId)
-		throws NoSuchVoteException {
-		PollsVote pollsVote = findByQ_U(questionId, userId);
-
-		return remove(pollsVote);
+	public void removeByQ_U(long questionId, long userId) {
+		for (PollsVote pollsVote : findByQ_U(questionId, userId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(pollsVote);
+		}
 	}
 
 	/**
@@ -2714,10 +3030,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { pollsVote.getUuid(), pollsVote.getGroupId() },
-			pollsVote);
-
-		finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U,
-			new Object[] { pollsVote.getQuestionId(), pollsVote.getUserId() },
 			pollsVote);
 
 		pollsVote.resetOriginalValues();
@@ -2800,16 +3112,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				Long.valueOf(1));
 			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				pollsVoteModelImpl);
-
-			args = new Object[] {
-					pollsVoteModelImpl.getQuestionId(),
-					pollsVoteModelImpl.getUserId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U, args,
-				pollsVoteModelImpl);
 		}
 		else {
 			if ((pollsVoteModelImpl.getColumnBitmask() &
@@ -2822,19 +3124,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					pollsVoteModelImpl);
-			}
-
-			if ((pollsVoteModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_Q_U.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						pollsVoteModelImpl.getQuestionId(),
-						pollsVoteModelImpl.getUserId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_Q_U, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_Q_U, args,
 					pollsVoteModelImpl);
 			}
 		}
@@ -2858,25 +3147,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-		}
-
-		args = new Object[] {
-				pollsVoteModelImpl.getQuestionId(),
-				pollsVoteModelImpl.getUserId()
-			};
-
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
-
-		if ((pollsVoteModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_Q_U.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					pollsVoteModelImpl.getOriginalQuestionId(),
-					pollsVoteModelImpl.getOriginalUserId()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_Q_U, args);
 		}
 	}
 
@@ -3118,6 +3388,27 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_CHOICEID, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHOICEID,
+					args);
+			}
+
+			if ((pollsVoteModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_Q_U.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						pollsVoteModelImpl.getOriginalQuestionId(),
+						pollsVoteModelImpl.getOriginalUserId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_Q_U,
+					args);
+
+				args = new Object[] {
+						pollsVoteModelImpl.getQuestionId(),
+						pollsVoteModelImpl.getUserId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_Q_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_Q_U,
 					args);
 			}
 		}

@@ -18,7 +18,10 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
@@ -61,12 +64,17 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
+		ResourceBundleLoader resourceBundleLoader =
+			new AggregateResourceBundleLoader(
+				ResourceBundleUtil.getResourceBundleLoader(
+					"content.Language", getClassLoader()),
+				LanguageResources.RESOURCE_BUNDLE_LOADER);
+
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
-			"content.Language", getClass(), "layout-prototype-wiki-title");
+			resourceBundleLoader, "layout-prototype-wiki-title");
 		Map<Locale, String> descriptionMap =
 			ResourceBundleUtil.getLocalizationMap(
-				"content.Language", getClass(),
-				"layout-prototype-wiki-description");
+				resourceBundleLoader, "layout-prototype-wiki-description");
 
 		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
 			companyId, defaultUserId, nameMap, descriptionMap, "2_columns_iii",

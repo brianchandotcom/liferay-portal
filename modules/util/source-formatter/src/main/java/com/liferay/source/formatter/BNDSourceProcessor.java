@@ -67,6 +67,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
 	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
-		"\n.*:(\\\\\n\t).*\n[^\t]");
+		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 
 }

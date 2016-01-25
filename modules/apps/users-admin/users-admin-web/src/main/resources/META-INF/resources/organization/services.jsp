@@ -97,7 +97,7 @@ else {
 Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", locale);
 %>
 
-<liferay-ui:error-marker key="errorSection" value="services" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="services" />
 
 <h3><liferay-ui:message key="services" /></h3>
 

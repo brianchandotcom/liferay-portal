@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/ui/tabs/init.jsp" %>
 
 <%
-String errorSection = (String)request.getAttribute("errorSection");
+String errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 %>
 
 <c:if test="<%= !themeDisplay.isFacebook() %>">

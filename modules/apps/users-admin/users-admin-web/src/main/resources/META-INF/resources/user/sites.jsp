@@ -24,7 +24,7 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");
 %>
 
-<liferay-ui:error-marker key="errorSection" value="sites" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="sites" />
 
 <liferay-ui:membership-policy-error />
 

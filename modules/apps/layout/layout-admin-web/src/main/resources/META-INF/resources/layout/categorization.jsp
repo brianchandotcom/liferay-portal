@@ -20,7 +20,7 @@
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 %>
 
-<liferay-ui:error-marker key="errorSection" value="categorization" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorization" />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 

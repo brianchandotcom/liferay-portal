@@ -20,7 +20,7 @@
 User selUser = (User)request.getAttribute("user.selUser");
 %>
 
-<liferay-ui:error-marker key="errorSection" value="openId" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="openId" />
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 

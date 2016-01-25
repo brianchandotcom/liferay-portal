@@ -142,6 +142,8 @@ public interface WebKeys {
 
 	public static final String ENCRYPT = "shuo";
 
+	public static final String ERROR_SECTION = "errorSection";
+
 	public static final String EXPANDO_COLUMN = "EXPANDO_COLUMN";
 
 	public static final String EXTEND_SESSION = "EXTEND_SESSION";

@@ -137,13 +137,7 @@ public class NodeExecutor {
 	}
 
 	protected File getExecutableDir() {
-		File executableDir = GradleUtil.toFile(_project, _nodeDir);
-
-		if (!OSDetector.isWindows()) {
-			executableDir = new File(executableDir, "bin");
-		}
-
-		return executableDir;
+		return new File(getNodeDir(), "bin");
 	}
 
 	protected List<String> getWindowsArgs() {

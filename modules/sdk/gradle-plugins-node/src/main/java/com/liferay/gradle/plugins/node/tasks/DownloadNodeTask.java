@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.node.util.NodeExecutor;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
+import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,6 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.process.ExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -61,66 +61,29 @@ public class DownloadNodeTask extends DefaultTask {
 	@TaskAction
 	public void downloadNode() throws IOException {
 		final File nodeDir = getNodeDir();
-		final String nodeUrl = getNodeUrl();
 		final Project project = getProject();
 
-		final File nodeFile = FileUtil.get(project, nodeUrl);
+		final File nodeFile = FileUtil.get(project, getNodeUrl());
 
-		if (nodeUrl.endsWith(".tar.gz")) {
-			project.delete(nodeDir);
+		project.delete(nodeDir);
 
-			// Avoid using project#tarTree to extract the tarball because of
-			// GRADLE-2844
+		project.copy(
+			new Action<CopySpec>() {
 
-			project.exec(
-				new Action<ExecSpec>() {
+				@Override
+				public void execute(CopySpec copySpec) {
+					copySpec.eachFile(new StripPathSegmentsAction(1));
+					copySpec.from(project.tarTree(nodeFile));
+					copySpec.into(nodeDir);
+					copySpec.setIncludeEmptyDirs(false);
+				}
 
-					@Override
-					public void execute(ExecSpec execSpec) {
-						execSpec.args("xfz", project.relativePath(nodeFile));
-						execSpec.args(
-							"-C",
-							project.relativePath(nodeDir.getParentFile()));
-
-						execSpec.setExecutable("tar");
-					}
-
-				});
-
-			String dirName = nodeFile.getName();
-
-			dirName = dirName.substring(0, dirName.lastIndexOf(".tar.gz"));
-
-			File dir = new File(nodeDir.getParentFile(), dirName);
-
-			dir.renameTo(nodeDir);
-		}
-		else {
-			project.copy(
-				new Action<CopySpec>() {
-
-					@Override
-					public void execute(CopySpec copySpec) {
-						copySpec.from(nodeFile);
-						copySpec.into(nodeDir);
-					}
-
-				});
-		}
+			});
 
 		if (OSDetector.isWindows()) {
-			final File npmFile = FileUtil.get(project, getNpmUrl());
+			File nodeBinDir = new File(getNodeDir(), "bin");
 
-			project.copy(
-				new Action<CopySpec>() {
-
-					@Override
-					public void execute(CopySpec copySpec) {
-						copySpec.from(project.zipTree(npmFile));
-						copySpec.into(nodeDir);
-					}
-
-				});
+			FileUtil.get(project, getNodeExeUrl(), nodeBinDir);
 		}
 	}
 
@@ -130,29 +93,29 @@ public class DownloadNodeTask extends DefaultTask {
 	}
 
 	@Input
-	public String getNodeUrl() {
-		return GradleUtil.toString(_nodeUrl);
+	public String getNodeExeUrl() {
+		return GradleUtil.toString(_nodeExeUrl);
 	}
 
 	@Input
-	public String getNpmUrl() {
-		return GradleUtil.toString(_npmUrl);
+	public String getNodeUrl() {
+		return GradleUtil.toString(_nodeUrl);
 	}
 
 	public void setNodeDir(Object nodeDir) {
 		_nodeExecutor.setNodeDir(nodeDir);
 	}
 
+	public void setNodeExeUrl(Object nodeExeUrl) {
+		_nodeExeUrl = nodeExeUrl;
+	}
+
 	public void setNodeUrl(Object nodeUrl) {
 		_nodeUrl = nodeUrl;
 	}
 
-	public void setNpmUrl(Object npmUrl) {
-		_npmUrl = npmUrl;
-	}
-
 	private final NodeExecutor _nodeExecutor;
+	private Object _nodeExeUrl;
 	private Object _nodeUrl;
-	private Object _npmUrl;
 
 }

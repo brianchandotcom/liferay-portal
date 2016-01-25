@@ -121,22 +121,22 @@ public class NodePlugin implements Plugin<Project> {
 
 			});
 
+		downloadNodeTask.setNodeExeUrl(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return nodeExtension.getNodeExeUrl();
+				}
+
+			});
+
 		downloadNodeTask.setNodeUrl(
 			new Callable<String>() {
 
 				@Override
 				public String call() throws Exception {
 					return nodeExtension.getNodeUrl();
-				}
-
-			});
-
-		downloadNodeTask.setNpmUrl(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return nodeExtension.getNpmUrl();
 				}
 
 			});

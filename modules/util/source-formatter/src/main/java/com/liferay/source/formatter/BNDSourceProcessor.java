@@ -14,9 +14,14 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.File;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -44,6 +49,13 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 					"modules: " + fileName);
 		}
 
+		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
+
+		while (matcher.find()) {
+			content = StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.SPACE, matcher.start());
+		}
+
 		return trimContent(content, false);
 	}
 
@@ -53,5 +65,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
+
+	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
+		"\n.*:(\\\\\n\t).*\n[^\t]");
 
 }

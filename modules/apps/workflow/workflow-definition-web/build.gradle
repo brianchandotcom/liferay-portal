@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":frontend:frontend-taglib")

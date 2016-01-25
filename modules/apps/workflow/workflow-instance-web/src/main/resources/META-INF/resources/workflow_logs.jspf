@@ -22,7 +22,7 @@
 					<liferay-ui:message key="activity-description" />
 				</th>
 				<th>
-					<liferay-ui:message key="Date" />
+					<liferay-ui:message key="date" />
 				</th>
 			</tr>
 		</thead>

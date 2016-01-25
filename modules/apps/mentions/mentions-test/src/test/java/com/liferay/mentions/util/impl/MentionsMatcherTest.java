@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.util.impl.test;
-
-import com.liferay.mentions.util.impl.MentionsMatcher;
+package com.liferay.mentions.util.impl;
 
 import java.util.Arrays;
 import java.util.Iterator;

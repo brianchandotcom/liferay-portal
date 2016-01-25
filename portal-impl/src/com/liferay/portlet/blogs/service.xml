@@ -104,7 +104,7 @@
 		<finder name="G_U_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="status" />
+			<finder-column name="status" arrayable-operator="OR" />
 		</finder>
 		<finder name="G_U_NotS" return-type="Collection">
 			<finder-column name="groupId" />

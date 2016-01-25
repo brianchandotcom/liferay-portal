@@ -174,9 +174,22 @@ public class BlogsEntryServiceUtil {
 				   .getGroupUserEntries(groupId, userId, status, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
+		return getService()
+				   .getGroupUserEntries(groupId, userId, statuses, start, end,
+			obc);
+	}
+
 	public static int getGroupUserEntriesCount(long groupId, long userId,
 		int status) {
 		return getService().getGroupUserEntriesCount(groupId, userId, status);
+	}
+
+	public static int getGroupUserEntriesCount(long groupId, long userId,
+		int[] statuses) {
+		return getService().getGroupUserEntriesCount(groupId, userId, statuses);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(

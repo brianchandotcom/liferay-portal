@@ -395,6 +395,15 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int[] statuses, int start, int end,
+		OrderByComparator<BlogsEntry> obc) {
+
+		return blogsEntryPersistence.filterFindByG_U_S(
+			groupId, userId, statuses, start, end, obc);
+	}
+
+	@Override
 	public int getGroupUserEntriesCount(long groupId, long userId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return blogsEntryPersistence.filterCountByG_U_NotS(
@@ -404,6 +413,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			return blogsEntryPersistence.filterCountByG_U_S(
 				groupId, userId, status);
 		}
+	}
+
+	@Override
+	public int getGroupUserEntriesCount(
+		long groupId, long userId, int[] statuses) {
+
+		return blogsEntryPersistence.filterCountByG_U_S(
+			groupId, userId, statuses);
 	}
 
 	@Override

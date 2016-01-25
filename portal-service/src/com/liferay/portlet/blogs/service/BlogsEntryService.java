@@ -143,7 +143,16 @@ public interface BlogsEntryService extends BaseService {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupUserEntriesCount(long groupId, long userId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		int[] statuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(

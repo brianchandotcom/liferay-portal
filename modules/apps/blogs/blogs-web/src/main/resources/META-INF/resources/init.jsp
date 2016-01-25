@@ -128,6 +128,7 @@ page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsPermission" %><%@
 page import="com.liferay.portlet.blogs.util.BlogsUtil" %><%@
+page import="com.liferay.portlet.blogs.util.comparator.EntryModifiedDateComparator" %><%@
 page import="com.liferay.portlet.documentlibrary.exception.FileSizeException" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@

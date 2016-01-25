@@ -2536,6 +2536,125 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException;
 
 	/**
+	* Returns all the blogs entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @return the matching blogs entries that the user has permission to view
+	*/
+	public java.util.List<BlogsEntry> filterFindByG_U_S(long groupId,
+		long userId, int[] statuses);
+
+	/**
+	* Returns a range of all the blogs entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries that the user has permission to view
+	*/
+	public java.util.List<BlogsEntry> filterFindByG_U_S(long groupId,
+		long userId, int[] statuses, int start, int end);
+
+	/**
+	* Returns an ordered range of all the blogs entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries that the user has permission to view
+	*/
+	public java.util.List<BlogsEntry> filterFindByG_U_S(long groupId,
+		long userId, int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns all the blogs entries where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @return the matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_S(long groupId, long userId,
+		int[] statuses);
+
+	/**
+	* Returns a range of all the blogs entries where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_S(long groupId, long userId,
+		int[] statuses, int start, int end);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_S(long groupId, long userId,
+		int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and status = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public java.util.List<BlogsEntry> findByG_U_S(long groupId, long userId,
+		int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Removes all the blogs entries where groupId = &#63; and userId = &#63; and status = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -2555,6 +2674,16 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	public int countByG_U_S(long groupId, long userId, int status);
 
 	/**
+	* Returns the number of blogs entries where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @return the number of matching blogs entries
+	*/
+	public int countByG_U_S(long groupId, long userId, int[] statuses);
+
+	/**
 	* Returns the number of blogs entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID
@@ -2563,6 +2692,16 @@ public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	* @return the number of matching blogs entries that the user has permission to view
 	*/
 	public int filterCountByG_U_S(long groupId, long userId, int status);
+
+	/**
+	* Returns the number of blogs entries that the user has permission to view where groupId = &#63; and userId = &#63; and status = any &#63;.
+	*
+	* @param groupId the group ID
+	* @param userId the user ID
+	* @param statuses the statuses
+	* @return the number of matching blogs entries that the user has permission to view
+	*/
+	public int filterCountByG_U_S(long groupId, long userId, int[] statuses);
 
 	/**
 	* Returns all the blogs entries where groupId = &#63; and userId = &#63; and status &ne; &#63;.

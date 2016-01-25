@@ -18,7 +18,8 @@
 							path: 'navigation.js',
 							requires: [
 								'aui-component',
-								'liferay-portlet-base'
+								'liferay-portlet-base',
+								'liferay-search-container'
 							]
 						},
 						'liferay-portlet-journal': {

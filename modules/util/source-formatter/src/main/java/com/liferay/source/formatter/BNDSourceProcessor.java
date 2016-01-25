@@ -82,16 +82,23 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 				definition = definition.substring(0, definition.length() - 1);
 			}
 
-			if (Validator.isNotNull(previousDefinition) &&
-				(definitionComparator.compare(previousDefinition, definition) >
-					0)) {
+			if (Validator.isNotNull(previousDefinition)) {
+				int value = definitionComparator.compare(
+					previousDefinition, definition);
 
-				content = StringUtil.replaceFirst(
-					content, previousDefinition, definition);
-				content = StringUtil.replaceLast(
-					content, definition, previousDefinition);
+				if (value > 0) {
+					content = StringUtil.replaceFirst(
+						content, previousDefinition, definition);
+					content = StringUtil.replaceLast(
+						content, definition, previousDefinition);
 
-				return content;
+					return content;
+				}
+
+				if (value == 0) {
+					return StringUtil.replaceFirst(
+						content, previousDefinition, StringPool.BLANK);
+				}
 			}
 
 			previousDefinition = definition;

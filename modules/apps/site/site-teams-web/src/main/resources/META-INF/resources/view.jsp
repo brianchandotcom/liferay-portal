@@ -34,8 +34,6 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 int teamsCount = TeamServiceUtil.searchCount(scopeGroupId, searchTerms.getKeywords(), searchTerms.getKeywords(), new LinkedHashMap<String, Object>());
 
 teamSearchContainer.setTotal(teamsCount);
-
-teamSearchContainer.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

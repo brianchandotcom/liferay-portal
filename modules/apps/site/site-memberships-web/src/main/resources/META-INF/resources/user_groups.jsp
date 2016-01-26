@@ -47,8 +47,6 @@ userGroupSearch.setTotal(userGroupsCount);
 List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
 
 userGroupSearch.setResults(userGroups);
-
-userGroupSearch.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">

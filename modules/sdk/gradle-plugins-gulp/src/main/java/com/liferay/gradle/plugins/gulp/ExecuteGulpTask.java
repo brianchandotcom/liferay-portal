@@ -14,29 +14,21 @@
 
 package com.liferay.gradle.plugins.gulp;
 
-import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
-import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeScriptTask;
 import com.liferay.gradle.util.GradleUtil;
 
-import java.io.File;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.tasks.Input;
-import org.gradle.util.GUtil;
 
 /**
  * @author David Truong
  * @author Andrea Di Giorgi
  */
-public class ExecuteGulpTask extends ExecuteNodeTask {
+public class ExecuteGulpTask extends ExecuteNodeScriptTask {
 
-	@Override
-	public void executeNode() {
-		setArgs(getCompleteArgs());
-
-		super.executeNode();
+	public ExecuteGulpTask() {
+		setScriptFile("node_modules/gulp/bin/gulp.js");
 	}
 
 	@Input
@@ -44,32 +36,18 @@ public class ExecuteGulpTask extends ExecuteNodeTask {
 		return GradleUtil.toString(_gulpCommand);
 	}
 
-	@Input
-	public File getScriptFile() {
-		return GradleUtil.toFile(getProject(), _scriptFile);
-	}
-
 	public void setGulpCommand(Object gulpCommand) {
 		_gulpCommand = gulpCommand;
 	}
 
-	public void setScriptFile(Object scriptFile) {
-		_scriptFile = scriptFile;
-	}
-
-	protected List<Object> getCompleteArgs() {
-		List<Object> completeArgs = new ArrayList<>();
-
-		completeArgs.add(FileUtil.getAbsolutePath(getScriptFile()));
+	protected List<String> getCompleteArgs() {
+		List<String> completeArgs = super.getCompleteArgs();
 
 		completeArgs.add(getGulpCommand());
-
-		GUtil.addToCollection(completeArgs, getArgs());
 
 		return completeArgs;
 	}
 
 	private Object _gulpCommand;
-	private Object _scriptFile = "node_modules/gulp/bin/gulp.js";
 
 }

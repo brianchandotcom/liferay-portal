@@ -1,6 +1,7 @@
 <definition>
 	<command name="addExportTemplateCP">
 		<execute function="Pause" locator1="3000" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateName}" />

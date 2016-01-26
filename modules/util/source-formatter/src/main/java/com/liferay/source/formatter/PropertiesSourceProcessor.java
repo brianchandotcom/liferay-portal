@@ -331,6 +331,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 					line = line.replace(StringPool.TAB, StringPool.FOUR_SPACES);
 				}
 
+				if (line.contains(" \t")) {
+					line = line.replace(" \t", StringPool.FOUR_SPACES);
+				}
+
 				sb.append(line);
 				sb.append("\n");
 			}

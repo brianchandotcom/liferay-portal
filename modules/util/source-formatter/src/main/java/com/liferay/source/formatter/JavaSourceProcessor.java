@@ -1457,6 +1457,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			!moduleSuperClassContent.contains("@Component") ||
 			!moduleSuperClassContent.contains("@Reference")) {
 
+			setBNDInheritRequiredValue(fileName, false);
+
 			return content;
 		}
 
@@ -1531,22 +1533,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		Tuple bndFileLocationAndContentTuple =
-			getBNDFileLocationAndContentTuple(fileName);
-
-		String bndFileLocation =
-			(String)bndFileLocationAndContentTuple.getObject(0);
-
-		Tuple bndInheritTuple = _bndInheritRequiredTupleMap.get(
-			bndFileLocation);
-
-		if ((bndInheritTuple == null) || bndInheritRequired) {
-			String bndContent =
-				(String)bndFileLocationAndContentTuple.getObject(1);
-
-			_bndInheritRequiredTupleMap.put(
-				bndFileLocation, new Tuple(bndContent, bndInheritRequired));
-		}
+		setBNDInheritRequiredValue(fileName, bndInheritRequired);
 
 		return content;
 	}
@@ -3900,6 +3887,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void postFormat() throws Exception {
 		checkBndInheritAnnotationOption();
+	}
+
+	protected void setBNDInheritRequiredValue(
+			String fileName, boolean bndInheritRequired)
+		throws Exception {
+
+		Tuple bndFileLocationAndContentTuple =
+			getBNDFileLocationAndContentTuple(fileName);
+
+		String bndFileLocation =
+			(String)bndFileLocationAndContentTuple.getObject(0);
+
+		Tuple bndInheritTuple = _bndInheritRequiredTupleMap.get(
+			bndFileLocation);
+
+		if ((bndInheritTuple == null) || bndInheritRequired) {
+			String bndContent =
+				(String)bndFileLocationAndContentTuple.getObject(1);
+
+			_bndInheritRequiredTupleMap.put(
+				bndFileLocation, new Tuple(bndContent, bndInheritRequired));
+		}
 	}
 
 	protected String sortExceptions(String line) {

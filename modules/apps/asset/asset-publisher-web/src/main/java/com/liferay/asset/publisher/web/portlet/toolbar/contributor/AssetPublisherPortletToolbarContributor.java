@@ -39,7 +39,7 @@ import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.util.AssetUtil;
@@ -127,8 +127,8 @@ public class AssetPublisherPortletToolbarContributor
 
 		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs =
 			_getScopeAddPortletURLs(
-				themeDisplay, assetPublisherDisplayContext, portletRequest,
-				portletResponse, 1);
+				assetPublisherDisplayContext, portletRequest, portletResponse,
+				1);
 
 		if (MapUtil.isEmpty(scopeAddPortletURLs)) {
 			return;
@@ -297,11 +297,21 @@ public class AssetPublisherPortletToolbarContributor
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_getClassName(className));
+		Map<String, Object> data = new HashMap<>();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		data.put(
+			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
 
 		String message = _getMessage(className, themeDisplay.getLocale());
+
+		String title = LanguageUtil.format(
+			themeDisplay.getLocale(), "new-x", message, false);
+
+		data.put("title", title);
+
+		urlMenuItem.setData(data);
 
 		urlMenuItem.setLabel(HtmlUtil.escape(message));
 
@@ -309,14 +319,16 @@ public class AssetPublisherPortletToolbarContributor
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_getClassName(className));
+
 		if (!group.isStagedPortlet(
 				assetRendererFactory.getPortletId()) &&
 			!group.isStagedRemotely()) {
 
 			curGroupId = group.getLiveGroupId();
 		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		boolean addDisplayPageParameter = AssetUtil.isDefaultAssetPublisher(
 			themeDisplay.getLayout(), portletDisplay.getId(),
@@ -335,7 +347,6 @@ public class AssetPublisherPortletToolbarContributor
 	}
 
 	private Map<Long, Map<String, PortletURL>> _getScopeAddPortletURLs(
-			ThemeDisplay themeDisplay,
 			AssetPublisherDisplayContext assetPublisherDisplayContext,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			int max)
@@ -349,14 +360,22 @@ public class AssetPublisherPortletToolbarContributor
 
 		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs = new HashMap();
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			portletRequest, AssetPublisherPortletKeys.ASSET_PUBLISHER,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)portletRequest;
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)portletResponse;
+
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
 		redirectURL.setParameter(
 			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
-		redirectURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		redirectURL.setParameter("redirect", currentURLObj.toString());
+
 		redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
 		String redirect = redirectURL.toString();
@@ -364,8 +383,7 @@ public class AssetPublisherPortletToolbarContributor
 		for (long groupId : groupIds) {
 			Map<String, PortletURL> addPortletURLs =
 				AssetUtil.getAddPortletURLs(
-					(LiferayPortletRequest)portletRequest,
-					(LiferayPortletResponse)portletResponse, groupId,
+					liferayPortletRequest, liferayPortletResponse, groupId,
 					assetPublisherDisplayContext.getClassNameIds(),
 					assetPublisherDisplayContext.getClassTypeIds(),
 					assetPublisherDisplayContext.getAllAssetCategoryIds(),

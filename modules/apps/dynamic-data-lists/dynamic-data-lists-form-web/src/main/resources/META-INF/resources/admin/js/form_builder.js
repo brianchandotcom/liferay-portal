@@ -340,7 +340,7 @@ AUI.add(
 								portletNamespace: instance.get('portletNamespace'),
 								resizable: false,
 								strings: {
-									addField: Liferay.Language.get('choose-field')
+									addField: Liferay.Language.get('choose-a-field-type')
 								},
 								visible: false
 							}

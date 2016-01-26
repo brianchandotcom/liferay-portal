@@ -382,7 +382,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
 			if (scopeGroup.isUser() &&
-				(_userLocalService.fetchUserById(
+				(userLocalService.fetchUserById(
 					scopeGroup.getClassPK()) == null)) {
 
 				redirect = HttpUtil.setParameter(redirect, "doAsGroupId", 0);
@@ -553,7 +553,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
+		this.userLocalService = userLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -785,11 +785,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
 
+	protected UserLocalService userLocalService;
+
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 	private DLAppLocalService _dlAppLocalService;
 	private ListTypeLocalService _listTypeLocalService;
-	private UserLocalService _userLocalService;
 	private UserService _userService;
 
 }

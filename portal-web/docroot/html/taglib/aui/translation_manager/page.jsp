@@ -47,7 +47,9 @@
 
 		</select>
 
-		<a class="lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
+		<c:if test="<%= changeableDefaultLanguage %>">
+			<a class="lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
+		</c:if>
 
 		<c:if test="<%= !readOnly %>">
 			<liferay-ui:icon-menu
@@ -140,6 +142,7 @@
 					translationManager = new Liferay.TranslationManager(
 						{
 							availableLocales: <%= availableLocalesJSONArray.toString() %>,
+							changeableDefaultLanguage: <%= changeableDefaultLanguage %>,
 							boundingBox: '#<%= namespace + id %>',
 							defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 							editingLocale: '<%= HtmlUtil.escapeJS(editingLanguageId) %>',

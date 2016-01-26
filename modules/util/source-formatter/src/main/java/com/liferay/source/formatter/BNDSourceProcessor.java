@@ -97,7 +97,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 				if (value == 0) {
 					return StringUtil.replaceFirst(
-						content, previousDefinition, StringPool.BLANK);
+						content, previousDefinition + "\n", StringPool.BLANK);
 				}
 			}
 

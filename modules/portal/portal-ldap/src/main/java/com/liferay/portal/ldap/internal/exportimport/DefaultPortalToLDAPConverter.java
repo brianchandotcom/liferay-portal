@@ -300,7 +300,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		Modifications modifications = getModifications(
 			user, userMappings, _reservedUserFieldNames);
 
-		if (PrincipalThreadLocal.getPasswordModified() &&
+		if (PrincipalThreadLocal.isPasswordModified() &&
 			Validator.isNotNull(
 				PrincipalThreadLocal.getPasswordUnencrypted())) {
 

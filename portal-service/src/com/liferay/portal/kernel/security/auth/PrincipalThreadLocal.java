@@ -39,16 +39,16 @@ public class PrincipalThreadLocal {
 		return _password.get();
 	}
 
-	public static boolean getPasswordModified() {
-		return _passwordModified.get();
-	}
-
 	public static String getPasswordUnencrypted() {
 		return _passwordUnencrypted.get();
 	}
 
 	public static long getUserId() {
 		return GetterUtil.getLong(getName());
+	}
+
+	public static boolean isPasswordModified() {
+		return _passwordModified.get();
 	}
 
 	public static void setName(long name) {

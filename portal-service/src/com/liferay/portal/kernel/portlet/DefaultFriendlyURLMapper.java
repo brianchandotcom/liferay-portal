@@ -163,12 +163,12 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String namespace = null;
 
-		String portletId = getPortletId(routeParameters);
+		String portletInstanceKey = getPortletInstanceKey(routeParameters);
 
-		if (Validator.isNotNull(portletId)) {
-			namespace = PortalUtil.getPortletNamespace(portletId);
+		if (Validator.isNotNull(portletInstanceKey)) {
+			namespace = PortalUtil.getPortletNamespace(portletInstanceKey);
 
-			addParameter(namespace, parameterMap, "p_p_id", portletId);
+			addParameter(namespace, parameterMap, "p_p_id", portletInstanceKey);
 		}
 		else if (isAllPublicRenderParameters(routeParameters)) {
 
@@ -292,16 +292,26 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	}
 
 	/**
-	 * Returns the portlet ID, including the instance ID if applicable, from the
-	 * parameter map.
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortletInstanceKey(Map)}
+	 */
+	@Deprecated
+	protected String getPortletId(Map<String, String> routeParameters) {
+		return getPortletInstanceKey(routeParameters);
+	}
+
+	/**
+	 * Returns the portlet instance key, including the user ID if applicable,
+	 * from the parameter map.
 	 *
 	 * @param  routeParameters the parameter map. For an instanceable portlet,
 	 *         this must contain either <code>p_p_id</code> or
 	 *         <code>instanceId</code>.
-	 * @return the portlet ID, including the instance ID if applicable, or
+	 * @return the portlet instance key, including the user ID if applicable, or
 	 *         <code>null</code> if it cannot be determined
 	 */
-	protected String getPortletId(Map<String, String> routeParameters) {
+	protected String getPortletInstanceKey(
+		Map<String, String> routeParameters) {
+
 		if (!isPortletInstanceable()) {
 			return getPortletName();
 		}

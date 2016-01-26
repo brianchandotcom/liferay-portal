@@ -201,7 +201,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	 *        portlets this must include the instance ID.
 	 * @param value the value of the parameter
 	 * @see   PortalUtil#getPortletNamespace(String)
-	 * @see   DefaultFriendlyURLMapper#getPortletId(Map)
+	 * @see   DefaultFriendlyURLMapper#getPortletInstanceKey(Map)
 	 */
 	protected void addParameter(
 		String namespace, Map<String, String[]> parameterMap, String name,
@@ -220,7 +220,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	 *        portlets this must include the instance ID.
 	 * @param values the values of the parameter
 	 * @see   PortalUtil#getPortletNamespace(String)
-	 * @see   DefaultFriendlyURLMapper#getPortletId(Map)
+	 * @see   DefaultFriendlyURLMapper#getPortletInstanceKey(Map)
 	 */
 	protected void addParameter(
 		String namespace, Map<String, String[]> parameterMap, String name,

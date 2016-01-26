@@ -38,7 +38,9 @@ import org.openqa.selenium.WebDriver;
  */
 public final class CommandLoggerHandler {
 
-	public static void failCommand(Element element) throws Exception {
+	public static void failCommand(Element element)
+		throws PoshiRunnerLoggerException {
+
 		if (!_isCurrentCommand(element)) {
 			return;
 		}
@@ -75,7 +77,9 @@ public final class CommandLoggerHandler {
 			dividerLineLoggerElement);
 	}
 
-	public static void logMessage(Element element) throws Exception {
+	public static void logMessage(Element element)
+		throws PoshiRunnerLoggerException {
+
 		try {
 			_lineGroupLoggerElement = _getMessageGroupLoggerElement(element);
 
@@ -118,7 +122,9 @@ public final class CommandLoggerHandler {
 		_updateStatus(xmlLoggerElement, "pass");
 	}
 
-	public static void startCommand(Element element) throws Exception {
+	public static void startCommand(Element element)
+		throws PoshiRunnerLoggerException {
+
 		if (!_isCommand(element)) {
 			return;
 		}
@@ -159,7 +165,9 @@ public final class CommandLoggerHandler {
 		_commandLogLoggerElement.removeClassName("running");
 	}
 
-	public static void warnCommand(Element element) throws Exception {
+	public static void warnCommand(Element element)
+		throws PoshiRunnerLoggerException {
+
 		if (!_isCurrentCommand(element)) {
 			return;
 		}

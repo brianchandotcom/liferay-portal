@@ -35,7 +35,7 @@ import org.dom4j.Element;
 public final class XMLLoggerHandler {
 
 	public static void generateXMLLog(String classCommandName)
-		throws Exception {
+		throws PoshiRunnerLoggerException {
 
 		try {
 			_xmlLogLoggerElement = new LoggerElement("xmlLogContainer");

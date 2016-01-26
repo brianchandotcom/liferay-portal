@@ -131,7 +131,7 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
-	public static void startMajorSteps() throws Exception {
+	public static void startMajorSteps() throws PoshiRunnerLoggerException {
 		try {
 			_causeBodyLoggerElement = _getCauseBodyLoggerElement();
 			_majorStepsLoggerElement = _getMajorStepsLoggerElement();

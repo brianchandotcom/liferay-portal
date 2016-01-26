@@ -107,7 +107,7 @@ public final class LoggerUtil {
 			"addChildLoggerElement(" + parentSB + ", " + childSB + ");");
 	}
 
-	public static void createSummary() throws Exception {
+	public static void createSummary() throws PoshiRunnerLoggerException {
 		try {
 			FileUtil.write(
 				_getSummaryLogFilePath(), SummaryLoggerHandler.getSummary());
@@ -185,7 +185,7 @@ public final class LoggerUtil {
 		pauseLoggerCheck();
 	}
 
-	public static void pauseLoggerCheck() throws Exception {
+	public static void pauseLoggerCheck() throws PoshiRunnerLoggerException {
 		if (!isLoggerStarted()) {
 			return;
 		}
@@ -283,7 +283,7 @@ public final class LoggerUtil {
 		_startLogger();
 	}
 
-	public static void stopLogger() throws Exception {
+	public static void stopLogger() throws PoshiRunnerLoggerException {
 		try {
 			if (!PropsValues.SELENIUM_LOGGER_ENABLED) {
 				String mainCSSContent = _readResource(
@@ -398,7 +398,7 @@ public final class LoggerUtil {
 		return sb.toString();
 	}
 
-	private static void _startLogger() throws Exception {
+	private static void _startLogger() throws PoshiRunnerLoggerException {
 		try {
 			_webDriver = new FirefoxDriver();
 

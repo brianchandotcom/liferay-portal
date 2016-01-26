@@ -51,8 +51,8 @@ request.setAttribute("view.jsp-categoryDisplay", categoryDisplay);
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscriptionClassPKs);
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionClassPKs);
 
+request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
-
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 

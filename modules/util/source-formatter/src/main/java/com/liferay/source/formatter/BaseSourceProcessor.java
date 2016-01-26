@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -1118,35 +1119,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected Properties getBNDFileLanguageProperties(String fileName)
 		throws Exception {
 
-		Properties properties = _bndFileLanguageProperties.get(fileName);
+		Tuple bndFileLocationAndContentTuple =
+			getBNDFileLocationAndContentTuple(fileName);
+
+		if (bndFileLocationAndContentTuple == null) {
+			return null;
+		}
+
+		String bndFileLocation =
+			(String)bndFileLocationAndContentTuple.getObject(0);
+
+		Properties properties = _bndLanguagePropertiesMap.get(bndFileLocation);
 
 		if (properties != null) {
 			return properties;
 		}
 
-		String bndContent = null;
-		String bndFileLocation = fileName;
-
-		while (true) {
-			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
-
-			if (pos == -1) {
-				return null;
-			}
-
-			bndFileLocation = bndFileLocation.substring(0, pos + 1);
-
-			File file = new File(bndFileLocation + "bnd.bnd");
-
-			if (file.exists()) {
-				bndContent = FileUtil.read(file);
-
-				break;
-			}
-
-			bndFileLocation = StringUtil.replaceLast(
-				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
-		}
+		String bndContent = (String)bndFileLocationAndContentTuple.getObject(1);
 
 		Matcher matcher = bndContentDirPattern.matcher(bndContent);
 
@@ -1164,12 +1153,52 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			properties.load(inputStream);
 
-			_bndFileLanguageProperties.put(fileName, properties);
+			_bndLanguagePropertiesMap.put(bndFileLocation, properties);
 
 			return properties;
 		}
 
 		return null;
+	}
+
+	protected Tuple getBNDFileLocationAndContentTuple(String fileName)
+		throws Exception {
+
+		Tuple bndFileLocationAndContentTuple =
+			_bndFileLocationAndContentMap.get(fileName);
+
+		if (bndFileLocationAndContentTuple != null) {
+			return bndFileLocationAndContentTuple;
+		}
+
+		String bndFileLocation = fileName;
+
+		while (true) {
+			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			bndFileLocation = bndFileLocation.substring(0, pos + 1);
+
+			File file = new File(bndFileLocation + "bnd.bnd");
+
+			if (file.exists()) {
+				String bndContent = FileUtil.read(file);
+
+				bndFileLocationAndContentTuple = new Tuple(
+					bndFileLocation, bndContent);
+
+				_bndFileLocationAndContentMap.put(
+					fileName, bndFileLocationAndContentTuple);
+
+				return bndFileLocationAndContentTuple;
+			}
+
+			bndFileLocation = StringUtil.replaceLast(
+				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
+		}
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
@@ -2175,8 +2204,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private Set<String> _annotationsExclusions;
-	private Map<String, Properties> _bndFileLanguageProperties =
-		new HashMap<>();
+	private Map<String, Tuple> _bndFileLocationAndContentMap = new HashMap<>();
+	private Map<String, Properties> _bndLanguagePropertiesMap = new HashMap<>();
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private Map<String, List<String>> _errorMessagesMap = new HashMap<>();

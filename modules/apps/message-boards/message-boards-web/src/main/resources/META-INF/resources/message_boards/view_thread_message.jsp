@@ -72,6 +72,10 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<%= HtmlUtil.escape(message.getSubject()) %>
 						</c:otherwise>
 					</c:choose>
+
+					<c:if test="<%= message.isAnswer() %>">
+						(<liferay-ui:message key="answer" />)
+					</c:if>
 				</h4>
 
 				<%
@@ -195,22 +199,39 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					if (!message.isRoot()) {
 						MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
 
-						showAnswerFlag = MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.UPDATE) && !message.isAnswer() && (thread.isQuestion() || MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()));
+						showAnswerFlag = MBMessagePermission.contains(permissionChecker, rootMessage, ActionKeys.UPDATE) && (thread.isQuestion() || MBThreadLocalServiceUtil.hasAnswerMessage(thread.getThreadId()));
 					}
 					%>
 
 					<c:if test="<%= showAnswerFlag || hasReplyPermission || hasUpdatePermission || hasPermissionsPermission || hasMoveThreadPermission || hasDeletePermission %>">
 						<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 							<c:if test="<%= showAnswerFlag %>">
+								<c:choose>
+									<c:when test="<%= !message.isAnswer() %>">
+										<portlet:actionURL name="/message_boards/edit_message" var="addAnswerURL">
+											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_ANSWER %>" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
+											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+										</portlet:actionURL>
 
-								<%
-								String taglibMarkAsAnswerURL = "javascript:" + renderResponse.getNamespace() + "addAnswerFlag('" + message.getMessageId() + "');";
-								%>
+										<liferay-ui:icon
+											message="mark-as-an-answer"
+											url="<%= addAnswerURL %>"
+										/>
+									</c:when>
+									<c:otherwise>
+										<portlet:actionURL name="/message_boards/edit_message" var="deleteAnswerURL">
+											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_ANSWER %>" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
+											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+										</portlet:actionURL>
 
-								<liferay-ui:icon
-									message="mark-as-an-answer"
-									url="<%= taglibMarkAsAnswerURL %>"
-								/>
+										<liferay-ui:icon
+											message="unmark-as-an-answer"
+											url="<%= deleteAnswerURL %>"
+										/>
+									</c:otherwise>
+								</c:choose>
 							</c:if>
 
 							<c:if test="<%= hasReplyPermission && !thread.isLocked() %>">

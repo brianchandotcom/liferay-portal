@@ -175,11 +175,6 @@
 		}
 	}
 
-	.question-details {
-		float: left;
-		white-space: nowrap;
-	}
-
 	.views {
 		clear: both;
 		color: #999;
@@ -194,7 +189,7 @@
 		}
 	}
 
-	.status, .votes {
+	.status {
 		display: inline-block;
 		height: 38px;
 		margin: 0 3px 0 0;
@@ -202,25 +197,8 @@
 		text-align: center;
 	}
 
-	.votes {
-		color: #555;
-		width: 40px;
-	}
-
 	.status {
 		width: 48px;
-	}
-
-	.answered, .unanswered {
-		color: #FFF;
-	}
-
-	.answered {
-		background-color: #5BA018;
-	}
-
-	.unanswered {
-		background-color: #CF4937;
 	}
 
 	.count {
@@ -315,57 +293,6 @@
 
 	.threads-panel {
 		margin-top: 1em;
-	}
-
-	.displayStyle-question {
-		.action-question {
-			.taglib-text {
-				display: none;
-			}
-		}
-
-		.last-post {
-			margin-left: 1em;
-			width: 15%;
-		}
-
-		.stats {
-			width: 20%;
-		}
-
-		.question {
-			vertical-align: top;
-			width: 65%;
-		}
-
-		.last-post .portrait {
-			text-align: center;
-		}
-
-		.username {
-			text-align: center;
-		}
-
-		.time {
-			color: #777;
-			font-size: 0.9em;
-			font-weight: bold;
-			margin-top: 0.5em;
-			text-align: center;
-		}
-
-		.question-subject {
-			font-size: 125%;
-
-			#a {
-				color: #06C;
-			}
-		}
-
-		.summary {
-			color: #444;
-			font-size: 120%;
-		}
 	}
 
 	.search-root-entry {

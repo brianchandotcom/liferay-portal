@@ -89,7 +89,9 @@ public class UserPortraitTag extends IncludeTag {
 
 		String[] userNames = StringUtil.split(userName, StringPool.SPACE);
 
-		userNames = ArrayUtil.subset(userNames, 0, 2);
+		if (userNames.length > 1) {
+			userNames = ArrayUtil.subset(userNames, 0, 2);
+		}
 
 		StringBundler sb = new StringBundler(userNames.length);
 

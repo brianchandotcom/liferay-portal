@@ -43,6 +43,6 @@ public class JSTranspilerExtension {
 	}
 
 	private Object _lfrAmdLoaderVersion = "1.3.5";
-	private Object _metalCliVersion = "0.2.1";
+	private Object _metalCliVersion = "0.3.0";
 
 }

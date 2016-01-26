@@ -42,7 +42,8 @@ public class ExportDDLRecordSetPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new ExportDDLRecordSetPortletConfigurationIcon(portletRequest);
+		return new ExportDDLRecordSetPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

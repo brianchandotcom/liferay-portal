@@ -16,23 +16,26 @@ package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Rafael Praxedes
  */
 public class ExportDDLRecordSetPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public ExportDDLRecordSetPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
 		PortletRequest portletRequest) {
 
-		super(portletRequest);
+		super(servletContext, jspPath, portletRequest);
 	}
 
 	@Override

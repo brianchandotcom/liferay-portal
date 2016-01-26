@@ -39,7 +39,8 @@ public class ExportUsersPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new ExportUsersPortletConfigurationIcon(portletRequest);
+		return new ExportUsersPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

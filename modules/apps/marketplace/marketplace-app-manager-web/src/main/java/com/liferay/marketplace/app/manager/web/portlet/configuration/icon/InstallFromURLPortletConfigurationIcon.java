@@ -14,20 +14,23 @@
 
 package com.liferay.marketplace.app.manager.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Douglas Wong
  */
 public class InstallFromURLPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public InstallFromURLPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
 		PortletRequest portletRequest) {
 
-		super(portletRequest);
+		super(servletContext, jspPath, portletRequest);
 	}
 
 	@Override

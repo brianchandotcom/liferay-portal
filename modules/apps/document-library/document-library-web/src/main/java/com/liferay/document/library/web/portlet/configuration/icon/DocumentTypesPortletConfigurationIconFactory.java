@@ -39,7 +39,8 @@ public class DocumentTypesPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new DocumentTypesPortletConfigurationIcon(portletRequest);
+		return new DocumentTypesPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

@@ -16,18 +16,23 @@ package com.liferay.journal.web.portlet.configuration.icon;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class PreviewPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
-	public PreviewPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
+	public PreviewPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
+		PortletRequest portletRequest) {
+
+		super(servletContext, jspPath, portletRequest);
 	}
 
 	@Override

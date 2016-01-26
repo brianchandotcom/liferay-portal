@@ -185,7 +185,9 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				public File call() throws Exception {
 					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-					return sourceSetOutput.getResourcesDir();
+					return new File(
+						sourceSetOutput.getResourcesDir(),
+						"META-INF/resources");
 				}
 
 			});

@@ -219,9 +219,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		completeArgs.add("build");
 
 		completeArgs.add("--dest");
-		completeArgs.add(
-			FileUtil.relativize(
-				getOutputDir(), sourceDir) + "/META-INF/resources");
+		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
 
 		completeArgs.add("--format");
 		completeArgs.add(getModules());

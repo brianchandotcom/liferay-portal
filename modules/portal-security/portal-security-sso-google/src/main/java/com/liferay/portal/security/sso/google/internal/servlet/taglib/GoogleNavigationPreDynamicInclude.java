@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.google.GoogleAuthorization;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -49,22 +51,7 @@ public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean googleAuthEnabled = PrefsPropsUtil.getBoolean(
-			themeDisplay.getCompanyId(), "google-auth-enabled", true);
-
-		if (!googleAuthEnabled) {
-			return;
-		}
-
-		String googleClientId = PrefsPropsUtil.getString(
-			themeDisplay.getCompanyId(), "google-client-id");
-
-		String googleClientSecret = PrefsPropsUtil.getString(
-			themeDisplay.getCompanyId(), "google-client-secret");
-
-		if (Validator.isNull(googleClientId) ||
-			Validator.isNull(googleClientSecret)) {
-
+		if (!_googleAuthorization.isEnabled(themeDisplay.getCompanyId())) {
 			return;
 		}
 
@@ -87,6 +74,13 @@ public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
+	@Reference(unbind = "-")
+	protected void setGoogleAuthorization(
+		GoogleAuthorization googleAuthorization) {
+
+		_googleAuthorization = googleAuthorization;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google)",
 		unbind = "-"
@@ -101,6 +95,7 @@ public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleNavigationPreDynamicInclude.class);
 
+	private GoogleAuthorization _googleAuthorization;
 	private ServletContext _servletContext;
 
 }

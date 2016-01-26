@@ -1,5 +1,3 @@
-apply plugin: "application"
-
 dependencies {
 	compile group: "commons-codec", name: "commons-codec", version: "1.9"
 	compile group: "dom4j", name: "dom4j", version: "1.6.1"

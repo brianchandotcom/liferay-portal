@@ -37,15 +37,15 @@ public class JSTranspilerDefaultsPlugin
 		JSTranspilerExtension jsTranspilerExtension = GradleUtil.getExtension(
 			project, JSTranspilerExtension.class);
 
-		String metalCliVersion = GradleUtil.getProperty(
-			project, "nodejs.metal.cli.version", _METAL_CLI_VERSION);
-
-		jsTranspilerExtension.setMetalCliVersion(metalCliVersion);
-
 		String lfrAmdLoaderVersion = GradleUtil.getProperty(
 			project, "nodejs.lfr.amd.loader.version", _LFR_AMD_LOADER_VERSION);
 
 		jsTranspilerExtension.setLfrAmdLoaderVersion(lfrAmdLoaderVersion);
+
+		String metalCliVersion = GradleUtil.getProperty(
+			project, "nodejs.metal.cli.version", _METAL_CLI_VERSION);
+
+		jsTranspilerExtension.setMetalCliVersion(metalCliVersion);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
@@ -878,8 +879,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = getDDMFormValues(
-					companyId, ddmForm, data_);
+				DDMFormValues ddmFormValues =
+					DDMFormValuesJSONDeserializerUtil.deserialize(
+						ddmForm, data_);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -929,8 +931,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = getDDMFormValues(
-					companyId, ddmForm, data_);
+				DDMFormValues ddmFormValues =
+					DDMFormValuesJSONDeserializerUtil.deserialize(
+						ddmForm, data_);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,

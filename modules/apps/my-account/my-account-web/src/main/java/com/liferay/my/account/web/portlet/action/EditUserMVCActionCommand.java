@@ -91,7 +91,6 @@ public class EditUserMVCActionCommand
 	@Override
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 		super.setUserLocalService(userLocalService);
 	}
 
@@ -127,17 +126,17 @@ public class EditUserMVCActionCommand
 			int authResult = Authenticator.FAILURE;
 
 			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				authResult = _userLocalService.authenticateByEmailAddress(
+				authResult = userLocalService.authenticateByEmailAddress(
 					company.getCompanyId(), user.getEmailAddress(),
 					currentPassword, headerMap, parameterMap, resultsMap);
 			}
 			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				authResult = _userLocalService.authenticateByUserId(
+				authResult = userLocalService.authenticateByUserId(
 					company.getCompanyId(), user.getUserId(), currentPassword,
 					headerMap, parameterMap, resultsMap);
 			}
 			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				authResult = _userLocalService.authenticateByScreenName(
+				authResult = userLocalService.authenticateByScreenName(
 					company.getCompanyId(), user.getScreenName(),
 					currentPassword, headerMap, parameterMap, resultsMap);
 			}
@@ -153,7 +152,5 @@ public class EditUserMVCActionCommand
 
 		return super.updateUser(actionRequest, actionResponse);
 	}
-
-	private UserLocalService _userLocalService;
 
 }

@@ -23,14 +23,10 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -83,10 +79,12 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 				}
 			}
 
-			Object[] plidAndPortletId = getPlidAndPortletId(
-				themeDisplay, groupId, themeDisplay.getPlid(), _portletIds);
+			PortletPageFinder portletPageFinder = getPortletPageFinder();
 
-			long plid = (Long)plidAndPortletId[0];
+			PortletPageFinder.Result result = portletPageFinder.find(
+				themeDisplay, groupId);
+
+			long plid = result.getPlid();
 
 			Layout layout = setTargetLayout(request, groupId, plid);
 
@@ -94,7 +92,7 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 				themeDisplay.getPermissionChecker(), layout, true,
 				ActionKeys.VIEW);
 
-			String portletId = (String)plidAndPortletId[1];
+			String portletId = result.getPortletId();
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, portletId, plid, PortletRequest.RENDER_PHASE);
@@ -170,118 +168,6 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 			PortletURL portletURL, long primaryKey)
 		throws Exception;
 
-	protected static Object[] fetchPlidAndPortletId(
-			PermissionChecker permissionChecker, long groupId,
-			String[] portletIds)
-		throws Exception {
-
-		for (String portletId : portletIds) {
-			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
-
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				continue;
-			}
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
-
-				continue;
-			}
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			portletId = getPortletId(layoutTypePortlet, portletId);
-
-			return new Object[] {plid, portletId};
-		}
-
-		return null;
-	}
-
-	protected static Object[] getPlidAndPortletId(
-			ThemeDisplay themeDisplay, long groupId, long plid,
-			String[] portletIds)
-		throws Exception {
-
-		if ((plid != LayoutConstants.DEFAULT_PLID) &&
-			(groupId == themeDisplay.getScopeGroupId())) {
-
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				for (String portletId : portletIds) {
-					if (!layoutTypePortlet.hasPortletId(portletId, false) ||
-						!LayoutPermissionUtil.contains(
-							themeDisplay.getPermissionChecker(), layout,
-							ActionKeys.VIEW)) {
-
-						continue;
-					}
-
-					portletId = getPortletId(layoutTypePortlet, portletId);
-
-					return new Object[] {plid, portletId};
-				}
-			}
-			catch (NoSuchLayoutException nsle) {
-			}
-		}
-
-		Object[] plidAndPortletId = fetchPlidAndPortletId(
-			themeDisplay.getPermissionChecker(), groupId, portletIds);
-
-		if ((plidAndPortletId == null) &&
-			SitesUtil.isUserGroupLayoutSetViewable(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup())) {
-
-			plidAndPortletId = fetchPlidAndPortletId(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletIds);
-		}
-
-		if (plidAndPortletId != null) {
-			return plidAndPortletId;
-		}
-
-		StringBundler sb = new StringBundler(portletIds.length * 2 + 5);
-
-		sb.append("{groupId=");
-		sb.append(groupId);
-		sb.append(", plid=");
-		sb.append(plid);
-
-		for (String portletId : portletIds) {
-			sb.append(", portletId=");
-			sb.append(portletId);
-		}
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
-	}
-
-	protected static String getPortletId(
-		LayoutTypePortlet layoutTypePortlet, String portletId) {
-
-		for (String curPortletId : layoutTypePortlet.getPortletIds()) {
-			String curRootPortletId = PortletConstants.getRootPortletId(
-				curPortletId);
-
-			if (portletId.equals(curRootPortletId)) {
-				return curPortletId;
-			}
-		}
-
-		return portletId;
-	}
-
 	protected static Layout setTargetLayout(
 			HttpServletRequest request, long groupId, long plid)
 		throws Exception {
@@ -321,6 +207,8 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 
 	protected abstract void addRequiredParameters(
 		HttpServletRequest request, String portletId, PortletURL portletURL);
+
+	protected abstract PortletPageFinder getPortletPageFinder();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFindActionHelper.class);

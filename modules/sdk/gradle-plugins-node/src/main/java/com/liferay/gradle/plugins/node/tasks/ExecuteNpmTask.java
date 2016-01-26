@@ -14,26 +14,26 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import java.io.File;
+
+import java.util.concurrent.Callable;
+
 /**
  * @author Andrea Di Giorgi
  */
-public class ExecuteNpmTask extends ExecuteNodeTask {
+public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
-	@Override
-	public void executeNode() {
-		super.setCommand(getCommand());
+	public ExecuteNpmTask() {
+		setScriptFile(
+			new Callable<File>() {
 
-		super.executeNode();
-	}
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getNodeDir(), "lib/node_modules/npm/bin/npm-cli.js");
+				}
 
-	@Override
-	public String getCommand() {
-		return "npm";
-	}
-
-	@Override
-	public void setCommand(Object command) {
-		throw new UnsupportedOperationException();
+			});
 	}
 
 }

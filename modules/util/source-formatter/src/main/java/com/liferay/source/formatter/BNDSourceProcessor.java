@@ -51,7 +51,14 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 					"modules: " + fileName);
 		}
 
-		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
+		Matcher matcher = _incorrectTabPattern.matcher(content);
+
+		while (matcher.find()) {
+			content = StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.TAB, matcher.start());
+		}
+
+		matcher = _singleValueOnMultipleLinesPattern.matcher(content);
 
 		while (matcher.find()) {
 			content = StringUtil.replaceFirst(
@@ -111,6 +118,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private Pattern _bndDefinitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+	private Pattern _incorrectTabPattern = Pattern.compile(
+		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 

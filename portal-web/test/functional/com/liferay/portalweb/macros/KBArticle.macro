@@ -126,20 +126,23 @@
 		<if>
 			<equals arg1="${kbArticleInvalidContent}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter valid content." />
 			</then>
 			<elseif>
 				<equals arg1="${kbArticleDuplicateFriendlyURL}" arg2="true" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
 					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a unique friendly URL." />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${kbMissingRequiredCategory}" arg2="true" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
 					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
 				</then>
 			</elseif>
@@ -1477,7 +1480,7 @@
 		<if>
 			<equals arg1="${kbImportFailed}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminUploadZipFile#ALERT_FAILED" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
 			</then>
 			<else>
 				<execute function="AssertTextNotPresent" value1="Your request failed to complete." />

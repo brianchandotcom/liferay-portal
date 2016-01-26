@@ -940,7 +940,8 @@
 		<execute function="Type" locator1="SOMessagesAdd#BODY_FIELD" value1="${messageBody}" />
 		<execute function="UploadCommonFile" locator1="SOMessagesAdd#ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
 		<execute function="Click" locator1="SOMessagesAdd#SEND_BUTTON" />
-		<execute function="AssertTextEquals" locator1="SOMessagesAdd#ERROR_MESSAGE" value1="Your request failed to complete." />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

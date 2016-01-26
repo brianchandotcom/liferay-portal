@@ -513,7 +513,8 @@
 	</command>
 
 	<command name="viewInvalidDefinitionMessage">
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid XML schema definition." />
 	</command>
 

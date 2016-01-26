@@ -547,6 +547,27 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				content, "\n", "\n\n", matcher.start());
 		}
 
+		String previousDefineObjectsTag = null;
+
+		matcher = _defineObjectsPattern.matcher(content);
+
+		while (matcher.find()) {
+			String defineObjectsTag = matcher.group(1);
+
+			if (Validator.isNotNull(previousDefineObjectsTag) &&
+				(previousDefineObjectsTag.compareTo(defineObjectsTag) > 0)) {
+
+				content = StringUtil.replaceFirst(
+					content, previousDefineObjectsTag, defineObjectsTag);
+				content = StringUtil.replaceLast(
+					content, defineObjectsTag, previousDefineObjectsTag);
+
+				return content;
+			}
+
+			previousDefineObjectsTag = defineObjectsTag;
+		}
+
 		return content;
 	}
 
@@ -1743,6 +1764,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	};
 
 	private Set<String> _checkedForIncludesFileNames = new HashSet<>();
+	private final Pattern _defineObjectsPattern = Pattern.compile(
+		"\n\t*(<.*:defineObjects />)\n");
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
 		"\n(\t*)<[a-z-]*:.*[^/]>\n\n(\t*)<[a-z-]*:.*>\n");

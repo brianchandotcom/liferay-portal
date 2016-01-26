@@ -40,7 +40,6 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 
 		<aui:fieldset>
 			<aui:select label="reason-for-the-report" name="reason">
-				<aui:option value="" />
 
 				<%
 				for (String reason : PropsValues.FLAGS_REASONS) {

@@ -3693,12 +3693,16 @@
 	<command name="ImportCalendarAndViewEventRegularComment" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
-		<var name="site" value="Liferay" />
+		<var name="site" value="${defaultSiteName}" />
 		<var name="user" value="Test Test" />
 
 		<execute macro="Page#gotoPG">

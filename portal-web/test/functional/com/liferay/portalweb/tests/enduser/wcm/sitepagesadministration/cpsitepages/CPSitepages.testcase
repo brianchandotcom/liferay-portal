@@ -238,13 +238,15 @@
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="SitePage#viewChildPG">
 			<var name="childPageCount" value="1" />
 			<var name="pageName" value="Site Page" />
 			<var name="siteChildPageName" value="Site Child Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-child-page" />
+			<var name="sitePageURL" value="${portalURL}/web/site-name/site-child-page" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
@@ -271,11 +273,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="SitePage#viewPG">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-page" />
+			<var name="sitePageURL" value="${portalURL}/web/site-name/site-page" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>

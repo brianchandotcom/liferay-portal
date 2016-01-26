@@ -89,12 +89,36 @@ int offset = GetterUtil.getInteger(recentPostsDateOffset);
 
 calendar.add(Calendar.DATE, -offset);
 
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
+
+searchContainer.setId("mbEntries");
+searchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
+
 if (entriesNavigation.equals("all")) {
 	entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
 }
 else if (entriesNavigation.equals("recent")) {
 	entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
 }
+
+searchContainer.setTotal(entriesTotal);
+
+int status = WorkflowConstants.STATUS_APPROVED;
+
+if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+	status = WorkflowConstants.STATUS_ANY;
+}
+
+List entriesResults = null;
+
+if (entriesNavigation.equals("all")) {
+	entriesResults = MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, searchContainer.getStart(), searchContainer.getEnd());
+}
+else if (entriesNavigation.equals("recent")) {
+	entriesResults = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+}
+
+searchContainer.setResults(entriesResults);
 %>
 
 <liferay-frontend:management-bar
@@ -166,9 +190,40 @@ else if (entriesNavigation.equals("recent")) {
 
 <%
 request.setAttribute("view.jsp-displayStyle", displayStyle);
-request.setAttribute("view.jsp-entriesTotal", entriesTotal);
+request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 %>
 
 <liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
+
+<aui:script>
+	function <portlet:namespace />deleteEntries() {
+		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
+
+			submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
+		}
+	}
+
+	function <portlet:namespace />lockEntries() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.attr('method', 'post');
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.LOCK %>');
+
+		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
+	}
+
+	function <portlet:namespace />unlockEntries() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.attr('method', 'post');
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.UNLOCK %>');
+
+		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
+	}
+</aui:script>

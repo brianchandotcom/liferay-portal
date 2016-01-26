@@ -17,13 +17,11 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
-
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
 
-int entriesTotal = GetterUtil.getInteger(request.getAttribute("view.jsp-entriesTotal"));
+SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-entriesSearchContainer");
 
 long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 
@@ -91,36 +89,8 @@ if (groupThreadsUserId > 0) {
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
 		<liferay-ui:search-container
-			curParam="cur1"
-			emptyResultsMessage="there-are-no-threads-nor-categories"
-			id="mbEntries"
-			iteratorURL="<%= portletURL %>"
-			rowChecker="<%= new EntriesChecker(liferayPortletRequest, liferayPortletResponse) %>"
-			total="<%= entriesTotal %>"
-			var="categorySearchContainer"
+			searchContainer="<%= entriesSearchContainer %>"
 		>
-
-			<%
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-				status = WorkflowConstants.STATUS_ANY;
-			}
-
-			List entriesResults = null;
-
-			if (entriesNavigation.equals("all")) {
-				entriesResults = MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, categorySearchContainer.getStart(), categorySearchContainer.getEnd());
-			}
-			else if (entriesNavigation.equals("recent")) {
-				entriesResults = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, categorySearchContainer.getStart(), categorySearchContainer.getEnd());
-			}
-			%>
-
-			<liferay-ui:search-container-results
-				results="<%= entriesResults %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="Object"
 				escapedModel="<%= true %>"
@@ -261,37 +231,6 @@ if (category != null) {
 	PortalUtil.setPageDescription(category.getDescription(), request);
 }
 %>
-
-<aui:script>
-	function <portlet:namespace />deleteEntries() {
-		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, TrashUtil.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
-
-			submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
-		}
-	}
-
-	function <portlet:namespace />lockEntries() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.LOCK %>');
-
-		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
-	}
-
-	function <portlet:namespace />unlockEntries() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.UNLOCK %>');
-
-		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
-	}
-</aui:script>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_message_boards_web.message_boards_admin.view_entries_jsp");

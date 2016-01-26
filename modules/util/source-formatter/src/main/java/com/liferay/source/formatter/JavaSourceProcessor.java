@@ -217,6 +217,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkBndInheritAnnotationOption() {
+		for (Map.Entry<String, Tuple> entry :
+				_bndInheritRequiredTupleMap.entrySet()) {
+
+			String bndFileLocation = entry.getKey();
+
+			Tuple bndInheritTuple = entry.getValue();
+
+			String bndContent = (String)bndInheritTuple.getObject(0);
+			boolean bndInheritRequired = (Boolean)bndInheritTuple.getObject(1);
+
+			if (bndContent.contains("-dsannotations-options: inherit")) {
+				if (!bndInheritRequired) {
+					printError(
+						bndFileLocation,
+						"Redundant '-dsannotations-options: inherit'" +
+							bndFileLocation);
+				}
+			}
+			else if (bndInheritRequired) {
+				printError(
+					bndFileLocation,
+					"Add '-dsannotations-options: inherit'" + bndFileLocation);
+			}
+		}
+	}
+
 	protected void checkDeserializationSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
 
@@ -3868,6 +3895,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected void postFormat() throws Exception {
+		checkBndInheritAnnotationOption();
 	}
 
 	protected String sortExceptions(String line) {

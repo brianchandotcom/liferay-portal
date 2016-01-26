@@ -38,14 +38,14 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 	public Result find(ThemeDisplay themeDisplay, long groupId)
 		throws PortalException {
 
-		long plid = themeDisplay.getPlid();
 		String[] portletIds = getPortletIds();
 
-		if ((plid != LayoutConstants.DEFAULT_PLID) &&
+		if ((themeDisplay.getPlid() != LayoutConstants.DEFAULT_PLID) &&
 			(groupId == themeDisplay.getScopeGroupId())) {
 
 			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+				Layout layout = LayoutLocalServiceUtil.getLayout(
+					themeDisplay.getPlid());
 
 				LayoutTypePortlet layoutTypePortlet =
 					(LayoutTypePortlet)layout.getLayoutType();
@@ -61,7 +61,7 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 
 					portletId = getPortletId(layoutTypePortlet, portletId);
 
-					return new ResultImpl(plid, portletId);
+					return new ResultImpl(themeDisplay.getPlid(), portletId);
 				}
 			}
 			catch (NoSuchLayoutException nsle) {
@@ -91,7 +91,7 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 		sb.append("{groupId=");
 		sb.append(groupId);
 		sb.append(", plid=");
-		sb.append(plid);
+		sb.append(themeDisplay.getPlid());
 
 		for (String portletId : portletIds) {
 			sb.append(", portletId=");

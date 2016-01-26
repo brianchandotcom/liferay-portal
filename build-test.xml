@@ -5256,20 +5256,20 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<and>
-				<equals arg1="${test.batch.run.type}" arg2="sequential" />
-				<isset property="test.skip.tear.down" />
-			</and>
+			<equals arg1="${test.batch.run.type}" arg2="sequential" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.skip.tear.down=false
 				</echo>
 			</then>
-			<else>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.skip.tear.down=${test.skip.tear.down}
-				</echo>
-			</else>
+			<elseif>
+				<isset property="test.skip.tear.down" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						test.skip.tear.down=${test.skip.tear.down}
+					</echo>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

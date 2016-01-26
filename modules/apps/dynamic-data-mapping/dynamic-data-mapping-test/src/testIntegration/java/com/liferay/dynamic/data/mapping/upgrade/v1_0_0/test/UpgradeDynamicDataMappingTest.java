@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.upgrade.v1_0_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -34,6 +35,8 @@ import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermissio
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.upgrade.DDMServiceUpgrade;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -85,23 +88,11 @@ public class UpgradeDynamicDataMappingTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_classNameIdDDLRecordSet = PortalUtil.getClassNameId(
-			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
-		_classNameIdDDMStructure = PortalUtil.getClassNameId(
-			"com.liferay.dynamic.data.mapping.model.DDMStructure");
-		_classNameIdDDMContent = PortalUtil.getClassNameId(
-			"com.liferay.dynamic.data.mapping.model.DDMContent");
-		_classNameDDMStorageLink =
-			"com.liferay.dynamic.data.mapping.model.DDMStorageLink";
 		_group = GroupTestUtil.addGroup();
 		_now = new Timestamp(System.currentTimeMillis());
 
-		_structureId = RandomTestUtil.randomLong();
-		_parentStructureId = RandomTestUtil.randomLong();
-		_templateId = RandomTestUtil.randomLong();
-		_storageLinkId = RandomTestUtil.randomLong();
-		_contentId = RandomTestUtil.randomLong();
-
+		setUpClassNameIds();
+		setUpPrimaryKeys();
 		setUpUpgradeDynamicDataMapping();
 	}
 
@@ -796,7 +787,7 @@ public class UpgradeDynamicDataMappingTest {
 			ps.setString(5, null);
 			ps.setTimestamp(6, _now);
 			ps.setTimestamp(7, _now);
-			ps.setString(8, _classNameDDMStorageLink);
+			ps.setString(8, DDMStorageLink.class.getName());
 			ps.setString(9, StringPool.BLANK);
 			ps.setString(10, data);
 
@@ -979,79 +970,30 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	protected void deleteContent(long contentId) throws Exception {
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		DB db = DBManagerUtil.getDB();
 
-		PreparedStatement ps = null;
-
-		try {
-			String sql = "delete from DDMContent where contentID = ?";
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, contentId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		db.runSQL("delete from DDMContent where contentId = " + contentId);
 	}
 
 	protected void deleteStorageLink(long storageLinkId) throws Exception {
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		DB db = DBManagerUtil.getDB();
 
-		PreparedStatement ps = null;
-
-		try {
-			String sql = "delete from DDMStorageLink where storageLinkId = ?";
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, storageLinkId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		db.runSQL(
+			"delete from DDMStorageLink where storageLinkId = " +
+				storageLinkId);
 	}
 
 	protected void deleteStructure(long structureId) throws Exception {
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		DB db = DBManagerUtil.getDB();
 
-		PreparedStatement ps = null;
-
-		try {
-			String sql = "delete from DDMStructure where structureId = ?";
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, structureId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		db.runSQL(
+			"delete from DDMStructure where structureId = " + structureId);
 	}
 
 	protected void deleteTemplate(long templateId) throws Exception {
-		Connection con = DataAccess.getUpgradeOptimizedConnection();
+		DB db = DBManagerUtil.getDB();
 
-		PreparedStatement ps = null;
-
-		try {
-			String sql = "delete from DDMTemplate where templateId = ?";
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, templateId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		db.runSQL("delete from DDMTemplate where templateId = " + templateId);
 	}
 
 	protected String getBasePath() {
@@ -1127,6 +1069,23 @@ public class UpgradeDynamicDataMappingTest {
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
 
+	protected void setUpClassNameIds() {
+		_classNameIdDDLRecordSet = PortalUtil.getClassNameId(
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
+		_classNameIdDDMStructure = PortalUtil.getClassNameId(
+			"com.liferay.dynamic.data.mapping.model.DDMStructure");
+		_classNameIdDDMContent = PortalUtil.getClassNameId(
+			"com.liferay.dynamic.data.mapping.model.DDMContent");
+	}
+
+	protected void setUpPrimaryKeys() {
+		_structureId = RandomTestUtil.randomLong();
+		_parentStructureId = RandomTestUtil.randomLong();
+		_templateId = RandomTestUtil.randomLong();
+		_storageLinkId = RandomTestUtil.randomLong();
+		_contentId = RandomTestUtil.randomLong();
+	}
+
 	protected void setUpUpgradeDynamicDataMapping() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -1141,7 +1100,6 @@ public class UpgradeDynamicDataMappingTest {
 				UpgradeDynamicDataMapping.class);
 	}
 
-	private String _classNameDDMStorageLink;
 	private long _classNameIdDDLRecordSet;
 	private long _classNameIdDDMContent;
 	private long _classNameIdDDMStructure;

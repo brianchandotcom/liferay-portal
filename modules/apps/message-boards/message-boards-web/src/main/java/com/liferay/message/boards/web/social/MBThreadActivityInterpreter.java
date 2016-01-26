@@ -15,7 +15,9 @@
 package com.liferay.message.boards.web.social;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +32,8 @@ import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,7 +76,11 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 			categoryLink, MBCategory.class.getName(), message.getCategoryId(),
 			serviceContext);
 
-		return wrapLink(categoryLink, "go-to-category", serviceContext);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", serviceContext.getLocale(), getClass());
+
+		return wrapLink(
+			categoryLink, LanguageUtil.get(resourceBundle, "go-to-category"));
 	}
 
 	protected MBMessage getMessage(SocialActivity activity) throws Exception {

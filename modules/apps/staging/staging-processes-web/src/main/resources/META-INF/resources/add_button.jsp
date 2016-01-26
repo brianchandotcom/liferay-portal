@@ -49,6 +49,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 	<portlet:renderURL var="addNewCustomProcessURL">
 		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-publication") %>' url="<%= addNewCustomProcessURL %>" />

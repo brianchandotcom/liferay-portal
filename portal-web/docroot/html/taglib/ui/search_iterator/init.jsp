@@ -16,11 +16,13 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry" %>
+<%@ page import="com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry" %><%@
+page import="com.liferay.taglib.ui.SearchIteratorTag" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
+String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:search-iterator:displayStyle"), SearchIteratorTag.DEFAULT_DISPLAY_STYLE);
 String markupView = (String)request.getAttribute("liferay-ui:search-iterator:markupView");
 boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
 ResultRowSplitter resultRowSplitter = (ResultRowSplitter)request.getAttribute("liferay-ui:search-iterator:resultRowSplitter");

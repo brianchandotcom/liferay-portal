@@ -32,7 +32,7 @@ String ldapSecurityPrincipal = ldapServerConfiguration.securityPrincipal();
 
 String ldapSecurityCredentials = ldapServerConfiguration.securityCredential();
 
-if (Validator.isNotNull(ldapSecurityCredentials)) {
+if (Validator.isNull(ldapSecurityCredentials)) {
 	ldapSecurityCredentials = Portal.TEMP_OBFUSCATION_VALUE;
 }
 

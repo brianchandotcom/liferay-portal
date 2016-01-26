@@ -202,6 +202,84 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="check-jenkins-console">
+		<sequential>
+			<if>
+				<isset property="env.BUILD_URL" />
+				<then>
+					<var name="tstamp.value" unset="true" />
+
+					<tstamp>
+						<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					</tstamp>
+
+					<propertyregex
+						input="${env.BUILD_URL}"
+						property="jenkins.build.url"
+						regexp="https:\/\/([^\.]+)\.[^\/]+"
+						replace="http://\1"
+					/>
+
+					<propertyregex
+						input="${jenkins.build.url}"
+						override="true"
+						property="jenkins.build.url"
+						regexp="http:\/\/([^\/]+)\/(\d+)"
+						replace="http://\1-\2/\2"
+					/>
+
+					<get dest="${tstamp.value}.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+
+					<var name="jenkins.console.txt" unset="true" />
+
+					<loadfile property="jenkins.console.txt" srcfile="${tstamp.value}.txt" />
+
+					<delete file="${tstamp.value}.txt" />
+
+					<var name="tstamp.value" unset="true" />
+
+					<var name="junit.failure.count" unset="true" />
+					<var name="junit.failure.message" unset="true" />
+					<var name="junit.timestamp" unset="true" />
+
+					<if>
+						<contains string="${jenkins.console.txt}" substring="!MESSAGE error" />
+						<then>
+							<property name="junit.failure.count" value="1" />
+							<property name="junit.failure.message"><![CDATA[<failure message="!MESSAGE error" type="java.lang.Exception" />]]></property>
+						</then>
+						<elseif>
+							<contains string="${jenkins.console.txt}" substring="!MESSAGE warning" />
+							<then>
+								<property name="junit.failure.count" value="1" />
+								<property name="junit.failure.message"><![CDATA[<failure message="!MESSAGE warning" type="java.lang.Exception" />]]></property>
+							</then>
+						</elseif>
+						<else>
+							<property name="junit.failure.count" value="0" />
+							<property name="junit.failure.message" value="" />
+						</else>
+					</if>
+
+					<tstamp>
+						<format property="junit.timestamp" pattern="yyyy-MM-dd_kk:mm:ss" />
+					</tstamp>
+
+					<echo file="portal-impl/test-results/TEST-JenkinsLogAssertTest.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite name="com.liferay.jenkins.JenkinsLogAsserterTest" tests="1" skipped="0" failures="${junit.failure.count}" errors="0" timestamp="${junit.timestamp}" hostname="localhost" time="0.0">
+	<properties />
+	<testcase name="testScanJenkinsLog" classname="com.liferay.jenkins.JenkinsLogAsserterTest" time="0.0">
+		${junit.failure.message}
+	</testcase>
+	<system-out></system-out>
+	<system-err></system-err>
+</testsuite>]]></echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="clean-restart-sybase">
 		<attribute name="retry" default="false" />
 		<sequential>
@@ -790,9 +868,11 @@
 						</then>
 					</if>
 
-					<merge-test-results />
-
 					<check-deprecated-method />
+
+					<check-jenkins-console />
+
+					<merge-test-results />
 
 					<test-tear-down />
 

@@ -153,7 +153,8 @@
 	<command name="addFrontPageCP">
 		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO_2" value1="This page does not exist yet. Use the form below to create it." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
+
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiFrontPageContent}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />

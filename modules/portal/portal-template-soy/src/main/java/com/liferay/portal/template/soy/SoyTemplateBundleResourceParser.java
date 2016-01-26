@@ -92,17 +92,19 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 
 	private final Map<String, Bundle> _bundleProvidersMap =
 		new ConcurrentHashMap<>();
-	private final BundleTracker<Bundle> _bundleTracker;
+	private final BundleTracker<List<BundleCapability>> _bundleTracker;
 
 	private class CapabilityBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<Bundle> {
+		implements BundleTrackerCustomizer<List<BundleCapability>> {
 
 		public CapabilityBundleTrackerCustomizer(String namespace) {
 			_namespace = namespace;
 		}
 
 		@Override
-		public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+		public List<BundleCapability> addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
 			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 			List<BundleCapability> bundleCapabilities =
@@ -115,22 +117,19 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 				_bundleProvidersMap.put(providerBundleKey, bundle);
 			}
 
-			return bundle;
+			return bundleCapabilities;
 		}
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Bundle object) {
+			Bundle bundle, BundleEvent bundleEvent,
+			List<BundleCapability> object) {
 		}
 
 		@Override
 		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Bundle object) {
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			List<BundleCapability> bundleCapabilities =
-				bundleWiring.getCapabilities(_namespace);
+			Bundle bundle, BundleEvent bundleEvent,
+			List<BundleCapability> bundleCapabilities) {
 
 			for (BundleCapability bundleCapability : bundleCapabilities) {
 				String providerBundleKey = getCapabilityPrefix(

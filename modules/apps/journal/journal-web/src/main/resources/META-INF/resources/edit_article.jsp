@@ -88,7 +88,9 @@ boolean changeableDefaultLanguage = journalGroupServiceConfiguration.changeableD
 if (article != null) {
 	String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
 
-	changeableDefaultLanguage = changeableDefaultLanguage || !Validator.equals(defaultLanguageId, articleDefaultLanguageId);
+	if (!Validator.equals(defaultLanguageId, articleDefaultLanguageId)) {
+		changeableDefaultLanguage = true;
+	}
 
 	defaultLanguageId = articleDefaultLanguageId;
 }

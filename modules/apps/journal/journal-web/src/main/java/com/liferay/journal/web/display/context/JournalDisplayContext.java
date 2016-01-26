@@ -711,6 +711,12 @@ public class JournalDisplayContext {
 			return false;
 		}
 
+		if (!isNavigationHome() ||
+			(getStatus() != WorkflowConstants.STATUS_ANY)) {
+
+			return false;
+		}
+
 		return true;
 	}
 

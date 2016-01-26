@@ -382,6 +382,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatLogFileName(absolutePath, newContent);
 
+		newContent = formatDefineObjects(newContent);
+
 		// LPS-59076
 
 		if (portalSource && isModulesFile(absolutePath) &&
@@ -534,6 +536,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected String formatDefineObjects(String content) {
+		Matcher matcher = _missingEmptyLineBetweenDefineOjbectsPattern.matcher(
+			content);
+
+		if (matcher.find()) {
+			content = StringUtil.replaceFirst(
+				content, "\n", "\n\n", matcher.start());
+		}
+
+		return content;
 	}
 
 	protected String formatJSP(
@@ -1759,6 +1773,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
+	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
+		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(

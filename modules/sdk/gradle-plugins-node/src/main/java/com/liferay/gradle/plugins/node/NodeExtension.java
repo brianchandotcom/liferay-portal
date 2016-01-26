@@ -199,7 +199,7 @@ public class NodeExtension {
 	private Object _nodeDir;
 	private Object _nodeExeUrl;
 	private Object _nodeUrl;
-	private Object _nodeVersion = "0.12.6";
+	private Object _nodeVersion = "5.5.0";
 	private final List<Object> _npmArgs = new ArrayList<>();
 	private final Project _project;
 

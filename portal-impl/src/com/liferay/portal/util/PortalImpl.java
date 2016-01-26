@@ -701,8 +701,8 @@ public class PortalImpl implements Portal {
 			groupId = getScopeGroupId(layout, portlet.getPortletId());
 		}
 
-		addDefaultResource(
-			themeDisplay.getCompanyId(), groupId, layout, portlet, false);
+		addRootModelDefaultResource(
+			themeDisplay.getCompanyId(), groupId, portlet);
 	}
 
 	@Override
@@ -710,7 +710,9 @@ public class PortalImpl implements Portal {
 			long companyId, Layout layout, Portlet portlet)
 		throws PortalException {
 
-		addDefaultResource(companyId, layout, portlet, false);
+		long groupId = getScopeGroupId(layout, portlet.getPortletId());
+
+		addRootModelDefaultResource(companyId, groupId, portlet);
 	}
 
 	@Override
@@ -7109,6 +7111,7 @@ public class PortalImpl implements Portal {
 		return windowState;
 	}
 
+	@Deprecated
 	protected void addDefaultResource(
 			long companyId, Layout layout, Portlet portlet,
 			boolean portletActions)
@@ -7116,26 +7119,27 @@ public class PortalImpl implements Portal {
 
 		long groupId = getScopeGroupId(layout, portlet.getPortletId());
 
-		addDefaultResource(companyId, groupId, layout, portlet, portletActions);
+		addRootModelDefaultResource(companyId, groupId, portlet);
 	}
 
+	@Deprecated
 	protected void addDefaultResource(
 			long companyId, long groupId, Layout layout, Portlet portlet,
 			boolean portletActions)
 		throws PortalException {
 
-		String rootPortletId = portlet.getRootPortletId();
+		addRootModelDefaultResource(companyId, groupId, portlet);
+	}
 
-		String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
-			layout.getPlid(), portlet.getPortletId());
+	protected void addRootModelDefaultResource(
+			long companyId, long groupId, Portlet portlet)
+		throws PortalException {
+
+		String rootPortletId = portlet.getRootPortletId();
 
 		String name = null;
 		String primaryKey = null;
 
-		if (portletActions) {
-			return;
-		}
-		else {
 			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 			if ((group != null) && group.isStagingGroup()) {
@@ -7144,7 +7148,6 @@ public class PortalImpl implements Portal {
 
 			name = ResourceActionsUtil.getPortletBaseResource(rootPortletId);
 			primaryKey = String.valueOf(groupId);
-		}
 
 		if (Validator.isNull(name)) {
 			return;
@@ -7161,18 +7164,8 @@ public class PortalImpl implements Portal {
 
 		boolean addGuestPermissions = true;
 
-		if (portletActions) {
-			Group layoutGroup = layout.getGroup();
-
-			if (layout.isPrivateLayout() && !layoutGroup.isLayoutPrototype() &&
-				!layoutGroup.isLayoutSetPrototype()) {
-
-				addGuestPermissions = false;
-			}
-		}
-
 		ResourceLocalServiceUtil.addResources(
-			companyId, groupId, 0, name, primaryKey, portletActions, true,
+			companyId, groupId, 0, name, primaryKey, false, true,
 			addGuestPermissions);
 	}
 

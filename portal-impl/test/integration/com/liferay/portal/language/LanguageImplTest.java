@@ -14,6 +14,7 @@
 
 package com.liferay.portal.language;
 
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -26,6 +27,7 @@ import java.util.Locale;
 import org.apache.struts.mock.MockHttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +46,12 @@ public class LanguageImplTest {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new LiferayIntegrationTestRule();
+
+		@Before
+		public void setUp() {
+			_languageImpl = (LanguageImpl)PortalBeanLocatorUtil.locate(
+				"com.liferay.portal.language.LanguageImpl");
+		}
 
 		@Test
 		public void testFormatWithOneArgument() {
@@ -110,6 +118,12 @@ public class LanguageImplTest {
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
 			new LiferayIntegrationTestRule();
+
+		@Before
+		public void setUp() {
+			_languageImpl = (LanguageImpl)PortalBeanLocatorUtil.locate(
+				"com.liferay.portal.language.LanguageImpl");
+		}
 
 		@Test
 		public void testFormatWithOneArgument() {
@@ -227,7 +241,7 @@ public class LanguageImplTest {
 	private static final String _LANG_KEY_WITH_ARGUMENTS =
 		"x-has-invited-you-to-join-x";
 
-	private static final LanguageImpl _languageImpl = new LanguageImpl();
+	private static LanguageImpl _languageImpl;
 
 	private static final class MockLanguageServletRequest {
 

@@ -70,6 +70,11 @@ public abstract class FindStrutsAction extends BaseStrutsAction {
 					portletURL, primaryKey);
 			}
 
+			@Override
+			protected PortletPageFinder getPortletPageFinder() {
+				return FindStrutsAction.this._portletPageFinder;
+			}
+
 		};
 	}
 
@@ -108,5 +113,15 @@ public abstract class FindStrutsAction extends BaseStrutsAction {
 	}
 
 	private final FindActionHelper _findActionHelper;
+
+	private final PortletPageFinder _portletPageFinder =
+		new BasePortletPageFinder() {
+
+			@Override
+			protected String[] getPortletIds() {
+				return FindStrutsAction.this.initPortletIds();
+			}
+
+		};
 
 }

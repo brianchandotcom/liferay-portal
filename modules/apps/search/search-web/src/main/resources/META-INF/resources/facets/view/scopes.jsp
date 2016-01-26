@@ -16,6 +16,12 @@
 
 <%@ include file="/facets/init.jsp" %>
 
+<%
+if (Validator.isNull(fieldParam)) {
+	fieldParam = String.valueOf(searchDisplayContext.getSearchScopeGroupId());
+}
+%>
+
 <c:choose>
 	<c:when test="<%= termCollectors.isEmpty() %>">
 		<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />

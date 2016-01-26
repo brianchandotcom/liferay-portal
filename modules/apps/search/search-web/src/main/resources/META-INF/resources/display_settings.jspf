@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:select label="scope" name="preferences--searchScope--" value="<%= searchDisplayContext.getSearchScope() %>">
+<aui:select label="scope" name="preferences--searchScope--" value="<%= searchDisplayContext.getSearchScopePreferenceString() %>">
 	<aui:option label="this-site" value="" />
 	<aui:option label="everything" />
 	<aui:option label="let-the-user-choose" />

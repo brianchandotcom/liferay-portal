@@ -23,9 +23,9 @@ if (Validator.isNotNull(redirect)) {
 	portletDisplay.setURLBack(redirect);
 }
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, SearchPortletParameterNames.GROUP_ID);
 
-String format = ParamUtil.getString(request, "format");
+String format = ParamUtil.getString(request, SearchPortletParameterNames.FORMAT);
 %>
 
 <liferay-ui:header
@@ -44,6 +44,7 @@ String format = ParamUtil.getString(request, "format");
 
 	<aui:fieldset id="searchContainer">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" value="<%= HtmlUtil.escape(searchDisplayContext.getKeywords()) %>" />
+		<aui:input name="scope" type="hidden" value="<%= searchDisplayContext.getSearchScopeParameterString() %>" />
 
 		<aui:field-wrapper inlineField="<%= true %>">
 			<aui:button icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />

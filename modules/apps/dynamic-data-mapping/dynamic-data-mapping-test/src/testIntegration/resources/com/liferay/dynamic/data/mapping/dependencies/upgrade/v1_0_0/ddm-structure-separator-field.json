@@ -1,27 +1,25 @@
 {
-	"availableLanguageIds": [
-		"en_US"
-	],
+	"availableLanguageIds": ["en_US"],
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{
+			"indexType": "keyword",
+			"fieldNamespace": "ddm",
 			"label": {
 				"en_US": "Separator Label"
 			},
+			"localizable": true,
+			"name": "Separator",
 			"predefinedValue": {
 				"en_US": ""
 			},
-			"tip": {
-				"en_US": ""
-			},
-			"fieldNamespace": "ddm",
-			"indexType": "keyword",
-			"localizable": true,
-			"name": "Separator",
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
 			"type": "ddm-separator"
 		}
 	]

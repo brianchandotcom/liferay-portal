@@ -1,50 +1,48 @@
 {
-	"availableLanguageIds": [
-		"en_US"
-	],
+	"availableLanguageIds": ["en_US"],
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{
+			"dataType": "string",
+			"indexType": "keyword",
 			"label": {
 				"en_US": "Text"
 			},
-			"predefinedValue": {
-				"en_US": ""
-			},
-			"tip": {
-				"en_US": ""
-			},
-			"dataType": "string",
-			"indexType": "keyword",
 			"localizable": true,
 			"name": "Text",
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"showLabel": true,
-			"type": "text",
 			"nestedFields": [
 				{
+					"dataType": "boolean",
+					"indexType": "keyword",
 					"label": {
 						"en_US": "Boolean"
 					},
+					"localizable": true,
+					"name": "Boolean",
 					"predefinedValue": {
 						"en_US": "false"
 					},
-					"tip": {
-						"en_US": ""
-					},
-					"dataType": "boolean",
-					"indexType": "keyword",
-					"localizable": true,
-					"name": "Boolean",
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
 					"type": "checkbox"
 				}
-			]
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text",
 		}
 	]
 }

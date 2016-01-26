@@ -1,47 +1,45 @@
 {
-	"availableLanguageIds": [
-		"en_US"
-	],
+	"availableLanguageIds": ["en_US"],
 	"defaultLanguageId": "en_US",
 	"fieldValues": [
 		{
+			"instanceId": "fjjg",
+			"name": "SeparatorRepeatable",
 			"nestedFieldValues": [
 				{
+					"instanceId": "aiuk",
 					"name": "Text",
 					"value": {
 						"en_US": "Pellentesque libero tortor"
-					},
-					"instanceId": "aiuk"
+					}
 				}
-			],
-			"name": "SeparatorRepeatable",
-			"instanceId": "fjjg"
+			]
 		},
 		{
+			"instanceId": "nkek",
+			"name": "SeparatorRepeatable",
 			"nestedFieldValues": [
 				{
+					"instanceId": "xxym",
 					"name": "Text",
 					"value": {
 						"en_US": "Pellentesque ut neque"
-					},
-					"instanceId": "xxym"
+					}
 				}
-			],
-			"name": "SeparatorRepeatable",
-			"instanceId": "nkek"
+			]
 		},
 		{
+			"instanceId": "unbf",
+			"name": "SeparatorRepeatable",
 			"nestedFieldValues": [
 				{
+					"instanceId": "lcuq",
 					"name": "Text",
 					"value": {
 						"en_US": "Quisque malesuada placerat nis"
-					},
-					"instanceId": "lcuq"
+					}
 				}
-			],
-			"name": "SeparatorRepeatable",
-			"instanceId": "unbf"
+			]
 		}
 	]
 }

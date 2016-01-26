@@ -1,27 +1,25 @@
 {
-	"availableLanguageIds": [
-		"en_US"
-	],
+	"availableLanguageIds": ["en_US"],
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{
+			"dataType": "string",
+			"indexType": "keyword",
 			"label": {
 				"en_US": "Child"
 			},
+			"localizable": false,
+			"name": "Child",
 			"predefinedValue": {
 				"en_US": ""
 			},
-			"tip": {
-				"en_US": ""
-			},
-			"dataType": "string",
-			"indexType": "keyword",
-			"localizable": false,
-			"name": "Child",
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
 			"type": "textarea"
 		}
 	]

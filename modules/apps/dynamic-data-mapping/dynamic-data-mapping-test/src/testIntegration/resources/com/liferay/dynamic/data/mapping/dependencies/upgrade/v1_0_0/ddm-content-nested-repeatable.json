@@ -1,52 +1,50 @@
 {
-	"availableLanguageIds": [
-		"en_US"
-	],
+	"availableLanguageIds": ["en_US"],
 	"defaultLanguageId": "en_US",
 	"fieldValues": [
 		{
+			"instanceId": "zhow",
+			"name": "TextParent",
 			"nestedFieldValues": [
 				{
+					"instanceId": "neoi",
 					"name": "TextNestedUpper",
 					"value": {
 						"en_US": "Praesent turpis"
-					},
-					"instanceId": "neoi"
+					}
 				},
 				{
+					"instanceId": "woyi",
 					"name": "TextRepeateable",
 					"value": {
 						"en_US": "Quisque rutrum"
-					},
-					"instanceId": "woyi"
+					}
 				},
 				{
+					"instanceId": "rlgw",
 					"name": "TextRepeateable",
 					"value": {
 						"en_US": "Etiam sit amet orci eget eros faucibus tincidunt"
-					},
-					"instanceId": "rlgw"
+					}
 				},
 				{
+					"instanceId": "ysgc",
 					"name": "TextRepeateable",
 					"value": {
 						"en_US": "Sed libero"
-					},
-					"instanceId": "ysgc"
+					}
 				},
 				{
+					"instanceId": "qagd",
 					"name": "TextNestedBottom",
 					"value": {
 						"en_US": "Duis vel nibh at velit scelerisque suscipit"
-					},
-					"instanceId": "qagd"
+					}
 				}
 			],
-			"name": "TextParent",
 			"value": {
 				"en_US": "In ut quam vitae odio lacinia tincidunt"
-			},
-			"instanceId": "zhow"
+			}
 		}
 	]
 }

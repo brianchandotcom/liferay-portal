@@ -1,47 +1,45 @@
 {
-	"availableLanguageIds": [
-		"en_US"
-	],
+	"availableLanguageIds": ["en_US"],
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{
+			"dataType": "string",
+			"indexType": "keyword",
 			"label": {
 				"en_US": "Radio Label"
 			},
+			"localizable": true,
+			"name": "Radio",
 			"options": [
 				{
-					"value": "value 1",
 					"label": {
 						"en_US": "option radio 1"
-					}
+					},
+					"value": "value 1"
 				},
 				{
-					"value": "value 2",
 					"label": {
 						"en_US": "option radio 2"
-					}
+					},
+					"value": "value 2"
 				},
 				{
-					"value": "value 3",
 					"label": {
 						"en_US": "option radio 3"
-					}
+					},
+					"value": "value 3"
 				}
 			],
 			"predefinedValue": {
 				"en_US": "[\"\"]"
 			},
-			"tip": {
-				"en_US": ""
-			},
-			"dataType": "string",
-			"indexType": "keyword",
-			"localizable": true,
-			"name": "Radio",
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
 			"type": "radio"
 		}
 	]

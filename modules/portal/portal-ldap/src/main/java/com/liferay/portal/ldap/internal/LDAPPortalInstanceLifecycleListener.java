@@ -14,45 +14,40 @@
 
 package com.liferay.portal.ldap.internal;
 
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.exportimport.UserImporter;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.model.Company;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class LDAPPortalInstanceLifecycleListener {
+public class LDAPPortalInstanceLifecycleListener
+	implements PortalInstanceLifecycleListener {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, Company.class,
-			new CompanyServiceTrackerCustomizer());
-
-		_serviceTracker.open();
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (_ldapSettings.isImportOnStartup(company.getCompanyId())) {
+			try {
+				_userImporter.importUsers(company.getCompanyId());
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to import users for company " +
+						company.getCompanyId(),
+					e);
+			}
+		}
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_bundleContext = null;
-
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-		}
+	@Override
+	public void portalInstanceUnregistered(Company company) throws Exception {
 	}
 
 	@Reference(unbind = "-")
@@ -68,45 +63,7 @@ public class LDAPPortalInstanceLifecycleListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPPortalInstanceLifecycleListener.class);
 
-	private BundleContext _bundleContext;
 	private LDAPSettings _ldapSettings;
-	private ServiceTracker<Company, Company> _serviceTracker;
 	private UserImporter _userImporter;
-
-	private class CompanyServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Company, Company> {
-
-		@Override
-		public Company addingService(
-			ServiceReference<Company> serviceReference) {
-
-			Company company = _bundleContext.getService(serviceReference);
-
-			if (_ldapSettings.isImportOnStartup(company.getCompanyId())) {
-				try {
-					_userImporter.importUsers(company.getCompanyId());
-				}
-				catch (Exception e) {
-					_log.error(
-						"Unable to import users for company " +
-							company.getCompanyId(),
-						e);
-				}
-			}
-
-			return company;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Company> reference, Company company) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Company> reference, Company service) {
-		}
-
-	}
 
 }

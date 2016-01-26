@@ -208,11 +208,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		%>
 
 		<liferay-util:include page='<%= "/message_boards_admin/view_entries.jsp" %>' servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") || mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
 
 		<%
-		if ((mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) && themeDisplay.isSignedIn()) {
+		if (category != null) {
+			PortalUtil.setPageSubtitle(category.getName(), request);
+			PortalUtil.setPageDescription(category.getDescription(), request);
+		}
+		%>
+
+	</c:when>
+	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
+
+		<%
+		if (mvcRenderCommandName.equals("/message_boards/view_my_posts") && themeDisplay.isSignedIn()) {
 			groupThreadsUserId = user.getUserId();
 		}
 
@@ -227,40 +235,49 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</div>
 		</c:if>
 
-		<c:if test='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") %>'>
-			<liferay-ui:search-container
-				curParam="cur1"
-				deltaConfigurable="<%= false %>"
-				emptyResultsMessage="you-are-not-subscribed-to-any-categories"
-				headerNames="category,categories,threads,posts"
-				iteratorURL="<%= portletURL %>"
-				total="<%= MBCategoryServiceUtil.getSubscribedCategoriesCount(scopeGroupId, user.getUserId()) %>"
-			>
-				<liferay-ui:search-container-results
-					results="<%= MBCategoryServiceUtil.getSubscribedCategories(scopeGroupId, user.getUserId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+		<%
+		Calendar calendar = Calendar.getInstance();
 
-				<liferay-ui:search-container-row
-					className="com.liferay.portlet.messageboards.model.MBCategory"
-					escapedModel="<%= true %>"
-					keyProperty="categoryId"
-					modelVar="curCategory"
-				>
-					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
+		int entriesTotal = 0;
 
-					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
-					</liferay-portlet:renderURL>
+		if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
+			entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY);
+		}
+		else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+			int offset = GetterUtil.getInteger(recentPostsDateOffset);
 
-					<%@ include file="/message_boards/subscribed_category_columns.jspf" %>
-				</liferay-ui:search-container-row>
+			calendar.add(Calendar.DATE, -offset);
 
-				<liferay-ui:search-iterator type="more" />
-			</liferay-ui:search-container>
-		</c:if>
+			entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+		}
 
-		<%@ include file="/message_boards/view_threads.jspf" %>
+		String entriesEmptyResultsMessage = "you-do-not-have-any-posts";
+
+		if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+			entriesEmptyResultsMessage = "there-are-no-recent-posts";
+		}
+
+		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, entriesEmptyResultsMessage);
+
+		entriesSearchContainer.setId("mbEntries");
+		entriesSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
+
+		entriesSearchContainer.setTotal(entriesTotal);
+
+		List entriesResults = null;
+
+		if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
+			entriesResults = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd());
+		}
+		else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
+			entriesResults = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd());
+		}
+
+		entriesSearchContainer.setResults(entriesResults);
+
+		request.setAttribute("view.jsp-displayStyle", "descriptive");
+		request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
+		%>
 
 		<c:if test='<%= enableRSS && mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
 			<br />
@@ -274,18 +291,71 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			/>
 		</c:if>
 
+		<liferay-util:include page='<%= "/message_boards_admin/view_entries.jsp" %>' servletContext="<%= application %>" />
+
 		<%
-		String title = "message-boards-home";
+		String pageSubtitle = null;
 
 		if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
-			title = "my-subscriptions";
+			pageSubtitle = "my-subscriptions";
 		}
 		else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
-			title = "recent-posts";
+			pageSubtitle = "recent-posts";
 		}
 
-		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(title, StringPool.UNDERLINE, StringPool.DASH)), request);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(title, TextFormatter.O)), portletURL.toString());
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(pageSubtitle, StringPool.UNDERLINE, StringPool.DASH)), request);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(pageSubtitle, TextFormatter.O)), portletURL.toString());
+		%>
+
+	</c:when>
+	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") %>'>
+
+		<%
+		if (themeDisplay.isSignedIn()) {
+			groupThreadsUserId = user.getUserId();
+		}
+
+		if (groupThreadsUserId > 0) {
+			portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
+		}
+		%>
+
+		<liferay-ui:search-container
+			curParam="cur1"
+			deltaConfigurable="<%= false %>"
+			emptyResultsMessage="you-are-not-subscribed-to-any-categories"
+			headerNames="category,categories,threads,posts"
+			iteratorURL="<%= portletURL %>"
+			total="<%= MBCategoryServiceUtil.getSubscribedCategoriesCount(scopeGroupId, user.getUserId()) %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= MBCategoryServiceUtil.getSubscribedCategories(scopeGroupId, user.getUserId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.portlet.messageboards.model.MBCategory"
+				escapedModel="<%= true %>"
+				keyProperty="categoryId"
+				modelVar="curCategory"
+			>
+				<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
+
+				<liferay-portlet:renderURL varImpl="rowURL">
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" />
+					<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
+				</liferay-portlet:renderURL>
+
+				<%@ include file="/message_boards/subscribed_category_columns.jspf" %>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator type="more" />
+		</liferay-ui:search-container>
+
+		<%@ include file="/message_boards/view_threads.jspf" %>
+
+		<%
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace("my-subscriptions", StringPool.UNDERLINE, StringPool.DASH)), request);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format("my-subscriptions", TextFormatter.O)), portletURL.toString());
 		%>
 
 	</c:when>

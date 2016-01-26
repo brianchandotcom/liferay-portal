@@ -225,13 +225,6 @@ if (groupThreadsUserId > 0) {
 	</aui:form>
 </div>
 
-<%
-if (category != null) {
-	PortalUtil.setPageSubtitle(category.getName(), request);
-	PortalUtil.setPageDescription(category.getDescription(), request);
-}
-%>
-
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_message_boards_web.message_boards_admin.view_entries_jsp");
 %>

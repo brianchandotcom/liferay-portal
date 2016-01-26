@@ -195,6 +195,13 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 
 <liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
 
+<%
+if (category != null) {
+	PortalUtil.setPageSubtitle(category.getName(), request);
+	PortalUtil.setPageDescription(category.getDescription(), request);
+}
+%>
+
 <liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
 
 <aui:script>

@@ -669,7 +669,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = decorateMessageFormat(
+					locale, pattern, formattedArguments);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;
@@ -815,7 +818,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = decorateMessageFormat(
+					resourceBundle.getLocale(), pattern, formattedArguments);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;
@@ -1623,6 +1629,13 @@ public class LanguageImpl implements Language, Serializable {
 		throws PortalException {
 
 		Locale locale = _getLocale(request);
+
+		return decorateMessageFormat(locale, pattern, formattedArguments);
+	}
+
+	protected MessageFormat decorateMessageFormat(
+			Locale locale, String pattern, Object[] formattedArguments)
+		throws PortalException {
 
 		MessageFormat messageFormat = new MessageFormat(pattern, locale);
 

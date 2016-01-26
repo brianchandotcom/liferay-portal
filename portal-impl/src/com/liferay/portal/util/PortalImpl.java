@@ -7137,17 +7137,14 @@ public class PortalImpl implements Portal {
 
 		String rootPortletId = portlet.getRootPortletId();
 
-		String name = null;
-		String primaryKey = null;
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+		if ((group != null) && group.isStagingGroup()) {
+			groupId = group.getLiveGroupId();
+		}
 
-			if ((group != null) && group.isStagingGroup()) {
-				groupId = group.getLiveGroupId();
-			}
-
-			name = ResourceActionsUtil.getPortletBaseResource(rootPortletId);
-			primaryKey = String.valueOf(groupId);
+		String name = ResourceActionsUtil.getPortletBaseResource(rootPortletId);
+		String primaryKey = String.valueOf(groupId);
 
 		if (Validator.isNull(name)) {
 			return;
@@ -7162,11 +7159,8 @@ public class PortalImpl implements Portal {
 			return;
 		}
 
-		boolean addGuestPermissions = true;
-
 		ResourceLocalServiceUtil.addResources(
-			companyId, groupId, 0, name, primaryKey, false, true,
-			addGuestPermissions);
+			companyId, groupId, 0, name, primaryKey, false, true, true);
 	}
 
 	protected String buildI18NPath(Locale locale) {

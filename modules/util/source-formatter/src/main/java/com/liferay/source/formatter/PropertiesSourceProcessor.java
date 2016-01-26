@@ -208,37 +208,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatProperties(String content)
-		throws Exception {
-
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = trimLine(line, true);
-
-				if (line.startsWith(StringPool.TAB)) {
-					line = line.replace(StringPool.TAB, StringPool.FOUR_SPACES);
-				}
-
-				sb.append(line);
-				sb.append("\n");
-			}
-		}
-
-		String newContent = sb.toString();
-
-		if (newContent.endsWith("\n")) {
-			newContent = newContent.substring(0, newContent.length() - 1);
-		}
-
-		return newContent;
-	}
-
 	protected void formatPortalProperties(String fileName, String content)
 		throws Exception {
 
@@ -343,6 +312,37 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected String formatProperties(String content)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = trimLine(line, true);
+
+				if (line.startsWith(StringPool.TAB)) {
+					line = line.replace(StringPool.TAB, StringPool.FOUR_SPACES);
+				}
+
+				sb.append(line);
+				sb.append("\n");
+			}
+		}
+
+		String newContent = sb.toString();
+
+		if (newContent.endsWith("\n")) {
+			newContent = newContent.substring(0, newContent.length() - 1);
+		}
+
+		return newContent;
 	}
 
 	protected void formatSourceFormatterProperties(

@@ -139,7 +139,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			formatSourceFormatterProperties(fileName, content);
 		}
 		else if (portalSource && fileName.endsWith("portal.properties")) {
-			newContent = formatPortalPortalProperties(fileName, content);
+			newContent = formatPortalPortalProperties(content);
 		}
 		else {
 			formatPortalProperties(fileName, content);
@@ -211,8 +211,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatPortalPortalProperties(
-			String fileName, String content)
+	protected String formatPortalPortalProperties(String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();

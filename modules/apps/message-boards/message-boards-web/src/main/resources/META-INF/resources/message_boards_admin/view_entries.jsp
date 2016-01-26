@@ -23,18 +23,7 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS, "entries-display-style", "descriptive");
-}
-else {
-	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS, "entries-display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
-int entriesTotal = 0;
+int entriesTotal = GetterUtil.getInteger(request.getAttribute("view.jsp-entriesTotal"));
 
 long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 
@@ -44,86 +33,12 @@ int offset = GetterUtil.getInteger(recentPostsDateOffset);
 
 calendar.add(Calendar.DATE, -offset);
 
-if (entriesNavigation.equals("all")) {
-	entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
-}
-else if (entriesNavigation.equals("recent")) {
-	entriesTotal = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
-}
-
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 if (groupThreadsUserId > 0) {
 	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
 }
 %>
-
-<liferay-frontend:management-bar
-	disabled="<%= entriesTotal == 0 %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="mbEntries"
->
-
-	<%
-	PortletURL displayStyleURL = renderResponse.createRenderURL();
-
-	if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view");
-	}
-	else {
-		displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_category");
-		displayStyleURL.setParameter("categoryId", String.valueOf(categoryId));
-	}
-	%>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<portlet:renderURL var="viewEntriesHomeURL">
-		<portlet:param name="categoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:management-bar-filters>
-
-		<%
-		PortletURL navigationPortletURL = renderResponse.createRenderURL();
-
-		navigationPortletURL.setParameter("categoryId", String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID));
-		%>
-
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "recent"} %>'
-			navigationParam="entriesNavigation"
-			portletURL="<%= navigationPortletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-
-		<%
-		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
-
-		<%
-		taglibURL = "javascript:" + renderResponse.getNamespace() + "lockEntries();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="lock" label="lock" />
-
-		<%
-		taglibURL = "javascript:" + renderResponse.getNamespace() + "unlockEntries();";
-		%>
-
-		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="unlock" label="unlock" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<c:if test="<%= category != null %>">
@@ -335,7 +250,7 @@ if (groupThreadsUserId > 0) {
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new MBResultRowSplitter() %>" />
+			<liferay-ui:search-iterator displayStyle='<%= GetterUtil.getString(request.getAttribute("view.jsp-displayStyle")) %>' markupView="lexicon" resultRowSplitter="<%= new MBResultRowSplitter() %>" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

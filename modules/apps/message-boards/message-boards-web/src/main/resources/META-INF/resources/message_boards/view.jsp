@@ -296,7 +296,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		String pageSubtitle = null;
 
-		if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
+		if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
+			pageSubtitle = "my-posts";
+		}
+		else if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
 			pageSubtitle = "my-subscriptions";
 		}
 		else if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {

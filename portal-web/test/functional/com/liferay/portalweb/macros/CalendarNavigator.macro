@@ -1,5 +1,8 @@
 <definition>
-	<var name="siteName" value="Liferay" />
+	<var method="TestPropsUtil#get('portal.url')" name="siteName" />
+
+	<var method="StringUtil#replace('${siteName}', 'http://', '')" name="siteName" />
+	<var method="StringUtil#replace('${siteName}', ':8080', '')" name="siteName" />
 
 	<command name="_selectCalendarSettingsIframe">
 		<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />

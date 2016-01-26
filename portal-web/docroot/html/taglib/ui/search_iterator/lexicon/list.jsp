@@ -128,12 +128,10 @@ if (!resultRowSplitterEntries.isEmpty()) {
 		%>
 
 			<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-				<tr>
+				<tr class="splitter">
 					<td colspan="<%= (headerNames != null) ? headerNames.size() : StringPool.BLANK %>">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
-							</div>
+						<div class="splitter">
+							<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
 						</div>
 					</td>
 				</tr>

@@ -39,10 +39,8 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 %>
 
 	<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
-			</div>
+		<div class="splitter splitter-spaced">
+			<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
 		</div>
 	</c:if>
 

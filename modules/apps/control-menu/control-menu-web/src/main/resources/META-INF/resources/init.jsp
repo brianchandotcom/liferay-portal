@@ -90,8 +90,8 @@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
-<portlet:defineObjects />
-
 <liferay-frontend:defineObjects />
+
+<portlet:defineObjects />
 
 <liferay-theme:defineObjects />

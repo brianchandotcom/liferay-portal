@@ -37,9 +37,9 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 <%@ page import="java.util.List" %><%@
 page import="java.util.ResourceBundle" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());

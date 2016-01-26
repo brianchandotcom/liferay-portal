@@ -36,9 +36,9 @@ page import="com.liferay.workflow.definition.link.web.search.WorkflowDefinitionL
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

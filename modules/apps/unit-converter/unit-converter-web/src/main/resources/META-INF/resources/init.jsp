@@ -29,9 +29,9 @@ page import="com.liferay.unit.converter.web.util.UnitConverterUtil" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

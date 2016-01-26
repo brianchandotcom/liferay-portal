@@ -70,9 +70,9 @@ page import="java.util.ResourceBundle" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());

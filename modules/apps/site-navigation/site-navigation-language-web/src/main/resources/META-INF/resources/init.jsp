@@ -27,9 +27,9 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguagePortletInstanceConfiguration" %><%@
 page import="com.liferay.site.navigation.language.web.display.context.SiteNavigationLanguageDisplayContext" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 SiteNavigationLanguageDisplayContext siteNavigationLanguageDisplayContext = new SiteNavigationLanguageDisplayContext(request);

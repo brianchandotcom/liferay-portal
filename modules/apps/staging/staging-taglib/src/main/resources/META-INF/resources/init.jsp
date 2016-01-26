@@ -88,13 +88,13 @@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@
 page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
-
 <liferay-frontend:defineObjects />
+
+<liferay-staging:defineObjects />
 
 <liferay-theme:defineObjects />
 
-<liferay-staging:defineObjects />
+<portlet:defineObjects />
 
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);

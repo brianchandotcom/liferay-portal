@@ -29,9 +29,9 @@ page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration" 
 page import="com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration" %><%@
 page import="com.liferay.xsl.content.web.display.context.XSLContentDisplayContext" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 XSLContentConfiguration xslContentConfiguration = (XSLContentConfiguration)request.getAttribute(XSLContentConfiguration.class.getName());

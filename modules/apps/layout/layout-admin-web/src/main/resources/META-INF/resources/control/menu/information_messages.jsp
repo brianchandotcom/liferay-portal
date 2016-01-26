@@ -37,11 +37,11 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 
-<portlet:defineObjects />
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(LayoutAdminWebKeys.CONTROL_MENU_ENTRY);

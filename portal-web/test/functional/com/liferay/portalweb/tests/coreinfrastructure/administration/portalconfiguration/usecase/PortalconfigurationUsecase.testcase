@@ -71,7 +71,9 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute function="AssertLocation" value1="http://localhost:8080/web/guest/landing" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/landing" />
 	</command>
 
 	<command name="DeletePortalInstance" priority="5">

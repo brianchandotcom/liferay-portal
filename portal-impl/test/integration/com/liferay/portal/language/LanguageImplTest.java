@@ -38,6 +38,72 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class LanguageImplTest {
 
+	public static final class WhenFormattingFromLocale {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new LiferayIntegrationTestRule();
+
+		@Test
+		public void testFormatWithOneArgument() {
+			String format = _languageImpl.format(
+				LocaleUtil.US, _LANG_KEY_WITH_ARGUMENT, "31");
+
+			Assert.assertEquals("31 Hours", format);
+		}
+
+		@Test
+		public void testFormatWithOneNontranslatableAmericanArgument() {
+			Locale locale = LocaleUtil.US;
+
+			String format = _languageImpl.format(
+				locale, _LANG_KEY_WITH_ARGUMENT, _BIG_INTEGER, false);
+
+			Assert.assertEquals("1,234,567,890 Hours", format);
+
+			format = _languageImpl.format(
+				locale, _LANG_KEY_WITH_ARGUMENT, _BIG_DOUBLE, false);
+
+			Assert.assertEquals("1,234,567,890.12 Hours", format);
+
+			format = _languageImpl.format(
+				locale, _LANG_KEY_WITH_ARGUMENT, _BIG_FLOAT, false);
+
+			Assert.assertEquals("1,234,567.875 Hours", format);
+		}
+
+		@Test
+		public void testFormatWithOneNontranslatableSpanishArgument() {
+			Locale locale = LocaleUtil.SPAIN;
+
+			String format = _languageImpl.format(
+				locale, _LANG_KEY_WITH_ARGUMENT, _BIG_INTEGER, false);
+
+			Assert.assertEquals("1.234.567.890 horas", format);
+
+			format = _languageImpl.format(
+				locale, _LANG_KEY_WITH_ARGUMENT, _BIG_DOUBLE, false);
+
+			Assert.assertEquals("1.234.567.890,12 horas", format);
+
+			format = _languageImpl.format(
+				locale, _LANG_KEY_WITH_ARGUMENT, _BIG_FLOAT, false);
+
+			Assert.assertEquals("1.234.567,875 horas", format);
+		}
+
+		@Test
+		public void testFormatWithTwoArguments() {
+			String format = _languageImpl.format(
+				LocaleUtil.US, _LANG_KEY_WITH_ARGUMENTS,
+				new Object[] {"A", "B"});
+
+			Assert.assertEquals("A has invited you to join B.", format);
+		}
+
+	}
+
 	public static final class WhenFormattingFromRequest {
 
 		@ClassRule

@@ -125,7 +125,10 @@ if (liveGroup == null) {
 				/>
 
 				<%
+				request.setAttribute("view.jsp-groupId", groupId);
 				request.setAttribute("view.jsp-liveGroupId", liveGroupId);
+				request.setAttribute("view.jsp-privateLayout", privateLayout);
+				request.setAttribute("view.jsp-exportImportConfigurationId", exportImportConfiguration.getExportImportConfigurationId());
 				%>
 
 				<liferay-ui:search-container-column-jsp

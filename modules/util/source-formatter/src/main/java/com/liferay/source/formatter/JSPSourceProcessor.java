@@ -1757,12 +1757,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"**/*.jsp", "**/*.jspf", "**/*.vm"
 	};
 
-	private static final String[] _TAG_LIBRARIES = new String[] {
-		"aui", "c", "html", "jsp", "liferay-portlet", "liferay-security",
-		"liferay-theme", "liferay-ui", "liferay-util", "portlet", "struts",
-		"tiles"
-	};
-
 	private Set<String> _checkedForIncludesFileNames = new HashSet<>();
 	private final Pattern _defineObjectsPattern = Pattern.compile(
 		"\n\t*(<.*:defineObjects />)\n");

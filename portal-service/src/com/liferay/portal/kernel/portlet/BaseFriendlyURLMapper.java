@@ -271,7 +271,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 		BaseFriendlyURLMapper.class);
 
 	private String _mapping;
-	private String _portletName;
 	private boolean _portletInstanceable;
+	private String _portletName;
 
 }

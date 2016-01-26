@@ -135,12 +135,12 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 	}
 
 	@Override
-	public void setPortletName(String portletName) {
-		_portletName = portletName;
+	public void setPortletInstanceable(boolean portletInstanceable) {
 	}
 
 	@Override
-	public void setPortletInstanceable(boolean portletInstanceable) {
+	public void setPortletName(String portletName) {
+		_portletName = portletName;
 	}
 
 	@Override

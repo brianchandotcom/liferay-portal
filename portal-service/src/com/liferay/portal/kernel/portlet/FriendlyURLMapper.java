@@ -67,7 +67,7 @@ public interface FriendlyURLMapper {
 
 	/**
 	 * Returns the ID of this portlet
-	 * 
+	 *
 	 * @deprecated As of 7.0.0, replaced by {@link #getPortletName()}
 	 *
 	 * @return the ID of this portlet, not including the instance ID

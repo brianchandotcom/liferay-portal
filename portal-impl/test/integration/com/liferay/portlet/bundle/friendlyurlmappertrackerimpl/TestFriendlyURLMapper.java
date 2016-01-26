@@ -88,12 +88,12 @@ public class TestFriendlyURLMapper implements FriendlyURLMapper {
 	}
 
 	@Override
-	public void setPortletName(String portletName) {
+	public void setPortletInstanceable(boolean portletInstanceable) {
 		return;
 	}
 
 	@Override
-	public void setPortletInstanceable(boolean portletInstanceable) {
+	public void setPortletName(String portletName) {
 		return;
 	}
 

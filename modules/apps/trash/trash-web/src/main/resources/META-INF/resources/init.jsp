@@ -58,6 +58,7 @@ page import="com.liferay.portlet.trash.model.impl.TrashEntryImpl" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryServiceUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
+page import="com.liferay.trash.web.dao.search.TrashResultRowSplitter" %><%@
 page import="com.liferay.trash.web.search.EntrySearch" %><%@
 page import="com.liferay.trash.web.search.EntrySearchTerms" %>
 

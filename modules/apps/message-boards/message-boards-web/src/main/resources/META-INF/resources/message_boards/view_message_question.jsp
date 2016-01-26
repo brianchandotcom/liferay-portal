@@ -26,37 +26,6 @@ MBCategory category = messageDisplay.getCategory();
 MBThread thread = messageDisplay.getThread();
 %>
 
-<div id="<portlet:namespace />addAnswerFlagDiv" style="display: none;">
-	<liferay-ui:icon
-		iconCssClass="icon-check"
-		label="<%= true %>"
-		message="answer"
-	/>
-
-	<c:if test="<%= !MBMessagePermission.contains(permissionChecker, message.getRootMessageId(), ActionKeys.UPDATE) %>">
-
-		<%
-		String taglibHREF = "javascript:" + renderResponse.getNamespace() + "deleteAnswerFlag('@MESSAGE_ID@');";
-		%>
-
-		(<aui:a href="<%= taglibHREF %>"><liferay-ui:message key="unmark" /></aui:a>)
-	</c:if>
-</div>
-
-<div id="<portlet:namespace />deleteAnswerFlagDiv" style="display: none;">
-
-	<%
-	String taglibMarkAsAnAnswerURL = "javascript:" + renderResponse.getNamespace() + "addAnswerFlag('@MESSAGE_ID@');";
-	%>
-
-	<liferay-ui:icon
-		iconCssClass="icon-check"
-		label="<%= true %>"
-		message="mark-as-an-answer"
-		url="<%= taglibMarkAsAnAnswerURL %>"
-	/>
-</div>
-
 <c:choose>
 	<c:when test="<%= includeFormTag %>">
 		<aui:form>
@@ -79,31 +48,6 @@ MBThread thread = messageDisplay.getThread();
 </c:if>
 
 <aui:script>
-	function <portlet:namespace />addAnswerFlag(messageId) {
-		var $ = AUI.$;
-
-		Liferay.Service(
-			'/mbmessage/update-answer',
-			{
-				answer: true,
-				cascade: false,
-				messageId: messageId
-			}
-		);
-
-		var html = $('#<portlet:namespace />addAnswerFlagDiv').html();
-
-		html = '<div class="answer" id="<portlet:namespace />deleteAnswerFlag_' + messageId + '">' + html + '</div>';
-		html = html.replace(/@MESSAGE_ID@/g, messageId);
-
-		var tags = $('#<portlet:namespace />message_' + messageId).find('div.tags');
-
-		tags.html(html);
-
-		$('#<portlet:namespace />addAnswerFlag_' + messageId).addClass('hide');
-		$('#<portlet:namespace />deleteAnswerFlag_' + messageId).removeClass('hide');
-	}
-
 	function <portlet:namespace />addQuickReply(cmd, messageId) {
 		var addQuickReplyDiv = AUI.$('#<portlet:namespace />addQuickReplyDiv');
 
@@ -117,32 +61,6 @@ MBThread thread = messageDisplay.getThread();
 		else {
 			addQuickReplyDiv.addClass('hide');
 		}
-	}
-
-	function <portlet:namespace />deleteAnswerFlag(messageId) {
-		var $ = AUI.$;
-
-		Liferay.Service(
-			'/mbmessage/update-answer',
-			{
-				answer: false,
-				cascade: false,
-				messageId: messageId
-			}
-		);
-
-		var html = $('#<portlet:namespace />deleteAnswerFlagDiv').html();
-
-		html = '<li id="<portlet:namespace />addAnswerFlag_' + messageId + '">' + html + '</li>';
-		html = html.replace(/@MESSAGE_ID@/g, messageId);
-
-		var editControls = $('#<portlet:namespace />message_' + messageId).find('ul.edit-controls');
-
-		editControls.prepend(html);
-
-		$('#<portlet:namespace />deleteAnswerFlag_' + messageId).addClass('hide');
-
-		$('#<portlet:namespace />addAnswerFlag_' + messageId).removeClass('hide');
 	}
 
 	<c:if test="<%= thread.getRootMessageId() != message.getMessageId() %>">

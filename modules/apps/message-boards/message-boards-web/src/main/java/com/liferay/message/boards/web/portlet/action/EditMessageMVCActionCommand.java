@@ -93,6 +93,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
+	protected void addAnswer(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		_mbMessageService.updateAnswer(messageId, true, false);
+	}
+
+	protected void deleteAnswer(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		_mbMessageService.updateAnswer(messageId, false, false);
+	}
+
 	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
@@ -135,8 +147,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				message = updateMessage(actionRequest, actionResponse);
 			}
+			else if (cmd.equals(Constants.ADD_ANSWER)) {
+				addAnswer(actionRequest);
+			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteMessage(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE_ANSWER)) {
+				deleteAnswer(actionRequest);
 			}
 			else if (cmd.equals(Constants.LOCK)) {
 				lockThreads(actionRequest);

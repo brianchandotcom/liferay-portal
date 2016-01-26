@@ -123,8 +123,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<execute macro="SitesDirectory#viewDescriptivePG">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${defaultSiteName}" />
 		</execute>
 
 		<execute macro="SitesDirectory#viewDescriptivePG">

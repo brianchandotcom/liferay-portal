@@ -54,10 +54,14 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="landing" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${defaultSiteName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

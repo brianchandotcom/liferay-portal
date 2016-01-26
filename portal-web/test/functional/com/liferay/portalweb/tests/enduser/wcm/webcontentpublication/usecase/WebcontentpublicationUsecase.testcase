@@ -1153,7 +1153,11 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Liferay,Site Name,Global" param="siteName">
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
+		<for list="${defaultSiteName},Site Name,Global" param="siteName">
 			<execute macro="ProductMenu#gotoSite">
 				<var name="site" value="${siteName}" />
 			</execute>
@@ -1196,7 +1200,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
-			<var name="otherSite" value="Liferay" />
+			<var name="otherSite" value="${defaultSiteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -1204,7 +1208,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Liferay,Site Name,Global" param="siteName">
+		<for list="${defaultSiteName},Site Name,Global" param="siteName">
 			<execute macro="AssetPublisherPortlet#viewAssetPG">
 				<var name="assetContent" value="${siteName} WC Content" />
 				<var name="assetTitle" value="${siteName} WC Title" />

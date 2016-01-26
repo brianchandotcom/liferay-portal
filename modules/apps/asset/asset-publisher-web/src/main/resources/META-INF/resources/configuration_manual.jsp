@@ -32,7 +32,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 >
 	<liferay-ui:section>
 		<aui:fieldset-group markupView="lexicon">
-			<liferay-ui:error-marker key="errorSection" value="asset-selection" />
+			<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="asset-selection" />
 
 			<aui:fieldset>
 				<%= selectStyle %>
@@ -209,12 +209,12 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 		</aui:fieldset-group>
 	</liferay-ui:section>
 	<liferay-ui:section>
-		<liferay-ui:error-marker key="errorSection" value="display-settings" />
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-settings" />
 
 		<%@ include file="/display_settings.jspf" %>
 	</liferay-ui:section>
 	<liferay-ui:section>
-		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="subscriptions" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>

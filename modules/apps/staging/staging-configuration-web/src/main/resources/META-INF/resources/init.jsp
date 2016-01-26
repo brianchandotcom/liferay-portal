@@ -53,6 +53,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.model.LayoutSet" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.service.LayoutSetLocalServiceUtil" %><%@

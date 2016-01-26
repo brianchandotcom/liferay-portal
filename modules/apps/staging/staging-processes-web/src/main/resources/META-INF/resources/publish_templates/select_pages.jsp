@@ -29,8 +29,6 @@ long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-
-boolean disableInputs = ParamUtil.getBoolean(request, "disableInputs");
 %>
 
 <aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(groupId, privateLayout, selectedLayoutIds) %>" />
@@ -42,21 +40,21 @@ boolean disableInputs = ParamUtil.getBoolean(request, "disableInputs");
 				<c:when test="<%= privateLayout %>">
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
-							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
 							<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
 						</liferay-portlet:renderURL>
 
-						<aui:button disabled="<%= disableInputs %>" href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
+						<aui:button href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
 					</li>
 				</c:when>
 				<c:otherwise>
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
-							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
 							<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
 						</liferay-portlet:renderURL>
 
-						<aui:button disabled="<%= disableInputs %>" href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
+						<aui:button href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
 					</li>
 				</c:otherwise>
 			</c:choose>
@@ -124,13 +122,13 @@ boolean disableInputs = ParamUtil.getBoolean(request, "disableInputs");
 
 	<li class="layout-selector-options">
 		<aui:fieldset label="look-and-feel">
-			<aui:input disabled="<%= disableInputs %>" helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
+			<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
 
-			<aui:input disabled="<%= disableInputs %>" label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
+			<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
 
-			<aui:input disabled="<%= disableInputs %>" label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
+			<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
 
-			<aui:input disabled="<%= disableInputs %>" helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" />
+			<aui:input helpMessage="delete-missing-layouts-staging-help" label="delete-missing-layouts" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" />
 		</aui:fieldset>
 	</li>
 </ul>

@@ -34,7 +34,7 @@ String siteRoleSyncEntitiesEventName = liferayPortletResponse.getNamespace() + "
 String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespace() + "syncOrganizationRoles";
 %>
 
-<liferay-ui:error-marker key="errorSection" value="roles" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="roles" />
 
 <liferay-ui:membership-policy-error />
 

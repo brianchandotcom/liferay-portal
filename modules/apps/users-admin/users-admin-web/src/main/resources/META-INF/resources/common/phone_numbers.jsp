@@ -61,7 +61,7 @@ else {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="phoneNumbers" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="phoneNumbers" />
 
 <h3><liferay-ui:message key="phone-numbers" /></h3>
 

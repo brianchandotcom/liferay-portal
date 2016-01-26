@@ -60,7 +60,7 @@ else {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="addresses" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="addresses" />
 
 <h3><liferay-ui:message key="addresses" /></h3>
 

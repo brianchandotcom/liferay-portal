@@ -22,7 +22,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 boolean showButtons = GroupPermissionUtil.contains(permissionChecker, layoutsAdminDisplayContext.getSelGroup(), ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet);
 %>
 
-<liferay-ui:error-marker key="errorSection" value="logo" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="logo" />
 
 <liferay-ui:error exception="<%= FileSizeException.class %>">
 

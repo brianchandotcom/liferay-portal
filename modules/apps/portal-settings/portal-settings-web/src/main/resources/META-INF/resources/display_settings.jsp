@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:error-marker key="errorSection" value="displaySettings" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="displaySettings" />
 
 <h3><liferay-ui:message key="display-settings" /></h3>
 

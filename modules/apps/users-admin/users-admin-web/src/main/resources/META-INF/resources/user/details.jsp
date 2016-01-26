@@ -36,7 +36,7 @@ if (selContact != null) {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="details" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 

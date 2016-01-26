@@ -32,7 +32,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	type="tabs nav-tabs-default"
 >
 	<liferay-ui:section>
-		<liferay-ui:error-marker key="errorSection" value="asset-selection" />
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="asset-selection" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<%= selectStyle %>
@@ -509,14 +509,14 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<liferay-ui:error-marker key="errorSection" value="display-settings" />
+		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-settings" />
 
 		<%@ include file="/display_settings.jspf" %>
 	</liferay-ui:section>
 
 	<liferay-ui:section>
 		<aui:fieldset-group markupView="lexicon">
-			<liferay-ui:error-marker key="errorSection" value="subscriptions" />
+			<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="subscriptions" />
 
 			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 				<aui:fieldset>

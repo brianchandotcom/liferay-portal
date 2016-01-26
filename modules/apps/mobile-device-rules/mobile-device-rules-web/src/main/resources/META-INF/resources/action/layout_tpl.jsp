@@ -20,7 +20,7 @@
 String layoutTemplateId = GetterUtil.getString(typeSettingsProperties.getProperty("layoutTemplateId"), PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 %>
 
-<liferay-ui:error-marker key="errorSection" value="layout" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="layout" />
 
 <h5><liferay-ui:message key="layout-template" /></h5>
 

@@ -34,7 +34,7 @@ String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaul
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
-<liferay-ui:error-marker key="errorSection" value="content" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="content" />
 
 <aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 

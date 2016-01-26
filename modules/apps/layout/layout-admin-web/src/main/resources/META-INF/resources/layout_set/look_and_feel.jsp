@@ -29,7 +29,7 @@ Theme selWapTheme = layoutSet.getWapTheme();
 ColorScheme selWapColorScheme = layoutSet.getWapColorScheme();
 %>
 
-<liferay-ui:error-marker key="errorSection" value="look-and-feel" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="look-and-feel" />
 
 <aui:model-context bean="<%= layoutSet %>" model="<%= Layout.class %>" />
 

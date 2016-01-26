@@ -26,7 +26,7 @@ if (selLayout != null) {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="javascript" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="javascript" />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 

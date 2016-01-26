@@ -22,7 +22,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 %>
 
-<liferay-ui:error-marker key="errorSection" value="advanced" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="advanced" />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 

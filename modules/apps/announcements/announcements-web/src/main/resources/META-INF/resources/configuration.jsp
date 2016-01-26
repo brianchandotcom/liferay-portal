@@ -51,21 +51,19 @@ if (!roles.isEmpty()) {
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset collapsible="<%= true %>" id="displaySettingsPanel"  label="display-settings">
-			<aui:fieldset>
-				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
+			<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
-					<%
-					for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
-					%>
+				<%
+				for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
+				%>
 
-						<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
+					<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</aui:select>
-			</aui:fieldset>
+			</aui:select>
 		</aui:fieldset>
 
 		<aui:fieldset collapsible="<%= true %>" id="announcementsDisplayedPanel" label="announcements-displayed">

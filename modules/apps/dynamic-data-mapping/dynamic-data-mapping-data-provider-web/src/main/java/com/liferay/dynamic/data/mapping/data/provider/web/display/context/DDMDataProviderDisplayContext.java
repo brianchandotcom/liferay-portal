@@ -261,7 +261,7 @@ public class DDMDataProviderDisplayContext {
 			_ddmDataProviderRequestHelper.getLocale());
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
-		ddmFormRenderingContext.setRenderRequiredFieldsWarning(false);
+		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
 
 		return ddmFormRenderingContext;
 	}

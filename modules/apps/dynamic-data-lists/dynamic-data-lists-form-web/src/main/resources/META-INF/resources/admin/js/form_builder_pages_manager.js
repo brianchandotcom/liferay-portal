@@ -125,7 +125,7 @@ AUI.add(
 									{
 										addPageLastPosition: strings.addPageLastPosition,
 										addPageNextPosition: strings.addPageNextPosition,
-										deleteCurrentPage: strings.deleteCurrentPage,
+										deleteCurrentPage: this._getDeleteButtonString(),
 										switchMode: strings.switchMode
 									}
 								),

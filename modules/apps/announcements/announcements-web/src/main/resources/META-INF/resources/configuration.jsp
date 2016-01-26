@@ -49,8 +49,8 @@ if (!roles.isEmpty()) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:panel-container extended="<%= true %>" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="displaySettingsPanel" persistState="<%= true %>" title="display-settings">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset collapsible="<%= true %>" id="displaySettingsPanel"  label="display-settings">
 			<aui:fieldset>
 				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
@@ -66,9 +66,9 @@ if (!roles.isEmpty()) {
 
 				</aui:select>
 			</aui:fieldset>
-		</liferay-ui:panel>
+		</aui:fieldset>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="announcementsDisplayedPanel" persistState="<%= true %>" title="announcements-displayed">
+		<aui:fieldset collapsible="<%= true %>" id="announcementsDisplayedPanel" label="announcements-displayed">
 			<aui:input cssClass="customize-announcements-displayed" id="customizeAnnouncementsDisplayed" name="preferences--customizeAnnouncementsDisplayed--" title="customize-announcements-displayed" type="checkbox" value="<%= customizeAnnouncementsDisplayed %>" />
 
 			<div class="<%= customizeAnnouncementsDisplayed ? "" : "hide" %>" id="<portlet:namespace />announcementsDisplayed">
@@ -246,8 +246,8 @@ if (!roles.isEmpty()) {
 					</c:if>
 				</liferay-ui:tabs>
 			</div>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

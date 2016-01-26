@@ -318,9 +318,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		return sb.toString();
 	}
 
-	protected void processDepedencies(Analyzer analyzer, NpmModule npmModule)
-		throws Exception {
-
+	protected void processDepedencies(Analyzer analyzer, NpmModule npmModule) {
 		if (npmModule.runtime == null) {
 			return;
 		}

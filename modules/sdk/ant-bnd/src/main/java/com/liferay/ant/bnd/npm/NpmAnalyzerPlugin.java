@@ -52,7 +52,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 
 		NpmModule npmModule = processNpmJsonResource(analyzer, npmJSONResource);
 
-		processDepedencies(analyzer, npmModule);
+		processDependencies(analyzer, npmModule);
 
 		return false;
 	}
@@ -318,7 +318,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		return sb.toString();
 	}
 
-	protected void processDepedencies(Analyzer analyzer, NpmModule npmModule) {
+	protected void processDependencies(Analyzer analyzer, NpmModule npmModule) {
 		if (npmModule.runtime == null) {
 			return;
 		}

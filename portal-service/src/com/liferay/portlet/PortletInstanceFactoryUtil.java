@@ -41,6 +41,15 @@ public class PortletInstanceFactoryUtil {
 		return getPortletInstanceFactory().create(portlet, servletContext);
 	}
 
+	public static InvokerPortlet create(
+			Portlet portlet, ServletContext servletContext,
+			boolean destroyPrevious)
+		throws PortletException {
+
+		return getPortletInstanceFactory().create(
+			portlet, servletContext, destroyPrevious);
+	}
+
 	public static void delete(Portlet portlet) {
 		getPortletInstanceFactory().delete(portlet);
 	}

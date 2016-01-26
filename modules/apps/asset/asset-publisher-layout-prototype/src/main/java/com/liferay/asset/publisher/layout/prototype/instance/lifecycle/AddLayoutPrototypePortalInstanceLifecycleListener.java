@@ -21,7 +21,11 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
@@ -34,6 +38,8 @@ import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.search.web.constants.SearchPortletKeys;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,10 +70,23 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
+		ResourceBundleLoader resourceBundleLoader =
+			new AggregateResourceBundleLoader(
+				ResourceBundleUtil.getResourceBundleLoader(
+					"content.Language", getClassLoader()),
+				LanguageResources.RESOURCE_BUNDLE_LOADER);
+
+		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
+			resourceBundleLoader, "layout-prototype-web-content-title");
+
+		Map<Locale, String> descriptionMap =
+			ResourceBundleUtil.getLocalizationMap(
+				resourceBundleLoader,
+				"layout-prototype-web-content-description");
+
 		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
-			companyId, defaultUserId, "layout-prototype-web-content-title",
-			"layout-prototype-web-content-description", "2_columns_ii",
-			layoutPrototypes, getClassLoader());
+			companyId, defaultUserId, nameMap, descriptionMap, "2_columns_ii",
+			layoutPrototypes);
 
 		if (layout == null) {
 			return;

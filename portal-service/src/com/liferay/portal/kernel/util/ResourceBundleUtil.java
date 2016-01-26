@@ -14,12 +14,16 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
 
 import java.text.MessageFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +36,21 @@ import java.util.ResourceBundle;
  * @author Neil Griffin
  */
 public class ResourceBundleUtil {
+
+	public static final ResourceBundle EMPTY_RESOURCE_BUNDLE =
+		new ResourceBundle() {
+
+			@Override
+			protected Object handleGetObject(String key) {
+				return key;
+			}
+
+			@Override
+			public Enumeration<String> getKeys() {
+				return Collections.emptyEnumeration();
+			}
+
+		};
 
 	public static ResourceBundle getBundle(String baseName, Class<?> clazz) {
 		return getBundle(baseName, clazz.getClassLoader());
@@ -55,6 +74,50 @@ public class ResourceBundleUtil {
 
 		return ResourceBundle.getBundle(
 			baseName, locale, classLoader, UTF8Control.INSTANCE);
+	}
+
+	public static Map<Locale, String> getLocalizationMap(
+		ResourceBundleLoader resourceBundleLoader, String key) {
+
+		Map<Locale, String> map = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			ResourceBundle resourceBundle =
+				resourceBundleLoader.loadResourceBundle(
+					LocaleUtil.toLanguageId(locale));
+
+			map.put(locale, getString(resourceBundle, key));
+		}
+
+		return map;
+	}
+
+	@Deprecated
+	public static Map<Locale, String> getLocalizationMap(
+		String baseName, Class<?> clazz, String key) {
+
+		Map<Locale, String> map = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			ResourceBundle resourceBundle = getBundle(baseName, locale, clazz);
+
+			map.put(locale, getString(resourceBundle, key));
+		}
+
+		return map;
+	}
+
+	public static ResourceBundleLoader getResourceBundleLoader(
+		final String base, final ClassLoader classLoader) {
+
+		return new ResourceBundleLoader() {
+
+			@Override
+			public ResourceBundle loadResourceBundle(String languageId) {
+				return ResourceBundleUtil.getBundle(base, classLoader);
+			}
+
+		};
 	}
 
 	public static String getString(
@@ -133,12 +196,6 @@ public class ResourceBundleUtil {
 							new ResourceBundle[size])));
 			}
 		}
-	}
-
-	public interface ResourceBundleLoader {
-
-		public ResourceBundle loadResourceBundle(String languageId);
-
 	}
 
 	private static List<String> _getLanguageIds(String languageId) {

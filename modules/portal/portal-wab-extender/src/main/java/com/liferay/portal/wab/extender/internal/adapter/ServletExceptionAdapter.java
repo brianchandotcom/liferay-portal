@@ -16,8 +16,6 @@ package com.liferay.portal.wab.extender.internal.adapter;
 
 import java.io.IOException;
 
-import java.util.concurrent.Callable;
-
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -55,17 +53,7 @@ public class ServletExceptionAdapter implements Servlet {
 	@Override
 	public void init(final ServletConfig servletConfig) {
 		try {
-			TCCLUtil.wrapTCCL(
-				new Callable<Void>() {
-
-					@Override
-					public Void call() throws Exception {
-						_servlet.init(servletConfig);
-
-						return null;
-					}
-
-				});
+			_servlet.init(servletConfig);
 		}
 		catch (Exception e) {
 			_exception = e;

@@ -32,6 +32,11 @@ public interface PortletInstanceFactory {
 	public InvokerPortlet create(Portlet portlet, ServletContext servletContext)
 		throws PortletException;
 
+	public InvokerPortlet create(
+			Portlet portlet, ServletContext servletContext,
+			boolean destroyPrevious)
+		throws PortletException;
+
 	public void delete(Portlet portlet);
 
 	public void destroy(Portlet portlet);

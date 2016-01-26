@@ -93,7 +93,9 @@ data.put("qa-id", "navigation");
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
 					<c:choose>
 						<c:when test="<%= !journalDisplayContext.isSearch() %>">
-							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="searchContainerId" value="articles" />
+							</liferay-util:include>
 						</c:when>
 						<c:otherwise>
 
@@ -120,13 +122,17 @@ data.put("qa-id", "navigation");
 							>
 								<c:if test="<%= journalDisplayContext.hasResults() %>">
 									<liferay-ui:section>
-										<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+										<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
+											<liferay-util:param name="searchContainerId" value="articles" />
+										</liferay-util:include>
 									</liferay-ui:section>
 								</c:if>
 
 								<c:if test="<%= journalDisplayContext.hasCommentsResults() %>">
 									<liferay-ui:section>
-										<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
+										<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>">
+											<liferay-util:param name="searchContainerId" value="comments" />
+										</liferay-util:include>
 									</liferay-ui:section>
 								</c:if>
 							</liferay-ui:tabs>

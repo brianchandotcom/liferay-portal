@@ -306,12 +306,12 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 			return getPortletId();
 		}
 
+		boolean customizablePortletInstance = isCustomizablePortletInstance(
+			routeParameters);
+
 		String instanceId = routeParameters.remove("instanceId");
 		String portletId = routeParameters.remove("p_p_id");
 		long userId = PrincipalThreadLocal.getUserId();
-
-		boolean customizablePortletInstance = isCustomizablePortletInstance(
-			routeParameters);
 
 		if (Validator.isNotNull(portletId)) {
 			if (customizablePortletInstance) {

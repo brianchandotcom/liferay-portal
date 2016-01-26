@@ -66,6 +66,7 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="user-groups" selected="<%= true %>" />
 	</aui:nav>
+
 	<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">

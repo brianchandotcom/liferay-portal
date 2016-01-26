@@ -34,17 +34,17 @@ portletURL.setParameter("teamId", String.valueOf(team.getTeamId()));
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-			PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
+		PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-			usersURL.setParameter("tabs1", "users");
+		usersURL.setParameter("tabs1", "users");
 		%>
 
 		<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
 
 		<%
-			PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
+		PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-			userGroupsURL.setParameter("tabs1", "user-groups");
+		userGroupsURL.setParameter("tabs1", "user-groups");
 		%>
 
 		<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />

@@ -4736,59 +4736,45 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPasswordModified(true);
 		}
 
-		boolean passwordModified = PrincipalThreadLocal.isPasswordModified();
-
 		PrincipalThreadLocal.setPasswordModified(user.getPasswordModified());
-
-		String passwordUnencrypted =
-			PrincipalThreadLocal.getPasswordUnencrypted();
-
 		PrincipalThreadLocal.setPasswordUnencrypted(
 			user.getPasswordUnencrypted());
 
 		try {
-			try {
-				user = userPersistence.update(user);
-			}
-			catch (ModelListenerException mle) {
-				String msg = GetterUtil.getString(mle.getCause().getMessage());
+			user = userPersistence.update(user);
+		}
+		catch (ModelListenerException mle) {
+			String msg = GetterUtil.getString(mle.getCause().getMessage());
 
-				if (LDAPSettingsUtil.isPasswordPolicyEnabled(
-						user.getCompanyId())) {
+			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
+				String[] errorPasswordHistoryKeywords =
+					LDAPSettingsUtil.getErrorPasswordHistoryKeywords(
+						user.getCompanyId());
 
-					String[] errorPasswordHistoryKeywords =
-						LDAPSettingsUtil.getErrorPasswordHistoryKeywords(
-							user.getCompanyId());
+				for (String errorPasswordHistoryKeyword :
+						errorPasswordHistoryKeywords) {
 
-					for (String errorPasswordHistoryKeyword :
-							errorPasswordHistoryKeywords) {
-
-						if (msg.contains(errorPasswordHistoryKeyword)) {
-							throw new UserPasswordException.
-								MustNotBeRecentlyUsed(userId);
-						}
+					if (msg.contains(errorPasswordHistoryKeyword)) {
+						throw new UserPasswordException.MustNotBeRecentlyUsed(
+							userId);
 					}
 				}
-
-				throw new UserPasswordException.MustComplyWithModelListeners(
-					userId, mle);
 			}
 
-			if (!silentUpdate) {
-				user.setPasswordModified(false);
-
-				passwordTrackerLocalService.trackPassword(userId, oldEncPwd);
-			}
-
-			if (!silentUpdate && (PrincipalThreadLocal.getUserId() != userId)) {
-				sendPasswordNotification(
-					user, user.getCompanyId(), password1, null, null, null,
-					null, null, ServiceContextThreadLocal.getServiceContext());
-			}
+			throw new UserPasswordException.MustComplyWithModelListeners(
+				userId, mle);
 		}
-		finally {
-			PrincipalThreadLocal.setPasswordModified(passwordModified);
-			PrincipalThreadLocal.setPasswordUnencrypted(passwordUnencrypted);
+
+		if (!silentUpdate) {
+			user.setPasswordModified(false);
+
+			passwordTrackerLocalService.trackPassword(userId, oldEncPwd);
+		}
+
+		if (!silentUpdate && (PrincipalThreadLocal.getUserId() != userId)) {
+			sendPasswordNotification(
+				user, user.getCompanyId(), password1, null, null, null, null,
+				null, ServiceContextThreadLocal.getServiceContext());
 		}
 
 		return user;

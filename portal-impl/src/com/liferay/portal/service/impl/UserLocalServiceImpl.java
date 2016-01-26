@@ -4736,6 +4736,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPasswordModified(true);
 		}
 
+		PrincipalThreadLocal.setPasswordModified(user.getPasswordModified());
+		PrincipalThreadLocal.setPasswordUnencrypted(
+			user.getPasswordUnencrypted());
+
 		try {
 			user = userPersistence.update(user);
 		}

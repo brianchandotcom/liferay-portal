@@ -109,11 +109,12 @@
 			}
 
 			.comments {
-				margin-right: 10px;
+				margin: 2px 25px 2px 0;
 			}
 
 			.ratings .taglib-ratings {
 				display: inline-block;
+				margin-right: 10px;
 				vertical-align: middle;
 
 				&.stars {
@@ -131,7 +132,6 @@
 
 			.taglib-social-bookmarks {
 				display: inline-block;
-				margin-top: 0;
 				vertical-align: middle;
 			}
 

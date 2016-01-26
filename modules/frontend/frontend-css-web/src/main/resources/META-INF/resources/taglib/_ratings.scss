@@ -2,8 +2,6 @@
 
 .taglib-ratings {
 	&.stars {
-		margin: 1.5em 0 0;
-
 		.liferay-rating-score {
 			padding-left: 15px;
 		}
@@ -27,7 +25,9 @@
 		margin-top: 0;
 
 		.thumbrating {
-			height: 20px;
+			height: 32px;
+			line-height: 32px;
+			margin: 2px;
 
 			@include respond-to(phone, tablet) {
 				a {

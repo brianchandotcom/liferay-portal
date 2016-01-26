@@ -118,13 +118,15 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 	<div class="asset-content" id="<portlet:namespace /><%= assetEntry.getEntryId() %>">
 		<c:if test='<%= assetPublisherDisplayContext.isEnableSocialBookmarks() && socialBookmarksDisplayPosition.equals("top") && !print %>'>
-			<liferay-ui:social-bookmarks
-				contentId="<%= String.valueOf(assetEntry.getEntryId()) %>"
-				displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-				target="_blank"
-				title="<%= title %>"
-				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
-			/>
+			<div class="pull-right">
+				<liferay-ui:social-bookmarks
+					contentId="<%= String.valueOf(assetEntry.getEntryId()) %>"
+					displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+					target="_blank"
+					title="<%= title %>"
+					url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
+				/>
+			</div>
 		</c:if>
 
 		<liferay-ui:asset-display
@@ -145,13 +147,17 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			</div>
 		</c:if>
 
+		<br />
+
 		<c:if test='<%= assetPublisherDisplayContext.isEnableSocialBookmarks() && socialBookmarksDisplayPosition.equals("bottom") && !print %>'>
-			<liferay-ui:social-bookmarks
-				displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-				target="_blank"
-				title="<%= title %>"
-				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
-			/>
+			<div class="pull-right">
+				<liferay-ui:social-bookmarks
+					displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+					target="_blank"
+					title="<%= title %>"
+					url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
+				/>
+			</div>
 		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable() %>">
@@ -162,6 +168,8 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				/>
 			</div>
 		</c:if>
+
+		<br />
 
 		<c:if test="<%= assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible() %>">
 			<div class="asset-more">

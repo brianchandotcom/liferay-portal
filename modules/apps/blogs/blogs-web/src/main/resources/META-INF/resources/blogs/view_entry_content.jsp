@@ -251,7 +251,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 						<div class="comments">
 							<a href="<%= viewEntryCommentsURL %>">
-								<i class="icon-comment"></i>
+								<i class="icon-comment icon-monospaced"></i>
 								<span><%= String.valueOf(messagesCount) %></span>
 							</a>
 						</div>

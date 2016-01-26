@@ -34,7 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 %>
 
-<liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="messageBoardsPanelContainer" persistState="<%= true %>">
+<liferay-ui:panel-container cssClass="message-boards-panels" extended="<%= false %>" id="messageBoardsPanelContainer" markupView="lexicon" persistState="<%= true %>">
 
 	<%
 	int categoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED);

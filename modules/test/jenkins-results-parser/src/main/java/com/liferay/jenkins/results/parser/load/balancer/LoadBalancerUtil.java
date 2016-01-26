@@ -51,11 +51,14 @@ public class LoadBalancerUtil {
 
 		return getMostAvailableMasterURL(
 			"http://mirrors/github.com/liferay/liferay-jenkins-ee/commands/" +
-				"build.properties", overrideMap);
+				"build.properties",
+			overrideMap);
 	}
 
 	public static String getMostAvailableMasterURL(Properties properties)
 		throws Exception {
+
+		boolean readOnly = false;
 
 		int retryCount = 0;
 
@@ -75,19 +78,31 @@ public class LoadBalancerUtil {
 				return "http://" + hostNamePrefix + "-1";
 			}
 
-			File baseDir = new File(
-				properties.getProperty("jenkins.shared.dir") + "/" +
-					hostNamePrefix);
+			File sharedDir = new File(
+				properties.getProperty("jenkins.shared.dir", "NULL"));
 
-			File semaphoreFile = new File(
-				baseDir, hostNamePrefix + ".semaphore");
+			if (!sharedDir.exists() || !sharedDir.isDirectory()) {
+				readOnly = true;
+				System.out.println(
+					"Shared Dir: " + sharedDir.getPath() + " not found.\n" +
+						"Load Balancer will run in read-only mode.");
+			}
 
-			waitForTurn(semaphoreFile, hostNames.size());
+			Map<String, Integer> recentJobMap = new HashMap<>();
 
-			JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
+			if (!readOnly) {
+				File baseDir = new File(sharedDir, hostNamePrefix);
 
-			Map<String, Integer> recentJobMap = getRecentJobCountMap(
-				new File(baseDir, "recentJob"));
+				File semaphoreFile = new File(
+					baseDir, hostNamePrefix + ".semaphore");
+
+				waitForTurn(semaphoreFile, hostNames.size());
+
+				JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
+
+				recentJobMap = getRecentJobCountMap(
+					new File(baseDir, "recentJob"));
+			}
 
 			int maxAvailableSlaveCount = Integer.MIN_VALUE;
 			int x = -1;
@@ -183,38 +198,45 @@ public class LoadBalancerUtil {
 				return "http://" + hostNames.get(x);
 			}
 			finally {
-				if (recentJobPeriod > 0) {
-					StringBuilder sb = new StringBuilder();
+				if (!readOnly) {
+					File baseDir = new File(sharedDir, hostNamePrefix);
+					File semaphoreFile = new File(
+						baseDir, hostNamePrefix + ".semaphore");
 
-					File recentJobFile = new File(
-						baseDir, "recentJob/" + hostNames.get(x));
+					if (recentJobPeriod > 0) {
+						StringBuilder sb = new StringBuilder();
 
-					if (recentJobFile.exists()) {
-						sb.append(JenkinsResultsParserUtil.read(recentJobFile));
+						File recentJobFile = new File(
+							baseDir, "recentJob/" + hostNames.get(x));
 
-						if (sb.length() > 0) {
-							sb.append("|");
+						if (recentJobFile.exists()) {
+							sb.append(
+								JenkinsResultsParserUtil.read(recentJobFile));
+
+							if (sb.length() > 0) {
+								sb.append("|");
+							}
 						}
+
+						String invokedJobBatchSize = properties.getProperty(
+							"invoked.job.batch.size");
+
+						if ((invokedJobBatchSize == null) ||
+							(invokedJobBatchSize.length() == 0)) {
+
+							invokedJobBatchSize = "1";
+						}
+
+						sb.append(invokedJobBatchSize);
+						sb.append("-");
+						sb.append(System.currentTimeMillis());
+
+						JenkinsResultsParserUtil.write(
+							recentJobFile, sb.toString());
 					}
 
-					String invokedJobBatchSize = properties.getProperty(
-						"invoked.job.batch.size");
-
-					if ((invokedJobBatchSize == null) ||
-						(invokedJobBatchSize.length() == 0)) {
-
-						invokedJobBatchSize = "1";
-					}
-
-					sb.append(invokedJobBatchSize);
-					sb.append("-");
-					sb.append(System.currentTimeMillis());
-
-					JenkinsResultsParserUtil.write(
-						recentJobFile, sb.toString());
+					JenkinsResultsParserUtil.write(semaphoreFile, "");
 				}
-
-				JenkinsResultsParserUtil.write(semaphoreFile, "");
 			}
 		}
 	}
@@ -245,11 +267,9 @@ public class LoadBalancerUtil {
 			return Collections.emptyList();
 		}
 
-		String[] blackListArray = blackListString.split(",");
+		List<String> blackList = new ArrayList<>();
 
-		List<String> blackList = new ArrayList<>(blackListArray.length);
-
-		for (String blackListItem : blackListArray) {
+		for (String blackListItem : blackListString.split(",")) {
 			blackList.add(blackListItem.trim());
 		}
 

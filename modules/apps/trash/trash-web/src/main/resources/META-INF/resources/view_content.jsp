@@ -124,127 +124,84 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 	iteratorURL.setParameter("classNameId", String.valueOf(classNameId));
 	iteratorURL.setParameter("classPK", String.valueOf(classPK));
 
-	int containerModelsCount = trashHandler.getTrashContainerModelsCount(classPK);
-	int baseModelsCount = trashHandler.getTrashContainedModelsCount(classPK);
+	String emptyResultsMessage = LanguageUtil.format(request, "this-x-does-not-contain-an-entry", ResourceActionsUtil.getModelResource(locale, className), false);
 	%>
 
-	<c:if test="<%= containerModelsCount > 0 %>">
-		<liferay-ui:search-container
-			curParam="cur1"
-			deltaConfigurable="<%= false %>"
-			iteratorURL="<%= iteratorURL %>"
-			total="<%= containerModelsCount %>"
+	<liferay-ui:search-container
+		deltaConfigurable="<%= false %>"
+		emptyResultsMessage="<%= emptyResultsMessage %>"
+		iteratorURL="<%= iteratorURL %>"
+		total="<%= trashHandler.getTrashModelsCount(classPK) %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= trashHandler.getTrashModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.trash.TrashRenderer"
+			modelVar="curTrashRenderer"
 		>
-			<liferay-ui:search-container-results
-				results="<%= trashHandler.getTrashContainerModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
+
+			<%
+			TrashHandler curTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(curTrashRenderer.getClassName());
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
+				name="name"
+			>
+				<c:choose>
+					<c:when test="<%= curTrashHandler.isContainerModel() %>">
+
+						<%
+						PortletURL rowURL = renderResponse.createRenderURL();
+
+						rowURL.setParameter("mvcPath", "/view_content.jsp");
+						rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(curTrashRenderer.getClassName())));
+						rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
+						%>
+
+						<aui:a href="<%= rowURL.toString() %>">
+							<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+
+						<%
+						PortletURL rowURL = renderResponse.createRenderURL();
+
+						rowURL.setParameter("mvcPath", "/preview.jsp");
+						rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(curTrashRenderer.getClassName())));
+						rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
+
+						rowURL.setWindowState(LiferayWindowState.POP_UP);
+
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("title", HtmlUtil.escape(curTrashRenderer.getTitle(locale)));
+						data.put("url", rowURL.toString());
+						%>
+
+						<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>
+						</aui:a>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="type"
+				value="<%= ResourceActionsUtil.getModelResource(locale, curTrashRenderer.getClassName()) %>"
 			/>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.trash.TrashRenderer"
-				modelVar="curTrashRenderer"
-			>
-
-				<%
-				TrashHandler curTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(curTrashRenderer.getClassName());
-
-				int curContainerModelsCount = curTrashHandler.getTrashContainerModelsCount(curTrashRenderer.getClassPK());
-				int curBaseModelsCount = curTrashHandler.getTrashContainedModelsCount(curTrashRenderer.getClassPK());
-
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("mvcPath", "/view_content.jsp");
-				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(curTrashRenderer.getClassName())));
-				rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
-				%>
-
-				<liferay-ui:search-container-column-text
-					name="name"
-				>
-					<liferay-ui:icon
-						label="<%= true %>"
-						message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
-						method="get"
-						url="<%= rowURL.toString() %>"
-					/>
-				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-text
-					name='<%= LanguageUtil.format(request, "num-of-x", curTrashHandler.getTrashContainedModelName()) %>'
-					value="<%= String.valueOf(curBaseModelsCount) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					name='<%= LanguageUtil.format(request, "num-of-x", curTrashHandler.getTrashContainerModelName()) %>'
-					value="<%= String.valueOf(curContainerModelsCount) %>"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					cssClass="list-group-item-field"
-					path="/view_content_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator markupView="lexicon" />
-		</liferay-ui:search-container>
-	</c:if>
-
-	<c:if test="<%= baseModelsCount > 0 %>">
-		<liferay-ui:search-container
-			curParam="cur2"
-			deltaConfigurable="<%= false %>"
-			iteratorURL="<%= iteratorURL %>"
-			total="<%= baseModelsCount %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= trashHandler.getTrashContainedModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/view_content_action.jsp"
 			/>
+		</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.trash.TrashRenderer"
-				modelVar="curTrashRenderer"
-			>
-
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
-
-				rowURL.setParameter("mvcPath", "/preview.jsp");
-				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(curTrashRenderer.getClassName())));
-				rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
-
-				rowURL.setWindowState(LiferayWindowState.POP_UP);
-				%>
-
-				<liferay-ui:search-container-column-text
-					name="name"
-				>
-
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("title", HtmlUtil.escape(curTrashRenderer.getTitle(locale)));
-					data.put("url", rowURL.toString());
-					%>
-
-					<aui:a cssClass="preview" data="<%= data %>" href="javascript:;">
-						<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>
-					</aui:a>
-				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-jsp
-					cssClass="list-group-item-field"
-					path="/view_content_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator markupView="lexicon" />
-		</liferay-ui:search-container>
-	</c:if>
-
-	<c:if test="<%= (containerModelsCount + baseModelsCount) == 0 %>">
-		<div class="alert alert-info">
-			<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-an-entry" translateArguments="<%= false %>" />
-		</div>
-	</c:if>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
 </div>
 
 <aui:script use="liferay-url-preview">

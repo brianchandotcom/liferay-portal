@@ -36,6 +36,12 @@
 				}
 
 			});
+
+		String errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+
+		if (Validator.equals(formNavigatorEntry.getKey(), errorSection)) {
+			request.setAttribute(WebKeys.ERROR_SECTION, null);
+		}
 		%>
 
 	</aui:fieldset>
@@ -70,7 +76,7 @@
 		<!-- End fragment <%= sectionId %> -->
 
 	<%
-		String errorSection = (String)request.getAttribute("errorSection");
+		String errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 
 		if (Validator.equals(curFormNavigatorEntry.getKey(), errorSection)) {
 	%>
@@ -84,7 +90,7 @@
 			</aui:script>
 
 	<%
-			request.setAttribute("errorSection", null);
+			request.setAttribute(WebKeys.ERROR_SECTION, null);
 		}
 	}
 	%>

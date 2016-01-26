@@ -28,7 +28,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.site.navigation.breadcrumb.web.display.context.SiteNavigationBreadcrumbDisplayContext" %>
 
 <liferay-theme:defineObjects />
-<portlet:defineObjects/>
+<portlet:defineObjects />
 
 <%
 SiteNavigationBreadcrumbDisplayContext siteNavigationBreadcrumbDisplayContext = new SiteNavigationBreadcrumbDisplayContext(request);

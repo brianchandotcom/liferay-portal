@@ -29,7 +29,7 @@
 
 <portlet:defineObjects />
 
-<liferay-theme:defineObjects/>
+<liferay-theme:defineObjects />
 
 <%
 Map<String, Object> contextObjects = new HashMap<>();

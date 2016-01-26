@@ -49,4 +49,4 @@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 
-<liferay-theme:defineObjects/>
+<liferay-theme:defineObjects />

@@ -28,4 +28,4 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
 <portlet:defineObjects />
 
-<liferay-theme:defineObjects/>
+<liferay-theme:defineObjects />

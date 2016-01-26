@@ -28,7 +28,7 @@ page import="com.liferay.portlet.PortletURLUtil" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects/>
+<portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 

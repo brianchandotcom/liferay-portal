@@ -66,7 +66,7 @@ page import="javax.naming.ldap.LdapContext" %>
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects/>
+<portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 

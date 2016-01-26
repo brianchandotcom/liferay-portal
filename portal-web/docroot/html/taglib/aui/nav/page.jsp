@@ -37,5 +37,5 @@
 				}
 			);
 		</aui:script>
-	</c:if >
-</c:if >
+	</c:if>
+</c:if>

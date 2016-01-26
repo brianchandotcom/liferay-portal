@@ -28,4 +28,4 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <liferay-frontend:defineObjects />
 
-<liferay-theme:defineObjects/>
+<liferay-theme:defineObjects />

@@ -102,7 +102,7 @@ renderResponse.setTitle(title);
 								<div class="permission-group">
 									<b><liferay-ui:message key="action.ADD_TO_PAGE" /></b>: <liferay-ui:message key="the-users-with-the-following-roles-can-add-this-portlet-to-the-pages-they-manage" />
 
-									<liferay-ui:search-container >
+									<liferay-ui:search-container>
 										<liferay-ui:search-container-results
 											results="<%= addToPageRoles %>"
 										/>
@@ -149,7 +149,7 @@ renderResponse.setTitle(title);
 								<div class="permission-group">
 									<strong><liferay-ui:message key="action.ACCESS_IN_CONTROL_PANEL" /></strong>: <liferay-ui:message key="the-users-with-the-following-roles-can-access-this-portlet-in-the-control-panel" />
 
-									<liferay-ui:search-container >
+									<liferay-ui:search-container>
 										<liferay-ui:search-container-results
 											results="<%= accessInControlPanelRoles %>"
 										/>

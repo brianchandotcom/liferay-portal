@@ -1,8 +1,5 @@
 <definition>
-	<var method="TestPropsUtil#get('portal.url')" name="siteName" />
-
-	<var method="StringUtil#replace('${siteName}', 'http://', '')" name="siteName" />
-	<var method="StringUtil#replace('${siteName}', ':8080', '')" name="siteName" />
+	<var name="siteName" value="Liferay" />
 
 	<command name="_assertDialogBoxPresent">
 		<if>
@@ -97,6 +94,10 @@
 	</command>
 
 	<command name="add">
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<if>
 			<equals arg1="${eventType}" arg2="Regular" />
 			<then>
@@ -115,7 +116,7 @@
 					<var name="pageStaging" value="${pageStaging}" />
 					<var name="reminders" value="${reminders}" />
 					<var name="resourcesAvailability" value="${resourcesAvailability}" />
-					<var name="siteName" value="${siteName}" />
+					<var name="siteName" value="${defaultSiteName}" />
 					<var name="siteURL" value="${siteURL}" />
 					<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
 					<var name="workflow" value="${workflow}" />
@@ -139,7 +140,7 @@
 						<var name="pageStaging" value="${pageStaging}" />
 						<var name="reminders" value="${reminders}" />
 						<var name="resourcesAvailability" value="${resourcesAvailability}" />
-						<var name="siteName" value="${siteName}" />
+						<var name="siteName" value="${defaultSiteName}" />
 						<var name="siteURL" value="${siteURL}" />
 						<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
 						<var name="workflow" value="${workflow}" />
@@ -166,7 +167,7 @@
 						<var name="pageStaging" value="${pageStaging}" />
 						<var name="reminders" value="${reminders}" />
 						<var name="resourcesAvailability" value="${resourcesAvailability}" />
-						<var name="siteName" value="${siteName}" />
+						<var name="siteName" value="${defaultSiteName}" />
 						<var name="siteURL" value="${siteURL}" />
 						<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
 						<var name="workflow" value="${workflow}" />
@@ -245,12 +246,16 @@
 			</else>
 		</if>
 
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="${defaultSiteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -389,12 +394,16 @@
 			</else>
 		</if>
 
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="${defaultSiteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -460,12 +469,16 @@
 			</else>
 		</if>
 
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="${defaultSiteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -1016,12 +1029,16 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="${defaultSiteName}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
@@ -1710,8 +1727,12 @@
 	</command>
 
 	<command name="viewInvitedUserRSVPWithApprovedWorkflow">
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="${defaultSiteName}" />
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
@@ -1724,8 +1745,12 @@
 	</command>
 
 	<command name="viewNoUserInviteWithUnapprovedWorkflow">
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
+
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="${defaultSiteName}" />
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
@@ -1842,9 +1867,13 @@
 	</command>
 
 	<command name="viewSiteCalendarEventNotPresent">
-		<var name="key_siteName" value="${siteName}" />
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${siteName}'s Calendars" />
+		<var name="key_siteName" value="${defaultSiteName}" />
+
+		<execute function="AssertElementNotPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${defaultSiteName}'s Calendars" />
 
 		<var name="key_endDateTime" value="${endDateTime}" />
 		<var name="key_startDateTime" value="${startDateTime}" />
@@ -1853,9 +1882,13 @@
 	</command>
 
 	<command name="viewSiteCalendarEventWithDefaultPermissions">
-		<var name="key_siteName" value="${siteName}" />
+		<execute macro="TestCase#getDefaultSiteName">
+			<return from="defaultSiteName" name="defaultSiteName" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${siteName}'s Calendars" />
+		<var name="key_siteName" value="${defaultSiteName}" />
+
+		<execute function="AssertTextEquals" locator1="Calendar#CURRENT_SITE_CALENDARS_HEADER" value1="${defaultSiteName}'s Calendars" />
 
 		<var name="key_endDateTime" value="${endDateTime}" />
 		<var name="key_startDateTime" value="${startDateTime}" />

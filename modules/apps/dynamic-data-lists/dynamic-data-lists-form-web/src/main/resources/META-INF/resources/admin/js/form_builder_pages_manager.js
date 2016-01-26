@@ -28,6 +28,18 @@ AUI.add(
 					mode: {
 						validator: '_validateMode',
 						value: 'pagination'
+					},
+
+					strings: {
+						value: {
+							addPageLastPosition: Liferay.Language.get('add-new-page'),
+							aditionalInfo: Liferay.Language.get('an-aditional-information-about-this-page'),
+							deleteCurrentPage: Liferay.Language.get('delete-current-page'),
+							resetPage: Liferay.Language.get('reset-page'),
+							switchMode: Liferay.Language.get('switch-pagination-mode'),
+							untitledPage: Liferay.Language.get('untitled-page-x-of-n')
+						},
+						writeOnce: true
 					}
 				},
 

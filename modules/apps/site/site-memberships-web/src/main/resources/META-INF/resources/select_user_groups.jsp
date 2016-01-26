@@ -46,6 +46,9 @@ userGroupSearch.setResults(userGroups);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="user-groups" selected='<%= true %>' />
+	</aui:nav>
 	<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>
 			<aui:form action="<%= viewUserGroupsURL.toString() %>" name="searchFm">

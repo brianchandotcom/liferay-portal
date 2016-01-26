@@ -53,6 +53,9 @@ userSearch.setResults(users);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="users" selected='<%= true %>' />
+	</aui:nav>
 	<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>
 			<aui:form action="<%= viewUsersURL.toString() %>" name="searchFm">

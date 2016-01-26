@@ -12,7 +12,9 @@
 	</command>
 
 	<command name="configureExternalServices">
-		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="External Services" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="External Services" />
+		</execute>
 
 		<if>
 			<equals arg1="${enableOpenOfficeIntegration}" arg2="true" />

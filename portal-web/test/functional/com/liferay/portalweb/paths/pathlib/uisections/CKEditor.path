@@ -246,6 +246,11 @@
 	<td>//input[@id='cke_99_textInput']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONTENT_AUDIO_LINK_IMAGE</td>
+	<td>//img[contains(@class,'audio')]</td>
+	<td></td>
+</tr>
 <!--CONTENT_IMAGE_LINK-->
 <tr>
 	<td>CONTENT_IMAGE_LINK</td>

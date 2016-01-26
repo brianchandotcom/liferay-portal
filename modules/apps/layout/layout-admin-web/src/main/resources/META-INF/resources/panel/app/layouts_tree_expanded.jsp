@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="product-menu product-menu-expanded sidebar-body">
+<div class="product-menu product-menu-expanded sidebar-body sidenav-fixed sidenav-menu-slider">
 	<div class="panel">
 		<div class="nav nav-equal-height">
 			<liferay-util:include page="/panel/app/layouts_tree.jsp" servletContext="<%= application %>" />

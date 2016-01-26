@@ -344,6 +344,7 @@
 			@include ellipsis(200px);
 
 			display: inline-block;
+			max-width: 100%;
 			overflow: hidden;
 			padding-right: 20px;
 			width: 100%;
@@ -443,7 +444,7 @@
 	.expand-pages-link {
 		position: absolute;
 		top: -35px;
-		left: 245px;
+		right: 50px;
 		z-index: 1;
 
 		a {
@@ -455,5 +456,10 @@
 .product-menu-expanded {
 	&.sidebar-body {
 		overflow: visible;
+	}
+
+	&.sidenav-fixed.sidenav-menu-slider {
+		overflow: auto;
+		width: 100%;
 	}
 }

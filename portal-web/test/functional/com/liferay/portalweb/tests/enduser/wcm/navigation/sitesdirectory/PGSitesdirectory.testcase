@@ -159,7 +159,7 @@
 		</execute>
 
 		<execute macro="SitesDirectory#viewListHierarchyPG">
-			<var name="availableSiteName" value="Liferay" />
+			<var name="availableSiteName" value="${defaultSiteName}" />
 			<var name="childSiteName1" value="Child SiteName 1" />
 			<var name="childSiteName2" value="Child SiteName 2" />
 			<var name="childSiteName3" value="Child SiteName 3" />

@@ -37,7 +37,7 @@ else {
 }
 %>
 
-<liferay-ui:error-marker key="errorSection" value="password" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="password" />
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 

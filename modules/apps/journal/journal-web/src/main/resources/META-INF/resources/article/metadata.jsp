@@ -26,7 +26,7 @@ DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
-<liferay-ui:error-marker key="errorSection" value="categorization" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorization" />
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 

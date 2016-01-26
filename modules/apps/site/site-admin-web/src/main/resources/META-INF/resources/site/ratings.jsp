@@ -35,7 +35,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
 %>
 
-<liferay-ui:error-marker key="errorSection" value="ratings" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="ratings" />
 
 <p><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
 

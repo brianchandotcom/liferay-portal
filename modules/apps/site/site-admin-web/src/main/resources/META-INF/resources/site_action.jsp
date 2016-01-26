@@ -176,7 +176,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		/>
 	</c:if>
 
-	<c:if test="<%= !group.isCompany() && hasUpdatePermission %>">
+	<c:if test="<%= !group.isCompany() && !group.isGuest() && hasUpdatePermission %>">
 		<c:choose>
 			<c:when test="<%= group.isActive() %>">
 				<portlet:actionURL name="deactivate" var="activateURL">

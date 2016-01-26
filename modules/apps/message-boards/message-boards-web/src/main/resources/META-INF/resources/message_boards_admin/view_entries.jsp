@@ -340,8 +340,6 @@ if (groupThreadsUserId > 0) {
 	</aui:form>
 </div>
 
-<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
-
 <%
 if (category != null) {
 	PortalUtil.setPageSubtitle(category.getName(), request);

@@ -66,3 +66,5 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </aui:nav-bar>
 
 <liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
+
+<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />

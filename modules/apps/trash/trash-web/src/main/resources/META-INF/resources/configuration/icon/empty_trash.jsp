@@ -16,23 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:icon
-	id="emptyRecycleBinButton"
-	message="empty-the-recycle-bin"
-	url="javascript:;"
-/>
-
 <portlet:actionURL name="emptyTrash" var="emptyTrashURL">
 	<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
 </portlet:actionURL>
 
-<aui:script>
-	$('#<portlet:namespace />emptyRecycleBinButton').on(
-		'click',
-		function(event) {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-empty-the-recycle-bin" />')) {
-				submitForm(document.hrefFm, '<%= emptyTrashURL.toString() %>');
-			}
-		}
-	);
-</aui:script>
+<liferay-util:buffer var="onClickFn">
+	if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-empty-the-recycle-bin" />')) {
+		submitForm(document.hrefFm, '<%= emptyTrashURL.toString() %>');
+	}
+</liferay-util:buffer>
+
+<liferay-ui:icon
+	id="emptyRecycleBinButton"
+	message="empty-the-recycle-bin"
+	onClick="<%= onClickFn %>"
+	url="javascript:;"
+/>

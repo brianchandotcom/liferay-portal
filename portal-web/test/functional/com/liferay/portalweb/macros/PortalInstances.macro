@@ -71,11 +71,11 @@
 
 	<command name="tearDownCP">
 		<execute macro="SignOut#signOutOfSpecificURL">
-			<var name="url" value="http://localhost:8080" />
+			<var name="url" value="http://localhost:8080/" />
 		</execute>
 
 		<execute macro="SignIn#signInSpecificURL">
-			<var name="url" value="http://localhost:8080" />
+			<var name="url" value="http://localhost:8080/" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

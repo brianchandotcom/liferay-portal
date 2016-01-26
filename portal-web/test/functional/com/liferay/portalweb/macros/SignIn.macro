@@ -106,7 +106,7 @@
 
 	<command name="signInPortalInstanceSetUp">
 		<execute macro="SignIn#signInSpecificURL">
-			<var name="url" value="http://localhost:8080" />
+			<var name="url" value="http://localhost:8080/" />
 		</execute>
 
 		<if>

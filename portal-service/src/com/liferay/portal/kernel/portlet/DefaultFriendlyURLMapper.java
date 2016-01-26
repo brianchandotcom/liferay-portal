@@ -316,10 +316,11 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 			return getPortletName();
 		}
 
-		boolean customizablePortletInstance = isCustomizablePortletInstance(
-			routeParameters);
-
 		String instanceId = routeParameters.remove("instanceId");
+
+		boolean customizablePortletInstance = hasUserCustomizedPreferences(
+			instanceId);
+
 		String portletId = routeParameters.remove("p_p_id");
 
 		if (customizablePortletInstance) {
@@ -384,11 +385,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	 * @return <code>true</code> if a portlet preference exists in the database;
 	 *         <code>false</code> otherwise
 	 */
-	protected boolean isCustomizablePortletInstance(
-		Map<String, String> routeParameters) {
-
-		String instanceId = routeParameters.get("instanceId");
-
+	protected boolean hasUserCustomizedPreferences(String instanceId) {
 		long userId = PrincipalThreadLocal.getUserId();
 
 		PortletInstance portletInstance = new PortletInstance(

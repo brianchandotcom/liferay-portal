@@ -135,6 +135,10 @@ public interface DocumentRepository extends CapabilityProvider {
 			int end, OrderByComparator<?> obc)
 		throws PortalException;
 
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, boolean includeMountFolders)
+		throws PortalException;
+
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
 		throws PortalException;
 

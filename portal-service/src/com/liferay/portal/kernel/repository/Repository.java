@@ -165,10 +165,6 @@ public interface Repository extends DocumentRepository {
 		throws PortalException;
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
-			long folderId, int status, boolean includeMountFolders)
-		throws PortalException;
-
-	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders)
 		throws PortalException;

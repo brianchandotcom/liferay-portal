@@ -355,7 +355,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getCompanyId(), defaultRoleName);
 
 			if ((role != null) &&
-				role.getType() == RoleConstants.TYPE_REGULAR &&
+				(role.getType() == RoleConstants.TYPE_REGULAR) &&
 				!userPersistence.containsRole(userId, role.getRoleId())) {
 
 				roleIdSet.add(role.getRoleId());

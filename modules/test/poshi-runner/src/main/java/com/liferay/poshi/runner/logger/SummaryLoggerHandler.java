@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
+import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
 import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
@@ -130,34 +131,44 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
-	public static void startMajorSteps() throws Exception {
-		_causeBodyLoggerElement = _getCauseBodyLoggerElement();
-		_majorStepsLoggerElement = _getMajorStepsLoggerElement();
-		_summaryLogLoggerElement = _getSummaryLogLoggerElement();
+	public static void startMajorSteps() throws PoshiRunnerLoggerException {
+		try {
+			_causeBodyLoggerElement = _getCauseBodyLoggerElement();
+			_majorStepsLoggerElement = _getMajorStepsLoggerElement();
+			_summaryLogLoggerElement = _getSummaryLogLoggerElement();
+		}
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
+		}
 	}
 
 	public static void startSummary(Element element) throws Exception {
-		if (_isMajorStep(element)) {
-			_startMajorStep(element);
+		try {
+			if (_isMajorStep(element)) {
+				_startMajorStep(element);
 
-			_majorStepLoggerElement = _getMajorStepLoggerElement(element);
+				_majorStepLoggerElement = _getMajorStepLoggerElement(element);
 
-			_majorStepsLoggerElement.addChildLoggerElement(
-				_majorStepLoggerElement);
+				_majorStepsLoggerElement.addChildLoggerElement(
+					_majorStepLoggerElement);
 
-			_minorStepsLoggerElement = _getMinorStepsLoggerElement();
+				_minorStepsLoggerElement = _getMinorStepsLoggerElement();
 
-			_majorStepLoggerElement.addChildLoggerElement(
-				_minorStepsLoggerElement);
+				_majorStepLoggerElement.addChildLoggerElement(
+					_minorStepsLoggerElement);
+			}
+
+			if (_isMinorStep(element)) {
+				_startMinorStep(element);
+
+				_minorStepLoggerElement = _getMinorStepLoggerElement(element);
+
+				_minorStepsLoggerElement.addChildLoggerElement(
+					_minorStepLoggerElement);
+			}
 		}
-
-		if (_isMinorStep(element)) {
-			_startMinorStep(element);
-
-			_minorStepLoggerElement = _getMinorStepLoggerElement(element);
-
-			_minorStepsLoggerElement.addChildLoggerElement(
-				_minorStepLoggerElement);
+		catch (Throwable t) {
+			throw new PoshiRunnerLoggerException(t.getMessage(), t);
 		}
 	}
 

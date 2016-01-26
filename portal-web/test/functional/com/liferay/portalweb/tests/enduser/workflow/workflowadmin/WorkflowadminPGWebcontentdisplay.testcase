@@ -62,7 +62,6 @@
 		</execute>
 
 		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -126,7 +125,6 @@
 		</execute>
 
 		<execute macro="WebContent#addWithWorkflowPGViaWCD">
-			<var name="selectStructureName" value="Basic Web Content" />
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>

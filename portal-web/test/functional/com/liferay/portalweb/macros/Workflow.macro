@@ -1,10 +1,4 @@
 <definition>
-	<command name="_gotoAssignedToMyRoles">
-		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
-
-		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_ACTIVE" />
-	</command>
-
 	<command name="_gotoCompletedFilter">
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
@@ -356,6 +350,12 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="gotoAssignedToMyRoles">
+		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
+
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_ACTIVE" />
+	</command>
+
 	<command name="gotoPreviewEdit">
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 
@@ -658,7 +658,7 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute macro="Workflow#_gotoAssignedToMyRoles" />
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 
@@ -754,7 +754,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
 
-		<execute macro="Workflow#_gotoAssignedToMyRoles" />
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to your roles." />
 
@@ -914,7 +914,7 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute macro="Workflow#_gotoAssignedToMyRoles" />
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 
@@ -939,7 +939,7 @@
 	</command>
 
 	<command name="viewTaskNotPresentAssignedToMyRoles">
-		<execute macro="Workflow#_gotoAssignedToMyRoles" />
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 

@@ -1970,8 +1970,6 @@
 	</command>
 
 	<command name="ConfigureDisplayTimeZone" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

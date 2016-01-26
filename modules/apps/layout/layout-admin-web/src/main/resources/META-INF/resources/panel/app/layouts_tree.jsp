@@ -204,7 +204,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 <aui:script use="liferay-layout-tree-fullscreen">
 	var layoutTreeFullscreen = new Liferay.LayoutTreeFullscreen(
 		{
-			fullscreenButton: '#<portlet:namespace />expandPagesLink a',
+			fullscreenButton: '#<portlet:namespace />expandPagesLink',
 			url: '<%= treeURL.toString() %>'
 		}
 	);

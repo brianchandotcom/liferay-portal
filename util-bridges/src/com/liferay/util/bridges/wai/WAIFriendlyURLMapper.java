@@ -62,6 +62,11 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public String getPortletId() {
+		return getPortletName();
+	}
+
+	@Override
+	public String getPortletName() {
 		return _portletId;
 	}
 
@@ -126,7 +131,12 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public void setPortletId(String portletId) {
-		_portletId = portletId;
+		setPortletName(portletId);
+	}
+
+	@Override
+	public void setPortletName(String portletName) {
+		_portletId = portletName;
 	}
 
 	@Override

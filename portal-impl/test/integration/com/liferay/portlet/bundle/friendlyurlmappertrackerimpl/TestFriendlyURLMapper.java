@@ -50,6 +50,11 @@ public class TestFriendlyURLMapper implements FriendlyURLMapper {
 	}
 
 	@Override
+	public String getPortletName() {
+		return null;
+	}
+
+	@Override
 	public Router getRouter() {
 		return null;
 	}
@@ -79,6 +84,11 @@ public class TestFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public void setPortletId(String portletId) {
+		return;
+	}
+
+	@Override
+	public void setPortletName(String portletName) {
 		return;
 	}
 

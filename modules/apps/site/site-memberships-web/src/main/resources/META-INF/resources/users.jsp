@@ -48,6 +48,8 @@ userSearch.setTotal(usersCount);
 List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator());
 
 userSearch.setResults(users);
+
+userSearch.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">

@@ -45,11 +45,13 @@ organizationSearch.setTotal(organizationsCount);
 List<Organization> organizations = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearch.getStart(), organizationSearch.getEnd(), organizationSearch.getOrderByComparator());
 
 organizationSearch.setResults(organizations);
+
+organizationSearch.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="organizations" selected='<%= true %>' />
+		<aui:nav-item label="organizations" selected="<%= true %>" />
 	</aui:nav>
 	<c:if test="<%= (organizationsCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>

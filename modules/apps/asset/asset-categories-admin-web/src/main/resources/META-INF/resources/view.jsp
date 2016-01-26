@@ -23,6 +23,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, renderResponse.createRenderURL(), null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-bottom-right-corner");
 
+vocabulariesSearchContainer.setSearch(Validator.isNotNull(keywords));
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 
 vocabulariesSearchContainer.setOrderByCol(orderByCol);

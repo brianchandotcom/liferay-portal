@@ -44,6 +44,8 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 
 userSearchContainer.setResults(users);
 
+userSearchContainer.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
+
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 

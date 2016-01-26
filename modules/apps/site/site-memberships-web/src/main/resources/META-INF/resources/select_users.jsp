@@ -50,11 +50,13 @@ userSearch.setTotal(usersCount);
 List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator());
 
 userSearch.setResults(users);
+
+userSearch.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected='<%= true %>' />
+		<aui:nav-item label="users" selected="<%= true %>" />
 	</aui:nav>
 	<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>

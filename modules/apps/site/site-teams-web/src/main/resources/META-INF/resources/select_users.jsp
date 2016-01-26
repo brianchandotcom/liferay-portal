@@ -24,9 +24,9 @@ long teamId = ParamUtil.getLong(request, "teamId");
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUser");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUser");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -59,12 +59,14 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 
 userSearchContainer.setResults(users);
 
+userSearchContainer.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
+
 RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected='<%= true %>' />
+		<aui:nav-item label="users" selected="<%= true %>" />
 	</aui:nav>
 	<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>

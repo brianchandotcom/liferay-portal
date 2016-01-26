@@ -57,12 +57,14 @@ List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompany
 
 userGroupSearchContainer.setResults(userGroups);
 
+userGroupSearchContainer.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
+
 RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="user-groups" selected='<%= true %>' />
+		<aui:nav-item label="user-groups" selected="<%= true %>" />
 	</aui:nav>
 	<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>

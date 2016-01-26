@@ -46,7 +46,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 
 	<c:if test="<%= searchEnabled %>">
 		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 				<liferay-ui:input-search markupView="lexicon" />

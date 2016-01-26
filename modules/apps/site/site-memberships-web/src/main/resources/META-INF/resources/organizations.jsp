@@ -50,6 +50,8 @@ organizationSearch.setTotal(organizationsCount);
 List<Organization> organizations = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearch.getStart(), organizationSearch.getEnd(), organizationSearch.getOrderByComparator());
 
 organizationSearch.setResults(organizations);
+
+organizationSearch.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">

@@ -43,6 +43,8 @@ List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompany
 
 userGroupSearchContainer.setResults(userGroups);
 
+userGroupSearchContainer.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
+
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 

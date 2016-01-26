@@ -43,11 +43,13 @@ userGroupSearch.setTotal(userGroupsCount);
 List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
 
 userGroupSearch.setResults(userGroups);
+
+userGroupSearch.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="user-groups" selected='<%= true %>' />
+		<aui:nav-item label="user-groups" selected="<%= true %>" />
 	</aui:nav>
 	<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>

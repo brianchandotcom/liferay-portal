@@ -61,6 +61,8 @@ iteratorURL.setParameter("keywords", keywords);
 
 SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-bottom-right-corner");
 
+categoriesSearchContainer.setSearch(Validator.isNotNull(keywords));
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 
 categoriesSearchContainer.setOrderByCol(orderByCol);

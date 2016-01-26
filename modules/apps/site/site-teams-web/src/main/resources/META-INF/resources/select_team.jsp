@@ -34,6 +34,8 @@ portletURL.setParameter(teamSearch.getCurParam(), String.valueOf(teamSearch.getC
 int teamsCount = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getKeywords(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
 teamSearch.setTotal(teamsCount);
+
+teamSearch.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

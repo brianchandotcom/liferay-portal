@@ -175,7 +175,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 			// Portlet namespace is not needed if all the parameters are public
 			// render parameters
 
-			addParameter(null, parameterMap, "p_p_id", getPortletId());
+			addParameter(null, parameterMap, "p_p_id", getPortletName());
 		}
 		else {
 			return;
@@ -303,7 +303,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	 */
 	protected String getPortletId(Map<String, String> routeParameters) {
 		if (!isPortletInstanceable()) {
-			return getPortletId();
+			return getPortletName();
 		}
 
 		boolean customizablePortletInstance = isCustomizablePortletInstance(
@@ -324,12 +324,12 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		if (customizablePortletInstance) {
 			return PortletConstants.assemblePortletId(
-				getPortletId(), userId, instanceId);
+				getPortletName(), userId, instanceId);
 		}
 
 		if (Validator.isNotNull(instanceId)) {
 			return PortletConstants.assemblePortletId(
-				getPortletId(), instanceId);
+				getPortletName(), instanceId);
 		}
 
 		if (!isAllPublicRenderParameters(routeParameters)) {
@@ -382,7 +382,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		long userId = PrincipalThreadLocal.getUserId();
 
 		PortletInstance portletInstance = new PortletInstance(
-			getPortletId(), userId, instanceId);
+			getPortletName(), userId, instanceId);
 
 		String portletInstanceKey = portletInstance.getPortletInstanceKey();
 

@@ -389,15 +389,23 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public List<Object> getFoldersAndArticles(
-		long groupId, long folderId, int start, int end,
+		long groupId, long folderId, int status, int start, int end,
 		OrderByComparator<?> obc) {
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<Object>(
-			WorkflowConstants.STATUS_ANY, start, end,
-			(OrderByComparator<Object>)obc);
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, start, end, (OrderByComparator<Object>)obc);
 
 		return journalFolderFinder.findF_A_ByG_F(
 			groupId, folderId, queryDefinition);
+	}
+
+	@Override
+	public List<Object> getFoldersAndArticles(
+		long groupId, long folderId, int start, int end,
+		OrderByComparator<?> obc) {
+
+		return getFoldersAndArticles(
+			groupId, folderId, WorkflowConstants.STATUS_ANY, start, end, obc);
 	}
 
 	@Override

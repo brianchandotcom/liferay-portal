@@ -147,7 +147,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="text-strong"
 				name="name"
 			>
 				<c:choose>

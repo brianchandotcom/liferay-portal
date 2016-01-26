@@ -328,6 +328,8 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		Parameters parameters = new Parameters();
 
 		for (Entry<String, String> entry : npmModule.runtime.entrySet()) {
+			Attrs attrs = new Attrs();
+
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("(&(");
@@ -345,8 +347,6 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 			sb.append(getNpmVersionFilter(version));
 
 			sb.append(")");
-
-			Attrs attrs = new Attrs();
 
 			attrs.put(Constants.FILTER_DIRECTIVE, sb.toString());
 

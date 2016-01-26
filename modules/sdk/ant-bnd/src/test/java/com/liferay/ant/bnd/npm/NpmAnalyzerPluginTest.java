@@ -37,7 +37,7 @@ public class NpmAnalyzerPluginTest {
 	public void testConversion() throws Exception {
 		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		URL url = getResource("dependencies/npm.json");
+		URL url = getResource("dependencies/package.json");
 
 		NpmModule npmModule = npmAnalyzerPlugin.getNpmModule(url.openStream());
 
@@ -293,7 +293,8 @@ public class NpmAnalyzerPluginTest {
 		Jar jar = new Jar("test");
 
 		jar.putResource(
-			"npm.json", new URLResource(getResource("dependencies/npm.json")));
+			"package.json",
+			new URLResource(getResource("dependencies/package.json")));
 
 		analyzer.setJar(jar);
 
@@ -328,8 +329,9 @@ public class NpmAnalyzerPluginTest {
 		Jar jar = new Jar("test");
 
 		jar.putResource(
-			"npm.json",
-			new URLResource(getResource("dependencies/npm.bad.version.json")));
+			"package.json",
+			new URLResource(
+				getResource("dependencies/package.bad.version.json")));
 
 		analyzer.setJar(jar);
 
@@ -357,8 +359,8 @@ public class NpmAnalyzerPluginTest {
 		Jar jar = new Jar("test");
 
 		jar.putResource(
-			"npm.json",
-			new URLResource(getResource("dependencies/npm.empty.json")));
+			"package.json",
+			new URLResource(getResource("dependencies/package.empty.json")));
 
 		analyzer.setJar(jar);
 

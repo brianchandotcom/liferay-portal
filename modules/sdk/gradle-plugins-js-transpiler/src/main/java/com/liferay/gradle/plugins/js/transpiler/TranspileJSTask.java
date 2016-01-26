@@ -225,7 +225,9 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		completeArgs.add("");
 
 		completeArgs.add("--dest");
-		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir) + "/META-INF/resources");
+		completeArgs.add(
+			FileUtil.relativize(
+				getOutputDir(), sourceDir) + "/META-INF/resources");
 
 		SourceMaps sourceMaps = getSourceMaps();
 

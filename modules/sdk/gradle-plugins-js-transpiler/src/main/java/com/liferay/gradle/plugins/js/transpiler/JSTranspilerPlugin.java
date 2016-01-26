@@ -46,7 +46,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	public static final String DOWNLOAD_LFR_AMD_LOADER_TASK_NAME =
 		"downloadLfrAmdLoader";
 
-	public static final String DOWNLOAD_METAL_CLI_TASK_NAME = "downloadMetalCli";
+	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
+		"downloadMetalCli";
 
 	public static final String EXTENSION_NAME = "jsTranspiler";
 
@@ -74,27 +75,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected DownloadNodeModuleTask addTaskDownloadMetalCli(
-		Project project, final JSTranspilerExtension jsTranspilerExtension) {
-
-		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
-			project, DOWNLOAD_METAL_CLI_TASK_NAME, DownloadNodeModuleTask.class);
-
-		downloadNodeModuleTask.setModuleName("metal-cli");
-
-		downloadNodeModuleTask.setModuleVersion(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return jsTranspilerExtension.getMetalCliVersion();
-				}
-
-			});
-
-		return downloadNodeModuleTask;
-	}
-
 	protected DownloadNodeModuleTask addTaskDownloadLfrAmdLoader(
 		Project project, final JSTranspilerExtension jsTranspilerExtension) {
 
@@ -110,6 +90,28 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return jsTranspilerExtension.getLfrAmdLoaderVersion();
+				}
+
+			});
+
+		return downloadNodeModuleTask;
+	}
+
+	protected DownloadNodeModuleTask addTaskDownloadMetalCli(
+		Project project, final JSTranspilerExtension jsTranspilerExtension) {
+
+		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
+			project, DOWNLOAD_METAL_CLI_TASK_NAME,
+			DownloadNodeModuleTask.class);
+
+		downloadNodeModuleTask.setModuleName("metal-cli");
+
+		downloadNodeModuleTask.setModuleVersion(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return jsTranspilerExtension.getMetalCliVersion();
 				}
 
 			});

@@ -31,31 +31,63 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
+						if (instance._dialog) {
+							instance._dialog.destroy();
+						}
+
 						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
+					_bindFullscreenButton: function() {
+						var instance = this;
+
+						instance._eventHandles.push(
+							instance.get('fullscreenButton').on('click', instance._openDialog, instance)
+						);
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
 						instance._eventHandles = [
-							instance.get('fullscreenButton').on('click', instance._openDialog, instance)
+							instance.on('fullscreenButtonChange', instance._bindFullscreenButton, instance),
+							instance.on('urlChange', instance._updateDialog, instance)
 						];
+
+						instance._bindFullscreenButton();
+					},
+
+					_getDialog: function() {
+						var instance = this;
+
+						var dialog = instance._dialog;
+
+						if (!dialog) {
+							dialog = new Liferay.UrlPreview(
+								{
+									title: 'Pages',
+									url: instance.get('url')
+								}
+							);
+						}
+
+						return dialog;
 					},
 
 					_openDialog: function() {
 						var instance = this;
 
-						var dialog = Liferay.Util.Window.getWindow(
-							{
-								dialog: {
-									centered: true,
-									destroyOnHide: true,
-									draggable: false
-								},
-								title: 'Pages',
-								uri: instance.get('url')
-							}
-						);
+						var dialog = instance._getDialog();
+
+						dialog.open();
+					},
+
+					_updateDialog: function(event) {
+						var instance = this;
+
+						var dialog = instance._getDialog();
+
+						dialog.set('url', instance.get('url'));
 					}
 				}
 			}
@@ -65,6 +97,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'liferay-portlet-base']
+		requires: ['aui-component', 'liferay-portlet-base', 'liferay-url-preview']
 	}
 );

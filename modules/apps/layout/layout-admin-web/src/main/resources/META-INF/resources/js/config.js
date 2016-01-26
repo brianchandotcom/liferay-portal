@@ -11,7 +11,8 @@
 							path: 'layout-tree-fullscreen.js',
 							requires: [
 								'aui-component',
-								'liferay-portlet-base'
+								'liferay-portlet-base',
+								'liferay-url-preview'
 							]
 						}
 					},

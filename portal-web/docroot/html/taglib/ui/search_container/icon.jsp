@@ -22,6 +22,6 @@ String icon = (String)request.getAttribute("liferay-ui:search-container-column-i
 boolean toggleRowChecker = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search-container-column-icon:toggleRowChecker"));
 %>
 
-<div class="<%= toggleRowChecker ? "click-selector" : StringPool.BLANK %>">
-	<aui:icon cssClass="icon-xl text-default" image="<%= icon %>" markupView="lexicon" url="<%= href %>" />
+<div class="<%= toggleRowChecker ? "click-selector" : StringPool.BLANK %> sticker-default sticker-lg">
+	<aui:icon cssClass="text-default" image="<%= icon %>" markupView="lexicon" url="<%= href %>" />
 </div>

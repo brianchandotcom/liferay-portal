@@ -38,11 +38,69 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 	public Result find(ThemeDisplay themeDisplay, long groupId)
 		throws PortalException {
 
-		Object[] plidAndPortletId = getPlidAndPortletId(
-			themeDisplay, groupId, themeDisplay.getPlid(), getPortletIds());
+		long plid = themeDisplay.getPlid();
+		String[] portletIds = getPortletIds();
 
-		return new ResultImpl(
-			(long)plidAndPortletId[0], (String)plidAndPortletId[1]);
+		if ((plid != LayoutConstants.DEFAULT_PLID) &&
+			(groupId == themeDisplay.getScopeGroupId())) {
+
+			try {
+				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				for (String portletId : portletIds) {
+					if (!layoutTypePortlet.hasPortletId(portletId, false) ||
+						!LayoutPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(), layout,
+							ActionKeys.VIEW)) {
+
+						continue;
+					}
+
+					portletId = getPortletId(layoutTypePortlet, portletId);
+
+					return new ResultImpl(plid, portletId);
+				}
+			}
+			catch (NoSuchLayoutException nsle) {
+			}
+		}
+
+		Object[] plidAndPortletId = fetchPlidAndPortletId(
+			themeDisplay.getPermissionChecker(), groupId, portletIds);
+
+		if ((plidAndPortletId == null) &&
+			SitesUtil.isUserGroupLayoutSetViewable(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup())) {
+
+			plidAndPortletId = fetchPlidAndPortletId(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), portletIds);
+		}
+
+		if (plidAndPortletId != null) {
+			return new ResultImpl(
+				(long)plidAndPortletId[0], (String)plidAndPortletId[1]);
+		}
+
+		StringBundler sb = new StringBundler(portletIds.length * 2 + 5);
+
+		sb.append("{groupId=");
+		sb.append(groupId);
+		sb.append(", plid=");
+		sb.append(plid);
+
+		for (String portletId : portletIds) {
+			sb.append(", portletId=");
+			sb.append(portletId);
+		}
+
+		sb.append("}");
+
+		throw new NoSuchLayoutException(sb.toString());
 	}
 
 	protected Object[] fetchPlidAndPortletId(
@@ -74,72 +132,6 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 		}
 
 		return null;
-	}
-
-	protected Object[] getPlidAndPortletId(
-			ThemeDisplay themeDisplay, long groupId, long plid,
-			String[] portletIds)
-		throws PortalException {
-
-		if ((plid != LayoutConstants.DEFAULT_PLID) &&
-			(groupId == themeDisplay.getScopeGroupId())) {
-
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				for (String portletId : portletIds) {
-					if (!layoutTypePortlet.hasPortletId(portletId, false) ||
-						!LayoutPermissionUtil.contains(
-							themeDisplay.getPermissionChecker(), layout,
-							ActionKeys.VIEW)) {
-
-						continue;
-					}
-
-					portletId = getPortletId(layoutTypePortlet, portletId);
-
-					return new Object[] {plid, portletId};
-				}
-			}
-			catch (NoSuchLayoutException nsle) {
-			}
-		}
-
-		Object[] plidAndPortletId = fetchPlidAndPortletId(
-			themeDisplay.getPermissionChecker(), groupId, portletIds);
-
-		if ((plidAndPortletId == null) &&
-			SitesUtil.isUserGroupLayoutSetViewable(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup())) {
-
-			plidAndPortletId = fetchPlidAndPortletId(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletIds);
-		}
-
-		if (plidAndPortletId != null) {
-			return plidAndPortletId;
-		}
-
-		StringBundler sb = new StringBundler(portletIds.length * 2 + 5);
-
-		sb.append("{groupId=");
-		sb.append(groupId);
-		sb.append(", plid=");
-		sb.append(plid);
-
-		for (String portletId : portletIds) {
-			sb.append(", portletId=");
-			sb.append(portletId);
-		}
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
 	}
 
 	protected String getPortletId(

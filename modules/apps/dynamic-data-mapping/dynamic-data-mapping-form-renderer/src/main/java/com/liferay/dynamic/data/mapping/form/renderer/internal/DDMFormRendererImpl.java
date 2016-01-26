@@ -191,7 +191,8 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		DDMFormLayoutTransformer ddmFormLayoutTransformer =
 			new DDMFormLayoutTransformer(
-				ddmFormLayout, renderedDDMFormFieldsMap,
+				ddmForm, ddmFormLayout, renderedDDMFormFieldsMap,
+				ddmFormRenderingContext.isShowRequiredFieldsWarning(),
 				ddmFormRenderingContext.getLocale());
 
 		return ddmFormLayoutTransformer.getPages();
@@ -288,14 +289,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		template.put("readOnly", ddmFormRenderingContext.isReadOnly());
-
-		if (showRequiredFieldsWarning(ddmForm, ddmFormRenderingContext)) {
-			template.put("showRequiredFieldsWarning", true);
-		}
-		else {
-			template.put("showRequiredFieldsWarning", false);
-		}
-
 		template.put("strings", getLanguageStringsMap(locale));
 
 		String submitLabel = GetterUtil.getString(
@@ -367,23 +360,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
-	}
-
-	protected boolean showRequiredFieldsWarning(
-		DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext) {
-
-		if (ddmFormRenderingContext.isRenderRequiredFieldsWarning()) {
-			Map<String, DDMFormField> ddmFormFieldsMap =
-				ddmForm.getDDMFormFieldsMap(true);
-
-			for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-				if (ddmFormField.isRequired()) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private DDM _ddm;

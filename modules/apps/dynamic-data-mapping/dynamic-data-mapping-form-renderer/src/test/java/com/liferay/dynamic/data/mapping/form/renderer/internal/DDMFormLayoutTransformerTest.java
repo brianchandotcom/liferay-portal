@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -39,6 +41,9 @@ public class DDMFormLayoutTransformerTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetPages() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			"Field_1", "Field_2", "Field_3", "Field_4", "Field_5");
+
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
@@ -82,7 +87,8 @@ public class DDMFormLayoutTransformerTest {
 
 		DDMFormLayoutTransformer ddmFormLayoutTransformer =
 			new DDMFormLayoutTransformer(
-				ddmFormLayout, renderedDDMFormFieldsMap, _LOCALE);
+				ddmForm, ddmFormLayout, renderedDDMFormFieldsMap, false,
+				_LOCALE);
 
 		List<Object> pages = ddmFormLayoutTransformer.getPages();
 

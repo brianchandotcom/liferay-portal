@@ -34,7 +34,6 @@
  * @param layout
  * @param portletNamespace
  * @param readOnly
- * @param showRequiredFieldsWarning
  * @param submitLabel
  * @param templateNamespace
  * @param values
@@ -63,7 +62,6 @@
 
 							portletNamespace: '{$portletNamespace}',
 							readOnly: {$readOnly},
-							showRequiredFieldsWarning: {$showRequiredFieldsWarning},
 							submitLabel: '{$submitLabel}',
 							templateNamespace: '{$templateNamespace}',
 							values: {$values|noAutoescape}
@@ -117,7 +115,7 @@
 {/template}
 
 /**
- * Prints a form required message
+ * Prints the form fields required message warning.
  *
  * @param showRequiredFieldsWarning
  * @param strings
@@ -126,6 +124,7 @@
 	{if $showRequiredFieldsWarning}
 		<label class="required-warning">
 			{$strings.requiredFieldsWarningMessage}
+
 			<span class="icon-asterisk text-warning">
 				<span class="hide-accessible">{$strings.required}</span>
 			</span>
@@ -139,7 +138,6 @@
  * @param containerId
  * @param pages
  * @param readOnly
- * @param showRequiredFieldsWarning
  * @param submitLabel
  * @param strings
  */
@@ -174,7 +172,7 @@
 						{/if}
 
 						{call ddm.required_warning_message data="all"}
-							{param showRequiredFieldsWarning: $showRequiredFieldsWarning /}
+							{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
 							{param strings: $strings /}
 						{/call}
 
@@ -207,19 +205,19 @@
  *
  * @param containerId
  * @param pages
- * @param showRequiredFieldsWarning
  * @param strings
  */
 {template .simple_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
 
-		{call ddm.required_warning_message data="all"}
-			{param showRequiredFieldsWarning: $showRequiredFieldsWarning /}
-			{param strings: $strings /}
-		{/call}
 
 		<div class="lfr-ddm-form-fields">
 			{foreach $page in $pages}
+				{call ddm.required_warning_message data="all"}
+					{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
+					{param strings: $strings /}
+				{/call}
+
 				{call ddm.form_rows data="all"}
 					{param rows: $page.rows /}
 				{/call}
@@ -233,7 +231,6 @@
  *
  * @param containerId
  * @param pages
- * @param showRequiredFieldsWarning
  * @param strings
  */
 {template .tabbed_form}
@@ -250,7 +247,7 @@
 			<div class="tab-content">
 				{foreach $page in $pages}
 					{call ddm.required_warning_message data="all"}
-						{param showRequiredFieldsWarning: $showRequiredFieldsWarning /}
+						{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
 						{param strings: $strings /}
 					{/call}
 

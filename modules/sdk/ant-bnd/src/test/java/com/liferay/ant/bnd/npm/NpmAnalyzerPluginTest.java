@@ -372,7 +372,7 @@ public class NpmAnalyzerPluginTest {
 
 		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		String filterString = npmAnalyzerPlugin.getBowerVersionFilter(version);
+		String filterString = npmAnalyzerPlugin.getNpmVersionFilter(version);
 
 		Assert.assertEquals(expectedFilterString, filterString);
 

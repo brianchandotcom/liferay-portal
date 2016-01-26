@@ -107,7 +107,7 @@ else {
 
 	<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
-	<liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
+	<liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" markupView="lexicon" persistState="<%= true %>">
 		<div class="selected-files-count">
 			<liferay-ui:message key="no-files-selected" />
 		</div>
@@ -116,7 +116,7 @@ else {
 			<aui:input name="description" />
 
 			<c:if test="<%= !fileEntryTypes.isEmpty() %>">
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="document-type" persistState="<%= true %>" title="document-type">
+				<liferay-ui:panel collapsible="<%= true %>" cssClass="document-type" markupView="lexicon" persistState="<%= true %>" title="document-type">
 					<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
 					<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 
@@ -231,7 +231,7 @@ else {
 		</c:if>
 
 		<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
-			<liferay-ui:panel cssClass="categorization-panel" defaultState="closed" extended="<%= false %>" id="dlFileEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
+			<liferay-ui:panel cssClass="categorization-panel" defaultState="closed" extended="<%= false %>" id="dlFileEntryCategorizationPanel" markupView="lexicon" persistState="<%= true %>" title="categorization">
 				<aui:fieldset>
 					<aui:input classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" model="<%= DLFileEntry.class %>" name="categories" type="assetCategories" />
 

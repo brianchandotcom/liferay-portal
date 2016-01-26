@@ -89,11 +89,11 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 
 		<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" markupView="lexicon" persistState="<%= true %>" title="details">
 			<aui:input name="description" />
 		</liferay-ui:panel>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" markupView="lexicon" persistState="<%= true %>" title="main-metadata-fields">
 			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW) %>">
 				<portlet:param name="refererPortletName" value="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" />
 				<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
@@ -102,7 +102,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 			</liferay-util:include>
 		</liferay-ui:panel>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="additionalMetadataFields" persistState="<%= true %>" title="additional-metadata-fields">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="additionalMetadataFields" markupView="lexicon" persistState="<%= true %>" title="additional-metadata-fields">
 			<liferay-ui:search-container
 				headerNames="name,null"
 				total="<%= (ddmStructures != null) ? ddmStructures.size() : 0 %>"

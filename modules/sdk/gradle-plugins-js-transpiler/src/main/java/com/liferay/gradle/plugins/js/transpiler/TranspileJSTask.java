@@ -218,16 +218,16 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 		completeArgs.add("build");
 
+		completeArgs.add("--dest");
+		completeArgs.add(
+			FileUtil.relativize(
+				getOutputDir(), sourceDir) + "/META-INF/resources");
+
 		completeArgs.add("--format");
 		completeArgs.add(getModules());
 
 		completeArgs.add("--moduleName");
 		completeArgs.add("");
-
-		completeArgs.add("--dest");
-		completeArgs.add(
-			FileUtil.relativize(
-				getOutputDir(), sourceDir) + "/META-INF/resources");
 
 		SourceMaps sourceMaps = getSourceMaps();
 
@@ -239,14 +239,14 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 			completeArgs.add("inline");
 		}
 
-		completeArgs.add("--stage");
-		completeArgs.add(String.valueOf(getStage()));
-
 		completeArgs.add("--src");
 
 		for (File file : getSourceFiles()) {
 			completeArgs.add(FileUtil.relativize(file, sourceDir));
 		}
+
+		completeArgs.add("--stage");
+		completeArgs.add(String.valueOf(getStage()));
 
 		return completeArgs;
 	}

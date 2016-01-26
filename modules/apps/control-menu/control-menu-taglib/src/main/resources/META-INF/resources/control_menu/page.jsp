@@ -22,56 +22,48 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 %>
 
 <c:if test="<%= !controlMenuCategories.isEmpty() %>">
-	<div class="control-menu" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
-		<div class="control-menu-level-1">
-			<header class="header-toolbar header-toolbar-default" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
+	<div class="control-menu control-menu-level-1" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
+		<div class="container-fluid-1280">
+			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 				<%
-				for (int i = 0; i < controlMenuCategories.size(); i++) {
-					ControlMenuCategory controlMenuCategory = controlMenuCategories.get(i);
-
-					String cssClass = "toolbar-group";
-
-					if (i == (controlMenuCategories.size() - 2)) {
-						cssClass += "-right";
-					}
-					else if (i == (controlMenuCategories.size() - 1)) {
-						cssClass += "-expand-text text-center";
-					}
+				for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
 				%>
 
-					<div class="<%= cssClass %>">
+					<li class="control-menu-nav-item <%= controlMenuCategory.getKey() %>-controls-group">
+						<ul class="control-menu-nav">
 
-						<%
-						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+							<%
+							List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
 
-						for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
-							if (controlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
-								continue;
+							for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+								if (controlMenuEntry.includeIcon(request, new PipingServletResponse(pageContext))) {
+									continue;
+								}
+							%>
+
+								<liferay-ui:icon
+									data="<%= controlMenuEntry.getData(request) %>"
+									icon="<%= controlMenuEntry.getIconCssClass(request) %>"
+									label="<%= false %>"
+									linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+									markupView="lexicon"
+									message="<%= controlMenuEntry.getLabel(locale) %>"
+									url="<%= controlMenuEntry.getURL(request) %>"
+								/>
+
+							<%
 							}
-						%>
+							%>
 
-							<liferay-ui:icon
-								data="<%= controlMenuEntry.getData(request) %>"
-								icon="<%= controlMenuEntry.getIconCssClass(request) %>"
-								label="<%= false %>"
-								linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
-								markupView="lexicon"
-								message="<%= controlMenuEntry.getLabel(locale) %>"
-								url="<%= controlMenuEntry.getURL(request) %>"
-							/>
-
-						<%
-						}
-						%>
-
-					</div>
+						</ul>
+					</li>
 
 				<%
 				}
 				%>
 
-			</header>
+			</ul>
 		</div>
 
 		<div class="control-menu-body">

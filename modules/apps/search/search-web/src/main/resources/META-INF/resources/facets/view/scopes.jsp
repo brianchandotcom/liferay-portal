@@ -20,7 +20,7 @@
 if (termCollectors.isEmpty()) {
 %>
 
-	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="0" />
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />
 
 <%
 	return;

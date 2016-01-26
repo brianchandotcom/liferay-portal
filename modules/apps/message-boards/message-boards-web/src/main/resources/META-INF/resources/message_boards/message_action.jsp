@@ -26,7 +26,7 @@ MBMessage message = (MBMessage)objArray[0];
 Set<Long> threadSubscriptionClassPKs = null;
 
 if (portletName.equals(MBPortletKeys.MESSAGE_BOARDS)) {
-	threadSubscriptionClassPKs = (Set<Long>)objArray[1];
+	threadSubscriptionClassPKs = (Set<Long>)request.getAttribute("view.jsp-threadSubscriptionClassPKs");
 }
 
 MBCategory category = message.getCategory();

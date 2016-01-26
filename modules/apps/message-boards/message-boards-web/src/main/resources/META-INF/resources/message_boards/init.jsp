@@ -162,8 +162,6 @@ page import="com.liferay.portlet.messageboards.service.permission.MBPermission" 
 page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator" %><%@
-page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
-page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
@@ -214,11 +212,6 @@ boolean enableRSS = mbGroupServiceSettings.isEnableRSS();
 int rssDelta = mbGroupServiceSettings.getRSSDelta();
 String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
 String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
-
-boolean categoriesPanelCollapsible = true;
-boolean categoriesPanelExtended = true;
-boolean threadsPanelCollapsible = true;
-boolean threadsPanelExtended = true;
 
 boolean childrenMessagesTaggable = true;
 boolean includeFormTag = true;

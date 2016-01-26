@@ -183,19 +183,31 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			/>
 		</c:if>
 
-		<div class="displayStyle-<%= HtmlUtil.escapeAttribute(displayStyle) %>">
-			<liferay-util:include page='<%= "/message_boards/view_category_" + displayStyle + ".jsp" %>' servletContext="<%= application %>" />
-		</div>
-
 		<%
-		MBBreadcrumbUtil.addPortletBreadcrumbEntries(category, request, renderResponse);
+		int entriesTotal = MBCategoryLocalServiceUtil.getCategoriesAndThreadsCount(scopeGroupId, categoryId);
 
-		if (category != null) {
-			PortalUtil.setPageSubtitle(category.getName(), request);
-			PortalUtil.setPageDescription(category.getDescription(), request);
+		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
+
+		entriesSearchContainer.setId("mbEntries");
+		entriesSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
+
+		entriesSearchContainer.setTotal(entriesTotal);
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+			status = WorkflowConstants.STATUS_ANY;
 		}
+
+		List entriesResults = MBCategoryServiceUtil.getCategoriesAndThreads(scopeGroupId, categoryId, status, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd());
+
+		entriesSearchContainer.setResults(entriesResults);
+
+		request.setAttribute("view.jsp-displayStyle", "descriptive");
+		request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
 		%>
 
+		<liferay-util:include page='<%= "/message_boards_admin/view_entries.jsp" %>' servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") || mvcRenderCommandName.equals("/message_boards/view_my_subscriptions") || mvcRenderCommandName.equals("/message_boards/view_recent_posts") %>'>
 

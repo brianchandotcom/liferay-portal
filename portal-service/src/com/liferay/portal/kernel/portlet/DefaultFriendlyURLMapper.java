@@ -353,25 +353,6 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	}
 
 	/**
-	 * Returns <code>true</code> if all the route parameters are public render
-	 * parameters.
-	 *
-	 * @param  routeParameters the parameter map
-	 * @return <code>true</code> if all the route parameters are public render
-	 *         parameters; <code>false</code> otherwise
-	 */
-	protected boolean isAllPublicRenderParameters(
-		Map<String, String> routeParameters) {
-
-		Set<String> routeParameterKeys = routeParameters.keySet();
-
-		Map<String, String> publicRenderParameters =
-			FriendlyURLMapperThreadLocal.getPRPIdentifiers();
-
-		return routeParameterKeys.containsAll(publicRenderParameters.keySet());
-	}
-
-	/**
 	 * Returns <code>true</code> if a portlet preference exists in the database
 	 * for a portlet instance key. The portlet instance key is calculated using
 	 * the primary key of the portlet instance, the current user primary key and
@@ -398,6 +379,25 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 				getPortletPreferencesByPortletInstanceKey(portletInstanceKey);
 
 		return (!preferences.isEmpty() && (preferences.size() == 1));
+	}
+
+	/**
+	 * Returns <code>true</code> if all the route parameters are public render
+	 * parameters.
+	 *
+	 * @param  routeParameters the parameter map
+	 * @return <code>true</code> if all the route parameters are public render
+	 *         parameters; <code>false</code> otherwise
+	 */
+	protected boolean isAllPublicRenderParameters(
+		Map<String, String> routeParameters) {
+
+		Set<String> routeParameterKeys = routeParameters.keySet();
+
+		Map<String, String> publicRenderParameters =
+			FriendlyURLMapperThreadLocal.getPRPIdentifiers();
+
+		return routeParameterKeys.containsAll(publicRenderParameters.keySet());
 	}
 
 	/**

@@ -33,7 +33,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class CompanyLDAPInitializer {
+public class LDAPPortalInstanceLifecycleListener {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -66,7 +66,7 @@ public class CompanyLDAPInitializer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CompanyLDAPInitializer.class);
+		LDAPPortalInstanceLifecycleListener.class);
 
 	private BundleContext _bundleContext;
 	private LDAPSettings _ldapSettings;

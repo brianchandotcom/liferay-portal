@@ -21,7 +21,13 @@ boolean searchEnabled = ParamUtil.getBoolean(request, "searchEnabled");
 
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
+Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
+portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("teamId", String.valueOf(team.getTeamId()));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

@@ -27,11 +27,11 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 pageContext.setAttribute("portletURL", portletURL);
 
-SearchContainer teamSearchContainer = new TeamSearch(renderRequest, portletURL);
+SearchContainer teamSearchContainer = new TeamSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
 TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTerms();
 
-int teamsCount = TeamServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+int teamsCount = TeamServiceUtil.searchCount(scopeGroupId, searchTerms.getKeywords(), searchTerms.getKeywords(), new LinkedHashMap<String, Object>());
 
 teamSearchContainer.setTotal(teamsCount);
 
@@ -45,10 +45,10 @@ teamSearchContainer.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 
 	<c:if test="<%= (teamsCount > 0) || searchTerms.isSearch() %>">
 		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= searchTerms.NAME %>" />
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
 			</aui:form>
 		</aui:nav-bar-search>
 	</c:if>
@@ -110,7 +110,7 @@ teamSearchContainer.setSearch(Validator.isNotNull(searchTerms.getKeywords()));
 		total="<%= teamsCount %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= TeamServiceUtil.search(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= TeamServiceUtil.search(scopeGroupId, searchTerms.getKeywords(), searchTerms.getKeywords(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row

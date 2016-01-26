@@ -50,8 +50,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 			return false;
 		}
 
-		NpmModule npmModule = processNpmJsonResource(
-			analyzer, npmJSONResource);
+		NpmModule npmModule = processNpmJsonResource(analyzer, npmJSONResource);
 
 		processDepedencies(analyzer, npmModule);
 
@@ -259,9 +258,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		return minor;
 	}
 
-	protected NpmModule getNpmModule(InputStream inputStream)
-		throws Exception {
-
+	protected NpmModule getNpmModule(InputStream inputStream) throws Exception {
 		JSONCodec jsonCodec = new JSONCodec();
 
 		Decoder decoder = jsonCodec.dec();
@@ -321,12 +318,49 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		return sb.toString();
 	}
 
+	protected void processDepedencies(Analyzer analyzer, NpmModule npmModule)
+		throws Exception {
+
+		if (npmModule.runtime == null) {
+			return;
+		}
+
+		Parameters parameters = new Parameters();
+
+		for (Entry<String, String> entry : npmModule.runtime.entrySet()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("(&(");
+			sb.append(_OSGI_WEBRESOURCE);
+			sb.append("=");
+
+			String name = entry.getKey();
+
+			sb.append(name);
+
+			sb.append(")");
+
+			String version = entry.getValue();
+
+			sb.append(getNpmVersionFilter(version));
+
+			sb.append(")");
+
+			Attrs attrs = new Attrs();
+
+			attrs.put(Constants.FILTER_DIRECTIVE, sb.toString());
+
+			parameters.add(_OSGI_WEBRESOURCE, attrs);
+		}
+
+		setCapabilities(analyzer, Constants.REQUIRE_CAPABILITY, parameters);
+	}
+
 	protected NpmModule processNpmJsonResource(
 			Analyzer analyzer, Resource npmJSONResource)
 		throws Exception {
 
-		NpmModule npmModule = getNpmModule(
-			npmJSONResource.openInputStream());
+		NpmModule npmModule = getNpmModule(npmJSONResource.openInputStream());
 
 		String bundleVersion = analyzer.getBundleVersion();
 
@@ -402,45 +436,6 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		setCapabilities(analyzer, Constants.PROVIDE_CAPABILITY, parameters);
 
 		return npmModule;
-	}
-
-	protected void processDepedencies(
-			Analyzer analyzer, NpmModule npmModule)
-		throws Exception {
-
-		if (npmModule.runtime == null) {
-			return;
-		}
-
-		Parameters parameters = new Parameters();
-
-		for (Entry<String, String> entry : npmModule.runtime.entrySet()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("(&(");
-			sb.append(_OSGI_WEBRESOURCE);
-			sb.append("=");
-
-			String name = entry.getKey();
-
-			sb.append(name);
-
-			sb.append(")");
-
-			String version = entry.getValue();
-
-			sb.append(getNpmVersionFilter(version));
-
-			sb.append(")");
-
-			Attrs attrs = new Attrs();
-
-			attrs.put(Constants.FILTER_DIRECTIVE, sb.toString());
-
-			parameters.add(_OSGI_WEBRESOURCE, attrs);
-		}
-
-		setCapabilities(analyzer, Constants.REQUIRE_CAPABILITY, parameters);
 	}
 
 	protected void setCapabilities(

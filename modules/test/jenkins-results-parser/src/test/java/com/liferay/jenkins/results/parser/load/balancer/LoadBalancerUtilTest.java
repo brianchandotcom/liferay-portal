@@ -21,9 +21,8 @@ import java.io.File;
 
 import java.net.URL;
 
-import java.util.Map;
-
-import org.apache.tools.ant.Project;
+import java.util.List;
+import java.util.Properties;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,9 +41,9 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		Project project = getTestProject(null);
+		Properties properties = getTestProperties(null);
 
-		deleteFile(project.getProperty("jenkins.shared.dir"));
+		deleteFile(properties.getProperty("jenkins.shared.dir"));
 	}
 
 	@Test
@@ -54,55 +53,81 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 		assertSamples();
 	}
 
-	protected static Project getDownloadProject(String baseInvocationHostName) {
-		Project project = new Project();
+	protected static Properties getDownloadProperties(
+		String baseInvocationHostName) {
 
-		project.setProperty(
+		Properties properties = new Properties();
+
+		properties.setProperty(
 			"base.invocation.url",
 			"http://" + baseInvocationHostName + ".liferay.com");
-		project.setProperty(
+		properties.setProperty(
 			"jenkins.shared.dir", "mnt/mfs-ssd1-10.10/jenkins/tmp");
-		project.setProperty("jenkins.local.url[test-1-1]", "http://test-1-1");
-		project.setProperty("jenkins.local.url[test-1-2]", "http://test-1-2");
-		project.setProperty("jenkins.local.url[test-1-3]", "http://test-1-3");
-		project.setProperty("jenkins.local.url[test-1-4]", "http://test-1-4");
-		project.setProperty("jenkins.local.url[test-1-5]", "http://test-1-5");
-		project.setProperty("jenkins.local.url[test-1-6]", "http://test-1-6");
-		project.setProperty("jenkins.local.url[test-1-7]", "http://test-1-7");
-		project.setProperty("jenkins.local.url[test-1-8]", "http://test-1-8");
-		project.setProperty("jenkins.local.url[test-1-9]", "http://test-1-9");
-		project.setProperty("jenkins.local.url[test-1-10]", "http://test-1-10");
-		project.setProperty("jenkins.local.url[test-1-11]", "http://test-1-11");
-		project.setProperty("jenkins.local.url[test-1-12]", "http://test-1-12");
-		project.setProperty("jenkins.local.url[test-1-13]", "http://test-1-13");
-		project.setProperty("jenkins.local.url[test-1-14]", "http://test-1-14");
-		project.setProperty("jenkins.local.url[test-1-15]", "http://test-1-15");
-		project.setProperty("jenkins.local.url[test-1-16]", "http://test-1-16");
-		project.setProperty("jenkins.local.url[test-1-17]", "http://test-1-17");
-		project.setProperty("jenkins.local.url[test-1-18]", "http://test-1-18");
-		project.setProperty("jenkins.local.url[test-1-19]", "http://test-1-19");
-		project.setProperty("jenkins.local.url[test-1-20]", "http://test-1-20");
-		project.setProperty("jenkins.local.url[test-2-1]", "http://test-2-1");
-		project.setProperty("jenkins.local.url[test-3-1]", "http://test-3-1");
-		project.setProperty("jenkins.local.url[test-3-2]", "http://test-3-2");
-		project.setProperty("jenkins.local.url[test-3-3]", "http://test-3-3");
-		project.setProperty("invoked.batch.size", "2");
+		properties.setProperty(
+			"jenkins.local.url[test-1-1]", "http://test-1-1");
+		properties.setProperty(
+			"jenkins.local.url[test-1-2]", "http://test-1-2");
+		properties.setProperty(
+			"jenkins.local.url[test-1-3]", "http://test-1-3");
+		properties.setProperty(
+			"jenkins.local.url[test-1-4]", "http://test-1-4");
+		properties.setProperty(
+			"jenkins.local.url[test-1-5]", "http://test-1-5");
+		properties.setProperty(
+			"jenkins.local.url[test-1-6]", "http://test-1-6");
+		properties.setProperty(
+			"jenkins.local.url[test-1-7]", "http://test-1-7");
+		properties.setProperty(
+			"jenkins.local.url[test-1-8]", "http://test-1-8");
+		properties.setProperty(
+			"jenkins.local.url[test-1-9]", "http://test-1-9");
+		properties.setProperty(
+			"jenkins.local.url[test-1-10]", "http://test-1-10");
+		properties.setProperty(
+			"jenkins.local.url[test-1-11]", "http://test-1-11");
+		properties.setProperty(
+			"jenkins.local.url[test-1-12]", "http://test-1-12");
+		properties.setProperty(
+			"jenkins.local.url[test-1-13]", "http://test-1-13");
+		properties.setProperty(
+			"jenkins.local.url[test-1-14]", "http://test-1-14");
+		properties.setProperty(
+			"jenkins.local.url[test-1-15]", "http://test-1-15");
+		properties.setProperty(
+			"jenkins.local.url[test-1-16]", "http://test-1-16");
+		properties.setProperty(
+			"jenkins.local.url[test-1-17]", "http://test-1-17");
+		properties.setProperty(
+			"jenkins.local.url[test-1-18]", "http://test-1-18");
+		properties.setProperty(
+			"jenkins.local.url[test-1-19]", "http://test-1-19");
+		properties.setProperty(
+			"jenkins.local.url[test-1-20]", "http://test-1-20");
+		properties.setProperty(
+			"jenkins.local.url[test-2-1]", "http://test-2-1");
+		properties.setProperty(
+			"jenkins.local.url[test-3-1]", "http://test-3-1");
+		properties.setProperty(
+			"jenkins.local.url[test-3-2]", "http://test-3-2");
+		properties.setProperty(
+			"jenkins.local.url[test-3-3]", "http://test-3-3");
+		properties.setProperty("invoked.batch.size", "2");
 
-		return project;
+		return properties;
 	}
 
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
-		Project project = getDownloadProject(sampleDir.getName());
+		Properties properties = getDownloadProperties(sampleDir.getName());
 
-		int hostNameCount = LoadBalancerUtil.getHostNameCount(
-			project, sampleDir.getName());
+		List<String> hostNames = LoadBalancerUtil.getHostNames(
+			properties, sampleDir.getName());
 
-		for (int i = 1; i <= hostNameCount; i++) {
+		for (int i = 1; i <= hostNames.size(); i++) {
 			downloadSampleURL(
 				new File(sampleDir, sampleDir.getName() + "-" + i),
 				JenkinsResultsParserUtil.createURL(
-					project.getProperty(
+					properties.getProperty(
 						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
 							"]")),
 				"/computer/api/json?pretty&tree=computer" +
@@ -110,7 +135,7 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 			downloadSampleURL(
 				new File(sampleDir, sampleDir.getName() + "-" + i),
 				JenkinsResultsParserUtil.createURL(
-					project.getProperty(
+					properties.getProperty(
 						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
 							"]")),
 				"/queue/api/json");
@@ -121,17 +146,15 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 	protected String getMessage(String urlString) throws Exception {
 		File sampleDir = new File(urlString.substring("file:".length()));
 
-		Project project = getTestProject(sampleDir.getName());
+		Properties properties = getTestProperties(sampleDir.getName());
 
-		return LoadBalancerUtil.getMostAvailableMasterURL(project);
+		return LoadBalancerUtil.getMostAvailableMasterURL(properties);
 	}
 
-	protected Project getTestProject(String baseInvocationHostName) {
-		Project project = getDownloadProject(baseInvocationHostName);
+	protected Properties getTestProperties(String baseInvocationHostName) {
+		Properties properties = getDownloadProperties(baseInvocationHostName);
 
-		Map<String, Object> properties = project.getProperties();
-
-		for (String key : properties.keySet()) {
+		for (Object key : properties.keySet()) {
 			if (key.equals("base.invocation.url")) {
 				continue;
 			}
@@ -144,11 +167,11 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 					"file:" + dependenciesDir.getAbsolutePath() + "/" +
 						baseInvocationHostName + "/");
 
-				project.setProperty(key, value);
+				properties.put(key, value);
 			}
 		}
 
-		return project;
+		return properties;
 	}
 
 }

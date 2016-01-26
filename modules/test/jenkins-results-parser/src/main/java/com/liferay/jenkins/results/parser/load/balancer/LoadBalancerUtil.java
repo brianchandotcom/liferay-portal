@@ -17,14 +17,17 @@ package com.liferay.jenkins.results.parser.load.balancer;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
+import java.io.StringReader;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,8 +37,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.Project;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,13 +45,25 @@ import org.json.JSONObject;
  */
 public class LoadBalancerUtil {
 
-	public static String getMostAvailableMasterURL(Project project)
+	public static String getMostAvailableMasterURL(
+			Map<String, String> overrideMap)
 		throws Exception {
+
+		return getMostAvailableMasterURL(
+			"http://mirrors/github.com/liferay/liferay-jenkins-ee/commands/" +
+				"build.properties",
+			overrideMap);
+	}
+
+	public static String getMostAvailableMasterURL(Properties properties)
+		throws Exception {
+
+		boolean readOnly = false;
 
 		int retryCount = 0;
 
 		while (true) {
-			String baseInvocationURL = project.getProperty(
+			String baseInvocationURL = properties.getProperty(
 				"base.invocation.url");
 
 			String hostNamePrefix = getHostNamePrefix(baseInvocationURL);
@@ -59,37 +72,48 @@ public class LoadBalancerUtil {
 				return baseInvocationURL;
 			}
 
-			int hostNameCount = getHostNameCount(project, hostNamePrefix);
+			List<String> hostNames = getHostNames(properties, hostNamePrefix);
 
-			if (hostNameCount == 1) {
+			if (hostNames.size() == 1) {
 				return "http://" + hostNamePrefix + "-1";
 			}
 
-			File baseDir = new File(
-				project.getProperty("jenkins.shared.dir") + "/" +
-					hostNamePrefix);
+			File sharedDir = new File(
+				properties.getProperty("jenkins.shared.dir", "NULL"));
 
-			File semaphoreFile = new File(
-				baseDir, hostNamePrefix + ".semaphore");
+			if (!sharedDir.exists() || !sharedDir.isDirectory()) {
+				readOnly = true;
+				System.out.println(
+					"Shared Dir: " + sharedDir.getPath() + " not found.\n" +
+						"Load Balancer will run in read-only mode.");
+			}
 
-			waitForTurn(semaphoreFile, hostNameCount);
+			Map<String, Integer> recentJobMap = new HashMap<>();
 
-			JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
+			if (!readOnly) {
+				File baseDir = new File(sharedDir, hostNamePrefix);
 
-			Map<String, Integer> recentJobMap = getRecentJobCountMap(
-				new File(baseDir, "recentJob"));
+				File semaphoreFile = new File(
+					baseDir, hostNamePrefix + ".semaphore");
 
-			List<String> hostNames = new ArrayList<>(hostNameCount);
+				waitForTurn(semaphoreFile, hostNames.size());
+
+				JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
+
+				recentJobMap = getRecentJobCountMap(
+					new File(baseDir, "recentJob"));
+			}
+
 			int maxAvailableSlaveCount = Integer.MIN_VALUE;
 			int x = -1;
 
 			try {
 				List<FutureTask<Integer>> futureTasks = new ArrayList<>(
-					hostNameCount);
+					hostNames.size());
 
 				startParallelTasks(
-					recentJobMap, hostNames, hostNamePrefix, hostNameCount,
-					project, futureTasks);
+					recentJobMap, hostNames, hostNamePrefix, properties,
+					futureTasks);
 
 				List<Integer> badIndices = new ArrayList<>(futureTasks.size());
 				List<Integer> maxIndices = new ArrayList<>(futureTasks.size());
@@ -153,7 +177,7 @@ public class LoadBalancerUtil {
 				}
 				else {
 					while (true) {
-						x = getRandomValue(0, hostNameCount - 1);
+						x = getRandomValue(0, hostNames.size() - 1);
 
 						if (badIndices.contains(x)) {
 							continue;
@@ -174,59 +198,82 @@ public class LoadBalancerUtil {
 				return "http://" + hostNames.get(x);
 			}
 			finally {
-				if (recentJobPeriod > 0) {
-					StringBuilder sb = new StringBuilder();
+				if (!readOnly) {
+					File baseDir = new File(sharedDir, hostNamePrefix);
+					File semaphoreFile = new File(
+						baseDir, hostNamePrefix + ".semaphore");
 
-					File recentJobFile = new File(
-						baseDir, "recentJob/" + hostNames.get(x));
+					if (recentJobPeriod > 0) {
+						StringBuilder sb = new StringBuilder();
 
-					if (recentJobFile.exists()) {
-						sb.append(JenkinsResultsParserUtil.read(recentJobFile));
+						File recentJobFile = new File(
+							baseDir, "recentJob/" + hostNames.get(x));
 
-						if (sb.length() > 0) {
-							sb.append("|");
+						if (recentJobFile.exists()) {
+							sb.append(
+								JenkinsResultsParserUtil.read(recentJobFile));
+
+							if (sb.length() > 0) {
+								sb.append("|");
+							}
 						}
+
+						String invokedJobBatchSize = properties.getProperty(
+							"invoked.job.batch.size");
+
+						if ((invokedJobBatchSize == null) ||
+							(invokedJobBatchSize.length() == 0)) {
+
+							invokedJobBatchSize = "1";
+						}
+
+						sb.append(invokedJobBatchSize);
+						sb.append("-");
+						sb.append(System.currentTimeMillis());
+
+						JenkinsResultsParserUtil.write(
+							recentJobFile, sb.toString());
 					}
 
-					String invokedJobBatchSize = project.getProperty(
-						"invoked.job.batch.size");
-
-					if ((invokedJobBatchSize == null) ||
-						(invokedJobBatchSize.length() == 0)) {
-
-						invokedJobBatchSize = "1";
-					}
-
-					sb.append(invokedJobBatchSize);
-					sb.append("-");
-					sb.append(System.currentTimeMillis());
-
-					JenkinsResultsParserUtil.write(
-						recentJobFile, sb.toString());
+					JenkinsResultsParserUtil.write(semaphoreFile, "");
 				}
-
-				JenkinsResultsParserUtil.write(semaphoreFile, "");
 			}
 		}
 	}
 
-	protected static int getHostNameCount(
-		Project project, String hostNamePrefix) {
+	public static String getMostAvailableMasterURL(
+			String propertiesURL, Map<String, String> overrideMap)
+		throws Exception {
 
-		int i = 1;
+		String propertiesString = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(propertiesURL), false);
 
-		while (true) {
-			String jenkinsLocalURL = project.getProperty(
-				"jenkins.local.url[" + hostNamePrefix + "-" + i + "]");
+		Properties properties = new Properties();
 
-			if ((jenkinsLocalURL != null) && (jenkinsLocalURL.length() > 0)) {
-				i++;
+		properties.load(new StringReader(propertiesString));
 
-				continue;
-			}
-
-			return i - 1;
+		if (overrideMap != null) {
+			properties.putAll(overrideMap);
 		}
+
+		return getMostAvailableMasterURL(properties);
+	}
+
+	protected static List<String> getBlackList(Properties properties) {
+		String blackListString = properties.getProperty(
+			"jenkins.load.balancer.blacklist", "");
+
+		if (blackListString.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<String> blackList = new ArrayList<>();
+
+		for (String blackListItem : blackListString.split(",")) {
+			blackList.add(blackListItem.trim());
+		}
+
+		return blackList;
 	}
 
 	protected static String getHostNamePrefix(String baseInvocationURL) {
@@ -237,6 +284,39 @@ public class LoadBalancerUtil {
 		}
 
 		return matcher.group("hostNamePrefix");
+	}
+
+	protected static List<String> getHostNames(
+		Properties properties, String hostNamePrefix) {
+
+		List<String> blackList = getBlackList(properties);
+
+		int i = 1;
+		List<String> hostNames = new ArrayList<>();
+
+		while (true) {
+			String jenkinsLocalURL = properties.getProperty(
+				"jenkins.local.url[" + hostNamePrefix + "-" + i + "]");
+
+			if ((jenkinsLocalURL != null) && (jenkinsLocalURL.length() > 0)) {
+				Matcher matcher = _hostnamePattern.matcher(jenkinsLocalURL);
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				String jenkinsLocalHostName = matcher.group("hostname");
+
+				if (!blackList.contains(jenkinsLocalHostName)) {
+					hostNames.add(jenkinsLocalHostName);
+				}
+
+				i++;
+				continue;
+			}
+
+			return hostNames;
+		}
 	}
 
 	protected static int getRandomValue(int start, int end) {
@@ -315,22 +395,18 @@ public class LoadBalancerUtil {
 
 	protected static void startParallelTasks(
 			Map<String, Integer> recentJobMap, List<String> hostNames,
-			String hostNamePrefix, int hostNameCount, Project project,
+			String hostNamePrefix, Properties properties,
 			List<FutureTask<Integer>> futureTasks)
 		throws Exception {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			hostNameCount);
+			hostNames.size());
 
-		for (int i = 1; i <= hostNameCount; i++) {
-			String targetHostName = hostNamePrefix + "-" + i;
-
-			hostNames.add(targetHostName);
-
+		for (String targetHostName : hostNames) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
 					recentJobMap.get(targetHostName),
-					project.getProperty(
+					properties.getProperty(
 						"jenkins.local.url[" + targetHostName + "]")));
 
 			executorService.execute(futureTask);
@@ -369,6 +445,8 @@ public class LoadBalancerUtil {
 
 	private static final String _MY_HOST_NAME;
 
+	private static final Pattern _hostnamePattern =
+		Pattern.compile(".*/(?<hostname>[^/]+)/?");
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
 
@@ -417,10 +495,12 @@ public class LoadBalancerUtil {
 				"computer");
 
 			for (int i = 0; i < computersJSONArray.length(); i++) {
-				JSONObject idle = computersJSONArray.getJSONObject(i);
+				JSONObject computer = computersJSONArray.getJSONObject(i);
 
-				if (idle.getBoolean("idle") && !idle.getBoolean("offline")) {
-					String displayName = idle.getString("displayName");
+				if (computer.getBoolean("idle") &&
+					!computer.getBoolean("offline")) {
+
+					String displayName = computer.getString("displayName");
 
 					if (!displayName.equals("master")) {
 						idleCount++;
@@ -434,7 +514,19 @@ public class LoadBalancerUtil {
 				JSONArray itemsJSONArray = queueJSONObject.getJSONArray(
 					"items");
 
-				queueCount = itemsJSONArray.length();
+				for (int i = 0; i < itemsJSONArray.length(); i++) {
+					JSONObject item = itemsJSONArray.getJSONObject(i);
+
+					if (item.has("why")) {
+						String why = item.getString("why");
+
+						if (why.endsWith("is offline")) {
+							continue;
+						}
+
+						queueCount++;
+					}
+				}
 			}
 
 			int availableSlaveCount = idleCount - queueCount;

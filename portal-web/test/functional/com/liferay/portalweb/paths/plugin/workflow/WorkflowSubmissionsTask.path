@@ -67,12 +67,12 @@
 </tr>
 <tr>
 	<td>PREVIEW_VIEW</td>
-	<td>//div[@class='task-content-actions']//a[contains(@title, 'View')]</td>
+	<td>//a[@data-qa-id='view[action]Button'] | //span/*[name()='svg'][contains(@class,'icon-view')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_EDIT</td>
-	<td>//div[@class='task-content-actions']/a[contains(@title, 'Edit')]</td>
+	<td>//*[@data-qa-id='editButton'] | //span/*[name()='svg'][contains(@class,'icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>

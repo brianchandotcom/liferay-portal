@@ -24,9 +24,9 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	cssClass="expand-pages-link"
 	icon="expand"
 	id="expandPagesLink"
-	label="<%= false%>"
-	message="expand"
+	label="<%= false %>"
 	markupView="lexicon"
+	message="expand"
 	url="javascript:;"
 />
 
@@ -197,8 +197,8 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	treeId="layoutsTree"
 />
 
-<liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES%>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString()%>">
-    <portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
+<liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:script use="liferay-layout-tree-fullscreen">

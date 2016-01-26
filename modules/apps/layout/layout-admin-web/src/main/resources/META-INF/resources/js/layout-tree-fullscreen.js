@@ -65,7 +65,7 @@ AUI.add(
 						if (!dialog) {
 							dialog = new Liferay.UrlPreview(
 								{
-									title: 'Pages',
+									title: Liferay.Language.get('pages'),
 									url: instance.get('url')
 								}
 							);

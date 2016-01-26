@@ -179,10 +179,10 @@ public class DDMDataProviderServlet extends HttpServlet {
 
 			labelJSONObject.put(
 				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
-				keyValuePair.getValue());
+				keyValuePair.getKey());
 
 			jsonObject.put("label", labelJSONObject);
-			jsonObject.put("value", keyValuePair.getKey());
+			jsonObject.put("value", keyValuePair.getValue());
 
 			jsonArray.put(jsonObject);
 		}

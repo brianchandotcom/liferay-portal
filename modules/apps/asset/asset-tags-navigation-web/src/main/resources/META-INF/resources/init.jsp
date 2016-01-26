@@ -38,9 +38,9 @@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 long classNameId = PrefsParamUtil.getLong(portletPreferences, request, "classNameId");

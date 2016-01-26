@@ -31,8 +31,8 @@ page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>

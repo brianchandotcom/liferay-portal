@@ -78,11 +78,11 @@ page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
+<liferay-staging:defineObjects />
 
 <liferay-theme:defineObjects />
 
-<liferay-staging:defineObjects />
+<portlet:defineObjects />
 
 <%
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

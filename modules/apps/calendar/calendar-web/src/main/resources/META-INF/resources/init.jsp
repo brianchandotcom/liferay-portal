@@ -124,9 +124,9 @@ page import="java.util.TimeZone" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

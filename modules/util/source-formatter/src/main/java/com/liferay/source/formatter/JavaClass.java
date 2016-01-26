@@ -297,7 +297,7 @@ public class JavaClass {
 		javaDocBuilder.addSource(_file);
 
 		com.thoughtworks.qdox.model.JavaClass javaClass =
-			javaClass = javaDocBuilder.getClassByName(getClassName());
+			javaDocBuilder.getClassByName(getClassName());
 
 		com.thoughtworks.qdox.model.JavaClass superJavaClass =
 			javaClass.getSuperJavaClass();

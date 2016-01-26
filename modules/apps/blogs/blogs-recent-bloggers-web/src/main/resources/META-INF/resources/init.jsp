@@ -59,9 +59,9 @@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 String selectionMethod = portletPreferences.getValue("selectionMethod", "users");

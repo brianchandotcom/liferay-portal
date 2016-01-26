@@ -24,11 +24,11 @@
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 
-<portlet:defineObjects />
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
-<liferay-frontend:defineObjects />
+<portlet:defineObjects />
 
 <%
 String customUserAttributes = GetterUtil.getString(portletPreferences.getValue("customUserAttributes", StringPool.BLANK));

@@ -52,9 +52,9 @@ page import="com.liferay.portlet.documentlibrary.exception.NoSuchFileException" 
 
 <%@ page import="javax.portlet.WindowState" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

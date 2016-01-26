@@ -30,9 +30,9 @@
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="javax.portlet.RenderRequest" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");

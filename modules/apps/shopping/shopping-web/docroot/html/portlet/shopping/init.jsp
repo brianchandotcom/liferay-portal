@@ -179,6 +179,7 @@ page import="java.util.Properties" %>
 page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
+
 <portlet:defineObjects />
 
 <%

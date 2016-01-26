@@ -47,7 +47,7 @@ catch (Exception e) {
 				<c:when test="<%= order != null %>">
 					<liferay-ui:message key="your-order-number-is" /> <strong><%= HtmlUtil.escape(order.getNumber()) %></strong>. <liferay-ui:message key="you-will-receive-an-email-shortly-with-your-order-summary-and-further-details" />
 				</c:when>
-				<c:otherwise >
+				<c:otherwise>
 					<liferay-ui:message key="your-order-was-already-processed.-please-check-your-email-for-your-order-summary-and-further-details" />
 				</c:otherwise>
 			</c:choose>

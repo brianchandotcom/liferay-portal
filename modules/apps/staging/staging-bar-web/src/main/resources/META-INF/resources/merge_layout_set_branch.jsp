@@ -87,7 +87,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 	</aui:form>
 </div>
 
-<aui:script >
+<aui:script>
 	function <portlet:namespace />selectLayoutSetBranch(layoutSetBranchId) {
 		var layoutSetBranch = AUI.$('#<portlet:namespace />' + layoutSetBranchId);
 

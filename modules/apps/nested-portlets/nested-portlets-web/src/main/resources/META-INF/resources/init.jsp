@@ -36,9 +36,9 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.LayoutTemplate" %><%@
 page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 NestedPortletsDisplayContext nestedPortletsDisplayContext = new NestedPortletsDisplayContext(request);

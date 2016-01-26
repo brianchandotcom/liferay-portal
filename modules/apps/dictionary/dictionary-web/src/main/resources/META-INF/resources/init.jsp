@@ -21,9 +21,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

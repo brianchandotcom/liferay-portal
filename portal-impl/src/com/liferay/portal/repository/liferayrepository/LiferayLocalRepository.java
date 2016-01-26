@@ -405,6 +405,18 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long folderId, int status, boolean includeMountFolders) {
+
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(status);
+
+		return dlFolderLocalService.
+			getFoldersAndFileEntriesAndFileShortcutsCount(
+				getGroupId(), toFolderId(folderId), null, includeMountFolders,
+				queryDefinition);
+	}
+
+	@Override
 	public int getFoldersCount(
 		long parentFolderId, boolean includeMountfolders) {
 

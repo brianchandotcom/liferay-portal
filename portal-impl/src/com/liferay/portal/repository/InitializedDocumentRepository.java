@@ -311,6 +311,17 @@ public abstract class InitializedDocumentRepository
 	}
 
 	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, int status, boolean includeMountFolders)
+		throws PortalException {
+
+		checkDocumentRepository();
+
+		return documentRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, status, includeMountFolders);
+	}
+
+	@Override
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
 		throws PortalException {
 

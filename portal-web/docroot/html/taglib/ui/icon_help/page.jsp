@@ -16,8 +16,11 @@
 
 <%@ include file="/html/taglib/ui/icon_help/init.jsp" %>
 
-<span class="taglib-icon-help">
-	<img alt="" aria-labelledby="<%= id %>" onBlur="Liferay.Portal.ToolTip.hide();" onFocus="Liferay.Portal.ToolTip.show(this);" onMouseOver="Liferay.Portal.ToolTip.show(this);" src="<%= themeDisplay.getPathThemeImages() %>/portlet/help.png" tabIndex="0" />
-
-	<span class="hide-accessible tooltip-text" id="<%= id %>"><%= message %></span>
-</span>
+<liferay-ui:icon
+	cssClass="taglib-icon-help"
+	icon="question-circle-full"
+	id="<%= id %>"
+	markupView="lexicon"
+	message="<%= message %>"
+	toolTip="<%= true %>"
+/>

@@ -138,19 +138,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute function="Pause" locator1="5000" />
-
-		<if>
-			<or>
-				<equals arg1="${portletName}" arg2="Asset Publisher" />
-				<equals arg1="${portletName}" arg2="Documents and Media" />
-				<equals arg1="${portletName}" arg2="Knowledge Base Display" />
-				<equals arg1="${portletName}" arg2="Media Gallery" />
-			</or>
-			<then>
-				<execute function="Pause" locator1="30000" />
-			</then>
-		</if>
+		<execute function="AssertElementNotPresent" locator1="Home#LOADING_ANIMATION" />
 	</command>
 
 	<command name="changeDisplayStyle">

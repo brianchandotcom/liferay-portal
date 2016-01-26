@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//i[@class='icon-edit-sign']</td>
+	<td>//span/*[name()='svg'][contains(@class,'icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -161,11 +161,6 @@
 <tr>
 	<td>MOVE</td>
 	<td>//*[@data-qa-id='moveButton'] | //a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PENCIL</td>
-	<td>//a[contains(@class,'btn icon-monospaced btn-default')]/i[contains(@class,'icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>

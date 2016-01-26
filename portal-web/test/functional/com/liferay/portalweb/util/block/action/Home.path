@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>LOADING_ANIMATION</td>
-	<td>//div[@class='loading-animation']</td>
+	<td>//div[contains(@class,'loading-animation')]</td>
 	<td></td>
 </tr>
 <tr>

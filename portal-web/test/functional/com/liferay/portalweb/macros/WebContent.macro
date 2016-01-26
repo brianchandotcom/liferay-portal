@@ -836,7 +836,7 @@
 	<command name="editDisplayPagePGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="Click" locator1="APAsset#ASSET_PENCIL" />
+		<execute function="Click" locator1="Icon#EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
@@ -1344,7 +1344,7 @@
 	<command name="viewDisplayPagePGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Icon#EDIT" value1="Edit" />
+		<execute function="Click" locator1="Icon#EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 

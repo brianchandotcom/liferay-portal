@@ -300,36 +300,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkReferenceMethodsFromSuperClass(
-			String fileName, String content, String className,
-			String packagePath)
-		throws Exception {
-
-		String moduleSuperClassContent = getModuleSuperClassContent(
-			content, className, packagePath);
-
-		if (Validator.isNull(moduleSuperClassContent) ||
-			!moduleSuperClassContent.contains("@Component") ||
-			!moduleSuperClassContent.contains("@Reference")) {
-
-			return;
-		}
-
-		Matcher matcher = _referenceMethodPattern.matcher(
-			moduleSuperClassContent);
-
-		while (matcher.find()) {
-			String referenceMethodModifierAndName = matcher.group(2);
-
-			if (!content.contains(referenceMethodModifierAndName)) {
-				processErrorMessage(
-					fileName,
-					"LPS-62150: Missing method " + matcher.group(4) + ": " +
-						fileName);
-			}
-		}
-	}
-
 	protected void checkRegexPattern(
 		String regexPattern, String fileName, int lineCount) {
 
@@ -2499,9 +2469,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return StringUtil.replace(content, match, replacement);
 			}
 		}
-
-		checkReferenceMethodsFromSuperClass(
-			fileName, content, className, packagePath);
 
 		return content;
 	}

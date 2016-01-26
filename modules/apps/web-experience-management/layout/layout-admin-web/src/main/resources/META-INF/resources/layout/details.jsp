@@ -137,11 +137,9 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 	<aui:input label='<%= LanguageUtil.format(request, "automatically-apply-changes-done-to-the-page-template-x", HtmlUtil.escape(layoutPrototype.getName(user.getLocale())), false) %>' name="layoutPrototypeLinkEnabled" type="checkbox" value="<%= selLayout.isLayoutPrototypeLinkEnabled() %>" />
 
-	<c:if test="<%= selLayout.isLayoutPrototypeLinkActive() %>">
-		<div class="alert alert-warning">
-			<liferay-ui:message key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template" />
-		</div>
-	</c:if>
+	<div class="alert alert-warning" id="<portlet:namespace/>layoutPrototypeInfoMessage">
+		<liferay-ui:message key="some-options-are-disabled-because-this-page-is-linked-to-a-page-template" />
+	</div>
 
 	<div class='<%= selLayout.isLayoutPrototypeLinkEnabled() ? "" : "hide" %>' id="<portlet:namespace/>layoutPrototypeMergeAlert">
 
@@ -265,4 +263,27 @@ StringBuilder friendlyURLBase = new StringBuilder();
 			}
 		);
 	}
+
+	function togglePropagatableFields(isLayoutPrototypeLinkEnabled) {
+		$('#<portlet:namespace />layoutPrototypeInfoMessage').toggleClass('hide', !isLayoutPrototypeLinkEnabled);
+
+		$('#<portlet:namespace />fm').find('.propagatable-field').each(
+			function(index, item) {
+				item = $(item);
+
+				item.prop('disabled', isLayoutPrototypeLinkEnabled);
+			}
+		);
+	}
+
+	togglePropagatableFields(<%= selLayout.isLayoutPrototypeLinkEnabled() %>);
+
+	$('#<portlet:namespace />layoutPrototypeLinkEnabled').on(
+		'change',
+		function(event) {
+			var isLayoutPrototypeLinkEnabled = event.currentTarget.checked;
+
+			togglePropagatableFields(isLayoutPrototypeLinkEnabled);
+		}
+	);
 </aui:script>

@@ -1,7 +1,7 @@
 dependencies {
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.102"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.3"
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.0"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.1"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "1.0.0"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.0.4"
 }

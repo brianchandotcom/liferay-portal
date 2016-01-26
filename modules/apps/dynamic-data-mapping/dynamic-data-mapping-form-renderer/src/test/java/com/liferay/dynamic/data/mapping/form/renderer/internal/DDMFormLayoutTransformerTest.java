@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -41,8 +42,13 @@ public class DDMFormLayoutTransformerTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetPages() {
+
+		// DDM Form
+
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			"Field_1", "Field_2", "Field_3", "Field_4", "Field_5");
+
+		// DDM Form Layout
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
@@ -76,6 +82,8 @@ public class DDMFormLayoutTransformerTest {
 		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow3);
 
 		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
+
+		// Rendered Fields Map
 
 		Map<String, String> renderedDDMFormFieldsMap = new HashMap<>();
 
@@ -137,6 +145,61 @@ public class DDMFormLayoutTransformerTest {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Test
+	public void testGetPagesWithRequiredFieldsWarning() {
+
+		// DDM Form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField1 = new DDMFormField("Field_1", "text");
+
+		ddmFormField1.setRequired(false);
+
+		ddmForm.addDDMFormField(ddmFormField1);
+
+		DDMFormField ddmFormField2 = new DDMFormField("Field_2", "text");
+
+		ddmFormField2.setRequired(true);
+
+		ddmForm.addDDMFormField(ddmFormField2);
+
+		// DDM Form Layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		ddmFormLayout.addDDMFormLayoutPage(
+			createDDMFormLayoutPage("Page 1", "Field_1"));
+
+		ddmFormLayout.addDDMFormLayoutPage(
+			createDDMFormLayoutPage("Page 2", "Field_2"));
+
+		// Rendered Fields Map
+
+		Map<String, String> renderedDDMFormFieldsMap = new HashMap<>();
+
+		renderedDDMFormFieldsMap.put("Field_1", "Rendered Field 1");
+		renderedDDMFormFieldsMap.put("Field_2", "Rendered Field 2");
+
+		DDMFormLayoutTransformer ddmFormLayoutTransformer =
+			new DDMFormLayoutTransformer(
+				ddmForm, ddmFormLayout, renderedDDMFormFieldsMap, true,
+				_LOCALE);
+
+		List<Object> pages = ddmFormLayoutTransformer.getPages();
+
+		Assert.assertEquals(2, pages.size());
+
+		Map<String, Object> page1 = (Map<String, Object>)pages.get(0);
+
+		Assert.assertFalse((Boolean)page1.get("showRequiredFieldsWarning"));
+
+		Map<String, Object> page2 = (Map<String, Object>)pages.get(1);
+
+		Assert.assertTrue((Boolean)page2.get("showRequiredFieldsWarning"));
+	}
+
+	@SuppressWarnings("unchecked")
 	protected void assertColumnEquals(
 		String[] expectedRenderedDDMFormFields, int expectedSize,
 		Map<String, Object> actualColumn) {
@@ -171,6 +234,27 @@ public class DDMFormLayoutTransformerTest {
 		}
 
 		return ddmFormLayoutColumns;
+	}
+
+	protected DDMFormLayoutPage createDDMFormLayoutPage(
+		String title, String... fieldNames) {
+
+		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		LocalizedValue pageTitle = new LocalizedValue(_LOCALE);
+
+		pageTitle.addString(_LOCALE, title);
+
+		ddmFormLayoutPage.setTitle(pageTitle);
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(
+			createDDMFormLayoutColumns(fieldNames));
+
+		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+
+		return ddmFormLayoutPage;
 	}
 
 	private static final Locale _LOCALE = LocaleUtil.US;

@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -290,11 +291,15 @@ public class DDMFormFactoryHelper {
 			return;
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			resourceBundleBaseName, locale, clazz.getClassLoader());
+		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				resourceBundleBaseName, locale, clazz.getClassLoader());
 
-		if (resourceBundle != null) {
-			resourceBundles.add(resourceBundle);
+			if (resourceBundle != null) {
+				resourceBundles.add(resourceBundle);
+			}
+		}
+		catch (MissingResourceException mre) {
 		}
 	}
 

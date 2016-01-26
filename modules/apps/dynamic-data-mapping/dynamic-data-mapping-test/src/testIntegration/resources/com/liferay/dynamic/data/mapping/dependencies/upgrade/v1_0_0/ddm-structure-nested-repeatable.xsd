@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="string" indexType="keyword" localizable="true" name="TextParent" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="TextNestedUpper" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Text Nested Upper]]></entry>
+				<entry name="predefinedValue" />
+				<entry name="tip" />
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="TextRepeateable" readOnly="false" repeatable="true" required="false" showLabel="true" type="text" width="small">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Text Repeateable]]></entry>
+				<entry name="predefinedValue" />
+				<entry name="tip" />
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" name="TextNestedBottom" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+			<meta-data locale="en_US">
+				<entry name="label"><![CDATA[Text Nested Bottom]]></entry>
+				<entry name="predefinedValue" />
+				<entry name="tip" />
+			</meta-data>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Text Parent]]></entry>
+			<entry name="predefinedValue" />
+			<entry name="tip" />
+		</meta-data>
+	</dynamic-element>
+</root>

@@ -1,0 +1,26 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "boolean",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Boolean Label"
+			},
+			"localizable": true,
+			"name": "BooleanName",
+			"predefinedValue": {
+				"en_US": "false"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "checkbox"
+		}
+	]
+}

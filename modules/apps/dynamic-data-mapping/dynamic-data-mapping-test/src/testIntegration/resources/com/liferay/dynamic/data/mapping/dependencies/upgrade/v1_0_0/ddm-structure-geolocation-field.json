@@ -1,0 +1,21 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "geolocation",
+			"fieldNamespace": "ddm",
+			"indexType": "",
+			"label": {
+				"en_US": "Geolocation Field"
+			},
+			"localizable": false,
+			"name": "geolocation",
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"type": "ddm-geolocation"
+		}
+	]
+}

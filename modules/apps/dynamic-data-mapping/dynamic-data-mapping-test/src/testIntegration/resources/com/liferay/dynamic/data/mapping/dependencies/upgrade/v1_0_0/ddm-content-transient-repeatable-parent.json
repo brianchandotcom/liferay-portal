@@ -1,0 +1,45 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "fjjg",
+			"name": "SeparatorRepeatable",
+			"nestedFieldValues": [
+				{
+					"instanceId": "aiuk",
+					"name": "Text",
+					"value": {
+						"en_US": "Pellentesque libero tortor"
+					}
+				}
+			]
+		},
+		{
+			"instanceId": "nkek",
+			"name": "SeparatorRepeatable",
+			"nestedFieldValues": [
+				{
+					"instanceId": "xxym",
+					"name": "Text",
+					"value": {
+						"en_US": "Pellentesque ut neque"
+					}
+				}
+			]
+		},
+		{
+			"instanceId": "unbf",
+			"name": "SeparatorRepeatable",
+			"nestedFieldValues": [
+				{
+					"instanceId": "lcuq",
+					"name": "Text",
+					"value": {
+						"en_US": "Quisque malesuada placerat nis"
+					}
+				}
+			]
+		}
+	]
+}

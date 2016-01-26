@@ -1,0 +1,41 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Supported Versions"
+			},
+			"localizable": true,
+			"name": "SupportedVersions",
+			"multiple": true,
+			"options": [
+				{
+					"label": {
+						"en_US": "Liferay Portal 6.1 CE GA2 (6.1.1+)"
+					},
+					"value": "CE61GA2"
+				},
+				{
+					"label": {
+						"en_US": "Liferay Portal 6.1 EE GA2 (6.1.20+)"
+					},
+					"value": "EE61GA2"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[\"\"]"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "select"
+		}
+	]
+}

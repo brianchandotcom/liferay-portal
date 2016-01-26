@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element default-language-id="en_US" name="TextNestedUpper">
+		<dynamic-content language-id="en_US"><![CDATA[Praesent turpis]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="TextParent">
+		<dynamic-content language-id="en_US"><![CDATA[In ut quam vitae odio lacinia tincidunt]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="TextRepeateable">
+		<dynamic-content language-id="en_US"><![CDATA[Quisque rutrum]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Etiam sit amet orci eget eros faucibus tincidunt]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Sed libero]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="TextNestedBottom">
+		<dynamic-content language-id="en_US"><![CDATA[Duis vel nibh at velit scelerisque suscipit]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="_fieldsDisplay">
+		<dynamic-content language-id="en_US"><![CDATA[TextParent_INSTANCE_zhow,TextNestedUpper_INSTANCE_neoi,TextRepeateable_INSTANCE_woyi,TextRepeateable_INSTANCE_rlgw,TextRepeateable_INSTANCE_ysgc,TextNestedBottom_INSTANCE_qagd]]></dynamic-content>
+	</dynamic-element>
+</root>

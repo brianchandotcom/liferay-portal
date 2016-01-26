@@ -1,0 +1,48 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "yjnj",
+			"name": "TextRepeatable",
+			"value": {
+				"en_US": "Donec tincidunt"
+			}
+		},
+		{
+			"instanceId": "oxst",
+			"name": "TextRepeatable",
+			"value": {
+				"en_US": "Suspendisse potenti"
+			}
+		},
+		{
+			"instanceId": "oopi",
+			"name": "TextRepeatable",
+			"value": {
+				"en_US": "Pellentesque dapibus hendrerit tortor"
+			}
+		},
+		{
+			"instanceId": "wvli",
+			"name": "TextRepeatable",
+			"value": {
+				"en_US": "Phasellus a est"
+			}
+		},
+		{
+			"instanceId": "sjzh",
+			"name": "TextRepeatable",
+			"value": {
+				"en_US": "Nam pretium turpis et arcu"
+			}
+		},
+		{
+			"instanceId": "owql",
+			"name": "TextRepeatable",
+			"value": {
+				"en_US": "Pellentesque posuere"
+			}
+		}
+	]
+}

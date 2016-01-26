@@ -1,0 +1,10 @@
+<h2>Supported Versions: </h2>
+#if (!$Supported-Versions.getOptions().isEmpty())
+	<ul>
+		#foreach ($option in $Supported-Versions.getOptions())
+			<li>$option</li>
+		#end
+	</ul>
+#else
+	$Supported-Versions.getData()
+#end

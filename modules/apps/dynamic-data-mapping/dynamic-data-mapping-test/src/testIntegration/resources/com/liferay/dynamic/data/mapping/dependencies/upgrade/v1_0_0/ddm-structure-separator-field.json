@@ -1,0 +1,26 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"indexType": "keyword",
+			"fieldNamespace": "ddm",
+			"label": {
+				"en_US": "Separator Label"
+			},
+			"localizable": true,
+			"name": "Separator",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-separator"
+		}
+	]
+}

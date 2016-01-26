@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="string" indexType="" name="my??na" repeatable="true" required="false" type="text">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Text 1]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="string" indexType="" name="my!!na" repeatable="true" required="false" type="text">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Text 2]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root

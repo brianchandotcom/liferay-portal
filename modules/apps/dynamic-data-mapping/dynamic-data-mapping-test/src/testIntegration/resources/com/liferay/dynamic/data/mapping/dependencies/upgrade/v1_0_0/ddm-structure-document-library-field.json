@@ -1,0 +1,27 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "document-library",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Documents and Media"
+			},
+			"localizable": true,
+			"name": "Documents_and_Media",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-documentlibrary"
+		}
+	]
+}

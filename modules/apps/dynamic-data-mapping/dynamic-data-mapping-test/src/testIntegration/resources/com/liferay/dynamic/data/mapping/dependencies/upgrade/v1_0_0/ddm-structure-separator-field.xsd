@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element fieldNamespace="ddm" indexType="keyword" localizable="true" name="Separator" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-separator" width="">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Separator Label]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+			<entry name="style"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

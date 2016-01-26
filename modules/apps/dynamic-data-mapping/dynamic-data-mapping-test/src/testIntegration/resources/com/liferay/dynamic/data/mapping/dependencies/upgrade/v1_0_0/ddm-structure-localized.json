@@ -1,0 +1,29 @@
+{
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Name",
+				"pt_BR": "Nome"
+			},
+			"localizable": true,
+			"name": "Name",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Please type your name.",
+				"pt_BR": "Por favor digite o seu nome."
+			},
+			"type": "text"
+		}
+	]
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element default-language-id="en_US" name="TextRepeatable">
+		<dynamic-content language-id="en_US"><![CDATA[Donec tincidunt]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Suspendisse potenti]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Pellentesque dapibus hendrerit tortor]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Phasellus a est]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Nam pretium turpis et arcu]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Pellentesque posuere]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="_fieldsDisplay">
+		<dynamic-content language-id="en_US"><![CDATA[TextRepeatable_INSTANCE_yjnj,TextRepeatable_INSTANCE_oxst,TextRepeatable_INSTANCE_oopi,TextRepeatable_INSTANCE_wvli,TextRepeatable_INSTANCE_sjzh,TextRepeatable_INSTANCE_owql]]></dynamic-content>
+	</dynamic-element>
+</root>

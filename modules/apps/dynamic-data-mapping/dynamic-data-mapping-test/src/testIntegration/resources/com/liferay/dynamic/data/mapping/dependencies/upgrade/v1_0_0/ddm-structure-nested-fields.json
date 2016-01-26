@@ -1,0 +1,48 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text",
+			"nestedFields": [
+				{
+					"dataType": "boolean",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Boolean"
+					},
+					"localizable": true,
+					"name": "Boolean",
+					"predefinedValue": {
+						"en_US": "false"
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "checkbox"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text",
+		}
+	]
+}

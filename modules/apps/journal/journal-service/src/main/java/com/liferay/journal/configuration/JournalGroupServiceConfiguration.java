@@ -33,6 +33,9 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 )
 public interface JournalGroupServiceConfiguration {
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean changeableDefaultLanguage();
+
 	@Meta.AD(
 		deflt = "${resource:com/liferay/journal/dependencies/email_article_added_body.tmpl}",
 		required = false

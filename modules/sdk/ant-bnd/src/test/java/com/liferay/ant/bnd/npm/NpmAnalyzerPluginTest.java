@@ -39,8 +39,7 @@ public class NpmAnalyzerPluginTest {
 
 		URL url = getResource("dependencies/npm.json");
 
-		NpmModule npmModule = npmAnalyzerPlugin.getNpmModule(
-			url.openStream());
+		NpmModule npmModule = npmAnalyzerPlugin.getNpmModule(url.openStream());
 
 		Assert.assertNotNull(npmModule);
 		Assert.assertEquals("liferay", npmModule.name);
@@ -294,8 +293,7 @@ public class NpmAnalyzerPluginTest {
 		Jar jar = new Jar("test");
 
 		jar.putResource(
-			"npm.json",
-			new URLResource(getResource("dependencies/npm.json")));
+			"npm.json", new URLResource(getResource("dependencies/npm.json")));
 
 		analyzer.setJar(jar);
 
@@ -331,8 +329,7 @@ public class NpmAnalyzerPluginTest {
 
 		jar.putResource(
 			"npm.json",
-			new URLResource(
-				getResource("dependencies/npm.bad.version.json")));
+			new URLResource(getResource("dependencies/npm.bad.version.json")));
 
 		analyzer.setJar(jar);
 
@@ -375,8 +372,7 @@ public class NpmAnalyzerPluginTest {
 
 		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		String filterString = npmAnalyzerPlugin.getBowerVersionFilter(
-			version);
+		String filterString = npmAnalyzerPlugin.getBowerVersionFilter(version);
 
 		Assert.assertEquals(expectedFilterString, filterString);
 

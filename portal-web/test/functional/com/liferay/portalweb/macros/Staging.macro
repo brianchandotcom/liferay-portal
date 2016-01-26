@@ -151,6 +151,8 @@
 
 		<execute function="AssertClick" locator1="MenuItem#PUBLISH_TEPMLATES" value1="Publish Templates" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_NAME_FIELD" value1="${publishTemplateName}" />

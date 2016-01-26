@@ -33,7 +33,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
-	String tabs1Names = "advanced,email-from,web-content-added-email,web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
+	String tabs1Names = "email-from,web-content-added-email,web-content-moved-from-folder-email,web-content-moved-to-folder-email,web-content-review-email,web-content-updated-email";
 
 	if (WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinksCount(themeDisplay.getCompanyId(), scopeGroupId, JournalFolder.class.getName()) > 0) {
 		tabs1Names = tabs1Names.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email");
@@ -59,14 +59,6 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 		<liferay-ui:error key="emailArticleReviewSubject" message="please-enter-a-valid-subject" />
 		<liferay-ui:error key="emailArticleUpdatedBody" message="please-enter-a-valid-body" />
 		<liferay-ui:error key="emailArticleUpdatedSubject" message="please-enter-a-valid-subject" />
-
-		<liferay-ui:section>
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:input checked="<%= journalGroupServiceConfiguration.changeableDefaultLanguage() %>" helpMessage="changeable-default-language-help" label="changeable-default-language" name="preferences--changeableDefaultLanguage--" type="checkbox" value="<%= journalGroupServiceConfiguration.changeableDefaultLanguage() %>" />
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<aui:fieldset-group markupView="lexicon">

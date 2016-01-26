@@ -52,4 +52,11 @@ public interface JournalWebConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean publishVersionHistoryByDefault();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "%changeable.default.language.description",
+		name= "%changeable.default.language",
+		required = false)
+	public boolean changeableDefaultLanguage();
+
 }

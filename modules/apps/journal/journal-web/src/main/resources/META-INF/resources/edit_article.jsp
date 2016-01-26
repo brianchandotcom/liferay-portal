@@ -83,7 +83,7 @@ if (ddmTemplate == null) {
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
-boolean changeableDefaultLanguage = journalGroupServiceConfiguration.changeableDefaultLanguage();
+boolean changeableDefaultLanguage = journalWebConfiguration.changeableDefaultLanguage();
 
 if (article != null) {
 	String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());

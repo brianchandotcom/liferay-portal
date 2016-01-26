@@ -308,7 +308,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = decorateMessageFormat(
+					request, pattern, formattedArguments);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;

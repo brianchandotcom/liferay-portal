@@ -912,28 +912,21 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	protected boolean isSamePortletInstance(String ppid) {
-		PortletInstance currentPortletInstance =
+		PortletInstance portletInstance =
 			PortletInstance.fromPortletInstanceKey(ppid);
 
-		String currentPortletInstancePortletName =
-			currentPortletInstance.getPortletName();
+		String instanceId = portletInstance.getInstanceId();
 
-		String currentPortletInstanceInstanceId =
-			currentPortletInstance.getInstanceId();
-
-		if (Validator.isNull(currentPortletInstanceInstanceId)) {
+		if (Validator.isNull(instanceId)) {
 			return Validator.equals(_portlet.getPortletId(), ppid);
 		}
-		else {
-			if (Validator.equals(
-					currentPortletInstancePortletName,
+		else if (Validator.equals(
+					portletInstance.getPortletName(),
 					_portletInstance.getPortletName()) &&
-				Validator.equals(
-					currentPortletInstanceInstanceId,
-					_portletInstance.getInstanceId())) {
+				 Validator.equals(
+					 instanceId, _portletInstance.getInstanceId())) {
 
-				return true;
-			}
+			return true;
 		}
 
 		return false;

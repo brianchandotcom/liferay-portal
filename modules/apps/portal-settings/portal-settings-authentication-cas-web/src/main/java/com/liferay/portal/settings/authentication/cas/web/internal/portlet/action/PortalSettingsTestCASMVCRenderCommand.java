@@ -71,7 +71,7 @@ public class PortalSettingsTestCASMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.cas.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

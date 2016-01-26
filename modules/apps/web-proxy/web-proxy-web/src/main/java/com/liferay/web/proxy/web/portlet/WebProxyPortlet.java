@@ -89,7 +89,7 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 
 	@Override
 	public void destroy() {
-		if (_enabled) {
+		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
 

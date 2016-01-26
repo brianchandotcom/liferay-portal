@@ -354,15 +354,13 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 	/**
 	 * Returns <code>true</code> if a portlet preference exists in the database
-	 * for a portlet instance key. The portlet instance key is calculated using
-	 * the primary key of the portlet instance, the current user primary key and
-	 * the instanceId of the portlet.
+	 * for a portlet instance id and for the current user
 	 *
 	 * Only one portlet preference must exist on the database for a portlet
 	 * instance key, representing that the portlet instance has been deployed on
 	 * a customizable region of a layout by a user.
 	 *
-	 * @param routeParameters the parameter map
+	 * @param instanceId the identifier of the portlet instance map
 	 * @return <code>true</code> if a portlet preference exists in the database;
 	 *         <code>false</code> otherwise
 	 */

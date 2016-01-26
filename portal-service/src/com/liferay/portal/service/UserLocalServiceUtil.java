@@ -78,8 +78,8 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Adds the user to the default roles, unless the user already has these
-	* roles. The default roles can be specified in
+	* Adds the user to the default regular roles, unless the user already has
+	* these regular roles. The default regular roles can be specified in
 	* <code>portal.properties</code> with the key
 	* <code>admin.default.role.names</code>.
 	*

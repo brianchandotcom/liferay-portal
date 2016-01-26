@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google.events;
+package com.liferay.portal.security.sso.google.internal.lifecycle;
 
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true)
-public class AddGoogleExpandoColumnsAction extends SimpleAction {
+public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

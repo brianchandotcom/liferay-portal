@@ -88,9 +88,11 @@ public class CalendarUtil {
 			}
 
 			java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
-				calendarBooking.getStartTime(), displayTimeZone);
+				Math.max(calendarBooking.getStartTime(), startTime),
+					 displayTimeZone);
 			java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(
-				calendarBooking.getEndTime(), displayTimeZone);
+				Math.min(calendarBooking.getEndTime(), endTime),
+					displayTimeZone);
 
 			long days = JCalendarUtil.getDaysBetween(
 				startTimeJCalendar, endTimeJCalendar);

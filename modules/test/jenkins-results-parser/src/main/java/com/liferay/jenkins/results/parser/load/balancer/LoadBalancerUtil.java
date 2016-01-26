@@ -46,7 +46,7 @@ import org.json.JSONObject;
 public class LoadBalancerUtil {
 
 	public static String getMostAvailableMasterURL(
-			HashMap<String, String> overrideMap)
+			Map<String, String> overrideMap)
 		throws Exception {
 
 		return getMostAvailableMasterURL(
@@ -242,7 +242,7 @@ public class LoadBalancerUtil {
 	}
 
 	public static String getMostAvailableMasterURL(
-			String propertiesURL, HashMap<String, String> overrideMap)
+			String propertiesURL, Map<String, String> overrideMap)
 		throws Exception {
 
 		String propertiesString = JenkinsResultsParserUtil.toString(

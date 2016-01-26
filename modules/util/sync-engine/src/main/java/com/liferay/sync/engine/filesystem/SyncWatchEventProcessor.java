@@ -104,24 +104,12 @@ public class SyncWatchEventProcessor implements Runnable {
 	}
 
 	public boolean isInProgress() {
-		long count = SyncWatchEventService.getSyncWatchEventsCount(
-			_syncAccountId);
+		if (SyncWatchEventService.hasSyncWatchEvents(_syncAccountId) ||
+			SyncFileService.hasSyncFiles(
+				_syncAccountId, SyncFile.UI_EVENT_DOWNLOADING) ||
+			SyncFileService.hasSyncFiles(
+				_syncAccountId, SyncFile.UI_EVENT_UPLOADING)) {
 
-		if (count > 0) {
-			return true;
-		}
-
-		count = SyncFileService.getSyncFilesCount(
-			_syncAccountId, SyncFile.UI_EVENT_DOWNLOADING);
-
-		if (count > 0) {
-			return true;
-		}
-
-		count = SyncFileService.getSyncFilesCount(
-			_syncAccountId, SyncFile.UI_EVENT_UPLOADING);
-
-		if (count > 0) {
 			return true;
 		}
 

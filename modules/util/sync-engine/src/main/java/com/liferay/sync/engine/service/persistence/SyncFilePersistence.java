@@ -42,17 +42,12 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		super(SyncFile.class);
 	}
 
-	public long countByS_U(long syncAccountId, int uiEvent)
-		throws SQLException {
-
+	public long countByUIEvent(int uiEvent) throws SQLException {
 		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
 
 		Where<SyncFile, Long> where = queryBuilder.where();
 
-		where.eq("syncAccountId", syncAccountId);
 		where.eq("uiEvent", uiEvent);
-
-		where.and(2);
 
 		return where.countOf();
 	}
@@ -73,14 +68,18 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return where.countOf();
 	}
 
-	public long countByUIEvent(int uiEvent) throws SQLException {
+	public SyncFile fetchByFilePathName(String filePathName)
+		throws SQLException {
+
 		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
+
+		queryBuilder.limit(1L);
 
 		Where<SyncFile, Long> where = queryBuilder.where();
 
-		where.eq("uiEvent", uiEvent);
+		where.eq("filePathName", new SelectArg(filePathName));
 
-		return where.countOf();
+		return where.queryForFirst();
 	}
 
 	public SyncFile fetchByC_S(String checksum, int state) throws SQLException {
@@ -98,10 +97,12 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return where.queryForFirst();
 	}
 
-	public List<SyncFile> findByParentFilePathName(String parentFilePathName)
+	public SyncFile fetchByPF_S_First(String parentFilePathName, int state)
 		throws SQLException {
 
 		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
+
+		queryBuilder.limit(1L);
 
 		Where<SyncFile, Long> where = queryBuilder.where();
 
@@ -111,11 +112,18 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
 
 		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
+		where.eq("state", state);
+		where.ne("uiEvent", SyncFile.UI_EVENT_DELETED_LOCAL);
+		where.ne("uiEvent", SyncFile.UI_EVENT_DELETED_REMOTE);
+		where.ne("uiEvent", SyncFile.UI_EVENT_TRASHED_LOCAL);
+		where.ne("uiEvent", SyncFile.UI_EVENT_TRASHED_REMOTE);
 
-		return where.query();
+		where.and(6);
+
+		return where.queryForFirst();
 	}
 
-	public SyncFile fetchByFilePathName(String filePathName)
+	public SyncFile fetchByS_U_First(long syncAccountId, int uiEvent)
 		throws SQLException {
 
 		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
@@ -124,7 +132,10 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 
 		Where<SyncFile, Long> where = queryBuilder.where();
 
-		where.eq("filePathName", new SelectArg(filePathName));
+		where.eq("syncAccountId", syncAccountId);
+		where.eq("uiEvent", uiEvent);
+
+		where.and(2);
 
 		return where.queryForFirst();
 	}
@@ -146,6 +157,23 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		where.and(3);
 
 		return where.queryForFirst();
+	}
+
+	public List<SyncFile> findByParentFilePathName(String parentFilePathName)
+		throws SQLException {
+
+		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
+
+		Where<SyncFile, Long> where = queryBuilder.where();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		parentFilePathName = StringUtils.replace(
+			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
+
+		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
+
+		return where.query();
 	}
 
 	public List<SyncFile> findBySyncAccountId(long syncAccountId)
@@ -212,19 +240,6 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return queryForFieldValues(fieldValues);
 	}
 
-	public List<SyncFile> findByR_S_S(
-			long repositoryId, int state, long syncAccountId)
-		throws SQLException {
-
-		Map<String, Object> fieldValues = new HashMap<>();
-
-		fieldValues.put("repositoryId", repositoryId);
-		fieldValues.put("state", state);
-		fieldValues.put("syncAccountId", syncAccountId);
-
-		return queryForFieldValues(fieldValues);
-	}
-
 	public List<SyncFile> findByS_U(
 			long syncAccountId, int uiEvent, String orderByColumn,
 			boolean ascending)
@@ -242,6 +257,19 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		where.and(2);
 
 		return where.query();
+	}
+
+	public List<SyncFile> findByR_S_S(
+			long repositoryId, int state, long syncAccountId)
+		throws SQLException {
+
+		Map<String, Object> fieldValues = new HashMap<>();
+
+		fieldValues.put("repositoryId", repositoryId);
+		fieldValues.put("state", state);
+		fieldValues.put("syncAccountId", syncAccountId);
+
+		return queryForFieldValues(fieldValues);
 	}
 
 	public void renameByParentFilePathName(

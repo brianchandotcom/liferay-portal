@@ -187,17 +187,22 @@ public class SyncWatchEventService {
 		return _syncWatchEventPersistence;
 	}
 
-	public static long getSyncWatchEventsCount(long syncAccountId) {
+	public static boolean hasSyncWatchEvents(long syncAccountId) {
 		try {
-			return _syncWatchEventPersistence.countBySyncAccountId(
-				syncAccountId);
+			if (_syncWatchEventPersistence.fetchBySyncAccountId_First(
+					syncAccountId) == null) {
+
+				return false;
+			}
+
+			return true;
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {
 				_logger.debug(sqle.getMessage(), sqle);
 			}
 
-			return 0;
+			return false;
 		}
 	}
 

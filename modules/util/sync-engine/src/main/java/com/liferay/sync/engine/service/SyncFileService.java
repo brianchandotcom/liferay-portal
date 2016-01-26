@@ -463,19 +463,6 @@ public class SyncFileService {
 		}
 	}
 
-	public static long getSyncFilesCount(long syncAccountId, int uiEvent) {
-		try {
-			return _syncFilePersistence.countByS_U(syncAccountId, uiEvent);
-		}
-		catch (SQLException sqle) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(sqle.getMessage(), sqle);
-			}
-
-			return 0;
-		}
-	}
-
 	public static long getSyncFilesCount(
 		long syncAccountId, String type, int uiEvent) {
 
@@ -489,6 +476,46 @@ public class SyncFileService {
 			}
 
 			return 0;
+		}
+	}
+
+	public static boolean hasSyncFiles(long syncAccountId, int uiEvent) {
+		try {
+			SyncFile syncFile = _syncFilePersistence.fetchByS_U_First(
+				syncAccountId, uiEvent);
+
+			if (syncFile == null) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return false;
+		}
+	}
+
+	public static boolean hasSyncFiles(String parentFilePathName, int state) {
+		try {
+			SyncFile syncFile = _syncFilePersistence.fetchByPF_S_First(
+				parentFilePathName, state);
+
+			if (syncFile == null) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return false;
 		}
 	}
 

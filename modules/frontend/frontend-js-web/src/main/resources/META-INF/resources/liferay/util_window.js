@@ -377,7 +377,6 @@ AUI.add(
 					var modalConfig = A.merge(instance.DEFAULTS, config.dialog);
 
 					var height = modalConfig.height;
-
 					var width = modalConfig.width;
 
 					if (height === '' || height === undefined || height > DOM.winHeight()) {

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOWNLOAD</td>
+	<td>//a[contains(@class,'taglib-icon')]/span[contains(@class,'taglib-text') and contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Edit')]</td>
 	<td></td>

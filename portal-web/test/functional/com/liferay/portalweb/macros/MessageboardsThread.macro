@@ -438,13 +438,21 @@
 	</command>
 
 	<command name="markAsAnswerCP">
-		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
+		<var name="key_threadReplyBody" value="${threadReplyBody}" />
+
+		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MARK_AS_AN_ANSWER" value1="Mark as an Answer" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
 
 	<command name="markAsAnswerPG">
-		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_MARK_AS_AN_ANSWER_1" value1="Mark as an Answer" />
+		<var name="key_threadReplyBody" value="${threadReplyBody}" />
+
+		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MARK_AS_AN_ANSWER" value1="Mark as an Answer" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 	</command>
@@ -648,7 +656,9 @@
 		<if>
 			<equals arg1="${markAsAnswer}" arg2="true" />
 			<then>
-				<execute macro="MessageboardsThread#markAsAnswerCP" />
+				<execute macro="MessageboardsThread#markAsAnswerCP">
+					<var name="threadReplyBody" value="${threadReplyBody}" />
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -711,7 +721,9 @@
 		<if>
 			<equals arg1="${markAsAnswer}" arg2="true" />
 			<then>
-				<execute macro="MessageboardsThread#markAsAnswerPG" />
+				<execute macro="MessageboardsThread#markAsAnswerPG">
+					<var name="threadReplyBody" value="${threadReplyBody}" />
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -862,12 +874,15 @@
 		<execute function="AssertElementPresent" locator1="Checkbox#ANONYMOUS" />
 	</command>
 
-	<command name="viewAnswerCP">
+	<command name="viewAnswerPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_ADMIN_FLAG" value1="Resolved" />
-		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_ADMIN_THREAD" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_FLAG" value1="Resolved" />
+
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+
 		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="Back" />
 	</command>
 

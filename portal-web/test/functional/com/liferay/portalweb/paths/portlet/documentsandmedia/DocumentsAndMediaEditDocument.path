@@ -59,6 +59,22 @@
 	<td>//select[contains(@id,'_fileEntryTypeId')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REVISION_BUTTON-->
+<tr>
+	<td>MAJOR_REVISION_BUTTON</td>
+	<td>//label[contains(.,'Major Revision')]/input</td>
+	<td>Document Type</td>
+</tr>
+<tr>
+	<td>MINOR_REVISION_BUTTON</td>
+	<td>//label[contains(.,'Minor Revision')]/input</td>
+	<td>Document Type</td>
+</tr>
 </tbody>
 </table>
 </body>

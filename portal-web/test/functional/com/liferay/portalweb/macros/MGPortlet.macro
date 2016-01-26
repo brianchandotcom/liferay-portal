@@ -9,7 +9,7 @@
 
 		<execute function="Check" locator1="Checkbox#SHOW_ACTIONS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_FOLDER_MENU_CHECKBOX" />
-		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX" />
+		<execute function="Check" locator1="Checkbox#SHOW_NAVIGATION_LINKS_CHECKBOX" />
 		<execute function="Check" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

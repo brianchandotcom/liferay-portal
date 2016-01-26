@@ -444,6 +444,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARK_AS_AN_ANSWER</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Mark as an Answer')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MARK_AS_READ</td>
 	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Mark as Read')]</td>
 	<td></td>

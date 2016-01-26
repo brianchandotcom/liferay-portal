@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARENT_FOLDER_PANEL</td>
+	<td>//div[contains(@id,'parent-folderTitle')]//a[contains(.,'Parent Folder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

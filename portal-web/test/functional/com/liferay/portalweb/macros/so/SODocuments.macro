@@ -8,7 +8,7 @@
 
 		<execute function="AssertClick" locator1="SODocuments#VERSION_HISTORY_DELETE_VERSION" value1="Delete Version" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="revertPGDocumentVersion">
@@ -20,8 +20,8 @@
 
 		<execute function="AssertClick" locator1="SODocuments#VERSION_HISTORY_REVERT" value1="Revert" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_HEADER_TITLE" value1="${dmDocumentRevertTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${dmDocumentRevertTitle}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentRevertDescription}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Ratings" />
@@ -298,7 +298,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${dmDocumentTitle}" />
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
@@ -377,7 +377,7 @@
 
 		<execute function="AssertClick" locator1="SODocuments#VERSION_HISTORY_VIEW" value1="View" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${dmDocumentTitle}" />
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />

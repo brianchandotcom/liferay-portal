@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_URL_LINK</td>
+	<td>//div[@class='asset-details-content']//span/a[@class='show-url-file']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_VERSION</td>
 	<td>//h3[contains(@class,'version')]</td>
 	<td></td>
@@ -217,6 +222,32 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MARKETING-->
+<tr>
+	<td>MARKETING_SELECT</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_marketingSelect}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_CAMPAIGN_THEME</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_campaignTheme}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_NEEDS_LEGAL_REVIEW</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_legalReview}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_BANNER_NAME</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_bannerName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARKETING_BANNER_DESCRIPTION</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_bannerDescription}')]</td>
+	<td></td>
+</tr>
 <!--METADATA_PANEL-->
 <tr>
 	<td>METADATA_PANEL_BOOLEAN</td>
@@ -293,6 +324,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SOCIAL_OFFICE_RATING-->
+<tr>
+	<td>SOCIAL_OFFICE_AVERAGE_RATING_STAR_ICON_PNG</td>
+	<td>so/icons/average_rating_star_icon.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--VERSION_HISTORY_TABLE-->
 <tr>
 	<td>VERSION_HISTORY_TABLE_CHECKBOX</td>
@@ -329,6 +371,11 @@
 	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[5]/div/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SIDEBAR-->
 <tr>
 	<td>SIDEBAR_DROPDOWN</td>
@@ -348,6 +395,17 @@
 <tr>
 	<td>SIDEBAR_DROPDOWN_VERSIONS</td>
 	<td>//div//li[contains(@class,'active dropdown')]//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Versions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIDEO_GENERATION-->
+<tr>
+	<td>VIDEO_GENERATION_THUMBNAIL_RESOLUTION</td>
+	<td>//head/title[contains(.,'${key_videoGenerationThumbnailResolution}')]</td>
 	<td></td>
 </tr>
 </tbody>

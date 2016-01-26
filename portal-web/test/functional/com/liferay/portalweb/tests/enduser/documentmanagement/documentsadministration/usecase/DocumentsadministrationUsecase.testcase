@@ -262,6 +262,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
 		<execute macro="DMDocument#checkoutPG">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
@@ -654,19 +658,19 @@
 
 		<var name="key_videoGenerationThumbnailResolution" value="640" />
 
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 
 		<var name="key_videoGenerationThumbnailResolution" value="360" />
 
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 
 		<var name="key_videoGenerationThumbnailResolution" value="1280" />
 
-		<execute function="AssertElementPresent#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 
 		<var name="key_videoGenerationThumbnailResolution" value="720" />
 
-		<execute function="AssertElementPresent#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 	</command>
 
 	<command name="ImportDocumentWithDBStore" priority="3">

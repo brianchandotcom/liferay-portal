@@ -199,6 +199,11 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		_stage = stage;
 	}
 
+	@Override
+	public void setWorkingDir(Object workingDir) {
+		throw new UnsupportedOperationException();
+	}
+
 	public static enum SourceMaps {
 
 		DISABLED, ENABLED, ENABLED_INLINE

@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -45,10 +47,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.test.WorkflowHandlerInvocationCounter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.ExpectedLog;
@@ -74,6 +78,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import jodd.util.MimeTypes;
 
 import org.hibernate.util.JDBCExceptionReporter;
 
@@ -1489,6 +1495,162 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				serviceContext);
+		}
+
+	}
+
+	@Sync
+	public static class WhenViewingFolderContents extends BaseDLAppTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(),
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Test
+		public void shouldCountDraftsIfOwner() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			int foldersAndFileEntriesAndFileShortcutsCount =
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+					group.getGroupId(), parentFolder.getFolderId(),
+					WorkflowConstants.STATUS_APPROVED, false);
+
+			Assert.assertEquals(2, foldersAndFileEntriesAndFileShortcutsCount);
+		}
+
+		@Test
+		public void shouldNotCountDraftsIfNotOwner() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			User user = UserTestUtil.addGroupUser(group, "User");
+
+			try (ContextUserReplace contextUserReplace =
+					new ContextUserReplace(user)) {
+
+				int foldersAndFileEntriesAndFileShortcutsCount =
+					DLAppServiceUtil.
+						getFoldersAndFileEntriesAndFileShortcutsCount(
+							group.getGroupId(), parentFolder.getFolderId(),
+							WorkflowConstants.STATUS_APPROVED, false);
+
+				Assert.assertEquals(
+					1, foldersAndFileEntriesAndFileShortcutsCount);
+			}
+			finally {
+				UserLocalServiceUtil.deleteUser(user.getUserId());
+			}
+		}
+
+		@Test
+		public void shouldNotReturnDraftsIfNotOwner() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			User user = UserTestUtil.addGroupUser(group, "User");
+
+			try (ContextUserReplace contextUserReplace =
+					new ContextUserReplace(user)) {
+
+				List<Object> foldersAndFileEntriesAndFileShortcuts =
+					DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+						group.getGroupId(), parentFolder.getFolderId(),
+						WorkflowConstants.STATUS_APPROVED, false,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				Assert.assertEquals(
+					1, foldersAndFileEntriesAndFileShortcuts.size());
+			}
+			finally {
+				UserLocalServiceUtil.deleteUser(user.getUserId());
+			}
+		}
+
+		@Test
+		public void shouldReturnDraftsIfOwner() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				StringUtil.randomString(),
+				MimeTypes.MIME_APPLICATION_OCTET_STREAM,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, (byte[])null, serviceContext);
+
+			List<Object> foldersAndFileEntriesAndFileShortcuts =
+				DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+					group.getGroupId(), parentFolder.getFolderId(),
+					WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			Assert.assertEquals(
+				2, foldersAndFileEntriesAndFileShortcuts.size());
 		}
 
 	}

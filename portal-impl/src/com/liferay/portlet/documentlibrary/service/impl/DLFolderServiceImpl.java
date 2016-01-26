@@ -256,6 +256,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
 		throws PortalException {
 
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
 		if (!DLFolderPermission.contains(
 				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
 
@@ -297,6 +303,28 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+
+		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
+			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, QueryDefinition<?> queryDefinition)
+		throws PortalException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
 
 		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
 			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);

@@ -80,6 +80,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
+			cssClass="text-strong"
 			name="name"
 			orderable="<%= true %>"
 			value="<%= name %>"

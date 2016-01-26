@@ -61,6 +61,8 @@ iteratorURL.setParameter("keywords", keywords);
 
 SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-bottom-right-corner");
 
+categoriesSearchContainer.setSearch(Validator.isNotNull(keywords));
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 
 categoriesSearchContainer.setOrderByCol(orderByCol);
@@ -134,38 +136,37 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= Validator.isNotNull(keywords) || (categoriesCount > 0) %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="assetCategories"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-filters>
-				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
-				/>
-
-				<liferay-frontend:management-bar-sort
-					orderByCol="<%= orderByCol %>"
-					orderByType="<%= orderByType %>"
-					orderColumns='<%= new String[] {"create-date"} %>'
-					portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
-				/>
-			</liferay-frontend:management-bar-filters>
-
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
+<liferay-frontend:management-bar
+	disabled="<%= categoriesCount <= 0 %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="assetCategories"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
 			/>
-		</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedCategories" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"create-date"} %>'
+				portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedCategories" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <portlet:actionURL name="deleteCategory" var="deleteCategoryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -196,6 +197,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, curCategory.getCategoryId(), vocabularyId) > 0) ? rowURL : null %>"
 				name="category"
 				value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"

@@ -23,6 +23,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, renderResponse.createRenderURL(), null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-bottom-right-corner");
 
+vocabulariesSearchContainer.setSearch(Validator.isNotNull(keywords));
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 
 vocabulariesSearchContainer.setOrderByCol(orderByCol);
@@ -85,38 +87,37 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= Validator.isNotNull(keywords) || (vocabulariesCount > 0) %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="assetVocabularies"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-filters>
-				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
-				/>
-
-				<liferay-frontend:management-bar-sort
-					orderByCol="<%= orderByCol %>"
-					orderByType="<%= orderByType %>"
-					orderColumns='<%= new String[] {"create-date"} %>'
-					portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
-				/>
-			</liferay-frontend:management-bar-filters>
-
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
+<liferay-frontend:management-bar
+	disabled="<%= vocabulariesCount <= 0 %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="assetVocabularies"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
 			/>
-		</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedVocabularies" label="delete"  />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"create-date"} %>'
+				portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedVocabularies" label="delete"  />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -146,6 +147,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="text-strong"
 				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, vocabulary.getVocabularyId()) > 0) ? rowURL : null %>"
 				name="name"
 				value="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>"

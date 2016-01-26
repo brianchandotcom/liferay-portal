@@ -391,6 +391,10 @@ public class SearchContainer<R> {
 	}
 
 	public boolean isSearch() {
+		if (_searchTerms != null) {
+			return _searchTerms.isSearch();
+		}
+
 		return _search;
 	}
 

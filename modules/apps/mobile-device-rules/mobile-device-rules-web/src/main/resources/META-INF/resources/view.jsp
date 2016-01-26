@@ -57,49 +57,48 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="deviceFamilies"
-	>
+<liferay-frontend:management-bar
+	disabled="<%= mdrRuleGroupsCount <= 0 %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="deviceFamilies"
+>
 
-		<%
-		PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, renderResponse);
-		%>
+	<%
+	PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, renderResponse);
+	%>
 
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= displayStyleURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-		<%
-		PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
+	<%
+	PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-		iteratorURL.setParameter("displayStyle", displayStyle);
-		%>
+	iteratorURL.setParameter("displayStyle", displayStyle);
+	%>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= iteratorURL %>"
-			/>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= iteratorURL %>"
+		/>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= ruleGroupSearch.getOrderByCol() %>"
-				orderByType="<%= ruleGroupSearch.getOrderByType() %>"
-				orderColumns='<%= new String[] {"create-date"} %>'
-				portletURL="<%= iteratorURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= ruleGroupSearch.getOrderByCol() %>"
+			orderByType="<%= ruleGroupSearch.getOrderByType() %>"
+			orderColumns='<%= new String[] {"create-date"} %>'
+			portletURL="<%= iteratorURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedDeviceFamilies" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedDeviceFamilies" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <portlet:actionURL name="/mobile_device_rules/edit_rule_group" var="editRuleGroupURL">
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />

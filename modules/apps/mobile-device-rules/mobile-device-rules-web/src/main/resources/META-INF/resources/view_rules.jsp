@@ -80,42 +80,42 @@ renderResponse.setTitle(LanguageUtil.format(request, "classification-rules-for-x
 	</aui:nav>
 </aui:nav-bar>
 
-<c:if test="<%= rulesCount > 0 %>">
-	<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	disabled="<%= rulesCount <= 0 %>"
+>
 
-		<%
-		PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, renderResponse);
-		%>
+	<%
+	PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, renderResponse);
+	%>
 
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= displayStyleURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-		<%
-		PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
+	<%
+	PortletURL iteratorURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-		iteratorURL.setParameter("displayStyle", displayStyle);
-		%>
+	iteratorURL.setParameter("displayStyle", displayStyle);
+	%>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= iteratorURL %>"
-			/>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= iteratorURL %>"
+		/>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"create-date"} %>'
-				portletURL="<%= iteratorURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-	</liferay-frontend:management-bar>
-</c:if>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"create-date"} %>'
+			portletURL="<%= iteratorURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

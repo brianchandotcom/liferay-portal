@@ -24,9 +24,9 @@ long teamId = ParamUtil.getLong(request, "teamId");
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUser");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUser");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -63,41 +63,46 @@ RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="users" selected="<%= true %>" />
+	</aui:nav>
+
+	<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= usersCount > 0 %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="users"
-	>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= portletURL %>"
-			/>
+<liferay-frontend:management-bar
+	disabled="<%= usersCount <= 0 %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="users"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
 
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280" name="selectUserFm">
 	<liferay-ui:search-container

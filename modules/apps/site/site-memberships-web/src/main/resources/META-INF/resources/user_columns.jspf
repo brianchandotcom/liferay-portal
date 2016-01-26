@@ -128,6 +128,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
+			cssClass="text-strong"
 			name="name"
 			value="<%= name %>"
 		/>

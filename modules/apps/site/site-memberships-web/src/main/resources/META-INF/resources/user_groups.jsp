@@ -49,38 +49,41 @@ List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompany
 userGroupSearch.setResults(userGroups);
 %>
 
-<c:if test="<%= userGroupsCount > 0 %>">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="userGroups"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchEnabled" value="<%= String.valueOf((userGroupsCount > 0) || searchTerms.isSearch()) %>" />
+</liferay-util:include>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
-			/>
+<liferay-frontend:management-bar
+	disabled="<%= userGroupsCount <= 0 %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="userGroups"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"name", "description"} %>'
-				portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+		/>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedUserGroups" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
-</c:if>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name", "description"} %>'
+			portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedUserGroups" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 

@@ -45,7 +45,7 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 			(long)plidAndPortletId[0], (String)plidAndPortletId[1]);
 	}
 
-	protected static Object[] fetchPlidAndPortletId(
+	protected Object[] fetchPlidAndPortletId(
 			PermissionChecker permissionChecker, long groupId,
 			String[] portletIds)
 		throws PortalException {
@@ -76,7 +76,7 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 		return null;
 	}
 
-	protected static Object[] getPlidAndPortletId(
+	protected Object[] getPlidAndPortletId(
 			ThemeDisplay themeDisplay, long groupId, long plid,
 			String[] portletIds)
 		throws PortalException {
@@ -142,7 +142,7 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 		throw new NoSuchLayoutException(sb.toString());
 	}
 
-	protected static String getPortletId(
+	protected String getPortletId(
 		LayoutTypePortlet layoutTypePortlet, String portletId) {
 
 		for (String curPortletId : layoutTypePortlet.getPortletIds()) {

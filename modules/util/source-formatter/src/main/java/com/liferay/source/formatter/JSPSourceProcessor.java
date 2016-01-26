@@ -292,13 +292,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = StringUtil.replace(
 			newContent,
 			new String[] {
-				"<br/>", "\"/>", "\" >", ">'/>", ">' >", "@page import", "\"%>",
-				")%>", "function (", "javascript: ", "){\n", ";;\n", "\n\n\n"
+				"<br/>", "@page import", "\"%>", ")%>", "function (",
+				"javascript: ", "){\n", ";;\n", "\n\n\n"
 			},
 			new String[] {
-				"<br />", "\" />", "\">", ">' />", ">'>", "@ page import",
-				"\" %>", ") %>", "function(", "javascript:", ") {\n", ";\n",
-				"\n\n"
+				"<br />", "@ page import", "\" %>", ") %>", "function(",
+				"javascript:", ") {\n", ";\n", "\n\n"
 			});
 
 		newContent = fixRedirectBackURL(newContent);
@@ -634,6 +633,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
 					line = formatWhitespace(line, trimmedLine, javaSource);
+
+					if (line.endsWith(">")) {
+						if (line.endsWith("/>")) {
+							if (!trimmedLine.equals("/>") &&
+								!line.endsWith(" />")) {
+
+								line = StringUtil.replaceLast(
+									line, "/>", " />");
+							}
+						}
+						else if (line.endsWith(" >")) {
+							line = StringUtil.replaceLast(line, " >", ">");
+						}
+					}
 				}
 
 				// LPS-47179

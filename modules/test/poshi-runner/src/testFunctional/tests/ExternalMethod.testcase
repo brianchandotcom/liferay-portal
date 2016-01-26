@@ -26,15 +26,116 @@
 				<fail message="Execute method failed!" />
 			</else>
 		</if>
+
+		<var name="expected" value="TestString" />
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="extractChars">
+			<arg value="Test String" />
+			<return name="actual" />
+		</execute>
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The actual value matched the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The actual value did NOT match the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Execute method failed!" />
+			</else>
+		</if>
 	</command>
 
 	<command name="ExecuteMethodVariableArguments" priority="5">
+		<var name="argument1" value="test" />
+		<var name="argument2" value="string" />
 		<var name="expected" value="test,string," />
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="add">
+			<arg value="${argument1}" />
+			<arg value="${argument2}" />
+			<return name="actual" />
+		</execute>
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The actual value matched the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The actual value did NOT match the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Execute method failed!" />
+			</else>
+		</if>
+
+		<var name="argument" value="Test String" />
+		<var name="expected" value="TestString" />
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="extractChars">
+			<arg value="${argument}" />
+			<return name="actual" />
+		</execute>
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The actual value matched the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The actual value did NOT match the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Execute method failed!" />
+			</else>
+		</if>
+	</command>
+
+	<command name="ExecuteMethodVariableReturn" priority="5">
+		<var name="expected" value="test,string," />
+
+		<var name="returnVariable" value="actual" />
 
 		<execute class="com.liferay.poshi.runner.util.StringUtil" method="add">
 			<arg value="test" />
 			<arg value="string" />
-			<return name="actual" />
+			<return name="${returnVariable}" />
+		</execute>
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<echo message="The actual value matched the expected value." />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+			</then>
+			<else>
+				<echo message="The actual value did NOT match the expected value!" />
+				<echo message="action: '${actual}'" />
+				<echo message="expected: '${expected}'" />
+
+				<fail message="Execute method failed!" />
+			</else>
+		</if>
+
+		<var name="expected" value="TestString" />
+		<var name="returnVariable" value="actual" />
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="extractChars">
+			<arg value="Test String" />
+			<return name="${returnVariable}" />
 		</execute>
 
 		<if>

@@ -625,11 +625,17 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
+		XMLLoggerHandler.updateStatus(executeElement, "pending");
+
 		List<String> parameterList = new ArrayList<>();
 		List<Element> argElements = executeElement.elements("arg");
 
 		for (Element argElement : argElements) {
-			parameterList.add(argElement.attributeValue("value"));
+			String parameter = argElement.attributeValue("value");
+
+			parameter = PoshiRunnerVariablesUtil.replaceCommandVars(parameter);
+
+			parameterList.add(parameter);
 		}
 
 		Element returnElement = executeElement.element("return");
@@ -637,13 +643,29 @@ public class PoshiRunnerExecutor {
 		String returnVariable = returnElement.attributeValue("name");
 		String className = executeElement.attributeValue("class");
 		String methodName = executeElement.attributeValue("method");
+
 		String[] parameters = parameterList.toArray(
 			new String[parameterList.size()]);
 
-		String returnValue = ExternalMethod.execute(
-			className, methodName, parameters);
+		try {
+			String returnValue = ExternalMethod.execute(
+				className, methodName, parameters);
 
-		PoshiRunnerVariablesUtil.putIntoCommandMap(returnVariable, returnValue);
+			if (returnVariable != null) {
+				PoshiRunnerVariablesUtil.putIntoCommandMap(
+					returnVariable, returnValue);
+			}
+
+			CommandLoggerHandler.logExternalMethodCommand(
+				executeElement, parameterList, returnValue);
+		}
+		catch (Throwable t) {
+			XMLLoggerHandler.updateStatus(executeElement, "fail");
+
+			throw t;
+		}
+
+		XMLLoggerHandler.updateStatus(executeElement, "pass");
 	}
 
 	public static void runReturnElement(Element returnElement)

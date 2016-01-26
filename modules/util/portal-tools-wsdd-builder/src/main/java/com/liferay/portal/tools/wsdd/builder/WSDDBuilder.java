@@ -100,7 +100,7 @@ public class WSDDBuilder {
 		}
 
 		_outputPath +=
-			StringUtil.replace(packagePath, ".", "/") + "/service/http";
+			StringUtil.replace(packagePath, '.', '/') + "/service/http";
 
 		_packagePath = packagePath;
 

@@ -162,7 +162,7 @@ public class UnstableMessageUtil {
 					String testClassName = caseJSONObject.getString(
 						"className");
 
-					int x = testClassName.lastIndexOf(".");
+					int x = testClassName.lastIndexOf('.');
 
 					String testPackageName = testClassName.substring(0, x);
 

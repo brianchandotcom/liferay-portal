@@ -67,7 +67,7 @@ public class Java2WsddTask {
 
 		String wsdlFileName = tempDir + "/service.wsdl";
 
-		int pos = className.lastIndexOf(".");
+		int pos = className.lastIndexOf('.');
 
 		String packagePath = className.substring(0, pos);
 
@@ -86,7 +86,7 @@ public class Java2WsddTask {
 		String location = "http://localhost/services/" + serviceName;
 
 		String mappingPackage = packagePath.substring(
-			0, packagePath.lastIndexOf(".")) + ".ws";
+			0, packagePath.lastIndexOf('.')) + ".ws";
 
 		Project project = AntUtil.getProject();
 
@@ -127,7 +127,7 @@ public class Java2WsddTask {
 		// Get content
 
 		File deployFile = new File(
-			tempDir + "/" + StringUtil.replace(packagePath, ".", "/") +
+			tempDir + "/" + StringUtil.replace(packagePath, '.', '/') +
 				"/deploy.wsdd");
 
 		String deployContent = new String(
@@ -140,7 +140,7 @@ public class Java2WsddTask {
 		deployContent = _format(deployContent);
 
 		File undeployFile = new File(
-			tempDir + "/" + StringUtil.replace(packagePath, ".", "/") +
+			tempDir + "/" + StringUtil.replace(packagePath, '.', '/') +
 				"/undeploy.wsdd");
 
 		String undeployContent = new String(

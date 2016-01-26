@@ -123,7 +123,7 @@ public class JavaFieldsParser {
 	}
 
 	private static String _getClassName(String javaSnippet) {
-		int x = javaSnippet.lastIndexOf(".");
+		int x = javaSnippet.lastIndexOf('.');
 
 		if (x == -1) {
 			return null;
@@ -133,7 +133,7 @@ public class JavaFieldsParser {
 	}
 
 	private static String _getFieldName(String javaSnippet) {
-		int x = javaSnippet.lastIndexOf(".");
+		int x = javaSnippet.lastIndexOf('.');
 
 		if (x == -1) {
 			return null;

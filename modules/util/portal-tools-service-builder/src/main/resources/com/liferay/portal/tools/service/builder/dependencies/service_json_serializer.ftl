@@ -1,6 +1,6 @@
 package ${packagePath}.service.http;
 
-import ${packagePath}.model.${entity.name};
+import ${apiPackagePath}.model.${entity.name};
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -41,7 +41,7 @@ public class ${entity.name}JSONSerializer {
 		return jsonObject;
 	}
 
-	public static JSONArray toJSONArray(${packagePath}.model.${entity.name}[] models) {
+	public static JSONArray toJSONArray(${apiPackagePath}.model.${entity.name}[] models) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (${entity.name} model : models) {
@@ -51,7 +51,7 @@ public class ${entity.name}JSONSerializer {
 		return jsonArray;
 	}
 
-	public static JSONArray toJSONArray(${packagePath}.model.${entity.name}[][] models) {
+	public static JSONArray toJSONArray(${apiPackagePath}.model.${entity.name}[][] models) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (${entity.name}[] model : models) {
@@ -61,7 +61,7 @@ public class ${entity.name}JSONSerializer {
 		return jsonArray;
 	}
 
-	public static JSONArray toJSONArray(List<${packagePath}.model.${entity.name}> models) {
+	public static JSONArray toJSONArray(List<${apiPackagePath}.model.${entity.name}> models) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (${entity.name} model : models) {

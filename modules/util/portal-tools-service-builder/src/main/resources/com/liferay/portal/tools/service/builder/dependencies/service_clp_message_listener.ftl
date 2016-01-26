@@ -1,14 +1,14 @@
 package ${packagePath}.service.messaging;
 
-import ${packagePath}.service.ClpSerializer;
+import ${apiPackagePath}.service.ClpSerializer;
 
 <#list entities as entity>
 	<#if entity.hasLocalService()>
-		import ${packagePath}.service.${entity.name}LocalServiceUtil;
+		import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 	</#if>
 
 	<#if entity.hasRemoteService()>
-		import ${packagePath}.service.${entity.name}ServiceUtil;
+		import ${apiPackagePath}.service.${entity.name}ServiceUtil;
 	</#if>
 </#list>
 

@@ -1,7 +1,7 @@
-package ${packagePath}.service.persistence;
+package ${apiPackagePath}.service.persistence;
 
-import ${packagePath}.model.${entity.name};
-import ${packagePath}.service.${entity.name}LocalServiceUtil;
+import ${apiPackagePath}.model.${entity.name};
+import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -18,7 +18,7 @@ public abstract class ${entity.name}ActionableDynamicQuery extends DefaultAction
 		setBaseLocalService(${entity.name}LocalServiceUtil.getService());
 
 		<#if pluginName != "">
-			setClassLoader(${packagePath}.service.ClpSerializer.class.getClassLoader());
+			setClassLoader(${apiPackagePath}.service.ClpSerializer.class.getClassLoader());
 		<#else>
 			setClassLoader(PortalClassLoaderUtil.getClassLoader());
 		</#if>

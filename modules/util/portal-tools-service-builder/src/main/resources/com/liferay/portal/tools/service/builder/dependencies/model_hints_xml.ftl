@@ -1,5 +1,5 @@
 <#list entities as entity>
-	<#assign modelName = packagePath + ".model." + entity.name>
+	<#assign modelName = apiPackagePath + ".model." + entity.name>
 
 	<#if entity.hasColumns()>
 		<model name="${modelName}">

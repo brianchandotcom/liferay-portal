@@ -1,5 +1,5 @@
 <#list entities as entity>
-	<import class="${packagePath}.model.${entity.name}" />
+	<import class="${apiPackagePath}.model.${entity.name}" />
 </#list>
 
 <#list entities as entity>
@@ -10,7 +10,7 @@
 			</#if>
 		>
 			<#if entity.hasCompoundPK()>
-				<composite-id name="primaryKey" class="${packagePath}.service.persistence.${entity.name}PK">
+				<composite-id name="primaryKey" class="${apiPackagePath}.service.persistence.${entity.name}PK">
 					<#assign pkList = entity.getPKList()>
 
 					<#list pkList as column>
@@ -90,7 +90,7 @@
 						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
 					</#if>
 
-					<#if (serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), column.getName(), column.getType()) == "CLOB") && (column.type != "Map")>
+					<#if (serviceBuilder.getSqlType(apiPackagePath + ".model." + entity.getName(), column.getName(), column.getType()) == "CLOB") && (column.type != "Map")>
 						type="com.liferay.portal.dao.orm.hibernate.StringClobType"
 					<#elseif column.isPrimitiveType() || (column.type == "Map") || (column.type == "String")>
 						type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${column.type}")}Type"
@@ -109,14 +109,14 @@
 				</#if>
 
 				<#if (column.type == "Blob") && column.lazy>
-					<one-to-one name="${column.name}BlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="${packagePath}.model.${entity.name}${column.methodName}BlobModel" cascade="save-update" outer-join="false" constrained="true" />
+					<one-to-one name="${column.name}BlobModel" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" class="${apiPackagePath}.model.${entity.name}${column.methodName}BlobModel" cascade="save-update" outer-join="false" constrained="true" />
 				</#if>
 			</#list>
 		</class>
 
 		<#list entity.blobList as blobColumn>
 			<#if blobColumn.lazy>
-				<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true"
+				<class name="${apiPackagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true"
 					<#if entity.isDynamicUpdateEnabled()>
 						dynamic-update="true"
 					</#if>

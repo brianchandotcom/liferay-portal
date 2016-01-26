@@ -1,6 +1,6 @@
-package ${packagePath}.service.persistence;
+package ${apiPackagePath}.service.persistence;
 
-import ${packagePath}.model.${entity.name};
+import ${apiPackagePath}.model.${entity.name};
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -162,7 +162,7 @@ public class ${entity.name}Util {
 		<#else>
 			if (_persistence == null) {
 				<#if pluginName != "">
-					_persistence = (${entity.name}Persistence)PortletBeanLocatorUtil.locate(${packagePath}.service.ClpSerializer.getServletContextName(), ${entity.name}Persistence.class.getName());
+					_persistence = (${entity.name}Persistence)PortletBeanLocatorUtil.locate(${apiPackagePath}.service.ClpSerializer.getServletContextName(), ${entity.name}Persistence.class.getName());
 				<#else>
 					_persistence = (${entity.name}Persistence)PortalBeanLocatorUtil.locate(${entity.name}Persistence.class.getName());
 				</#if>

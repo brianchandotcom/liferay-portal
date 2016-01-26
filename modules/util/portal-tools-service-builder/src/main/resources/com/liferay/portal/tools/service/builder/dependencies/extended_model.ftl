@@ -1,4 +1,4 @@
-package ${packagePath}.model;
+package ${apiPackagePath}.model;
 
 import aQute.bnd.annotation.ProviderType;
 

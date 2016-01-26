@@ -942,7 +942,7 @@ public abstract class BaseSeleniumImpl
 
 				String dirName = className.substring(22);
 
-				dirName = StringUtil.replace(dirName, ".", "/") + "/";
+				dirName = StringUtil.replace(dirName, '.', '/') + "/";
 
 				String fileName = stackTraceElement.getFileName();
 				int lineNumber = stackTraceElement.getLineNumber();

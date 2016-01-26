@@ -1,13 +1,13 @@
-package ${packagePath}.model;
+package ${apiPackagePath}.model;
 
-import ${packagePath}.service.ClpSerializer;
+import ${apiPackagePath}.service.ClpSerializer;
 
 <#if entity.hasLocalService() && entity.hasColumns()>
-	import ${packagePath}.service.${entity.name}LocalServiceUtil;
+	import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
 </#if>
 
 <#if entity.hasCompoundPK()>
-	import ${packagePath}.service.persistence.${entity.name}PK;
+	import ${apiPackagePath}.service.persistence.${entity.name}PK;
 </#if>
 
 import aQute.bnd.annotation.ProviderType;
@@ -1056,7 +1056,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	</#list>
 
 	private BaseModel<?> _${entity.varName}RemoteModel;
-	private Class<?> _clpSerializerClass = ${packagePath}.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ${apiPackagePath}.service.ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 

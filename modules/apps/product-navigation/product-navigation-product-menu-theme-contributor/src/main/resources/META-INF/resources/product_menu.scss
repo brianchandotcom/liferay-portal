@@ -439,6 +439,17 @@
 		overflow: visible;
 		padding: 0 16px;
 	}
+
+	.expand-pages-link {
+		position: absolute;
+		top: -35px;
+		left: 245px;
+		z-index: 1;
+
+		a {
+			padding: 5px;
+		}
+	}
 }
 
 .product-menu-expanded {

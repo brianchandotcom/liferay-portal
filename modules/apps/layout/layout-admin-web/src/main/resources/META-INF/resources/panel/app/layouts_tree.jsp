@@ -20,9 +20,15 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<span id="<portlet:namespace />-expand-pages-list">
-	<aui:icon image="expand" markupView="lexicon" />
-</span>
+<liferay-ui:icon
+	cssClass="expand-pages-link"
+	icon="expand"
+	id="expandPagesLink"
+	label="<%= false%>"
+	message="expand"
+	markupView="lexicon"
+	url="javascript:;"
+/>
 
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutSetBranchesSelector() %>">
 	<ul class="nav nav-equal-height nav-nested">
@@ -198,7 +204,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 <aui:script use="liferay-layout-tree-fullscreen">
 	var layoutTreeFullscreen = new Liferay.LayoutTreeFullscreen(
 		{
-			fullscreenButton: '#<portlet:namespace />-expand-pages-list',
+			fullscreenButton: '#<portlet:namespace />expandPagesLink a',
 			url: '<%= treeURL.toString() %>'
 		}
 	);

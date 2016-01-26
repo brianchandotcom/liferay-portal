@@ -702,8 +702,6 @@ public class PortalImpl implements Portal {
 		}
 
 		addDefaultResource(
-			themeDisplay.getCompanyId(), groupId, layout, portlet, true);
-		addDefaultResource(
 			themeDisplay.getCompanyId(), groupId, layout, portlet, false);
 	}
 
@@ -712,7 +710,6 @@ public class PortalImpl implements Portal {
 			long companyId, Layout layout, Portlet portlet)
 		throws PortalException {
 
-		addDefaultResource(companyId, layout, portlet, true);
 		addDefaultResource(companyId, layout, portlet, false);
 	}
 
@@ -7136,8 +7133,7 @@ public class PortalImpl implements Portal {
 		String primaryKey = null;
 
 		if (portletActions) {
-			name = rootPortletId;
-			primaryKey = portletPrimaryKey;
+			return;
 		}
 		else {
 			Group group = GroupLocalServiceUtil.fetchGroup(groupId);

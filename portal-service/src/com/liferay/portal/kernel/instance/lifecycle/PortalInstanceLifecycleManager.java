@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.instance.lifecycle;
+package com.liferay.portal.kernel.instance.lifecycle;
 
 import com.liferay.portal.model.Company;
 

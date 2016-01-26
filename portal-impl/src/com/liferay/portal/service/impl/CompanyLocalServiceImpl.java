@@ -21,7 +21,6 @@ import com.liferay.portal.exception.CompanyVirtualHostException;
 import com.liferay.portal.exception.CompanyWebIdException;
 import com.liferay.portal.exception.NoSuchVirtualHostException;
 import com.liferay.portal.exception.RequiredCompanyException;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1192,7 +1192,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			preferences.store();
 		}
-		catch (IOException | PortletException e)  {
+		catch (IOException | PortletException e) {
 			throw new SystemException(e);
 		}
 	}

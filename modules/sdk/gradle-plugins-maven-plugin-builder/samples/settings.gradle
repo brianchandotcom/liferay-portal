@@ -1,3 +1,1 @@
-include "samples"
-
 rootProject.name = "hello-world"

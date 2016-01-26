@@ -5087,7 +5087,9 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>
-				<antcall target="prepare-poshi-runner-properties" />
+				<antcall target="prepare-poshi-runner-properties">
+					<param name="test.class" value="${test.class}" />
+				</antcall>
 			</then>
 		</if>
 
@@ -5254,12 +5256,20 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<isset property="test.skip.tear.down" />
+			<equals arg1="${test.batch.run.type}" arg2="sequential" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					test.skip.tear.down=${test.skip.tear.down}
+					test.skip.tear.down=false
 				</echo>
 			</then>
+			<elseif>
+				<isset property="test.skip.tear.down" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						test.skip.tear.down=${test.skip.tear.down}
+					</echo>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

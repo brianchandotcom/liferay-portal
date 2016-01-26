@@ -44,7 +44,7 @@ public class NodeExtension {
 
 		};
 
-		_nodeUrl = new Callable<String>() {
+		_nodeExeUrl = new Callable<String>() {
 
 			@Override
 			public String call() throws Exception {
@@ -62,51 +62,62 @@ public class NodeExtension {
 
 				String bitmode = OSDetector.getBitmode();
 
-				if (OSDetector.isWindows()) {
-					if (bitmode.equals("64")) {
-						sb.append("x64/");
+				if (bitmode.equals("64")) {
+					if (nodeVersion.charAt(0) != '0') {
+						sb.append("win-x64");
 					}
-
-					sb.append("node.exe");
+					else {
+						sb.append("x64");
+					}
 				}
-				else {
-					sb.append("/node-v");
-					sb.append(nodeVersion);
-					sb.append('-');
-
-					String os = "linux";
-
-					if (OSDetector.isApple()) {
-						os = "darwin";
-					}
-
-					sb.append(os);
-					sb.append("-x");
-
-					if (bitmode.equals("32")) {
-						bitmode = "86";
-					}
-
-					sb.append(bitmode);
-					sb.append(".tar.gz");
+				else if (nodeVersion.charAt(0) != '0') {
+					sb.append("win-x86");
 				}
+
+				sb.append("/node.exe");
 
 				return sb.toString();
 			}
 
 		};
 
-		_npmUrl = new Callable<String>() {
+		_nodeUrl = new Callable<String>() {
 
 			@Override
 			public String call() throws Exception {
-				String npmVersion = getNpmVersion();
+				String nodeVersion = getNodeVersion();
 
-				if (Validator.isNull(npmVersion)) {
+				if (Validator.isNull(nodeVersion)) {
 					return null;
 				}
 
-				return "http://nodejs.org/dist/npm/npm-" + npmVersion + ".zip";
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("http://nodejs.org/dist/v");
+				sb.append(nodeVersion);
+				sb.append("/node-v");
+				sb.append(nodeVersion);
+				sb.append('-');
+
+				String os = "linux";
+
+				if (OSDetector.isApple()) {
+					os = "darwin";
+				}
+
+				sb.append(os);
+				sb.append("-x");
+
+				String bitmode = OSDetector.getBitmode();
+
+				if (bitmode.equals("32") || OSDetector.isWindows()) {
+					bitmode = "86";
+				}
+
+				sb.append(bitmode);
+				sb.append(".tar.gz");
+
+				return sb.toString();
 			}
 
 		};
@@ -129,6 +140,10 @@ public class NodeExtension {
 		return GradleUtil.toFile(_project, _nodeDir);
 	}
 
+	public String getNodeExeUrl() {
+		return GradleUtil.toString(_nodeExeUrl);
+	}
+
 	public String getNodeUrl() {
 		return GradleUtil.toString(_nodeUrl);
 	}
@@ -139,14 +154,6 @@ public class NodeExtension {
 
 	public List<String> getNpmArgs() {
 		return GradleUtil.toStringList(_npmArgs);
-	}
-
-	public String getNpmUrl() {
-		return GradleUtil.toString(_npmUrl);
-	}
-
-	public String getNpmVersion() {
-		return GradleUtil.toString(_npmVersion);
 	}
 
 	public NodeExtension npmArgs(Iterable<?> npmArgs) {
@@ -161,6 +168,10 @@ public class NodeExtension {
 
 	public void setNodeDir(Object nodeDir) {
 		_nodeDir = nodeDir;
+	}
+
+	public void setNodeExeUrl(Object nodeExeUrl) {
+		_nodeExeUrl = nodeExeUrl;
 	}
 
 	public void setNodeUrl(Object nodeUrl) {
@@ -181,24 +192,15 @@ public class NodeExtension {
 		setNpmArgs(Arrays.asList(npmArgs));
 	}
 
-	public void setNpmUrl(Object npmUrl) {
-		_npmUrl = npmUrl;
-	}
-
-	public void setNpmVersion(Object npmVersion) {
-		_npmVersion = npmVersion;
-	}
-
 	protected File getNpmCacheDir() {
 		return new File(getNodeDir(), ".cache");
 	}
 
 	private Object _nodeDir;
+	private Object _nodeExeUrl;
 	private Object _nodeUrl;
-	private Object _nodeVersion = "0.12.6";
+	private Object _nodeVersion = "5.5.0";
 	private final List<Object> _npmArgs = new ArrayList<>();
-	private Object _npmUrl;
-	private Object _npmVersion = "1.4.9";
 	private final Project _project;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.node;
 
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
@@ -52,6 +53,7 @@ public class NodePlugin implements Plugin<Project> {
 		addTaskNpmInstall(project);
 
 		configureTasksDownloadNode(project, nodeExtension);
+		configureTasksDownloadNodeModule(project, nodeExtension);
 		configureTasksExecuteNode(project, nodeExtension);
 		configureTasksPublishNodeModule(project);
 
@@ -121,6 +123,16 @@ public class NodePlugin implements Plugin<Project> {
 
 			});
 
+		downloadNodeTask.setNodeExeUrl(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return nodeExtension.getNodeExeUrl();
+				}
+
+			});
+
 		downloadNodeTask.setNodeUrl(
 			new Callable<String>() {
 
@@ -130,13 +142,18 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
+	}
 
-		downloadNodeTask.setNpmUrl(
-			new Callable<String>() {
+	protected void configureTaskDownloadNodeModule(
+		DownloadNodeModuleTask downloadNodeModuleTask,
+		final NodeExtension nodeExtension) {
+
+		downloadNodeModuleTask.setWorkingDir(
+			new Callable<File>() {
 
 				@Override
-				public String call() throws Exception {
-					return nodeExtension.getNpmUrl();
+				public File call() throws Exception {
+					return nodeExtension.getNodeDir();
 				}
 
 			});
@@ -221,6 +238,26 @@ public class NodePlugin implements Plugin<Project> {
 				@Override
 				public void execute(DownloadNodeTask downloadNodeTask) {
 					configureTaskDownloadNode(downloadNodeTask, nodeExtension);
+				}
+
+			});
+	}
+
+	protected void configureTasksDownloadNodeModule(
+		Project project, final NodeExtension nodeExtension) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			DownloadNodeModuleTask.class,
+			new Action<DownloadNodeModuleTask>() {
+
+				@Override
+				public void execute(
+					DownloadNodeModuleTask downloadNodeModuleTask) {
+
+					configureTaskDownloadNodeModule(
+						downloadNodeModuleTask, nodeExtension);
 				}
 
 			});

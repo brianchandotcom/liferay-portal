@@ -52,8 +52,6 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 	@Override
 	public void executeNode() {
 		try {
-			setArgs(getCompleteArgs());
-
 			createNpmrcFile();
 			createPackageJsonFile();
 
@@ -246,15 +244,14 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 			packageJsonFile.toPath(), json.getBytes(StandardCharsets.UTF_8));
 	}
 
-	protected List<Object> getCompleteArgs() {
-		List<Object> completeArgs = new ArrayList<>();
+	@Override
+	protected List<String> getCompleteArgs() {
+		List<String> completeArgs = super.getCompleteArgs();
 
 		completeArgs.add("publish");
 
 		completeArgs.add("--userconfig");
 		completeArgs.add(FileUtil.getAbsolutePath(getNpmrcFile()));
-
-		completeArgs.addAll(getArgs());
 
 		return completeArgs;
 	}

@@ -20,7 +20,6 @@ import java.io.File;
 
 import java.nio.file.Files;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.GradleException;
@@ -69,15 +68,6 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 			});
 	}
 
-	@Override
-	public void executeNode() {
-		setArgs(getCompleteArgs());
-
-		super.setWorkingDir(getWorkingDir());
-
-		super.executeNode();
-	}
-
 	@OutputDirectory
 	public File getModuleDir() {
 		File nodeModulesDir = new File(getWorkingDir(), "node_modules");
@@ -95,11 +85,6 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 		return GradleUtil.toString(_moduleVersion);
 	}
 
-	@Override
-	public File getWorkingDir() {
-		return getNodeDir();
-	}
-
 	public void setModuleName(Object moduleName) {
 		_moduleName = moduleName;
 	}
@@ -109,17 +94,11 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 	}
 
 	@Override
-	public void setWorkingDir(Object workingDir) {
-		throw new UnsupportedOperationException();
-	}
-
-	protected List<Object> getCompleteArgs() {
-		List<Object> completeArgs = new ArrayList<>();
+	protected List<String> getCompleteArgs() {
+		List<String> completeArgs = super.getCompleteArgs();
 
 		completeArgs.add("install");
 		completeArgs.add(getModuleName() + "@" + getModuleVersion());
-
-		completeArgs.addAll(getArgs());
 
 		return completeArgs;
 	}

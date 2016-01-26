@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.js.module.config.generator;
 
-import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeScriptTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
@@ -22,9 +22,9 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -42,12 +42,11 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class ConfigJSModulesTask extends ExecuteNodeTask {
+public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 
 	public ConfigJSModulesTask() {
 		dependsOn(
@@ -55,6 +54,19 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
 
 		include("**/*.es.js");
+
+		setScriptFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getNodeDir(),
+						"node_modules/lfr-module-config-generator/bin/" +
+							"index.js");
+				}
+
+			});
 	}
 
 	public ConfigJSModulesTask exclude(Closure<?> closure) {
@@ -99,8 +111,6 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 				}
 
 			});
-
-		setArgs(getCompleteArgs());
 
 		super.executeNode();
 
@@ -263,16 +273,9 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 		_sourceDir = sourceDir;
 	}
 
-	protected List<Object> getCompleteArgs() {
-		List<Object> completeArgs = new ArrayList<>();
-
-		File scriptFile = new File(
-			getNodeDir(),
-			"node_modules/lfr-module-config-generator/bin/index.js");
-
-		completeArgs.add(FileUtil.getAbsolutePath(scriptFile));
-
-		GUtil.addToCollection(completeArgs, getArgs());
+	@Override
+	protected List<String> getCompleteArgs() {
+		List<String> completeArgs = super.getCompleteArgs();
 
 		String configVariable = getConfigVariable();
 
@@ -299,21 +302,21 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 
 		if (ignorePath) {
 			completeArgs.add("--ignorePath");
-			completeArgs.add(ignorePath);
+			completeArgs.add(String.valueOf(ignorePath));
 		}
 
 		boolean keepFileExtension = isKeepFileExtension();
 
 		if (keepFileExtension) {
 			completeArgs.add("--keepExtension");
-			completeArgs.add(keepFileExtension);
+			completeArgs.add(String.valueOf(keepFileExtension));
 		}
 
 		boolean lowerCase = isLowerCase();
 
 		if (lowerCase) {
 			completeArgs.add("--lowerCase");
-			completeArgs.add(lowerCase);
+			completeArgs.add(String.valueOf(lowerCase));
 		}
 
 		completeArgs.add("--moduleConfig");

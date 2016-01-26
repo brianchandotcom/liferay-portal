@@ -49,7 +49,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public String getPortletName() {
-		return _portletId;
+		return _portletName;
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public void setPortletName(String portletName) {
-		_portletId = portletName;
+		_portletName = portletName;
 	}
 
 	@Override
@@ -271,7 +271,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 		BaseFriendlyURLMapper.class);
 
 	private String _mapping;
-	private String _portletId;
+	private String _portletName;
 	private boolean _portletInstanceable;
 
 }

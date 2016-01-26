@@ -68,13 +68,6 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 			});
 	}
 
-	@Override
-	public void executeNode() {
-		super.setWorkingDir(getWorkingDir());
-
-		super.executeNode();
-	}
-
 	@OutputDirectory
 	public File getModuleDir() {
 		File nodeModulesDir = new File(getWorkingDir(), "node_modules");
@@ -90,11 +83,6 @@ public class DownloadNodeModuleTask extends ExecuteNpmTask {
 	@Input
 	public String getModuleVersion() {
 		return GradleUtil.toString(_moduleVersion);
-	}
-
-	@Override
-	public File getWorkingDir() {
-		return getNodeDir();
 	}
 
 	public void setModuleName(Object moduleName) {

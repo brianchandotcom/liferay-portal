@@ -67,8 +67,8 @@ import java.util.regex.Pattern;
 /**
  * @author Gergely Mathe
  */
-public class BaseExportImportContentProcessor
-	implements ExportImportContentProcessor {
+public class BaseTextExportImportContentProcessor
+	implements ExportImportContentProcessor<String> {
 
 	@Override
 	public String replaceExportContentReferences(
@@ -1298,6 +1298,6 @@ public class BaseExportImportContentProcessor
 		"\\[([\\d]+)@(private(-group|-user)?|public)@([\\d]+)(@([\\d]+))?\\]");
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseExportImportContentProcessor.class);
+		BaseTextExportImportContentProcessor.class);
 
 }

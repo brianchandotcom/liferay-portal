@@ -11,13 +11,15 @@
 	<#if (validator.isNotNull(fieldRawValue))>
 		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
 
-		<#if (fieldLayoutJSONObject.getLong("groupId") > 0)>
-			<#assign selectedLayoutGroupId = fieldLayoutJSONObject.getLong("groupId")>
-		<#else>
+		<#assign selectedLayoutGroupId = getterUtil.getLong(fieldLayoutJSONObject.get("groupId"))>
+
+		<#if (selectedLayoutGroupId <= 0)>
 			<#assign selectedLayoutGroupId = scopeGroupId>
 		</#if>
 
-		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
+		<#assign selectedLayoutLayoutId = getterUtil.getLong(fieldLayoutJSONObject.get("layoutId"))>
+
+		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), selectedLayoutLayoutId)!"">
 
 		<#if (validator.isNotNull(selectedLayout))>
 			<#assign selectedPlid = selectedLayout.getPlid()>

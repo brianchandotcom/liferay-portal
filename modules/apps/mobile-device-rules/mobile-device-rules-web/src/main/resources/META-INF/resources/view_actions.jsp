@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
+
 String redirect = ParamUtil.getString(request, "redirect");
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
@@ -26,11 +28,7 @@ MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.ge
 
 MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_actions.jsp");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceId));
+PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
 
 <liferay-ui:header
@@ -48,16 +46,11 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 	<liferay-ui:search-container
 		delta="<%= 5 %>"
 		deltaConfigurable="<%= false %>"
-		emptyResultsMessage="no-actions-are-configured-for-this-device-family"
 		headerNames="name,description,type"
+		id="actionActions"
 		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new RowChecker(renderResponse) %>"
-		total="<%= MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId) %>"
+		searchContainer="<%= mdrActionDisplayContext.getActionSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= MDRActionLocalServiceUtil.getActions(ruleGroupInstanceId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.mobile.device.rules.model.MDRAction"
 			escapedModel="<%= true %>"

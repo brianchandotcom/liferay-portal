@@ -74,31 +74,73 @@ public class VersionTest {
 	}
 
 	@Test
+	public void testQualifier() {
+		Version version = Version.getInstance("1-alpha-1");
+
+		Assert.assertNotEquals("1", version.toString());
+
+		version = Version.getInstance("1.1-alpha-1");
+
+		Assert.assertNotEquals("1.1", version.toString());
+
+		version = Version.getInstance("1.1.1-alpha-1");
+
+		Assert.assertNotEquals("1.1.1", version.toString());
+
+		version = Version.getInstance("1.1.1.1-alpha-1");
+
+		Assert.assertNotEquals("1.1.1.1", version.toString());
+
+		assertPrevious("1", "2-alpha-1");
+		assertPrevious("1.0", "1.1-alpha-1");
+		assertPrevious("1.1.0", "1.1.1-alpha-1");
+		assertPrevious("1.1.1.0", "1.1.1.1-alpha-1");
+		assertLater("2-alpha-1", "1");
+		assertLater("1.1-alpha-1", "1.0");
+		assertLater("1.1.1-alpha-1", "1.1.0");
+		assertLater("1.1.1.1-alpha-1", "1.1.1.0");
+		assertSame("1", "1-alpha-1");
+		assertSame("1.1", "1.1-alpha-1");
+		assertSame("1.1.1", "1.1.1-alpha-1");
+		assertSame("1.1.1.1", "1.1.1.1-alpha-1");
+		assertSame("1-alpha-1", "1-beta-1");
+		assertSame("1.1-alpha-1", "1.1-beta-1");
+		assertSame("1.1.1-alpha-1", "1.1.1-beta-1");
+		assertSame("1.1.1.1-alpha-1", "1.1.1.1-beta-1");
+	}
+
+	@Test
 	public void testSnapshot() {
 		Version version = Version.getInstance("1-SNAPSHOT");
 
-		Assert.assertEquals("1", version.toString());
+		Assert.assertNotEquals("1", version.toString());
 
 		version = Version.getInstance("1.1-SNAPSHOT");
 
-		Assert.assertEquals("1.1", version.toString());
+		Assert.assertNotEquals("1.1", version.toString());
 
 		version = Version.getInstance("1.1.1-SNAPSHOT");
 
-		Assert.assertEquals("1.1.1", version.toString());
+		Assert.assertNotEquals("1.1.1", version.toString());
 
 		version = Version.getInstance("1.1.1.1-SNAPSHOT");
 
-		Assert.assertEquals("1.1.1.1", version.toString());
+		Assert.assertNotEquals("1.1.1.1", version.toString());
 
-		assertPrevious("1", "2-SNAPSHOT");
-		assertPrevious("1.0", "1.1-SNAPSHOT");
-		assertPrevious("1.1.0", "1.1.1-SNAPSHOT");
-		assertPrevious("1.1.1.0", "1.1.1.1-SNAPSHOT");
-		assertLater("2-SNAPSHOT", "1");
-		assertLater("1.1-SNAPSHOT", "1.0");
-		assertLater("1.1.1-SNAPSHOT", "1.1.0");
-		assertLater("1.1.1.1-SNAPSHOT", "1.1.1.0");
+		assertPrevious("1-SNAPSHOT", "1");
+		assertPrevious("1.0-SNAPSHOT", "1.0");
+		assertPrevious("1.1.0-SNAPSHOT", "1.1.0");
+		assertPrevious("1.1.1.0-SNAPSHOT", "1.1.1.0");
+		assertLater("1", "1-SNAPSHOT");
+		assertLater("1.1", "1.1-SNAPSHOT");
+		assertLater("1.1.1", "1.1.1-SNAPSHOT");
+		assertLater("1.1.1.1", "1.1.1.1-SNAPSHOT");
+		assertNotSame("1", "1-SNAPSHOT");
+		assertNotSame("1.1", "1.1-SNAPSHOT");
+		assertNotSame("1.1.1", "1.1.1-SNAPSHOT");
+		assertNotSame("1.1.1.1", "1.1.1.1-SNAPSHOT");
+
+		assertSame("1.1-snapshot", "1.1-SNAPSHOT");
 	}
 
 	@Test
@@ -137,12 +179,28 @@ public class VersionTest {
 			firstVersion.includes(secondVersion));
 	}
 
+	protected void assertNotSame(String first, String second) {
+		Version firstVersion = Version.getInstance(first);
+
+		Assert.assertFalse(
+			first + " is the same as " + second,
+			firstVersion.isSameVersionAs(second));
+	}
+
 	protected void assertPrevious(String first, String second) {
 		Version firstVersion = Version.getInstance(first);
 
 		Assert.assertTrue(
 			first + " is not previous than " + second,
 			firstVersion.isPreviousVersionThan(second));
+	}
+
+	protected void assertSame(String first, String second) {
+		Version firstVersion = Version.getInstance(first);
+
+		Assert.assertTrue(
+			first + " is not the same as " + second,
+			firstVersion.isSameVersionAs(second));
 	}
 
 }

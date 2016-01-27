@@ -38,7 +38,7 @@ if (groupThreadsUserId > 0) {
 }
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280 view-entries-container">
 	<c:if test="<%= category != null %>">
 
 		<%
@@ -222,6 +222,12 @@ if (groupThreadsUserId > 0) {
 									<%= threadAnswersCount %>
 
 									<liferay-ui:message key='<%= threadAnswersCount == 1 ? "answer" : "answers" %>' />
+								</span>
+							</c:if>
+
+							<c:if test="<%= thread.isLocked() %>">
+								<span class="h6">
+									<liferay-ui:message key="locked" />
 								</span>
 							</c:if>
 						</liferay-ui:search-container-column-text>

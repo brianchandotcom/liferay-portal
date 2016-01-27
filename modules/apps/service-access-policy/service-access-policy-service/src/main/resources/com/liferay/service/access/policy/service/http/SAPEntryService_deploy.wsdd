@@ -2,10 +2,11 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_SAP_SAPEntryService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://model.policy.access.service.liferay.com" qname="ns:ArrayOf_tns2_SAPEntrySoap" type="java:com.liferay.service.access.policy.model.SAPEntrySoap[]" innerType="cmp-ns:SAPEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://model.policy.access.service.liferay.com" qname="ns:ArrayOf_tns16_SAPEntrySoap" type="java:com.liferay.service.access.policy.model.SAPEntrySoap[]" innerType="cmp-ns:SAPEntrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.policy.access.service.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://icon.configuration.portlet.kernel.portal.liferay.com" qname="ns:PortletConfigurationIconMenu" type="java:com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://model.policy.access.service.liferay.com" qname="ns:SAPEntrySoap" type="java:com.liferay.service.access.policy.model.SAPEntrySoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://permission.service.portal.liferay.com" qname="ns:ModelPermissions" type="java:com.liferay.portal.service.permission.ModelPermissions" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -37,12 +38,12 @@
 		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCompanySAPEntriesCount" qname="operNS:getCompanySAPEntriesCount" returnQName="getCompanySAPEntriesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns2_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns16_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns2_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.policy.access.service.liferay.com" xmlns:rtns="urn:http.service.policy.access.service.liferay.com" xmlns:tns2="http://model.policy.access.service.liferay.com" name="getCompanySAPEntries" qname="operNS:getCompanySAPEntries" returnQName="getCompanySAPEntriesReturn" returnType="rtns:ArrayOf_tns16_SAPEntrySoap" returnItemType="tns2:SAPEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
@@ -67,7 +68,7 @@
 		</operation>
 		<parameter name="allowedMethods" value="addSAPEntry deleteSAPEntry fetchSAPEntry getCompanySAPEntries getCompanySAPEntriesCount getSAPEntry updateSAPEntry" />
 		<parameter name="className" value="com.liferay.service.access.policy.service.http.SAPEntryServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.policy.access.service.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.policy.access.service.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://icon.configuration.portlet.kernel.portal.liferay.com,http://model.policy.access.service.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.policy.access.service.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="SAPEntryServiceSoap" />
 		<parameter name="wsdlServiceElement" value="SAPEntryServiceSoapService" />

@@ -2,11 +2,12 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_Journal_JournalFolderService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.journal.liferay.com" xmlns:cmp-ns="http://model.journal.liferay.com" qname="ns:ArrayOf_tns2_JournalFolderSoap" type="java:com.liferay.journal.model.JournalFolderSoap[]" innerType="cmp-ns:JournalFolderSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.journal.liferay.com" xmlns:cmp-ns="http://model.mapping.data.dynamic.liferay.com" qname="ns:ArrayOf_tns16_DDMStructureSoap" type="java:com.liferay.dynamic.data.mapping.model.DDMStructureSoap[]" innerType="cmp-ns:DDMStructureSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.journal.liferay.com" xmlns:cmp-ns="http://model.journal.liferay.com" qname="ns:ArrayOf_tns16_JournalFolderSoap" type="java:com.liferay.journal.model.JournalFolderSoap[]" innerType="cmp-ns:JournalFolderSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.journal.liferay.com" xmlns:cmp-ns="http://model.mapping.data.dynamic.liferay.com" qname="ns:ArrayOf_tns17_DDMStructureSoap" type="java:com.liferay.dynamic.data.mapping.model.DDMStructureSoap[]" innerType="cmp-ns:DDMStructureSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.journal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.journal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.journal.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://icon.configuration.portlet.kernel.portal.liferay.com" qname="ns:PortletConfigurationIconMenu" type="java:com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://model.journal.liferay.com" qname="ns:JournalFolderSoap" type="java:com.liferay.journal.model.JournalFolderSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://model.mapping.data.dynamic.liferay.com" qname="ns:DDMStructureSoap" type="java:com.liferay.dynamic.data.mapping.model.DDMStructureSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://permission.service.portal.liferay.com" qname="ns:ModelPermissions" type="java:com.liferay.portal.service.permission.ModelPermissions" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -33,7 +34,7 @@
 		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="http://model.journal.liferay.com" name="fetchFolder" qname="operNS:fetchFolder" returnQName="fetchFolderReturn" returnType="rtns:JournalFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getDDMStructures" qname="operNS:getDDMStructures" returnQName="getDDMStructuresReturn" returnType="rtns:ArrayOf_tns16_DDMStructureSoap" returnItemType="tns2:DDMStructureSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getDDMStructures" qname="operNS:getDDMStructures" returnQName="getDDMStructuresReturn" returnType="rtns:ArrayOf_tns17_DDMStructureSoap" returnItemType="tns2:DDMStructureSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.journal.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="restrictionType" type="tns:int"></parameter>
@@ -74,25 +75,25 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns16_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns16_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns16_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns16_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns2_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.journal.liferay.com" xmlns:rtns="urn:http.service.journal.liferay.com" xmlns:tns2="http://model.journal.liferay.com" name="getFolders" qname="operNS:getFolders" returnQName="getFoldersReturn" returnType="rtns:ArrayOf_tns16_JournalFolderSoap" returnItemType="tns2:JournalFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
@@ -161,7 +162,7 @@
 		</operation>
 		<parameter name="allowedMethods" value="addFolder deleteFolder fetchFolder getDDMStructures getFolder getFolderIds getFolders getFoldersAndArticlesCount getFoldersCount getSubfolderIds moveFolder moveFolderFromTrash moveFolderToTrash restoreFolderFromTrash subscribe unsubscribe updateFolder" />
 		<parameter name="className" value="com.liferay.journal.service.http.JournalFolderServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.journal.liferay.com,http://model.mapping.data.dynamic.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.journal.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://icon.configuration.portlet.kernel.portal.liferay.com,http://model.journal.liferay.com,http://model.mapping.data.dynamic.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.journal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="JournalFolderServiceSoap" />
 		<parameter name="wsdlServiceElement" value="JournalFolderServiceSoapService" />

@@ -15,10 +15,8 @@
 package com.liferay.document.library.web.social;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,8 +34,6 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.trash.util.TrashUtil;
-
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,16 +77,10 @@ public class DLFileEntryActivityInterpreter
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			fileEntry.getFileEntryId());
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", serviceContext.getLocale(), getClass());
-
 		String fileEntryLink = assetRenderer.getURLDownload(
 			serviceContext.getThemeDisplay());
 
-		sb.append(
-			wrapLink(
-				fileEntryLink,
-				LanguageUtil.get(resourceBundle, "download-file")));
+		sb.append(wrapLink(fileEntryLink, "download-file", serviceContext));
 
 		sb.append(StringPool.SPACE);
 
@@ -100,9 +90,7 @@ public class DLFileEntryActivityInterpreter
 			folderLink, DLFolder.class.getName(), fileEntry.getFolderId(),
 			serviceContext);
 
-		sb.append(
-			wrapLink(
-				folderLink, LanguageUtil.get(resourceBundle, "go-to-folder")));
+		sb.append(wrapLink(folderLink, "go-to-folder", serviceContext));
 
 		return sb.toString();
 	}

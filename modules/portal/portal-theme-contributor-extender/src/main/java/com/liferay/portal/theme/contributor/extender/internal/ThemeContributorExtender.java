@@ -70,7 +70,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String type = headers.get("Theme-Contributor-Type");
+		String type = headers.get("Liferay-Theme-Contributor-Type");
 
 		if (type == null) {
 			URL entryURL = bundle.getEntry("/package.json");

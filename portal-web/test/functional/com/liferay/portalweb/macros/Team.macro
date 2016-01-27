@@ -25,7 +25,7 @@
 
 		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_TEAM_MEMBERS" value1="Add Team Members" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

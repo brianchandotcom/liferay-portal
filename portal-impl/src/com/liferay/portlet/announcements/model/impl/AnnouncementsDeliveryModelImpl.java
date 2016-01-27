@@ -16,6 +16,10 @@ package com.liferay.portlet.announcements.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+import com.liferay.announcements.kernel.model.AnnouncementsDeliveryModel;
+import com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -29,9 +33,6 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
-import com.liferay.portlet.announcements.model.AnnouncementsDeliveryModel;
-import com.liferay.portlet.announcements.model.AnnouncementsDeliverySoap;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
@@ -553,7 +554,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 
 		sb.append("<model><model-name>");
 		sb.append(
-			"com.liferay.portlet.announcements.model.AnnouncementsDelivery");
+			"com.liferay.announcements.kernel.model.AnnouncementsDelivery");
 		sb.append("</model-name>");
 
 		sb.append(

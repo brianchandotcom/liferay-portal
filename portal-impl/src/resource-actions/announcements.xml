@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portlet.announcements.model.AnnouncementsEntry</model-name>
+		<model-name>com.liferay.announcements.kernel.model.AnnouncementsEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_announcements_web_portlet_AlertsPortlet</portlet-name>
 			<portlet-name>com_liferay_announcements_web_portlet_AnnouncementsPortlet</portlet-name>

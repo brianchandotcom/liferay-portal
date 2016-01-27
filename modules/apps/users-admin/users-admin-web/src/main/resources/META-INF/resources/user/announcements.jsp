@@ -48,7 +48,7 @@ else {
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portlet.announcements.model.AnnouncementsDelivery"
+		className="com.liferay.announcements.kernel.model.AnnouncementsDelivery"
 		escapedModel="<%= true %>"
 		keyProperty="deliveryId"
 		modelVar="delivery"

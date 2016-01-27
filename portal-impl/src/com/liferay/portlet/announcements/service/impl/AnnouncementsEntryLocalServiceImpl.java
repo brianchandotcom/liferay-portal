@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.announcements.service.impl;
 
+import com.liferay.announcements.kernel.exception.EntryContentException;
+import com.liferay.announcements.kernel.exception.EntryDisplayDateException;
+import com.liferay.announcements.kernel.exception.EntryExpirationDateException;
+import com.liferay.announcements.kernel.exception.EntryTitleException;
+import com.liferay.announcements.kernel.exception.EntryURLException;
+import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -39,13 +46,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.announcements.exception.EntryContentException;
-import com.liferay.portlet.announcements.exception.EntryDisplayDateException;
-import com.liferay.portlet.announcements.exception.EntryExpirationDateException;
-import com.liferay.portlet.announcements.exception.EntryTitleException;
-import com.liferay.portlet.announcements.exception.EntryURLException;
-import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
-import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 import com.liferay.portlet.announcements.service.base.AnnouncementsEntryLocalServiceBaseImpl;
 import com.liferay.util.ContentUtil;
 

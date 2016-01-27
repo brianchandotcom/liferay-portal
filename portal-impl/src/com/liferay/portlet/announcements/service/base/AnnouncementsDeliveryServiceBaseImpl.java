@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.announcements.service.base;
 
+import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryService;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -26,10 +30,6 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryService;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsDeliveryPersistence;
-
 import javax.sql.DataSource;
 
 /**
@@ -41,7 +41,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl
- * @see com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil
+ * @see com.liferay.announcements.kernel.service.AnnouncementsDeliveryServiceUtil
  * @generated
  */
 public abstract class AnnouncementsDeliveryServiceBaseImpl
@@ -50,7 +50,7 @@ public abstract class AnnouncementsDeliveryServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil} to access the announcements delivery remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.announcements.kernel.service.AnnouncementsDeliveryServiceUtil} to access the announcements delivery remote service.
 	 */
 
 	/**
@@ -58,7 +58,7 @@ public abstract class AnnouncementsDeliveryServiceBaseImpl
 	 *
 	 * @return the announcements delivery local service
 	 */
-	public com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService getAnnouncementsDeliveryLocalService() {
+	public com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService getAnnouncementsDeliveryLocalService() {
 		return announcementsDeliveryLocalService;
 	}
 
@@ -68,7 +68,7 @@ public abstract class AnnouncementsDeliveryServiceBaseImpl
 	 * @param announcementsDeliveryLocalService the announcements delivery local service
 	 */
 	public void setAnnouncementsDeliveryLocalService(
-		com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
+		com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
 		this.announcementsDeliveryLocalService = announcementsDeliveryLocalService;
 	}
 
@@ -251,9 +251,9 @@ public abstract class AnnouncementsDeliveryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService.class)
-	protected com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsDeliveryService.class)
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService.class)
+	protected com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsDeliveryService.class)
 	protected AnnouncementsDeliveryService announcementsDeliveryService;
 	@BeanReference(type = AnnouncementsDeliveryPersistence.class)
 	protected AnnouncementsDeliveryPersistence announcementsDeliveryPersistence;

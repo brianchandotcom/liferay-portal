@@ -16,10 +16,10 @@ package com.liferay.portlet.announcements.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.announcements.model.AnnouncementsDeliverySoap}.
+ * is translated to an array of {@link com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.announcements.model.AnnouncementsDelivery}, that is translated to a
- * {@link com.liferay.portlet.announcements.model.AnnouncementsDeliverySoap}. Methods that SOAP cannot
+ * {@link com.liferay.announcements.kernel.model.AnnouncementsDelivery}, that is translated to a
+ * {@link com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -59,21 +59,21 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see AnnouncementsDeliveryServiceHttp
- * @see com.liferay.portlet.announcements.model.AnnouncementsDeliverySoap
+ * @see com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap
  * @see AnnouncementsDeliveryServiceUtil
  * @generated
  */
 @ProviderType
 public class AnnouncementsDeliveryServiceSoap {
-	public static com.liferay.portlet.announcements.model.AnnouncementsDeliverySoap updateDelivery(
+	public static com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap updateDelivery(
 		long userId, java.lang.String type, boolean email, boolean sms,
 		boolean website) throws RemoteException {
 		try {
-			com.liferay.portlet.announcements.model.AnnouncementsDelivery returnValue =
+			com.liferay.announcements.kernel.model.AnnouncementsDelivery returnValue =
 				AnnouncementsDeliveryServiceUtil.updateDelivery(userId, type,
 					email, sms, website);
 
-			return com.liferay.portlet.announcements.model.AnnouncementsDeliverySoap.toSoapModel(returnValue);
+			return com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

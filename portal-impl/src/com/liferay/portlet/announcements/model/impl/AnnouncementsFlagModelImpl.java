@@ -16,6 +16,10 @@ package com.liferay.portlet.announcements.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.model.AnnouncementsFlagModel;
+import com.liferay.announcements.kernel.model.AnnouncementsFlagSoap;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -30,9 +34,6 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import com.liferay.portlet.announcements.model.AnnouncementsFlag;
-import com.liferay.portlet.announcements.model.AnnouncementsFlagModel;
-import com.liferay.portlet.announcements.model.AnnouncementsFlagSoap;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
@@ -544,7 +545,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.announcements.model.AnnouncementsFlag");
+		sb.append("com.liferay.announcements.kernel.model.AnnouncementsFlag");
 		sb.append("</model-name>");
 
 		sb.append(

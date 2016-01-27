@@ -73,9 +73,9 @@
 	<import class="com.liferay.portal.model.Website" />
 	<import class="com.liferay.portal.model.WorkflowDefinitionLink" />
 	<import class="com.liferay.portal.model.WorkflowInstanceLink" />
-	<import class="com.liferay.portlet.announcements.model.AnnouncementsDelivery" />
-	<import class="com.liferay.portlet.announcements.model.AnnouncementsEntry" />
-	<import class="com.liferay.portlet.announcements.model.AnnouncementsFlag" />
+	<import class="com.liferay.announcements.kernel.model.AnnouncementsDelivery" />
+	<import class="com.liferay.announcements.kernel.model.AnnouncementsEntry" />
+	<import class="com.liferay.announcements.kernel.model.AnnouncementsFlag" />
 	<import class="com.liferay.portlet.asset.model.AssetCategory" />
 	<import class="com.liferay.portlet.asset.model.AssetCategoryProperty" />
 	<import class="com.liferay.portlet.asset.model.AssetEntry" />

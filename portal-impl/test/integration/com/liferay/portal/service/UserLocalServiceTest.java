@@ -14,12 +14,12 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,6 +16,10 @@ package com.liferay.portlet.announcements.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -38,10 +42,6 @@ import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.announcements.model.AnnouncementsFlag;
-import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagPersistence;
-
 import java.io.Serializable;
 
 import java.util.List;
@@ -57,7 +57,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl
- * @see com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil
+ * @see com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -67,7 +67,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil} to access the announcements flag local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil} to access the announcements flag local service.
 	 */
 
 	/**
@@ -228,7 +228,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -241,7 +241,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -252,7 +252,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -371,13 +371,13 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.announcements.model.AnnouncementsFlag",
+		persistedModelLocalServiceRegistry.register("com.liferay.announcements.kernel.model.AnnouncementsFlag",
 			announcementsFlagLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.announcements.model.AnnouncementsFlag");
+			"com.liferay.announcements.kernel.model.AnnouncementsFlag");
 	}
 
 	/**
@@ -422,7 +422,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService.class)
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService.class)
 	protected AnnouncementsFlagLocalService announcementsFlagLocalService;
 	@BeanReference(type = AnnouncementsFlagPersistence.class)
 	protected AnnouncementsFlagPersistence announcementsFlagPersistence;

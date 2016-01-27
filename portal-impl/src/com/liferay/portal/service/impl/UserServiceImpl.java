@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.portal.exception.RequiredUserException;
 import com.liferay.portal.exception.UserEmailAddressException;
 import com.liferay.portal.exception.UserFieldException;
@@ -64,7 +65,6 @@ import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;

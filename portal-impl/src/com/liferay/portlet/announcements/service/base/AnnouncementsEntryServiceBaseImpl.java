@@ -14,6 +14,13 @@
 
 package com.liferay.portlet.announcements.service.base;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryService;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryFinder;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -37,13 +44,6 @@ import com.liferay.portal.service.persistence.UserGroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.announcements.model.AnnouncementsEntry;
-import com.liferay.portlet.announcements.service.AnnouncementsEntryService;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsDeliveryPersistence;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryPersistence;
-import com.liferay.portlet.announcements.service.persistence.AnnouncementsFlagPersistence;
-
 import javax.sql.DataSource;
 
 /**
@@ -55,7 +55,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl
- * @see com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil
+ * @see com.liferay.announcements.kernel.service.AnnouncementsEntryServiceUtil
  * @generated
  */
 public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
@@ -63,7 +63,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.announcements.service.AnnouncementsEntryServiceUtil} to access the announcements entry remote service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.announcements.kernel.service.AnnouncementsEntryServiceUtil} to access the announcements entry remote service.
 	 */
 
 	/**
@@ -71,7 +71,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the announcements entry local service
 	 */
-	public com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService getAnnouncementsEntryLocalService() {
+	public com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService getAnnouncementsEntryLocalService() {
 		return announcementsEntryLocalService;
 	}
 
@@ -81,7 +81,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param announcementsEntryLocalService the announcements entry local service
 	 */
 	public void setAnnouncementsEntryLocalService(
-		com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService announcementsEntryLocalService) {
+		com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService announcementsEntryLocalService) {
 		this.announcementsEntryLocalService = announcementsEntryLocalService;
 	}
 
@@ -705,7 +705,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the announcements delivery local service
 	 */
-	public com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService getAnnouncementsDeliveryLocalService() {
+	public com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService getAnnouncementsDeliveryLocalService() {
 		return announcementsDeliveryLocalService;
 	}
 
@@ -715,7 +715,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param announcementsDeliveryLocalService the announcements delivery local service
 	 */
 	public void setAnnouncementsDeliveryLocalService(
-		com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
+		com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
 		this.announcementsDeliveryLocalService = announcementsDeliveryLocalService;
 	}
 
@@ -724,7 +724,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the announcements delivery remote service
 	 */
-	public com.liferay.portlet.announcements.service.AnnouncementsDeliveryService getAnnouncementsDeliveryService() {
+	public com.liferay.announcements.kernel.service.AnnouncementsDeliveryService getAnnouncementsDeliveryService() {
 		return announcementsDeliveryService;
 	}
 
@@ -734,7 +734,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param announcementsDeliveryService the announcements delivery remote service
 	 */
 	public void setAnnouncementsDeliveryService(
-		com.liferay.portlet.announcements.service.AnnouncementsDeliveryService announcementsDeliveryService) {
+		com.liferay.announcements.kernel.service.AnnouncementsDeliveryService announcementsDeliveryService) {
 		this.announcementsDeliveryService = announcementsDeliveryService;
 	}
 
@@ -762,7 +762,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the announcements flag local service
 	 */
-	public com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService getAnnouncementsFlagLocalService() {
+	public com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService getAnnouncementsFlagLocalService() {
 		return announcementsFlagLocalService;
 	}
 
@@ -772,7 +772,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param announcementsFlagLocalService the announcements flag local service
 	 */
 	public void setAnnouncementsFlagLocalService(
-		com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService announcementsFlagLocalService) {
+		com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService announcementsFlagLocalService) {
 		this.announcementsFlagLocalService = announcementsFlagLocalService;
 	}
 
@@ -781,7 +781,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the announcements flag remote service
 	 */
-	public com.liferay.portlet.announcements.service.AnnouncementsFlagService getAnnouncementsFlagService() {
+	public com.liferay.announcements.kernel.service.AnnouncementsFlagService getAnnouncementsFlagService() {
 		return announcementsFlagService;
 	}
 
@@ -791,7 +791,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	 * @param announcementsFlagService the announcements flag remote service
 	 */
 	public void setAnnouncementsFlagService(
-		com.liferay.portlet.announcements.service.AnnouncementsFlagService announcementsFlagService) {
+		com.liferay.announcements.kernel.service.AnnouncementsFlagService announcementsFlagService) {
 		this.announcementsFlagService = announcementsFlagService;
 	}
 
@@ -862,9 +862,9 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService.class)
-	protected com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService announcementsEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryService.class)
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService.class)
+	protected com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService announcementsEntryLocalService;
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsEntryService.class)
 	protected AnnouncementsEntryService announcementsEntryService;
 	@BeanReference(type = AnnouncementsEntryPersistence.class)
 	protected AnnouncementsEntryPersistence announcementsEntryPersistence;
@@ -930,16 +930,16 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	protected UserGroupPersistence userGroupPersistence;
 	@BeanReference(type = UserGroupFinder.class)
 	protected UserGroupFinder userGroupFinder;
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService.class)
-	protected com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsDeliveryService.class)
-	protected com.liferay.portlet.announcements.service.AnnouncementsDeliveryService announcementsDeliveryService;
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService.class)
+	protected com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsDeliveryService.class)
+	protected com.liferay.announcements.kernel.service.AnnouncementsDeliveryService announcementsDeliveryService;
 	@BeanReference(type = AnnouncementsDeliveryPersistence.class)
 	protected AnnouncementsDeliveryPersistence announcementsDeliveryPersistence;
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService.class)
-	protected com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService announcementsFlagLocalService;
-	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagService.class)
-	protected com.liferay.portlet.announcements.service.AnnouncementsFlagService announcementsFlagService;
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService.class)
+	protected com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService announcementsFlagLocalService;
+	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsFlagService.class)
+	protected com.liferay.announcements.kernel.service.AnnouncementsFlagService announcementsFlagService;
 	@BeanReference(type = AnnouncementsFlagPersistence.class)
 	protected AnnouncementsFlagPersistence announcementsFlagPersistence;
 }

@@ -17,10 +17,7 @@ package com.liferay.document.library.web.portlet.action;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.struts.BaseFindActionHelper;
-import com.liferay.portal.struts.BasePortletPageFinder;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;
@@ -38,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder",
 	service = FindActionHelper.class
 )
-public class DLFolderFindActionHelper extends BaseFindActionHelper {
+public class DLFolderFindActionHelper extends BaseDLFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
@@ -50,14 +47,6 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 	@Override
 	public String getPrimaryKeyParameterName() {
 		return "folderId";
-	}
-
-	@Override
-	public PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
-		throws Exception {
-
-		return portletURL;
 	}
 
 	@Override
@@ -86,30 +75,11 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 		}
 	}
 
-	@Override
-	protected PortletPageFinder getPortletPageFinder() {
-		return new DLFolderPortletPageFinder();
-	}
-
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
 	}
 
-	private static final String[] _PORTLET_IDS = {
-		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
-	};
-
 	private DLAppLocalService _dlAppLocalService;
-
-	private static class DLFolderPortletPageFinder
-		extends BasePortletPageFinder {
-
-		@Override
-		protected String[] getPortletIds() {
-			return _PORTLET_IDS;
-		}
-
-	}
 
 }

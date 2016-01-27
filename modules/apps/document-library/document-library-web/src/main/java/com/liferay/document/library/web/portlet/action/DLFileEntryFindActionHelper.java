@@ -15,15 +15,23 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
+	service = FindActionHelper.class
+)
 public class DLFileEntryFindActionHelper extends DLFolderFindActionHelper {
 
 	@Override

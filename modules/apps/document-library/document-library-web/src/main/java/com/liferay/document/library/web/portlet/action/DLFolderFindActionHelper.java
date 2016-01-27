@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.BasePortletPageFinder;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
@@ -26,9 +27,16 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Iván Zaera
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder",
+	service = FindActionHelper.class
+)
 public class DLFolderFindActionHelper extends BaseFindActionHelper {
 
 	@Override

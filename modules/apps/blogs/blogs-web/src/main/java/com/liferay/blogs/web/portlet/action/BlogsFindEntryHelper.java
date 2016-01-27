@@ -18,6 +18,7 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.BasePortletPageFinder;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -27,9 +28,16 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portlet.blogs.model.BlogsEntry",
+	service = FindActionHelper.class
+)
 public class BlogsFindEntryHelper extends BaseFindActionHelper {
 
 	@Override

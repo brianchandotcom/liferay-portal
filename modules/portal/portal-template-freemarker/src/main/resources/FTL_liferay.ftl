@@ -105,9 +105,11 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 
 <#macro navigation_menu
 	default_preferences = ""
+	instance_id = ""
 >
 	<@liferay_portlet["runtime"]
 		defaultPreferences=default_preferences
+		instanceId=instance_id
 		portletProviderAction=portletProviderAction.VIEW
 		portletProviderClassName="com.liferay.portal.theme.NavItem"
 	/>

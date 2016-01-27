@@ -54,6 +54,14 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.portlet.expando.model.ExpandoRow;
+import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoRowLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -146,6 +154,227 @@ public class UpgradeDynamicDataMappingTest {
 		_upgradeDynamicDataMapping.upgrade();
 
 		getTemplateVersion(_templateId, DDMTemplateConstants.VERSION_DEFAULT);
+	}
+
+	@Test
+	public void testUpgradeExpandoWithLocalized() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-localized.xsd"), "expando");
+
+		long classPK = RandomTestUtil.randomLong();
+
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.addTable(
+			_group.getCompanyId(), _classNameIdExpandoStorageAdapter,
+			String.valueOf(_structureId));
+
+		ExpandoRow expandoRow = ExpandoRowLocalServiceUtil.addRow(
+			expandoTable.getTableId(), classPK);
+
+		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
+
+		ExpandoColumn columnName = ExpandoColumnLocalServiceUtil.addColumn(
+			expandoTable.getTableId(), "Name",
+			ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnName.getColumnId(), classPK,
+			read("expando-localized-field.xsd"));
+
+		ExpandoColumn columnFieldsDisplay =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "_fieldsDisplay",
+				ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnFieldsDisplay.getColumnId(), classPK,
+			read("expando-localized-field-display.xsd"));
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read("ddm-content-localized.json");
+
+		String actualData = getContentData(expandoRow.getRowId());
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
+	}
+
+	@Test
+	public void testUpgradeExpandoWithNestedAndRepeatableFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-nested-repeatable.xsd"), "expando");
+
+		long classPK = RandomTestUtil.randomLong();
+
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.addTable(
+			_group.getCompanyId(), _classNameIdExpandoStorageAdapter,
+			String.valueOf(_structureId));
+
+		ExpandoRow expandoRow = ExpandoRowLocalServiceUtil.addRow(
+			expandoTable.getTableId(), classPK);
+
+		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
+
+		ExpandoColumn columnTextNestedUpper =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "TextNestedUpper",
+				ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnTextNestedUpper.getColumnId(), classPK,
+			read("expando-nested-repeatable-field-1.xsd"));
+
+		ExpandoColumn columnTextParent =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "TextParent",
+				ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnTextParent.getColumnId(), classPK,
+			read("expando-nested-repeatable-field-2.xsd"));
+
+		ExpandoColumn columnTextRepeateable =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "TextRepeateable",
+				ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnTextRepeateable.getColumnId(), classPK,
+			read("expando-nested-repeatable-field-3.xsd"));
+
+		ExpandoColumn columnTextNestedBottom =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "TextNestedBottom",
+				ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnTextNestedBottom.getColumnId(), classPK,
+			read("expando-nested-repeatable-field-4.xsd"));
+
+		ExpandoColumn columnFieldsDisplay =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "_fieldsDisplay",
+				ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnFieldsDisplay.getColumnId(), classPK,
+			read("expando-nested-repeatable-field-display.xsd"));
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read("ddm-content-nested-repeatable.json");
+
+		String actualData = getContentData(expandoRow.getRowId());
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
+	}
+
+	@Test
+	public void testUpgradeExpandoWithRepeatableFields() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-text-repeatable-field.xsd"), "expando");
+
+		long classPK = RandomTestUtil.randomLong();
+
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.addTable(
+			_group.getCompanyId(), _classNameIdExpandoStorageAdapter,
+			String.valueOf(_structureId));
+
+		ExpandoRow expandoRow = ExpandoRowLocalServiceUtil.addRow(
+			expandoTable.getTableId(), classPK);
+
+		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
+
+		ExpandoColumn columnTextRepeatable =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "TextRepeatable",
+				ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnTextRepeatable.getColumnId(), classPK,
+			read("expando-value-text-repeatable-field.xsd"));
+
+		ExpandoColumn columnFieldsDisplay =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "_fieldsDisplay",
+				ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnFieldsDisplay.getColumnId(), classPK,
+			read("expando-value-text-repeatable-field-display.xsd"));
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read("ddm-content-text-repeatable-field.json");
+
+		String actualData = getContentData(expandoRow.getRowId());
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
+	}
+
+	@Test
+	public void testUpgradeExpandoWithTransientRepeatableParent()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-transient-repeatable-parent.xsd"), "expando");
+
+		long classPK = RandomTestUtil.randomLong();
+
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.addTable(
+			_group.getCompanyId(), _classNameIdExpandoStorageAdapter,
+			String.valueOf(_structureId));
+
+		ExpandoRow expandoRow = ExpandoRowLocalServiceUtil.addRow(
+			expandoTable.getTableId(), classPK);
+
+		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
+
+		ExpandoColumn columnText = ExpandoColumnLocalServiceUtil.addColumn(
+			expandoTable.getTableId(), "Text",
+			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnText.getColumnId(), classPK,
+			read("expando-transient-repeatable-parent-field.xsd"));
+
+		ExpandoColumn columnFieldsDisplay =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "_fieldsDisplay",
+				ExpandoColumnConstants.STRING_LOCALIZED);
+
+		ExpandoValueLocalServiceUtil.addValue(
+			expandoTable.getClassNameId(), expandoTable.getTableId(),
+			columnFieldsDisplay.getColumnId(), classPK,
+			read("expando-transient-repeatable-parent-field-display.xsd"));
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String expectedData = read(
+			"ddm-content-transient-repeatable-parent.json");
+
+		String actualData = getContentData(expandoRow.getRowId());
+
+		JSONAssert.assertEquals(expectedData, actualData, false);
 	}
 
 	@Test
@@ -1080,6 +1309,8 @@ public class UpgradeDynamicDataMappingTest {
 			"com.liferay.dynamic.data.mapping.model.DDMStructure");
 		_classNameIdDDMContent = PortalUtil.getClassNameId(
 			"com.liferay.dynamic.data.mapping.model.DDMContent");
+		_classNameIdExpandoStorageAdapter = PortalUtil.getClassNameId(
+			"com.liferay.portlet.dynamicdatamapping.ExpandoStorageAdapter");
 	}
 
 	protected void setUpPrimaryKeys() {
@@ -1107,6 +1338,7 @@ public class UpgradeDynamicDataMappingTest {
 	private long _classNameIdDDLRecordSet;
 	private long _classNameIdDDMContent;
 	private long _classNameIdDDMStructure;
+	private long _classNameIdExpandoStorageAdapter;
 	private long _contentId;
 
 	@DeleteAfterTestRun

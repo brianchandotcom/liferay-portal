@@ -20,7 +20,6 @@
 MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
 
 String redirect = ParamUtil.getString(request, "redirect");
-boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 long ruleGroupInstanceId = ParamUtil.getLong(request, "ruleGroupInstanceId");
 
@@ -31,12 +30,11 @@ MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
 PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	showBackURL="<%= showBackURL %>"
-	title='<%= LanguageUtil.format(request, "actions-for-x", ruleGroup.getName(locale), false) %>'
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label='<%= LanguageUtil.format(request, "actions-for-x", ruleGroup.getName(locale), false) %>' selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

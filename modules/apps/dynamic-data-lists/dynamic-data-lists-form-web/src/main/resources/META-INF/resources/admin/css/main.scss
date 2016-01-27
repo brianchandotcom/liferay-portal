@@ -331,6 +331,11 @@ $horizontal-spacing: 35px;
 		top: 0;
 		width: 100%;
 	}
+
+	.radio-option-multiline,
+	.radio-option-singleline {
+		text-transform: lowercase;
+	}
 }
 
 .lfr-ddl-field-settings-modal,

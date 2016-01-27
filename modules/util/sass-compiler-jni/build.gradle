@@ -27,7 +27,7 @@ buildLibSass_Darwin {
 		buildShFile.write("""\
 LIBSASS_VERSION=\"${libSassVersion}\"
 autoreconf --force --install
-./configure --disable-tests --disable-static --enable-shared
+./configure --disable-static --disable-tests --enable-shared
 make -j5""")
 	}
 

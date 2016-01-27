@@ -143,6 +143,12 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#OPTIONS_LABEL" value1="${fieldLabel}" />
 	</command>
 
+	<command name="viewParagraphBody">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_BODY_TEXT_CONTENT" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewRadioLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 

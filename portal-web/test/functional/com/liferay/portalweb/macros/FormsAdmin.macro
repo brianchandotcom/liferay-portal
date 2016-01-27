@@ -13,6 +13,48 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="editDataProvider">
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="DataProviderPortlet_name" />
+			<var name="fieldValue" value="${name}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="$url" />
+			<var name="fieldValue" value="${url}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="$key" />
+			<var name="fieldValue" value="${displayedAttribute}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="$value" />
+			<var name="fieldValue" value="${storedAttribute}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="$username" />
+			<var name="fieldValue" value="${username}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="$password" />
+			<var name="fieldValue" value="${password}" />
+		</execute>
+	</command>
+
+	<command name="saveDataProvider">
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
+	</command>
+
 	<command name="searchFormEntry">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchTerm}" />
 

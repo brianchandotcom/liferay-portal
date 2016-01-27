@@ -249,6 +249,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATA_PROVIDERS</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Data Providers')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Deactivate')]</td>
 	<td></td>
@@ -562,6 +567,11 @@
 	<td>PUBLISH_TEPMLATES</td>
 	<td>//a[@role='menuitem' and contains(.,'Publish Templates')]</td>
 	<td></td>
+</tr>
+<tr>
+ 	<td>PUBLISH</td>
+ 	<td>//a[@role='menuitem']//span[contains(.,'Publish')]</td>
+ 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_TO_LIVE</td>

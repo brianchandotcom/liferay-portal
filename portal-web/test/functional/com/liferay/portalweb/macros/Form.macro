@@ -19,6 +19,10 @@
 		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_ADD_NEW_PAGE" value1="Add new page" />
 	</command>
 
+	<command name="clickPublishSwitcher">
+		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
+	</command>
+
 	<command name="configureWorkflow">
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 
@@ -27,6 +31,29 @@
 
 	<command name="editDescription">
 		<execute function="Type#typeAceEditor" locator1="Form#DESCRIPTION_FIELD" value1="${formDescription}" />
+	</command>
+
+	<command name="editFieldDataProvider">
+		<execute macro="FormFields#selectRadioOption">
+			<var name="fieldName" value="dataSourceType" />
+			<var name="radioOption" value="From Data Provider" />
+		</execute>
+
+		<execute macro="FormFields#selectSelectOption">
+			<var name="fieldName" value="ddmDataProviderInstanceId" />
+			<var name="selectOption" value="${dataProvider}" />
+		</execute>
+	</command>
+
+	<command name="editFieldLabel">
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+
+		<execute macro="FormFields#viewFormName">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 	</command>
 
 	<command name="editName">
@@ -72,6 +99,23 @@
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
 	</command>
 
+	<command name="previewForm">
+		<execute macro="Navigator#selectSpecificWindow">
+			<var name="windowTitle" value="Form - Forms" />
+		</execute>
+
+		<var name="key_formName" value="${formName}" />
+
+		<execute function="AssertTextEquals" locator1="Form#PUBLISH_FORM_NAME_FIELD" value1="${formName}" />
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
+	</command>
+
 	<command name="save">
 		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
 
@@ -96,5 +140,36 @@
 
 	<command name="viewFormName">
 		<execute function="AssertTextEquals" locator1="Form#NAME_FIELD" value1="${formName}" />
+	</command>
+
+	<command name="viewFormNotPublished">
+		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishFormURL}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_3_ALT" value1="This form is not available or it was not published." />
+	</command>
+
+	<command name="viewFormPublish">
+		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishFormURL}" />
+		</execute>
+
+		<var name="key_formName" value="${formName}" />
+
+		<execute function="AssertTextEquals" locator1="Form#PUBLISH_FORM_NAME_FIELD" value1="${formName}" />
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute macro="Navigator#openURL" />
 	</command>
 </definition>

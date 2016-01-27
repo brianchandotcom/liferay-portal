@@ -101,6 +101,27 @@
 	<td>//div[@class='field-type']/div[contains(.,'${key_fieldType}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PUBLISH-->
+<tr>
+	<td>PUBLISH_FORM_NAME_FIELD</td>
+	<td>//h1[contains(@class,'form-name') and contains(.,'${key_formName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_FORM_SWITCHER</td>
+	<td>//label[contains(@class,'publish-checkbox')]//span[@class='toggle-switch-bar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_FORM_PUBLIC_URL</td>
+	<td>//input[@class='form-control' and @type='text']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

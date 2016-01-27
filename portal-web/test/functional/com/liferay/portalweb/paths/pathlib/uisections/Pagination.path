@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULTS</td>
+	<td>//div[@class='pagination-results']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VARIABLE_ITEMS_PER_PAGE</td>
 	<td>//div[@class='clearfix lfr-pagination']/div/div[contains(.,'${key_paginationNumber} Items per Page')]</td>
 	<td></td>

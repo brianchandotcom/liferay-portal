@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>TOOLBAR_ADD</td>
-	<td>//li[contains(@id,'addButtonContainer')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_MENULIST_NEW_FORM</td>
-	<td>//li[contains(@id,'addButtonContainer')]//a[contains(.,'New Form')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -61,6 +51,11 @@
 	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FORM_CONFIGURATION-->
 <tr>
 	<td>ADD_DISPLAY_STYLE</td>
@@ -75,6 +70,17 @@
 <tr>
 	<td>REMOVE_DISPLAY_STYLE</td>
 	<td>//div[div/input[contains(@value,'${key_displayStyle}')]]/following-sibling::div/a[contains(@class,'delete-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DATA_PROVIDER-->
+<tr>
+	<td>DATA_PROVIDER_PLUS_BUTTON</td>
+	<td>//a[contains(@id,'DDMDataProviderPortlet') and contains(@class,'btn') and span[contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 </tbody>

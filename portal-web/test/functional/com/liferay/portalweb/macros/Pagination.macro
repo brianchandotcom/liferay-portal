@@ -1,0 +1,15 @@
+<definition>
+	<command name="changePagination">
+		<execute function="Click" locator1="Pagination#ITEMS_PER_PAGE_SELECT" />
+
+		<var name="key_itemsPerPage" value="${itemsPerPage}" />
+
+		<execute function="AssertClick" locator1="MenuItem#ITEMS_PER_PAGE" value1="${itemsPerPage}" />
+
+		<execute function="AssertTextEquals" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="${itemsPerPage} Entries" />
+	</command>
+
+	<command name="viewResults">
+		<execute function="AssertTextEquals" locator1="Pagination#RESULTS" value1="${results}" />
+	</command>
+</definition>

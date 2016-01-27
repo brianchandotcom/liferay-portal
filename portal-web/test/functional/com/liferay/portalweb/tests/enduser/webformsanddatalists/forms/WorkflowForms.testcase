@@ -45,7 +45,7 @@
 			<var name="portlet" value="Forms" />
 		</execute>
 
-		<execute macro="FormsAdminNavigator#gotoAdd" />
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
 
 		<execute macro="Form#editName" />
 

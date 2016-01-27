@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.display.context;
 
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -46,7 +46,8 @@ public class MDRActionDisplayContext {
 			_request, getPortletURL(), null,
 			"no-actions-are-configured-for-this-device-family");
 
-		ruleActionSearchContainer.setRowChecker(new RowChecker(_response));
+		ruleActionSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_response));
 
 		ruleActionSearchContainer.setTotal(
 			MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId));

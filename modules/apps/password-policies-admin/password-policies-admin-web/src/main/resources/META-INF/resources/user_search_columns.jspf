@@ -1,0 +1,104 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:user-search-container-results
+	useIndexer="<%= false %>"
+	userParams="<%= userParams %>"
+/>
+
+<liferay-ui:search-container-row
+	className="com.liferay.portal.model.User"
+	escapedModel="<%= true %>"
+	keyProperty="userId"
+	modelVar="user2"
+	rowIdProperty="screenName"
+>
+
+	<%
+	PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(User.class.getName(), user.getUserId());
+	%>
+
+	<liferay-util:buffer var="name">
+		<%= user2.getFullName() %>
+
+		<c:if test="<%= (passwordPolicyRel != null) && (passwordPolicyRel.getPasswordPolicyId() != passwordPolicy.getPasswordPolicyId()) %>">
+
+			<%
+			PasswordPolicy curPasswordPolicy = PasswordPolicyLocalServiceUtil.getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
+			%>
+
+			<portlet:renderURL var="assignMembersURL">
+				<portlet:param name="mvcPath" value="/edit_password_policy_assignments.jsp" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+				<portlet:param name="tabs2" value="users" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="passwordPolicyId" value="<%= String.valueOf(curPasswordPolicy.getPasswordPolicyId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-user-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}, false) %>' />
+		</c:if>
+	</liferay-util:buffer>
+
+	<c:choose>
+		<c:when test='<%= displayStyle.equals("icon") %>'>
+
+			<%
+			row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<liferay-frontend:user-vertical-card
+					cssClass="entry-display-style"
+					resultRow="<%= row %>"
+					rowChecker="<%= rowChecker %>"
+					subtitle="<%= user2.getScreenName() %>"
+					title="<%= name %>"
+					userId="<%= user2.getUserId() %>"
+				/>
+			</liferay-ui:search-container-column-text>
+		</c:when>
+		<c:when test='<%= displayStyle.equals("descriptive") %>'>
+			<liferay-ui:search-container-column-text>
+				<liferay-ui:user-portrait
+					cssClass="user-icon-lg"
+					userId="<%= user2.getUserId() %>"
+				/>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				colspan="<%= 2 %>"
+				>
+				<h5><%= name %></h5>
+
+				<h6 class="text-default">
+					<span><%= user2.getScreenName() %></span>
+				</h6>
+			</liferay-ui:search-container-column-text>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:search-container-column-text
+				name="name"
+				value="<%= name %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="screen-name"
+				orderable="<%= true %>"
+				property="screenName"
+			/>
+		</c:otherwise>
+	</c:choose>
+</liferay-ui:search-container-row>

@@ -19,7 +19,6 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
 String tabs2 = ParamUtil.getString(request, "tabs2", "users");
-String tabs3 = ParamUtil.getString(request, "tabs3", "current");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -27,7 +26,16 @@ long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
 
 PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(passwordPolicyId);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN, "display-style", "list");
+}
+else {
+	portalPreferences.setValue(PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN, "display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -43,20 +51,20 @@ portletURL.setParameter("tabs2", tabs2);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), portletURL.toString());
 
-portletURL.setParameter("tabs3", tabs3);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(passwordPolicy.getName());
 
-SearchContainer searchContainer = new SearchContainer();
+String[] orderColumns = new String[] {"first-name", "screen-name"};
+RowChecker rowChecker = new DeleteUserPasswordPolicyChecker(renderResponse, passwordPolicy);
+PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
+SearchContainer searchContainer = new UserSearch(renderRequest, searchURL);
 
-if (tabs2.equals("users")) {
-	searchContainer = new UserSearch(renderRequest, portletURL);
-}
-else if (tabs2.equals("organizations")) {
-	searchContainer = new OrganizationSearch(renderRequest, portletURL);
+if (tabs2.equals("organizations")) {
+	orderColumns = new String[] {"name", "type"};
+	searchContainer = new OrganizationSearch(renderRequest, searchURL);
+	rowChecker = new DeleteOrganizationPasswordPolicyChecker(renderResponse, passwordPolicy);
 }
 %>
 
@@ -94,26 +102,40 @@ else if (tabs2.equals("organizations")) {
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= searchContainer.getOrderByCol() %>"
+			orderByType="<%= searchContainer.getOrderByType() %>"
+			orderColumns="<%= orderColumns %>"
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= searchContainer.getOrderByCol() %>"
-			orderByType="<%= searchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		String taglibURL = "javascript:;";
+
+		if (tabs2.equals("users")) {
+			taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteUsers();";
+		}
+		else if (tabs2.equals("organizations")) {
+			taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteOrganizations();";
+		}
+		%>
+
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <portlet:actionURL name="editPasswordPolicyAssignments" var="editPasswordPolicyAssignmentsURL" />
@@ -121,7 +143,6 @@ else if (tabs2.equals("organizations")) {
 <aui:form action="<%= editPasswordPolicyAssignmentsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="passwordPolicyId" type="hidden" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 
@@ -130,15 +151,9 @@ else if (tabs2.equals("organizations")) {
 			<aui:input name="addUserIds" type="hidden" />
 			<aui:input name="removeUserIds" type="hidden" />
 
-			<liferay-ui:tabs
-				names="current,available"
-				param="tabs3"
-				url="<%= portletURL.toString() %>"
-			/>
-
 			<liferay-ui:search-container
 				id="passwordPolicyMembers"
-				rowChecker="<%= new UserPasswordPolicyChecker(renderResponse, passwordPolicy) %>"
+				rowChecker="<%= rowChecker %>"
 				searchContainer="<%= searchContainer %>"
 				var="userSearchContainer"
 			>
@@ -148,82 +163,21 @@ else if (tabs2.equals("organizations")) {
 
 				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-				if (tabs3.equals("current")) {
-					userParams.put("usersPasswordPolicies", Long.valueOf(passwordPolicy.getPasswordPolicyId()));
-				}
+				userParams.put("usersPasswordPolicies", Long.valueOf(passwordPolicy.getPasswordPolicyId()));
 				%>
 
-				<liferay-ui:user-search-container-results
-					useIndexer="<%= false %>"
-					userParams="<%= userParams %>"
-				/>
+				<%@ include file="/user_search_columns.jspf" %>
 
-				<liferay-ui:search-container-row
-					className="com.liferay.portal.model.User"
-					escapedModel="<%= true %>"
-					keyProperty="userId"
-					modelVar="user2"
-					rowIdProperty="screenName"
-				>
-					<liferay-ui:search-container-column-text
-						name="name"
-					>
-
-						<%= user2.getFullName() %>
-
-						<%
-						PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(User.class.getName(), user.getUserId());
-						%>
-
-						<c:if test="<%= (passwordPolicyRel != null) && (passwordPolicyRel.getPasswordPolicyId() != passwordPolicy.getPasswordPolicyId()) %>">
-
-							<%
-							PasswordPolicy curPasswordPolicy = PasswordPolicyLocalServiceUtil.getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
-							%>
-
-							<portlet:renderURL var="assignMembersURL">
-								<portlet:param name="mvcPath" value="/edit_password_policy_assignments.jsp" />
-								<portlet:param name="tabs1" value="<%= tabs1 %>" />
-								<portlet:param name="tabs2" value="users" />
-								<portlet:param name="tabs3" value="current" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="passwordPolicyId" value="<%= String.valueOf(curPasswordPolicy.getPasswordPolicyId()) %>" />
-							</portlet:renderURL>
-
-							<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-user-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}, false) %>' />
-						</c:if>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="screen-name"
-						value="<%= user2.getScreenName() %>"
-					/>
-				</liferay-ui:search-container-row>
-
-				<div class="separator"><!-- --></div>
-
-				<%
-				String taglibOnClick = renderResponse.getNamespace() + "updatePasswordPolicyUsers();";
-				%>
-
-				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-				<liferay-ui:search-iterator markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 		<c:when test='<%= tabs2.equals("organizations") %>'>
 			<aui:input name="addOrganizationIds" type="hidden" />
 			<aui:input name="removeOrganizationIds" type="hidden" />
 
-			<liferay-ui:tabs
-				names="current,available"
-				param="tabs3"
-				url="<%= portletURL.toString() %>"
-			/>
-
 			<liferay-ui:search-container
 				id="passwordPolicyMembers"
-				rowChecker="<%= new OrganizationPasswordPolicyChecker(renderResponse, passwordPolicy) %>"
+				rowChecker="<%= rowChecker %>"
 				searchContainer="<%= searchContainer %>"
 				var="organizationSearchContainer"
 			>
@@ -233,114 +187,81 @@ else if (tabs2.equals("organizations")) {
 
 				LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
-				if (tabs3.equals("current")) {
-					organizationParams.put("organizationsPasswordPolicies", Long.valueOf(passwordPolicy.getPasswordPolicyId()));
-				}
+				organizationParams.put("organizationsPasswordPolicies", Long.valueOf(passwordPolicy.getPasswordPolicyId()));
 				%>
 
-				<liferay-ui:organization-search-container-results
-					organizationParams="<%= organizationParams %>"
-					parentOrganizationId="<%= OrganizationConstants.ANY_PARENT_ORGANIZATION_ID %>"
-					useIndexer="<%= false %>"
-				/>
+				<%@ include file="/organization_search_columns.jspf" %>
 
-				<liferay-ui:search-container-row
-					className="com.liferay.portal.model.Organization"
-					escapedModel="<%= true %>"
-					keyProperty="organizationId"
-					modelVar="organization"
-				>
-					<liferay-ui:search-container-column-text
-						name="name"
-						orderable="<%= true %>"
-					>
-
-						<%= organization.getName() %>
-
-						<%
-						PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(Organization.class.getName(), organization.getOrganizationId());
-						%>
-
-						<c:if test="<%= (passwordPolicyRel != null) && (passwordPolicyRel.getPasswordPolicyId() != passwordPolicy.getPasswordPolicyId()) %>">
-
-							<%
-							PasswordPolicy curPasswordPolicy = PasswordPolicyLocalServiceUtil.getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
-							%>
-
-							<portlet:renderURL var="assignMembersURL">
-								<portlet:param name="mvcPath" value="/edit_password_policy_assignments.jsp" />
-								<portlet:param name="tabs1" value="<%= tabs1 %>" />
-								<portlet:param name="tabs2" value="organizations" />
-								<portlet:param name="tabs3" value="current" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="passwordPolicyId" value="<%= String.valueOf(curPasswordPolicy.getPasswordPolicyId()) %>" />
-							</portlet:renderURL>
-
-							<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-organization-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}, false) %>' />
-						</c:if>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						name="parent-organization"
-						value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						orderable="<%= true %>"
-						value="<%= LanguageUtil.get(request, organization.getType()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="city"
-						value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="region"
-						value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="country"
-						value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
-					/>
-				</liferay-ui:search-container-row>
-
-				<div class="separator"><!-- --></div>
-
-				<%
-				String taglibOnClick = renderResponse.getNamespace() + "updatePasswordPolicyOrganizations();";
-				%>
-
-				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-				<liferay-ui:search-iterator markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</c:when>
 	</c:choose>
 </aui:form>
 
-<aui:script>
-	function <portlet:namespace />updatePasswordPolicyOrganizations() {
-		var Util = Liferay.Util;
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item id="addMembers" title='<%= LanguageUtil.get(request, "add-members") %>' url="javascript:;" />
+</liferay-frontend:add-menu>
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+<aui:script use="liferay-item-selector-dialog">
+	var Util = Liferay.Util;
 
-		form.fm('addOrganizationIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeOrganizationIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+	var $ = AUI.$;
 
-		submitForm(form);
-	}
+	var form = $(document.<portlet:namespace />fm);
 
-	function <portlet:namespace />updatePasswordPolicyUsers() {
-		var Util = Liferay.Util;
+	<portlet:renderURL var="selectMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/select_members.jsp" />
+		<portlet:param name="tabs1" value="<%= tabs1 %>" />
+		<portlet:param name="tabs2" value="<%= tabs2 %>" />
+		<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicyId) %>" />
+	</portlet:renderURL>
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+	$('#<portlet:namespace />addMembers').on(
+		'click',
+		function(event) {
+			event.preventDefault();
 
-		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectMember',
+					on: {
+						selectedItemChange: function(event) {
+							var result = event.newVal;
 
-		submitForm(form);
-	}
+							if (result && result.item) {
+								if (result.memberType == 'users') {
+									form.fm('addUserIds').val(result.item);
+								}
+								else if (result.memberType == 'organizations') {
+									form.fm('addOrganizationIds').val(result.item);
+								}
+
+								submitForm(form);
+							}
+						}
+					},
+					title: '<liferay-ui:message arguments="<%= passwordPolicy.getName() %>" key="add-members-to-x" />',
+					url: '<%= selectMembersURL %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+
+	window.<portlet:namespace />deleteOrganizations = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			form.fm('removeOrganizationIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form);
+		}
+	};
+
+	window.<portlet:namespace />deleteUsers = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			form.fm('removeUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form);
+		}
+	};
 </aui:script>

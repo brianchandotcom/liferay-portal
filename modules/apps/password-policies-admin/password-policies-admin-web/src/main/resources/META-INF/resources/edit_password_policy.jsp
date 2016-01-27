@@ -44,148 +44,39 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 
 	<aui:model-context bean="<%= passwordPolicy %>" model="<%= PasswordPolicy.class %>" />
 
-	<liferay-ui:panel-container extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyGeneralPanel" persistState="<%= true %>" title="general">
-			<aui:fieldset>
-				<aui:input autoFocus="<%= (!defaultPolicy && windowState.equals(WindowState.MAXIMIZED)) %>" disabled="<%= defaultPolicy %>" name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= (!defaultPolicy && windowState.equals(WindowState.MAXIMIZED)) %>" disabled="<%= defaultPolicy %>" name="name" required="<%= true %>" />
 
-				<aui:input autoFocus="<%= (defaultPolicy && windowState.equals(WindowState.MAXIMIZED)) %>" name="description" />
+			<aui:input autoFocus="<%= (defaultPolicy && windowState.equals(WindowState.MAXIMIZED)) %>" name="description" />
+		</aui:fieldset>
 
-				<aui:input helpMessage="changeable-help" name="changeable" />
+		<liferay-ui:panel-container extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyPanelContainer" persistState="<%= true %>">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyPasswordPanel" markupView="lexicon" persistState="<%= true %>" title="password-changes">
+				<aui:fieldset>
+					<aui:input helpMessage="changeable-help" name="changeable" />
 
-				<div class="password-policy-options" id="<portlet:namespace />changeableSettings">
-					<aui:input helpMessage="change-required-help" name="changeRequired" />
+					<div class="password-policy-options" id="<portlet:namespace />changeableSettings">
+						<aui:input helpMessage="change-required-help" name="changeRequired" />
 
-					<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge">
-						<aui:option label="none" value="0" />
+						<aui:select helpMessage="minimum-age-help" label="minimum-age" name="minAge">
+							<aui:option label="none" value="0" />
 
-						<%
-						for (int i = 0; i < 15; i++) {
-						%>
+							<%
+							for (int i = 0; i < 15; i++) {
+							%>
 
-							<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
 
-						<%
-						}
-						%>
+							<%
+							}
+							%>
 
-					</aui:select>
-				</div>
+						</aui:select>
+					</div>
 
-				<aui:select helpMessage="reset-ticket-max-age-help" name="resetTicketMaxAge">
-					<aui:option label="eternal" value="0" />
-
-					<%
-					for (int i = 0; i < 15; i++) {
-					%>
-
-						<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-			</aui:fieldset>
-		</liferay-ui:panel>
-
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" persistState="<%= true %>" title="password-syntax-checking">
-			<aui:fieldset>
-				<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" />
-
-				<div class="password-policy-options" id="<portlet:namespace />syntaxSettings">
-					<aui:input helpMessage="allow-dictionary-words-help" name="allowDictionaryWords" />
-
-					<aui:input helpMessage="minimum-alpha-numeric-help" label="minimum-alpha-numeric" name="minAlphanumeric" />
-
-					<aui:input helpMessage="minimum-length-help" label="minimum-length" name="minLength" />
-
-					<aui:input helpMessage="minimum-lower-case-help" label="minimum-lower-case" name="minLowerCase" />
-
-					<aui:input helpMessage="minimum-numbers-help" label="minimum-numbers" name="minNumbers" />
-
-					<aui:input helpMessage="minimum-symbols-help" label="minimum-symbols" name="minSymbols" />
-
-					<aui:input helpMessage="minimum-upper-case-help" label="minimum-upper-case" name="minUpperCase" />
-
-					<%
-					String taglinbHelpMessage = LanguageUtil.format(request, "regular-expression-help", new Object[] {"<a href=\"http://docs.oracle.com/javase/tutorial/essential/regex\" target=\"_blank\">", "</a>"}, false);
-					%>
-
-					<aui:input helpMessage="<%= taglinbHelpMessage %>" label="regular-expression" name="regex" />
-				</div>
-			</aui:fieldset>
-		</liferay-ui:panel>
-
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" persistState="<%= true %>" title="password-history">
-			<aui:fieldset>
-				<aui:input helpMessage="enable-history-help" label="enable-history" name="history" />
-
-				<div class="password-policy-options" id="<portlet:namespace />historySettings">
-					<aui:select helpMessage="history-count-help" name="historyCount">
-
-						<%
-						for (int i = 2; i < 25; i++) {
-						%>
-
-							<aui:option label="<%= i %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</div>
-			</aui:fieldset>
-		</liferay-ui:panel>
-
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" persistState="<%= true %>" title="password-expiration">
-			<aui:fieldset>
-				<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" />
-
-				<div class="password-policy-options" id="<portlet:namespace />expirationSettings">
-					<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
-
-						<%
-						for (int i = 15; i < _DURATIONS.length; i++) {
-						%>
-
-							<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
-					<aui:select helpMessage="warning-time-help" name="warningTime">
-
-						<%
-						for (int i = 7; i < 16; i++) {
-						%>
-
-							<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
-
-						<%
-						}
-						%>
-
-						<aui:option label="do-not-warn" value="<%= 0 %>" />
-					</aui:select>
-
-					<aui:input helpMessage="grace-limit-help" name="graceLimit" />
-				</div>
-			</aui:fieldset>
-		</liferay-ui:panel>
-
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" persistState="<%= true %>" title="lockout">
-			<aui:fieldset>
-				<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" />
-
-				<div class="password-policy-options" id="<portlet:namespace />lockoutSettings">
-					<aui:input helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />
-
-					<aui:select helpMessage="reset-failure-count-help" name="resetFailureCount">
+					<aui:select helpMessage="reset-ticket-max-age-help" name="resetTicketMaxAge">
+						<aui:option label="eternal" value="0" />
 
 						<%
 						for (int i = 0; i < 15; i++) {
@@ -198,25 +89,138 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 						%>
 
 					</aui:select>
+				</aui:fieldset>
+			</liferay-ui:panel>
 
-					<aui:select helpMessage="lockout-duration-help" name="lockoutDuration">
-						<aui:option label="until-unlocked-by-an-administrator" value="0" />
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" markupView="lexicon" persistState="<%= true %>" title="password-syntax-checking">
+				<aui:fieldset>
+					<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" />
+
+					<div class="password-policy-options" id="<portlet:namespace />syntaxSettings">
+						<aui:input helpMessage="allow-dictionary-words-help" name="allowDictionaryWords" />
+
+						<aui:input helpMessage="minimum-alpha-numeric-help" label="minimum-alpha-numeric" name="minAlphanumeric" />
+
+						<aui:input helpMessage="minimum-length-help" label="minimum-length" name="minLength" />
+
+						<aui:input helpMessage="minimum-lower-case-help" label="minimum-lower-case" name="minLowerCase" />
+
+						<aui:input helpMessage="minimum-numbers-help" label="minimum-numbers" name="minNumbers" />
+
+						<aui:input helpMessage="minimum-symbols-help" label="minimum-symbols" name="minSymbols" />
+
+						<aui:input helpMessage="minimum-upper-case-help" label="minimum-upper-case" name="minUpperCase" />
 
 						<%
-						for (int i = 0; i < 15; i++) {
+						String taglinbHelpMessage = LanguageUtil.format(request, "regular-expression-help", new Object[] {"<a href=\"http://docs.oracle.com/javase/tutorial/essential/regex\" target=\"_blank\">", "</a>"}, false);
 						%>
 
-							<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+						<aui:input helpMessage="<%= taglinbHelpMessage %>" label="regular-expression" name="regex" />
+					</div>
+				</aui:fieldset>
+			</liferay-ui:panel>
 
-						<%
-						}
-						%>
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" markupView="lexicon" persistState="<%= true %>" title="password-history">
+				<aui:fieldset>
+					<aui:input helpMessage="enable-history-help" label="enable-history" name="history" />
 
-					</aui:select>
-				</div>
-			</aui:fieldset>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+					<div class="password-policy-options" id="<portlet:namespace />historySettings">
+						<aui:select helpMessage="history-count-help" name="historyCount">
+
+							<%
+							for (int i = 2; i < 25; i++) {
+							%>
+
+								<aui:option label="<%= i %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+				</aui:fieldset>
+			</liferay-ui:panel>
+
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" markupView="lexicon" persistState="<%= true %>" title="password-expiration">
+				<aui:fieldset>
+					<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" />
+
+					<div class="password-policy-options" id="<portlet:namespace />expirationSettings">
+						<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
+
+							<%
+							for (int i = 15; i < _DURATIONS.length; i++) {
+							%>
+
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
+						<aui:select helpMessage="warning-time-help" name="warningTime">
+
+							<%
+							for (int i = 7; i < 16; i++) {
+							%>
+
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+
+							<%
+							}
+							%>
+
+							<aui:option label="do-not-warn" value="<%= 0 %>" />
+						</aui:select>
+
+						<aui:input helpMessage="grace-limit-help" name="graceLimit" />
+					</div>
+				</aui:fieldset>
+			</liferay-ui:panel>
+
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" markupView="lexicon" persistState="<%= true %>" title="lockout">
+				<aui:fieldset>
+					<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" />
+
+					<div class="password-policy-options" id="<portlet:namespace />lockoutSettings">
+						<aui:input helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />
+
+						<aui:select helpMessage="reset-failure-count-help" name="resetFailureCount">
+
+							<%
+							for (int i = 0; i < 15; i++) {
+							%>
+
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
+						<aui:select helpMessage="lockout-duration-help" name="lockoutDuration">
+							<aui:option label="until-unlocked-by-an-administrator" value="0" />
+
+							<%
+							for (int i = 0; i < 15; i++) {
+							%>
+
+								<aui:option label="<%= LanguageUtil.getTimeDescription(request, _DURATIONS[i] * 1000) %>" value="<%= _DURATIONS[i] %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</liferay-ui:panel-container>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

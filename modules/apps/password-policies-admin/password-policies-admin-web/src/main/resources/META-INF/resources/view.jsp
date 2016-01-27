@@ -61,6 +61,13 @@ searchContainer.setRowChecker(new PasswordPolicyChecker(renderResponse));
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
 		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= searchContainer.getOrderByCol() %>"
+			orderByType="<%= searchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
@@ -70,15 +77,6 @@ searchContainer.setRowChecker(new PasswordPolicyChecker(renderResponse));
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= searchContainer.getOrderByCol() %>"
-			orderByType="<%= searchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
 		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deletePasswordPolicies" />

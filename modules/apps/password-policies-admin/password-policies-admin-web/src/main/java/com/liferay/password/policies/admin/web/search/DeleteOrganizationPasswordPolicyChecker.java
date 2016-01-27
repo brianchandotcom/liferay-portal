@@ -14,13 +14,12 @@
 
 package com.liferay.password.policies.admin.web.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.PasswordPolicyRel;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
@@ -28,30 +27,15 @@ import javax.portlet.RenderResponse;
 /**
  * @author Scott Lee
  */
-public class OrganizationPasswordPolicyChecker extends RowChecker {
+public class DeleteOrganizationPasswordPolicyChecker
+	extends EmptyOnClickRowChecker {
 
-	public OrganizationPasswordPolicyChecker(
+	public DeleteOrganizationPasswordPolicyChecker(
 		RenderResponse renderResponse, PasswordPolicy passwordPolicy) {
 
 		super(renderResponse);
 
 		_passwordPolicy = passwordPolicy;
-	}
-
-	@Override
-	public boolean isChecked(Object obj) {
-		Organization organization = (Organization)obj;
-
-		try {
-			return OrganizationLocalServiceUtil.hasPasswordPolicyOrganization(
-				_passwordPolicy.getPasswordPolicyId(),
-				organization.getOrganizationId());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return false;
-		}
 	}
 
 	@Override
@@ -79,7 +63,7 @@ public class OrganizationPasswordPolicyChecker extends RowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OrganizationPasswordPolicyChecker.class);
+		DeleteOrganizationPasswordPolicyChecker.class);
 
 	private final PasswordPolicy _passwordPolicy;
 

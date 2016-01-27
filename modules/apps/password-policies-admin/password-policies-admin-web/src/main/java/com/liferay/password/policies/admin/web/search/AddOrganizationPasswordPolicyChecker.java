@@ -14,23 +14,24 @@
 
 package com.liferay.password.policies.admin.web.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.PasswordPolicyRel;
-import com.liferay.portal.model.User;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
  * @author Scott Lee
  */
-public class UserPasswordPolicyChecker extends RowChecker {
+public class AddOrganizationPasswordPolicyChecker
+	extends EmptyOnClickRowChecker {
 
-	public UserPasswordPolicyChecker(
+	public AddOrganizationPasswordPolicyChecker(
 		RenderResponse renderResponse, PasswordPolicy passwordPolicy) {
 
 		super(renderResponse);
@@ -40,11 +41,12 @@ public class UserPasswordPolicyChecker extends RowChecker {
 
 	@Override
 	public boolean isChecked(Object obj) {
-		User user = (User)obj;
+		Organization organization = (Organization)obj;
 
 		try {
-			return UserLocalServiceUtil.hasPasswordPolicyUser(
-				_passwordPolicy.getPasswordPolicyId(), user.getUserId());
+			return OrganizationLocalServiceUtil.hasPasswordPolicyOrganization(
+				_passwordPolicy.getPasswordPolicyId(),
+				organization.getOrganizationId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -55,12 +57,17 @@ public class UserPasswordPolicyChecker extends RowChecker {
 
 	@Override
 	public boolean isDisabled(Object obj) {
-		User user = (User)obj;
+		Organization organization = (Organization)obj;
+
+		if (isChecked(obj)) {
+			return true;
+		}
 
 		try {
 			PasswordPolicyRel passwordPolicyRel =
 				PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(
-					User.class.getName(), user.getUserId());
+					Organization.class.getName(),
+					organization.getOrganizationId());
 
 			if ((passwordPolicyRel != null) &&
 				(passwordPolicyRel.getPasswordPolicyId() !=
@@ -77,7 +84,7 @@ public class UserPasswordPolicyChecker extends RowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserPasswordPolicyChecker.class);
+		AddOrganizationPasswordPolicyChecker.class);
 
 	private final PasswordPolicy _passwordPolicy;
 

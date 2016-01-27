@@ -201,21 +201,24 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
 </liferay-portlet:renderURL>
 
-<aui:script use="liferay-layout-tree-fullscreen">
-	var layoutTreeFullscreen = new Liferay.LayoutTreeFullscreen(
-		{
-			fullscreenButton: '#<portlet:namespace />expandPagesLink',
-			url: '<%= treeURL.toString() %>'
+<aui:script use="liferay-url-preview">
+	var expandedTreeDialog;
+
+	var expandButton = A.one('#<portlet:namespace />expandPagesLink');
+
+	expandButton.on(
+		'click',
+		function() {
+			if (!expandedTreeDialog) {
+				expandedTreeDialog = new Liferay.UrlPreview(
+					{
+						title: '<%= LanguageUtil.get(request, "pages") %>',
+						url: '<%= treeURL.toString() %>'
+					}
+				);
+			}
+
+			expandedTreeDialog.open();
 		}
 	);
-
-	var clearLayoutTreeFullscreen = function(event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			layoutTreeFullscreen.destroy();
-
-			Liferay.detach('destroyPortlet', clearLayoutTreeFullscreen);
-		}
-	};
-
-	Liferay.on('destroyPortlet', clearLayoutTreeFullscreen);
 </aui:script>

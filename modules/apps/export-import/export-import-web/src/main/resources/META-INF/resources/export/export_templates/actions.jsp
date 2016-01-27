@@ -20,7 +20,6 @@
 long groupId = GetterUtil.getLong(request.getAttribute("view.jsp-groupId"));
 long liveGroupId = GetterUtil.getLong(request.getAttribute("view.jsp-liveGroupId"));
 boolean privateLayout = GetterUtil.getBoolean(request.getAttribute("view.jsp-privateLayout"));
-long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("view.jsp-exportImportConfigurationId"));
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -34,7 +33,7 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfigurationId) %>" />
+		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

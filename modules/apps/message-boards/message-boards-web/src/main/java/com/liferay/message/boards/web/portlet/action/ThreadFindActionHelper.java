@@ -18,6 +18,7 @@ import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.BasePortletPageFinder;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
@@ -26,9 +27,16 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portlet.messageboards.model.MBThread",
+	service = FindActionHelper.class
+)
 public class ThreadFindActionHelper extends BaseFindActionHelper {
 
 	@Override

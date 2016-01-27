@@ -17,6 +17,7 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.BasePortletPageFinder;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -25,9 +26,16 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
+	service = FindActionHelper.class
+)
 public class CategoryFindActionHelper extends BaseFindActionHelper {
 
 	@Override

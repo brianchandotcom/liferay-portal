@@ -21,7 +21,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ScreensUserService}.
  *
- * @author Brian Wing Shun Chan
+ * @author José Manuel Navarro
  * @see ScreensUserService
  * @generated
  */

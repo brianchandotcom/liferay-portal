@@ -2,7 +2,7 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
 <service-builder package-path="com.liferay.screens">
-	<!--<author>José Manuel Navarro</author>-->
+	<author>José Manuel Navarro</author>
 	<namespace>Screens</namespace>
 	<entity name="ScreensAssetEntry" local-service="false" remote-service="true">
 		<reference package-path="com.liferay.journal" entity="JournalArticle" />

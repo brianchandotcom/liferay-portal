@@ -5,5 +5,7 @@ Include-Resource:\
 	@lib/concurrent.jar,\
 	@lib/nekohtml.jar,\
 	@lib/org.portletbridge.core.jar,\
-	@lib/org.portletbridge.portlet.jar
+	@lib/org.portletbridge.portlet.jar,\
+	@lib/serializer.jar,\
+	@lib/xalan.jar
 Web-ContextPath: /web-proxy-web

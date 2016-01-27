@@ -14,15 +14,16 @@
 
 package com.liferay.frontend.editor.tinymce.web.editor.configuration;
 
-import com.liferay.frontend.editor.lang.FrontendEditorLang;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -33,6 +34,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrin Chaudhary
@@ -101,13 +103,9 @@ public class TinyMCEEditorConfigContributor
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		resourceBundle = new AggregateResourceBundle(
-			resourceBundle,
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale, FrontendEditorLang.class));
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(locale));
 
 		jsonArray.put(
 			getStyleFormatJSONObject(
@@ -302,5 +300,23 @@ public class TinyMCEEditorConfigContributor
 
 		return jsonArray;
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.frontend.editor.lang)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		ClassLoader classLoader =
+			TinyMCEEditorConfigContributor.class.getClassLoader();
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			ResourceBundleUtil.getResourceBundleLoader(
+				"content.Language", classLoader),
+			resourceBundleLoader);
+	}
+
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

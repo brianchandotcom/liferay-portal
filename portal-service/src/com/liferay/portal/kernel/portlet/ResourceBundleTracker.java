@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil.ResourceBundleLoader;
 import com.liferay.registry.collections.ServiceReferenceMapperFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;

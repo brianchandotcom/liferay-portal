@@ -14,13 +14,14 @@
 
 package com.liferay.frontend.editor.alloyeditor.web.editor.configuration;
 
-import com.liferay.frontend.editor.lang.FrontendEditorLang;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -28,9 +29,11 @@ import com.liferay.portlet.RequestBackedPortletURLFactory;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -82,13 +85,15 @@ public class AlloyEditorConfigContributor
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		ResourceBundle resourceBundle;
 
-		resourceBundle = new AggregateResourceBundle(
-			resourceBundle,
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale, FrontendEditorLang.class));
+		try {
+			resourceBundle = _resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(locale));
+		}
+		catch (MissingResourceException mre) {
+			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
+		}
 
 		jsonArray.put(
 			getStyleFormatJSONObject(
@@ -271,8 +276,26 @@ public class AlloyEditorConfigContributor
 		return jsonObject;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.frontend.editor.lang)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		ClassLoader classLoader =
+			AlloyEditorConfigContributor.class.getClassLoader();
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			ResourceBundleUtil.getResourceBundleLoader(
+				"content.Language", classLoader),
+			resourceBundleLoader);
+	}
+
 	private static final int _CKEDITOR_STYLE_BLOCK = 1;
 
 	private static final int _CKEDITOR_STYLE_INLINE = 2;
+
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

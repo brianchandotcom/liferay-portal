@@ -404,6 +404,14 @@ public class WikiPageLocalServiceUtil {
 		return getService().getChildren(nodeId, head, parentTitle, status);
 	}
 
+	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
+		long nodeId, boolean head, java.lang.String parentTitle, int status,
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return getService()
+				   .getChildren(nodeId, head, parentTitle, status, start, end,
+			obc);
+	}
+
 	public static int getChildrenCount(long nodeId, boolean head,
 		java.lang.String parentTitle) {
 		return getService().getChildrenCount(nodeId, head, parentTitle);

@@ -14,20 +14,25 @@
 
 package com.liferay.trash.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Eudaldo Alonso
  */
 public class EmptyTrashPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
-	public EmptyTrashPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
+	public EmptyTrashPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
+		PortletRequest portletRequest) {
+
+		super(servletContext, jspPath, portletRequest);
 	}
 
 	@Override

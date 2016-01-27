@@ -42,7 +42,8 @@ public class InstallFromURLPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new InstallFromURLPortletConfigurationIcon(portletRequest);
+		return new InstallFromURLPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

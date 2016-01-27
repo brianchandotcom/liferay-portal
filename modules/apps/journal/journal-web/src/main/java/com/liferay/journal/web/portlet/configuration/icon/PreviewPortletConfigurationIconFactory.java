@@ -42,7 +42,8 @@ public class PreviewPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new PreviewPortletConfigurationIcon(portletRequest);
+		return new PreviewPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

@@ -39,7 +39,8 @@ public class StructuresPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new StructuresPortletConfigurationIcon(portletRequest);
+		return new StructuresPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

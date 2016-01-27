@@ -53,11 +53,6 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 	}
 
 	@Override
-	public String[] initPortletIds() {
-		return _PORTLET_IDS;
-	}
-
-	@Override
 	public PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
 		throws Exception {

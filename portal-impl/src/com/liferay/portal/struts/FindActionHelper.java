@@ -32,8 +32,6 @@ public interface FindActionHelper {
 
 	public String getPrimaryKeyParameterName();
 
-	public String[] initPortletIds();
-
 	public PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
 		throws Exception;

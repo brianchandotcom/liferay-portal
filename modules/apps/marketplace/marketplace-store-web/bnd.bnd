@@ -6,4 +6,5 @@ Include-Resource: @lib/scribe.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /marketplace-store-web
+-dsannotations-options: inherit
 -include: ../../../../marketplace/marketplace/bnd.bnd

@@ -6,4 +6,5 @@ Include-Resource:\
 	META-INF/resources=../../users-admin/users-admin-web/src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+-dsannotations-options: inherit
 -include: ../../../../marketplace/platform/bnd.bnd

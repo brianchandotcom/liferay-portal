@@ -18,6 +18,7 @@ import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;
@@ -75,11 +76,25 @@ public class DLFolderFindActionHelper extends BaseDLFindActionHelper {
 		}
 	}
 
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return _portletPageFinder;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)",
+		unbind = "-"
+	)
+	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+		_portletPageFinder = portletPageFinder;
+	}
+
 	private DLAppLocalService _dlAppLocalService;
+	private PortletPageFinder _portletPageFinder;
 
 }

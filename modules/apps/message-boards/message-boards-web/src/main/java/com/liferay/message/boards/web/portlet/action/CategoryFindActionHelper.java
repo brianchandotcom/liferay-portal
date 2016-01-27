@@ -14,9 +14,7 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.struts.BaseFindActionHelper;
-import com.liferay.portal.struts.BasePortletPageFinder;
 import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -77,7 +75,7 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	protected PortletPageFinder getPortletPageFinder() {
-		return new CategoryPortletPageFinder();
+		return _portletPageFinder;
 	}
 
 	@Reference(unbind = "-")
@@ -87,22 +85,15 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	// Order is important. See LPS-23770.
-
-	private static final String[] _PORTLET_IDS = new String[] {
-		MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS
-	};
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBCategory)",
+		unbind = "-"
+	)
+	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+		_portletPageFinder = portletPageFinder;
+	}
 
 	private MBCategoryLocalService _mbCategoryLocalService;
-
-	private static class CategoryPortletPageFinder
-		extends BasePortletPageFinder {
-
-		@Override
-		protected String[] getPortletIds() {
-			return _PORTLET_IDS;
-		}
-
-	}
+	private PortletPageFinder _portletPageFinder;
 
 }

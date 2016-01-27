@@ -12,7 +12,7 @@ configurations {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.3"
 	// @formatter:off
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion

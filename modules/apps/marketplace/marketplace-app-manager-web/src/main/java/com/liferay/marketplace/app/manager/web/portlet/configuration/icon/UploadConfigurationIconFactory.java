@@ -39,7 +39,8 @@ public class UploadConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new UploadConfigurationIcon(portletRequest);
+		return new UploadConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

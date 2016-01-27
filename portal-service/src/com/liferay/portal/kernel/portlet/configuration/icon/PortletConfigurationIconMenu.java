@@ -14,24 +14,28 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
-import javax.servlet.ServletContext;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-public abstract class BaseJSPPortletConfigurationIconFactory
-	extends BasePortletConfigurationIconFactory {
+public class PortletConfigurationIconMenu {
 
-	public abstract String getJspPath();
+	public List<PortletConfigurationIcon>
+		getPortletConfigurationIcons(
+			String portletId, PortletRequest portletRequest) {
 
-	public ServletContext getServletContext() {
-		return _servletContext;
+		return PortletConfigurationIconTracker.getPortletConfigurationIcons(
+			portletId, portletRequest, _comparator);
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+	public void setComparator(Comparator comparator) {
+		_comparator = comparator;
 	}
 
-	private ServletContext _servletContext;
+	private Comparator _comparator;
 
 }

@@ -39,7 +39,8 @@ public class MetadataSetsPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new MetadataSetsPortletConfigurationIcon(portletRequest);
+		return new MetadataSetsPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

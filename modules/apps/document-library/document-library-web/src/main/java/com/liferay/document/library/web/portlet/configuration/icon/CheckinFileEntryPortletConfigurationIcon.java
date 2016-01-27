@@ -15,21 +15,24 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Roberto Díaz
  */
 public class CheckinFileEntryPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public CheckinFileEntryPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
 		PortletRequest portletRequest, FileEntry fileEntry) {
 
-		super(portletRequest);
+		super(servletContext, jspPath, portletRequest);
 
 		_fileEntry = fileEntry;
 	}

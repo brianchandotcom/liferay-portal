@@ -41,7 +41,8 @@ public class CopyApplicationsPortletConfigurationIconFactory
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
 		return new CopyApplicationsPortletConfigurationIcon(
-			portletRequest, _layoutLocalService);
+			getServletContext(), getJspPath(), portletRequest,
+			_layoutLocalService);
 	}
 
 	@Override

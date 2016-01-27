@@ -39,7 +39,8 @@ public class EmptyTrashPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new EmptyTrashPortletConfigurationIcon(portletRequest);
+		return new EmptyTrashPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

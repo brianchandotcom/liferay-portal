@@ -48,7 +48,7 @@ public class CheckinFileEntryPortletConfigurationIconFactory
 			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
 			return new CheckinFileEntryPortletConfigurationIcon(
-				portletRequest, fileEntry);
+				getServletContext(), getJspPath(), portletRequest, fileEntry);
 		}
 		catch (Exception e) {
 		}

@@ -32,12 +32,6 @@ public class ScreensUserServiceWrapper implements ScreensUserService,
 		_screensUserService = screensUserService;
 	}
 
-	@Override
-	public com.liferay.portal.model.User getCurrentUser()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensUserService.getCurrentUser();
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

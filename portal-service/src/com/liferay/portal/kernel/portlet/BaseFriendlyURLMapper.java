@@ -44,7 +44,12 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public String getPortletId() {
-		return _portletId;
+		return getPortletName();
+	}
+
+	@Override
+	public String getPortletName() {
+		return _portletName;
 	}
 
 	@Override
@@ -69,12 +74,17 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public void setPortletId(String portletId) {
-		_portletId = portletId;
+		setPortletName(portletId);
 	}
 
 	@Override
 	public void setPortletInstanceable(boolean portletInstanceable) {
 		_portletInstanceable = portletInstanceable;
+	}
+
+	@Override
+	public void setPortletName(String portletName) {
+		_portletName = portletName;
 	}
 
 	@Override
@@ -191,7 +201,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	 *        portlets this must include the instance ID.
 	 * @param value the value of the parameter
 	 * @see   PortalUtil#getPortletNamespace(String)
-	 * @see   DefaultFriendlyURLMapper#getPortletId(Map)
+	 * @see   DefaultFriendlyURLMapper#getPortletInstanceKey(Map)
 	 */
 	protected void addParameter(
 		String namespace, Map<String, String[]> parameterMap, String name,
@@ -210,7 +220,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	 *        portlets this must include the instance ID.
 	 * @param values the values of the parameter
 	 * @see   PortalUtil#getPortletNamespace(String)
-	 * @see   DefaultFriendlyURLMapper#getPortletId(Map)
+	 * @see   DefaultFriendlyURLMapper#getPortletInstanceKey(Map)
 	 */
 	protected void addParameter(
 		String namespace, Map<String, String[]> parameterMap, String name,
@@ -250,7 +260,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	 * @see    PortalUtil#getPortletNamespace(String)
 	 */
 	protected String getNamespace() {
-		return PortalUtil.getPortletNamespace(getPortletId());
+		return PortalUtil.getPortletNamespace(getPortletName());
 	}
 
 	protected Router router;
@@ -261,7 +271,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 		BaseFriendlyURLMapper.class);
 
 	private String _mapping;
-	private String _portletId;
 	private boolean _portletInstanceable;
+	private String _portletName;
 
 }

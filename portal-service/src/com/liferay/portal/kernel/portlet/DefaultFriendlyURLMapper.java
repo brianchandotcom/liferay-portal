@@ -16,14 +16,19 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletInstance;
+import com.liferay.portal.model.PortletPreferences;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -158,19 +163,19 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String namespace = null;
 
-		String portletId = getPortletId(routeParameters);
+		String portletInstanceKey = getPortletInstanceKey(routeParameters);
 
-		if (Validator.isNotNull(portletId)) {
-			namespace = PortalUtil.getPortletNamespace(portletId);
+		if (Validator.isNotNull(portletInstanceKey)) {
+			namespace = PortalUtil.getPortletNamespace(portletInstanceKey);
 
-			addParameter(namespace, parameterMap, "p_p_id", portletId);
+			addParameter(namespace, parameterMap, "p_p_id", portletInstanceKey);
 		}
 		else if (isAllPublicRenderParameters(routeParameters)) {
 
 			// Portlet namespace is not needed if all the parameters are public
 			// render parameters
 
-			addParameter(null, parameterMap, "p_p_id", getPortletId());
+			addParameter(null, parameterMap, "p_p_id", getPortletName());
 		}
 		else {
 			return;
@@ -287,31 +292,51 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	}
 
 	/**
-	 * Returns the portlet ID, including the instance ID if applicable, from the
-	 * parameter map.
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortletInstanceKey(Map)}
+	 */
+	@Deprecated
+	protected String getPortletId(Map<String, String> routeParameters) {
+		return getPortletInstanceKey(routeParameters);
+	}
+
+	/**
+	 * Returns the portlet instance key, including the user ID if applicable,
+	 * from the parameter map.
 	 *
 	 * @param  routeParameters the parameter map. For an instanceable portlet,
 	 *         this must contain either <code>p_p_id</code> or
 	 *         <code>instanceId</code>.
-	 * @return the portlet ID, including the instance ID if applicable, or
+	 * @return the portlet instance key, including the user ID if applicable, or
 	 *         <code>null</code> if it cannot be determined
 	 */
-	protected String getPortletId(Map<String, String> routeParameters) {
+	protected String getPortletInstanceKey(
+		Map<String, String> routeParameters) {
+
 		if (!isPortletInstanceable()) {
-			return getPortletId();
+			return getPortletName();
 		}
 
+		String instanceId = routeParameters.remove("instanceId");
 		String portletId = routeParameters.remove("p_p_id");
+
+		if (hasUserCustomizedPreferences(instanceId)) {
+			String portletName = getPortletName();
+
+			if (Validator.isNotNull(portletId)) {
+				portletName = portletId;
+			}
+
+			return PortletConstants.assemblePortletId(
+				portletName, PrincipalThreadLocal.getUserId(), instanceId);
+		}
 
 		if (Validator.isNotNull(portletId)) {
 			return portletId;
 		}
 
-		String instanceId = routeParameters.remove("instanceId");
-
 		if (Validator.isNotNull(instanceId)) {
 			return PortletConstants.assemblePortletId(
-				getPortletId(), instanceId);
+				getPortletName(), instanceId);
 		}
 
 		if (!isAllPublicRenderParameters(routeParameters)) {
@@ -321,6 +346,33 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Returns <code>true</code> if a portlet preference exists in the database
+	 * for a portlet instance id and for the current user
+	 *
+	 * Only one portlet preference must exist on the database for a portlet
+	 * instance key, representing that the portlet instance has been deployed on
+	 * a customizable region of a layout by a user.
+	 *
+	 * @param instanceId the identifier of the portlet instance map
+	 * @return <code>true</code> if a portlet preference exists in the database;
+	 *         <code>false</code> otherwise
+	 */
+	protected boolean hasUserCustomizedPreferences(String instanceId) {
+		long userId = PrincipalThreadLocal.getUserId();
+
+		PortletInstance portletInstance = new PortletInstance(
+			getPortletName(), userId, instanceId);
+
+		String portletInstanceKey = portletInstance.getPortletInstanceKey();
+
+		List<PortletPreferences> preferences =
+			PortletPreferencesLocalServiceUtil.
+				getPortletPreferencesByPortletInstanceKey(portletInstanceKey);
+
+		return (!preferences.isEmpty() && (preferences.size() == 1));
 	}
 
 	/**

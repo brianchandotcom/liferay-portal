@@ -296,6 +296,12 @@ public class PortletPreferencesLocalServiceUtil {
 		return getService().getPortletPreferencesByPlid(plid);
 	}
 
+	public static java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByPortletInstanceKey(
+		java.lang.String portletInstanceKey) {
+		return getService()
+				   .getPortletPreferencesByPortletInstanceKey(portletInstanceKey);
+	}
+
 	public static long getPortletPreferencesCount(long ownerId, int ownerType,
 		long plid, com.liferay.portal.model.Portlet portlet,
 		boolean excludeDefaultPreferences) {

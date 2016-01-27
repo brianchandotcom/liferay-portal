@@ -68,9 +68,19 @@ public interface FriendlyURLMapper {
 	/**
 	 * Returns the ID of this portlet
 	 *
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortletName()}
+	 *
 	 * @return the ID of this portlet, not including the instance ID
 	 */
+	@Deprecated
 	public String getPortletId();
+
+	/**
+	 * Returns the name of this portlet
+	 *
+	 * @return the name of this portlet
+	 */
+	public String getPortletName();
 
 	/**
 	 * Returns the router for this friendly URL mapper
@@ -155,16 +165,19 @@ public interface FriendlyURLMapper {
 	public void setMapping(String mapping);
 
 	/**
-	 * Sets the ID of this portlet.
+	 * Sets the name of this portlet.
 	 *
 	 * <p>
 	 * This method is automatically called by {@link
-	 * com.liferay.portlet.PortletBagFactory} with the portlet ID defined in
-	 * <code>liferay-portlet.xml</code>.
+	 * com.liferay.portlet.PortletBagFactory} with the portlet name defined in
+	 * <code>liferay-portlet.xml</code> or the portlet component properties.
 	 * </p>
 	 *
-	 * @param portletId the ID of this portlet.
+	 * @deprecated As of 7.0.0, replaced by {@link #setPortletName(String)}
+	 *
+	 * @param portletId the name of this portlet.
 	 */
+	@Deprecated
 	public void setPortletId(String portletId);
 
 	/**
@@ -173,6 +186,19 @@ public interface FriendlyURLMapper {
 	 * @param portletInstanceable whether this portlet is instanceable
 	 */
 	public void setPortletInstanceable(boolean portletInstanceable);
+
+	/**
+	 * Sets the name of this portlet.
+	 *
+	 * <p>
+	 * This method is automatically called by {@link
+	 * com.liferay.portlet.PortletBagFactory} with the portlet name defined in
+	 * <code>liferay-portlet.xml</code> or the portlet component properties.
+	 * </p>
+	 *
+	 * @param portletName the name of this portlet.
+	 */
+	public void setPortletName(String portletName);
 
 	/**
 	 * Sets the router for this friendly URL mapper.

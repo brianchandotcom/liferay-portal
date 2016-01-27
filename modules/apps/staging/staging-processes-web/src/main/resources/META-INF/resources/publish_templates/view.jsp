@@ -132,7 +132,7 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
 			<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 		</portlet:renderURL>
 
 		<liferay-frontend:add-menu>

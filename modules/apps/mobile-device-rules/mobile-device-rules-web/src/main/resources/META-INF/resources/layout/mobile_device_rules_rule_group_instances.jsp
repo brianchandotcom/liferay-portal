@@ -28,7 +28,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 <liferay-ui:search-container
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="no-device-rules-are-configured"
-	headerNames="name,description,priority"
+	id="rules"
 	iteratorURL="<%= portletURL %>"
 	total="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) %>"
 >
@@ -55,35 +55,31 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 	<liferay-ui:search-iterator markupView="lexicon" type="more" />
 </liferay-ui:search-container>
 
-<aui:script>
-	function <portlet:namespace />mobileDeviceActionHandler(href, title) {
-		<portlet:namespace />mobileDeviceOpenWindow(
-			{
-				uri: href,
-				title: title
-			}
-		);
-	}
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />rules').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
 
-	function <portlet:namespace />mobileDeviceOpenWindow(config) {
-		var data = AUI._.defaults(
-			config,
-			{
-				dialog: {
-					on: {
-						visibleChange: function(event) {
-							<portlet:namespace />updateRuleGroupInstances();
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						on: {
+							visibleChange: function(event) {
+								<portlet:namespace />updateRuleGroupInstances();
+							}
 						}
-					}
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					title: currentTarget.attr('data-title'),
+					uri: currentTarget.attr('data-uri')
 				}
-			}
-		);
-
-		Liferay.Util.openWindow(data);
-	}
+			);
+		},
+		'.actions'
+	);
 </aui:script>
 
 <c:if test="<%= themeDisplay.isStateExclusive() %>">

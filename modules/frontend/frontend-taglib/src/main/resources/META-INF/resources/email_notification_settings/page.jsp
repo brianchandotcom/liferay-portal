@@ -32,7 +32,7 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-fronte
 
 <aui:fieldset markupView="lexicon">
 	<c:if test="<%= showEmailEnabled %>">
-		<aui:input label="enabled" name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Enabled" + fieldPrefixSeparator %>' type="checkbox" value="<%= emailEnabled %>" />
+		<aui:input label="enabled" name='<%= fieldPrefix + fieldPrefixSeparator + emailParam + "Enabled" + fieldPrefixSeparator %>' type="toggle-switch" value="<%= emailEnabled %>" />
 	</c:if>
 
 	<c:if test="<%= showSubject %>">

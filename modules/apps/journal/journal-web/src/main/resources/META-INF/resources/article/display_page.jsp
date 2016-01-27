@@ -59,8 +59,6 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 				}
 			}
 		}
-
-		Group parentGroup = themeDisplay.getSiteGroup();
 		%>
 
 		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-page" />

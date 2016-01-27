@@ -53,10 +53,6 @@ AUI.add(
 									}
 								}
 							);
-
-							instance._eventHandles = [
-								Liferay.on(['dockbarHidePanel', 'dockbarShowPanel'], instance._onPanelStateChange, instance)
-							];
 						}
 					},
 

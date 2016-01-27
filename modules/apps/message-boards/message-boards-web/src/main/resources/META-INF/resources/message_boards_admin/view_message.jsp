@@ -36,6 +36,6 @@ AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.ge
 
 <div class="container-fluid-1280">
 	<div class="displayStyle-<%= displayStyle %>">
-		<liferay-util:include page='<%= "/message_boards/view_message_" + displayStyle + ".jsp" %>' servletContext="<%= application %>" />
+		<liferay-util:include page='<%= "/message_boards/view_message.jsp" %>' servletContext="<%= application %>" />
 	</div>
 </div>

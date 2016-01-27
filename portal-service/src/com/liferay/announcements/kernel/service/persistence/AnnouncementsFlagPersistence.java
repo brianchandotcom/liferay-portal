@@ -105,7 +105,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements flag
-	* @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a matching announcements flag could not be found
+	* @throws NoSuchFlagException if a matching announcements flag could not be found
 	*/
 	public AnnouncementsFlag findByEntryId_First(long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag> orderByComparator)
@@ -127,7 +127,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements flag
-	* @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a matching announcements flag could not be found
+	* @throws NoSuchFlagException if a matching announcements flag could not be found
 	*/
 	public AnnouncementsFlag findByEntryId_Last(long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsFlag> orderByComparator)
@@ -150,7 +150,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements flag
-	* @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a announcements flag with the primary key could not be found
+	* @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	*/
 	public AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
 		long entryId,
@@ -179,7 +179,7 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param value the value
 	* @return the matching announcements flag
-	* @throws com.liferay.portlet.announcements.exception.NoSuchFlagException if a matching announcements flag could not be found
+	* @throws NoSuchFlagException if a matching announcements flag could not be found
 	*/
 	public AnnouncementsFlag findByU_E_V(long userId, long entryId, int value)
 		throws com.liferay.announcements.kernel.exception.NoSuchFlagException;

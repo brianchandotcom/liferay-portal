@@ -63,7 +63,9 @@ public class AccessFromDesktopPortletConfigurationIcon
 					themeDisplay.getScopeGroupId(), folderId,
 					ActionKeys.VIEW) &&
 				portletDisplay.isWebDAVEnabled() &&
-				(_folder.getRepositoryId() == themeDisplay.getScopeGroupId())) {
+				((_folder == null) ||
+				 (_folder.getRepositoryId() ==
+					 themeDisplay.getScopeGroupId()))) {
 
 				return true;
 			}

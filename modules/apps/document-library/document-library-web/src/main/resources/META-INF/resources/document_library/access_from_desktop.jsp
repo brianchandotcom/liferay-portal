@@ -25,7 +25,11 @@ if (row != null) {
 	folder = (Folder)row.getObject();
 }
 else {
-	folder = ActionUtil.getFolder(liferayPortletRequest);
+	folder = (Folder)request.getAttribute("info_panel.jsp-folder");
+
+	if (folder == null) {
+		folder = ActionUtil.getFolder(liferayPortletRequest);
+	}
 }
 
 String randomNamespace = null;

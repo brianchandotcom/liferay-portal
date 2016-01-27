@@ -353,7 +353,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (isExcludedFile(getRunOutsidePortalExclusionPaths(), absolutePath) ||
+		if (isExcludedFile(getRunOutsidePortalExcludes(), absolutePath) ||
 			fileName.endsWith("GetterUtil.java")) {
 
 			return;
@@ -1586,17 +1586,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
-	protected List<String> getRunOutsidePortalExclusionPaths() {
-		if (_runOutsidePortalExclusionPaths != null) {
-			return _runOutsidePortalExclusionPaths;
+	protected List<String> getRunOutsidePortalExcludes() {
+		if (_runOutsidePortalExcludes != null) {
+			return _runOutsidePortalExcludes;
 		}
 
-		List<String> runOutsidePortalExclusionPaths = getPropertyList(
+		List<String> runOutsidePortalExcludes = getPropertyList(
 			"run.outside.portal.excludes.paths");
 
-		_runOutsidePortalExclusionPaths = runOutsidePortalExclusionPaths;
+		_runOutsidePortalExcludes = runOutsidePortalExcludes;
 
-		return _runOutsidePortalExclusionPaths;
+		return _runOutsidePortalExcludes;
 	}
 
 	protected boolean hasMissingParentheses(String s) {
@@ -2229,7 +2229,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _oldCopyright;
 	private Properties _portalLanguageProperties;
 	private Properties _properties;
-	private List<String> _runOutsidePortalExclusionPaths;
+	private List<String> _runOutsidePortalExcludes;
 	private SourceFormatterHelper _sourceFormatterHelper;
 	private boolean _usePortalCompatImport;
 

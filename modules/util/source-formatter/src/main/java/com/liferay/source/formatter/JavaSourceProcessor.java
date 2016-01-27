@@ -786,7 +786,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		boolean isRunOutsidePortalExclusion = isExcludedFile(
-			getRunOutsidePortalExclusionPaths(), absolutePath);
+			getRunOutsidePortalExcludes(), absolutePath);
 
 		if (!isRunOutsidePortalExclusion &&
 			!isExcludedFile(_proxyExcludes, absolutePath) &&

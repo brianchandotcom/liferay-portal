@@ -26,7 +26,7 @@ buildLibSass_Darwin {
 		File buildShFile = new File(libSassDir, "build.sh")
 
 		buildShFile.write("""\
-LIBSASS_VERSION=\"${libSassVersion}\"
+LIBSASS_VERSION=\"${project.libSassVersion}\"
 autoreconf --force --install
 ./configure --disable-static --disable-tests --enable-shared
 make -j5""")
@@ -95,7 +95,7 @@ downloadSassSpec {
 	}
 
 	from {
-		zipTree(FileUtil.get(project, sassSpecUrl))
+		zipTree(FileUtil.get(project, project.sassSpecUrl))
 	}
 
 	include "**/spec/basic/"

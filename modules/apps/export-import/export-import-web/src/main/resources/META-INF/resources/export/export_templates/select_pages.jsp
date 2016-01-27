@@ -40,7 +40,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 		<c:choose>
 			<c:when test="<%= privateLayout %>">
 				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
-					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
+					<portlet:param name="mvcPath" value="/export/export_templates/edit_template.jsp" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 				</liferay-portlet:renderURL>
@@ -49,7 +49,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 			</c:when>
 			<c:otherwise>
 				<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
-					<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
+					<portlet:param name="mvcPath" value="/export/export_templates/edit_template.jsp" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 				</liferay-portlet:renderURL>

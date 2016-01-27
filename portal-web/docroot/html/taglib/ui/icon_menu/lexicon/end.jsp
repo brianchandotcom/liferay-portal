@@ -36,5 +36,5 @@ boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-men
 			element: '#<%= id %>',
 			position: '<%= direction %>'
 		}
-	).render();
+	).decorate();
 </aui:script>

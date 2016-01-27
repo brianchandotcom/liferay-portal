@@ -3,6 +3,22 @@
 
 <routes>
 	<route>
+		<pattern>/preview/entry/{trashEntryId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/preview.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">pop_up</implicit-parameter>
+		<overridden-parameter name="showActions">false</overridden-parameter>
+		<overridden-parameter name="showEditURL">false</overridden-parameter>
+		<overridden-parameter name="status">8</overridden-parameter>
+	</route>
+	<route>
+		<pattern>/preview/entry/{classNameId:\d+}/{classPK:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/preview.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">pop_up</implicit-parameter>
+		<overridden-parameter name="showActions">false</overridden-parameter>
+		<overridden-parameter name="showEditURL">false</overridden-parameter>
+		<overridden-parameter name="status">8</overridden-parameter>
+	</route>
+	<route>
 		<pattern>/entry/{classNameId:\d+}/{classPK:\d+}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>

@@ -36,6 +36,7 @@ MembershipRequest membershipRequest = (MembershipRequest)objArray[2];
 
 	<liferay-ui:icon
 		icon="reply"
+		linkCssClass="icon-monospaced text-default"
 		markupView="lexicon"
 		message="reply"
 		url="<%= replyRequestURL %>"

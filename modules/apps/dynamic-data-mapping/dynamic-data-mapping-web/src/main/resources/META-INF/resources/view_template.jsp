@@ -85,11 +85,25 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	%>
 
 	<c:if test="<%= showHeader %>">
-		<liferay-ui:header
-			backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
-			cssClass="container-fluid-1280"
-			title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
-		/>
+		<c:choose>
+			<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
+
+				<%
+				portletDisplay.setShowBackIcon(true);
+				portletDisplay.setURLBack(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK));
+
+				renderResponse.setTitle(ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale));
+				%>
+
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:header
+					backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+					cssClass="container-fluid-1280"
+					title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
+				/>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 
 	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">

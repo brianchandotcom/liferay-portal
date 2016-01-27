@@ -48,7 +48,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 <div id="<portlet:namespace />smallImageContainer">
 	<div class="lfr-journal-small-image-header">
-		<aui:input id="useSmallImage" label="use-small-image" name="smallImage" />
+		<aui:input id="useSmallImage" label="use-small-image" name="smallImage" type="toggle-switch" />
 	</div>
 
 	<div class="lfr-journal-small-image-content toggler-content-collapsed">

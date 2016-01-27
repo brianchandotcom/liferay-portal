@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
@@ -223,6 +224,68 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
 				folder.getPrimaryKey());
+
+			trashRenderers.add(trashRenderer);
+		}
+
+		return trashRenderers;
+	}
+
+	@Override
+	public int getTrashModelsCount(long classPK) throws PortalException {
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
+
+		return documentRepository.getFileEntriesAndFileShortcutsCount(
+			classPK, WorkflowConstants.STATUS_IN_TRASH);
+	}
+
+	@Override
+	public List<TrashRenderer> getTrashModelTrashRenderers(
+			long classPK, int start, int end, OrderByComparator obc)
+		throws PortalException {
+
+		List<TrashRenderer> trashRenderers = new ArrayList<>();
+
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
+
+		List<RepositoryEntry> entries =
+			documentRepository.getFoldersAndFileEntriesAndFileShortcuts(
+				classPK, WorkflowConstants.STATUS_IN_TRASH, false, start, end,
+				obc);
+
+		for (RepositoryEntry repositoryEntry : entries) {
+			TrashRenderer trashRenderer = null;
+
+			if (repositoryEntry instanceof FileShortcut) {
+				FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
+
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						DLFileShortcutConstants.getClassName());
+
+				trashRenderer = trashHandler.getTrashRenderer(
+					fileShortcut.getPrimaryKey());
+			}
+			else if (repositoryEntry instanceof FileEntry) {
+				FileEntry fileEntry = (FileEntry)repositoryEntry;
+
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						DLFileEntry.class.getName());
+
+				trashRenderer = trashHandler.getTrashRenderer(
+					fileEntry.getPrimaryKey());
+			}
+			else {
+				Folder folder = (Folder)repositoryEntry;
+
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						DLFolder.class.getName());
+
+				trashRenderer = trashHandler.getTrashRenderer(
+					folder.getPrimaryKey());
+			}
 
 			trashRenderers.add(trashRenderer);
 		}

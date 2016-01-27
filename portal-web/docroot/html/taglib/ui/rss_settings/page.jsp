@@ -28,7 +28,7 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 
 <div class="taglib-rss-settings">
 	<aui:fieldset markupView="lexicon">
-		<aui:input label="enable-rss-subscription" name="preferences--enableRss--" type="checkbox" value="<%= enabled %>" />
+		<aui:input label="enable-rss-subscription" name="preferences--enableRss--" type="toggle-switch" value="<%= enabled %>" />
 
 		<div class="rss-settings-options" id="<portlet:namespace />rssOptions">
 			<c:if test="<%= nameEnabled %>">

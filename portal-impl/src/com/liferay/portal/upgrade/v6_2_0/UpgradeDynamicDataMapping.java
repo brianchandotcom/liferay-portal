@@ -73,6 +73,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		updateStructures();
 
+		updateStructuresClassNameId();
+
 		updateTemplates();
 	}
 
@@ -156,6 +158,38 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				updateStructure(
 					structureId, structureKey, updateXSD(xsd, structureKey));
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateStructuresClassNameId() throws Exception {
+		long classNameIdDLFileEntry = PortalUtil.getClassNameId(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntry");
+		long classNameIdDLFileEntryMetadata = PortalUtil.getClassNameId(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata");
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update DDMStructure set classNameId = ? where " +
+					"classNameId = ?");
+
+			ps.setLong(1, classNameIdDLFileEntryMetadata);
+			ps.setLong(2, classNameIdDLFileEntry);
+
+			ps.executeUpdate();
+		}
+		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sqle, sqle);
 			}
 		}
 		finally {

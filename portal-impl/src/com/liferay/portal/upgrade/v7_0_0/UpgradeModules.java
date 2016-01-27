@@ -82,29 +82,6 @@ public class UpgradeModules extends UpgradeProcess {
 		updateConvertedLegacyModules();
 	}
 
-	protected boolean hasPortlet(String portletId) throws SQLException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select portletId from Portlet where portletId like ?");
-
-			ps.setString(1, portletId);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return true;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-
-		return false;
-	}
-
 	protected boolean hasServiceComponent(String buildNamespace)
 		throws SQLException {
 
@@ -153,8 +130,7 @@ public class UpgradeModules extends UpgradeProcess {
 				rs = ps.executeQuery();
 
 				if (!rs.next()) {
-					if (hasPortlet(portletId) ||
-						hasServiceComponent(buildNamespace)) {
+					if (hasServiceComponent(buildNamespace)) {
 
 						addRelease(newServletContextName);
 					}

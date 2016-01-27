@@ -5252,7 +5252,9 @@ public class ServiceBuilder {
 
 		_removeActionableDynamicQuery(entity, _oldServiceOutputPath);
 		_removeBlobModels(entity, _oldServiceOutputPath);
-		_removeEJBPK(entity, _oldServiceOutputPath);
+		if (entity.getPKList().size() > 1) {
+			_removeEJBPK(entity, _oldServiceOutputPath);
+		}
 		_removeExportActionableDynamicQuery(entity, _oldServiceOutputPath);
 		_removeExtendedModel(entity, _oldServiceOutputPath);
 		_removeFinder(entity, _oldServiceOutputPath);

@@ -74,13 +74,6 @@ public class SelectDDMFormFieldValueRenderer
 		return sb.toString();
 	}
 
-	@Reference(unbind = "-")
-	public void setSelectDDMFormFieldValueAccessor(
-		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor) {
-
-		_selectDDMFormFieldValueAccessor = selectDDMFormFieldValueAccessor;
-	}
-
 	protected DDMFormFieldOptions getDDMFormFieldOptions(
 		DDMFormFieldValue ddmFormFieldValue) {
 
@@ -98,6 +91,13 @@ public class SelectDDMFormFieldValueRenderer
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSelectDDMFormFieldValueAccessor(
+		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor) {
+
+		_selectDDMFormFieldValueAccessor = selectDDMFormFieldValueAccessor;
 	}
 
 	private SelectDDMFormFieldValueAccessor _selectDDMFormFieldValueAccessor;

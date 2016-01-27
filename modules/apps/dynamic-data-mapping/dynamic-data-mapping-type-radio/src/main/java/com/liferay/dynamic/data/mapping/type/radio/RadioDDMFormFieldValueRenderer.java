@@ -51,19 +51,19 @@ public class RadioDDMFormFieldValueRenderer
 		return optionLabel.getString(locale);
 	}
 
-	@Reference(unbind = "-")
-	public void setRadioDDMFormFieldValueAccessor(
-		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor) {
-
-		_radioDDMFormFieldValueAccessor = radioDDMFormFieldValueAccessor;
-	}
-
 	protected DDMFormFieldOptions getDDMFormFieldOptions(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 		return ddmFormField.getDDMFormFieldOptions();
+	}
+
+	@Reference(unbind = "-")
+	protected void setRadioDDMFormFieldValueAccessor(
+		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor) {
+
+		_radioDDMFormFieldValueAccessor = radioDDMFormFieldValueAccessor;
 	}
 
 	private RadioDDMFormFieldValueAccessor _radioDDMFormFieldValueAccessor;

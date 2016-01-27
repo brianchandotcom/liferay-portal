@@ -18,6 +18,8 @@ import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.struts.BasePortletPageFinder;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import javax.portlet.PortletURL;
@@ -43,9 +45,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public String[] initPortletIds() {
-		return new String[] {
-			DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
-		};
+		return _PORTLET_IDS;
 	}
 
 	@Override
@@ -80,6 +80,25 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/view_folder");
 		}
+	}
+
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return new DLFolderPortletPageFinder();
+	}
+
+	private static final String[] _PORTLET_IDS = {
+		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
+	};
+
+	private static class DLFolderPortletPageFinder
+		extends BasePortletPageFinder {
+
+		@Override
+		protected String[] getPortletIds() {
+			return _PORTLET_IDS;
+		}
+
 	}
 
 }

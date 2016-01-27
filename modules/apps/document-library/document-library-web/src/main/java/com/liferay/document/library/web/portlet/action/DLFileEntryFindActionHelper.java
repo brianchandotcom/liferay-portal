@@ -16,6 +16,7 @@ package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;
@@ -63,11 +64,25 @@ public class DLFileEntryFindActionHelper extends BaseDLFindActionHelper {
 			"mvcRenderCommandName", "/document_library/view_file_entry");
 	}
 
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return _portletPageFinder;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)",
+		unbind = "-"
+	)
+	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+		_portletPageFinder = portletPageFinder;
+	}
+
 	private DLAppLocalService _dlAppLocalService;
+	private PortletPageFinder _portletPageFinder;
 
 }

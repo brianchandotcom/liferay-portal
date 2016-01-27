@@ -14,10 +14,7 @@
 
 package com.liferay.document.library.web.portlet.action;
 
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.struts.BaseFindActionHelper;
-import com.liferay.portal.struts.BasePortletPageFinder;
-import com.liferay.portal.struts.PortletPageFinder;
 
 import javax.portlet.PortletURL;
 
@@ -34,24 +31,6 @@ public abstract class BaseDLFindActionHelper extends BaseFindActionHelper {
 		throws Exception {
 
 		return portletURL;
-	}
-
-	@Override
-	protected PortletPageFinder getPortletPageFinder() {
-		return new DLPortletPageFinder();
-	}
-
-	private static final String[] _PORTLET_IDS = {
-		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
-	};
-
-	private static class DLPortletPageFinder extends BasePortletPageFinder {
-
-		@Override
-		protected String[] getPortletIds() {
-			return _PORTLET_IDS;
-		}
-
 	}
 
 }

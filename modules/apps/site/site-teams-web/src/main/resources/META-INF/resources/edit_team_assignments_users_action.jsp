@@ -32,6 +32,7 @@ User user2 = (User)row.getObject();
 
 <liferay-ui:icon
 	icon="trash"
+	linkCssClass="icon-monospaced text-default"
 	markupView="lexicon"
 	message="delete"
 	url="<%= deleteTeamUsersURL %>"

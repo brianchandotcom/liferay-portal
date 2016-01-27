@@ -30,7 +30,7 @@ if (Validator.isNull(icon)) {
 }
 %>
 
-<div class="dropdown <%= cssClass %>" id="<%= id %>" <%= AUIUtil.buildData(data) %>>
+<div class="dropdown dropdown-menu-no-arrow <%= cssClass %>" id="<%= id %>" <%= AUIUtil.buildData(data) %>>
 	<a aria-expanded="false" class="dropdown-toggle icon-monospaced <%= triggerCssClass %>" data-onclick="toggle" href="#1" title="<%= message %>">
 		<aui:icon image="<%= icon %>" markupView="lexicon" />
 	</a>

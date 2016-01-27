@@ -311,7 +311,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_First(String uuid,
@@ -361,7 +361,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_Last(String uuid,
@@ -419,7 +419,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUuid_PrevAndNext(long entryId,
@@ -717,7 +717,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(long entryId,
@@ -1282,7 +1282,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_C_First(String uuid, long companyId,
@@ -1338,7 +1338,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_C_Last(String uuid, long companyId,
@@ -1401,7 +1401,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUuid_C_PrevAndNext(long entryId,
@@ -1715,7 +1715,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(long entryId,
@@ -2267,7 +2267,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByUserId_First(long userId,
@@ -2318,7 +2318,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByUserId_Last(long userId,
@@ -2376,7 +2376,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUserId_PrevAndNext(long entryId,
@@ -2647,7 +2647,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUserId_PrevAndNext(long entryId,
@@ -3151,7 +3151,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_First(long classNameId, long classPK,
@@ -3207,7 +3207,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_Last(long classNameId, long classPK,
@@ -3270,7 +3270,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] findByC_C_PrevAndNext(long entryId,
@@ -3556,7 +3556,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByC_C_PrevAndNext(long entryId,
@@ -4097,7 +4097,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param alert the alert
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_A_First(long classNameId, long classPK,
@@ -4159,7 +4159,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param alert the alert
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a matching announcements entry could not be found
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_A_Last(long classNameId, long classPK,
@@ -4227,7 +4227,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param alert the alert
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] findByC_C_A_PrevAndNext(long entryId,
@@ -4526,7 +4526,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param alert the alert
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
-	 * @throws com.liferay.portlet.announcements.exception.NoSuchEntryException if a announcements entry with the primary key could not be found
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(long entryId,

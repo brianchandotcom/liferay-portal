@@ -14,4 +14,5 @@ Include-Resource:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Web-ContextPath: /exportimport-web
+-dsannotations-options: inherit
 -include: ../../../../marketplace/web-content-management/bnd.bnd

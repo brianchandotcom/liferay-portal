@@ -6,4 +6,5 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
+-dsannotations-options: inherit
 -include: ../../../../marketplace/business-productivity/bnd.bnd

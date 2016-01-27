@@ -53,6 +53,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -74,6 +75,8 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeCo
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.Serializable;
 
@@ -1090,8 +1093,9 @@ public class DLImpl implements DL {
 		}
 
 		HttpServletRequest request = serviceContext.getRequest();
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		if ((request == null) || (serviceContext.getThemeDisplay() == null)) {
+		if ((request == null) || (themeDisplay == null)) {
 			return StringPool.BLANK;
 		}
 
@@ -1100,8 +1104,21 @@ public class DLImpl implements DL {
 		long plid = serviceContext.getPlid();
 		long controlPanelPlid = PortalUtil.getControlPanelPlid(
 			serviceContext.getCompanyId());
+
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		for (PortletPageFinder portletPageFinder : _serviceTrackerList) {
+			try {
+				PortletPageFinder.Result result = portletPageFinder.find(
+					themeDisplay, themeDisplay.getSiteGroupId());
+
+				portletId = result.getPortletId();
+				plid = result.getPlid();
+			}
+			catch (PortalException pe) {
+			}
+		}
 
 		if ((plid == controlPanelPlid) ||
 			(plid == LayoutConstants.DEFAULT_PLID)) {
@@ -1181,6 +1198,11 @@ public class DLImpl implements DL {
 		new TreeSet<>();
 	private static final Set<String> _fileIcons = new HashSet<>();
 	private static final Map<String, String> _genericNames = new HashMap<>();
+	private static final ServiceTrackerList<PortletPageFinder>
+		_serviceTrackerList = ServiceTrackerCollections.list(
+			PortletPageFinder.class,
+			"(model.class.name=" +
+				"com.liferay.portal.kernel.repository.model.FileEntry)");
 
 	static {
 		_allMediaGalleryMimeTypes.addAll(

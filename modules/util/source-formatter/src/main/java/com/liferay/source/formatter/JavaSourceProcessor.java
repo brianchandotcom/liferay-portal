@@ -940,9 +940,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		if (!isExcludedFile(_diamondOperatorExcludes, absolutePath) &&
-			!isExcludedFile(_diamondOperatorExclusionPaths, absolutePath)) {
-
+		if (!isExcludedFile(_diamondOperatorExcludes, absolutePath)) {
 			newContent = applyDiamondOperator(newContent);
 		}
 
@@ -1076,8 +1074,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"check.java.field.types.excludes");
 		_checkTabsExcludes = getPropertyList("check.tabs.excludes");
 		_diamondOperatorExcludes = getPropertyList("diamond.operator.excludes");
-		_diamondOperatorExclusionPaths = getPropertyList(
-			"diamond.operator.excludes.paths");
 		_fitOnSingleLineExcludes = getPropertyList(
 			"fit.on.single.line.excludes");
 		_hibernateSQLQueryExcludes = getPropertyList(
@@ -3974,7 +3970,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _componentAnnotationPattern = Pattern.compile(
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private List<String> _diamondOperatorExcludes;
-	private List<String> _diamondOperatorExclusionPaths;
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(

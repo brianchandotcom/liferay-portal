@@ -36,6 +36,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 if (groupThreadsUserId > 0) {
 	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
 }
+
+boolean showBreadcrumb = ParamUtil.getBoolean(request, "showBreadcrumb", true);
 %>
 
 <div class="container-fluid-1280 view-entries-container">
@@ -74,16 +76,19 @@ if (groupThreadsUserId > 0) {
 
 	</c:if>
 
-	<%
-	MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
-	%>
+	<c:if test="<%= showBreadcrumb %>">
 
-	<liferay-ui:breadcrumb
-		showCurrentGroup="<%= false %>"
-		showGuestGroup="<%= false %>"
-		showLayout="<%= false %>"
-		showParentGroups="<%= false %>"
-	/>
+		<%
+		MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
+		%>
+
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
+	</c:if>
 
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />

@@ -1592,7 +1592,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		List<String> runOutsidePortalExcludes = getPropertyList(
-			"run.outside.portal.excludes.paths");
+			"run.outside.portal.excludes");
 
 		_runOutsidePortalExcludes = runOutsidePortalExcludes;
 

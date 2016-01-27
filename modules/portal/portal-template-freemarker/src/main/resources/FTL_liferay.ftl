@@ -8,9 +8,11 @@ LPS-30525.
 <#setting number_format = "computer">
 
 <#if PortalJspTagLibs??>
+	<#assign liferay_control_menu=PortalJspTagLibs["/META-INF/resources/liferay-control-menu.tld"]>
 	<#assign liferay_ui = PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"] />
 	<#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"] />
 <#elseif taglibLiferayHash??>
+	<#assign liferay_control_menu=taglibLiferayHash["/META-INF/resources/liferay-control-menu.tld"]>
 	<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 	<#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet-ext.tld"] />
 </#if>
@@ -55,6 +57,12 @@ LPS-30525.
 		portletProviderAction=portletProviderAction.VIEW
 		portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
 	/>
+</#macro>
+
+<#macro control_menu>
+	<#if themeDisplay.isImpersonated() || (is_setup_complete && is_signed_in)>
+		<@liferay_control_menu["control-menu"] />
+	</#if>
 </#macro>
 
 <#macro css

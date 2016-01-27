@@ -75,9 +75,9 @@ public class JavaClass {
 		throws Exception {
 
 		if (_javaTerms == null) {
-			if (!BaseSourceProcessor.isExcludedFile(
+			if (!BaseSourceProcessor.isExcludedPath(
 					_javaTermAccessLevelModifierExcludes, _absolutePath) &&
-				!BaseSourceProcessor.isExcludedFile(
+				!BaseSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath)) {
 
 				_javaSourceProcessor.processErrorMessage(
@@ -117,7 +117,7 @@ public class JavaClass {
 						_fileName + " " + javaTerm.getLineCount());
 			}
 
-			if (!BaseSourceProcessor.isExcludedFile(
+			if (!BaseSourceProcessor.isExcludedPath(
 					checkJavaFieldTypesExcludes, _absolutePath)) {
 
 				checkJavaFieldType(
@@ -587,7 +587,7 @@ public class JavaClass {
 
 			String javaTermName = javaTerm.getName();
 
-			if (BaseSourceProcessor.isExcludedFile(
+			if (BaseSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath,
 					javaTerm.getLineCount(), javaTermName)) {
 
@@ -800,7 +800,7 @@ public class JavaClass {
 		throws Exception {
 
 		if ((_indent.length() == 1) &&
-			!BaseSourceProcessor.isExcludedFile(
+			!BaseSourceProcessor.isExcludedPath(
 				testAnnotationsExcludes, _absolutePath) &&
 			_fileName.endsWith("Test.java")) {
 
@@ -989,7 +989,7 @@ public class JavaClass {
 					 !line.startsWith(_indent + StringPool.CLOSE_PARENTHESIS) &&
 					 !line.startsWith(_indent + "extends") &&
 					 !line.startsWith(_indent + "implements") &&
-					 !BaseSourceProcessor.isExcludedFile(
+					 !BaseSourceProcessor.isExcludedPath(
 						 _javaTermAccessLevelModifierExcludes, _absolutePath)) {
 
 				Matcher matcher = _classPattern.matcher(_content);
@@ -1300,7 +1300,7 @@ public class JavaClass {
 
 		String javaTermName = javaTerm.getName();
 
-		if (BaseSourceProcessor.isExcludedFile(
+		if (BaseSourceProcessor.isExcludedPath(
 				javaTermSortExcludes, _absolutePath, -1, javaTermName)) {
 
 			return;

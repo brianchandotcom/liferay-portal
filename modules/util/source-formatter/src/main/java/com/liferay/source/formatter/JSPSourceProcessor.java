@@ -654,7 +654,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				if (javaSource) {
 					if (portalSource &&
-						!isExcludedFile(
+						!isExcludedPath(
 							_unusedVariablesExcludes, absolutePath,
 							lineCount) &&
 						!_jspContents.isEmpty() &&

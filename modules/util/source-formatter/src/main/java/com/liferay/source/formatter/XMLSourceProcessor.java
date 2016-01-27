@@ -296,7 +296,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isExcludedFile(_xmlExcludes, absolutePath)) {
+		if (isExcludedPath(_xmlExcludes, absolutePath)) {
 			return content;
 		}
 
@@ -758,7 +758,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		sortAttributes(rootElement, true);
 
-		boolean checkNumericalPortletNameElement = !isExcludedFile(
+		boolean checkNumericalPortletNameElement = !isExcludedPath(
 			_numericalPortletNameElementExcludes, absolutePath);
 
 		List<Element> portletElements = rootElement.elements("portlet");

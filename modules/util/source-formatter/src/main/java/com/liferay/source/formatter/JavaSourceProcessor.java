@@ -755,7 +755,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (!isExcludedFile(_staticLogVariableExcludes, absolutePath)) {
+		if (!isExcludedPath(_staticLogVariableExcludes, absolutePath)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log",
 				"private static final Log _log");
@@ -776,7 +776,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-34911
 
 		if (portalSource &&
-			!isExcludedFile(_upgradeServiceUtilExcludes, absolutePath) &&
+			!isExcludedPath(_upgradeServiceUtilExcludes, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
@@ -785,11 +785,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "ServiceUtil: " + fileName);
 		}
 
-		boolean isRunOutsidePortalExclusion = isExcludedFile(
+		boolean isRunOutsidePortalExclusion = isExcludedPath(
 			getRunOutsidePortalExcludes(), absolutePath);
 
 		if (!isRunOutsidePortalExclusion &&
-			!isExcludedFile(_proxyExcludes, absolutePath) &&
+			!isExcludedPath(_proxyExcludes, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
 			processErrorMessage(fileName, "Proxy: " + fileName);
@@ -875,7 +875,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-39508
 
 		if (!isRunOutsidePortalExclusion &&
-			!isExcludedFile(_secureRandomExcludes, absolutePath) &&
+			!isExcludedPath(_secureRandomExcludes, absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -940,7 +940,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		if (!isExcludedFile(_diamondOperatorExcludes, absolutePath)) {
+		if (!isExcludedPath(_diamondOperatorExcludes, absolutePath)) {
 			newContent = applyDiamondOperator(newContent);
 		}
 
@@ -952,7 +952,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
-			!isExcludedFile(_secureXmlExcludes, absolutePath)) {
+			!isExcludedPath(_secureXmlExcludes, absolutePath)) {
 
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
@@ -961,7 +961,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
-			!isExcludedFile(_secureDeserializationExcludes, absolutePath)) {
+			!isExcludedPath(_secureDeserializationExcludes, absolutePath)) {
 
 			checkDeserializationSecurity(
 				fileName, content, isRunOutsidePortalExclusion);
@@ -1040,7 +1040,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatJava(fileName, absolutePath, newContent);
 
-		if (!isExcludedFile(_checkTabsExcludes, absolutePath)) {
+		if (!isExcludedPath(_checkTabsExcludes, absolutePath)) {
 			JavaSourceTabCalculator javaSourceTabCalculator =
 				new JavaSourceTabCalculator();
 
@@ -1787,7 +1787,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				// LPS-42599
 
-				if (!isExcludedFile(_hibernateSQLQueryExcludes, absolutePath) &&
+				if (!isExcludedPath(_hibernateSQLQueryExcludes, absolutePath) &&
 					line.contains("= session.createSQLQuery(") &&
 					content.contains(
 						"com.liferay.portal.kernel.dao.orm.Session")) {
@@ -2218,7 +2218,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							 line.contains(" index IX_")) {
 					}
 					else if (lineLength > _MAX_LINE_LENGTH) {
-						if (!isExcludedFile(
+						if (!isExcludedPath(
 								_lineLengthExcludes, absolutePath, lineCount) &&
 							!isAnnotationParameter(content, trimmedLine)) {
 
@@ -2736,7 +2736,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int lineTabCount, int previousLineTabCount) {
 
 		if (Validator.isNull(line) || Validator.isNull(previousLine) ||
-			isExcludedFile(_fitOnSingleLineExcludes, absolutePath, lineCount)) {
+			isExcludedPath(_fitOnSingleLineExcludes, absolutePath, lineCount)) {
 
 			return null;
 		}

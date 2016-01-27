@@ -131,61 +131,58 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return leadingTabCount;
 	}
 
-	protected static boolean isExcludedFile(
-		List<String> exclusionFiles, String absolutePath) {
+	protected static boolean isExcludedPath(
+		List<String> excludes, String path) {
 
-		return isExcludedFile(exclusionFiles, absolutePath, -1);
+		return isExcludedPath(excludes, path, -1);
 	}
 
-	protected static boolean isExcludedFile(
-		List<String> exclusionFiles, String absolutePath, int lineCount) {
+	protected static boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount) {
 
-		return isExcludedFile(exclusionFiles, absolutePath, lineCount, null);
+		return isExcludedPath(excludes, path, lineCount, null);
 	}
 
-	protected static boolean isExcludedFile(
-		List<String> exclusionFiles, String absolutePath, int lineCount,
+	protected static boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount,
 		String javaTermName) {
 
-		if (ListUtil.isEmpty(exclusionFiles)) {
+		if (ListUtil.isEmpty(excludes)) {
 			return false;
 		}
 
-		String absolutePathWithJavaTermName = null;
+		String pathWithJavaTermName = null;
 
 		if (Validator.isNotNull(javaTermName)) {
-			absolutePathWithJavaTermName =
-				absolutePath + StringPool.AT + javaTermName;
+			pathWithJavaTermName = path + StringPool.AT + javaTermName;
 		}
 
-		String absolutePathWithLineCount = null;
+		String pathWithLineCount = null;
 
 		if (lineCount > 0) {
-			absolutePathWithLineCount =
-				absolutePath + StringPool.AT + lineCount;
+			pathWithLineCount = path + StringPool.AT + lineCount;
 		}
 
-		for (String exclusionFile : exclusionFiles) {
-			if (exclusionFile.startsWith("**")) {
-				exclusionFile = exclusionFile.substring(2);
+		for (String exclude : excludes) {
+			if (exclude.startsWith("**")) {
+				exclude = exclude.substring(2);
 			}
 
-			if (exclusionFile.endsWith("**")) {
-				exclusionFile = exclusionFile.substring(
-					0, exclusionFile.length() - 2);
+			if (exclude.endsWith("**")) {
+				exclude = exclude.substring(0, exclude.length() - 2);
 
-				if (absolutePath.contains(exclusionFile)) {
+				if (path.contains(exclude)) {
 					return true;
 				}
 
 				continue;
 			}
 
-			if (absolutePath.endsWith(exclusionFile) ||
-				((absolutePathWithJavaTermName != null) &&
-				 absolutePathWithJavaTermName.endsWith(exclusionFile)) ||
-				((absolutePathWithLineCount != null) &&
-				 absolutePathWithLineCount.endsWith(exclusionFile))) {
+			if (path.endsWith(exclude) ||
+				((pathWithJavaTermName != null) &&
+				 pathWithJavaTermName.endsWith(exclude)) ||
+				((pathWithLineCount != null) &&
+				 pathWithLineCount.endsWith(exclude))) {
 
 				return true;
 			}
@@ -353,7 +350,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (isExcludedFile(getRunOutsidePortalExcludes(), absolutePath) ||
+		if (isExcludedPath(getRunOutsidePortalExcludes(), absolutePath) ||
 			fileName.endsWith("GetterUtil.java")) {
 
 			return;

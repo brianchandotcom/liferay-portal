@@ -126,9 +126,8 @@ public class DDMFormValuesExportImportContentProcessor
 		implements DDMFormFieldValueTransformer {
 
 		public FileEntryExportDDMFormFieldValueTransformer(
-			final boolean exportReferencedContent,
-			final PortletDataContext portletDataContext,
-			final StagedModel stagedModel) {
+			boolean exportReferencedContent,
+			PortletDataContext portletDataContext, StagedModel stagedModel) {
 
 			_exportReferencedContent = exportReferencedContent;
 			_portletDataContext = portletDataContext;
@@ -184,7 +183,7 @@ public class DDMFormValuesExportImportContentProcessor
 		implements DDMFormFieldValueTransformer {
 
 		public FileEntryImportDDMFormFieldValueTransformer(
-			final PortletDataContext portletDataContext) {
+			PortletDataContext portletDataContext) {
 
 			_portletDataContext = portletDataContext;
 		}
@@ -266,8 +265,7 @@ public class DDMFormValuesExportImportContentProcessor
 		implements DDMFormFieldValueTransformer {
 
 		public LayoutExportDDMFormFieldValueTransformer(
-			final PortletDataContext portletDataContext,
-			final StagedModel stagedModel) {
+			PortletDataContext portletDataContext, StagedModel stagedModel) {
 
 			_portletDataContext = portletDataContext;
 			_stagedModel = stagedModel;
@@ -316,7 +314,7 @@ public class DDMFormValuesExportImportContentProcessor
 		implements DDMFormFieldValueTransformer {
 
 		public LayoutImportDDMFormFieldValueTransformer(
-			final PortletDataContext portletDataContext) {
+			PortletDataContext portletDataContext) {
 
 			_portletDataContext = portletDataContext;
 		}

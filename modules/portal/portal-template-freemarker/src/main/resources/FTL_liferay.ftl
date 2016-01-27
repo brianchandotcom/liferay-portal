@@ -113,15 +113,6 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	/>
 </#macro>
 
-<#macro product_menu>
-	<#if themeDisplay.isImpersonated() || (is_setup_complete && is_signed_in)>
-		<@liferay_portlet["runtime"]
-			portletProviderAction=portletProviderAction.VIEW
-			portletProviderClassName="com.liferay.admin.kernel.util.PortalProductMenuApplicationType$ProductMenu"
-		/>
-	</#if>
-</#macro>
-
 <#macro search
 	default_preferences = ""
 >

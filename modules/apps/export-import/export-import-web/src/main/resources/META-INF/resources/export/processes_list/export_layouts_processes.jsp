@@ -71,6 +71,21 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				/>
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				name="title"
+			>
+
+				<%
+				String backgroundTaskName = backgroundTask.getName();
+
+				if (backgroundTaskName.equals(StringPool.BLANK)) {
+					backgroundTaskName = LanguageUtil.get(request, "untitled");
+				}
+				%>
+
+				<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-jsp
 				cssClass="background-task-status-column"
 				name="status"

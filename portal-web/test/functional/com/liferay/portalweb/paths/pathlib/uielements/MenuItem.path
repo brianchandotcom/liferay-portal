@@ -679,6 +679,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTED_ASSET</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_selectedAsset}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS</td>
 	<td>//a[@role='menuitem']//span[contains(.,'Settings')]</td>
 	<td></td>

@@ -488,10 +488,12 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
-		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
 		<execute function="AssertClick" locator1="MenuItem#BLOGS_ENTRY" value1="Blogs Entry" />
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Type" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 		<execute function="Type" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />

@@ -155,23 +155,11 @@
 	</command>
 
 	<command name="addViaAP">
-		<if>
-			<isset var="siteScope" />
-			<then>
-				<var name="key_siteScope" value="${siteScope}" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
-				<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope}" />
+		<execute function="AssertClick" locator1="MenuItem#BLOGS_ENTRY" value1="Blogs Entry" />
 
-				<execute function="AssertClick" locator1="AP#ADD_BLOGS_ENTRY_MENU_ITEM" value1="Blogs Entry" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
-
-				<execute function="AssertClick" locator1="MenuItem#BLOGS_ENTRY" value1="Blogs Entry" />
-			</else>
-		</if>
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
@@ -302,11 +290,11 @@
 	</command>
 
 	<command name="addWithWorkflowViaAP">
-		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#BLOGS_ENTRY" value1="Blogs Entry" />
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />

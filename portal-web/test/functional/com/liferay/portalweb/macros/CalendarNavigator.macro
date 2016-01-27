@@ -67,7 +67,7 @@
 	</command>
 
 	<command name="gotoAddEventViaAssetPublisher">
-		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CALENDAR_EVENT" value1="Calendar Event" />
 

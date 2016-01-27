@@ -29,6 +29,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ASSET_PLUS_ICON</td>
+	<td>//a[contains(@id,'AssetPublisher')]/i[contains(@class,'icon-plus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ASSET_TOPPER_TYPE</td>
+	<td>//a[contains(@id,'AssetPublisher')]/span[contains(.,'${key_selectedAsset}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RSS_LINK</td>
 	<td>//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]</td>
 	<td></td>

@@ -6,13 +6,13 @@
 				<execute function="Click" locator1="AP#ADD_BASIC_WEB_CONTENT_MENU_ITEM" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+				<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
 				<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 			</else>
 		</if>
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="_gotoAddPGViaWCD">
@@ -699,10 +699,11 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
-		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
 		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -844,7 +845,7 @@
 
 		<execute function="Click" locator1="Icon#EDIT" />
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Display Page" />
@@ -901,7 +902,7 @@
 
 		<execute function="Click" locator1="AP#ASSET_ABSTRACT_EDIT" />
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitleEdit}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContentEdit}" />
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
@@ -1360,7 +1361,7 @@
 
 		<execute function="Click" locator1="Icon#EDIT" />
 
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Display Page" />

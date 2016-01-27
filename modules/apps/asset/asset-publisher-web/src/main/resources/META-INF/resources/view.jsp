@@ -36,40 +36,7 @@ if (Validator.isNotNull(assetTagName)) {
 if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherDisplayContext.isSelectionStyleManual() && ((assetPublisherDisplayContext.getAllAssetCategoryIds().length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
 	assetPublisherDisplayContext.setSelectionStyle("dynamic");
 }
-
-Group scopeGroup = themeDisplay.getScopeGroup();
 %>
-
-<c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && !scopeGroup.isLayoutPrototype() && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
-
-	<%
-	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
-	%>
-
-	<c:if test="<%= groupIds.length > 0 %>">
-
-		<%
-		PortletURL redirectURL = renderResponse.createRenderURL();
-
-		redirectURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
-		redirectURL.setParameter("redirect", currentURL);
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-		%>
-
-		<aui:nav-bar cssClass='<%= "add-asset-selector lfr-meta-actions" + ((groupIds.length == 1) ? " single-item-button" : StringPool.BLANK) %>'>
-			<liferay-ui:asset-add-button
-				addDisplayPageParameter="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>"
-				allAssetCategoryIds="<%= assetPublisherDisplayContext.getAllAssetCategoryIds() %>"
-				allAssetTagNames="<%= assetPublisherDisplayContext.getAllAssetTagNames() %>"
-				classNameIds="<%= assetPublisherDisplayContext.getClassNameIds() %>"
-				classTypeIds="<%= assetPublisherDisplayContext.getClassTypeIds() %>"
-				groupIds="<%= groupIds %>"
-				redirect="<%= redirectURL.toString() %>"
-			/>
-		</aui:nav-bar>
-	</c:if>
-</c:if>
 
 <div class="subscribe-action">
 	<c:if test="<%= !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) && PortletPermissionUtil.contains(permissionChecker, 0, layout, portletDisplay.getId(), ActionKeys.SUBSCRIBE, false, false) && AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences) %>">

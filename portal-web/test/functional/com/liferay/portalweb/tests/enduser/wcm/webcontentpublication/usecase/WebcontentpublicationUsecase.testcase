@@ -1611,8 +1611,6 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
-
 		<execute macro="AssetPublisherPortlet#viewDynamicAssetSelectionConfigurationPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>

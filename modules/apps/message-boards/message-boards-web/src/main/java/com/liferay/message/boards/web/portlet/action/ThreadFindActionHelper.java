@@ -17,6 +17,8 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.struts.BasePortletPageFinder;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
@@ -43,9 +45,7 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public String[] initPortletIds() {
-		return new String[] {
-			MBPortletKeys.MESSAGE_BOARDS, MBPortletKeys.MESSAGE_BOARDS_ADMIN
-		};
+		return _PORTLET_IDS;
 	}
 
 	@Override
@@ -75,6 +75,24 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_message");
+	}
+
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return new ThreadPortletPageFinder();
+	}
+
+	private static final String[] _PORTLET_IDS = {
+		MBPortletKeys.MESSAGE_BOARDS, MBPortletKeys.MESSAGE_BOARDS_ADMIN
+	};
+
+	private static class ThreadPortletPageFinder extends BasePortletPageFinder {
+
+		@Override
+		protected String[] getPortletIds() {
+			return _PORTLET_IDS;
+		}
+
 	}
 
 }

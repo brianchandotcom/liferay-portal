@@ -17,6 +17,8 @@ package com.liferay.blogs.web.portlet.action;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.struts.BasePortletPageFinder;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -44,13 +46,7 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 
 	@Override
 	public String[] initPortletIds() {
-
-		// Order is important. See LPS-23770.
-
-		return new String[] {
-			BlogsPortletKeys.BLOGS_ADMIN, BlogsPortletKeys.BLOGS,
-			BlogsPortletKeys.BLOGS_AGGREGATOR
-		};
+		return _PORTLET_IDS;
 	}
 
 	@Override
@@ -110,6 +106,27 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 			portletURL.setParameter(
 				"mvcRenderCommandName", mvcRenderCommandName);
 		}
+	}
+
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return new BlogsPortletPageFinder();
+	}
+
+	// Order is important. See LPS-23770.
+
+	private static final String[] _PORTLET_IDS = {
+		BlogsPortletKeys.BLOGS_ADMIN, BlogsPortletKeys.BLOGS,
+		BlogsPortletKeys.BLOGS_AGGREGATOR
+	};
+
+	private static class BlogsPortletPageFinder extends BasePortletPageFinder {
+
+		@Override
+		protected String[] getPortletIds() {
+			return _PORTLET_IDS;
+		}
+
 	}
 
 }

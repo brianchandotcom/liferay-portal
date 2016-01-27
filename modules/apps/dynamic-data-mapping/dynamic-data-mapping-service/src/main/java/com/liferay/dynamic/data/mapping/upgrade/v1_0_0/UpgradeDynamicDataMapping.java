@@ -424,7 +424,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		setUpClassNameIds();
 
-		upgradeExpandoValues();
+		upgradeExpandoStorageAdapter();
+
 		upgradeStructuresAndAddStructureVersionsAndLayouts();
 		upgradeTemplatesAndAddTemplateVersions();
 		upgradeXMLStorageAdapter();
@@ -943,7 +944,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeExpandoValues() throws Exception {
+	protected void upgradeExpandoStorageAdapter() throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 

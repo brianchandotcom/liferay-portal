@@ -174,23 +174,24 @@ public class UpgradeDynamicDataMappingTest {
 
 		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
 
-		ExpandoColumn columnName = ExpandoColumnLocalServiceUtil.addColumn(
-			expandoTable.getTableId(), "Name",
-			ExpandoColumnConstants.STRING_LOCALIZED);
+		ExpandoColumn expandoColumnName =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "Name",
+				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnName.getColumnId(), classPK,
+			expandoColumnName.getColumnId(), classPK,
 			read("expando-localized-field.xsd"));
 
-		ExpandoColumn columnFieldsDisplay =
+		ExpandoColumn expandoColumnFieldsDisplay =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "_fieldsDisplay",
 				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnFieldsDisplay.getColumnId(), classPK,
+			expandoColumnFieldsDisplay.getColumnId(), classPK,
 			read("expando-localized-field-display.xsd"));
 
 		_upgradeDynamicDataMapping.upgrade();
@@ -222,54 +223,54 @@ public class UpgradeDynamicDataMappingTest {
 
 		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
 
-		ExpandoColumn columnTextNestedUpper =
+		ExpandoColumn expandoColumnTextNestedUpper =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "TextNestedUpper",
 				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnTextNestedUpper.getColumnId(), classPK,
+			expandoColumnTextNestedUpper.getColumnId(), classPK,
 			read("expando-nested-repeatable-field-1.xsd"));
 
-		ExpandoColumn columnTextParent =
+		ExpandoColumn expandoColumnTextParent =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "TextParent",
 				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnTextParent.getColumnId(), classPK,
+			expandoColumnTextParent.getColumnId(), classPK,
 			read("expando-nested-repeatable-field-2.xsd"));
 
-		ExpandoColumn columnTextRepeateable =
+		ExpandoColumn expandoColumnTextRepeateable =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "TextRepeateable",
 				ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnTextRepeateable.getColumnId(), classPK,
+			expandoColumnTextRepeateable.getColumnId(), classPK,
 			read("expando-nested-repeatable-field-3.xsd"));
 
-		ExpandoColumn columnTextNestedBottom =
+		ExpandoColumn expandoColumnTextNestedBottom =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "TextNestedBottom",
 				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnTextNestedBottom.getColumnId(), classPK,
+			expandoColumnTextNestedBottom.getColumnId(), classPK,
 			read("expando-nested-repeatable-field-4.xsd"));
 
-		ExpandoColumn columnFieldsDisplay =
+		ExpandoColumn expandoColumnFieldsDisplay =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "_fieldsDisplay",
 				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnFieldsDisplay.getColumnId(), classPK,
+			expandoColumnFieldsDisplay.getColumnId(), classPK,
 			read("expando-nested-repeatable-field-display.xsd"));
 
 		_upgradeDynamicDataMapping.upgrade();
@@ -299,24 +300,24 @@ public class UpgradeDynamicDataMappingTest {
 
 		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
 
-		ExpandoColumn columnTextRepeatable =
+		ExpandoColumn expandoColumnTextRepeatable =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "TextRepeatable",
 				ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnTextRepeatable.getColumnId(), classPK,
+			expandoColumnTextRepeatable.getColumnId(), classPK,
 			read("expando-value-text-repeatable-field.xsd"));
 
-		ExpandoColumn columnFieldsDisplay =
+		ExpandoColumn expandoColumnFieldsDisplay =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "_fieldsDisplay",
 				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnFieldsDisplay.getColumnId(), classPK,
+			expandoColumnFieldsDisplay.getColumnId(), classPK,
 			read("expando-value-text-repeatable-field-display.xsd"));
 
 		_upgradeDynamicDataMapping.upgrade();
@@ -348,23 +349,24 @@ public class UpgradeDynamicDataMappingTest {
 
 		addStorageLink(_storageLinkId, expandoRow.getRowId(), _structureId);
 
-		ExpandoColumn columnText = ExpandoColumnLocalServiceUtil.addColumn(
-			expandoTable.getTableId(), "Text",
-			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+		ExpandoColumn expandoColumnText =
+			ExpandoColumnLocalServiceUtil.addColumn(
+				expandoTable.getTableId(), "Text",
+				ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnText.getColumnId(), classPK,
+			expandoColumnText.getColumnId(), classPK,
 			read("expando-transient-repeatable-parent-field.xsd"));
 
-		ExpandoColumn columnFieldsDisplay =
+		ExpandoColumn expandoColumnFieldsDisplay =
 			ExpandoColumnLocalServiceUtil.addColumn(
 				expandoTable.getTableId(), "_fieldsDisplay",
 				ExpandoColumnConstants.STRING_LOCALIZED);
 
 		ExpandoValueLocalServiceUtil.addValue(
 			expandoTable.getClassNameId(), expandoTable.getTableId(),
-			columnFieldsDisplay.getColumnId(), classPK,
+			expandoColumnFieldsDisplay.getColumnId(), classPK,
 			read("expando-transient-repeatable-parent-field-display.xsd"));
 
 		_upgradeDynamicDataMapping.upgrade();

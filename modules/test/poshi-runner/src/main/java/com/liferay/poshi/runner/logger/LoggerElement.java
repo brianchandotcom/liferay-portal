@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -192,6 +193,10 @@ public class LoggerElement {
 		}
 
 		setClassName(sb.toString());
+	}
+
+	public void reverseChildLoggerElements() {
+		Collections.reverse(_childLoggerElements);
 	}
 
 	public void setAttribute(String attributeName, String attributeValue) {

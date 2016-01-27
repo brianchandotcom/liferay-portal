@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//*[@data-qa-id='recycle-binButton'] | //a[contains(@title,'Delete')]/span[contains(@class,'icon-monospaced')]</td>
+	<td>//*[@data-qa-id='deleteButton'] | //a[contains(@title,'Delete')]/span[contains(@class,'icon-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>

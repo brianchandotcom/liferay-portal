@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.internal;
+package com.liferay.portal.search.internal.instance.lifecycle;
 
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.model.Company;
@@ -30,7 +30,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class CompanySearchEngineInitializer {
+public class SearchIndexPortalInstanceLifecycleListener {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

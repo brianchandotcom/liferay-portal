@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -281,43 +280,6 @@ public class DDMFormRendererHelper {
 		catch (PortalException pe) {
 			throw new DDMFormRenderingException(pe);
 		}
-	}
-
-	protected String renderDDMFormField(
-			DDMFormField ddmFormField, String parentDDMFormFieldParameterName)
-		throws DDMFormRenderingException {
-
-		String ddmFormFieldParameterName = getDDMFormFieldParameterName(
-			ddmFormField.getName(), StringUtil.randomString(), 0,
-			parentDDMFormFieldParameterName);
-
-		List<DDMFormField> nestedDDMFormFields =
-			ddmFormField.getNestedDDMFormFields();
-
-		StringBundler sb = new StringBundler(nestedDDMFormFields.size());
-
-		for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
-			sb.append(
-				renderDDMFormField(
-					nestedDDMFormField, ddmFormFieldParameterName));
-		}
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			createDDMFormFieldRenderingContext();
-
-		setDDMFormFieldRenderingContextChildElementsHTML(
-			sb.toString(), ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextLabel(
-			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextName(
-			ddmFormFieldParameterName, ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextRequired(
-			ddmFormField.isRequired(), ddmFormFieldRenderingContext);
-		setDDMFormFieldRenderingContextVisible(
-			ddmFormField.getVisibilityExpression(), ddmFormField.getName(),
-			ddmFormFieldRenderingContext);
-
-		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
 
 	protected String renderDDMFormFieldValue(

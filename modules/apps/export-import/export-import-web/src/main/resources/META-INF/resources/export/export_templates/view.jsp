@@ -145,7 +145,7 @@ if (liveGroup == null) {
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

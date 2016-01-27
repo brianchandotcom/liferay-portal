@@ -43,7 +43,7 @@ boolean disableInputs = ParamUtil.getBoolean(request, "disableInputs");
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
 							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-							<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
+							<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 						</liferay-portlet:renderURL>
 
 						<aui:button disabled="<%= disableInputs %>" href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
@@ -53,7 +53,7 @@ boolean disableInputs = ParamUtil.getBoolean(request, "disableInputs");
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
 							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-							<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
+							<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 						</liferay-portlet:renderURL>
 
 						<aui:button disabled="<%= disableInputs %>" href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />

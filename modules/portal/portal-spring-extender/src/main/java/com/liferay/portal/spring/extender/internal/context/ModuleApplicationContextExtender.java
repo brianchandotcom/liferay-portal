@@ -212,7 +212,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			Dictionary<String, String> headers = _bundle.getHeaders();
 
-			String requireSchemaVersion = headers.get("Require-SchemaVersion");
+			String requireSchemaVersion = headers.get(
+				"Liferay-Require-SchemaVersion");
 
 			if (Validator.isNull(requireSchemaVersion)) {
 				_generateReleaseInfo();
@@ -244,7 +245,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			Dictionary<String, String> headers = _bundle.getHeaders();
 
 			String upgradeToSchemaVersion = GetterUtil.getString(
-				headers.get("Require-SchemaVersion"),
+				headers.get("Liferay-Require-SchemaVersion"),
 				headers.get("Bundle-Version"));
 
 			return UpgradeStepRegistratorTracker.register(

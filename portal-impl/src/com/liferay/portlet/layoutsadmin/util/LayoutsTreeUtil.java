@@ -142,6 +142,15 @@ public class LayoutsTreeUtil {
 			return LayoutLocalServiceUtil.fetchLayout(selPlid);
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (!layout.isTypeControlPanel()) {
+			return layout;
+		}
+
 		return null;
 	}
 

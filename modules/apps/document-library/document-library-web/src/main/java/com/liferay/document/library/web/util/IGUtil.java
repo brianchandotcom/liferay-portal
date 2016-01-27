@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.util;
+package com.liferay.document.library.web.util;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.Folder;

@@ -46,7 +46,13 @@ AUI.add(
 
 				nestedPortlets.each(
 					function(portlet) {
-						Liferay.Portlet.close(portlet, true);
+						Liferay.Portlet.close(
+							portlet,
+							true,
+							{
+								nestedPortlet: true
+							}
+						);
 					}
 				);
 			},
@@ -61,12 +67,13 @@ AUI.add(
 			findReferencePortlet: function(dropColumn) {
 				var portletBoundary = Layout.options.portletBoundary;
 				var portlets = dropColumn.all('>' + portletBoundary);
+
 				var firstPortlet = portlets.item(0);
 				var referencePortlet = null;
 
 				if (firstPortlet) {
-					var lastStatic = null;
 					var firstPortletStatic = firstPortlet.isStatic;
+					var lastStatic = null;
 
 					if (!firstPortletStatic || (firstPortletStatic == 'end')) {
 						referencePortlet = firstPortlet;
@@ -135,8 +142,8 @@ AUI.add(
 			},
 
 			hasMoved: function(dragNode) {
-				var moved = false;
 				var curPortletInfo = Layout.curPortletInfo;
+				var moved = false;
 
 				if (curPortletInfo) {
 					var currentIndex = Layout.findIndex(dragNode);
@@ -218,13 +225,14 @@ AUI.add(
 			},
 
 			syncEmptyColumnClassUI: function(columnNode) {
-				var options = Layout.options;
 				var curPortletInfo = Layout.curPortletInfo;
+				var options = Layout.options;
 
 				if (curPortletInfo) {
+					var columnHasPortlets = Layout.hasPortlets(columnNode);
 					var emptyColumnClass = options.emptyColumnClass;
 					var originalParent = curPortletInfo.originalParent;
-					var columnHasPortlets = Layout.hasPortlets(columnNode);
+
 					var originalColumnHasPortlets = Layout.hasPortlets(originalParent);
 
 					var currentColumn = columnNode.ancestor(options.dropNodes);
@@ -317,6 +325,7 @@ AUI.add(
 
 			_onPortletClose: function(event) {
 				var portlet = event.portlet;
+
 				var column = portlet.ancestor(Layout.options.dropContainer);
 
 				Layout.updateCurrentPortletInfo(portlet);

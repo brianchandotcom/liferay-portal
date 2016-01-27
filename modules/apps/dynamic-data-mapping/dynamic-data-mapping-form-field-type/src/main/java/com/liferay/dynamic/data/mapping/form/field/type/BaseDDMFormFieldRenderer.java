@@ -31,7 +31,6 @@ import java.io.Writer;
 import java.net.URL;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -94,15 +93,9 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.put("readOnly", ddmFormFieldRenderingContext.isReadOnly());
 		template.put("required", ddmFormFieldRenderingContext.isRequired());
 		template.put("showLabel", ddmFormField.isShowLabel());
+		template.put("tip", ddmFormFieldRenderingContext.getTip());
 		template.put("value", ddmFormFieldRenderingContext.getValue());
 		template.put("visible", ddmFormFieldRenderingContext.isVisible());
-
-		LocalizedValue tip = ddmFormField.getTip();
-		Map<Locale, String> tipValues = tip.getValues();
-
-		if (tipValues.containsKey(locale)) {
-			template.put("tip", tipValues.get(locale));
-		}
 	}
 
 	protected String render(Template template) throws PortalException {

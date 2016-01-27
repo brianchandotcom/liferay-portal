@@ -334,6 +334,8 @@ public class DDMFormRendererHelper {
 			ddmFormField.isRequired(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextRequired(
 			ddmFormField.isRequired(), ddmFormFieldRenderingContext);
+		setDDMFormFieldRenderingContextTip(
+			ddmFormField.getTip(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextValue(
 			ddmFormFieldValue.getValue(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextVisible(
@@ -437,6 +439,20 @@ public class DDMFormRendererHelper {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		ddmFormFieldRenderingContext.setRequired(required);
+	}
+
+	protected void setDDMFormFieldRenderingContextTip(
+		LocalizedValue tip,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		Map<Locale, String> values = tip.getValues();
+
+		if (values.isEmpty()) {
+			return;
+		}
+
+		ddmFormFieldRenderingContext.setTip(
+			tip.getString(ddmFormFieldRenderingContext.getLocale()));
 	}
 
 	protected void setDDMFormFieldRenderingContextValue(

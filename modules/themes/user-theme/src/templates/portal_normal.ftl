@@ -18,9 +18,7 @@
 
 ${theme.include(body_top_include)}
 
-<#if is_setup_complete && is_signed_in>
-	<@liferay_control_menu["control-menu"] />
-</#if>
+<@liferay.control_menu />
 
 <div class="container-fluid-1280" id="wrapper">
 	<header class="col-md-12 panel" id="banner" role="banner">

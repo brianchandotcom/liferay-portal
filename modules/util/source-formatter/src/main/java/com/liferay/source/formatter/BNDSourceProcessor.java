@@ -43,11 +43,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		// LPS-61288
 
 		if (fileName.endsWith("-web/bnd.bnd") &&
-			content.contains("Require-SchemaVersion: 1.0.0")) {
+			content.contains("Liferay-Require-SchemaVersion: 1.0.0")) {
 
 			processErrorMessage(
 				fileName,
-				"Do not include the header Require-SchemaVersion in web " +
+				"Do not include the header Liferay-Require-SchemaVersion in web " +
 					"modules: " + fileName);
 		}
 

@@ -258,7 +258,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	@Override
 	public void error(SAXParseException e) {
-		_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+		_logger.log(Logger.LOG_ERROR, _bundle + " " + e.getMessage(), e);
 	}
 
 	public WebXMLDefinition loadWebXML() throws Exception {
@@ -328,7 +328,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		}
 		catch (Exception e) {
 			_logger.log(
-				Logger.LOG_ERROR, "Unable to load filter " + filterClassName);
+				Logger.LOG_ERROR,
+				_bundle + " unable to load filter " + filterClassName);
 
 			return null;
 		}
@@ -346,7 +347,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		catch (Exception e) {
 			_logger.log(
 				Logger.LOG_ERROR,
-				"Unable to load listener " + listenerClassName);
+				_bundle + " unable to load listener " + listenerClassName);
 
 			return null;
 		}
@@ -363,8 +364,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		}
 		catch (Exception e) {
 			_logger.log(
-				Logger.LOG_ERROR, "Unable to load servlet " + servletClassName,
-				e);
+				Logger.LOG_ERROR,
+				_bundle + " unable to load servlet " + servletClassName, e);
 
 			return null;
 		}

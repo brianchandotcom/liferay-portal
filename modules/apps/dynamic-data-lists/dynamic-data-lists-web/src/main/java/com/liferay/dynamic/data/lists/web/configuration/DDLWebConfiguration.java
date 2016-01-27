@@ -29,6 +29,13 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 public interface DDLWebConfiguration {
 
 	@Meta.AD(
+		deflt = "false",
+		description = "%changeable.default.language.description",
+		name = "%changeable.default.language", required = false
+	)
+	public boolean changeableDefaultLanguage();
+
+	@Meta.AD(
 		deflt = "list", optionLabels = {"List", "Descriptive"},
 		optionValues = {"list", "descriptive"}, required = false
 	)

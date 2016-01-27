@@ -387,6 +387,12 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				value, StringPool.COMMA);
 
 			for (String propertyFileName : propertyFileNames) {
+				if (propertyFileName.startsWith("**") ||
+					propertyFileName.endsWith("**")) {
+
+					continue;
+				}
+
 				pos = propertyFileName.indexOf(CharPool.AT);
 
 				if (pos != -1) {

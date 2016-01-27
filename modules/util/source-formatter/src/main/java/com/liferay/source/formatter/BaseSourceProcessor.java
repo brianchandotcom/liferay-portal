@@ -166,6 +166,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (String exclusionFile : exclusionFiles) {
+			if (exclusionFile.startsWith("**")) {
+				exclusionFile = exclusionFile.substring(2);
+			}
+
+			if (exclusionFile.endsWith("**")) {
+				exclusionFile = exclusionFile.substring(
+					0, exclusionFile.length() - 2);
+
+				if (absolutePath.contains(exclusionFile)) {
+					return true;
+				}
+
+				continue;
+			}
+
 			if (absolutePath.endsWith(exclusionFile) ||
 				((absolutePathWithJavaTermName != null) &&
 				 absolutePathWithJavaTermName.endsWith(exclusionFile)) ||

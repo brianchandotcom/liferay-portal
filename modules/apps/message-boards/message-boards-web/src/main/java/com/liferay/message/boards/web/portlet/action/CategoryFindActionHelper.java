@@ -20,13 +20,14 @@ import com.liferay.portal.struts.BasePortletPageFinder;
 import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -40,8 +41,7 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			primaryKey);
+		MBCategory category = _mbCategoryLocalService.getCategory(primaryKey);
 
 		return category.getGroupId();
 	}
@@ -80,11 +80,20 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 		return new CategoryPortletPageFinder();
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
 	// Order is important. See LPS-23770.
 
 	private static final String[] _PORTLET_IDS = new String[] {
 		MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS
 	};
+
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 	private static class CategoryPortletPageFinder
 		extends BasePortletPageFinder {

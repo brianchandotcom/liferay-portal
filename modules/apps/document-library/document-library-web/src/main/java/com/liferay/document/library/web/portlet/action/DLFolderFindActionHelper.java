@@ -21,13 +21,14 @@ import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.BasePortletPageFinder;
 import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -41,7 +42,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		Folder folder = DLAppLocalServiceUtil.getFolder(primaryKey);
+		Folder folder = _dlAppLocalService.getFolder(primaryKey);
 
 		return folder.getRepositoryId();
 	}
@@ -63,7 +64,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
-		Folder folder = DLAppLocalServiceUtil.getFolder(primaryKey);
+		Folder folder = _dlAppLocalService.getFolder(primaryKey);
 
 		portletURL.setParameter(
 			"folderId", String.valueOf(folder.getFolderId()));
@@ -90,9 +91,16 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 		return new DLFolderPortletPageFinder();
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
 	private static final String[] _PORTLET_IDS = {
 		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
 	};
+
+	private DLAppLocalService _dlAppLocalService;
 
 	private static class DLFolderPortletPageFinder
 		extends BasePortletPageFinder {

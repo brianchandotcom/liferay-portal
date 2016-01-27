@@ -20,13 +20,14 @@ import com.liferay.portal.struts.BasePortletPageFinder;
 import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -40,7 +41,7 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(primaryKey);
+		MBMessage message = _mbMessageLocalService.getMessage(primaryKey);
 
 		return message.getGroupId();
 	}
@@ -79,11 +80,20 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 		return new MessagePortletPageFinder();
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
 	// Order is important. See LPS-23770.
 
 	private static final String[] _PORTLET_IDS = new String[] {
 		MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS
 	};
+
+	private MBMessageLocalService _mbMessageLocalService;
 
 	private static class MessagePortletPageFinder
 		extends BasePortletPageFinder {

@@ -37,7 +37,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 <ul class="flex-container layout-selector" id="<portlet:namespace />pages">
 	<li class="layout-selector-options">
-		<aui:fieldset cssClass="portlet-data-section" label="pages-options">
+		<aui:fieldset label="pages-options">
 			<c:choose>
 				<c:when test="<%= privateLayout %>">
 					<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
@@ -62,7 +62,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 	</li>
 
 	<li class="layout-selector-options">
-		<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
+		<aui:fieldset label="pages-to-export">
 
 			<%
 			String treeId = ParamUtil.getString(request, "treeId");
@@ -88,7 +88,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 	</li>
 
 	<li class="layout-selector-options">
-		<aui:fieldset cssClass="portlet-data-section" label="look-and-feel">
+		<aui:fieldset label="look-and-feel">
 			<aui:input disabled="<%= disableInputs %>" helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, true) %>" />
 
 			<aui:input disabled="<%= disableInputs %>" label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />

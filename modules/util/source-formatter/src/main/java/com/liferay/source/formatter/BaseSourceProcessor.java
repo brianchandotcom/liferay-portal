@@ -1466,12 +1466,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String moduleLocation = StringUtil.replaceLast(
 			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
 
-		String moduleLangPath = getModuleLangPath(moduleLocation);
+		String moduleLangDir = getModuleLangDir(moduleLocation);
 
-		String moduleLangLanguagePath =
-			moduleLangPath + "/src/main/resources/content/Language.properties";
+		String moduleLangLanguagePropertiesFileName =
+			moduleLangDir + "/src/main/resources/content/Language.properties";
 
-		File file = new File(moduleLangLanguagePath);
+		File file = new File(moduleLangLanguagePropertiesFileName);
 
 		if (!file.exists()) {
 			return null;
@@ -1488,7 +1488,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return properties;
 	}
 
-	protected String getModuleLangPath(String moduleLocation) {
+	protected String getModuleLangDir(String moduleLocation) {
 		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
 
 		String baseModuleName = moduleLocation.substring(0, x);

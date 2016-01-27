@@ -89,8 +89,8 @@ public class TrashPortlet extends MVCPortlet {
 			return;
 		}
 
-		long[] deleteEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "deleteThrashEntryIds"), 0L);
+		long[] deleteEntryIds = ParamUtil.getLongValues(
+			actionRequest, "rowIds");
 
 		if (deleteEntryIds.length > 0) {
 			for (int i = 0; i < deleteEntryIds.length; i++) {

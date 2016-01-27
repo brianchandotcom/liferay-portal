@@ -324,6 +324,11 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		long folderId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Object> getFoldersAndEntries(long groupId,
+		long folderId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndEntriesCount(long groupId, long folderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

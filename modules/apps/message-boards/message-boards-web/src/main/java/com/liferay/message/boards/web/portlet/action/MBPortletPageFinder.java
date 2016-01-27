@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletPageFinder.class
 )
-public class CategoryPortletPageFinder extends BasePortletPageFinder {
+public class MBPortletPageFinder extends BasePortletPageFinder {
 
 	@Override
 	protected String[] getPortletIds() {

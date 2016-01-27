@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import java.io.File;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -38,12 +39,10 @@ public class BaseSourceProcessorTest {
 			_baseSourceProcessor.getModuleLangPath(
 				"./modules/apps/dynamic-data-mapping/" +
 					"dynamic-data-mapping-web"));
-
 		Assert.assertEquals(
 			"./modules/apps/staging/staging-lang",
 			_baseSourceProcessor.getModuleLangPath(
 				"./modules/apps/staging/staging-bar-web"));
-
 		Assert.assertEquals(
 			"./modules/apps/workflow/workflow-lang",
 			_baseSourceProcessor.getModuleLangPath(
@@ -59,11 +58,6 @@ public class BaseSourceProcessorTest {
 			}
 
 			@Override
-			protected List<String> doGetFileNames() throws Exception {
-				return null;
-			}
-
-			@Override
 			protected String doFormat(
 					File file, String fileName, String absolutePath,
 					String content)
@@ -71,6 +65,12 @@ public class BaseSourceProcessorTest {
 
 				return null;
 			}
+
+			@Override
+			protected List<String> doGetFileNames() throws Exception {
+				return null;
+			}
+
 		};
 	}
 

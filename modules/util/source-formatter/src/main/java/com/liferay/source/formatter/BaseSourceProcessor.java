@@ -1468,8 +1468,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String moduleLangPath = getModuleLangPath(moduleLocation);
 
-		String moduleLangLanguagePath = moduleLangPath +
-			"/src/main/resources/content/Language.properties";
+		String moduleLangLanguagePath =
+			moduleLangPath + "/src/main/resources/content/Language.properties";
 
 		File file = new File(moduleLangLanguagePath);
 

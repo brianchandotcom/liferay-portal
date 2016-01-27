@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>SEARCH_TITLE</td>
-	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[contains(@class,'entry-title')]</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a</td>
 	<td></td>
 </tr>
 <tr>

@@ -135,25 +135,33 @@ public class LayoutsTreeUtil {
 		return _toJSON(request, groupId, layoutTreeNodes);
 	}
 
-	private static List<Layout> _getAncestorLayouts(HttpServletRequest request)
-		throws Exception {
-
+	private static Layout _fetchCurrentLayout(HttpServletRequest request) {
 		long selPlid = ParamUtil.getLong(request, "selPlid");
 
 		if (selPlid == 0) {
+			return null;
+		}
+
+		return LayoutLocalServiceUtil.fetchLayout(selPlid);
+	}
+
+	private static List<Layout> _getAncestorLayouts(HttpServletRequest request)
+		throws Exception {
+
+		Layout layout = _fetchCurrentLayout(request);
+
+		if (layout == null) {
 			return Collections.emptyList();
 		}
 
 		List<Layout> ancestorLayouts = LayoutServiceUtil.getAncestorLayouts(
-			selPlid);
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(selPlid);
+			layout.getPlid());
 
 		if (_log.isDebugEnabled()) {
 			StringBundler sb = new StringBundler(7);
 
-			sb.append("_getAncestorLayouts(selPlid=");
-			sb.append(selPlid);
+			sb.append("_getAncestorLayouts(plid=");
+			sb.append(layout.getPlid());
 			sb.append(", ancestorLayouts=");
 			sb.append(ancestorLayouts);
 			sb.append(", layout=");

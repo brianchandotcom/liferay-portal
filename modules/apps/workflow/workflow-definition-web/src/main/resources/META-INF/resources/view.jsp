@@ -17,9 +17,40 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = renderResponse.createRenderURL();
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
+String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
+String navigation = ParamUtil.getString(request, "navigation", "definitions");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-portletURL.setParameter("mvcPath", "/view.jsp");
+PortletURL navigationPortletURL = renderResponse.createRenderURL();
+navigationPortletURL.setParameter("mvcPath", "/view.jsp");
+
+if (delta > 0) {
+	navigationPortletURL.setParameter("delta", String.valueOf(delta));
+}
+
+navigationPortletURL.setParameter("orderBycol", orderByCol);
+navigationPortletURL.setParameter("orderByType", orderByType);
+
+PortletURL portletURL = PortletURLUtil.clone(navigationPortletURL, liferayPortletResponse);
+
+portletURL.setParameter("definitionsNavigation", definitionsNavigation);
+
+PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+if (cur > 0) {
+	displayStyleURL.setParameter("cur", String.valueOf(cur));
+}
+
+PortletURL viewDefinitionsURL = renderResponse.createRenderURL();
+
+viewDefinitionsURL.setParameter("navigation", "definitions");
+
+PortletURL searchURL = renderResponse.createRenderURL();
+searchURL.setParameter("groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+searchURL.setParameter("mvcPath", "/view.jsp");
 
 WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch(renderRequest, portletURL);
 %>
@@ -28,18 +59,51 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 
 <liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item
+			href="<%= viewDefinitionsURL %>"
+			label="definitions"
+			selected='<%= navigation.equals("definitions") %>'
+		/>
+	</aui:nav>
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm1">
+			<liferay-util:include page="/workflow_definition_search.jsp" servletContext="<%= application %>" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	searchContainerId="workflowDefinitions"
+	>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= displayStyleURL %>"
+			selectedDisplayStyle="list"
+		/>
+	</liferay-frontend:management-bar-buttons>
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/sort_buttons.jsp" servletContext="<%= application %>" />
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			navigationParam="definitionsNavigation"
+			portletURL="<%= navigationPortletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"active", "name", "title"} %>'
+			portletURL="<%= portletURL %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 workflow-definition-container">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-workflow-definitions-are-defined"
-		id="searchContainer"
+		id="workflowDefinitions"
 		searchContainer="<%= workflowDefinitionSearch %>"
 	>
 

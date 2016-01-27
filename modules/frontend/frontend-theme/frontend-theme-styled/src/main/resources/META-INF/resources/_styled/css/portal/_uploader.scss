@@ -33,44 +33,13 @@
 	}
 
 	.multiple-files .upload-file {
-		background: url(../images/file_system/small/jpg.png) no-repeat 5px 50%;
-
 		&.upload-complete {
-			background-position: 22px 50%;
-			padding-left: 45px;
-
-			&.file-saved, &.upload-error {
-				background-position: 5px 50%;
-			}
-
-			&.file-saved {
-				background-image: url(../images/common/check.png);
-			}
 		}
 	}
 
 	.upload-file {
-		border-color: #CCC;
-		font-weight: bold;
-		text-shadow: 1px 1px #FFF;
-
 		.file-title {
-			font-weight: bold;
 		}
-
-		&.upload-complete.file-saved {
-			background-color: #B4DDAD;
-			font-weight: bold;
-
-			opacity: 0.6;
-		}
-	}
-
-	.upload-list .upload-file.upload-complete.selected, .upload-list .upload-file.upload-complete.pending-file.selected {
-		background-color: #D3E8F1;
-		border-color: #38F;
-		color: #047;
-		text-shadow: 1px 1px #FFF;
 	}
 
 	.upload-list-info h4 {
@@ -78,23 +47,11 @@
 	}
 
 	.cancel-button {
-		background-color: #800;
-		background-image: url(../images/common/delete.png);
-		background-repeat: no-repeat;
-		color: #FFF;
-		text-shadow: 1px 1px #500;
+		color: #869CAD;
 	}
 
 	.delete-button {
-		background-image: url(../images/portlet/close.png);
-		background-repeat: no-repeat;
-		font-size: 0;
-	}
-
-	.pending-file {
-		background-color: #E0E0E0;
-		color: #777;
-		text-shadow: -1px -1px #FFF;
+		color: #869CAD;
 	}
 
 	.file-added .success-message {
@@ -125,7 +82,9 @@
 
 	.progress-bar {
 		background: #FFF;
-		border-color: #83A8D9;
+		margin-top: 25px;
+		text-align: left;
+		width: 100%;
 	}
 
 	.progress {

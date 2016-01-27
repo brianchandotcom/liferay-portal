@@ -17,22 +17,19 @@ package com.liferay.workflow.definition.web.portlet.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-
-import java.io.File;
 
 import java.util.Locale;
 import java.util.Map;
@@ -61,43 +58,45 @@ public class UpdateWorkflowDefitionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(actionRequest, "name");
+		String tempFileName = ParamUtil.getString(
+			actionRequest, "tempFileName");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		int version = ParamUtil.getInteger(actionRequest, "version");
 
-		File file = uploadPortletRequest.getFile("file");
+		if (Validator.isNull(tempFileName)) {
+			throw new WorkflowDefinitionFileException();
+		}
 
-		WorkflowDefinition workflowDefinition = null;
+		FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			UploadWorkflowDefinitionFileMVCActionCommand.TEMP_FOLDER_NAME,
+			tempFileName);
 
-		if (file == null) {
-			workflowDefinition = WorkflowDefinitionManagerUtil.updateTitle(
+		if (tempFileEntry == null) {
+			WorkflowDefinitionManagerUtil.updateTitle(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 				version, getTitle(titleMap));
 		}
 		else {
-			workflowDefinition =
-				WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					getTitle(titleMap), getFileBytes(file));
+			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				getTitle(titleMap), getFileBytes(tempFileEntry));
 		}
 
-		actionRequest.setAttribute(
-			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
+		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected byte[] getFileBytes(File file) throws Exception {
-		if (file.length() == 0) {
+	protected byte[] getFileBytes(FileEntry fileEntry) throws Exception {
+		if (fileEntry.getSize() == 0) {
 			throw new WorkflowDefinitionFileException();
 		}
 
-		return FileUtil.getBytes(file);
+		return FileUtil.getBytes(fileEntry.getContentStream());
 	}
 
 	protected String getTitle(Map<Locale, String> titleMap) {

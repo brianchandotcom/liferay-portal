@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>FILE_UPLOAD</td>
-	<td>//input[contains(@id,'file')]</td>
+	<td>//input[@type='file']</td>
 	<td></td>
 </tr>
 </tbody>

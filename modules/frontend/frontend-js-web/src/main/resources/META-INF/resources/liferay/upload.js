@@ -20,17 +20,35 @@ AUI.add(
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
-					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}">',
-						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
+					'<li class="checkbox checkbox-card checkbox-middle-left upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}">',
+						'<label>',
+							'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
+							'<div class="card-horizontal">',
+								'<div class="card-row card-row-padded">',
+									'<div class="card-col-field">',
+										'<span class="icon-file"></span>',
+									'</div>',
+									'<div class="card-col-content card-col-gutters clamp-horizontal">',
+										'<div class="clamp-container">',
+											'<span class="file-title truncate-text" title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}">{[ LString.escapeHTML(values.title ? values.title : values.name) ]}</span>',
+										'</div>',
+										'<span class="progress-bar">',
+											'<span class="progress" id="{id}progress"></span>',
+										'</span>',
+									'</div>',
+									'<div class="card-col-field delete-button-col">',
+										'<a class="delete-button lfr-button" href="javascript:;" id="{id}deleteButton" title="{[ this.strings.deleteFileText ]}">',
+											'<svg class="lexicon-icon"><use xlink:href="/o/frontend-theme-admin-web/admin/images/lexicon/icons.svg#times" /></svg>',
+										'</a>',
+									'</div>',
 
-						'<span class="file-title" title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}">{[ LString.escapeHTML(values.title ? values.title : values.name) ]}</span>',
-
-						'<span class="progress-bar">',
-							'<span class="progress" id="{id}progress"></span>',
-						'</span>',
-
-						'<a class="cancel-button lfr-button" href="javascript:;" id="{id}cancelButton">{[ this.strings.cancelFileText ]}</a>',
-						'<a class="delete-button lfr-button" href="javascript:;" id="{id}deleteButton">{[ this.strings.deleteFileText ]}</a>',
+									'<a class="cancel-button lfr-button" href="javascript:;" id="{id}cancelButton">',
+										'<svg class="lexicon-icon"><use xlink:href="/o/frontend-theme-admin-web/admin/images/lexicon/icons.svg#times" /></svg>',
+										'<span class="cancel-button-text">{[ this.strings.cancelFileText ]}</span>',
+									'</a>',
+								'</div>',
+							'</div>',
+						'</label>',
 					'</li>',
 				'</tpl>',
 
@@ -191,6 +209,11 @@ AUI.add(
 					removeOnComplete: {
 						validator: Lang.isBoolean,
 						value: false
+					},
+
+					restoreState: {
+						validator: Lang.isBoolean,
+						value: true
 					},
 
 					strings: {
@@ -534,6 +557,8 @@ AUI.add(
 						instance._updateWarningContainer();
 
 						Liferay.fire('tempFileRemoved');
+
+						instance.fire('tempFileRemoved');
 					},
 
 					_handleDrop: function(event) {
@@ -997,7 +1022,7 @@ AUI.add(
 
 						var tempFileURL = instance.get('tempFileURL');
 
-						if (tempFileURL) {
+						if (tempFileURL && instance.get('restoreState')) {
 							if (Lang.isString(tempFileURL)) {
 								A.io.request(
 									tempFileURL,
@@ -1179,9 +1204,9 @@ AUI.add(
 
 						var totalFiles = instance._fileList.all('li input[name=' + instance._selectUploadedFileCheckboxId + ']');
 
-						if (!totalFiles.size()) {
-							var warningContainer = instance._fileList.one('.upload-error');
+						var warningContainer = instance._fileList.one('.upload-error');
 
+						if (!totalFiles.size() && warningContainer) {
 							warningContainer.hide();
 						}
 					},

@@ -53,6 +53,40 @@
 	}
 }
 
+.portlet-workflow-definitions {
+	.lfr-upload-container {
+		.drop-file-text {
+			display: none;
+		}
+
+		.card-row.card-row-padded {
+			padding-left: 20px;
+
+			.card-col-field {
+				font-size: 40px;
+			}
+		}
+
+		.upload-complete {
+			padding-left: 0;
+		}
+
+		.upload-list {
+			margin-top: 10px;
+
+			.upload-list-info {
+				display: none;
+			}
+		}
+
+		.upload-target {
+			border-width: 0;
+			padding: 0;
+			text-align: left;
+		}
+	}
+}
+
 .workflow-definition-container {
 	margin-top: 20px;
 }

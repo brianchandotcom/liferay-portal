@@ -41,7 +41,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
 							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-							<portlet:param name="privateLayout" value="<%= String.valueOf(false) %>" />
+							<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 						</liferay-portlet:renderURL>
 
 						<aui:button href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
@@ -51,7 +51,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 					<li>
 						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
 							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-							<portlet:param name="privateLayout" value="<%= String.valueOf(true) %>" />
+							<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 						</liferay-portlet:renderURL>
 
 						<aui:button href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />

@@ -190,7 +190,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 			width: 320
 		}
 	);
-	console.log('sidenav init');
+
 	function <portlet:namespace />toggleActionsButton() {
 		var form = AUI.$(document.<portlet:namespace />fm2);
 

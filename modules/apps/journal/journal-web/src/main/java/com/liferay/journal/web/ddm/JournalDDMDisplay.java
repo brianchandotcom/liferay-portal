@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
@@ -137,7 +136,10 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		throws Exception {
 
 		if (classPK <= 0) {
-			return StringPool.BLANK;
+			String redirect = ParamUtil.getString(
+				liferayPortletRequest, "redirect");
+
+			return redirect;
 		}
 
 		return super.getViewTemplatesBackURL(

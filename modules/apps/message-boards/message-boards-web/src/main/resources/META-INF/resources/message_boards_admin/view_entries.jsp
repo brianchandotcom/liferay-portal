@@ -193,6 +193,10 @@ if (groupThreadsUserId > 0) {
 								<aui:a href="<%= rowURL.toString() %>">
 									<%= message.getSubject() %>
 								</aui:a>
+
+								<c:if test="<%= thread.isQuestion() %>">
+									<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+								</c:if>
 							</h4>
 
 							<%
@@ -207,6 +211,19 @@ if (groupThreadsUserId > 0) {
 							<span class="h6">
 								<liferay-ui:message arguments="<%= viewCount %>" key='<%= viewCount == 1 ? "x-view" : "x-views" %>' />
 							</span>
+
+							<c:if test="<%= thread.isQuestion() %>">
+
+								<%
+								int threadAnswersCount = MBMessageServiceUtil.getThreadAnswersCount(thread.getGroupId(), thread.getCategoryId(), thread.getThreadId());
+								%>
+
+								<span class="h6">
+									<%= threadAnswersCount %>
+
+									<liferay-ui:message key='<%= threadAnswersCount == 1 ? "answer" : "answers" %>' />
+								</span>
+							</c:if>
 						</liferay-ui:search-container-column-text>
 
 						<%

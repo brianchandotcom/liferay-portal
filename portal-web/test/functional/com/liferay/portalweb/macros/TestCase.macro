@@ -19,10 +19,16 @@
 	</command>
 
 	<command name="setUpPortalInstance">
+		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
+			<and>
+				<equals arg1="${testPortalInstance}" arg2="true" />
+				<not>
+					<condition function="IsTestName" locator1="${testNameSkipPortalInstance}" />
+				</not>
+			</and>
 			<then>
 				<execute macro="SignIn#signInPortalInstanceSetUp" />
 			</then>

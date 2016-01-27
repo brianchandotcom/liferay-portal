@@ -67,23 +67,21 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 			<%@ include file="/action_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-			<liferay-portlet:renderURL var="addURL">
-				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
-			</liferay-portlet:renderURL>
-
-			<aui:nav-bar>
-				<aui:nav cssClass="navbar-nav">
-					<aui:nav-item href="<%= addURL %>" iconCssClass="icon-plus" label="add-action" />
-				</aui:nav>
-			</aui:nav-bar>
-		</c:if>
-
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+	<liferay-portlet:renderURL var="addURL">
+		<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-action") %>' url="<%= addURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');

@@ -93,6 +93,8 @@ public final class SummaryLoggerHandler {
 	public static LoggerElement getSummarySnapshotLoggerElement() {
 		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
 
+		summaryLogLoggerElement.reverseChildLoggerElements();
+
 		List<LoggerElement> loggerElements =
 			summaryLogLoggerElement.loggerElements("div");
 

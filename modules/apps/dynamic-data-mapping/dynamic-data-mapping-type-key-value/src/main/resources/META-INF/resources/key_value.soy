@@ -12,7 +12,7 @@
  * @param required
  * @param showLabel
  * @param strings
- * @param tip
+ * @param tooltip
  * @param value
  * @param visible
  */
@@ -28,13 +28,13 @@
 			</label>
 		{/if}
 
-		<div class="input-group-container {if $tip}input-group-default{/if}">
+		<div class="input-group-container {if $tooltip}input-group-default{/if}">
 			<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$value}" />
 
-			{if $tip}
+			{if $tooltip}
 				<span class="input-group-addon">
 					<span class="input-group-addon-content">
-						<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tip}" data-toggle="popover" href="javascript:;" title="{$tip}"></a>
+						<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tooltip}" data-toggle="popover" href="javascript:;" title="{$tooltip}"></a>
 					</span>
 				</span>
 			{/if}

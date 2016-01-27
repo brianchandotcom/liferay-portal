@@ -20,6 +20,10 @@ AUI.add(
 						value: ''
 					},
 
+					tooltip: {
+						value: ''
+					},
+
 					type: {
 						value: 'text'
 					}
@@ -38,7 +42,7 @@ AUI.add(
 							{
 								displayStyle: instance.get('displayStyle'),
 								placeholder: instance.getLocalizedValue(instance.get('placeholder')),
-								tip: instance.getLocalizedValue(instance.get('tip'))
+								tooltip: instance.getLocalizedValue(instance.get('tooltip'))
 							}
 						);
 					},

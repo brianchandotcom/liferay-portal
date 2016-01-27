@@ -8,6 +8,13 @@ dependencies {
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-checkbox")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-date")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-key-value")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-paragraph")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-radio")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-select")
+	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-text")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.1"
 }

@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -71,17 +71,17 @@ public class TextDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 		template.put("displayStyle", ddmFormField.getProperty("displayStyle"));
 
-		String placeholderString = StringPool.BLANK;
-
 		LocalizedValue placeholder = (LocalizedValue)ddmFormField.getProperty(
 			"placeholder");
 
-		if (placeholder != null) {
-			placeholderString = placeholder.getString(
-				ddmFormFieldRenderingContext.getLocale());
-		}
+		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
-		template.put("placeholder", placeholderString);
+		template.put("placeholder", getValueString(placeholder, locale));
+
+		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
+			"tooltip");
+
+		template.put("tooltip", getValueString(tooltip, locale));
 	}
 
 	private TemplateResource _templateResource;

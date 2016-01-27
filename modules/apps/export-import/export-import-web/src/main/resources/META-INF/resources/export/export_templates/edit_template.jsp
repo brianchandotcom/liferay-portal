@@ -133,7 +133,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
 							%>
 
-							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
+							<liferay-util:include page="/export/export_templates/select_pages.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

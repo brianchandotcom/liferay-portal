@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 	service = FindActionHelper.class
 )
-public class DLFileEntryFindActionHelper extends DLFolderFindActionHelper {
+public class DLFileEntryFindActionHelper extends BaseDLFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {

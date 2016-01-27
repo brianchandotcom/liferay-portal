@@ -38,7 +38,7 @@ public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/portlet/control_menu/product_menu_control_menu_entry.jsp";
+		return "/portlet/control_menu/product_menu_control_menu_entry_icon.jsp";
 	}
 
 	@Override

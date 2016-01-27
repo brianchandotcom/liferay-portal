@@ -65,10 +65,13 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<portlet:actionURL name="/mobile_device_rules/edit_action" var="deleteURL">
+	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="actionIds" type="hidden" />
 
 	<liferay-ui:search-container
 		id="actionActions"
@@ -106,19 +109,11 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 </c:if>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
 	$('#<portlet:namespace />deleteActions').on(
 		'click',
 		function() {
 			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-				var form = AUI.$(document.<portlet:namespace />fm);
-
-				form.attr('method', 'post');
-				form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-				form.fm('actionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<portlet:actionURL name="/mobile_device_rules/edit_action"><portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" /></portlet:actionURL>');
+				submitForm(document.<portlet:namespace />fm);
 			}
 		}
 	);

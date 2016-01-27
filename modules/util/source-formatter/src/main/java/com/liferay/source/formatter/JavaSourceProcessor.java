@@ -232,14 +232,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (!bndInheritRequired) {
 					printError(
 						bndFileLocation,
-						"Redundant '-dsannotations-options: inherit'" +
-							bndFileLocation);
+						"Redundant '-dsannotations-options: inherit': " +
+							bndFileLocation + "bnd.bnd");
 				}
 			}
 			else if (bndInheritRequired) {
 				printError(
 					bndFileLocation,
-					"Add '-dsannotations-options: inherit'" + bndFileLocation);
+					"Add '-dsannotations-options: inherit': " +
+						bndFileLocation + "bnd.bnd");
 			}
 		}
 	}

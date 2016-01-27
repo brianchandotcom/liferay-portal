@@ -373,7 +373,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
 
-			if (!key.endsWith("excludes.files")) {
+			if (!key.endsWith("excludes")) {
 				continue;
 			}
 
@@ -387,6 +387,12 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				value, StringPool.COMMA);
 
 			for (String propertyFileName : propertyFileNames) {
+				if (propertyFileName.startsWith("**") ||
+					propertyFileName.endsWith("**")) {
+
+					continue;
+				}
+
 				pos = propertyFileName.indexOf(CharPool.AT);
 
 				if (pos != -1) {

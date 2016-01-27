@@ -131,63 +131,59 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return leadingTabCount;
 	}
 
-	protected static boolean isExcludedFile(
-		List<String> exclusionFiles, String absolutePath) {
+	protected static boolean isExcludedPath(
+		List<String> excludes, String path) {
 
-		return isExcludedFile(exclusionFiles, absolutePath, -1);
-	}
-
-	protected static boolean isExcludedFile(
-		List<String> exclusionFiles, String absolutePath, int lineCount) {
-
-		return isExcludedFile(exclusionFiles, absolutePath, lineCount, null);
-	}
-
-	protected static boolean isExcludedFile(
-		List<String> exclusionFiles, String absolutePath, int lineCount,
-		String javaTermName) {
-
-		if (ListUtil.isEmpty(exclusionFiles)) {
-			return false;
-		}
-
-		String absolutePathWithJavaTermName = null;
-
-		if (Validator.isNotNull(javaTermName)) {
-			absolutePathWithJavaTermName =
-				absolutePath + StringPool.AT + javaTermName;
-		}
-
-		String absolutePathWithLineCount = null;
-
-		if (lineCount > 0) {
-			absolutePathWithLineCount =
-				absolutePath + StringPool.AT + lineCount;
-		}
-
-		for (String exclusionFile : exclusionFiles) {
-			if (absolutePath.endsWith(exclusionFile) ||
-				((absolutePathWithJavaTermName != null) &&
-				 absolutePathWithJavaTermName.endsWith(exclusionFile)) ||
-				((absolutePathWithLineCount != null) &&
-				 absolutePathWithLineCount.endsWith(exclusionFile))) {
-
-				return true;
-			}
-		}
-
-		return false;
+		return isExcludedPath(excludes, path, -1);
 	}
 
 	protected static boolean isExcludedPath(
-		List<String> exclusionPaths, String absolutePath) {
+		List<String> excludes, String path, int lineCount) {
 
-		if (ListUtil.isEmpty(exclusionPaths)) {
+		return isExcludedPath(excludes, path, lineCount, null);
+	}
+
+	protected static boolean isExcludedPath(
+		List<String> excludes, String path, int lineCount,
+		String javaTermName) {
+
+		if (ListUtil.isEmpty(excludes)) {
 			return false;
 		}
 
-		for (String exclusionPath : exclusionPaths) {
-			if (absolutePath.contains(exclusionPath)) {
+		String pathWithJavaTermName = null;
+
+		if (Validator.isNotNull(javaTermName)) {
+			pathWithJavaTermName = path + StringPool.AT + javaTermName;
+		}
+
+		String pathWithLineCount = null;
+
+		if (lineCount > 0) {
+			pathWithLineCount = path + StringPool.AT + lineCount;
+		}
+
+		for (String exclude : excludes) {
+			if (exclude.startsWith("**")) {
+				exclude = exclude.substring(2);
+			}
+
+			if (exclude.endsWith("**")) {
+				exclude = exclude.substring(0, exclude.length() - 2);
+
+				if (path.contains(exclude)) {
+					return true;
+				}
+
+				continue;
+			}
+
+			if (path.endsWith(exclude) ||
+				((pathWithJavaTermName != null) &&
+				 pathWithJavaTermName.endsWith(exclude)) ||
+				((pathWithLineCount != null) &&
+				 pathWithLineCount.endsWith(exclude))) {
+
 				return true;
 			}
 		}
@@ -354,7 +350,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (isExcludedPath(getRunOutsidePortalExclusionPaths(), absolutePath) ||
+		if (isExcludedPath(getRunOutsidePortalExcludes(), absolutePath) ||
 			fileName.endsWith("GetterUtil.java")) {
 
 			return;
@@ -871,10 +867,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String javaClassName, String packagePath, File file,
 			String fileName, String absolutePath, String content,
 			String javaClassContent, int javaClassLineCount,
-			List<String> checkJavaFieldTypesExclusionFiles,
-			List<String> javaTermAccessLevelModifierExclusionFiles,
-			List<String> javaTermSortExclusionFiles,
-			List<String> testAnnotationsExclusionFiles)
+			List<String> checkJavaFieldTypesExcludes,
+			List<String> javaTermAccessLevelModifierExcludes,
+			List<String> javaTermSortExcludes,
+			List<String> testAnnotationsExcludes)
 		throws Exception {
 
 		JavaSourceProcessor javaSourceProcessor = null;
@@ -891,12 +887,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		JavaClass javaClass = new JavaClass(
 			javaClassName, packagePath, file, fileName, absolutePath,
 			javaClassContent, javaClassLineCount, StringPool.TAB, null,
-			javaTermAccessLevelModifierExclusionFiles, javaSourceProcessor);
+			javaTermAccessLevelModifierExcludes, javaSourceProcessor);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
 			getAnnotationsExclusions(), getImmutableFieldTypes(),
-			checkJavaFieldTypesExclusionFiles, javaTermSortExclusionFiles,
-			testAnnotationsExclusionFiles);
+			checkJavaFieldTypesExcludes, javaTermSortExcludes,
+			testAnnotationsExcludes);
 
 		if (!javaClassContent.equals(newJavaClassContent)) {
 			return StringUtil.replaceFirst(
@@ -1587,17 +1583,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
-	protected List<String> getRunOutsidePortalExclusionPaths() {
-		if (_runOutsidePortalExclusionPaths != null) {
-			return _runOutsidePortalExclusionPaths;
+	protected List<String> getRunOutsidePortalExcludes() {
+		if (_runOutsidePortalExcludes != null) {
+			return _runOutsidePortalExcludes;
 		}
 
-		List<String> runOutsidePortalExclusionPaths = getPropertyList(
-			"run.outside.portal.excludes.paths");
+		List<String> runOutsidePortalExcludes = getPropertyList(
+			"run.outside.portal.excludes");
 
-		_runOutsidePortalExclusionPaths = runOutsidePortalExclusionPaths;
+		_runOutsidePortalExcludes = runOutsidePortalExcludes;
 
-		return _runOutsidePortalExclusionPaths;
+		return _runOutsidePortalExcludes;
 	}
 
 	protected boolean hasMissingParentheses(String s) {
@@ -2230,7 +2226,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _oldCopyright;
 	private Properties _portalLanguageProperties;
 	private Properties _properties;
-	private List<String> _runOutsidePortalExclusionPaths;
+	private List<String> _runOutsidePortalExcludes;
 	private SourceFormatterHelper _sourceFormatterHelper;
 	private boolean _usePortalCompatImport;
 

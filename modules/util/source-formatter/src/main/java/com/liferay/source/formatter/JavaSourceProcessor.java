@@ -755,7 +755,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (!isExcludedFile(_staticLogVariableExclusionFiles, absolutePath)) {
+		if (!isExcludedPath(_staticLogVariableExcludes, absolutePath)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log",
 				"private static final Log _log");
@@ -776,7 +776,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-34911
 
 		if (portalSource &&
-			!isExcludedFile(_upgradeServiceUtilExclusionFiles, absolutePath) &&
+			!isExcludedPath(_upgradeServiceUtilExcludes, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
@@ -786,10 +786,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		boolean isRunOutsidePortalExclusion = isExcludedPath(
-			getRunOutsidePortalExclusionPaths(), absolutePath);
+			getRunOutsidePortalExcludes(), absolutePath);
 
 		if (!isRunOutsidePortalExclusion &&
-			!isExcludedFile(_proxyExclusionFiles, absolutePath) &&
+			!isExcludedPath(_proxyExcludes, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
 			processErrorMessage(fileName, "Proxy: " + fileName);
@@ -875,7 +875,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-39508
 
 		if (!isRunOutsidePortalExclusion &&
-			!isExcludedFile(_secureRandomExclusionFiles, absolutePath) &&
+			!isExcludedPath(_secureRandomExcludes, absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -940,9 +940,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		if (!isExcludedFile(_diamondOperatorExclusionFiles, absolutePath) &&
-			!isExcludedPath(_diamondOperatorExclusionPaths, absolutePath)) {
-
+		if (!isExcludedPath(_diamondOperatorExcludes, absolutePath)) {
 			newContent = applyDiamondOperator(newContent);
 		}
 
@@ -954,7 +952,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
-			!isExcludedFile(_secureXmlExclusionFiles, absolutePath)) {
+			!isExcludedPath(_secureXmlExcludes, absolutePath)) {
 
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
@@ -963,8 +961,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
-			!isExcludedFile(
-				_secureDeserializationExclusionFiles, absolutePath)) {
+			!isExcludedPath(_secureDeserializationExcludes, absolutePath)) {
 
 			checkDeserializationSecurity(
 				fileName, content, isRunOutsidePortalExclusion);
@@ -1036,14 +1033,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = formatJavaTerms(
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
-				_checkJavaFieldTypesExclusionFiles,
-				_javaTermAccessLevelModifierExclusionFiles,
-				_javaTermSortExclusionFiles, _testAnnotationsExclusionFiles);
+				_checkJavaFieldTypesExcludes,
+				_javaTermAccessLevelModifierExcludes,
+				_javaTermSortExcludes, _testAnnotationsExcludes);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
 
-		if (!isExcludedFile(_checkTabsExclusionFiles, absolutePath)) {
+		if (!isExcludedPath(_checkTabsExcludes, absolutePath)) {
 			JavaSourceTabCalculator javaSourceTabCalculator =
 				new JavaSourceTabCalculator();
 
@@ -1073,35 +1070,27 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("add.missing.deprecation.release.version"));
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
-		_checkJavaFieldTypesExclusionFiles = getPropertyList(
-			"check.java.field.types.excludes.files");
-		_checkTabsExclusionFiles = getPropertyList("check.tabs.excludes.files");
-		_diamondOperatorExclusionFiles = getPropertyList(
-			"diamond.operator.excludes.files");
-		_diamondOperatorExclusionPaths = getPropertyList(
-			"diamond.operator.excludes.paths");
-		_fitOnSingleLineExclusionFiles = getPropertyList(
-			"fit.on.single.line.excludes.files");
-		_hibernateSQLQueryExclusionFiles = getPropertyList(
-			"hibernate.sql.query.excludes.files");
-		_javaTermAccessLevelModifierExclusionFiles = getPropertyList(
-			"javaterm.access.level.modifier.excludes.files");
-		_javaTermSortExclusionFiles = getPropertyList(
-			"javaterm.sort.excludes.files");
-		_lineLengthExclusionFiles = getPropertyList(
-			"line.length.excludes.files");
-		_proxyExclusionFiles = getPropertyList("proxy.excludes.files");
-		_secureDeserializationExclusionFiles = getPropertyList(
+		_checkJavaFieldTypesExcludes = getPropertyList(
+			"check.java.field.types.excludes");
+		_checkTabsExcludes = getPropertyList("check.tabs.excludes");
+		_diamondOperatorExcludes = getPropertyList("diamond.operator.excludes");
+		_fitOnSingleLineExcludes = getPropertyList(
+			"fit.on.single.line.excludes");
+		_hibernateSQLQueryExcludes = getPropertyList(
+			"hibernate.sql.query.excludes");
+		_javaTermAccessLevelModifierExcludes = getPropertyList(
+			"javaterm.access.level.modifier.excludes");
+		_javaTermSortExcludes = getPropertyList("javaterm.sort.excludes");
+		_lineLengthExcludes = getPropertyList("line.length.excludes");
+		_proxyExcludes = getPropertyList("proxy.excludes");
+		_secureDeserializationExcludes = getPropertyList(
 			"secure.deserialization.excluded.files");
-		_secureRandomExclusionFiles = getPropertyList(
-			"secure.random.excludes.files");
-		_secureXmlExclusionFiles = getPropertyList("secure.xml.excludes.files");
-		_staticLogVariableExclusionFiles = getPropertyList(
-			"static.log.excludes.files");
-		_testAnnotationsExclusionFiles = getPropertyList(
-			"test.annotations.excludes.files");
-		_upgradeServiceUtilExclusionFiles = getPropertyList(
-			"upgrade.service.util.excludes.files");
+		_secureRandomExcludes = getPropertyList("secure.random.excludes");
+		_secureXmlExcludes = getPropertyList("secure.xml.excludes");
+		_staticLogVariableExcludes = getPropertyList("static.log.excludes");
+		_testAnnotationsExcludes = getPropertyList("test.annotations.excludes");
+		_upgradeServiceUtilExcludes = getPropertyList(
+			"upgrade.service.util.excludes");
 
 		return new ArrayList<>(fileNames);
 	}
@@ -1798,8 +1787,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				// LPS-42599
 
-				if (!isExcludedFile(
-						_hibernateSQLQueryExclusionFiles, absolutePath) &&
+				if (!isExcludedPath(_hibernateSQLQueryExcludes, absolutePath) &&
 					line.contains("= session.createSQLQuery(") &&
 					content.contains(
 						"com.liferay.portal.kernel.dao.orm.Session")) {
@@ -2230,9 +2218,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							 line.contains(" index IX_")) {
 					}
 					else if (lineLength > _MAX_LINE_LENGTH) {
-						if (!isExcludedFile(
-								_lineLengthExclusionFiles, absolutePath,
-								lineCount) &&
+						if (!isExcludedPath(
+								_lineLengthExcludes, absolutePath, lineCount) &&
 							!isAnnotationParameter(content, trimmedLine)) {
 
 							String truncateLongLinesContent =
@@ -2749,8 +2736,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int lineTabCount, int previousLineTabCount) {
 
 		if (Validator.isNull(line) || Validator.isNull(previousLine) ||
-			isExcludedFile(
-				_fitOnSingleLineExclusionFiles, absolutePath, lineCount)) {
+			isExcludedPath(_fitOnSingleLineExcludes, absolutePath, lineCount)) {
 
 			return null;
 		}
@@ -3971,8 +3957,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Map<String, Tuple> _bndInheritRequiredTupleMap = new HashMap<>();
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
-	private List<String> _checkJavaFieldTypesExclusionFiles;
-	private List<String> _checkTabsExclusionFiles;
+	private List<String> _checkJavaFieldTypesExcludes;
+	private List<String> _checkTabsExcludes;
 	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
@@ -3983,14 +3969,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)@.+(\\()\n");
 	private Pattern _componentAnnotationPattern = Pattern.compile(
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");
-	private List<String> _diamondOperatorExclusionFiles;
-	private List<String> _diamondOperatorExclusionPaths;
+	private List<String> _diamondOperatorExcludes;
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
-	private List<String> _fitOnSingleLineExclusionFiles;
-	private List<String> _hibernateSQLQueryExclusionFiles;
+	private List<String> _fitOnSingleLineExcludes;
+	private List<String> _hibernateSQLQueryExcludes;
 	private Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
@@ -4009,9 +3994,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Pattern.compile(
 			".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
-	private List<String> _javaTermAccessLevelModifierExclusionFiles;
-	private List<String> _javaTermSortExclusionFiles;
-	private List<String> _lineLengthExclusionFiles;
+	private List<String> _javaTermAccessLevelModifierExcludes;
+	private List<String> _javaTermSortExcludes;
+	private List<String> _lineLengthExcludes;
 	private Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|info|trace|warn)\\(");
 	private Pattern _logPattern = Pattern.compile(
@@ -4025,7 +4010,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Map<String, String> _moduleFileNamesMap;
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
-	private List<String> _proxyExclusionFiles;
+	private List<String> _proxyExcludes;
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private Pattern _redundantEmptyLines1 = Pattern.compile(
 		"\n\npublic ((abstract|static) )*(class|enum|interface) ");
@@ -4036,17 +4021,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _referenceMethodPattern = Pattern.compile(
 		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
-	private List<String> _secureDeserializationExclusionFiles;
-	private List<String> _secureRandomExclusionFiles;
-	private List<String> _secureXmlExclusionFiles;
+	private List<String> _secureDeserializationExcludes;
+	private List<String> _secureRandomExcludes;
+	private List<String> _secureXmlExcludes;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
-	private List<String> _staticLogVariableExclusionFiles;
-	private List<String> _testAnnotationsExclusionFiles;
+	private List<String> _staticLogVariableExcludes;
+	private List<String> _testAnnotationsExcludes;
 	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
-	private List<String> _upgradeServiceUtilExclusionFiles;
+	private List<String> _upgradeServiceUtilExcludes;
 
 }

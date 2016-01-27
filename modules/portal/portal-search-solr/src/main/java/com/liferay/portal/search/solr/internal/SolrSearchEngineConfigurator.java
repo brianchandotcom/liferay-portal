@@ -73,7 +73,7 @@ public class SolrSearchEngineConfigurator
 	}
 
 	@Reference(
-		target = "(|(search.engine.impl=Solr)(!(search.engine.impl=*)))",
+		target = "(search.engine.impl=Solr)",
 		unbind = "-"
 	)
 	protected void setIndexSearcher(IndexSearcher indexSearcher) {
@@ -81,7 +81,7 @@ public class SolrSearchEngineConfigurator
 	}
 
 	@Reference(
-		target = "(|(search.engine.impl=Solr)(!(search.engine.impl=*)))",
+		target = "(search.engine.impl=Solr)",
 		unbind = "-"
 	)
 	protected void setIndexWriter(IndexWriter indexWriter) {

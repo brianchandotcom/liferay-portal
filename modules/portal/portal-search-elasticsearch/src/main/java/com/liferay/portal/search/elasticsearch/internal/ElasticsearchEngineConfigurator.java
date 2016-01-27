@@ -94,7 +94,7 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	@Reference(
-		target = "(|(search.engine.impl=Elasticsearch)(!(search.engine.impl=*)))",
+		target = "(search.engine.impl=Elasticsearch)",
 		unbind = "-"
 	)
 	protected void setIndexSearcher(IndexSearcher indexSearcher) {
@@ -102,7 +102,7 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	@Reference(
-		target = "(|(search.engine.impl=Elasticsearch)(!(search.engine.impl=*)))",
+		target = "(search.engine.impl=Elasticsearch)",
 		unbind = "-"
 	)
 	protected void setIndexWriter(IndexWriter indexWriter) {

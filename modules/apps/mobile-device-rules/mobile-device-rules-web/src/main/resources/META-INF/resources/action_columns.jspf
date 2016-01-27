@@ -19,32 +19,28 @@ Group group = GroupLocalServiceUtil.getGroup(action.getGroupId());
 %>
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
+	cssClass="text-strong"
 	name="scope"
 	value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 />
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	name="name"
 	value="<%= action.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	name="description"
 	value="<%= action.getDescription(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
 	name="type"
 	translate="<%= true %>"
 	value="<%= action.getType() %>"
 />
 
 <liferay-ui:search-container-column-date
-	href="<%= rowURL %>"
 	name="modified-date"
 	value="<%= action.getModifiedDate() %>"
 />

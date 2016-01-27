@@ -38,17 +38,13 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	title='<%= LanguageUtil.format(request, "actions-for-x", ruleGroup.getName(locale), false) %>'
 />
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="actionIds" type="hidden" />
 
 	<liferay-ui:search-container
-		delta="<%= 5 %>"
-		deltaConfigurable="<%= false %>"
-		headerNames="name,description,type"
 		id="actionActions"
-		iteratorURL="<%= portletURL %>"
 		searchContainer="<%= mdrActionDisplayContext.getActionSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -87,7 +83,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 			<div class="separator"><!-- --></div>
 		</c:if>
 
-		<liferay-ui:search-iterator type="more" />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

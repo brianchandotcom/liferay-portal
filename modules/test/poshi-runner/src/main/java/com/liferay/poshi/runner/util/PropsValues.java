@@ -234,9 +234,6 @@ public class PropsValues {
 	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
 		PropsUtil.get("test.skip.tear.down"));
 
-	public static final boolean TEST_SMTP_SERVER_ENABLED =
-		GetterUtil.getBoolean(PropsUtil.get("test.smtp.server.enabled"));
-
 	public static final boolean TESTING_CLASS_METHOD = GetterUtil.getBoolean(
 		PropsUtil.get("testing.class.method"));
 

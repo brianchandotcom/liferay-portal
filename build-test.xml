@@ -2681,9 +2681,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="start-test-smtp-server">
  		<sequential>
+			<mirrors-get dest="MockMock.jar" src="${test.smtp.server.url}" />
+
 			<parallel>
 				<daemons>
-					<java dir="${test.smtp.server.dir}" jar="${test.smtp.server.dir}\MockMock.jar" fork="true" />
+					<java jar="MockMock.jar" fork="true" />
 				</daemons>
 			</parallel>
 		</sequential>
@@ -5080,15 +5082,6 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 		</if>
-
-		<if>
-			<isset property="test.smtp.server.dir" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					test.smtp.server.dir=${test.smtp.server.dir}
-				</echo>
-			</then>
-		</if>
 	</target>
 
 	<target name="prepare-selenium">
@@ -5976,17 +5969,6 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 		</if>
-
-		<get-testcase-property property.name="test.smtp.server.enabled" />
-
- 		<if>
- 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
- 			<then>
- 				<echo file="${test.ext.properties.file}" append="true">
- 					test.smtp.server.enabled=${test.smtp.server.enabled}
- 				</echo>
- 			</then>
- 		</if>
 
 		<get-testcase-property property.name="timeout.explicit.wait" />
 
@@ -7266,20 +7248,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="test.smtp.server.enabled" />
-
- 		<if>
- 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
- 			<then>
- 				<mirrors-get
- 					dest="${test.smtp.server.dir}/MockMock.jar"
- 					src="${test.smtp.server.release.url}/com.mockmock/1.4.0/com.mockmock-1.4.0.jar"
- 				/>
-
- 				<start-test-smtp-server />
- 			</then>
- 		</if>
-
 		<get-testcase-property property.name="solr.enabled" />
 
 		<if>
@@ -7288,6 +7256,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
 		</if>
+
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
+ 		<if>
+ 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
+ 			<then>
+ 				<start-test-smtp-server />
+ 			</then>
+ 		</if>
 
 		<antcall target="deploy-osgi-modules" />
 

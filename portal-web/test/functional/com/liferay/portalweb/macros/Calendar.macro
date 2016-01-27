@@ -1022,6 +1022,13 @@
 	</command>
 
 	<command name="viewRSSFeedEventNotPresent">
+		<if>
+			<condition function="IsElementNotPresent" locator1="CalendarRSS#FEED_TITLE"  />
+			<then>
+				<execute function="Refresh" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_TITLE"  value1="${calendarName}" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
@@ -1031,6 +1038,13 @@
 	</command>
 
 	<command name="viewRSSFeedEventPresent">
+		<if>
+			<condition function="IsElementNotPresent" locator1="CalendarRSS#FEED_TITLE"  />
+			<then>
+				<execute function="Refresh" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_TITLE"  value1="${calendarName}" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />

@@ -14,26 +14,11 @@
 
 package com.liferay.site.admin.web.portlet;
 
-import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.GroupService;
-import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.service.LayoutSetLocalService;
-import com.liferay.portal.service.LayoutSetPrototypeService;
-import com.liferay.portal.service.LayoutSetService;
-import com.liferay.portal.service.MembershipRequestLocalService;
-import com.liferay.portal.service.MembershipRequestService;
-import com.liferay.portal.service.RoleLocalService;
-import com.liferay.portal.service.TeamLocalService;
-import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.service.UserService;
 import com.liferay.site.admin.web.constants.SiteAdminPortletKeys;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -62,101 +47,4 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class SiteSettingsPortlet extends SiteAdminPortlet {
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setGroupService(GroupService groupService) {
-		this.groupService = groupService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		this.layoutLocalService = layoutLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		this.layoutSetLocalService = layoutSetLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeService(
-		LayoutSetPrototypeService layoutSetPrototypeService) {
-
-		this.layoutSetPrototypeService = layoutSetPrototypeService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setLayoutSetService(LayoutSetService layoutSetService) {
-		this.layoutSetService = layoutSetService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setMembershipRequestLocalService(
-		MembershipRequestLocalService membershipRequestLocalService) {
-
-		this.membershipRequestLocalService = membershipRequestLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setMembershipRequestService(
-		MembershipRequestService membershipRequestService) {
-
-		this.membershipRequestService = membershipRequestService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		this.panelAppRegistry = panelAppRegistry;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		this.panelCategoryRegistry = panelCategoryRegistry;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		this.roleLocalService = roleLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setTeamLocalService(TeamLocalService teamLocalService) {
-		this.teamLocalService = teamLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		this.userLocalService = userLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
 }

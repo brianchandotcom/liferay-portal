@@ -16,15 +16,8 @@ package com.liferay.asset.publisher.web.portlet.action;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.LayoutLocalService;
-import com.liferay.portal.service.LayoutRevisionLocalService;
-import com.liferay.portlet.asset.service.AssetTagLocalService;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -38,44 +31,4 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class HighestRatedAssetsConfigurationAction
 	extends AssetPublisherConfigurationAction {
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		this.assetTagLocalService = assetTagLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		this.layoutLocalService = layoutLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		this.layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
 }

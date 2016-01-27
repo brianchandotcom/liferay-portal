@@ -37,11 +37,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * <p>
@@ -335,14 +333,6 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	@Override
 	protected String getRootDirName() {
 		return _advancedFileSystemStoreConfiguration.rootDir();
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		this.configurationAdmin = configurationAdmin;
 	}
 
 	protected String unbuildPath(String path) {

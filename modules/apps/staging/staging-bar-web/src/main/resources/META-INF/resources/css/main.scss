@@ -1,49 +1,30 @@
 @import "bourbon";
 @import "mixins";
 
-.control-menu-nav {
-	.staging-bar {
+.control-menu {
+	.staging-links {
+		padding-top: 3px;
 		position: static;
 	}
-}
 
-.control-menu-nav {
-	@include display(flex);
-
-	font-size: 16px;
-	list-style: none;
-	margin-bottom: 0;
-	padding-left: 0;
-
-	> li {
-		@include align-self(center);
-
-		display: block;
-		float: left;
-		margin-left: 16px;
+	.staging-message {
+		margin: 0 auto;
+		width: 75%;
 	}
-}
-
-.control-menu .staging-links {
-	display:inline-block;
-	line-height: 25px;
-	position: static;
-
-	&:nth-last-of-type(2) {
-		@include flex(0 1 auto);
-
-		+ .edit-layout-link {
-			@include flex(1);
-		}
-	}
-}
-
-.control-menu-level-1 .toolbar-group-expand-text {
-	overflow: visible;
 }
 
 .control-menu-level-2 {
-	@include media-query(0, $screen-xs-max) {
+	padding-bottom: 7px;
+	padding-top: 6px;
+
+	@include sm() {
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 100%;
+	}
+
+	@include media-query(null, $screen-xs-max) {
 		bottom: 0;
 		display: none;
 		left: 0;
@@ -54,7 +35,7 @@
 	}
 
 	&.open {
-		@include media-query(0, $screen-xs-max) {
+		@include media-query(null, $screen-xs-max) {
 			background-color: rgba(75, 91, 101, 0.95);
 			display: block;
 			overflow: auto;
@@ -62,66 +43,59 @@
 	}
 }
 
-.control-menu-nav-level-2 {
-	@include flex-wrap(wrap);
-	@include justify-content(space-between);
-
-	> li {
-		margin-bottom: 5px;
-		margin-left: 0;
-		padding-bottom: 8px;
-		padding-top: 8px;
-
-		@include sm {
-			margin-bottom: 0;
-		}
-
-		@include media-query(0, $screen-xs-max) {
-			display: block;
-			float: none;
-			padding: 10px 0;
-			text-align: left;
-			width: 100%;
-		}
-	}
-
-	.control-menu-nav {
-		@include media-query(0, $screen-xs-max) {
-			display: block;
-		}
-
-		li {
-			@include media-query(0, $screen-xs-max) {
-				margin-left: 0;
-				width: 100%;
-			}
-		}
-	}
+.control-menu-level-2-heading {
+	padding: 20px 0;
+	text-align: center;
 }
 
-.staging-options-toggle {
-	padding: 15px 5px 15px 2px;
+.control-menu-level-2-nav {
+	@include display(flex);
+	@include flex-wrap(wrap);
+	@include justify-content(space-between);
+}
+
+.control-menu-nav {
+	.staging-bar {
+		position: absolute;
+
+		@include sm() {
+			position: static;
+		}
+	}
 }
 
 .live-link {
 	margin-right: 24px;
 }
 
-.live-link,
-.staging-link,
-.staging-options-toggle {
-	padding: 15px 5px 15px 2px;
-}
-
 .publish-btn-group {
-	@include sm {
-		border-radius: 4px;
+	@include sm() {
+		border-radius: 3px;
 		overflow: hidden;
 	}
 }
 
 .staging-ready {
-	@include sm {
-		padding-top: 70px;
+	padding-top: 55px;
+}
+
+.staging-variation-label {
+	display: block;
+	font-weight: 500;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	@include sm() {
+		font-size: 12px;
+	}
+}
+
+.staging-variation-selector {
+	font-weight: 500;
+
+	@include sm() {
+		font-size: 14px;
 	}
 }

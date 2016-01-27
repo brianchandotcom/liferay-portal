@@ -14,11 +14,37 @@ body.open {
 	z-index: 500;
 }
 
-.control-menu-level-1 {
-	position: relative;
-}
-
 .control-menu-icon {
 	display: inline-block;
 	margin: 0 10px;
+}
+
+.control-menu-nav {
+	@include align-items(center);
+	@include display(flex);
+
+	font-size: 16px;
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+}
+
+.control-menu-nav-item {
+	display: inline-block;
+}
+
+.control-menu-level-1 {
+	> .container-fluid-1280 {
+		padding: 6px 5px 7px;
+	}
+}
+
+.control-menu-level-1-nav {
+	@include display(flex);
+	@include flex-wrap(wrap);
+	@include justify-content(space-between);
+
+	> .control-menu-nav-item {
+		@include align-self(center);
+	}
 }

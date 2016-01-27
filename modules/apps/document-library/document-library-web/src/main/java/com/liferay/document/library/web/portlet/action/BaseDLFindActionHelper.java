@@ -38,15 +38,14 @@ public abstract class BaseDLFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	protected PortletPageFinder getPortletPageFinder() {
-		return new DLFolderPortletPageFinder();
+		return new DLPortletPageFinder();
 	}
 
 	private static final String[] _PORTLET_IDS = {
 		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
 	};
 
-	private static class DLFolderPortletPageFinder
-		extends BasePortletPageFinder {
+	private static class DLPortletPageFinder extends BasePortletPageFinder {
 
 		@Override
 		protected String[] getPortletIds() {

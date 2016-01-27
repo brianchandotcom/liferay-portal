@@ -115,7 +115,6 @@ public class UpgradeModules extends UpgradeProcess {
 			String oldServletContextName = convertedLegacyModule[0];
 			String newServletContextName = convertedLegacyModule[1];
 			String buildNamespace = convertedLegacyModule[2];
-			String portletId = convertedLegacyModule[3];
 
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -131,7 +130,6 @@ public class UpgradeModules extends UpgradeProcess {
 
 				if (!rs.next()) {
 					if (hasServiceComponent(buildNamespace)) {
-
 						addRelease(newServletContextName);
 					}
 				}
@@ -208,25 +206,21 @@ public class UpgradeModules extends UpgradeProcess {
 	};
 	private static final String[][] _convertedLegacyModules = {
 		{
-			"calendar-portlet", "com.liferay.calendar.service", "Calendar",
-			"%calendarportlet"
+			"calendar-portlet", "com.liferay.calendar.service", "Calendar"
 		},
 		{
 			"social-networking-portlet",
-			"com.liferay.social.networking.service", "SN",
-			"%socialnetworkingportlet"
+			"com.liferay.social.networking.service", "SN"
 		},
 		{
 			"marketplace-portlet", "com.liferay.marketplace.service",
-			"Marketplace", "%marketplace"
+			"Marketplace"
 		},
 		{
-			"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo",
-			"%kaleo%"
+			"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo"
 		},
 		{
-			"microblogs-portlet", "com.liferay.microblogs.service",
-			"Microblogs", "%microblogsportlet"
+			"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"
 		}
 	};
 

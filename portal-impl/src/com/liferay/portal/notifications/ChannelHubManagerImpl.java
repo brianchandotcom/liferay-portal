@@ -17,6 +17,8 @@ package com.liferay.portal.notifications;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.Channel;
 import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.notifications.ChannelHub;
@@ -370,9 +372,14 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 			long companyId, long userId, NotificationEvent notificationEvent)
 		throws ChannelException {
 
-		ChannelHub channelHub = getChannelHub(companyId);
+		ChannelHub channelHub = fetchChannelHub(companyId);
 
-		channelHub.storeNotificationEvent(userId, notificationEvent);
+		if (channelHub != null) {
+			channelHub.storeNotificationEvent(userId, notificationEvent);
+		}
+		else if (_log.isDebugEnabled()) {
+			_log.debug("There is no channelHub for companyId: " + companyId);
+		}
 	}
 
 	@Override
@@ -384,6 +391,9 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 
 		channelHub.unregisterChannelListener(userId, channelListener);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ChannelHubManagerImpl.class);
 
 	private static final MethodKey _destroyChannelMethodKey = new MethodKey(
 		ChannelHubManagerUtil.class, "destroyChannel", long.class, long.class);

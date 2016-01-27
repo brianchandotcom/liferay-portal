@@ -31,8 +31,8 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 <liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
-<liferay-ui:panel-container cssClass="statistics-panel" extended="<%= false %>" id="messageBoardsStatisticsPanelContainer" persistState="<%= true %>">
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsGeneralStatisticsPanel" persistState="<%= true %>" title="general">
+<liferay-ui:panel-container cssClass="statistics-panel" extended="<%= false %>" id="messageBoardsStatisticsPanelContainer" markupView="lexicon" persistState="<%= true %>">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsGeneralStatisticsPanel" markupView="lexicon" persistState="<%= true %>" title="general">
 		<dl>
 			<dt>
 				<liferay-ui:message key="num-of-categories" />:
@@ -55,7 +55,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 		</dl>
 	</liferay-ui:panel>
 
-	<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsTopPostersPanel" persistState="<%= true %>" title="top-posters">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="statistics-panel-content" extended="<%= true %>" id="messageBoardsTopPostersPanel" markupView="lexicon" persistState="<%= true %>" title="top-posters">
 		<liferay-ui:search-container
 			emptyResultsMessage="there-are-no-top-posters"
 			iteratorURL="<%= portletURL %>"
@@ -75,7 +75,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</liferay-ui:panel>
 </liferay-ui:panel-container>

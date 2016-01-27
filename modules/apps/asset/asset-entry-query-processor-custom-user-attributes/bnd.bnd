@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.asset.entry.query.processor.custom.user.attribu
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
 Web-ContextPath: /asset-entry-query-processor-custom-user-attributes
 -include: ../../../../marketplace/web-content-management/bnd.bnd

@@ -31,11 +31,16 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Renato Rego
  */
-public class RadioDDMFormFieldValueRendererTest {
+@RunWith(PowerMockRunner.class)
+public class RadioDDMFormFieldValueRendererTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -43,7 +48,7 @@ public class RadioDDMFormFieldValueRendererTest {
 	}
 
 	@Test
-	public void testRender() {
+	public void testRender() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
@@ -78,13 +83,18 @@ public class RadioDDMFormFieldValueRendererTest {
 	}
 
 	protected RadioDDMFormFieldValueRenderer
-		createRadioDDMFormFieldValueRenderer() {
+			createRadioDDMFormFieldValueRenderer()
+		throws Exception {
 
 		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
 			new RadioDDMFormFieldValueRenderer();
 
-		radioDDMFormFieldValueRenderer.setRadioDDMFormFieldValueAccessor(
-			new RadioDDMFormFieldValueAccessor());
+		field(
+			RadioDDMFormFieldValueRenderer.class,
+			"_radioDDMFormFieldValueAccessor"
+		).set(
+			radioDDMFormFieldValueRenderer, new RadioDDMFormFieldValueAccessor()
+		);
 
 		return radioDDMFormFieldValueRenderer;
 	}

@@ -32,11 +32,16 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Renato Rego
  */
-public class SelectDDMFormFieldValueRendererAccessorTest {
+@RunWith(PowerMockRunner.class)
+public class SelectDDMFormFieldValueRendererAccessorTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -143,13 +148,19 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 	}
 
 	protected SelectDDMFormFieldValueRenderer
-		createSelectDDMFormFieldValueRenderer() {
+			createSelectDDMFormFieldValueRenderer()
+		throws Exception {
 
 		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
 			new SelectDDMFormFieldValueRenderer();
 
-		selectDDMFormFieldValueRenderer.setSelectDDMFormFieldValueAccessor(
-			new SelectDDMFormFieldValueAccessor());
+		field(
+			SelectDDMFormFieldValueRenderer.class,
+			"_selectDDMFormFieldValueAccessor"
+		).set(
+			selectDDMFormFieldValueRenderer,
+			new SelectDDMFormFieldValueAccessor()
+		);
 
 		return selectDDMFormFieldValueRenderer;
 	}

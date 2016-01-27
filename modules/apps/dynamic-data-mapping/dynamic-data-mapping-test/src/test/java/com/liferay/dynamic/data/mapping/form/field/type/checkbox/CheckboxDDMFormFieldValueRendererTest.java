@@ -50,7 +50,7 @@ public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 	}
 
 	@Test
-	public void testRender() {
+	public void testRender() throws Exception {
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Checkbox", new UnlocalizedValue("true"));
@@ -77,13 +77,19 @@ public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 	}
 
 	protected CheckboxDDMFormFieldValueRenderer
-		createCheckboxDDMFormFieldValueRenderer() {
+			createCheckboxDDMFormFieldValueRenderer()
+		throws Exception {
 
 		CheckboxDDMFormFieldValueRenderer checkboxDDMFormFieldValueRenderer =
 			new CheckboxDDMFormFieldValueRenderer();
 
-		checkboxDDMFormFieldValueRenderer.setCheckboxDDMFormFieldValueAccessor(
-			new CheckboxDDMFormFieldValueAccessor());
+		field(
+			CheckboxDDMFormFieldValueRenderer.class,
+			"_checkboxDDMFormFieldValueAccessor"
+		).set(
+			checkboxDDMFormFieldValueRenderer,
+			new CheckboxDDMFormFieldValueAccessor()
+		);
 
 		return checkboxDDMFormFieldValueRenderer;
 	}

@@ -20,8 +20,6 @@
 			<@liferay_control_menu["control-menu"] />
 		</#if>
 
-		<@liferay.product_menu_sidebar state="${liferay_product_menu_state!}" />
-
 		<div id="wrapper">
 			<header id="banner" role="banner">
 				<div class="container-fluid-1280">

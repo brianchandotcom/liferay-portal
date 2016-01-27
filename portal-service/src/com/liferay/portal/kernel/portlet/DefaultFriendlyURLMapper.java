@@ -317,13 +317,9 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		}
 
 		String instanceId = routeParameters.remove("instanceId");
-
-		boolean customizablePortletInstance = hasUserCustomizedPreferences(
-			instanceId);
-
 		String portletId = routeParameters.remove("p_p_id");
 
-		if (customizablePortletInstance) {
+		if (hasUserCustomizedPreferences(instanceId)) {
 			String portletName = getPortletName();
 
 			if (Validator.isNotNull(portletId)) {

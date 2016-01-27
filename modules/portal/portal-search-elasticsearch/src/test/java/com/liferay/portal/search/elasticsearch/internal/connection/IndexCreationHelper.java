@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.elasticsearch.common.settings.Settings;
 
 /**
  * @author André de Oliveira
@@ -22,5 +23,9 @@ import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 public interface IndexCreationHelper {
 
 	public void contribute(CreateIndexRequestBuilder createIndexRequestBuilder);
+
+	public void contributeIndexSettings(Settings.Builder builder);
+
+	public void whenIndexCreated();
 
 }

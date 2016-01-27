@@ -14,11 +14,12 @@
 
 package com.liferay.portal.search.elasticsearch.settings;
 
+import org.elasticsearch.common.settings.Settings;
+
 /**
  * @author André de Oliveira
  */
-public abstract class BaseIndexSettingsContributor
-	implements IndexSettingsContributor {
+public class BaseIndexSettingsContributor implements IndexSettingsContributor {
 
 	public BaseIndexSettingsContributor(int priority) {
 		_priority = priority;
@@ -37,10 +38,18 @@ public abstract class BaseIndexSettingsContributor
 	}
 
 	@Override
+	public void contribute(TypeMappingsHelper typeMappingsHelper) {
+	}
+
+	@Override
 	public int getPriority() {
 		return _priority;
 	}
 
-	private int _priority;
+	@Override
+	public void populate(Settings.Builder builder) {
+	}
+
+	private final int _priority;
 
 }

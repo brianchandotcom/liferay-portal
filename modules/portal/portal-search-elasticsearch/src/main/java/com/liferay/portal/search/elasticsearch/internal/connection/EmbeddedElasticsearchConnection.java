@@ -18,12 +18,9 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
@@ -141,23 +138,11 @@ public class EmbeddedElasticsearchConnection
 			"http.cors.allow-origin",
 			elasticsearchConfiguration.httpCORSAllowOrigin());
 
-		String[] httpCORSConfigurations =
+		String httpCORSConfigurations =
 			elasticsearchConfiguration.httpCORSConfigurations();
 
-		if (ArrayUtil.isEmpty(httpCORSConfigurations)) {
-			return;
-		}
-
-		for (String httpCORSConfiguration : httpCORSConfigurations) {
-			String[] httpCORSConfigurationPair = StringUtil.split(
-				httpCORSConfiguration, StringPool.EQUAL);
-
-			if (httpCORSConfigurationPair.length < 2) {
-				continue;
-			}
-
-			builder.put(
-				httpCORSConfigurationPair[0], httpCORSConfigurationPair[1]);
+		if (Validator.isNotNull(httpCORSConfigurations)) {
+			builder.loadFromSource(httpCORSConfigurations);
 		}
 	}
 

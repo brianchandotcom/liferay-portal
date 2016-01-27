@@ -19,6 +19,7 @@ package com.liferay.portal.search.elasticsearch.internal.index;
  */
 public class IndexSettingsConstants {
 
-	public static final String FILE = "/META-INF/index-settings.json";
+	public static final String INDEX_SETTINGS_FILE_NAME =
+		"/META-INF/index-settings.json";
 
 }

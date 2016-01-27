@@ -19,9 +19,9 @@ package com.liferay.portal.search.elasticsearch.internal.index;
  */
 public class LiferayTypeMappingsConstants {
 
-	public static final String FILE =
-		"/META-INF/mappings/liferay-type-mappings.json";
+	public static final String LIFERAY_DOCUMENT_TYPE = "LiferayDocumentType";
 
-	public static final String TYPE = "LiferayDocumentType";
+	public static final String LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME =
+		"/META-INF/mappings/liferay-type-mappings.json";
 
 }

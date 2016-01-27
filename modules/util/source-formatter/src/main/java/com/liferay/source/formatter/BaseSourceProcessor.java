@@ -1423,6 +1423,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _mainReleaseVersion;
 	}
 
+	protected String getModuleLangDir(String moduleLocation) {
+		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
+
+		String baseModuleName = moduleLocation.substring(0, x);
+
+		int y = baseModuleName.lastIndexOf(StringPool.SLASH);
+
+		baseModuleName = baseModuleName.substring(
+			y + 1, baseModuleName.length());
+
+		return moduleLocation.substring(0, x + 1) + baseModuleName + "-lang";
+	}
+
 	protected Properties getModuleLangLanguageProperties(String fileName)
 		throws Exception {
 
@@ -1466,19 +1479,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String moduleLocation = StringUtil.replaceLast(
 			buildGradleFileLocation, StringPool.SLASH, StringPool.BLANK);
 
-		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
+		String moduleLangDir = getModuleLangDir(moduleLocation);
 
-		int y = moduleLocation.indexOf(StringPool.DASH, x);
+		String moduleLangLanguagePropertiesFileName =
+			moduleLangDir + "/src/main/resources/content/Language.properties";
 
-		String baseModuleName = moduleLocation.substring(x + 1, y);
-
-		String moduleLangName = baseModuleName.concat("-lang");
-
-		String moduleLangLanguagePath =
-			moduleLocation.substring(0, x + 1) + moduleLangName +
-				"/src/main/resources/content/Language.properties";
-
-		File file = new File(moduleLangLanguagePath);
+		File file = new File(moduleLangLanguagePropertiesFileName);
 
 		if (!file.exists()) {
 			return null;

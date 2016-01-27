@@ -61,27 +61,27 @@
 <!--RECYCLE_BIN_TABLE-->
 <tr>
 	<td>RECYCLE_BIN_TABLE_NAME</td>
-	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[1]/span/a</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_TYPE</td>
-	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[2]</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_REMOVED_DATE</td>
-	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[3]</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_REMOVED_BY</td>
-	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[4]</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[5]/div/a</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[6]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -128,12 +128,12 @@
 <!--RECYCLE_BIN_FOLDER-->
 <tr>
 	<td>RECYCLE_BIN_FOLDER_DOCUMENT_NAME</td>
-	<td>//div[contains(@id,'trashRenderersSearchContainer')]//tr[contains(.,'${key_assetName}')]/td/span/a/span</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_FOLDER_ACTIONS</td>
-	<td>//div[contains(@id,'trashRenderersSearchContainer')]//tr[contains(.,'${key_assetName}')]/td/div/a</td>
+	<td>//div[contains(@id,'trashSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[3]/div/a</td>
 	<td></td>
 </tr>
 <tr>

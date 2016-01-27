@@ -138,11 +138,11 @@ public class LayoutsTreeUtil {
 	private static Layout _fetchCurrentLayout(HttpServletRequest request) {
 		long selPlid = ParamUtil.getLong(request, "selPlid");
 
-		if (selPlid == 0) {
-			return null;
+		if (selPlid > 0) {
+			return LayoutLocalServiceUtil.fetchLayout(selPlid);
 		}
 
-		return LayoutLocalServiceUtil.fetchLayout(selPlid);
+		return null;
 	}
 
 	private static List<Layout> _getAncestorLayouts(HttpServletRequest request)

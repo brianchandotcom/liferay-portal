@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_STATUS</td>
-	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[2]</td>
+	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[contains(@class,'status')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -196,6 +196,11 @@
 </tr>
 <!--EXPORT_TEMPLATES_TABLE-->
 <tr>
+	<td>EXPORT_TEMPLATES_SEARCH</td>
+	<td>xpath=(//*[@data-qa-id='searchButton'] | //button[contains(.,'Search')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_TEMPLATES_TABLE_NAME</td>
 	<td>//div[contains(@id,'exportImportConfigurationsSearch')]//tr[contains(.,'${key_exportTemplateName}')]/td[2]/a</td>
 	<td></td>
@@ -206,8 +211,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON</td>
-	<td>//div[contains(@id,'exportImportConfigurationsSearch')]//tr[contains(.,'${key_exportTemplateName}')]/td/span/a[contains(.,'Export')]</td>
+	<td>EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON</td>
+	<td>//div[contains(@id,'exportImportConfigurationsSearch')]//tr[contains(.,'${key_exportTemplateName}')]/td//a[@role='menuitem' and contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>

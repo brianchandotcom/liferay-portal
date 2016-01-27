@@ -124,6 +124,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		_serviceTracker = registry.trackServices(
 			PortalInstanceLifecycleManager.class,
 			new PortalInstanceLifecycleManagerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	/**

@@ -133,7 +133,7 @@
 
 		<execute macro="FormsAdmin#viewFormEntry">
 			<var name="fieldLabel" value="Data Provider Select Field" />
-			<var name="fieldValue" value="United States" />
+			<var name="fieldValue" value="united-states" />
 		</execute>
 	</command>
 

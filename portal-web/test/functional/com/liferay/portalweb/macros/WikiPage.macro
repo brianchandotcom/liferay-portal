@@ -153,7 +153,8 @@
 	<command name="addFrontPageCP">
 		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO_2" value1="This page does not exist yet. Use the form below to create it." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
+
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiFrontPageContent}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
@@ -164,7 +165,7 @@
 	<command name="addFrontPageDraftPG">
 		<execute function="AssertTextEquals" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO_2" value1="This page does not exist yet. Use the form below to create it." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="AssertTextNotPresent" value1="${wikiPageContent}" />
 
 		<execute function="AssertClick" locator1="Wiki#LINK_EDIT" value1="Edit" />
@@ -192,7 +193,7 @@
 
 		<execute function="AssertClick#assertTextClickAtAndPause" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO_2" value1="This page does not exist yet. Use the form below to create it." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 
 		<if>
 			<equals arg1="${creoleSource}" arg2="true" />

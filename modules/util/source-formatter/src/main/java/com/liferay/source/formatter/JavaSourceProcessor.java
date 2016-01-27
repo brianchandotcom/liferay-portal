@@ -1073,31 +1073,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
 		_checkJavaFieldTypesExcludes = getPropertyList(
-			"check.java.field.types.excludes.files");
-		_checkTabsExcludes = getPropertyList("check.tabs.excludes.files");
-		_diamondOperatorExcludes = getPropertyList(
-			"diamond.operator.excludes.files");
+			"check.java.field.types.excludes");
+		_checkTabsExcludes = getPropertyList("check.tabs.excludes");
+		_diamondOperatorExcludes = getPropertyList("diamond.operator.excludes");
 		_diamondOperatorExclusionPaths = getPropertyList(
 			"diamond.operator.excludes.paths");
 		_fitOnSingleLineExcludes = getPropertyList(
-			"fit.on.single.line.excludes.files");
+			"fit.on.single.line.excludes");
 		_hibernateSQLQueryExcludes = getPropertyList(
-			"hibernate.sql.query.excludes.files");
+			"hibernate.sql.query.excludes");
 		_javaTermAccessLevelModifierExcludes = getPropertyList(
-			"javaterm.access.level.modifier.excludes.files");
-		_javaTermSortExcludes = getPropertyList("javaterm.sort.excludes.files");
-		_lineLengthExcludes = getPropertyList("line.length.excludes.files");
-		_proxyExcludes = getPropertyList("proxy.excludes.files");
+			"javaterm.access.level.modifier.excludes");
+		_javaTermSortExcludes = getPropertyList("javaterm.sort.excludes");
+		_lineLengthExcludes = getPropertyList("line.length.excludes");
+		_proxyExcludes = getPropertyList("proxy.excludes");
 		_secureDeserializationExcludes = getPropertyList(
 			"secure.deserialization.excluded.files");
-		_secureRandomExcludes = getPropertyList("secure.random.excludes.files");
-		_secureXmlExcludes = getPropertyList("secure.xml.excludes.files");
-		_staticLogVariableExcludes = getPropertyList(
-			"static.log.excludes.files");
-		_testAnnotationsExcludes = getPropertyList(
-			"test.annotations.excludes.files");
+		_secureRandomExcludes = getPropertyList("secure.random.excludes");
+		_secureXmlExcludes = getPropertyList("secure.xml.excludes");
+		_staticLogVariableExcludes = getPropertyList("static.log.excludes");
+		_testAnnotationsExcludes = getPropertyList("test.annotations.excludes");
 		_upgradeServiceUtilExcludes = getPropertyList(
-			"upgrade.service.util.excludes.files");
+			"upgrade.service.util.excludes");
 
 		return new ArrayList<>(fileNames);
 	}

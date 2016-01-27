@@ -373,7 +373,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
 
-			if (!key.endsWith("excludes.files")) {
+			if (!key.endsWith("excludes")) {
 				continue;
 			}
 

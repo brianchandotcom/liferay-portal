@@ -377,8 +377,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		_numericalPortletNameElementExcludes = getPropertyList(
-			"numerical.portlet.name.element.excludes.files");
-		_xmlExcludes = getPropertyList("xml.excludes.files");
+			"numerical.portlet.name.element.excludes");
+		_xmlExcludes = getPropertyList("xml.excludes");
 
 		return getFileNames(excludes, getIncludes());
 	}

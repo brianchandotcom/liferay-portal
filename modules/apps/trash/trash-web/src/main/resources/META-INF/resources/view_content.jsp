@@ -130,6 +130,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 	<liferay-ui:search-container
 		deltaConfigurable="<%= false %>"
 		emptyResultsMessage="<%= emptyResultsMessage %>"
+		id="trash"
 		iteratorURL="<%= iteratorURL %>"
 		total="<%= trashHandler.getTrashModelsCount(classPK) %>"
 	>

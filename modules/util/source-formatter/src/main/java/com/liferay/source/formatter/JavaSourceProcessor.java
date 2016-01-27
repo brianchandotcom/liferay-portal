@@ -785,7 +785,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "ServiceUtil: " + fileName);
 		}
 
-		boolean isRunOutsidePortalExclusion = isExcludedPath(
+		boolean isRunOutsidePortalExclusion = isExcludedFile(
 			getRunOutsidePortalExclusionPaths(), absolutePath);
 
 		if (!isRunOutsidePortalExclusion &&
@@ -941,7 +941,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-48153
 
 		if (!isExcludedFile(_diamondOperatorExcludes, absolutePath) &&
-			!isExcludedPath(_diamondOperatorExclusionPaths, absolutePath)) {
+			!isExcludedFile(_diamondOperatorExclusionPaths, absolutePath)) {
 
 			newContent = applyDiamondOperator(newContent);
 		}

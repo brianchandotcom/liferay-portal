@@ -38,6 +38,28 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	includeCheckBox="<%= true %>"
 	searchContainerId="actionActions"
 >
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= mdrActionDisplayContext.getOrderByCol() %>"
+			orderByType="<%= mdrActionDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"create-date"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteActions" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>

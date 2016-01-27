@@ -14,9 +14,12 @@
 
 package com.liferay.mobile.device.rules.web.display.context;
 
+import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.util.comparator.ActionCreateDateComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletURL;
@@ -46,6 +49,19 @@ public class MDRActionDisplayContext {
 			_request, getPortletURL(), null,
 			"no-actions-are-configured-for-this-device-family");
 
+		ruleActionSearchContainer.setOrderByCol(getOrderByCol());
+
+		String orderByType = getOrderByType();
+
+		boolean orderByAsc = orderByType.equals("asc");
+
+		OrderByComparator<MDRAction> orderByComparator =
+			new ActionCreateDateComparator(orderByAsc);
+
+		ruleActionSearchContainer.setOrderByComparator(orderByComparator);
+
+		ruleActionSearchContainer.setOrderByType(orderByType);
+
 		ruleActionSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_response));
 
@@ -55,11 +71,21 @@ public class MDRActionDisplayContext {
 		ruleActionSearchContainer.setResults(
 			MDRActionLocalServiceUtil.getActions(
 				ruleGroupInstanceId, ruleActionSearchContainer.getStart(),
-				ruleActionSearchContainer.getEnd()));
+				ruleActionSearchContainer.getEnd(), orderByComparator));
 
 		_ruleActionSearchContainer = ruleActionSearchContainer;
 
 		return _ruleActionSearchContainer;
+	}
+
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+
+		return _displayStyle;
 	}
 
 	public long getGroupInstanceId() {
@@ -70,6 +96,27 @@ public class MDRActionDisplayContext {
 		_groupInstanceId = ParamUtil.getLong(_request, "ruleGroupInstanceId");
 
 		return _groupInstanceId;
+	}
+
+	public String getOrderByCol() {
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "create-date");
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -91,7 +138,10 @@ public class MDRActionDisplayContext {
 		return _portletURL;
 	}
 
+	private String _displayStyle;
 	private Long _groupInstanceId;
+	private String _orderByCol;
+	private String _orderByType;
 	private PortletURL _portletURL;
 	private final RenderRequest _request;
 	private final RenderResponse _response;

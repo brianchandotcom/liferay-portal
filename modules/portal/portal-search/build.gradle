@@ -8,6 +8,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":core:registry-api")
+	compile project(":portal:portal-instance-lifecycle")
 	compile project(":portal:portal-metatype")
 }
 

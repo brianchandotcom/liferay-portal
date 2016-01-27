@@ -2679,6 +2679,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-test-smtp-server">
+ 		<sequential>
+			<mirrors-get dest="MockMock.jar" src="${test.smtp.server.url}" />
+
+			<parallel>
+				<daemons>
+					<java jar="MockMock.jar" fork="true" />
+				</daemons>
+			</parallel>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-android-device">
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
@@ -7244,6 +7256,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
 		</if>
+
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
+ 		<if>
+ 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
+ 			<then>
+ 				<start-test-smtp-server />
+ 			</then>
+ 		</if>
 
 		<antcall target="deploy-osgi-modules" />
 

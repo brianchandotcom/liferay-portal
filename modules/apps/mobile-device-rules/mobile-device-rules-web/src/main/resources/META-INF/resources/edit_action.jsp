@@ -39,12 +39,6 @@ else {
 }
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= (action == null) %>"
-	title="<%= title %>"
-/>
-
 <c:if test="<%= action == null %>">
 	<div class="alert alert-info">
 		<liferay-ui:message key="action-help" />
@@ -55,7 +49,7 @@ else {
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 </portlet:actionURL>
 
-<aui:form action="<%= editActionURL %>" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= editActionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (action == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="actionId" type="hidden" value="<%= actionId %>" />
@@ -68,31 +62,33 @@ else {
 
 	<aui:model-context bean="<%= action %>" model="<%= MDRAction.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-		<aui:input name="description" />
+			<aui:input name="description" />
 
-		<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
+			<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>' required="<%= true %>" showEmptyOption="<%= true %>">
 
-			<%
-			for (ActionHandler actionHandler : ActionHandlerManagerUtil.getActionHandlers()) {
-			%>
+				<%
+				for (ActionHandler actionHandler : ActionHandlerManagerUtil.getActionHandlers()) {
+				%>
 
-				<aui:option label="<%= actionHandler.getType() %>" selected="<%= type.equals(actionHandler.getType()) %>" />
+					<aui:option label="<%= actionHandler.getType() %>" selected="<%= type.equals(actionHandler.getType()) %>" />
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</aui:select>
+			</aui:select>
 
-		<div id="<%= renderResponse.getNamespace() %>typeSettings">
-			<c:if test="<%= Validator.isNotNull(editorJSP) %>">
-				<liferay-util:include page="<%= editorJSP %>" servletContext="<%= application %>" />
-			</c:if>
-		</div>
-	</aui:fieldset>
+			<div id="<%= renderResponse.getNamespace() %>typeSettings">
+				<c:if test="<%= Validator.isNotNull(editorJSP) %>">
+					<liferay-util:include page="<%= editorJSP %>" servletContext="<%= application %>" />
+				</c:if>
+			</div>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

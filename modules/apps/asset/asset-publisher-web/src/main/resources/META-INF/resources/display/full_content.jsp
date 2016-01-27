@@ -136,19 +136,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			showExtraInfo="<%= assetPublisherDisplayContext.isShowExtraInfo() %>"
 		/>
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
-			<div class="asset-flag">
-				<liferay-ui:flags
-					className="<%= assetEntry.getClassName() %>"
-					classPK="<%= assetEntry.getClassPK() %>"
-					contentTitle="<%= title %>"
-					reportedUserId="<%= assetRenderer.getUserId() %>"
-				/>
-			</div>
-		</c:if>
-
-		<br />
-
 		<c:if test='<%= assetPublisherDisplayContext.isEnableSocialBookmarks() && socialBookmarksDisplayPosition.equals("bottom") && !print %>'>
 			<div class="pull-right">
 				<liferay-ui:social-bookmarks
@@ -156,6 +143,17 @@ request.setAttribute("view.jsp-showIconLabel", true);
 					target="_blank"
 					title="<%= title %>"
 					url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
+				/>
+			</div>
+		</c:if>
+
+		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
+			<div class="asset-flag">
+				<liferay-ui:flags
+					className="<%= assetEntry.getClassName() %>"
+					classPK="<%= assetEntry.getClassPK() %>"
+					contentTitle="<%= title %>"
+					reportedUserId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>
 		</c:if>
@@ -169,15 +167,11 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			</div>
 		</c:if>
 
-		<br />
-
 		<c:if test="<%= assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible() %>">
 			<div class="asset-more">
 				<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL)) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
 			</div>
 		</c:if>
-
-		<br />
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>">
 			<liferay-ui:asset-links
@@ -186,8 +180,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
-			<br />
-
 			<liferay-ui:discussion
 				className="<%= assetEntry.getClassName() %>"
 				classPK="<%= assetEntry.getClassPK() %>"

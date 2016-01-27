@@ -48,6 +48,7 @@ public class BuildServiceTask extends JavaExec {
 			(Object[])ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS);
 		setMain("com.liferay.portal.tools.service.builder.ServiceBuilder");
 		springNamespaces("beans");
+		systemProperty("file.encoding", "UTF-8");
 	}
 
 	@Override

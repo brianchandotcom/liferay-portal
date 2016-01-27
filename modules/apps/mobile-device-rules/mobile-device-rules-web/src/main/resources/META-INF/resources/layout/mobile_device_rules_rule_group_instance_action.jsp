@@ -38,7 +38,9 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 		</liferay-portlet:renderURL>
 
 		<%
-		String taglibActionHandler = liferayPortletResponse.getNamespace() + "mobileDeviceActionHandler('" + viewRuleGroupInstanceActionsURL.toString() + "');";
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
+
+		String taglibActionHandler = liferayPortletResponse.getNamespace() + "mobileDeviceActionHandler('" + viewRuleGroupInstanceActionsURL.toString() + "', '" + LanguageUtil.format(resourceBundle, "actions-for-x", HtmlUtil.escape(mdrRuleGroup.getName(locale)), false) + "');";
 		%>
 
 		<liferay-ui:icon message="manage-actions" onClick="<%= taglibActionHandler %>" url="javascript:;" />

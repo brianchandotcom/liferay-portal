@@ -56,10 +56,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 </liferay-ui:search-container>
 
 <aui:script>
-	function <portlet:namespace />mobileDeviceActionHandler(href) {
+	function <portlet:namespace />mobileDeviceActionHandler(href, title) {
 		<portlet:namespace />mobileDeviceOpenWindow(
 			{
-				uri: href
+				uri: href,
+				title: title
 			}
 		);
 	}
@@ -73,10 +74,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 						visibleChange: function(event) {
 							<portlet:namespace />updateRuleGroupInstances();
 						}
-					},
-					width: 1024
+					}
 				},
-				title: '<liferay-ui:message key="javax.portlet.title.com_liferay_mobile_device_rules_web_portlet_MDRPortlet" />'
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				}
 			}
 		);
 

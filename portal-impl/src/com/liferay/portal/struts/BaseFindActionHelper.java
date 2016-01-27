@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -156,9 +155,6 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 	public abstract String getPrimaryKeyParameterName();
 
 	@Override
-	public abstract String[] initPortletIds();
-
-	@Override
 	public abstract PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
 		throws Exception;
@@ -197,14 +193,6 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 		return layout;
 	}
 
-	protected BaseFindActionHelper() {
-		_portletIds = initPortletIds();
-
-		if (ArrayUtil.isEmpty(_portletIds)) {
-			throw new RuntimeException("Portlet IDs cannot be null or empty");
-		}
-	}
-
 	protected abstract void addRequiredParameters(
 		HttpServletRequest request, String portletId, PortletURL portletURL);
 
@@ -212,7 +200,5 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFindActionHelper.class);
-
-	private final String[] _portletIds;
 
 }

@@ -31,8 +31,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
@@ -1052,9 +1050,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				continue;
 			}
 
-			String resourceName =
-				DDMStructurePermission.getStructureModelResourceName(
-					classNameId);
+			String resourceName = getStructureModelResourceName(classNameId);
 
 			resourcePermission.setName(resourceName);
 
@@ -1173,8 +1169,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				continue;
 			}
 
-			String resourceName =
-				DDMTemplatePermission.getTemplateModelResourceName(classNameId);
+			String resourceName = getTemplateModelResourceName(classNameId);
 
 			resourcePermission.setName(resourceName);
 

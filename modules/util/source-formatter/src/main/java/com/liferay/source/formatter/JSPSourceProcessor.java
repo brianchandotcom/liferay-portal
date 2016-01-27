@@ -421,7 +421,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected List<String> doGetFileNames() throws Exception {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
 			getProperty("move.frequently.used.imports.to.common.init"));
-		_unusedVariablesExclusionFiles = getPropertyList(
+		_unusedVariablesExcludes = getPropertyList(
 			"jsp.unused.variables.excludes.files");
 
 		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
@@ -655,7 +655,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (javaSource) {
 					if (portalSource &&
 						!isExcludedFile(
-							_unusedVariablesExclusionFiles, absolutePath,
+							_unusedVariablesExcludes, absolutePath,
 							lineCount) &&
 						!_jspContents.isEmpty() &&
 						hasUnusedVariable(fileName, trimmedLine)) {
@@ -1811,7 +1811,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
 		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
 			"(?:'|\").+(?:'|\"))");
-	private List<String> _unusedVariablesExclusionFiles;
+	private List<String> _unusedVariablesExcludes;
 	private String _utilTaglibDirName;
 	private final Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");

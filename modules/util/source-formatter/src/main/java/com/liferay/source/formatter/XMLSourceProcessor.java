@@ -296,7 +296,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isExcludedFile(_xmlExclusionFiles, absolutePath)) {
+		if (isExcludedFile(_xmlExcludes, absolutePath)) {
 			return content;
 		}
 
@@ -376,9 +376,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"**/tools/node**"
 		};
 
-		_numericalPortletNameElementExclusionFiles = getPropertyList(
+		_numericalPortletNameElementExcludes = getPropertyList(
 			"numerical.portlet.name.element.excludes.files");
-		_xmlExclusionFiles = getPropertyList("xml.excludes.files");
+		_xmlExcludes = getPropertyList("xml.excludes.files");
 
 		return getFileNames(excludes, getIncludes());
 	}
@@ -759,7 +759,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		sortAttributes(rootElement, true);
 
 		boolean checkNumericalPortletNameElement = !isExcludedFile(
-			_numericalPortletNameElementExclusionFiles, absolutePath);
+			_numericalPortletNameElementExcludes, absolutePath);
 
 		List<Element> portletElements = rootElement.elements("portlet");
 
@@ -1314,7 +1314,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"[\t ]-->\n[\t<]");
 
 	private List<String> _columnNames;
-	private List<String> _numericalPortletNameElementExclusionFiles;
+	private List<String> _numericalPortletNameElementExcludes;
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");
 	private final Pattern _poshiCommandsPattern = Pattern.compile(
@@ -1353,7 +1353,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _tablesContentMap = new HashMap<>();
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
-	private List<String> _xmlExclusionFiles;
+	private List<String> _xmlExcludes;
 
 	private class CustomSQLElementComparator extends ElementComparator {
 

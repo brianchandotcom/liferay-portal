@@ -886,10 +886,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String javaClassName, String packagePath, File file,
 			String fileName, String absolutePath, String content,
 			String javaClassContent, int javaClassLineCount,
-			List<String> checkJavaFieldTypesExclusionFiles,
-			List<String> javaTermAccessLevelModifierExclusionFiles,
-			List<String> javaTermSortExclusionFiles,
-			List<String> testAnnotationsExclusionFiles)
+			List<String> checkJavaFieldTypesExcludes,
+			List<String> javaTermAccessLevelModifierExcludes,
+			List<String> javaTermSortExcludes,
+			List<String> testAnnotationsExcludes)
 		throws Exception {
 
 		JavaSourceProcessor javaSourceProcessor = null;
@@ -906,12 +906,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		JavaClass javaClass = new JavaClass(
 			javaClassName, packagePath, file, fileName, absolutePath,
 			javaClassContent, javaClassLineCount, StringPool.TAB, null,
-			javaTermAccessLevelModifierExclusionFiles, javaSourceProcessor);
+			javaTermAccessLevelModifierExcludes, javaSourceProcessor);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
 			getAnnotationsExclusions(), getImmutableFieldTypes(),
-			checkJavaFieldTypesExclusionFiles, javaTermSortExclusionFiles,
-			testAnnotationsExclusionFiles);
+			checkJavaFieldTypesExcludes, javaTermSortExcludes,
+			testAnnotationsExcludes);
 
 		if (!javaClassContent.equals(newJavaClassContent)) {
 			return StringUtil.replaceFirst(

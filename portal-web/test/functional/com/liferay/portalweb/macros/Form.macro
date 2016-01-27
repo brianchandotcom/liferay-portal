@@ -51,6 +51,8 @@
 			<var name="fieldValue" value="${fieldValue}" />
 		</execute>
 
+		<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldName" />
+
 		<execute macro="FormFields#viewFormName">
 			<var name="fieldName" value="${fieldName}" />
 		</execute>

@@ -55,13 +55,8 @@
 			<var name="fieldType" value="Date" />
 		</execute>
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="label" />
+		<execute macro="Form#editFieldLabel">
 			<var name="fieldValue" value="Date" />
-		</execute>
-
-		<execute macro="FormFields#viewFormName">
-			<var name="fieldName" value="Date" />
 		</execute>
 
 		<execute macro="FormFields#save" />

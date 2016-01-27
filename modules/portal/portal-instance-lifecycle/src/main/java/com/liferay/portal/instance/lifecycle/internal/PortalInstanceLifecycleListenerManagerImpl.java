@@ -111,20 +111,13 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
 
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
 		try {
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
 			portalInstanceLifecycleListener.portalInstanceUnregistered(company);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to register portal instance " + company, e);
 			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
 		}
 	}
 

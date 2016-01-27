@@ -129,7 +129,7 @@
 
 		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />

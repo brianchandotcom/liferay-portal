@@ -54,14 +54,16 @@
 		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="InvalidEmail" />
 		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
 
 		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
 		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
 		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
 	</command>
 

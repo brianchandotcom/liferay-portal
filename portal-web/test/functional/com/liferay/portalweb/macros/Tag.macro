@@ -28,7 +28,8 @@
 
 				<execute function="Type" locator1="TextInput#NAME" value1="${tagEntry}" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+				<execute macro="Alert#viewRequestFailedToComplete" />
 			</then>
 			<elseif>
 				<equals arg1="${tagNameVariation}" arg2="Duplicate" />
@@ -46,7 +47,8 @@
 
 					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-					<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+					<execute macro="Alert#viewRequestFailedToComplete" />
 				</then>
 			</elseif>
 			<else>

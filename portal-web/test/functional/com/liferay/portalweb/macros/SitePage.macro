@@ -109,7 +109,8 @@
 
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 
-				<execute function="AssertTextNotPresent" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextNotPresent" locator1="Message#ERROR_2" value1="You must have at least one page." />
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
@@ -133,7 +134,8 @@
 		<if>
 			<isset var="lastPublicSitepage" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You must have at least one page." />
 			</then>
 			<else>
@@ -222,7 +224,8 @@
 
 		<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The first page cannot be of type Link to URL." />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />

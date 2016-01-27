@@ -113,7 +113,8 @@
 		<if>
 			<equals arg1="${organizationName}" arg2="Duplicate" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The organization name is already taken." />
 			</then>
 			<else>

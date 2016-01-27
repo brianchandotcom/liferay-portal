@@ -553,7 +553,8 @@
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
 			</else>
 		</if>
@@ -598,7 +599,7 @@
 		<if>
 			<equals arg1="${friendlyURLInvalid}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
 
 				<execute function="AssertClick" locator1="SiteSettingsSiteURL#SITE_URL_LABEL" value1="Site URL" />
 
@@ -1001,7 +1002,8 @@
 		<if>
 			<equals arg1="${siteNameInvalid}" arg2="Duplicate" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a unique name." />
 			</then>
 			<elseif>
@@ -1011,7 +1013,8 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The Site Name cannot be blank, numeric or a reserved word such as null. The Site Name cannot contain the following invalid characters: *." />
 			</else>
 		</if>

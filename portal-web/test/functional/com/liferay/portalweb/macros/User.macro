@@ -129,7 +129,8 @@
 			<elseif>
 				<equals arg1="${userEmailAddressVariation}" arg2="Root" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
 					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
 				</then>
 			</elseif>
@@ -294,7 +295,8 @@
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The email address you requested is reserved." />
 	</command>
 
@@ -309,7 +311,8 @@
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The screen name you requested is reserved." />
 	</command>
 
@@ -324,7 +327,8 @@
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The screen name cannot contain only numeric values." />
 	</command>
 
@@ -869,7 +873,8 @@
 				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test1" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The password cannot be blank. Please enter a password." />
 
 				<execute macro="User#logoutPG" />
@@ -1173,18 +1178,21 @@
 		<if>
 			<equals arg1="${trivialPassword}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
 			</then>
 			<elseif>
 				<isset var="regex" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
 					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="That password does not comply with the regular expression ${regex}. Please enter a different password." />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="That password is invalid. Please enter in a different password." />
 			</else>
 		</if>
@@ -1531,7 +1539,8 @@
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
 		<execute function="Click" locator1="Button#SIGN_IN" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Authentication failed. Please try again." />
 	</command>
 

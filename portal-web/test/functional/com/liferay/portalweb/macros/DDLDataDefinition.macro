@@ -132,7 +132,9 @@
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The structure cannot be deleted because it is required by one or more structure links." />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -249,7 +251,8 @@
 				<if>
 					<equals arg1="${kfProcessExists}" arg2="true" />
 					<then>
-						<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+						<execute macro="Alert#viewRequestFailedToComplete" />
+
 						<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The structure cannot be deleted because it is required by one or more structure links." />
 					</then>
 					<else>

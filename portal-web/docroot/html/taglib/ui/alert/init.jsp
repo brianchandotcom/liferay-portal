@@ -21,6 +21,7 @@ Integer animationTime = GetterUtil.getInteger((String)request.getAttribute("life
 boolean closeable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ui:alert:closeable")));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:alert:cssClass"));
 boolean destroyOnHide = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ui:alert:destroyOnHide")));
+String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:alert:icon"));
 String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:alert:message"));
 String targetContainer = GetterUtil.getString((String)request.getAttribute("liferay-ui:alert:targetContainer"));
 Integer timeout = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:alert:timeout"));

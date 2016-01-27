@@ -140,7 +140,8 @@
 			<elseif>
 				<equals arg1="${entryInvalidContent}" arg2="true" />
 				<then>
-					<execute function="AssertTextEquals" locator1="CPBlogsAdd#ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
 					<execute function="AssertTextEquals" locator1="CPBlogsAdd#ERROR_MESSAGE_2" value1="Please enter valid content." />
 					<execute function="AssertElementNotPresent" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				</then>
@@ -894,7 +895,8 @@
 	<command name="publishWithInvalidContent">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_ENTER_VALID_CONTENT" value1="Please enter valid content." />
 		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -902,14 +904,16 @@
 	<command name="publishWithInvalidTitle">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="publishWithInvalidTitleLength">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_ENTER_A_VALID_TITLE" value1="Please enter a valid title." />
 	</command>
 

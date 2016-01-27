@@ -25,6 +25,7 @@
 				show: 0
 			},
 			duration: <%= animationTime %>,
+			icon: '<%= icon %>',
 			message: '<%= HtmlUtil.escapeJS(message) %>',
 			namespace: '<portlet:namespace />',
 			title: '<%= title %>',

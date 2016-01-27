@@ -372,13 +372,15 @@
 		<if>
 			<equals arg1="${dmDocument}" arg2="Duplicate" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="DocumentsAndMediaEditDocument#UNIQUE_DOCUMENT_ERROR_MESSAGE" value1="Please enter a unique document name." />
 			</then>
 			<elseif>
 				<equals arg1="${dmDocument}" arg2="Invalid" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+					<execute macro="Alert#viewRequestFailedToComplete" />
+
 					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a file with a valid file name." />
 				</then>
 			</elseif>
@@ -1207,7 +1209,8 @@
 		<if>
 			<isset var="dmDuplicateDocument" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The folder you selected already has an entry with this name. Please select a different folder." />
 			</then>
 			<else>

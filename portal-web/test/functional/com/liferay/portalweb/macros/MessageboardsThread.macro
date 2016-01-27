@@ -47,7 +47,8 @@
 
 		<execute function="UploadCommonFile" locator1="MessageBoardsEditMessage#ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<if>
 			<equals arg1="${invalidSize}" arg2="true" />
@@ -938,7 +939,8 @@
 	<command name="viewDoNotHaveRequiredPermissionsPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_THREAD"  />

@@ -36,9 +36,9 @@ if (bodyContent != null) {
 		<c:if test="<%= SessionErrors.contains(portletRequest, key) %>">
 			<c:if test="<%= Validator.isNotNull(bodyContentString) %>">
 				<liferay-ui:alert
+					icon="exclamation-full"
 					message="<%= bodyContentString %>"
 					timeout="0"
-					title='<%= LanguageUtil.get(request, "danger") %>'
 					type="danger"
 				/>
 
@@ -59,9 +59,9 @@ if (bodyContent != null) {
 		</liferay-util:buffer>
 
 		<liferay-ui:alert
+			icon="exclamation-full"
 			message="<%= alertMessage %>"
 			timeout="0"
-			title='<%= LanguageUtil.get(request, "warning") %>'
 			type="warning"
 		/>
 
@@ -70,9 +70,9 @@ if (bodyContent != null) {
 	<c:when test="<%= key == null %>">
 		<c:if test="<%= !SessionErrors.isEmpty(portletRequest) %>">
 			<liferay-ui:alert
+				icon="exclamation-full"
 				message='<%= LanguageUtil.get(request, "your-request-failed-to-complete") %>'
 				timeout="0"
-				title='<%= LanguageUtil.get(request, "danger") %>'
 				type="danger"
 			/>
 
@@ -82,9 +82,9 @@ if (bodyContent != null) {
 	<c:otherwise>
 		<c:if test="<%= SessionErrors.contains(portletRequest, key) %>">
 			<liferay-ui:alert
+				icon="exclamation-full"
 				message="<%= translateMessage ? LanguageUtil.get(request, message) : message %>"
 				timeout="0"
-				title='<%= LanguageUtil.get(request, "danger") %>'
 				type="danger"
 			/>
 

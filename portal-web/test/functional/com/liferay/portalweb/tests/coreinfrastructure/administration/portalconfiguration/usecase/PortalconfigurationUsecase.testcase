@@ -149,7 +149,8 @@
 			<var name="virtualHostsURL" value="${otherInstanceAccessAttempt}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 

@@ -41,10 +41,6 @@ public class ScreensUserServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensUserServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.model.User getCurrentUser()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCurrentUser();
-	}
 
 	/**
 	* Returns the OSGi service identifier.

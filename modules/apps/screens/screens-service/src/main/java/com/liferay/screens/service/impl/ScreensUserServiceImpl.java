@@ -30,11 +30,6 @@ import com.liferay.screens.service.base.ScreensUserServiceBaseImpl;
 public class ScreensUserServiceImpl extends ScreensUserServiceBaseImpl {
 
 	@Override
-	public User getCurrentUser() throws PortalException {
-		return getUser();
-	}
-
-	@Override
 	public boolean sendPasswordByEmailAddress(
 			long companyId, String emailAddress)
 		throws PortalException {

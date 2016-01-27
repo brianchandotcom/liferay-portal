@@ -55,37 +55,6 @@ import com.liferay.screens.service.ScreensUserServiceUtil;
  */
 @ProviderType
 public class ScreensUserServiceHttp {
-	public static com.liferay.portal.model.User getCurrentUser(
-		HttpPrincipal httpPrincipal)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(ScreensUserServiceUtil.class,
-					"getCurrentUser", _getCurrentUserParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portal.model.User)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static boolean sendPasswordByEmailAddress(
 		HttpPrincipal httpPrincipal, long companyId,
 		java.lang.String emailAddress)
@@ -93,7 +62,7 @@ public class ScreensUserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensUserServiceUtil.class,
 					"sendPasswordByEmailAddress",
-					_sendPasswordByEmailAddressParameterTypes1);
+					_sendPasswordByEmailAddressParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, emailAddress);
@@ -126,7 +95,7 @@ public class ScreensUserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensUserServiceUtil.class,
 					"sendPasswordByScreenName",
-					_sendPasswordByScreenNameParameterTypes2);
+					_sendPasswordByScreenNameParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, screenName);
@@ -157,7 +126,7 @@ public class ScreensUserServiceHttp {
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensUserServiceUtil.class,
-					"sendPasswordByUserId", _sendPasswordByUserIdParameterTypes3);
+					"sendPasswordByUserId", _sendPasswordByUserIdParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
 
@@ -184,16 +153,13 @@ public class ScreensUserServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ScreensUserServiceHttp.class);
-	private static final Class<?>[] _getCurrentUserParameterTypes0 = new Class[] {
-			
-		};
-	private static final Class<?>[] _sendPasswordByEmailAddressParameterTypes1 = new Class[] {
+	private static final Class<?>[] _sendPasswordByEmailAddressParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _sendPasswordByScreenNameParameterTypes2 = new Class[] {
+	private static final Class<?>[] _sendPasswordByScreenNameParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _sendPasswordByUserIdParameterTypes3 = new Class[] {
+	private static final Class<?>[] _sendPasswordByUserIdParameterTypes2 = new Class[] {
 			long.class
 		};
 }

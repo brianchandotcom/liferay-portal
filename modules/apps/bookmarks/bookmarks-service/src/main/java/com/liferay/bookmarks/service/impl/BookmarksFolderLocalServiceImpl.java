@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
@@ -282,8 +283,17 @@ public class BookmarksFolderLocalServiceImpl
 	public List<Object> getFoldersAndEntries(
 		long groupId, long folderId, int status, int start, int end) {
 
+		return getFoldersAndEntries(
+			groupId, folderId, status, start, end, null);
+	}
+
+	@Override
+	public List<Object> getFoldersAndEntries(
+		long groupId, long folderId, int status, int start, int end,
+		OrderByComparator obc) {
+
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
+			status, start, end, obc);
 
 		return bookmarksFolderFinder.findF_E_ByG_F(
 			groupId, folderId, queryDefinition);

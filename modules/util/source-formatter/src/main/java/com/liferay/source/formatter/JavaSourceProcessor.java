@@ -4033,7 +4033,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _referenceMethodContentPattern = Pattern.compile(
 		"^(\\w+) =\\s+\\w+;$");
 	private Pattern _referenceMethodPattern = Pattern.compile(
-		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?)\\()" +
+		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private List<String> _secureDeserializationExclusionFiles;
 	private List<String> _secureRandomExclusionFiles;

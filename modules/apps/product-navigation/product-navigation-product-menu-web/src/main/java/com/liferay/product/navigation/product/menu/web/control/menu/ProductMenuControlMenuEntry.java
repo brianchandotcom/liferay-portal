@@ -17,8 +17,13 @@ package com.liferay.product.navigation.product.menu.web.control.menu;
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,8 +42,31 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 
 	@Override
+	public String getBodyJspPath() {
+		return "/portlet/control_menu/product_menu_control_menu_entry_body.jsp";
+	}
+
+	@Override
 	public String getIconJspPath() {
 		return "/portlet/control_menu/product_menu_control_menu_entry_icon.jsp";
+	}
+
+	@Override
+	public boolean isShow(HttpServletRequest request) throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isImpersonated()) {
+			return true;
+		}
+
+		User user = themeDisplay.getUser();
+
+		if (themeDisplay.isSignedIn() && user.isSetupComplete()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

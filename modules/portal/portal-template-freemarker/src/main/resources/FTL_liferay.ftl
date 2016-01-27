@@ -122,18 +122,6 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	</#if>
 </#macro>
 
-<#macro product_menu_sidebar
-	state
->
-	<#if themeDisplay.isImpersonated() || (is_setup_complete && is_signed_in)>
-		<div class="${state} lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
-			<div class="product-menu sidebar sidenav-menu">
-				<@liferay.product_menu />
-			</div>
-		</div>
-	</#if>
-</#macro>
-
 <#macro search
 	default_preferences = ""
 >

@@ -35,16 +35,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_BODY</td>
-	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[contains(@class,'entry-description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FOLDER</td>
-	<td>//div[@class='entry-metadata']//dl[contains(.,'Folder')]/dd[contains(.,'${key_webContentFolder}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

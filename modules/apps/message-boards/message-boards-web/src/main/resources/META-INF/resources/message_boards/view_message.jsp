@@ -35,7 +35,9 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
+	</c:if>
 
 	<c:choose>
 		<c:when test="<%= includeFormTag %>">

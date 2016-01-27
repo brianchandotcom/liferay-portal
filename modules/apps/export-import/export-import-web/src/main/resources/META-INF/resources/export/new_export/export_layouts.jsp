@@ -116,64 +116,62 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 		</liferay-util:include>
 	</div>
 
-	<div id="<portlet:namespace />customConfiguration">
-		<portlet:actionURL name="exportLayouts" var="exportPagesURL">
-			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
-			<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:actionURL>
+	<portlet:actionURL name="exportLayouts" var="exportPagesURL">
+		<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
+		<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
+	</portlet:actionURL>
 
-		<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-			<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
-			<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
-			<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
-			<aui:input name="treeId" type="hidden" value="<%= treeId %>" />
-			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
-			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
-			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
-			<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
+	<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
+		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
+		<aui:input name="liveGroupId" type="hidden" value="<%= String.valueOf(liveGroupId) %>" />
+		<aui:input name="privateLayout" type="hidden" value="<%= String.valueOf(privateLayout) %>" />
+		<aui:input name="rootNodeName" type="hidden" value="<%= rootNodeName %>" />
+		<aui:input name="treeId" type="hidden" value="<%= treeId %>" />
+		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
+		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
+		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>"  />
+		<aui:input name="<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>" type="hidden" value="<%= true %>" />
 
-			<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
+		<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
-			<div class="export-dialog-tree">
-				<aui:fieldset-group markupView="lexicon">
-					<aui:fieldset>
-						<aui:input name="name" placeholder="process-name-placeholder" />
+		<div class="export-dialog-tree">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:input name="name" placeholder="process-name-placeholder" />
+				</aui:fieldset>
+
+				<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
+					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
+
+						<%
+						request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
+						%>
+
+						<liferay-util:include page="/export/new_export/select_pages.jsp" servletContext="<%= application %>">
+							<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+							<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+							<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+							<liferay-util:param name="treeId" value="<%= treeId %>" />
+							<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
+							<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredExport) %>" />
+						</liferay-util:include>
 					</aui:fieldset>
+				</c:if>
 
-					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
-						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
-
-							<%
-							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
-							%>
-
-							<liferay-util:include page="/export/new_export/select_pages.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-								<liferay-util:param name="treeId" value="<%= treeId %>" />
-								<liferay-util:param name="selectedLayoutIds" value="<%= StringUtil.merge(selectedLayoutIds) %>" />
-								<liferay-util:param name="disableInputs" value="<%= String.valueOf(configuredExport) %>" />
-							</liferay-util:include>
-						</aui:fieldset>
-					</c:if>
-
-					<liferay-staging:content cmd="<%= Constants.EXPORT %>" disableInputs="<%= configuredExport %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
+				<liferay-staging:content cmd="<%= Constants.EXPORT %>" disableInputs="<%= configuredExport %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
 					<liferay-staging:permissions action="export" descriptionCSSClass="permissions-description" disableInputs="<%= configuredExport %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
 				</aui:fieldset-group>
 			</div>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="export" />
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" value="export" />
 
-				<aui:button cssClass="btn-lg" href="<%= portletURL.toString() %>" type="cancel" />
-			</aui:button-row>
-		</aui:form>
-	</div>
+			<aui:button cssClass="btn-lg" href="<%= portletURL.toString() %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
 </div>
 
 <aui:script use="liferay-export-import">

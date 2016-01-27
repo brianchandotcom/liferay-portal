@@ -21,13 +21,14 @@ import com.liferay.portal.struts.BasePortletPageFinder;
 import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -41,7 +42,7 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(primaryKey);
+		MBThread thread = _mbThreadLocalService.getThread(primaryKey);
 
 		return thread.getGroupId();
 	}
@@ -59,7 +60,7 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 		long threadId = ParamUtil.getLong(
 			request, getPrimaryKeyParameterName());
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
+		MBThread thread = _mbThreadLocalService.getThread(threadId);
 
 		portletURL.setParameter(
 			"messageId", String.valueOf(thread.getRootMessageId()));
@@ -85,9 +86,18 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 		return new ThreadPortletPageFinder();
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
 	private static final String[] _PORTLET_IDS = {
 		MBPortletKeys.MESSAGE_BOARDS, MBPortletKeys.MESSAGE_BOARDS_ADMIN
 	};
+
+	private MBThreadLocalService _mbThreadLocalService;
 
 	private static class ThreadPortletPageFinder extends BasePortletPageFinder {
 

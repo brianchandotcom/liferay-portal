@@ -14,15 +14,11 @@
 
 package com.liferay.marketplace.store.web.portlet;
 
-import com.liferay.marketplace.service.AppLocalService;
-import com.liferay.marketplace.service.AppService;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
-import com.liferay.marketplace.store.web.oauth.util.OAuthManager;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -57,24 +53,6 @@ public class MarketplacePurchasedPortlet extends MarketplaceStorePortlet {
 	@Override
 	protected String getClientPortletId() {
 		return MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setAppLocalService(AppLocalService appLocalService) {
-		super.setAppLocalService(appLocalService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setAppService(AppService appService) {
-		super.setAppService(appService);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setOAuthManager(OAuthManager oAuthManager) {
-		super.setOAuthManager(oAuthManager);
 	}
 
 }

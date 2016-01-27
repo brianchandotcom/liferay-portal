@@ -227,23 +227,6 @@ public class BaseLayoutDisplayContext {
 			ActionKeys.ADD_LAYOUT);
 	}
 
-	protected HttpServletRequest getHttpServletRequest() {
-		if (_httpServletRequest != null) {
-			return _httpServletRequest;
-		}
-
-		_httpServletRequest = PortalUtil.getHttpServletRequest(
-			liferayPortletRequest);
-
-		return _httpServletRequest;
-	}
-
-	protected HttpSession getHttpSession() {
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
-
-		return httpServletRequest.getSession();
-	}
-
 	protected Group getLiveGroup() {
 		if (_liveGroup != null) {
 			return _liveGroup;
@@ -262,10 +245,17 @@ public class BaseLayoutDisplayContext {
 		_selGroup = themeDisplay.getScopeGroup();
 
 		if (_selGroup.isControlPanel()) {
-			_selGroup = LatentGroupManagerUtil.getLatentGroup(getHttpSession());
+			_selGroup = LatentGroupManagerUtil.getLatentGroup(getSession());
 		}
 
 		return _selGroup;
+	}
+
+	protected HttpSession getSession() {
+		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
+			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+
+		return request.getSession();
 	}
 
 	protected Group getStagingGroup() {
@@ -282,7 +272,6 @@ public class BaseLayoutDisplayContext {
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final ThemeDisplay themeDisplay;
 
-	private HttpServletRequest _httpServletRequest;
 	private Long _layoutId;
 	private Group _liveGroup;
 	private Boolean _privateLayout;

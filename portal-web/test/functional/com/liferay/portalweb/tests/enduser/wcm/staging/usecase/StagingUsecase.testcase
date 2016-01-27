@@ -1240,8 +1240,6 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
-
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1380,8 +1378,6 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
@@ -1729,8 +1725,6 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
-
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1976,8 +1970,6 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Community Site Name" />
 		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
@@ -3057,8 +3049,6 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 

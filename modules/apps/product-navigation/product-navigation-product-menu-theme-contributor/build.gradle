@@ -1,3 +1,7 @@
+dependencies {
+	compile project(":apps:product-navigation:product-navigation-product-menu-web")
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }

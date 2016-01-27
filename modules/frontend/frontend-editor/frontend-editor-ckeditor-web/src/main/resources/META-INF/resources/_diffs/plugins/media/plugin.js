@@ -128,7 +128,7 @@
 					{
 						elements: {
 							'div': function(realElement) {
-								var attributeClass = realElement.attributes.class;
+								var attributeClass = realElement.attributes['class'];
 
 								var fakeElement;
 
@@ -141,8 +141,8 @@
 									var realChild = realElement.children && realElement.children[0];
 
 									if (realChild &&
-										(mediaPlugin.hasClass(realChild.attributes.class, 'ckvideo-no-id') ||
-										mediaPlugin.hasClass(realChild.attributes.class, 'ckaudio-no-id')) &&
+										(mediaPlugin.hasClass(realChild.attributes['class'], 'ckvideo-no-id') ||
+										mediaPlugin.hasClass(realChild.attributes['class'], 'ckaudio-no-id')) &&
 										realChild.children && realChild.children.length) {
 
 										realChild.children[0].value = '';
@@ -197,7 +197,7 @@
 					{
 						elements: {
 							'div': function(realElement) {
-								var attributeClass = realElement.attributes.class;
+								var attributeClass = realElement.attributes['class'];
 
 								var mediaPlugin = editor.plugins.media;
 

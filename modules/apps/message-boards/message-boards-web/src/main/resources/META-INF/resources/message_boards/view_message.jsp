@@ -32,6 +32,8 @@ if ((message != null) && layout.isTypeControlPanel()) {
 AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 %>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
@@ -99,6 +101,4 @@ PortalUtil.setPageDescription(message.getSubject(), request);
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(MBMessage.class.getName(), message.getMessageId());
 
 PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
-
-MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 %>

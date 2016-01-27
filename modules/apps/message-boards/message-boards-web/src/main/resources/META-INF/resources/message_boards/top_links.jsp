@@ -106,8 +106,6 @@ long categoryId = MBUtil.getCategoryId(request, category);
 	</c:if>
 </aui:nav-bar>
 
-<c:if test="<%= layout.isTypeControlPanel() %>">
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-	</div>
-</c:if>
+<div id="breadcrumb">
+	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+</div>

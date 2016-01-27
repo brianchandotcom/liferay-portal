@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -140,6 +139,20 @@ public class LoggerElement {
 		return null;
 	}
 
+	public LoggerElement loggerElement(String name, String className) {
+		List<LoggerElement> loggerElements = loggerElements(name);
+
+		for (LoggerElement loggerElement : loggerElements) {
+			String childLoggerElementClassName = loggerElement.getClassName();
+
+			if (className.equals(childLoggerElementClassName)) {
+				return loggerElement;
+			}
+		}
+
+		return null;
+	}
+
 	public List<LoggerElement> loggerElements() {
 		return _childLoggerElements;
 	}
@@ -193,10 +206,6 @@ public class LoggerElement {
 		}
 
 		setClassName(sb.toString());
-	}
-
-	public void reverseChildLoggerElements() {
-		Collections.reverse(_childLoggerElements);
 	}
 
 	public void setAttribute(String attributeName, String attributeValue) {

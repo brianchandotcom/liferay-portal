@@ -192,7 +192,7 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.asset.tags.navigation.web",
 		"com.liferay.blogs.recent.bloggers.web", "com.liferay.blogs.web",
 		"com.liferay.bookmarks.service", "com.liferay.bookmarks.web",
-		"com.liferay.comment.page.comments.web",
+		"com.liferay.calendar.web", "com.liferay.comment.page.comments.web",
 		"com.liferay.currency.converter.web", "com.liferay.dictionary.web",
 		"com.liferay.document.library.web",
 		"com.liferay.dynamic.data.lists.service",
@@ -233,10 +233,6 @@ public class UpgradeModules extends UpgradeProcess {
 	private static final String[][] _convertedLegacyModules = {
 		{
 			"calendar-portlet", "com.liferay.calendar.service", "Calendar",
-			"%calendarportlet"
-		},
-		{
-			"calendar-portlet", "com.liferay.calendar.web", "Calendar",
 			"%calendarportlet"
 		},
 		{

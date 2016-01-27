@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>IMPORT_BUTTON</td>
-	<td>//button[contains(.,'Import')] and contains(@type,'submit')]</td>
+	<td>//button[contains(.,'Import') and contains(@type,'submit')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,11 +66,11 @@ public class LanguageFilter extends BasePortalFilter {
 
 		ResourceBundleUtil.loadResourceBundles(
 			_resourceBundles, locale,
-			new ResourceBundleUtil.ResourceBundleLoader() {
+			new ResourceBundleLoader() {
 
 				@Override
 				public ResourceBundle loadResourceBundle(String languageId) {
-					String name = null;
+					String name;
 
 					if (Validator.isNull(languageId)) {
 						name = "content/Language.properties";

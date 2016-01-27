@@ -21,11 +21,15 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
@@ -257,11 +261,17 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 				ClassLoader classLoader = clazz.getClassLoader();
 
+				ResourceBundleLoader resourceBundleLoader =
+					new AggregateResourceBundleLoader(
+						ResourceBundleUtil.getResourceBundleLoader(
+							"content.Language", classLoader),
+						LanguageResources.RESOURCE_BUNDLE_LOADER);
+
 				Map<Locale, String> nameMap = getLocalizationMap(
-					classLoader, group.getGroupId(),
+					resourceBundleLoader, group.getGroupId(),
 					templateElement.elementText("name"));
 				Map<Locale, String> descriptionMap = getLocalizationMap(
-					classLoader, group.getGroupId(),
+					resourceBundleLoader, group.getGroupId(),
 					templateElement.elementText("description"));
 
 				String type = templateElement.elementText("type");
@@ -290,13 +300,15 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 		}
 
 		private Map<Locale, String> getLocalizationMap(
-			ClassLoader classLoader, long groupId, String key) {
+			ResourceBundleLoader resourceBundleLoader, long groupId,
+			String key) {
 
 			Map<Locale, String> map = new HashMap<>();
 
 			for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", locale, classLoader);
+				ResourceBundle resourceBundle =
+					resourceBundleLoader.loadResourceBundle(
+						LocaleUtil.toLanguageId(locale));
 
 				map.put(locale, LanguageUtil.get(resourceBundle, key));
 			}

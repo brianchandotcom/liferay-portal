@@ -859,7 +859,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				_portletsMap.put(entry.getKey(), portlet);
 
-				portletBagFactory.create(portlet);
+				portletBagFactory.create(portlet, true);
 			}
 
 			// Sprite images

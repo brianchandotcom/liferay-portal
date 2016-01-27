@@ -14,7 +14,10 @@
 
 package com.liferay.wiki.engine;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 
@@ -53,8 +56,10 @@ public abstract class BaseWikiEngine implements WikiEngine {
 
 	@Override
 	public String getFormatLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content/Language", locale, getClass());
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			LocaleUtil.toLanguageId(locale));
 
 		String format = getFormat();
 
@@ -106,6 +111,10 @@ public abstract class BaseWikiEngine implements WikiEngine {
 	}
 
 	protected abstract ServletContext getEditPageServletContext();
+
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return LanguageResources.RESOURCE_BUNDLE_LOADER;
+	}
 
 	private static final String _WIKI_PAGE =
 		BaseWikiEngine.class.getName() + "#WIKI_PAGE";

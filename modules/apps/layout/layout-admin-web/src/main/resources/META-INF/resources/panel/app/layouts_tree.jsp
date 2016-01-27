@@ -20,6 +20,16 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
+<liferay-ui:icon
+	cssClass="expand-pages-link"
+	icon="expand"
+	id="expandPagesLink"
+	label="<%= false %>"
+	markupView="lexicon"
+	message="expand"
+	url="javascript:;"
+/>
+
 <c:if test="<%= layoutsTreeDisplayContext.isShowLayoutSetBranchesSelector() %>">
 	<ul class="nav nav-equal-height nav-nested">
 		<li>
@@ -186,3 +196,29 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	selPlid="<%= layoutsTreeDisplayContext.getCurSelPlid() %>"
 	treeId="layoutsTree"
 />
+
+<liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
+</liferay-portlet:renderURL>
+
+<aui:script use="liferay-url-preview">
+	var expandedTreeDialog;
+
+	var expandButton = A.one('#<portlet:namespace />expandPagesLink');
+
+	expandButton.on(
+		'click',
+		function() {
+			if (!expandedTreeDialog) {
+				expandedTreeDialog = new Liferay.UrlPreview(
+					{
+						title: '<%= LanguageUtil.get(request, "pages") %>',
+						url: '<%= treeURL.toString() %>'
+					}
+				);
+			}
+
+			expandedTreeDialog.open();
+		}
+	);
+</aui:script>

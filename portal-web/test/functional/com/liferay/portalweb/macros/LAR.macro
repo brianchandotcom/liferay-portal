@@ -461,9 +461,11 @@
 	<command name="exportExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON" />
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+ 
 		<var method="StringUtil#replace('${exportTemplateName}', ' ', '_')" name="exportTemplateName" />
 		<var name="key_larFileName" value="${exportTemplateName}" />
 		<echo message="${exportTemplateName}" />
@@ -571,7 +573,7 @@
 
 	<command name="searchTemplate">
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${exportTemplateName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_SEARCH" />
 
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 

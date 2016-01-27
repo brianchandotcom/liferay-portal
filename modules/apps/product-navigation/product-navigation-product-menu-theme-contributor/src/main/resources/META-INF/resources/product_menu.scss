@@ -121,15 +121,26 @@
 	}
 
 	.list-group-heading,
-	.panel-title > .panel-toggler {
-		line-height: 32px;
-		padding: 10px 24px;
+	.panel-title {
+		> .panel-toggler {
+			line-height: 32px;
+			padding: 10px 40px 10px 24px;
+		}
+
+		.site-administration-toggler {
+			padding-right: 85px;
+		}
 	}
 
 	.list-group-heading {
 		background-color: $product-menu-list-group-heading-bg;
 		border-color: transparent;
 		font-weight: 500;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		@include word-wrap(normal);
 
 		&:after {
 			background-color: $product-menu-list-group-heading-border;
@@ -233,29 +244,9 @@
 }
 
 .product-menu {
-	.site-administration-toolbar {
-		margin-bottom: 0;
-		padding: 10px 15px 10px 25px;
-
-		a {
-			color: $product-menu-site-administration-link-color;
-		}
-
-		.active a {
-			background-color: $product-menu-site-administration-link-active-bg;
-			border-radius: $product-menu-site-administration-link-active-border-radius;
-			color: $product-menu-site-administration-link-active-color;
-		}
-
-		.site-administration-title {
-			color: $product-menu-site-administration-color;
-		}
-	}
-}
-
-.product-menu {
 	.user-icon, .sticker {
 		display: inline-block;
+		float: left;
 		margin-right: 5px;
 		position: static;
 		vertical-align: middle;

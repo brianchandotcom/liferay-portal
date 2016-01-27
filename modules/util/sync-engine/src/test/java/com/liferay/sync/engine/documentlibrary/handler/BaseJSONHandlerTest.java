@@ -31,9 +31,7 @@ public class BaseJSONHandlerTest {
 		Handler handler = new BaseJSONHandler(
 			new GetSyncContextEvent(0, Collections.<String, Object>emptyMap()));
 
-		String expectedException =
-			"com.liferay.portal.kernel.jsonwebservice." +
-				"NoSuchJSONWebServiceException";
+		String expectedException = "NoSuchJSONWebServiceException";
 
 		String response1 =
 			"{\"error\":{\"message\":\"No JSON web service action with path" +

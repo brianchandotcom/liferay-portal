@@ -39,9 +39,7 @@ public class UpdateFileEntriesHandler extends BaseJSONHandler {
 
 	@Override
 	public boolean handlePortalException(String exception) throws Exception {
-		if (exception.equals(
-				"com.liferay.portal.kernel.upload.UploadException")) {
-
+		if (exception.endsWith("UploadException")) {
 			return true;
 		}
 

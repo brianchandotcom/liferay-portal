@@ -241,7 +241,11 @@
 
 				node.setAttribute('data-width', videoWidth);
 
-				extraStyles.backgroundImage = 'url(' + value + ')';
+				var poster = Liferay.Util.addParams('videoThumbnail=1', value);
+
+				node.setAttribute('data-poster', poster);
+
+				extraStyles.backgroundImage = 'url(' + poster + ')';
 				extraStyles.height = videoHeight + 'px';
 				extraStyles.width = videoWidth + 'px';
 
@@ -249,7 +253,7 @@
 					{
 						height: videoHeight,
 						ogvUrl: videoOgvUrl,
-						poster: Liferay.Util.addParams('videoThumbnail=1', value),
+						poster: poster,
 						url: videoUrl,
 						width: videoWidth
 					}

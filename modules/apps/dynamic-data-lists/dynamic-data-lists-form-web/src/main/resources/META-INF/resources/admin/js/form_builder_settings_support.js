@@ -228,6 +228,10 @@ AUI.add(
 				instance._previousSettings = JSON.stringify(instance.getSettings());
 
 				instance._showDefaultToolbar();
+
+				var closeButton = settingsModal.toolbars.header.item(0);
+
+				closeButton.set('labelHTML', '<svg class="lexicon-icon"><use xlink:href="/o/frontend-theme-admin-web/admin/images/lexicon/icons.svg#times" /></svg>');
 			},
 
 			_showConfirmationToolbar: function() {
@@ -292,10 +296,6 @@ AUI.add(
 					],
 					'footer'
 				);
-
-				var closeButton = settingsModal.toolbars.header.item(0);
-
-				closeButton.set('labelHTML', '<svg class="lexicon-icon"><use xlink:href="/o/frontend-theme-admin-web/admin/images/lexicon/icons.svg#times" /></svg>');
 			},
 
 			_updateSettingsFormValues: function() {

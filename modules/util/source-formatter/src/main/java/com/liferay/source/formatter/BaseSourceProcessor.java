@@ -1423,6 +1423,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _mainReleaseVersion;
 	}
 
+	protected String getModuleLangDir(String moduleLocation) {
+		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
+
+		String baseModuleName = moduleLocation.substring(0, x);
+
+		int y = baseModuleName.lastIndexOf(StringPool.SLASH);
+
+		baseModuleName = baseModuleName.substring(
+			y + 1, baseModuleName.length());
+
+		return moduleLocation.substring(0, x + 1) + baseModuleName + "-lang";
+	}
+
 	protected Properties getModuleLangLanguageProperties(String fileName)
 		throws Exception {
 
@@ -1486,19 +1499,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_moduleLangLanguageProperties.put(fileName, properties);
 
 		return properties;
-	}
-
-	protected String getModuleLangDir(String moduleLocation) {
-		int x = moduleLocation.lastIndexOf(StringPool.SLASH);
-
-		String baseModuleName = moduleLocation.substring(0, x);
-
-		int y = baseModuleName.lastIndexOf(StringPool.SLASH);
-
-		baseModuleName = baseModuleName.substring(
-			y + 1, baseModuleName.length());
-
-		return moduleLocation.substring(0, x + 1) + baseModuleName + "-lang";
 	}
 
 	protected Properties getModuleLanguageProperties(String fileName) {

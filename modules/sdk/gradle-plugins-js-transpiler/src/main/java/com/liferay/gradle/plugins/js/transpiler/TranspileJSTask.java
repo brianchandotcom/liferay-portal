@@ -44,8 +44,8 @@ import org.gradle.api.tasks.util.PatternSet;
 public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 	public TranspileJSTask() {
-		dependsOn(JSTranspilerPlugin.DOWNLOAD_BABEL_TASK_NAME);
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
+		dependsOn(JSTranspilerPlugin.DOWNLOAD_METAL_CLI_TASK_NAME);
 
 		include("**/*.es.js");
 
@@ -55,7 +55,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 				@Override
 				public File call() throws Exception {
 					return new File(
-						getNodeDir(), "node_modules/babel/bin/babel.js");
+						getNodeDir(), "node_modules/metal-cli/index.js");
 				}
 
 			});
@@ -216,11 +216,16 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 		File sourceDir = getSourceDir();
 
-		completeArgs.add("--modules");
+		completeArgs.add("build");
+
+		completeArgs.add("--dest");
+		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
+
+		completeArgs.add("--format");
 		completeArgs.add(getModules());
 
-		completeArgs.add("--out-dir");
-		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
+		completeArgs.add("--moduleName");
+		completeArgs.add("");
 
 		SourceMaps sourceMaps = getSourceMaps();
 
@@ -232,12 +237,14 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 			completeArgs.add("inline");
 		}
 
-		completeArgs.add("--stage");
-		completeArgs.add(String.valueOf(getStage()));
+		completeArgs.add("--src");
 
 		for (File file : getSourceFiles()) {
 			completeArgs.add(FileUtil.relativize(file, sourceDir));
 		}
+
+		completeArgs.add("--stage");
+		completeArgs.add(String.valueOf(getStage()));
 
 		return completeArgs;
 	}

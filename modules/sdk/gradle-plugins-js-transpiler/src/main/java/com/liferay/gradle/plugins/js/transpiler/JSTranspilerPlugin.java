@@ -43,10 +43,11 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class JSTranspilerPlugin implements Plugin<Project> {
 
-	public static final String DOWNLOAD_BABEL_TASK_NAME = "downloadBabel";
-
 	public static final String DOWNLOAD_LFR_AMD_LOADER_TASK_NAME =
 		"downloadLfrAmdLoader";
+
+	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
+		"downloadMetalCli";
 
 	public static final String EXTENSION_NAME = "jsTranspiler";
 
@@ -59,8 +60,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		JSTranspilerExtension jsTranspilerExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, JSTranspilerExtension.class);
 
-		addTaskDownloadBabel(project, jsTranspilerExtension);
 		addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
+		addTaskDownloadMetalCli(project, jsTranspilerExtension);
 		addTaskTranspileJS(project);
 
 		project.afterEvaluate(
@@ -72,27 +73,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected DownloadNodeModuleTask addTaskDownloadBabel(
-		Project project, final JSTranspilerExtension jsTranspilerExtension) {
-
-		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
-			project, DOWNLOAD_BABEL_TASK_NAME, DownloadNodeModuleTask.class);
-
-		downloadNodeModuleTask.setModuleName("babel");
-
-		downloadNodeModuleTask.setModuleVersion(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return jsTranspilerExtension.getBabelVersion();
-				}
-
-			});
-
-		return downloadNodeModuleTask;
 	}
 
 	protected DownloadNodeModuleTask addTaskDownloadLfrAmdLoader(
@@ -110,6 +90,28 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return jsTranspilerExtension.getLfrAmdLoaderVersion();
+				}
+
+			});
+
+		return downloadNodeModuleTask;
+	}
+
+	protected DownloadNodeModuleTask addTaskDownloadMetalCli(
+		Project project, final JSTranspilerExtension jsTranspilerExtension) {
+
+		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
+			project, DOWNLOAD_METAL_CLI_TASK_NAME,
+			DownloadNodeModuleTask.class);
+
+		downloadNodeModuleTask.setModuleName("metal-cli");
+
+		downloadNodeModuleTask.setModuleVersion(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return jsTranspilerExtension.getMetalCliVersion();
 				}
 
 			});
@@ -183,7 +185,9 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				public File call() throws Exception {
 					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-					return sourceSetOutput.getResourcesDir();
+					return new File(
+						sourceSetOutput.getResourcesDir(),
+						"META-INF/resources");
 				}
 
 			});
@@ -193,7 +197,9 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getSrcDir(sourceSet.getResources());
+					File resourcesDir = getSrcDir(sourceSet.getResources());
+
+					return new File(resourcesDir, "META-INF/resources");
 				}
 
 			});

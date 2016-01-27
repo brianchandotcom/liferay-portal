@@ -14,13 +14,11 @@
 
 package com.liferay.workflow.definition.link.web.portlet;
 
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -50,14 +48,4 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WorkflowDefinitionLinkControlPanelPortlet
 	extends WorkflowDefinitionLinkPortlet {
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		super.setWorkflowDefinitionLinkLocalService(
-			workflowDefinitionLinkLocalService);
-	}
-
 }

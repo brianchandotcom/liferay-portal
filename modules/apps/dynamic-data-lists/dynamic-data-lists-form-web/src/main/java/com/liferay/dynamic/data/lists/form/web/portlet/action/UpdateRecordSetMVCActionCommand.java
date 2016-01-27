@@ -17,29 +17,21 @@ package com.liferay.dynamic.data.lists.form.web.portlet.action;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
-import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -66,63 +58,6 @@ public class UpdateRecordSetMVCActionCommand
 			actionRequest, ddmStructure.getStructureId());
 
 		updateRecordSetSettings(actionRequest, recordSet);
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		this.ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
-
-		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDMFormLayoutJSONDeserializer(
-		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
-
-		this.ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
-
-		this.ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesQueryFactory(
-		DDMFormValuesQueryFactory ddmFormValuesQueryFactory) {
-
-		this.ddmFormValuesQueryFactory = ddmFormValuesQueryFactory;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		this.ddmStructureService = ddmStructureService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		this.workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
 	}
 
 	protected DDMStructure updateDDMStructure(ActionRequest actionRequest)

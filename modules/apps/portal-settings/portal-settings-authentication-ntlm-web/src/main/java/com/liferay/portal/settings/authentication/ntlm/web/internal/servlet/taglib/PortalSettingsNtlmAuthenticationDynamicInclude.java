@@ -50,7 +50,7 @@ public class PortalSettingsNtlmAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.ntlm)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ntlm.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

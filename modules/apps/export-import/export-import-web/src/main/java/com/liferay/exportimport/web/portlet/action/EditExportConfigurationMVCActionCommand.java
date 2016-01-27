@@ -35,9 +35,11 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationHelper;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationService;
 import com.liferay.portlet.exportimport.service.ExportImportService;
+import com.liferay.taglib.ui.util.SessionTreeJSClicks;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -49,6 +51,8 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -152,6 +156,8 @@ public class EditExportConfigurationMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		setLayoutIds(actionRequest);
+
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateExportConfiguration(actionRequest);
@@ -232,6 +238,26 @@ public class EditExportConfigurationMVCActionCommand
 		ExportImportService exportImportService) {
 
 		this.exportImportService = exportImportService;
+	}
+
+	protected void setLayoutIds(ActionRequest actionRequest) {
+		HttpServletRequest portletRequest = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		String treeId = ParamUtil.getString(actionRequest, "treeId");
+
+		String openNodes = SessionTreeJSClicks.getOpenNodes(
+			portletRequest, treeId + "SelectedNode");
+
+		String selectedLayoutsJSON =
+			ExportImportHelperUtil.getSelectedLayoutsJSON(
+				groupId, privateLayout, openNodes);
+
+		actionRequest.setAttribute("layoutIds", selectedLayoutsJSON);
 	}
 
 	@Reference(unbind = "-")

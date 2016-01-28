@@ -29,12 +29,6 @@ String type = (String)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_
 MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_INSTANCE);
 %>
 
-<c:if test="<%= action == null %>">
-	<div class="alert alert-info">
-		<liferay-ui:message key="action-help" />
-	</div>
-</c:if>
-
 <portlet:actionURL name="/mobile_device_rules/edit_action" var="editActionURL">
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 </portlet:actionURL>
@@ -51,6 +45,12 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 	<liferay-ui:error exception="<%= NoSuchRuleGroupInstanceException.class %>" message="device-rule-does-not-exist" />
 
 	<aui:model-context bean="<%= action %>" model="<%= MDRAction.class %>" />
+
+	<c:if test="<%= action == null %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="action-help" />
+		</div>
+	</c:if>
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>

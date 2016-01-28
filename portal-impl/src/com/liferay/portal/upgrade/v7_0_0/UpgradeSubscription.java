@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
+import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -250,8 +250,8 @@ public class UpgradeSubscription extends UpgradeProcess {
 		_getGroupIdSQLPartsMap.put(
 			MBThread.class.getName(), "MBThread,groupId,threadId");
 		_getGroupIdSQLPartsMap.put(
-			WorkflowInstance.class.getName(),
-			"WorkflowInstance,groupId,workflowInstanceId");
+			WorkflowInstanceLink.class.getName(),
+			"WorkflowInstanceLink,groupId,workflowInstanceId");
 		_getGroupIdSQLPartsMap.put(
 			"com.liferay.bookmarks.model.BookmarksEntry",
 			"BookmarksEntry,groupId,entryId");

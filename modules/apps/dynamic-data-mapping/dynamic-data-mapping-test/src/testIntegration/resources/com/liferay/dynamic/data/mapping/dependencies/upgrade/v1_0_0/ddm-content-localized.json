@@ -1,0 +1,14 @@
+{
+	"availableLanguageIds": ["en_US","pt_BR"],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "yoze",
+			"name": "Name",
+			"value": {
+				"en_US": "Etiam vitae tortor",
+				"pt_BR": "Praesent egestas tristique nibh"
+			}
+		}
+	]
+}

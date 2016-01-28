@@ -32,9 +32,7 @@ if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL.toString());
 
-	String headerTitle = LanguageUtil.get(resourceBundle, "compare-versions");
-
-	renderResponse.setTitle(headerTitle);
+	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "compare-versions"));
 }
 %>
 

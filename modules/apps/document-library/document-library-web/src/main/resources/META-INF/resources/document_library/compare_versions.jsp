@@ -25,11 +25,11 @@ List[] diffResults = (List[])renderRequest.getAttribute(WebKeys.DIFF_RESULTS);
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
+String headerTitle = LanguageUtil.get(resourceBundle, "compare-versions");
+
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
-
-	String headerTitle = LanguageUtil.get(resourceBundle, "compare-versions");
 
 	renderResponse.setTitle(headerTitle);
 }
@@ -38,7 +38,7 @@ if (portletTitleBasedNavigation) {
 <c:if test="<%= !portletTitleBasedNavigation %>">
 	<liferay-ui:header
 		backURL="<%= backURL %>"
-		title="compare-versions"
+		title="<%= headerTitle %>"
 	/>
 </c:if>
 

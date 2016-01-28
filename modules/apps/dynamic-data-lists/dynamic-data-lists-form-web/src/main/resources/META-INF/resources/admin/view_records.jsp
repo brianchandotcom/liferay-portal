@@ -21,14 +21,13 @@ DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = new DDLFormV
 
 DDLRecordSet ddlRecordSet = ddlFormViewRecordsDisplayContext.getDDLRecordSet();
 
+PortletURL searchURL = renderResponse.createRenderURL();
+searchURL.setParameter("mvcPath", "/admin/view_records.jsp");
+searchURL.setParameter("redirect", ParamUtil.getString(request, "redirect"));
+searchURL.setParameter("recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
+
 renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 %>
-
-<portlet:renderURL var="searchURL">
-	<portlet:param name="mvcPath" value="/admin/view_records.jsp" />
-	<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />
-	<portlet:param name="recordSetId" value="<%= String.valueOf(ddlRecordSet.getRecordSetId()) %>" />
-</portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="post" name="fm">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -38,61 +37,91 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	</aui:nav-bar>
 </aui:form>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="ddlRecord"
+>
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/admin/view_records_sort_button.jsp" servletContext="<%= application %>" />
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= searchURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= ddlFormViewRecordsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= ddlFormViewRecordsDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"modified-date"} %>'
+			portletURL="<%= searchURL %>"
+		/>
 	</liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteRecords();";
+		%>
+
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />viewEntriesContainer">
-	<liferay-ui:search-container searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>">
+	<aui:form action="<%= searchURL.toString() %>" method="post" name="searchContainerForm">
+		<aui:input name="deleteRecordIds" type="hidden" />
 
-		<liferay-ui:search-container-row
-			className="com.liferay.dynamic.data.lists.model.DDLRecord"
-			cssClass="entry-display-style selectable"
-			modelVar="record"
+		<liferay-ui:search-container
+			id="ddlRecord"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>"
 		>
 
-			<%
-			DDMFormValues ddmFormValues = ddlFormViewRecordsDisplayContext.getDDMFormValues(record);
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.lists.model.DDLRecord"
+				cssClass="entry-display-style selectable"
+				keyProperty="recordId"
+				modelVar="record"
+			>
 
-			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
+				<%
+				DDMFormValues ddmFormValues = ddlFormViewRecordsDisplayContext.getDDMFormValues(record);
 
-			for (DDMFormField ddmFormField : ddlFormViewRecordsDisplayContext.getDDMFormFields()) {
-			%>
+				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 
-				<liferay-ui:search-container-column-text
-					name="<%= ddlFormViewRecordsDisplayContext.getColumnName(ddmFormField) %>"
-					value="<%= ddlFormViewRecordsDisplayContext.getColumnValue(ddmFormField, ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
+				for (DDMFormField ddmFormField : ddlFormViewRecordsDisplayContext.getDDMFormFields()) {
+				%>
+
+					<liferay-ui:search-container-column-text
+						name="<%= ddlFormViewRecordsDisplayContext.getColumnName(ddmFormField) %>"
+						value="<%= ddlFormViewRecordsDisplayContext.getColumnValue(ddmFormField, ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
+					/>
+
+				<%
+				}
+				%>
+
+				<liferay-ui:search-container-column-status
+					name="status"
+					status="<%= ddlFormViewRecordsDisplayContext.getStatus(record) %>"
 				/>
 
-			<%
-			}
-			%>
+				<liferay-ui:search-container-column-date
+					name="modified-date"
+					value="<%= record.getModifiedDate() %>"
+				/>
 
-			<liferay-ui:search-container-column-status
-				name="status"
-				status="<%= ddlFormViewRecordsDisplayContext.getStatus(record) %>"
-			/>
+				<liferay-ui:search-container-column-text
+					name="author"
+					value="<%= PortalUtil.getUserName(record) %>"
+				/>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= record.getModifiedDate() %>"
-			/>
+				<liferay-ui:search-container-column-jsp
+					path="/admin/record_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-text
-				name="author"
-				value="<%= PortalUtil.getUserName(record) %>"
-			/>
+			<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" />
 
-			<liferay-ui:search-container-column-jsp
-				path="/admin/record_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" />
-
-	</liferay-ui:search-container>
+		</liferay-ui:search-container>
+	</aui:form>
 </div>
 
 <div class="container-fluid-1280">
@@ -100,3 +129,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 </div>
 
 <%@ include file="/admin/export_record_set.jspf" %>
+
+<aui:script>
+	function <portlet:namespace />deleteRecords() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />searchContainerForm);
+
+			var searchContainer = AUI.$('#<portlet:namespace />ddlRecord', form);
+
+			form.attr('method', 'post');
+			form.fm('deleteRecordIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="deleteRecord"><portlet:param name="mvcPath" value="/admin/view_records.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		}
+	}
+</aui:script>

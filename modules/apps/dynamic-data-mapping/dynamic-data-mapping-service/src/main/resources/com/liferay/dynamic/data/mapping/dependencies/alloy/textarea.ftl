@@ -2,7 +2,7 @@
 
 <@liferay_aui["field-wrapper"] data=data>
 	<div class="form-group">
-		<@liferay_aui.input cssClass=cssClass dir=requestedLanguageDir helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName required=required type="textarea" value=fieldValue>
+		<@liferay_aui.input cssClass=cssClass dir=requestedLanguageDir helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName placeholder=fieldName required=required type="textarea" value=fieldValue>
 			<#if required>
 				<@liferay_aui.validator name="required" />
 			</#if>

@@ -14,12 +14,15 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
@@ -73,8 +76,15 @@ public class FolderPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		if (_folder != null) {
-			return true;
+		try {
+			if (_folder != null) {
+				return DLFolderPermission.contains(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+					ActionKeys.PERMISSIONS);
+			}
+		}
+		catch (PortalException e) {
 		}
 
 		return false;

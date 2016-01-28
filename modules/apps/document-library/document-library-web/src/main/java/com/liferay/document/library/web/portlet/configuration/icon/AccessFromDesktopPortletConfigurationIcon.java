@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import javax.portlet.PortletRequest;
@@ -51,9 +52,15 @@ public class AccessFromDesktopPortletConfigurationIcon
 		try {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (_folder != null) {
+				folderId = _folder.getFolderId();
+			}
+
 			if (DLFolderPermission.contains(
 					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+					themeDisplay.getScopeGroupId(), folderId,
 					ActionKeys.VIEW) &&
 				portletDisplay.isWebDAVEnabled() &&
 				(_folder.getRepositoryId() == themeDisplay.getScopeGroupId())) {

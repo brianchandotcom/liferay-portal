@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
-import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Constants;
@@ -68,17 +67,18 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 	@Override
 	public boolean isShow() {
 		try {
-			if (_folder.isMountPoint()) {
-				LocalRepository localRepository =
-					RepositoryProviderUtil.getLocalRepository(
-						_folder.getRepositoryId());
+			if (!_folder.isMountPoint()) {
+				return false;
+			}
 
-				if (localRepository.isCapabilityProvided(
-						TemporaryFileEntriesCapability.class)) {
+			LocalRepository localRepository =
+				RepositoryProviderUtil.getLocalRepository(
+					_folder.getRepositoryId());
 
-					return true;
-				}
+			if (localRepository.isCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
 
+				return true;
 			}
 		}
 		catch (PortalException pe) {

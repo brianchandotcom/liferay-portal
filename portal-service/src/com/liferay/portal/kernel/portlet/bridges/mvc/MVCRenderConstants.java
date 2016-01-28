@@ -25,6 +25,8 @@ public class MVCRenderConstants {
 	public static final String MVC_PATH_VALUE_SKIP_DISPATCH =
 		MVCRenderConstants.class.getName() + "#MVC_PATH_SKIP_DISPATCH";
 
-
+	public static final String
+		PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX =
+			"portlet.context.override.";
 
 }

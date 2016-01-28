@@ -6,7 +6,7 @@ Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-JS-Config: /META-INF/resources/js/config.js
+Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
 Web-ContextPath: /calendar-web

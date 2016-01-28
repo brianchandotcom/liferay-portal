@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Control Menu Web
 Bundle-SymbolicName: com.liferay.control.menu.web
 Bundle-Version: 1.0.0
-JS-Config: /META-INF/resources/js/config.js
+Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
 Web-ContextPath: /control-menu-web

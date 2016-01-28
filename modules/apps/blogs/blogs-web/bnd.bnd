@@ -6,7 +6,7 @@ Export-Package:\
 	com.liferay.blogs.web.constants,\
 	com.liferay.blogs.web.lar,\
 	com.liferay.blogs.web.social
-JS-Config: /META-INF/resources/blogs/js/config.js
+Liferay-JS-Config: /META-INF/resources/blogs/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
 Web-ContextPath: /blogs-web

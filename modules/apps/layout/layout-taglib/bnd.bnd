@@ -4,7 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.layout.taglib.servlet,\
 	com.liferay.layout.taglib.servlet.taglib
-JS-Config: /META-INF/resources/config.js
+Liferay-JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/layout";version:Version="1.0.0"

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.DDMTemplateTable;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.util.xml.XMLUtil;
 
 import java.sql.Connection;
@@ -45,34 +47,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter table DDMTemplate add classNameId LONG");
-
-			runSQL("alter table DDMTemplate add templateKey STRING");
-
-			runSQL("alter_column_name DDMTemplate structureId classPK LONG");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DDMTemplateTable.TABLE_NAME, DDMTemplateTable.TABLE_COLUMNS,
-				DDMTemplateTable.TABLE_SQL_CREATE,
-				DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
-		}
-
-		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
-
-		try {
-			runSQL("update DDMTemplate set classNameId = " + classNameId);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
+		updateSchema();
 
 		updateStructures();
-
 		updateStructuresClassNameId();
 
 		updateTemplates();
@@ -96,6 +73,34 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				parentElement.addAttribute(name, entryElement.getText());
 
 				metadataElement.remove(entryElement);
+			}
+		}
+	}
+
+	protected void updateSchema() throws Exception {
+		try {
+			runSQL("alter table DDMTemplate add classNameId LONG");
+
+			runSQL("alter table DDMTemplate add templateKey STRING");
+
+			runSQL("alter_column_name DDMTemplate structureId classPK LONG");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DDMTemplateTable.TABLE_NAME, DDMTemplateTable.TABLE_COLUMNS,
+				DDMTemplateTable.TABLE_SQL_CREATE,
+				DDMTemplateTable.TABLE_SQL_ADD_INDEXES);
+		}
+
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
+
+		try {
+			runSQL("update DDMTemplate set classNameId = " + classNameId);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
 			}
 		}
 	}
@@ -166,11 +171,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void updateStructuresClassNameId() throws Exception {
-		long classNameIdDLFileEntry = PortalUtil.getClassNameId(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry");
-		long classNameIdDLFileEntryMetadata = PortalUtil.getClassNameId(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata");
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -182,8 +182,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"update DDMStructure set classNameId = ? where " +
 					"classNameId = ?");
 
-			ps.setLong(1, classNameIdDLFileEntryMetadata);
-			ps.setLong(2, classNameIdDLFileEntry);
+			ps.setLong(1, PortalUtil.getClassNameId(DLFileEntryMetadata.class));
+			ps.setLong(2, PortalUtil.getClassNameId(DLFileEntry.class));
 
 			ps.executeUpdate();
 		}

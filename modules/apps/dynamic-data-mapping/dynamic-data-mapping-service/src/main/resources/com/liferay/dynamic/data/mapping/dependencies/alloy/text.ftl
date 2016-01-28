@@ -8,6 +8,7 @@
 			helpMessage=escape(fieldStructure.tip)
 			label=escape(label)
 			name=namespacedFieldName
+			placeholder=fieldName
 			required=required
 			type="text"
 			value=fieldValue

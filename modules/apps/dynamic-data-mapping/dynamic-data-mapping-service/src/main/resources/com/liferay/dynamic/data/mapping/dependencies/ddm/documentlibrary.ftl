@@ -26,6 +26,7 @@
 			helpMessage=escape(fieldStructure.tip)
 			inlineField=true label=escape(label)
 			name="${namespacedFieldName}Title"
+			placeholder=fieldName
 			readonly="readonly" type="text"
 			value=(fileEntryTitle?has_content)?string(fileEntryTitle, '')
 		/>

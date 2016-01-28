@@ -17,6 +17,7 @@ package com.liferay.portal.language;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,6 +52,26 @@ public class LanguageImplTest {
 		public void setUp() {
 			_languageImpl = (LanguageImpl)PortalBeanLocatorUtil.locate(
 				"com.liferay.portal.language.LanguageImpl");
+		}
+
+		@Test
+		public void testFormatWithLocaleNull() {
+			Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
+
+			Locale nullableLocale = null;
+
+			try {
+				String format = _languageImpl.format(
+					nullableLocale, _LANG_KEY_WITH_ARGUMENT, "31");
+
+				String expectedMessage = _languageImpl.format(
+					nullableLocale, _LANG_KEY_WITH_ARGUMENT, "31");
+
+				Assert.assertEquals(expectedMessage, format);
+			}
+			finally {
+				LocaleThreadLocal.setDefaultLocale(defaultLocale);
+			}
 		}
 
 		@Test

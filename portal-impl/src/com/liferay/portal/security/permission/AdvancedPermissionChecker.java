@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -49,7 +48,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -883,14 +881,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 			companyId = group.getCompanyId();
-		}
-		else if (name.equals(User.class.getName())) {
-			User user = UserLocalServiceUtil.fetchUser(
-				GetterUtil.getLong(primKey));
-
-			if (user != null) {
-				companyId = user.getCompanyId();
-			}
 		}
 
 		try {

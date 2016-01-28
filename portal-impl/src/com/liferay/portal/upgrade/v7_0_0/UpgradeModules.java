@@ -82,29 +82,6 @@ public class UpgradeModules extends UpgradeProcess {
 		updateConvertedLegacyModules();
 	}
 
-	protected boolean hasPortlet(String portletId) throws SQLException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"select portletId from Portlet where portletId like ?");
-
-			ps.setString(1, portletId);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return true;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
-		}
-
-		return false;
-	}
-
 	protected boolean hasServiceComponent(String buildNamespace)
 		throws SQLException {
 
@@ -138,7 +115,6 @@ public class UpgradeModules extends UpgradeProcess {
 			String oldServletContextName = convertedLegacyModule[0];
 			String newServletContextName = convertedLegacyModule[1];
 			String buildNamespace = convertedLegacyModule[2];
-			String portletId = convertedLegacyModule[3];
 
 			PreparedStatement ps = null;
 			ResultSet rs = null;
@@ -153,9 +129,7 @@ public class UpgradeModules extends UpgradeProcess {
 				rs = ps.executeQuery();
 
 				if (!rs.next()) {
-					if (hasPortlet(portletId) ||
-						hasServiceComponent(buildNamespace)) {
-
+					if (hasServiceComponent(buildNamespace)) {
 						addRelease(newServletContextName);
 					}
 				}
@@ -192,7 +166,7 @@ public class UpgradeModules extends UpgradeProcess {
 		"com.liferay.asset.tags.navigation.web",
 		"com.liferay.blogs.recent.bloggers.web", "com.liferay.blogs.web",
 		"com.liferay.bookmarks.service", "com.liferay.bookmarks.web",
-		"com.liferay.comment.page.comments.web",
+		"com.liferay.calendar.web", "com.liferay.comment.page.comments.web",
 		"com.liferay.currency.converter.web", "com.liferay.dictionary.web",
 		"com.liferay.document.library.web",
 		"com.liferay.dynamic.data.lists.service",
@@ -232,29 +206,21 @@ public class UpgradeModules extends UpgradeProcess {
 	};
 	private static final String[][] _convertedLegacyModules = {
 		{
-			"calendar-portlet", "com.liferay.calendar.service", "Calendar",
-			"%calendarportlet"
-		},
-		{
-			"calendar-portlet", "com.liferay.calendar.web", "Calendar",
-			"%calendarportlet"
+			"calendar-portlet", "com.liferay.calendar.service", "Calendar"
 		},
 		{
 			"social-networking-portlet",
-			"com.liferay.social.networking.service", "SN",
-			"%socialnetworkingportlet"
+			"com.liferay.social.networking.service", "SN"
 		},
 		{
 			"marketplace-portlet", "com.liferay.marketplace.service",
-			"Marketplace", "%marketplace"
+			"Marketplace"
 		},
 		{
-			"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo",
-			"%kaleo%"
+			"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo"
 		},
 		{
-			"microblogs-portlet", "com.liferay.microblogs.service",
-			"Microblogs", "%microblogsportlet"
+			"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"
 		}
 	};
 

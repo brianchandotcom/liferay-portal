@@ -423,19 +423,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		// Taglibs
 
-		templateManager.addTaglibApplication(
-			contextObjects,
-			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_APPLICATION,
-			request.getServletContext());
-
-		templateManager.addTaglibRequest(
-			contextObjects,
-			PortletDisplayTemplateConstants.FREEMARKER_SERVLET_REQUEST, request,
-			response);
-
-		templateManager.addTaglibFactory(
-			contextObjects, PortletDisplayTemplateConstants.TAGLIB_LIFERAY_HASH,
-			request.getServletContext());
+		templateManager.addTaglibSupport(contextObjects, request, response);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

@@ -364,14 +364,8 @@ public class JournalTransformer {
 
 					HttpServletRequest request = themeDisplay.getRequest();
 
-					templateManager.addTaglibApplication(
-						template, "Application", request.getServletContext());
-					templateManager.addTaglibFactory(
-						template, "PortalJspTagLibs",
-						request.getServletContext());
-					templateManager.addTaglibRequest(
-						template, "Request", request,
-						themeDisplay.getResponse());
+					templateManager.addTaglibSupport(
+						template, request, themeDisplay.getResponse());
 					templateManager.addTaglibTheme(
 						template, "taglibLiferay", request,
 						new PipingServletResponse(

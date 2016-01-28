@@ -42,12 +42,57 @@
 
 		<%
 			String rowURL = siteAdminDisplayContext.getRowURL(curGroup);
+
+			String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
 		%>
 
-		<%@ include file="/site_columns.jspf" %>
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("icon") %>'>
+
+				<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+				%>
+
+				<liferay-ui:search-container-column-text>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
+							<liferay-frontend:vertical-card
+								actionJsp="/site_action.jsp"
+								actionJspServletContext="<%= application %>"
+								imageUrl="<%= siteImageURL %>"
+								resultRow="<%= row %>"
+								rowChecker="<%= searchContainer.getRowChecker() %>"
+								showCheckbox="<%= false %>"
+								title="<%= curGroup.getName(locale) %>"
+								url="<%= rowURL != null ? rowURL.toString() : null %>"
+							>
+								<%@ include file="/site_vertical_card.jspf" %>
+							</liferay-frontend:vertical-card>
+						</c:when>
+						<c:otherwise>
+							<liferay-frontend:icon-vertical-card
+								actionJsp="/site_action.jsp"
+								actionJspServletContext="<%= application %>"
+								icon="sites"
+								resultRow="<%= row %>"
+								rowChecker="<%= searchContainer.getRowChecker() %>"
+								showCheckbox="<%= false %>"
+								title="<%= curGroup.getName(locale) %>"
+								url="<%= rowURL != null ? rowURL.toString() : null %>"
+							>
+								<%@ include file="/site_vertical_card.jspf" %>
+							</liferay-frontend:icon-vertical-card>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/site_columns.jspf" %>
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>
 
 <liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />

@@ -29,13 +29,17 @@ searchURL.setParameter("recordSetId", String.valueOf(ddlRecordSet.getRecordSetId
 renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 %>
 
-<aui:form action="<%= searchURL %>" method="post" name="fm">
-	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<aui:nav-bar-search>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="<%= ddlRecordSet.getName(locale) %>" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL %>" method="post" name="fm">
 			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-</aui:form>
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

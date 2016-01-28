@@ -1125,36 +1125,16 @@
 
 	<command name="linkImage">
 		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON" value1="Browse Server" />
-		<execute function="SelectFrame" locator1="CKEditor#LINK_IMAGE_BROWSE_SERVER_IFRAME" />
 
-		<if>
-			<isset var="siteName" />
-			<then>
-				<execute function="Click" locator1="CKEditor#LINK_IMAGE_BROWSE_SERVER_SITE_BUTTON" />
+		<execute macro="ItemSelector#addFromURL">
+			<var name="imageSourceURL" value="${dmDocumentURL}" />
+		</execute>
 
-				<var name="key_siteName" value="${siteName}" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 
-				<execute function="Click" locator1="CKEditor#LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON" />
-			</then>
-		</if>
+		<execute function="AssertElementPresent" locator1="CKEditor#CONTENT_IMAGE_LINK_IMAGE" />
 
-		<if>
-			<isset var="key_folderName" />
-			<then>
-				<for list="${dmFolderNames}" param="folderName">
-					<var name="key_folderName" value="${folderName}" />
-
-					<execute function="Click" locator1="CKEditor#LINK_IMAGE_BROWSE_SERVER_FOLDER_NAME" />
-				</for>
-			</then>
-		</if>
-
-		<var name="key_documentName" value="${documentName}" />
-
-		<execute function="AssertClick" locator1="CKEditor#LINK_IMAGE_BROWSE_SERVER_DOCUMENT_CHOOSE_BUTTON" value1="Choose" />
-		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="AssertClick" locator1="CKEditor#CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
+		<execute macro="IFrame#selectTopFrame" />
 	</command>
 
 	<command name="moveToFolderCP">

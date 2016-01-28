@@ -273,6 +273,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_IMAGE_LINK_IMAGE</td>
+	<td>//img[contains(@src,'jpg')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

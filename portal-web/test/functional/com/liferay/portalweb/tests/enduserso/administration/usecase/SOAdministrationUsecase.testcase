@@ -1097,10 +1097,8 @@
 			<var name="userName" value="${userName2}" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
-			<var name="soPage" value="true" />
 		</execute>
 
 		<execute macro="SOEvents#viewTodaysEventSiteEvent">
@@ -1129,10 +1127,8 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName2}" />
-			<var name="siteURL" value="true" />
-			<var name="soPage" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle1}" />
@@ -1141,10 +1137,8 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
-			<var name="soPage" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle2}" />
@@ -1168,17 +1162,14 @@
 			<var name="pageName" value="Calendar Test Page" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
-			<var name="soPage" value="true" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle3}" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOBookmarks#addBookmarksEntry">
@@ -1187,9 +1178,8 @@
 			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOBookmarks#viewBookmarksEntry">
@@ -1198,9 +1188,8 @@
 			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOActivities#viewSiteContent">
@@ -1232,9 +1221,8 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SORss#addRssFeed">
@@ -1244,9 +1232,8 @@
 			<var name="feedUrl" value="${feedUrl}" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SORss#viewRssFeed">
@@ -1279,9 +1266,8 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName1}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName1}" />

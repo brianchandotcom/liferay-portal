@@ -1426,10 +1426,8 @@
 			<var name="userLoginFullName" value="${admin}" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteNameFriendly}" />
-			<var name="siteURL" value="true" />
-			<var name="soPage" value="true" />
 		</execute>
 
 		<execute function="AssertAlertNotPresent" />
@@ -1441,9 +1439,8 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteNameFriendly}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertAlertNotPresent" />
@@ -1456,9 +1453,8 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteNameFriendly}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertAlertNotPresent" />
@@ -1471,9 +1467,8 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteNameFriendly}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertAlertNotPresent" />

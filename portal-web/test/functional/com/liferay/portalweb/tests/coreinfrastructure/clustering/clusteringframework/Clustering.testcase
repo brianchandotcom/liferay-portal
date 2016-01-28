@@ -275,7 +275,6 @@
 		</execute>
 
 		<execute macro="Page#openURL">
-			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -290,10 +289,7 @@
 			<var name="scheduleTitleName" value="Staging Schedule Title" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 

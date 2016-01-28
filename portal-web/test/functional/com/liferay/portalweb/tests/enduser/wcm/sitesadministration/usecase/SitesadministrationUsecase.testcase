@@ -192,9 +192,8 @@
 			<var name="successMessage" value="true" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name 2" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This site is inactive. Please contact the administrator." />
@@ -561,7 +560,7 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080/test-private-page" />
 		</execute>
 
-		<execute macro="Site#viewPrivateVirtaulHostUrlUserLoginRedirect">
+		<execute macro="Site#viewPrivateVirtualHostUrlUserLoginRedirect">
 			<var name="userEmailAddress" value="@liferay.com" />
 		</execute>
 
@@ -959,9 +958,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site1 Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
@@ -1509,9 +1507,7 @@
 			<var name="userEmailAddress" value="userea2@liferay.com" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="Blog Page Template" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_2" />
 

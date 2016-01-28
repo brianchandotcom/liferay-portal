@@ -1450,9 +1450,8 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#expandCategory">

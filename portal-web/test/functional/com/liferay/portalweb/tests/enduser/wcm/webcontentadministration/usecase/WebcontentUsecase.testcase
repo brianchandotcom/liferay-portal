@@ -546,22 +546,16 @@
 			<var name="siteName" value="Blank Site Name" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Public" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Blank Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Public" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Blank Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
@@ -606,11 +600,8 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="pageAccess" value="Public" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Blank Site Name" />
-			<var name="sitePageName" value="Site Page Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaAP">

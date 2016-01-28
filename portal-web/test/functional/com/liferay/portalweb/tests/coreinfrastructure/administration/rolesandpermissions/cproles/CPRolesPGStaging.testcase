@@ -428,9 +428,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
@@ -453,10 +452,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="Blogs Test Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE_2_GUEST_VIEW" />
@@ -480,9 +477,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Home#PAGE_2_GUEST_VIEW" value1="Blogs Test Page" />
@@ -514,9 +510,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Home#PAGE_2_GUEST_VIEW" value1="Blogs Test Page" />
@@ -543,9 +538,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="Click" locator1="Home#PAGE_2_GUEST_VIEW" />

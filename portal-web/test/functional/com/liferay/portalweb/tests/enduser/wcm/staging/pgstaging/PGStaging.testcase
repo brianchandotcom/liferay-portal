@@ -854,10 +854,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#PORTLET_TITLE" />
@@ -880,10 +878,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="PGBlogs#PORTLET_TITLE" />
@@ -907,10 +903,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE_1" />
@@ -938,10 +932,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE_1" />
@@ -964,10 +956,8 @@
 
 		<execute macro="User#logoutUserPG" />
 
-		<execute macro="Page#openURL">
-			<var name="pageName" value="Staging Test Page" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="PGBlogs#ENTRY_TITLE_1" />

@@ -1214,7 +1214,7 @@
 		<execute function="AssertElementNotPresent" locator1="MySites#SITE_TABLE_SITE_ACTIONS" />
 	</command>
 
-	<command name="viewPrivateVirtaulHostUrlUserLoginRedirect">
+	<command name="viewPrivateVirtualHostUrlUserLoginRedirect">
 		<execute function="AssertTextEquals" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="AssertElementPresent" locator1="TextInput#PASSWORD" />
 	</command>

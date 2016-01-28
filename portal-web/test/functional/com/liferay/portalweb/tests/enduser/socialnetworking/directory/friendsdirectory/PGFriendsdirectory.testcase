@@ -109,9 +109,8 @@
 			<var name="portletName" value="Requests" />
 		</execute>
 
-		<execute macro="Page#openURL">
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="test" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#openProductMenu" />

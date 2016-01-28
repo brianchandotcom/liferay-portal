@@ -1,0 +1,12 @@
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile project(":apps:portal-settings:portal-settings-api")
+	compile project(":apps:portal-settings:portal-settings-web")
+	compile project(":portal:portal-language-resource-bundle")
+	compile project(":portal-security:portal-security-sso-ntlm")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

@@ -299,7 +299,12 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 			}
 		}
 
-		private Map<Locale, String> getLocalizationMap(
+		@Override
+		public void portalInstanceUnregistered(Company company)
+			throws Exception {
+		}
+
+		protected Map<Locale, String> getLocalizationMap(
 			ResourceBundleLoader resourceBundleLoader, long groupId,
 			String key) {
 

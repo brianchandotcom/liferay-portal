@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.instance.lifecycle;
+package com.liferay.portal.kernel.instance.lifecycle;
 
 import com.liferay.portal.model.Company;
 
 /**
  * @author Michael C. Han
  */
-public interface PortalInstanceLifecycleListener {
+public interface PortalInstanceLifecycleManager {
 
-	public void portalInstanceRegistered(Company company) throws Exception;
+	public void registerCompany(Company company);
 
-	public void portalInstanceUnregistered(Company company) throws Exception;
+	public void unregisterCompany(Company company);
 
 }

@@ -12,28 +12,39 @@
  * details.
  */
 
-package com.liferay.portal.instance.lifecycle;
+package com.liferay.portal.search.internal.instance.lifecycle;
 
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.model.Company;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-public abstract class BasePortalInstanceLifecycleListener
+@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+public class SearchIndexPortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		_searchEngineHelper.initialize(company.getCompanyId());
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
+		_searchEngineHelper.removeCompany(company.getCompanyId());
 	}
 
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
+	@Reference(unbind = "-")
+	protected void setSearchEngineHelper(
+		SearchEngineHelper searchEngineHelper) {
 
-		return clazz.getClassLoader();
+		_searchEngineHelper = searchEngineHelper;
 	}
+
+	private SearchEngineHelper _searchEngineHelper;
 
 }

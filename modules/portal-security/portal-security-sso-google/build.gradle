@@ -8,6 +8,7 @@ dependencies {
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile project(":apps:portal-settings:portal-settings-api")
 	compile project(":apps:portal-settings:portal-settings-web")
+	compile project(":portal:portal-instance-lifecycle")
 	compile project(":portal:portal-language-resource-bundle")
 }
 

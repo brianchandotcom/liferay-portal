@@ -96,7 +96,6 @@ import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -4007,53 +4006,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group, role, Layout.class.getName(),
 			new String[] {ActionKeys.VIEW});
 
-		setRolePermissions(
-			group, role, "com.liferay.portlet.blogs",
-			new String[] {
-				ActionKeys.ADD_ENTRY, ActionKeys.PERMISSIONS,
-				ActionKeys.SUBSCRIBE
-			});
-
 		// Power User role
 
 		role = roleLocalService.getRole(
 			group.getCompanyId(), RoleConstants.POWER_USER);
-
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId(), false, false);
-
-		for (Portlet portlet : portlets) {
-			List<String> actions =
-				ResourceActionsUtil.getPortletResourceActions(
-					portlet.getPortletId());
-
-			String controlPanelEntryCategory = GetterUtil.getString(
-				portlet.getControlPanelEntryCategory());
-
-			if (actions.contains(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
-				controlPanelEntryCategory.startsWith(
-					PortletCategoryKeys.SITE_ADMINISTRATION)) {
-
-				setRolePermissions(
-					group, role, portlet.getPortletId(),
-					new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
-			}
-		}
 
 		setRolePermissions(
 			group, role, Group.class.getName(),
 			new String[] {
 				ActionKeys.MANAGE_LAYOUTS, ActionKeys.VIEW_SITE_ADMINISTRATION
 			});
-
-		setRolePermissions(group, role, "com.liferay.portlet.asset");
-		setRolePermissions(group, role, "com.liferay.portlet.blogs");
-		setRolePermissions(group, role, "com.liferay.portlet.bookmarks");
-		setRolePermissions(group, role, "com.liferay.portlet.documentlibrary");
-		setRolePermissions(group, role, "com.liferay.portlet.imagegallery");
-		setRolePermissions(group, role, "com.liferay.portlet.journal");
-		setRolePermissions(group, role, "com.liferay.portlet.messageboards");
-		setRolePermissions(group, role, "com.liferay.portlet.wiki");
 	}
 
 	protected boolean isParentGroup(long parentGroupId, long groupId)

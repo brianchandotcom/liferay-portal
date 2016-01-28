@@ -86,61 +86,67 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 		/>
 	</c:if>
 
-	<portlet:renderURL var="selectFileVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_version" />
-		<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
-		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-		<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
-	</portlet:renderURL>
-
 	<%
-	Map<String, Object> data = new HashMap<String, Object>();
-
-	data.put("uri", selectFileVersionURL);
+	boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
 	%>
 
-	<liferay-ui:icon
-		cssClass="compare-to-link"
-		data="<%= data %>"
-		label="<%= true %>"
-		message="compare-to"
-		url="javascript:;"
-	/>
-</liferay-ui:icon-menu>
+	<c:if test="<%= comparableFileEntry %>">
+		<portlet:renderURL var="selectFileVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_version" />
+			<portlet:param name="redirect" value="<%= viewFileEntryURL %>" />
+			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+			<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
+		</portlet:renderURL>
 
-<aui:script sandbox="<%= true %>">
-	$('body').on(
-		'click',
-		'.compare-to-link a',
-		function(event) {
-			var currentTarget = $(event.currentTarget);
+		<%
+		Map<String, Object> data = new HashMap<String, Object>();
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectFileVersionFm',
-					id: '<portlet:namespace />compareFileVersions' + currentTarget.attr('id'),
-					title: '<liferay-ui:message key="compare-versions" />',
-					uri: currentTarget.data('uri')
-				},
+		data.put("uri", selectFileVersionURL);
+		%>
+
+		<liferay-ui:icon
+			cssClass="compare-to-link"
+			data="<%= data %>"
+			label="<%= true %>"
+			message="compare-to"
+			url="javascript:;"
+		/>
+
+		<aui:script sandbox="<%= true %>">
+			$('body').on(
+				'click',
+				'.compare-to-link a',
 				function(event) {
-					<portlet:renderURL var="compareVersionURL">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-					</portlet:renderURL>
+					var currentTarget = $(event.currentTarget);
 
-					var uri = '<%= compareVersionURL %>';
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								destroyOnHide: true,
+								modal: true
+							},
+							eventName: '<portlet:namespace />selectFileVersionFm',
+							id: '<portlet:namespace />compareFileVersions' + currentTarget.attr('id'),
+							title: '<liferay-ui:message key="compare-versions" />',
+							uri: currentTarget.data('uri')
+						},
+						function(event) {
+							<portlet:renderURL var="compareVersionURL">
+								<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
+								<portlet:param name="backURL" value="<%= currentURL %>" />
+							</portlet:renderURL>
 
-					uri = Liferay.Util.addParams('<portlet:namespace />sourceFileVersionId=' + event.sourceversion, uri);
-					uri = Liferay.Util.addParams('<portlet:namespace />targetFileVersionId=' + event.targetversion, uri);
+							var uri = '<%= compareVersionURL %>';
 
-					location.href = uri;
+							uri = Liferay.Util.addParams('<portlet:namespace />sourceFileVersionId=' + event.sourceversion, uri);
+							uri = Liferay.Util.addParams('<portlet:namespace />targetFileVersionId=' + event.targetversion, uri);
+
+							location.href = uri;
+						}
+					);
 				}
 			);
-		}
-	);
-</aui:script>
+		</aui:script>
+	</c:if>
+</liferay-ui:icon-menu>

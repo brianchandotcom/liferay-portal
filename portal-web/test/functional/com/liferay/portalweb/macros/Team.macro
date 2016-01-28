@@ -17,7 +17,9 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${teamName}" />
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
+
+		<execute function="Pause" locator1="5000" />
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 

@@ -2681,7 +2681,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	</macrodef>
 
 	<macrodef name="start-test-smtp-server">
- 		<sequential>
+		<sequential>
 			<mirrors-get dest="MockMock.jar" src="${test.smtp.server.url}" />
 
 			<parallel>
@@ -7260,12 +7260,12 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<get-testcase-property property.name="test.smtp.server.enabled" />
 
- 		<if>
- 			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
- 			<then>
- 				<start-test-smtp-server />
- 			</then>
- 		</if>
+		<if>
+			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
+			<then>
+				<start-test-smtp-server />
+			</then>
+		</if>
 
 		<antcall target="deploy-osgi-modules" />
 

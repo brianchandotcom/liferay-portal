@@ -10,6 +10,44 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
 
+	<!-- Advice -->
+
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*GraphWalker" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*KaleoSignaler" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*TaskManager" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.BeanNameMatcher">
+				<property name="beanNamePattern" value="*WorkflowEngine" />
+			</bean>
+		</property>
+		<property name="methodInterceptor" ref="transactionAdvice" />
+	</bean>
+
 	<!-- Comparator -->
 
 	<bean id="com.liferay.portal.workflow.kaleo.comparator.WorkflowComparatorFactoryImpl" class="com.liferay.portal.workflow.kaleo.comparator.WorkflowComparatorFactoryImpl" />

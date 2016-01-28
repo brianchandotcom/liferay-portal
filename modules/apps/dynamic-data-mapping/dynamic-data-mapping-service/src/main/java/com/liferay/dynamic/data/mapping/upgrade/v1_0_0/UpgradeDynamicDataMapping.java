@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
@@ -30,8 +31,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
@@ -595,6 +594,52 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return _structureClassNameIds.get(classPK);
 	}
 
+	protected boolean hasStructureVersion(long structureId, String version)
+		throws Exception {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select * from DDMStructureVersion where structureId = ? and " +
+					"version = ?");
+
+			ps.setLong(1, structureId);
+			ps.setString(2, version);
+
+			rs = ps.executeQuery();
+
+			return rs.next();
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+	}
+
+	protected boolean hasTemplateVersion(long templateId, String version)
+		throws Exception {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select * from DDMTemplateVersion where templateId = ? and " +
+					"version = ?");
+
+			ps.setLong(1, templateId);
+			ps.setString(2, version);
+
+			rs = ps.executeQuery();
+
+			return rs.next();
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+	}
+
 	protected boolean isInvalidFieldName(String fieldName) {
 		Matcher matcher = _invalidFieldNameCharsPattern.matcher(fieldName);
 
@@ -651,7 +696,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		_ddmContentClassNameId = PortalUtil.getClassNameId(DDMContent.class);
 
 		_expandoStorageAdapterClassNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.ExpandoStorageAdapter");
+			"com.liferay.portlet.dynamicdatamapping.storage." +
+				"ExpandoStorageAdapter");
 	}
 
 	protected String toJSON(DDMForm ddmForm) {
@@ -878,8 +924,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = getDDMFormValues(
-					companyId, ddmForm, data_);
+				DDMFormValues ddmFormValues =
+					DDMFormValuesJSONDeserializerUtil.deserialize(
+						ddmForm, data_);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -929,8 +976,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = getDDMFormValues(
-					companyId, ddmForm, data_);
+				DDMFormValues ddmFormValues =
+					DDMFormValuesJSONDeserializerUtil.deserialize(
+						ddmForm, data_);
 
 				transformFieldTypeDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -1049,9 +1097,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				continue;
 			}
 
-			String resourceName =
-				DDMStructurePermission.getStructureModelResourceName(
-					classNameId);
+			String resourceName = getStructureModelResourceName(classNameId);
 
 			resourcePermission.setName(resourceName);
 
@@ -1103,7 +1149,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// Structure version
 
-				if (version != null) {
+				if (hasStructureVersion(structureId, version)) {
 					continue;
 				}
 
@@ -1170,8 +1216,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				continue;
 			}
 
-			String resourceName =
-				DDMTemplatePermission.getTemplateModelResourceName(classNameId);
+			String resourceName = getTemplateModelResourceName(classNameId);
 
 			resourcePermission.setName(resourceName);
 
@@ -1256,7 +1301,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// Template version
 
-				if (version == null) {
+				if (!hasTemplateVersion(templateId, version)) {
 					addTemplateVersion(
 						increment(), groupId, companyId, userId, userName,
 						modifiedDate, classNameId, classPK, templateId, name,
@@ -1335,7 +1380,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			ps = connection.prepareStatement(sb.toString());
 
-			ps.setLong(1, PortalUtil.getClassNameId(DDMContent.class));
+			ps.setLong(1, _ddmContentClassNameId);
 			ps.setString(2, "xml");
 
 			rs = ps.executeQuery();

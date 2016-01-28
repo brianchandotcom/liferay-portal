@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.ldap.LDAPServerNameException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -102,7 +102,9 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 					_portal.getHttpServletRequest(actionRequest);
 
 				httpServletRequest.setAttribute(
-					MVCRenderCommand.PORTLET_CONTEXT_OVERRIDE_PREFIX + mvcPath,
+					MVCRenderConstants.
+						PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX +
+							mvcPath,
 					_portletContext);
 			}
 			else if (e instanceof PrincipalException) {

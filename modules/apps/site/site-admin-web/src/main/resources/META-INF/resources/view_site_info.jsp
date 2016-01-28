@@ -17,33 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
+long groupId = siteAdminDisplayContext.getGroupId();
 
-Group group = null;
+Group group = siteAdminDisplayContext.getGroup();
 
-if (groupId > 0) {
-	group = GroupServiceUtil.getGroup(groupId);
-}
+int usersCount = siteAdminDisplayContext.getUsersCount();
 
-LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+int organizationsCount = siteAdminDisplayContext.getOrganizationsCount();
 
-userParams.put("inherit", Boolean.TRUE);
-userParams.put("usersGroups", Long.valueOf(groupId));
-
-int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
-
-LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-organizationParams.put("groupOrganization", Long.valueOf(groupId));
-organizationParams.put("organizationsGroups", Long.valueOf(groupId));
-
-int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
-
-LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-userGroupParams.put("userGroupsGroups", Long.valueOf(groupId));
-
-int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, userGroupParams);
+int userGroupsCount = siteAdminDisplayContext.getUserGroupsCount();
 
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -115,11 +97,7 @@ request.setAttribute("view_entries.jspf-site", group);
 	</c:if>
 
 	<%
-	int pendingRequests = 0;
-
-	if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
-		pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
-	}
+	int pendingRequests = siteAdminDisplayContext.getPendingRequestsCount();
 	%>
 
 	<c:if test="<%= pendingRequests > 0 %>">

@@ -14,102 +14,11 @@
  */
 --%>
 
-<%
-List<Group> groups = new ArrayList<Group>();
-
-if (filterManageableGroups) {
-	groups = user.getSiteGroups(true);
-}
-
-if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-	groups.clear();
-
-	groups.add(GroupLocalServiceUtil.getGroup(groupId));
-}
-%>
-
 <liferay-ui:search-container
 	id="sites"
+	rowChecker="<%= new SiteChecker(renderResponse) %>"
 	searchContainer="<%= groupSearch %>"
 >
-
-	<%
-	if (groupId != 0) {
-		searchContainer.setEmptyResultsMessage(null);
-	}
-
-	searchContainer.setRowChecker(new SiteChecker(renderResponse));
-
-	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
-
-	request.setAttribute("view_tree.jspf-searchTerms", searchTerms);
-
-	Map<Long, Integer> groupUsersCounts = Collections.emptyMap();
-	%>
-
-	<liferay-ui:search-container-results>
-
-		<%
-		long parentGroupId = _getParentGroupId(group, filterManageableGroups);
-		%>
-
-		<c:choose>
-			<c:when test="<%= !searchTerms.hasSearchTerms() && (parentGroupId <= 0) && (filterManageableGroups) %>">
-
-				<%
-				total = groups.size();
-
-				searchContainer.setTotal(total);
-
-				results = ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd());
-				%>
-
-			</c:when>
-			<c:otherwise>
-
-				<%
-				LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
-
-				groupParams.put("site", Boolean.TRUE);
-				//groupParams.put("active", Boolean.TRUE);
-
-				if (searchTerms.hasSearchTerms()) {
-					if (filterManageableGroups) {
-						groupParams.put("groupsTree", groups);
-					}
-					else if (parentGroupId > 0) {
-						List<Group> groupsTree = new ArrayList<Group>();
-
-						Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
-
-						groupsTree.add(parentGroup);
-
-						groupParams.put("groupsTree", groupsTree);
-					}
-
-					parentGroupId = GroupConstants.ANY_PARENT_GROUP_ID;
-				}
-
-				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, groupId, searchTerms.getKeywords(), groupParams);
-
-				searchContainer.setTotal(total);
-
-				results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, groupId, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-				%>
-
-			</c:otherwise>
-		</c:choose>
-
-		<%
-		searchContainer.setResults(results);
-
-		long[] groupIds = ListUtil.toLongArray(results, Group.GROUP_ID_ACCESSOR);
-
-		groupUsersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
-		%>
-
-	</liferay-ui:search-container-results>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Group"
 		escapedModel="<%= true %>"
@@ -118,37 +27,60 @@ if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		rowIdProperty="friendlyURL"
 		rowVar="row"
 	>
-		<portlet:renderURL var="siteAdministrationURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-			<portlet:param name="mvcPath" value="/edit_site.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
-		</portlet:renderURL>
 
 		<%
-		String rowURL = null;
+		String rowURL = siteAdminDisplayContext.getRowURL(curGroup);
 
-		if (GroupPermissionUtil.contains(permissionChecker, curGroup.getGroupId(), ActionKeys.UPDATE)) {
-			rowURL = siteAdministrationURL.toString();
-		}
+		String siteImageURL = curGroup.getLogoURL(themeDisplay, false);
 		%>
 
-		<%@ include file="/site_columns.jspf" %>
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("icon") %>'>
+
+				<%
+				row.setCssClass("col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+				%>
+
+				<liferay-ui:search-container-column-text>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(siteImageURL) %>">
+							<liferay-frontend:vertical-card
+								actionJsp="/site_action.jsp"
+								actionJspServletContext="<%= application %>"
+								imageUrl="<%= siteImageURL %>"
+								resultRow="<%= row %>"
+								rowChecker="<%= searchContainer.getRowChecker() %>"
+								showCheckbox="<%= false %>"
+								title="<%= curGroup.getName(locale) %>"
+								url="<%= rowURL != null ? rowURL.toString() : null %>"
+							>
+								<%@ include file="/site_vertical_card.jspf" %>
+							</liferay-frontend:vertical-card>
+						</c:when>
+						<c:otherwise>
+							<liferay-frontend:icon-vertical-card
+								actionJsp="/site_action.jsp"
+								actionJspServletContext="<%= application %>"
+								icon="sites"
+								resultRow="<%= row %>"
+								rowChecker="<%= searchContainer.getRowChecker() %>"
+								showCheckbox="<%= false %>"
+								title="<%= curGroup.getName(locale) %>"
+								url="<%= rowURL != null ? rowURL.toString() : null %>"
+							>
+								<%@ include file="/site_vertical_card.jspf" %>
+							</liferay-frontend:icon-vertical-card>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/site_columns.jspf" %>
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>
 
 <liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
-
-<%!
-private long _getParentGroupId(Group group, boolean filterManageableGroups) {
-	if (group != null) {
-		return group.getGroupId();
-	}
-
-	if (filterManageableGroups) {
-		return GroupConstants.ANY_PARENT_GROUP_ID;
-	}
-
-	return GroupConstants.DEFAULT_PARENT_GROUP_ID;
-}
-%>

@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.instanceable=false",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.use-default-template=false",
+		"javax.portlet.display-name=Product Menu",
 		"javax.portlet.init-param.view-template=/portlet/view.jsp",
 		"javax.portlet.name=" + ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU,
 		"javax.portlet.supported-public-render-parameter=layoutSetBranchId",

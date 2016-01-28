@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.concurrent.CountDownLatch;
+
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +33,8 @@ public class InitFilter extends BasePortalFilter {
 		ServiceRegistration<InitFilter> serviceRegistration) {
 
 		_serviceRegistration = serviceRegistration;
+
+		_countDownLatch.countDown();
 	}
 
 	@Override
@@ -38,6 +42,8 @@ public class InitFilter extends BasePortalFilter {
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
+
+		_countDownLatch.await();
 
 		if (_competeLatch.compete()) {
 			try {
@@ -59,6 +65,7 @@ public class InitFilter extends BasePortalFilter {
 	}
 
 	private final CompeteLatch _competeLatch = new CompeteLatch();
+	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private ServiceRegistration<InitFilter> _serviceRegistration;
 
 }

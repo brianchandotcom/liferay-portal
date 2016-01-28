@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="templates" selected="<%= true %>" />
+	</aui:nav>
+
 	<aui:nav-bar-search>
 		<liferay-util:include page="/template_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>

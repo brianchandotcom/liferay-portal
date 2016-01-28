@@ -79,6 +79,7 @@
 			<supports>
 				<action-key>ADD_CALENDAR</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
@@ -86,13 +87,13 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_CALENDAR</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

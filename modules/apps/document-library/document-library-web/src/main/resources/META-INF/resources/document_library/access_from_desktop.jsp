@@ -40,8 +40,6 @@ if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLP
 else {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_image_gallery_display_folder_action") + StringPool.UNDERLINE;
 }
-
-String iconMenuId = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
 %>
 
 <liferay-ui:icon
@@ -97,17 +95,6 @@ String iconMenuId = GetterUtil.getString((String)request.getAttribute("liferay-u
 						var webdavURLInput = webdavDialog.get('boundingBox').one('.webdav-url-resource');
 
 						webdavURLInput.focus();
-					}
-				);
-
-				webdavDialog.on(
-					'close',
-					function(event) {
-						var trigger = A.one('#<portlet:namespace /><%= iconMenuId %>Button');
-
-						if (trigger) {
-							trigger.focus();
-						}
 					}
 				);
 

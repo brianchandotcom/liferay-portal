@@ -18,7 +18,7 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = siteBrowserDisplayContext.getDisplayStyle();
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSite");
 String target = ParamUtil.getString(request, "target");
 
@@ -80,7 +80,7 @@ PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"list", "icon"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -97,37 +97,69 @@ PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
 			keyProperty="groupId"
 			modelVar="group"
 			rowIdProperty="friendlyURL"
+			rowVar="row"
 		>
-			<liferay-ui:search-container-column-text
-				name="name"
-			>
-				<c:choose>
-					<c:when test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
 
-						<%
-						Map<String, Object> data = new HashMap<String, Object>();
+			<%
+			Map<String, Object> data = new HashMap<String, Object>();
 
-						data.put("groupdescriptivename", group.getDescriptiveName(locale));
-						data.put("groupid", group.getGroupId());
-						data.put("grouptarget", target);
-						data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
-						data.put("url", group.getDisplayURL(themeDisplay));
-						%>
+			data.put("groupdescriptivename", group.getDescriptiveName(locale));
+			data.put("groupid", group.getGroupId());
+			data.put("grouptarget", target);
+			data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
+			data.put("url", group.getDisplayURL(themeDisplay));
+			%>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
-						</aui:a>
-					</c:when>
-					<c:otherwise>
-						<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
 
-			<liferay-ui:search-container-column-text
-				name="type"
-				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-			/>
+					<%
+					row.setCssClass("col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<c:choose>
+							<c:when test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
+
+								<%
+								Map<String, Object> urlData = data;
+								%>
+
+								<%@ include file="/site_vertical_card.jspf" %>
+							</c:when>
+							<c:otherwise>
+
+								<%
+								Map<String, Object> urlData = null;
+								%>
+
+								<%@ include file="/site_vertical_card.jspf" %>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						name="name"
+					>
+						<c:choose>
+							<c:when test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

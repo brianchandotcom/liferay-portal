@@ -57,6 +57,15 @@ public class SiteBrowserDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle == null) {
+			_displayStyle = ParamUtil.getString(
+				_request, "displayStyle", "list");
+		}
+
+		return _displayStyle;
+	}
+
 	public String getFilter() {
 		if (_filter != null) {
 			return _filter;
@@ -292,6 +301,7 @@ public class SiteBrowserDisplayContext {
 			"selectedGroupIds", StringUtil.merge(selectedGroupIds));
 		portletURL.setParameter("type", getType());
 		portletURL.setParameter("types", getTypes());
+		portletURL.setParameter("displayStyle", getDisplayStyle());
 		portletURL.setParameter("filter", getFilter());
 		portletURL.setParameter(
 			"includeCompany", String.valueOf(includeCompany));
@@ -399,6 +409,7 @@ public class SiteBrowserDisplayContext {
 		return filteredGroups;
 	}
 
+	private String _displayStyle;
 	private String _filter;
 	private Long _groupId;
 	private LinkedHashMap<String, Object> _groupParams;

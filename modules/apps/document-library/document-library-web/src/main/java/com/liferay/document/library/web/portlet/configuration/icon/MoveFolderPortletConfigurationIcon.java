@@ -32,11 +32,11 @@ public class MoveFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public MoveFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, Folder fileEntry) {
+		PortletRequest portletRequest, Folder folder) {
 
 		super(portletRequest);
 
-		_folder = fileEntry;
+		_folder = folder;
 	}
 
 	@Override

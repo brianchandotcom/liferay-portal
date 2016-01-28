@@ -63,7 +63,7 @@ public class CheckinFileEntryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 102.0;
+		return 102;
 	}
 
 	@Override

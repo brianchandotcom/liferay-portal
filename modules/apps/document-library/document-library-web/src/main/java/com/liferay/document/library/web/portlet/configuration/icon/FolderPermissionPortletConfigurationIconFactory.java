@@ -56,7 +56,7 @@ public class FolderPermissionPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 101.0;
+		return 101;
 	}
 
 }

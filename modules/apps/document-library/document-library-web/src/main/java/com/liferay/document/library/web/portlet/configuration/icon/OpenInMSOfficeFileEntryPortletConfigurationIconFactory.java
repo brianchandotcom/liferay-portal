@@ -59,7 +59,7 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 107.0;
+		return 107;
 	}
 
 }

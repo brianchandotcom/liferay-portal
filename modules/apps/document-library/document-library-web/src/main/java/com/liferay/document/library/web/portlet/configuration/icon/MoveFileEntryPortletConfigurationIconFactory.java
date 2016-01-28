@@ -55,7 +55,7 @@ public class MoveFileEntryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 105.0;
+		return 105;
 	}
 
 }

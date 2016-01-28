@@ -56,7 +56,7 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 103.0;
+		return 103;
 	}
 
 }

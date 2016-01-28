@@ -60,8 +60,8 @@ public class EditFolderPortletConfigurationIcon
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/document_library/edit_folder");
 			portletURL.setParameter(
-				"folderId", String.valueOf(
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+				"folderId",
+				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 			portletURL.setParameter(
 				"repositoryId", String.valueOf(themeDisplay.getScopeGroupId()));
 			portletURL.setParameter("rootFolder", Boolean.TRUE.toString());
@@ -71,7 +71,8 @@ public class EditFolderPortletConfigurationIcon
 				portletURL.setParameter(
 					"mvcRenderCommandName",
 					"/document_library/edit_repository");
-			} else {
+			}
+			else {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "/document_library/edit_folder");
 			}
@@ -90,7 +91,7 @@ public class EditFolderPortletConfigurationIcon
 		try {
 			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			if (_folder  == null) {
+			if (_folder == null) {
 				if (!WorkflowEngineManagerUtil.isDeployed() ||
 					(WorkflowHandlerRegistryUtil.getWorkflowHandler(
 						DLFileEntry.class.getName()) == null)) {
@@ -101,7 +102,6 @@ public class EditFolderPortletConfigurationIcon
 			else {
 				folderId = _folder.getFolderId();
 			}
-
 
 			return DLFolderPermission.contains(
 				themeDisplay.getPermissionChecker(),

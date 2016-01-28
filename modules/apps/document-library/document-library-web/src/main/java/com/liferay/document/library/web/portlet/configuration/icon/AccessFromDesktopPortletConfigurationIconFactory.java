@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"path=/document_library/view", "path=/document_library/view_folder",
-		"path=-",
+		"path=-"
 	},
 	service = PortletConfigurationIconFactory.class
 )
@@ -64,7 +64,7 @@ public class AccessFromDesktopPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 102.0;
+		return 102;
 	}
 
 	@Override

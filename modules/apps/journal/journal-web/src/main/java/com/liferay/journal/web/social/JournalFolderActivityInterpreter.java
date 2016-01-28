@@ -17,7 +17,9 @@ package com.liferay.journal.web.social;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.permission.JournalFolderPermission;
+import com.liferay.journal.web.util.JournalResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
@@ -58,6 +60,11 @@ public class JournalFolderActivityInterpreter
 		}
 
 		return getViewEntryURL(className, classPK, serviceContext);
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

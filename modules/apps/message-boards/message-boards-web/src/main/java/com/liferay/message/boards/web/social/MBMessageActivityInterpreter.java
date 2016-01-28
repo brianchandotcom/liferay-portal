@@ -15,7 +15,9 @@
 package com.liferay.message.boards.web.social;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.util.MBResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -83,6 +85,11 @@ public class MBMessageActivityInterpreter
 
 		return "/message_boards/find_message?messageId=" +
 			activity.getClassPK();
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return MBResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

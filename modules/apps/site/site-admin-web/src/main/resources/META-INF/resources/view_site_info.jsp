@@ -22,8 +22,6 @@ long groupId = siteAdminDisplayContext.getGroupId();
 Group group = siteAdminDisplayContext.getGroup();
 
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-request.setAttribute("view_entries.jspf-site", group);
 %>
 
 <div class="sidebar-header">

@@ -31,7 +31,7 @@ if (row != null) {
 	userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
 }
 else {
-	group = (Group)request.getAttribute("view_entries.jspf-site");
+	group = siteAdminDisplayContext.getGroup();
 
 	List<String> organizationNames = SitesUtil.getOrganizationNames(group, user);
 

@@ -17,7 +17,6 @@ package com.liferay.site.admin.web.display.context;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -74,13 +73,6 @@ public class SiteAdminDisplayContext {
 		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		SearchContainer<Group> searchContainer = getSearchContainer();
-
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)searchContainer.getSearchTerms();
-
-		_request.setAttribute("view_tree.jspf-searchTerms", searchTerms);
 	}
 
 	public int getChildSitesCount(Group group) {

@@ -262,10 +262,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	@Override
 	public long[] getRoleIds(long userId, long groupId) {
-		long[] roleIds = null;
-
 		try {
-			roleIds = doGetRoleIds(userId, groupId);
+			return doGetRoleIds(userId, groupId);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -274,26 +272,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return PermissionChecker.DEFAULT_ROLE_IDS;
 		}
-
-		if (!checkGuest) {
-			return roleIds;
-		}
-
-		Set<Long> roleIdsSet = SetUtil.fromArray(roleIds);
-
-		try {
-			for (long roleId : getGuestUserRoleIds()) {
-				roleIdsSet.add(roleId);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-		}
-
-		return ArrayUtil.toArray(
-			roleIdsSet.toArray(new Long[roleIdsSet.size()]));
 	}
 
 	@Override
@@ -611,7 +589,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		boolean value = ResourceLocalServiceUtil.hasUserPermissions(
 			user.getUserId(), groupId, resources, actionId,
-			doGetRoleIds(user.getUserId(), groupId));
+			getRoleIds(user.getUserId(), groupId));
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 4);
 
@@ -707,6 +685,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				}
 			}
 
+			if (checkGuest) {
+				for (long roleId : getGuestUserRoleIds()) {
+					roleIdsSet.add(roleId);
+				}
+			}
+
 			roleIds = ArrayUtil.toLongArray(roleIdsSet);
 
 			Arrays.sort(roleIds);
@@ -794,16 +778,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			long groupId, String name, String primKey, String actionId)
 		throws Exception {
 
-		try {
-			ResourceActionsUtil.checkAction(name, actionId);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Guest does not have permission to " + actionId + " on " +
-						name + " with primary key " + primKey);
-			}
+		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
+			name);
 
+		if (!resourceActions.contains(actionId)) {
 			return false;
 		}
 
@@ -867,27 +845,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 
 			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
-
-				// It is not necessary to check guest permissions separately, as
-				// the user's resource block IDs bag will already have the guest
-				// permissions in it if checkGuest is true.
-
 				return hasUserPermission(
 					groupId, name, primKey, actionId, true);
 			}
 
-			boolean value = false;
-
-			if (checkGuest) {
-				value = hasGuestPermission(groupId, name, primKey, actionId);
-			}
-
-			if (!value) {
-				value = hasUserPermission(
-					groupId, name, primKey, actionId, true);
-			}
-
-			return value;
+			return hasUserPermission(groupId, name, primKey, actionId, true);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1234,7 +1196,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		long[] roleIds = doGetRoleIds(getUserId(), groupId);
+		long[] roleIds = getRoleIds(getUserId(), groupId);
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 

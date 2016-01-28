@@ -257,7 +257,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SCOPE</td>
-	<td>//div[contains(@class,'nav-equal-height-heading')]/span</td>
+	<td>//div[contains(@class,'scope-selector')]/span</td>
 	<td></td>
 </tr>
 <tr>

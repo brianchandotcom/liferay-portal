@@ -229,11 +229,6 @@
 	</command>
 
 	<command name="MoveFolderToFolder" priority="4">
-		<var name="dmFolderDescription1" value="DM Folder1 Description" />
-		<var name="dmFolderDescription2" value="DM Folder2 Description" />
-		<var name="dmFolderName1" value="DM Folder1 Name" />
-		<var name="dmFolderName2" value="DM Folder2 Name" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -241,21 +236,20 @@
 		</execute>
 
 		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="${dmFolderDescription1}" />
-			<var name="dmFolderName" value="${dmFolderName1}" />
+			<var name="dmFolderDescription" value="DM Folder1 Description" />
+			<var name="dmFolderName" value="DM Folder1 Name" />
 		</execute>
 
 		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="${dmFolderDescription2}" />
-			<var name="dmFolderName" value="${dmFolderName2}" />
+			<var name="dmFolderDescription" value="DM Folder2 Description" />
+			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
 		<execute macro="DMFolder#moveToFolderCP">
-			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="dmFolderName" value="${dmFolderName1}" />
-			<var name="dmFolderName" value="${dmFolderName2}" />
-			<var name="dmFolderName1" value="${dmFolderName1}" />
-			<var name="dmFolderName2" value="${dmFolderName2}" />
+			<var name="dmFolderName" value="DM Folder1 Name" />
+			<var name="dmFolderName" value="DM Folder2 Name" />
+			<var name="dmFolderName1" value="DM Folder1 Name" />
+			<var name="dmFolderName2" value="DM Folder2 Name" />
 		</execute>
 	</command>
 

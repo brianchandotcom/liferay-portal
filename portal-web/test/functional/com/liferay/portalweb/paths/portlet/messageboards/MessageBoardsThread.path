@@ -21,9 +21,15 @@
 <!--THREAD-->
 <tr>
 	<td>THREAD_BODY</td>
-	<td>//div[@class='message-content']</td>
+	<td>//div[@class='message-content' and contains(.,'${key_threadBody}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>THREAD_BODY_2</td>
+	<td>xpath=(//div[@class='message-content' and contains(.,'${key_threadBody}')])[2]</td>
+	<td></td>
+</tr>
+
 <tr>
 	<td>THREAD_REPLY_BUTTON</td>
 	<td>//div[contains(@class,'message-container') and contains(.,'${key_threadSubject}')]//a[contains(@class,'btn')]</td>
@@ -35,8 +41,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_SUBJECT_2</td>
+	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h4[contains(.,'${key_threadSubject}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_USERNAME</td>
 	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_USERNAME_2</td>
+	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

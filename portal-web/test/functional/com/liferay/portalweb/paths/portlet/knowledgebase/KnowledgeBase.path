@@ -83,7 +83,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_TABLE_CREATE_DATE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[5]</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[5]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,7 +180,7 @@
 <!--FOLDER-->
 <tr>
 	<td>FOLDER_BREADCRUMBS</td>
-	<td>//ul[contains(@class,'breadcrumb')]//a[contains(.,'${kbFolderName}')]</td>
+	<td>//ul[contains(@class,'breadcrumb')]//a[contains(.,'${key_kbFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

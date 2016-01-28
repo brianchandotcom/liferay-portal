@@ -162,6 +162,11 @@
 </tr>
 <!--DOCUMENT_DETAILS-->
 <tr>
+	<td>DOCUMENT_DETAILS_DROPDOWN</td>
+	<td>//li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_DETAILS_VERSION</td>
 	<td>//h3[contains(@class,'version') and not(contains(@class,'icon-lock'))]</td>
 	<td></td>
@@ -328,73 +333,6 @@
 <tr>
 	<td>SOCIAL_OFFICE_AVERAGE_RATING_STAR_ICON_PNG</td>
 	<td>so/icons/average_rating_star_icon.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--VERSION_HISTORY_TABLE-->
-<tr>
-	<td>VERSION_HISTORY_TABLE_CHECKBOX</td>
-	<td>//td//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSION_HISTORY_TABLE_VERSION</td>
-	<td>//td[contains(.,'.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSION_HISTORY_TABLE_VERSION_GENERIC</td>
-	<td>//td[contains(.,'${key_dmDocumentVersionNumber}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSION_HISTORY_TABLE_DATE</td>
-	<td>//td[contains(.,'Ago')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSION_HISTORY_TABLE_SIZE</td>
-	<td>//td[contains(.,'KB')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSION_HISTORY_TABLE_STATUS</td>
-	<td>//td//span[@class='workflow-status']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSION_HISTORY_TABLE_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[5]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SIDEBAR-->
-<tr>
-	<td>SIDEBAR_DROPDOWN</td>
-	<td>//div//li[contains(@class,'active dropdown')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_DROPDOWN_DETAILS</td>
-	<td>//div//li[contains(@class,'active dropdown')]//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Details')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_DROPDOWN_METADATA</td>
-	<td>//div//li[contains(@class,'active dropdown')]//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Metadata')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_DROPDOWN_VERSIONS</td>
-	<td>//div//li[contains(@class,'active dropdown')]//ul[contains(@class,'dropdown-menu')]//li/a[contains(.,'Versions')]</td>
 	<td></td>
 </tr>
 <tr>

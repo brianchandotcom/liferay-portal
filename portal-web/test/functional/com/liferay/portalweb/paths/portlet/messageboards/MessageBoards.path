@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERTICAL_ELLIPSIS_REPLY_CARD</td>
+	<td>xpath=(//div[contains(@class,'portlet') and contains(@class,'container')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

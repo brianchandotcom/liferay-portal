@@ -35,6 +35,8 @@
 	</command>
 
 	<command name="gotoFolderPG">
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
+
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />

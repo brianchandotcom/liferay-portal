@@ -1772,6 +1772,21 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#configureEmailCP">
+			<var name="emailFrom" value="true" />
+			<var name="suggestionInProgress" value="true" />
+			<var name="suggestionReceived" value="true" />
+			<var name="suggestionResolved" value="true" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
@@ -1786,15 +1801,6 @@
 		</execute>
 
 		<execute macro="KBArticle#subscribeCP" />
-
-		<execute macro="KBArticle#configureEmailCP">
-			<var name="emailFrom" value="true" />
-			<var name="suggestionInProgress" value="true" />
-			<var name="suggestionReceived" value="true" />
-			<var name="suggestionResolved" value="true" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userName" value="${userName}" />
-		</execute>
 
 		<execute macro="User#logoutPG" />
 
@@ -1877,6 +1883,7 @@
 		</execute>
 
 		<execute macro="KBArticle#viewKBSuggestionNotificationsInGmail">
+			<var name="folderName" value="Home" />
 			<var name="gmailKBArticleDate" value="true" />
 			<var name="gmailMessageKBArticleURL" value="true" />
 			<var name="kbArticleContent" value="${kbArticleContent}" />

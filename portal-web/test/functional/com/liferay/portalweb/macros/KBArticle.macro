@@ -1273,7 +1273,12 @@
 
 	<command name="viewKBSuggestionNotificationsInGmail">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_kbFolderName" value="${folderName}" />
 		<var name="pageName" value="${pageName}" />
+
+		<var method="StringUtil#upperCase('${key_kbFolderName}')" name="folderBreadcrumbUpperCase" />
+
+		<execute function="AssertVisible" locator1="KnowledgeBase#FOLDER_BREADCRUMBS" value1="${folderBreadcrumbUpperCase}" />
 
 		<execute function="MouseOver" locator1="KnowledgeBase#ARTICLE_TABLE_CREATE_DATE" />
 
@@ -1282,7 +1287,7 @@
 		<var name="key_publishDate" value="${publishDate}" />
 		<var name="separator" value=" " />
 
-		<var method="StringUtil#extractFirst('${key_publishDate}, ${separator}')" name="gmailKBArticleDate" />
+		<var method="StringUtil#extractFirst('${key_publishDate}','${separator}')" name="gmailKBArticleDate" />
 
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${userEmailAddress}" />

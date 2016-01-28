@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.internal.portal.settings.web.portlet.resource.bundle;
+package com.liferay.portal.settings.authentication.cas.web.internal.portlet.resource.bundle;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.language.resource.bundle.BaseResourceBundlePublisher;

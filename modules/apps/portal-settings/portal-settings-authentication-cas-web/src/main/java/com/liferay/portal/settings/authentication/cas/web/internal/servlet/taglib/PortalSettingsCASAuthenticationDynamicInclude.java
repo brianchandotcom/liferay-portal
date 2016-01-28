@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.internal.portal.settings.web.servlet.taglib;
+package com.liferay.portal.settings.authentication.cas.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,7 +68,7 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.cas)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.cas.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

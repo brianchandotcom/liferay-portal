@@ -23,6 +23,7 @@
 			initMethod=""
 			name="${namespacedFieldName}Editor"
 			onChangeMethod="${namespacedFieldName}OnChangeEditor"
+			placeholder=fieldName
 			skipEditorLoading=skipEditorLoading
 		/>
 

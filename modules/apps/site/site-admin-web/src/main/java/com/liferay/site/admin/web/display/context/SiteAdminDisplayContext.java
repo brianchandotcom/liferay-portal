@@ -128,76 +128,6 @@ public class SiteAdminDisplayContext {
 		return _groupId;
 	}
 
-	public List<Group> getGroups() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SearchContainer<Group> searchContainer = getSearchContainer();
-
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)searchContainer.getSearchTerms();
-
-		long parentGroupId = getParentGroupId();
-
-		Company company = themeDisplay.getCompany();
-
-		if (!searchTerms.hasSearchTerms() && isFilterManageableGroups() &&
-			(parentGroupId <= 0)) {
-
-			return ListUtil.subList(
-				getAllGroups(), searchContainer.getStart(),
-				searchContainer.getEnd());
-		}
-		else if (searchTerms.hasSearchTerms()) {
-			return GroupLocalServiceUtil.search(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		}
-		else {
-			return GroupLocalServiceUtil.search(
-				company.getCompanyId(), _classNameIds, getGroupId(),
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
-		}
-	}
-
-	public int getGroupsCount() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SearchContainer<Group> searchContainer = getSearchContainer();
-
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)searchContainer.getSearchTerms();
-
-		long parentGroupId = getParentGroupId();
-
-		Company company = themeDisplay.getCompany();
-
-		if (!searchTerms.hasSearchTerms() && isFilterManageableGroups() &&
-			(parentGroupId <= 0)) {
-
-			return getAllGroups().size();
-		}
-		else if (searchTerms.hasSearchTerms()) {
-			return GroupLocalServiceUtil.searchCount(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId));
-		}
-		else {
-			return GroupLocalServiceUtil.searchCount(
-				company.getCompanyId(), _classNameIds, getGroupId(),
-				searchTerms.getKeywords(),
-				getGroupParams(themeDisplay, searchTerms, parentGroupId));
-		}
-	}
-
 	public Map<Long, Integer> getGroupUsersCount(long[] groupIds)
 		throws PortalException {
 
@@ -294,8 +224,63 @@ public class SiteAdminDisplayContext {
 	}
 
 	public GroupSearch getSearchContainer() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		GroupSearch groupSearch = new GroupSearch(
 			_liferayPortletRequest, getPortletURL());
+
+		GroupSearchTerms searchTerms =
+			(GroupSearchTerms)groupSearch.getSearchTerms();
+
+		long parentGroupId = getParentGroupId();
+
+		Company company = themeDisplay.getCompany();
+
+		List results = null;
+
+		if (!searchTerms.hasSearchTerms() && isFilterManageableGroups() &&
+			(parentGroupId <= 0)) {
+
+			int total = getAllGroups().size();
+
+			groupSearch.setTotal(total);
+
+			results = ListUtil.subList(
+				getAllGroups(), groupSearch.getStart(), groupSearch.getEnd());
+		}
+		else if (searchTerms.hasSearchTerms()) {
+			int total = GroupLocalServiceUtil.searchCount(
+				company.getCompanyId(), _classNameIds,
+				searchTerms.getKeywords(),
+				getGroupParams(themeDisplay, searchTerms, parentGroupId));
+
+			groupSearch.setTotal(total);
+
+			results = GroupLocalServiceUtil.search(
+				company.getCompanyId(), _classNameIds,
+				searchTerms.getKeywords(),
+				getGroupParams(themeDisplay, searchTerms, parentGroupId),
+				groupSearch.getStart(), groupSearch.getEnd(),
+				groupSearch.getOrderByComparator());
+		}
+		else {
+			int total = GroupLocalServiceUtil.searchCount(
+				company.getCompanyId(), _classNameIds, getGroupId(),
+				searchTerms.getKeywords(),
+				getGroupParams(themeDisplay, searchTerms, parentGroupId));
+
+			groupSearch.setTotal(total);
+
+			results = GroupLocalServiceUtil.search(
+				company.getCompanyId(), _classNameIds, getGroupId(),
+				searchTerms.getKeywords(),
+				getGroupParams(themeDisplay, searchTerms, parentGroupId),
+				groupSearch.getStart(), groupSearch.getEnd(),
+				groupSearch.getOrderByComparator());
+		}
+
+		groupSearch.setResults(results);
 
 		return groupSearch;
 	}

@@ -19,18 +19,6 @@
 	rowChecker="<%= new SiteChecker(renderResponse) %>"
 	searchContainer="<%= groupSearch %>"
 >
-	<liferay-ui:search-container-results>
-
-		<%
-		searchContainer.setTotal(siteAdminDisplayContext.getGroupsCount());
-
-		results = siteAdminDisplayContext.getGroups();
-
-		searchContainer.setResults(results);
-		%>
-
-	</liferay-ui:search-container-results>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Group"
 		escapedModel="<%= true %>"

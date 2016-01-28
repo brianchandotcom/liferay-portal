@@ -32,7 +32,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -101,9 +100,7 @@ public class ControlMenuCategoryRegistry {
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
+	protected void activate(final BundleContext bundleContext) {
 		_controlMenuCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ControlMenuCategory.class,

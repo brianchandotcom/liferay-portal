@@ -7083,7 +7083,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<property name="jenkins.results.xml.file" value="${toString:first}" />
 
 				<if>
-					<available file="${jenkins.results.xml.file}" />
+					<and>
+						<available file="${jenkins.results.xml.file}" />
+						<isset property="env.BUILD_FLOW_BUILD_NUMBER" />
+						<isset property="env.BUILD_FLOW_JOB_NAME" />
+					</and>
 					<then>
 						<copy
 							file="${jenkins.results.xml.file}"

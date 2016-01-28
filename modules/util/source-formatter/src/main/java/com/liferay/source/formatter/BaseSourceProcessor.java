@@ -350,9 +350,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (isExcludedPath(getRunOutsidePortalExcludes(), absolutePath) ||
-			fileName.endsWith("GetterUtil.java")) {
-
+		if (isExcludedPath(getRunOutsidePortalExcludes(), absolutePath)) {
 			return;
 		}
 

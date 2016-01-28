@@ -60,6 +60,7 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 import java.io.Serializable;
 
 import java.text.MessageFormat;
+import java.text.NumberFormat;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -307,7 +308,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = decorateMessageFormat(
+					request, pattern, formattedArguments);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;
@@ -475,7 +479,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = decorateMessageFormat(
+					request, pattern, formattedArguments);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;
@@ -662,7 +669,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = decorateMessageFormat(
+					locale, pattern, formattedArguments);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;
@@ -808,7 +818,10 @@ public class LanguageImpl implements Language, Serializable {
 					}
 				}
 
-				value = MessageFormat.format(pattern, formattedArguments);
+				MessageFormat messageFormat = decorateMessageFormat(
+					resourceBundle.getLocale(), pattern, formattedArguments);
+
+				value = messageFormat.format(formattedArguments);
 			}
 			else {
 				value = pattern;
@@ -1608,6 +1621,37 @@ public class LanguageImpl implements Language, Serializable {
 		languageIdCookie.setMaxAge(CookieKeys.MAX_AGE);
 
 		CookieKeys.addCookie(request, response, languageIdCookie);
+	}
+
+	protected MessageFormat decorateMessageFormat(
+			HttpServletRequest request, String pattern,
+			Object[] formattedArguments)
+		throws PortalException {
+
+		Locale locale = _getLocale(request);
+
+		return decorateMessageFormat(locale, pattern, formattedArguments);
+	}
+
+	protected MessageFormat decorateMessageFormat(
+			Locale locale, String pattern, Object[] formattedArguments)
+		throws PortalException {
+
+		if (locale == null) {
+			locale = LocaleUtil.getDefault();
+		}
+
+		MessageFormat messageFormat = new MessageFormat(pattern, locale);
+
+		for (int i = 0; i < formattedArguments.length; i++) {
+			Object formattedArgument = formattedArguments[i];
+
+			if (formattedArgument instanceof Number) {
+				messageFormat.setFormat(i, NumberFormat.getInstance(locale));
+			}
+		}
+
+		return messageFormat;
 	}
 
 	private static CompanyLocalesBag _getCompanyLocalesBag() {

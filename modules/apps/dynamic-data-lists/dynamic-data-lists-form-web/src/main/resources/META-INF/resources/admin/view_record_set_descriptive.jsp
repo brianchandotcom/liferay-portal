@@ -21,32 +21,31 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DDLRecordSet ddlRecordSet = (DDLRecordSet)row.getObject();
 
-DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
-DDMStructureVersion ddmStructureVersion = ddmStructure.getStructureVersion();
+dateSearchEntry.setDate(ddlRecordSet.getModifiedDate());
 
 String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 %>
 
-<liferay-ui:app-view-entry
-	actionJsp="/admin/record_set_action.jsp"
-	actionJspServletContext="<%= application %>"
-	author="<%= ddlRecordSet.getUserName() %>"
-	createDate="<%= ddlRecordSet.getCreateDate() %>"
-	description="<%= ddlRecordSet.getDescription(locale) %>"
-	displayStyle="descriptive"
-	groupId="<%= ddlRecordSet.getGroupId() %>"
-	latestApprovedVersion="<%= ddmStructureVersion.getVersion() %>"
-	latestApprovedVersionAuthor="<%= ddmStructureVersion.getUserName() %>"
-	markupView="lexicon"
-	modifiedDate="<%= ddlRecordSet.getModifiedDate() %>"
-	rowCheckerId="<%= String.valueOf(ddlRecordSet.getRecordSetId()) %>"
-	rowCheckerName="<%= DDLRecordSet.class.getSimpleName() %>"
-	showCheckbox="<%= false %>"
-	thumbnailDivStyle="height: 146px; width: 146px;"
-	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-	thumbnailStyle="max-height: 128px; max-width: 128px;"
-	title="<%= ddlRecordSet.getName(locale) %>"
-	url="<%= href %>"
-	version="<%= ddmStructureVersion.getVersion() %>"
-/>
+<h4>
+	<aui:a cssClass="record-set-name" href="<%= href %>">
+		<%= ddlRecordSet.getName(locale) %>
+	</aui:a>
+</h4>
+
+<h5 class="text-default">
+	<div class="record-set-description">
+		<%= ddlRecordSet.getDescription(locale) %>
+	</div>
+</h5>
+
+<h5 class="text-default">
+	<span class="record-set-id">
+		<liferay-ui:message key="id" />: <%= ddlRecordSet.getRecordSetId() %>
+	</span>
+
+	<span class="record-set-modified-date">
+		<liferay-ui:message key="modified-date" />: <%= dateSearchEntry.getName(request) %>
+	</span>
+</h5>

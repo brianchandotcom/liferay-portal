@@ -28,7 +28,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
- * @author Brian Wing Shun Chan
+ * @author José Manuel Navarro
  * @see ScreensUserService
  * @see com.liferay.screens.service.base.ScreensUserServiceBaseImpl
  * @see com.liferay.screens.service.impl.ScreensUserServiceImpl

@@ -29,9 +29,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * @author Raymond Augé
  */
-public class ServicebuilderMojo extends AbstractMojo {
+public class BuildServiceMojo extends AbstractMojo {
 
-	public ServicebuilderMojo() {
+	public BuildServiceMojo() {
 		_serviceBuilderArgs = new ServiceBuilderArgs();
 	}
 

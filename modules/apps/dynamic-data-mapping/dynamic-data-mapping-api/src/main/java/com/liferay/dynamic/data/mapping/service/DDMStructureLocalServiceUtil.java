@@ -553,6 +553,11 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getChildrenStructures(
+		long parentStructureId) {
+		return getService().getChildrenStructures(parentStructureId);
+	}
+
 	/**
 	* Returns all the structures matching the class name ID.
 	*

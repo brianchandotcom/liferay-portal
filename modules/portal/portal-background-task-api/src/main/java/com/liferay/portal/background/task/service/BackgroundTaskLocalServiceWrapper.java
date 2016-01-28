@@ -157,6 +157,14 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteBackgroundTasks(long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_backgroundTaskLocalService.deleteBackgroundTasks(groupId, name,
+			taskExecutorClassName);
+	}
+
+	@Override
 	public void deleteCompanyBackgroundTasks(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_backgroundTaskLocalService.deleteCompanyBackgroundTasks(companyId);

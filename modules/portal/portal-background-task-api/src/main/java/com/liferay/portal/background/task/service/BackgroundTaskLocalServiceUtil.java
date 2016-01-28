@@ -158,6 +158,12 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService().deleteBackgroundTask(backgroundTaskId);
 	}
 
+	public static void deleteBackgroundTasks(long groupId,
+		java.lang.String name, java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteBackgroundTasks(groupId, name, taskExecutorClassName);
+	}
+
 	public static void deleteCompanyBackgroundTasks(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCompanyBackgroundTasks(companyId);

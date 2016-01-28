@@ -38,9 +38,9 @@ public class StringParser {
 
 		if (stringParser == null) {
 			stringParser = new StringParser(chunk);
-		}
 
-		_stringParserFragmentsCache.put(chunk, stringParser);
+			_stringParserFragmentsCache.put(chunk, stringParser);
+		}
 
 		return stringParser;
 	}

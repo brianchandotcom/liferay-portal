@@ -33,9 +33,9 @@ public class StringParserFragment {
 
 		if (stringParserFragment == null) {
 			stringParserFragment = new StringParserFragment(chunk);
-		}
 
-		_stringParserFragmentsCache.put(chunk, stringParserFragment);
+			_stringParserFragmentsCache.put(chunk, stringParserFragment);
+		}
 
 		return stringParserFragment;
 	}

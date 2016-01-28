@@ -70,15 +70,6 @@ public class DeleteFolderPortletConfigurationIcon
 				ActionRequest.ACTION_NAME, "/document_library/edit_folder");
 		}
 
-		if ((_folder.getModel() instanceof DLFolder) &&
-			isTrashEnabled(themeDisplay.getScopeGroupId())) {
-
-			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
-		}
-		else {
-			portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		}
-
 		if (_folder.isMountPoint() ||
 				!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
 					!(_folder.getModel() instanceof DLFolder)) {

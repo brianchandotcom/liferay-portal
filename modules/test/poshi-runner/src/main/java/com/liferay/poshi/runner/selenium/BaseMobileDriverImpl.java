@@ -1026,7 +1026,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isText(String locator, String value) throws Exception {
-		return value.equals(getElementText(locator, "1"));
+		return value.equals(getText(locator, "1"));
 	}
 
 	@Override

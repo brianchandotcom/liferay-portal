@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] data=data>
-	<@aui.fieldset label=escape(label)>
+<@liferay_aui["field-wrapper"] data=data>
+	<@liferay_aui.fieldset label=escape(label)>
 		${fieldStructure.children}
-	</@aui.fieldset>
+	</@liferay_aui.fieldset>
 </@>

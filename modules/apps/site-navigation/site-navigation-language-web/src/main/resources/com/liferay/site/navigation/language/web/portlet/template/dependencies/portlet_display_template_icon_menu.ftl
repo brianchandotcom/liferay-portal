@@ -1,5 +1,3 @@
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-
 <#if entries?has_content>
 	<@liferay_ui["icon-menu"] icon="../aui/globe" message=locale.getDisplayName(locale)>
 		<#list entries as entry>

@@ -1,5 +1,3 @@
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-
 <#if entries?has_content>
 	<#list entries as entry>
 		<#if entry.isSelected()>

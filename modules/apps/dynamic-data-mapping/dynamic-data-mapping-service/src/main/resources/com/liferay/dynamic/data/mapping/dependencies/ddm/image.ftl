@@ -18,7 +18,7 @@
 	<#assign name = fileJSONObject.getString("name")>
 </#if>
 
-<@aui["field-wrapper"] data=data>
+<@liferay_aui["field-wrapper"] data=data>
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 
@@ -28,7 +28,7 @@
 			</a>
 		</div>
 
-		<@aui.input
+		<@liferay_aui.input
 			helpMessage=escape(fieldStructure.tip)
 			inlineField=true label=escape(label)
 			name="${namespacedFieldName}Title"
@@ -36,33 +36,33 @@
 			value=(name?has_content)?string(name, languageUtil.get(locale, "drag-file-here"))
 		/>
 
-		<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue>
+		<@liferay_aui.input name=namespacedFieldName type="hidden" value=fieldRawValue>
 			<#if required>
-				<@aui.validator name="required" />
+				<@liferay_aui.validator name="required" />
 			</#if>
 		</@>
 
-		<@aui["button-row"]>
-			<@aui.button
+		<@liferay_aui["button-row"]>
+			<@liferay_aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
 				value="select"
 			/>
 
-			<@aui.button
+			<@liferay_aui.button
 				cssClass="clear-button ${(imageData?has_content)?string('', 'hide')}"
 				id="${namespacedFieldName}ClearButton"
 				value="clear"
 			/>
 
-			<@aui.button
+			<@liferay_aui.button
 				cssClass="preview-button ${(imageData?has_content)?string('', 'hide')}"
 				id="${namespacedFieldName}PreviewButton"
 				value="preview"
 			/>
 		</@>
 
-		<@aui.input
+		<@liferay_aui.input
 			label="image-description"
 			name="${namespacedFieldName}Alt"
 			type="text"

@@ -11,7 +11,7 @@
 	<#assign cssClass = "form-control">
 </#if>
 
-<@aui["field-wrapper"] cssClass="field-wrapper-html" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=inputEditorName required=required>
+<@liferay_aui["field-wrapper"] cssClass="field-wrapper-html" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=inputEditorName required=required>
 	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
 	<div class="form-group">
@@ -26,13 +26,13 @@
 			skipEditorLoading=skipEditorLoading
 		/>
 
-		<@aui.input name=namespacedFieldName type="hidden" value=fieldValue>
+		<@liferay_aui.input name=namespacedFieldName type="hidden" value=fieldValue>
 			<#if required>
-				<@aui.validator name="required" />
+				<@liferay_aui.validator name="required" />
 			</#if>
 		</@>
 
-		<@aui.script>
+		<@liferay_aui.script>
 			Liferay.provide(
 				window,
 				'${portletNamespace}${namespacedFieldName}OnChangeEditor',

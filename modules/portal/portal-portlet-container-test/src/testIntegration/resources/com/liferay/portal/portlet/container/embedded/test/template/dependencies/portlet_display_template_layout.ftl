@@ -14,6 +14,4 @@
 */
 --%>
 
-<#assign portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet-ext.tld"] />
-
-<@portlet.runtime portletName="${testRuntimePortletId}" />
+<@liferay_portlet.runtime portletName="${testRuntimePortletId}" />

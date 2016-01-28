@@ -1,8 +1,3 @@
-<#assign liferay_aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-<#assign liferay_map = taglibLiferayHash["/META-INF/resources/liferay-map.tld"] />
-<#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-
 <#assign defaultLatitude = -3.6833 />
 <#assign defaultLongitude = 40.40 />
 
@@ -122,7 +117,7 @@
 />
 
 <@liferay_aui.script use="liferay-map-base">
-	var map = Liferay.component('<@liferay_portlet.namespace />Map');
+	var map = Liferay.component('<@portlet.namespace />Map');
 
 	map.on(
 		'featureClick',
@@ -141,7 +136,7 @@
 </@liferay_aui.script>
 
 <#macro getAbstract asset>
-	<div class="asset-entry-abstract" id="<@liferay_portlet.namespace />assetEntryAbstract">
+	<div class="asset-entry-abstract" id="<@portlet.namespace />assetEntryAbstract">
 		<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 		<#assign assetRenderer = asset.getAssetRenderer() />

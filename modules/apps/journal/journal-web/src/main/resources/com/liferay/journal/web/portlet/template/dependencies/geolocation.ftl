@@ -1,8 +1,6 @@
 <#include "init.ftl">
 
 <#if language == "ftl">
-	${r"<#assign"} liferay_map = PortalJspTagLibs["/META-INF/resources/liferay-map.tld"] />
-
 	${r"<#assign"} latitude = 0>
 	${r"<#assign"} longitude = 0>
 

@@ -1,5 +1,3 @@
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-
 <#list entries as entry>
 	<div class="entry">
 		<#assign viewURL = renderResponse.createRenderURL() />

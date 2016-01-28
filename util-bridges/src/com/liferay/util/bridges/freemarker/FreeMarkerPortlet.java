@@ -90,13 +90,8 @@ public class FreeMarkerPortlet extends MVCPortlet {
 				Template template = TemplateManagerUtil.getTemplate(
 					TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
-				templateManager.addTaglibApplication(
-					template, "Application", getServletContext());
-				templateManager.addTaglibFactory(
-					template, "PortletJspTagLibs", getServletContext());
-				templateManager.addTaglibRequest(
-					template, "Request",
-					PortalUtil.getHttpServletRequest(portletRequest),
+				templateManager.addTaglibSupport(
+					template, PortalUtil.getHttpServletRequest(portletRequest),
 					PortalUtil.getHttpServletResponse(portletResponse));
 
 				template.put("portletContext", getPortletContext());

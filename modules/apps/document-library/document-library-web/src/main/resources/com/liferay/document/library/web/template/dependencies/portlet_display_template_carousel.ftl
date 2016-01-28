@@ -1,9 +1,6 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-<#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
-
 <#if entries?has_content>
 	<style>
-		#<@liferay_portlet.namespace />carousel .carousel-item {
+		#<@portlet.namespace />carousel .carousel-item {
 			background-color: #000;
 			height: 250px;
 			overflow: hidden;
@@ -11,13 +8,13 @@
 			width: 700px;
 		}
 
-		#<@liferay_portlet.namespace />carousel .carousel-item img {
+		#<@portlet.namespace />carousel .carousel-item img {
 			max-height: 250px;
 			max-width: 700px;
 		}
 	</style>
 
-	<div id="<@liferay_portlet.namespace />carousel">
+	<div id="<@portlet.namespace />carousel">
 		<#assign imageMimeTypes = propsUtil.getArray("dl.file.entry.preview.image.mime.types") />
 
 		<#list entries as entry>
@@ -29,7 +26,7 @@
 		</#list>
 	</div>
 
-	<@aui.script use="aui-carousel">
+	<@liferay_aui.script use="aui-carousel">
 		var carousel = new A.Carousel(
 			{
 				after: {
@@ -49,11 +46,11 @@
 					}
 				},
 
-				contentBox: '#<@liferay_portlet.namespace />carousel',
+				contentBox: '#<@portlet.namespace />carousel',
 				height: 250,
 				intervalTime: 2,
 				width: 700
 			}
 		).render();
-	</@aui.script>
+	</@liferay_aui.script>
 </#if>

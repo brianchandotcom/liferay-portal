@@ -1,5 +1,3 @@
-<#assign liferay_util = taglibLiferayHash["/WEB-INF/tld/liferay-util.tld"] />
-
 <#if entries?has_content>
 	<@liferay_util["html-top"]>
 		<style>

@@ -80,6 +80,12 @@ public abstract class BaseTemplateManager implements TemplateManager {
 	}
 
 	@Override
+	public void addTaglibSupport(
+		Map<String, Object> contextObjects, HttpServletRequest request,
+		HttpServletResponse response) {
+	}
+
+	@Override
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String themeName,
 		HttpServletRequest request, HttpServletResponse response) {

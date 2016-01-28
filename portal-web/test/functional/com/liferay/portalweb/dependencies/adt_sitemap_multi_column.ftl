@@ -1,9 +1,7 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-
 <#if entries?has_content>
-	<@aui.layout>
+	<@liferay_aui.layout>
 		<#list entries as entry>
-		    <@aui.column columnWidth=25>
+		    <@liferay_aui.column columnWidth=25>
 				<div class="results-header">
 					<h3>
 						<#assign layoutURL = portalUtil.getLayoutURL(entry, themeDisplay)>
@@ -15,9 +13,9 @@
 				<#assign pages = entry.getChildren()>
 
 				<@displayPages pages=pages />
-		    </@aui.column>
+		    </@liferay_aui.column>
 		</#list>
-	</@aui.layout>
+	</@liferay_aui.layout>
 </#if>
 
 <#macro displayPages

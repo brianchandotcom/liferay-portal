@@ -1,5 +1,3 @@
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-
 <#if !entries?has_content>
 	<#if !themeDisplay.isSignedIn()>
 		${renderRequest.setAttribute("PORTLET_CONFIGURATOR_VISIBILITY", true)}

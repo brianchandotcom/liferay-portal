@@ -273,14 +273,7 @@ public class ThemeUtil {
 			TemplateManagerUtil.getTemplateManager(
 				TemplateConstants.LANG_TYPE_FTL);
 
-		templateManager.addTaglibApplication(
-			template, "Application", request.getServletContext());
-		templateManager.addTaglibFactory(
-			template, "PortalJspTagLibs", servletContext);
-		templateManager.addTaglibFactory(
-			template, "ThemeJspTaglibs", themeServletContext);
-		templateManager.addTaglibRequest(
-			template, "Request", request, response);
+		templateManager.addTaglibSupport(template, request, response);
 		templateManager.addTaglibTheme(
 			template, "taglibLiferay", request,
 			new PipingServletResponse(response, writer));

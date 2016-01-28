@@ -47,6 +47,10 @@ public interface TemplateManager {
 		Map<String, Object> contextObjects, String applicationName,
 		HttpServletRequest request, HttpServletResponse response);
 
+	public void addTaglibSupport(
+		Map<String, Object> contextObjects, HttpServletRequest request,
+		HttpServletResponse response);
+
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String string,
 		HttpServletRequest request, HttpServletResponse response);

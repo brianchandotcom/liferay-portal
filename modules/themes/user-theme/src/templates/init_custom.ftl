@@ -1,7 +1,3 @@
-<#assign liferay_control_menu=PortalJspTagLibs["/META-INF/resources/liferay-control-menu.tld"]>
-<#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
-<#assign liferay_util=PortalJspTagLibs["/WEB-INF/tld/liferay-util.tld"]>
-
 <#assign layout_set_title = site_name>
 
 <#assign pageDistributionType = themeDisplay.getThemeSetting("page-distribution-type")>

@@ -1306,13 +1306,14 @@ public class UpgradeDynamicDataMappingTest {
 
 	protected void setUpClassNameIds() {
 		_classNameIdDDLRecordSet = PortalUtil.getClassNameId(
-			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet");
 		_classNameIdDDMStructure = PortalUtil.getClassNameId(
 			"com.liferay.dynamic.data.mapping.model.DDMStructure");
 		_classNameIdDDMContent = PortalUtil.getClassNameId(
 			"com.liferay.dynamic.data.mapping.model.DDMContent");
 		_classNameIdExpandoStorageAdapter = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.ExpandoStorageAdapter");
+			"com.liferay.portlet.dynamicdatamapping.storage." +
+				"ExpandoStorageAdapter");
 	}
 
 	protected void setUpPrimaryKeys() {

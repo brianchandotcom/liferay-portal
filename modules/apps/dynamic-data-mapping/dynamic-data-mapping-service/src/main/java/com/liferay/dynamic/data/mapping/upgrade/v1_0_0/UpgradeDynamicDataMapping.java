@@ -696,7 +696,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		_ddmContentClassNameId = PortalUtil.getClassNameId(DDMContent.class);
 
 		_expandoStorageAdapterClassNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.ExpandoStorageAdapter");
+			"com.liferay.portlet.dynamicdatamapping.storage." +
+				"ExpandoStorageAdapter");
 	}
 
 	protected String toJSON(DDMForm ddmForm) {
@@ -1379,7 +1380,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			ps = connection.prepareStatement(sb.toString());
 
-			ps.setLong(1, PortalUtil.getClassNameId(DDMContent.class));
+			ps.setLong(1, _ddmContentClassNameId);
 			ps.setString(2, "xml");
 
 			rs = ps.executeQuery();

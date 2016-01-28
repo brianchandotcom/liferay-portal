@@ -269,6 +269,14 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions(
+		long ruleGroupInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRAction> obc) {
+		return _mdrActionLocalService.getActions(ruleGroupInstanceId, start,
+			end, obc);
+	}
+
+	@Override
 	public int getActionsCount(long ruleGroupInstanceId) {
 		return _mdrActionLocalService.getActionsCount(ruleGroupInstanceId);
 	}

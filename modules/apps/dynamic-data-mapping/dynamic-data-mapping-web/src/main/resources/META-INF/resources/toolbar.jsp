@@ -18,6 +18,9 @@
 
 <%
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
 <liferay-frontend:management-bar
@@ -25,7 +28,17 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"modified-date", "id"} %>'
+			portletURL="<%= portletURL %>"
+		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

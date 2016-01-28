@@ -74,6 +74,8 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="searchContainerId" value="ddmStructures" />
+			<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 		</liferay-util:include>
 	</c:if>
 

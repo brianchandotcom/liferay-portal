@@ -11,7 +11,7 @@
 	<#assign dateFormat = "dd MMM yyyy - HH:mm:ss" />
 
 	<div class="container-fluid">
-		<div class="row" id="<@liferay_portlet.namespace />feedsTab">
+		<div class="row" id="<@portlet.namespace />feedsTab">
 			<ul class="col-xs-4">
 				<#list entries as curEntry>
 					<li><a href="#tab-${curEntry_index}">${htmlUtil.escape(curEntry.getTitle())}</a></li>
@@ -65,7 +65,7 @@
 	<@liferay_aui["script"] use="aui-base,aui-tabview">
 		new A.TabView(
 			{
-				srcNode: '#<@liferay_portlet.namespace />feedsTab',
+				srcNode: '#<@portlet.namespace />feedsTab',
 				stacked: true,
 				type: 'pills'
 			}

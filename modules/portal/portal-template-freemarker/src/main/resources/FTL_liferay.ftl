@@ -42,7 +42,7 @@ LPS-30525.
 <#macro breadcrumbs
 	default_preferences = ""
 >
-	<@liferay_portlet_ext["runtime"]
+	<@liferay_portlet["runtime"]
 		defaultPreferences=default_preferences
 		portletProviderAction=portletProviderAction.VIEW
 		portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
@@ -94,7 +94,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 <#macro languages
 	default_preferences = ""
 >
-	<@liferay_portlet_ext["runtime"]
+	<@liferay_portlet["runtime"]
 		defaultPreferences=default_preferences
 		portletProviderAction=portletProviderAction.VIEW
 		portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
@@ -105,7 +105,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	default_preferences = ""
 	instance_id = ""
 >
-	<@liferay_portlet_ext["runtime"]
+	<@liferay_portlet["runtime"]
 		defaultPreferences=default_preferences
 		instanceId=instance_id
 		portletProviderAction=portletProviderAction.VIEW
@@ -117,7 +117,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	default_preferences = ""
 >
 	<#if is_setup_complete>
-		<@liferay_portlet_ext["runtime"]
+		<@liferay_portlet["runtime"]
 			defaultPreferences=default_preferences
 			portletProviderAction=portletProviderAction.VIEW
 			portletProviderClassName="com.liferay.admin.kernel.util.PortalSearchApplicationType$Search"
@@ -133,7 +133,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 
 <#macro user_personal_bar>
 	<#if themeDisplay.isImpersonated() || is_setup_complete || !is_signed_in>
-		<@liferay_portlet_ext["runtime"]
+		<@liferay_portlet["runtime"]
 			portletProviderAction=portletProviderAction.VIEW
 			portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar"
 		/>

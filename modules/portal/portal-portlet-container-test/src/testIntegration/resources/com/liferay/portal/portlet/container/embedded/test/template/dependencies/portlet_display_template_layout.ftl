@@ -14,4 +14,4 @@
 */
 --%>
 
-<@liferay_portlet_ext.runtime portletName="${testRuntimePortletId}" />
+<@liferay_portlet.runtime portletName="${testRuntimePortletId}" />

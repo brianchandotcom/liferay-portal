@@ -29,7 +29,7 @@
 
 				<#if portlet_configuration_icons?has_content>
 					<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
-						<@liferay_portlet_ext["icon-options"]
+						<@liferay_portlet["icon-options"]
 							portletConfigurationIcons=portlet_configuration_icons
 						/>
 					</menu>

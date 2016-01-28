@@ -23,7 +23,7 @@
 			<#if portlet_display.isShowBackIcon()>
 				<a class="portlet-icon-back" href="${portlet_back_url}"><@liferay.language key="return-to-full-page" /></a>
 			<#else>
-				<@liferay_portlet_ext["icon-options"] />
+				<@liferay_portlet["icon-options"] />
 			</#if>
 		</menu>
 	</header>

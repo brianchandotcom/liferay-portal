@@ -117,7 +117,7 @@
 />
 
 <@liferay_aui.script use="liferay-map-base">
-	var map = Liferay.component('<@liferay_portlet.namespace />Map');
+	var map = Liferay.component('<@portlet.namespace />Map');
 
 	map.on(
 		'featureClick',
@@ -136,7 +136,7 @@
 </@liferay_aui.script>
 
 <#macro getAbstract asset>
-	<div class="asset-entry-abstract" id="<@liferay_portlet.namespace />assetEntryAbstract">
+	<div class="asset-entry-abstract" id="<@portlet.namespace />assetEntryAbstract">
 		<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
 
 		<#assign assetRenderer = asset.getAssetRenderer() />

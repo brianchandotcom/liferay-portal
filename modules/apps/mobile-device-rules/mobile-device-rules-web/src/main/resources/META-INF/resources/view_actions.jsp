@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
 
 long ruleGroupInstanceId = ParamUtil.getLong(request, "ruleGroupInstanceId");
 
@@ -26,38 +25,58 @@ MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.ge
 
 MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_actions.jsp");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceId));
+PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	showBackURL="<%= showBackURL %>"
-	title='<%= LanguageUtil.format(request, "actions-for-x", ruleGroup.getName(locale), false) %>'
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label='<%= LanguageUtil.format(request, "actions-for-x", ruleGroup.getName(locale), false) %>' selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="actionIds" type="hidden" />
-
-	<liferay-ui:search-container
-		delta="<%= 5 %>"
-		deltaConfigurable="<%= false %>"
-		emptyResultsMessage="no-actions-are-configured-for-this-device-family"
-		headerNames="name,description,type"
-		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new RowChecker(renderResponse) %>"
-		total="<%= MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId) %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= MDRActionLocalServiceUtil.getActions(ruleGroupInstanceId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="actionActions"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= mdrActionDisplayContext.getOrderByCol() %>"
+			orderByType="<%= mdrActionDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"create-date"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteActions" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
+
+<portlet:actionURL name="/mobile_device_rules/edit_action" var="deleteURL">
+	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+
+	<liferay-ui:search-container
+		id="actionActions"
+		searchContainer="<%= mdrActionDisplayContext.getActionSearchContainer() %>"
+	>
 		<liferay-ui:search-container-row
 			className="com.liferay.mobile.device.rules.model.MDRAction"
 			escapedModel="<%= true %>"
@@ -73,43 +92,29 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 			<%@ include file="/action_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-			<liferay-portlet:renderURL var="addURL">
-				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
-			</liferay-portlet:renderURL>
-
-			<aui:nav-bar>
-				<aui:nav cssClass="navbar-nav">
-					<aui:nav-item href="<%= addURL %>" iconCssClass="icon-plus" label="add-action" />
-				</aui:nav>
-			</aui:nav-bar>
-		</c:if>
-		<c:if test="<%= total > 0 %>">
-			<aui:button-row>
-				<aui:button cssClass="btn-lg delete-rule-actions-button" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteActions();" %>' value="delete" />
-			</aui:button-row>
-
-			<div class="separator"><!-- --></div>
-		</c:if>
-
-		<liferay-ui:search-iterator type="more" />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
+<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+	<liferay-portlet:renderURL var="addURL">
+		<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
+	</liferay-portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-action") %>' url="<%= addURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
+
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request) %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
-	function <portlet:namespace />deleteActions() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('actionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="/mobile_device_rules/edit_action"><portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" /></portlet:actionURL>');
+	$('#<portlet:namespace />deleteActions').on(
+		'click',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+				submitForm(document.<portlet:namespace />fm);
+			}
 		}
-	}
+	);
 </aui:script>

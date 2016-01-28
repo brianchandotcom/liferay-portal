@@ -27,7 +27,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="ruleGroupInstanceId" type="long" />
-		<column name="name" type="String"  localized="true" />
+		<column name="name" type="String" localized="true" accessor="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />

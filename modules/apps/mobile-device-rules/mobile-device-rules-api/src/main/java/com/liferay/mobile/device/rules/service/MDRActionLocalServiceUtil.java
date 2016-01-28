@@ -254,6 +254,12 @@ public class MDRActionLocalServiceUtil {
 		return getService().getActions(ruleGroupInstanceId, start, end);
 	}
 
+	public static java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions(
+		long ruleGroupInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRAction> obc) {
+		return getService().getActions(ruleGroupInstanceId, start, end, obc);
+	}
+
 	public static int getActionsCount(long ruleGroupInstanceId) {
 		return getService().getActionsCount(ruleGroupInstanceId);
 	}

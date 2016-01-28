@@ -19,7 +19,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="mobile-device-rule"
+	cssClass="text-strong"
 	href="<%= rowURL %>"
 	name="name"
 >
@@ -31,43 +31,22 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	</c:if>
 </liferay-ui:search-container-column-text>
 
+<%
+List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupInstance.getRuleGroupInstanceId(), 0, 10);
+%>
+
 <liferay-ui:search-container-column-text
-	cssClass="mobile-device-rule"
-	href="<%= rowURL %>"
 	name="actions"
->
-
-	<%
-	List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupInstance.getRuleGroupInstanceId(), 0, 10);
-
-	StringBundler sb = new StringBundler(mdrActions.size() * 2);
-
-	for (int i = 0; i < mdrActions.size(); i++) {
-		MDRAction mdrAction = mdrActions.get(i);
-
-		sb.append(HtmlUtil.escape(mdrAction.getName(locale)));
-		sb.append(", ");
-	}
-
-	if (mdrActions.size() > 0) {
-		sb.setIndex(sb.index() - 1);
-	}
-	%>
-
-	<%= sb.toString() %>
-
-</liferay-ui:search-container-column-text>
+	value="<%= HtmlUtil.escape(ListUtil.toString(mdrActions, MDRAction.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>"
+/>
 
 <c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
 	<liferay-ui:search-container-column-text
-		cssClass="mobile-device-rule"
-		href="<%= rowURL %>"
 		property="priority"
 	/>
 </c:if>
 
 <liferay-ui:search-container-column-jsp
-	align="right"
-	cssClass="entry-action"
+	cssClass="list-group-item-field"
 	path="/layout/mobile_device_rules_rule_group_instance_action.jsp"
 />

@@ -221,6 +221,11 @@ public interface MDRActionLocalService extends BaseLocalService,
 		long ruleGroupInstanceId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions(
+		long ruleGroupInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRAction> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getActionsCount(long ruleGroupInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

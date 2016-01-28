@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -46,6 +47,23 @@ public interface MDRAction extends MDRActionModel, PersistedModel {
 			@Override
 			public Class<Long> getAttributeClass() {
 				return Long.class;
+			}
+
+			@Override
+			public Class<MDRAction> getTypeClass() {
+				return MDRAction.class;
+			}
+		};
+
+	public static final Accessor<MDRAction, String> NAME_ACCESSOR = new Accessor<MDRAction, String>() {
+			@Override
+			public String get(MDRAction mdrAction) {
+				return mdrAction.getName(LocaleThreadLocal.getThemeDisplayLocale());
+			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
 			}
 
 			@Override

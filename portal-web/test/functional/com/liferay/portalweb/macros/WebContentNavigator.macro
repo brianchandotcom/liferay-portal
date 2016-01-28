@@ -36,6 +36,30 @@
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>
 
+	<command name="gotoAddPGViaWCD">
+		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
+
+		<if>
+			<not>
+				<contains string="${structureName}" substring="{structureName}" />
+			</not>
+			<then>
+				<var name="structureName" value="${structureName}" />
+			</then>
+			<else>
+				<var name="structureName" value="Basic Web Content" />
+			</else>
+		</if>
+
+		<var name="key_structureName" value="${structureName}" />
+
+		<execute function="AssertClick" locator1="WCD#ADD_STRUCTURED_WEB_CONTENT" value1="${structureName}" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+
+		<execute function="AssertVisible" locator1="TextInput#TITLE" />
+	</command>
+
 	<command name="gotoAddTemplate">
 		<execute function="Click" locator1="Button#PLUS" />
 

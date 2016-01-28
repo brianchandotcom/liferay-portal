@@ -9,13 +9,18 @@
 </thead>
 <tbody>
 <tr>
+	<td>PREVIEW_TITLE</td>
+	<td>//div[contains(@class,'modal-header')]//span[contains(@class,'title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_IFRAME</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'preview_article_content')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BODY_FIELD</td>
-	<td>//div[@class='portlet-body']</td>
+	<td>//div[@class='journal-article-preview']</td>
 	<td></td>
 </tr>
 </tbody>

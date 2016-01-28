@@ -595,7 +595,7 @@
 </tr>
 <tr>
 	<td>UNDO</td>
-	<td>//a[contains(.,'Undo')]</td>
+	<td>//button[contains(.,'Undo')]</td>
 	<td></td>
 </tr>
 <tr>

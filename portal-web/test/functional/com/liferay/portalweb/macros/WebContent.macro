@@ -18,7 +18,9 @@
 	<command name="_gotoAddPGViaWCD">
 		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
 
-		<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<var name="key_structureName" value="Basic Web Content" />
+
+		<execute function="AssertClick" locator1="WCD#ADD_STRUCTURED_WEB_CONTENT" value1="Basic Web Content" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
@@ -139,15 +141,9 @@
 	</command>
 
 	<command name="addLocalizedPGViaWCD">
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
-
-		<var name="key_localizedBasicWebContent" value="${localizedBasicWebContent}" />
-
-		<execute function="AssertClick" locator1="WCD#ADD_BASIC_WEB_CONTENT_LOCALIZED" value1="${localizedBasicWebContent}" />
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-
-		<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
+		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
+			<var name="structureName" value="${localizedBasicWebContent}" />
+		</execute>
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -215,7 +211,9 @@
 	</command>
 
 	<command name="addPGViaWCD">
-		<execute macro="WebContent#_gotoAddPGViaWCD">
+		<execute macro="WebContentNavigator#gotoAddPGViaWCD" />
+
+		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -250,13 +248,9 @@
 	</command>
 
 	<command name="addStructuredPGViaWCD">
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
-
-		<var name="key_structureName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="WCD#ADD_STRUCTURED_WEB_CONTENT" value1="${structureName}" />
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
+			<var name="structureName" value="${structureName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 
@@ -427,12 +421,9 @@
 	</command>
 
 	<command name="addWithGlobalStructurePGViaWCD">
-		<var name="key_selectStructureName" value="${selectStructureName}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
-		<execute function="AssertClick" locator1="WCD#ADD_MENU_WEB_CONTENT_STRUCTURE" value1="${selectStructureName}" />
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
+			<var name="structureName" value="${selectStructureName}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Structure and Template" />
@@ -719,7 +710,11 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaWCD">
-		<execute macro="WebContent#_gotoAddPGViaWCD">
+		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
+			<var name="structureName" value="${selectStructureName}" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -1064,7 +1059,7 @@
 	<command name="preview">
 		<var name="key_iframeTitle" value="${webContentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextEquals" locator1="WCPreview#PREVIEW_TITLE" value1="${webContentTitle}" />
 
 		<execute function="SelectFrame" locator1="WCPreview#PREVIEW_IFRAME" />
 

@@ -911,6 +911,10 @@
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
+
 		<execute macro="WikiPage#deleteCP">
 			<var name="assetType" value="Wiki Page" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
@@ -974,6 +978,10 @@
 		<execute macro="WikiNode#viewCP">
 			<var name="numberOfWikiPages" value="2" />
 			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
 		<execute macro="WikiNavigator#gotoCP">

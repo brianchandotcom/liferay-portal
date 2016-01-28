@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -82,6 +83,20 @@ public class DDLViewRecordsDisplayContext {
 
 	public String getDisplayStyle() {
 		return "list";
+	}
+
+	public String getOrderByCol() {
+		String orderByCol = ParamUtil.getString(
+			_liferayPortletRequest, "orderByCol", "modified-date");
+
+		return orderByCol;
+	}
+
+	public String getOrderByType() {
+		String orderByType = ParamUtil.getString(
+			_liferayPortletRequest, "orderByType", "asc");
+
+		return orderByType;
 	}
 
 	protected boolean isDDMFormFieldTransient(DDMFormField ddmFormField) {

@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.internal.map;
 
+import com.liferay.osgi.service.tracker.collections.internal.ServiceTrackerUtil;
 import com.liferay.osgi.service.tracker.collections.map.KeyedServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
@@ -32,8 +33,6 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -45,32 +44,21 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	implements ServiceTrackerMap<K, R> {
 
 	public ServiceTrackerMapImpl(
-			BundleContext bundleContext, Class<SR> clazz, String filterString,
-			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
-			ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer,
-			ServiceTrackerBucketFactory<SR, TS, R>
-				serviceTrackerMapBucketFactory,
-			ServiceTrackerMapListener<K, TS, R> serviceTrackerMapListener)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<SR> clazz, String filterString,
+		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
+		ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer,
+		ServiceTrackerBucketFactory<SR, TS, R>
+			serviceTrackerMapBucketFactory,
+		ServiceTrackerMapListener<K, TS, R> serviceTrackerMapListener) {
 
 		_serviceReferenceMapper = serviceReferenceMapper;
 		_serviceTrackerCustomizer = serviceTrackerCustomizer;
 		_serviceTrackerMapBucketFactory = serviceTrackerMapBucketFactory;
 		_serviceTrackerMapListener = serviceTrackerMapListener;
 
-		if (filterString != null) {
-			Filter filter = bundleContext.createFilter(
-				"(&(objectClass=" + clazz.getName() + ")" + filterString + ")");
-
-			_serviceTracker = new ServiceTracker<>(
-				bundleContext, filter,
-				new ServiceReferenceServiceTrackerCustomizer());
-		}
-		else {
-			_serviceTracker = new ServiceTracker<>(
-				bundleContext, clazz,
-				new ServiceReferenceServiceTrackerCustomizer());
-		}
+		_serviceTracker = ServiceTrackerUtil.createServiceTracker(
+			bundleContext, clazz, filterString,
+			new ServiceReferenceServiceTrackerCustomizer());
 
 		_logger = new Logger(bundleContext);
 	}

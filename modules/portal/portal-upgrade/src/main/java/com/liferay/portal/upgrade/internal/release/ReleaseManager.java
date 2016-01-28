@@ -46,7 +46,6 @@ import java.util.Map;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -116,8 +115,7 @@ public class ReleaseManager {
 
 	@Activate
 	protected void activate(
-			final BundleContext bundleContext, Map<String, Object> properties)
-		throws InvalidSyntaxException {
+		final BundleContext bundleContext, Map<String, Object> properties) {
 
 		_logger = new Logger(bundleContext);
 

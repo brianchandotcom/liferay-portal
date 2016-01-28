@@ -30,7 +30,6 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkListener;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -65,21 +64,19 @@ public class BundleContextWrapper implements BundleContext {
 
 	@Override
 	public void addServiceListener(
-			ServiceListener serviceListener, String filterString)
-		throws InvalidSyntaxException {
+		ServiceListener serviceListener, String filterString) {
 
 		_bundleContext.addServiceListener(serviceListener, filterString);
 	}
 
 	@Override
-	public Filter createFilter(String s) throws InvalidSyntaxException {
+	public Filter createFilter(String s) {
 		return _bundleContext.createFilter(s);
 	}
 
 	@Override
 	public ServiceReference<?>[] getAllServiceReferences(
-			String clazz, String filterString)
-		throws InvalidSyntaxException {
+		String clazz, String filterString) {
 
 		return _bundleContext.getAllServiceReferences(clazz, filterString);
 	}
@@ -154,16 +151,14 @@ public class BundleContextWrapper implements BundleContext {
 
 	@Override
 	public <S> Collection<ServiceReference<S>> getServiceReferences(
-			Class<S> clazz, String filterString)
-		throws InvalidSyntaxException {
+		Class<S> clazz, String filterString) {
 
 		return _bundleContext.getServiceReferences(clazz, filterString);
 	}
 
 	@Override
 	public ServiceReference<?>[] getServiceReferences(
-			String clazz, String filterString)
-		throws InvalidSyntaxException {
+		String clazz, String filterString) {
 
 		return _bundleContext.getServiceReferences(clazz, filterString);
 	}

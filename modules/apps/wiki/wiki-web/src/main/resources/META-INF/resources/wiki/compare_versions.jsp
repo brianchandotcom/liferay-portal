@@ -25,9 +25,20 @@ String title = (String)request.getAttribute(WebKeys.TITLE);
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);
 double sourceVersion = (Double)request.getAttribute(WebKeys.SOURCE_VERSION);
 double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL.toString());
+
+	String headerTitle = LanguageUtil.get(resourceBundle, "compare-versions");
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
-<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
+<c:if test="<%= !portletTitleBasedNavigation && !windowState.equals(LiferayWindowState.POP_UP) %>">
 	<liferay-util:include page="/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 	<liferay-util:include page="/wiki/page_tabs.jsp" servletContext="<%= application %>">

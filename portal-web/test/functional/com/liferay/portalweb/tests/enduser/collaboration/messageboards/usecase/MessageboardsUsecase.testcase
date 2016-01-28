@@ -789,7 +789,6 @@
 
 		<execute macro="PermissionsInline#gotoMessageBoardsCategoryPG">
 			<var name="categoryDescription" value="MB Category4 Description" />
-			<var name="categoryDescriptionEnabled" value="true" />
 			<var name="categoryName" value="MB Category4 Name" />
 		</execute>
 

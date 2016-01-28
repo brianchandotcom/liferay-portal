@@ -465,7 +465,7 @@
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON" />
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
- 
+
 		<var method="StringUtil#replace('${exportTemplateName}', ' ', '_')" name="exportTemplateName" />
 		<var name="key_larFileName" value="${exportTemplateName}" />
 		<echo message="${exportTemplateName}" />

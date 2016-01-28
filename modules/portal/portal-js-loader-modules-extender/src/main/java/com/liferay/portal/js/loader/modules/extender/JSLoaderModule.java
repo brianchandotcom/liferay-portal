@@ -265,7 +265,7 @@ public class JSLoaderModule {
 			Dictionary<String, String> headers = _bundle.getHeaders();
 
 			boolean jsSubmodules = GetterUtil.getBoolean(
-				headers.get("JS-Submodules"));
+				headers.get("Liferay-JS-Submodules"));
 
 			if (jsSubmodules) {
 				_unversionedMapsConfiguration = normalize(

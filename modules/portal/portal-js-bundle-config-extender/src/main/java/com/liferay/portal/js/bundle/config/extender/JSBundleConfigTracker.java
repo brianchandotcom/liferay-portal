@@ -67,7 +67,7 @@ public class JSBundleConfigTracker
 
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String jsConfig = headers.get("JS-Config");
+		String jsConfig = headers.get("Liferay-JS-Config");
 
 		if (jsConfig != null) {
 			URL url = bundle.getEntry(jsConfig);

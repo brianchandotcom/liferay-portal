@@ -4,7 +4,7 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	META-INF/resources/content=src/main/resources/content,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
-JS-Config: /META-INF/resources/admin/js/config.js
+Liferay-JS-Config: /META-INF/resources/admin/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Lists
 Web-ContextPath: /dynamic-data-lists-form-web

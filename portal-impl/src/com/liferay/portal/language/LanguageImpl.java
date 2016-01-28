@@ -1637,6 +1637,10 @@ public class LanguageImpl implements Language, Serializable {
 			Locale locale, String pattern, Object[] formattedArguments)
 		throws PortalException {
 
+		if (locale == null) {
+			locale = LocaleUtil.getDefault();
+		}
+
 		MessageFormat messageFormat = new MessageFormat(pattern, locale);
 
 		for (int i = 0; i < formattedArguments.length; i++) {

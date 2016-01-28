@@ -83,9 +83,9 @@ else {
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-image
-							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-							toggleRowChecker="<%= true %>"
+						<liferay-ui:search-container-column-icon
+							cssClass="asset-icon"
+							icon="forms"
 						/>
 
 						<liferay-ui:search-container-column-jsp

@@ -14,12 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
-import java.io.IOException;
-
 import javax.portlet.PortletRequest;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -35,17 +30,6 @@ public class BasePortletConfigurationIconFactory
 	@Override
 	public double getWeight() {
 		return 0;
-	}
-
-	/**
-	 * @throws IOException
-	 */
-	@Override
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		return false;
 	}
 
 }

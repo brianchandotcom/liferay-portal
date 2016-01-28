@@ -39,7 +39,8 @@ public class DDMStructuresPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
-		return new DDMStructuresPortletConfigurationIcon(portletRequest);
+		return new DDMStructuresPortletConfigurationIcon(
+			getServletContext(), getJspPath(), portletRequest);
 	}
 
 	@Override

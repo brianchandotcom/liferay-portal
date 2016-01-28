@@ -16,21 +16,24 @@ package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Rafael Praxedes
  */
 public class DDMStructuresPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public DDMStructuresPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
 		PortletRequest portletRequest) {
 
-		super(portletRequest);
+		super(servletContext, jspPath, portletRequest);
 	}
 
 	@Override

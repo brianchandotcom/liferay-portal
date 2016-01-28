@@ -14,19 +14,24 @@
 
 package com.liferay.journal.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.model.User;
 
 import javax.portlet.PortletRequest;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class StructuresPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
-	public StructuresPortletConfigurationIcon(PortletRequest portletRequest) {
-		super(portletRequest);
+	public StructuresPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
+		PortletRequest portletRequest) {
+
+		super(servletContext, jspPath, portletRequest);
 	}
 
 	@Override

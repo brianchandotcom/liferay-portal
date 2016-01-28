@@ -14,7 +14,12 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
+import java.io.IOException;
+
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -54,6 +59,10 @@ public interface PortletConfigurationIcon {
 	public String getTarget();
 
 	public String getURL();
+
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
 
 	public boolean isLabel();
 

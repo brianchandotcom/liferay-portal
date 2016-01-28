@@ -21,13 +21,11 @@ long groupId = siteAdminDisplayContext.getGroupId();
 
 Group group = siteAdminDisplayContext.getGroup();
 
-String keywords = siteAdminDisplayContext.getKeywords();
-
-PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
-
 String displayStyle = siteAdminDisplayContext.getDisplayStyle();
 
 SearchContainer groupSearch = siteAdminDisplayContext.getSearchContainer();
+
+PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
 
 PortletURL searchURL = siteAdminDisplayContext.getSearchURL();
 
@@ -57,7 +55,7 @@ if (group != null) {
 	searchContainerId="sites"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= Validator.isNull(keywords) && (group != null) %>">
+		<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
 			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
 		</c:if>
 
@@ -85,7 +83,7 @@ if (group != null) {
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<div class="sidenav-menu-slider">
 		<div class="sidebar sidebar-default sidenav-menu">
-			<c:if test="<%= Validator.isNull(keywords) && (group != null) %>">
+			<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
 				<liferay-util:include page="/view_site_info.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</div>

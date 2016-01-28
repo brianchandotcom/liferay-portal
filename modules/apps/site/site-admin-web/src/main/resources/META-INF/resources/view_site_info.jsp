@@ -21,12 +21,6 @@ long groupId = siteAdminDisplayContext.getGroupId();
 
 Group group = siteAdminDisplayContext.getGroup();
 
-int usersCount = siteAdminDisplayContext.getUsersCount();
-
-int organizationsCount = siteAdminDisplayContext.getOrganizationsCount();
-
-int userGroupsCount = siteAdminDisplayContext.getUserGroupsCount();
-
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 request.setAttribute("view_entries.jspf-site", group);
@@ -64,7 +58,7 @@ request.setAttribute("view_entries.jspf-site", group);
 
 	<h5><liferay-ui:message key="members" /></h5>
 
-	<c:if test="<%= (usersCount == 0) && (organizationsCount == 0) && (userGroupsCount == 0) %>">
+	<c:if test="<%= (siteAdminDisplayContext.getUsersCount() == 0) && (siteAdminDisplayContext.getOrganizationsCount() == 0) && (siteAdminDisplayContext.getUserGroupsCount() == 0) %>">
 		<p>
 			<liferay-ui:message key="none" />
 		</p>
@@ -78,29 +72,25 @@ request.setAttribute("view_entries.jspf-site", group);
 	assignMembersURL.setParameter("redirect", currentURL);
 	%>
 
-	<c:if test="<%= usersCount > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getUsersCount() > 0 %>">
 		<p>
-			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (usersCount == 1) ? "x-user" : "x-users", usersCount, false) %>' />
+			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount() == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(), false) %>' />
 		</p>
 	</c:if>
 
-	<c:if test="<%= organizationsCount > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getOrganizationsCount() > 0 %>">
 		<p>
-			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount, false) %>' />
+			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getOrganizationsCount() == 1) ? "x-organization" : "x-organizations", siteAdminDisplayContext.getOrganizationsCount(), false) %>' />
 		</p>
 	</c:if>
 
-	<c:if test="<%= userGroupsCount > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getUserGroupsCount() > 0 %>">
 		<p>
-			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount, false) %>' />
+			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUserGroupsCount() == 1) ? "x-user-groups" : "x-user-groups", siteAdminDisplayContext.getUserGroupsCount(), false) %>' />
 		</p>
 	</c:if>
 
-	<%
-	int pendingRequests = siteAdminDisplayContext.getPendingRequestsCount();
-	%>
-
-	<c:if test="<%= pendingRequests > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getPendingRequestsCount() > 0 %>">
 		<h5><liferay-ui:message key="request-pending" /></h5>
 
 		<liferay-portlet:renderURL portletName="<%= portletId %>" var="viewMembershipRequestsURL">
@@ -110,7 +100,7 @@ request.setAttribute("view_entries.jspf-site", group);
 		</liferay-portlet:renderURL>
 
 		<p>
-			<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>' />
+			<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getPendingRequestsCount() == 1) ? "x-request-pending" : "x-requests-pending", siteAdminDisplayContext.getPendingRequestsCount(), false) %>' />
 		</p>
 	</c:if>
 

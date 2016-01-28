@@ -12,21 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.tools.shard.builder.internal.algorithm;
+package com.liferay.portal.tools.shard.builder.internal.validators;
 
-import java.io.OutputStream;
+import com.beust.jcommander.ParameterException;
 
-import java.util.List;
+import java.io.File;
 
 /**
  * @author Manuel de la Peña
  */
-public interface DBProvider {
+public class WritableFileParamValidator extends FileParamExistsValidator {
 
-	public List<String> getControlTableNames(String schemaName);
+	@Override
+	public void validate(String name, String value) throws ParameterException {
+		super.validate(name, value);
 
-	public List<String> getPartitionedTableNames(String schemaName);
+		File file = new File(value);
 
-	public String write(String tableName, OutputStream outputStream);
+		if (!file.canRead() || !file.canWrite()) {
+			throw new ParameterException(
+				"File parameter " + name + " is read-only");
+		}
+	}
 
 }

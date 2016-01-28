@@ -2,6 +2,7 @@ Bundle-Name: Liferay Dynamic Data Mapping Service
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.service
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.dynamic.data.mapping.background.task,\
 	com.liferay.dynamic.data.mapping.configuration,\
 	com.liferay.dynamic.data.mapping.exportimport.content.processor,\
 	com.liferay.dynamic.data.mapping.model.impl,\

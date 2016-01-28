@@ -10,7 +10,7 @@
 
 		<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
 
-		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
 	</command>
@@ -28,7 +28,7 @@
 			<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
 		</for>
 
-		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="addTag">

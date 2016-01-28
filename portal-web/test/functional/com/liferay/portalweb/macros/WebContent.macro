@@ -45,7 +45,7 @@
 		<execute function="AssertClick#assertTextClickTagSelector" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" />
 		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_UNSELECTED" value1="${categoryName}" />
 		<execute function="AssertElementPresent" locator1="AssetCategorization#CATEGORY_SELECTED" value1="${categoryName}" />
-		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
+		<execute function="Click" locator1="Icon#CLOSE" />
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />

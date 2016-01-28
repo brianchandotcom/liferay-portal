@@ -1114,7 +1114,8 @@
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found" />
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
-		<execute function="Click" locator1="WC#SEARCH_FILTER_REMOVE_BUTTON" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
 	</command>
 

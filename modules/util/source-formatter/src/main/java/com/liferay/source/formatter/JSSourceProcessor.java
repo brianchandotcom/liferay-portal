@@ -80,7 +80,8 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 			newContent = newContent.substring(0, newContent.length() - 1);
 		}
 
-		checkLanguageKeys(fileName, newContent, languageKeyPattern);
+		checkLanguageKeys(
+			fileName, absolutePath, newContent, languageKeyPattern);
 
 		if (newContent.contains("debugger.")) {
 			processErrorMessage(fileName, "debugger " + fileName);

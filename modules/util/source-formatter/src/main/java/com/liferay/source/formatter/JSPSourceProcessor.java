@@ -364,10 +364,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = fixSessionKey(
 			fileName, newContent, taglibSessionKeyPattern);
 
-		checkLanguageKeys(fileName, newContent, languageKeyPattern);
-		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern1);
-		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern2);
-		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern3);
+		checkLanguageKeys(
+			fileName, absolutePath, newContent, languageKeyPattern);
+		checkLanguageKeys(
+			fileName, absolutePath, newContent, _taglibLanguageKeyPattern1);
+		checkLanguageKeys(
+			fileName, absolutePath, newContent, _taglibLanguageKeyPattern2);
+		checkLanguageKeys(
+			fileName, absolutePath, newContent, _taglibLanguageKeyPattern3);
 
 		checkXSS(fileName, newContent);
 

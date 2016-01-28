@@ -858,7 +858,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName);
 		}
 
-		checkLanguageKeys(fileName, newContent, languageKeyPattern);
+		checkLanguageKeys(
+			fileName, absolutePath, newContent, languageKeyPattern);
 
 		newContent = StringUtil.replace(
 			newContent, StringPool.TAB + "for (;;) {",

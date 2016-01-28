@@ -29,82 +29,84 @@ else {
 }
 %>
 
-<c:if test="<%= (wikiPage.getStatus() == WorkflowConstants.STATUS_APPROVED) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
-	<portlet:actionURL name="/wiki/edit_page" var="revertURL">
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-		<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
-		<portlet:param name="version" value="<%= String.valueOf(wikiPage.getVersion()) %>" />
-	</portlet:actionURL>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= (wikiPage.getStatus() == WorkflowConstants.STATUS_APPROVED) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
+		<portlet:actionURL name="/wiki/edit_page" var="revertURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+			<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
+			<portlet:param name="version" value="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon
-		iconCssClass="icon-undo"
-		message="revert"
-		url="<%= revertURL %>"
-	/>
-</c:if>
+		<liferay-ui:icon
+			iconCssClass="icon-undo"
+			message="revert"
+			url="<%= revertURL %>"
+		/>
+	</c:if>
 
-<c:if test="<%= row == null %>">
-	<portlet:renderURL var="compareVersionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/wiki/select_version" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-		<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
-		<portlet:param name="sourceVersion" value="<%= String.valueOf(wikiPage.getVersion()) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= row == null %>">
+		<portlet:renderURL var="compareVersionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="/wiki/select_version" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+			<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
+			<portlet:param name="sourceVersion" value="<%= String.valueOf(wikiPage.getVersion()) %>" />
+		</portlet:renderURL>
 
-	<%
-	Map<String, Object> data = new HashMap<String, Object>();
+		<%
+		Map<String, Object> data = new HashMap<String, Object>();
 
-	data.put("uri", compareVersionsURL);
-	%>
+		data.put("uri", compareVersionsURL);
+		%>
 
-	<liferay-ui:icon
-		cssClass="compare-to-link"
-		data="<%= data %>"
-		label="<%= true %>"
-		message="compare-to"
-		url="javascript:;"
-	/>
+		<liferay-ui:icon
+			cssClass="compare-to-link"
+			data="<%= data %>"
+			label="<%= true %>"
+			message="compare-to"
+			url="javascript:;"
+		/>
 
-	<aui:script sandbox="<%= true %>">
-		$('body').on(
-			'click',
-			'.compare-to-link a',
-			function(event) {
-				var currentTarget = $(event.currentTarget);
+		<aui:script sandbox="<%= true %>">
+			$('body').on(
+				'click',
+				'.compare-to-link a',
+				function(event) {
+					var currentTarget = $(event.currentTarget);
 
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								destroyOnHide: true,
+								modal: true
+							},
+							eventName: '<portlet:namespace />selectVersionFm',
+							id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
+							title: '<liferay-ui:message key="compare-versions" />',
+							uri: currentTarget.data('uri')
 						},
-						eventName: '<portlet:namespace />selectVersionFm',
-						id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
-						title: '<liferay-ui:message key="compare-versions" />',
-						uri: currentTarget.data('uri')
-					},
-					function(event) {
-						<portlet:renderURL var="compareVersionURL">
-							<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
-							<portlet:param name="backURL" value="<%= currentURL %>" />
-							<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
-							<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-							<portlet:param name="type" value="html" />
-						</portlet:renderURL>
+						function(event) {
+							<portlet:renderURL var="compareVersionURL">
+								<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
+								<portlet:param name="backURL" value="<%= currentURL %>" />
+								<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
+								<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+								<portlet:param name="type" value="html" />
+							</portlet:renderURL>
 
-						var uri = '<%= compareVersionURL %>';
+							var uri = '<%= compareVersionURL %>';
 
-						uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + event.sourceversion, uri);
-						uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + event.targetversion, uri);
+							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + event.sourceversion, uri);
+							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + event.targetversion, uri);
 
-						location.href = uri;
-					}
-				);
-			}
-		);
-	</aui:script>
-</c:if>
+							location.href = uri;
+						}
+					);
+				}
+			);
+		</aui:script>
+	</c:if>
+</liferay-ui:icon-menu>

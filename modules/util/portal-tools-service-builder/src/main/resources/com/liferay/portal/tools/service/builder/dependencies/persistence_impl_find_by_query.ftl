@@ -1,7 +1,7 @@
 StringBundler query = null;
 
 if (orderByComparator != null) {
-	query = new StringBundler(${finderColsList?size + 2} + (orderByComparator.getOrderByFields().length * 3));
+	query = new StringBundler(${finderColsList?size + 2} + (orderByComparator.getOrderByFields().length * 2));
 }
 else {
 	query = new StringBundler(${finderColsList?size + 2});

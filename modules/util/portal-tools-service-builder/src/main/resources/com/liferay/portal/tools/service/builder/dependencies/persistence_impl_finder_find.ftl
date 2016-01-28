@@ -697,10 +697,10 @@ that may or may not be enforced with a unique index at the database level. Case
 				StringBundler query = null;
 
 				if (orderByComparator != null) {
-					query = new StringBundler(${finderColsList?size + 2} + (orderByComparator.getOrderByFields().length * 3));
+					query = new StringBundler(${finderColsList?size + 2} + (orderByComparator.getOrderByFields().length * 2));
 				}
 				else {
-					query = new StringBundler(${finderColsList?size + 2});
+					query = new StringBundler(${finderColsList?size + 3});
 				}
 
 				if (getDB().isSupportsInlineDistinct()) {
@@ -882,10 +882,10 @@ that may or may not be enforced with a unique index at the database level. Case
 					StringBundler query = null;
 
 					if (orderByComparator != null) {
-						query = new StringBundler(6 + (orderByComparator.getOrderByFields().length * 6));
+						query = new StringBundler(${finderColsList?size + 4} + (orderByComparator.getOrderByConditionFields().length * 3) + (orderByComparator.getOrderByFields().length * 3));
 					}
 					else {
-						query = new StringBundler(3);
+						query = new StringBundler(${finderColsList?size + 3});
 					}
 
 					if (getDB().isSupportsInlineDistinct()) {

@@ -1091,7 +1091,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 + (orderByComparator.getOrderByFields().length * 3));
+				query = new StringBundler(2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_${entity.alias?upper_case});
 

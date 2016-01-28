@@ -594,6 +594,52 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return _structureClassNameIds.get(classPK);
 	}
 
+	protected boolean hasStructureVersion(long structureId, String version)
+		throws Exception {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select * from DDMStructureVersion where structureId = ? and " +
+					"version = ?");
+
+			ps.setLong(1, structureId);
+			ps.setString(2, version);
+
+			rs = ps.executeQuery();
+
+			return rs.next();
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+	}
+
+	protected boolean hasTemplateVersion(long templateId, String version)
+		throws Exception {
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select * from DDMTemplateVersion where templateId = ? and " +
+					"version = ?");
+
+			ps.setLong(1, templateId);
+			ps.setString(2, version);
+
+			rs = ps.executeQuery();
+
+			return rs.next();
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+	}
+
 	protected boolean isInvalidFieldName(String fieldName) {
 		Matcher matcher = _invalidFieldNameCharsPattern.matcher(fieldName);
 
@@ -1102,7 +1148,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// Structure version
 
-				if (version != null) {
+				if (hasStructureVersion(structureId, version)) {
 					continue;
 				}
 
@@ -1254,7 +1300,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// Template version
 
-				if (version == null) {
+				if (!hasTemplateVersion(templateId, version)) {
 					addTemplateVersion(
 						increment(), groupId, companyId, userId, userName,
 						modifiedDate, classNameId, classPK, templateId, name,

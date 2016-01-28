@@ -12,23 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.portlet.action;
+package com.liferay.login.authentication.openid.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,57 +35,53 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Enables the Sign In portlet to render a prompt for users to enter their
- * OpenIDs.
+ * When Liferay's Sign In portlet is requested, this component checks if OpenID
+ * authentication has been enabled for the portal instance being accessed and,
+ * if so, adds an OpenID link to the Sign In portlet for triggering the
+ * authentication process.
  *
  * @author Michael C. Han
- * @author Stian Sigvartsen
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + PortletKeys.LOGIN,
-		"mvc.command.name=/login/openid"
-	},
-	service = MVCRenderCommand.class
-)
-public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
+@Component(immediate = true, service = DynamicInclude.class)
+public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(renderRequest);
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
-		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(renderResponse);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (mvcRenderCommandName.equals("/login/openid") ||
+			!_openId.isEnabled(themeDisplay.getCompanyId())) {
 
-		if (!_openId.isEnabled(themeDisplay.getCompanyId()) ||
-			themeDisplay.isSignedIn()) {
-
-			return "/login.jsp";
+			return;
 		}
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(_JSP_PATH);
 
 		try {
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+			requestDispatcher.include(request, response);
 		}
-		catch (Exception e) {
-			_log.error("Unable to include JSP " + _JSP_PATH, e);
+		catch (ServletException se) {
+			_log.error("Unable to include JSP " + _JSP_PATH, se);
 
-			throw new PortletException("Unable to include JSP " + _JSP_PATH, e);
+			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
 		}
+	}
 
-		return "/navigation.jsp";
+	@Override
+	public void register(
+		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
+
+		dynamicIncludeRegistry.register(
+			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
 	@Reference(unbind = "-")
@@ -102,10 +97,11 @@ public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/com.liferay.login.web/openid.jsp";
+	private static final String _JSP_PATH =
+		"/com.liferay.login.web/navigation/openid.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdLoginMVCRenderCommand.class);
+		OpenIdNavigationPreDynamicInclude.class);
 
 	private OpenId _openId;
 	private ServletContext _servletContext;

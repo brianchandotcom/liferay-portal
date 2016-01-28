@@ -60,9 +60,8 @@ public class InitFilter extends BasePortalFilter {
 		}
 	}
 
-	private static final CountDownLatch _countDownLatch = new CountDownLatch(1);
-	private static final AtomicBoolean _setup = new AtomicBoolean();
-
+	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private ServiceRegistration<InitFilter> _serviceRegistration;
+	private final AtomicBoolean _setup = new AtomicBoolean();
 
 }

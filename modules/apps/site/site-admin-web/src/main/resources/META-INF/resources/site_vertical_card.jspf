@@ -15,13 +15,11 @@
 --%>
 
 <%
-List<Group> children = curGroup.getChildren(true);
-
-int childrenCount = children.size();
+List<Group> childGroups = curGroup.getChildren(true);
 %>
 
 <liferay-frontend:vertical-card-footer>
-	<label class="<%= childrenCount != 0 ? "text-default" : "disabled" %>">
-		<liferay-ui:message arguments="<%= String.valueOf(childrenCount) %>" key="x-child-sites" />
+	<label class="<%= (childGroups.size() != 0) ? "text-default" : "disabled" %>">
+		<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
 	</label>
 </liferay-frontend:vertical-card-footer>

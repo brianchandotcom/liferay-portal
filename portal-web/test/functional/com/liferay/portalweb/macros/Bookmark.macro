@@ -402,7 +402,7 @@
 	</command>
 
 	<command name="moveToRecycleBinPG">
-		<var name="key_assetName" value="${bookmarkName}" />
+		<var name="key_rowEntry" value="${bookmarkName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 

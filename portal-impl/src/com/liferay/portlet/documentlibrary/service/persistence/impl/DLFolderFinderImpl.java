@@ -258,7 +258,7 @@ public class DLFolderFinderImpl
 				queryDefinition.isIncludeOwner()) {
 
 				qPos.add(queryDefinition.getOwnerUserId());
-				qPos.add(queryDefinition.getStatus());
+				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 
 			qPos.add(folderId);
@@ -488,7 +488,7 @@ public class DLFolderFinderImpl
 				queryDefinition.isIncludeOwner()) {
 
 				qPos.add(queryDefinition.getOwnerUserId());
-				qPos.add(queryDefinition.getStatus());
+				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 
 			qPos.add(folderId);

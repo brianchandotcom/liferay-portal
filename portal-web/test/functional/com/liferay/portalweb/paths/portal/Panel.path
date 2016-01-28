@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PANEL_HEADING_COLLAPSED</td>
-	<td>//div[contains(@class,'panel') and contains(@class,'collapsed')]//span[contains(.,'${key_panelHeading}')] | //div[contains(@class,'panel') and contains(@role,'group')]//a[contains(@class,'collapsed') and contains(.,'${key_panelHeading}')] | //div[contains(@class,'panel-heading') and @role='tab']//a[contains(@class,'collapsed') and contains(.,'${key_panelHeading}')]</td>
+	<td>//div[contains(@class,'panel') and contains(@class,'collapsed')]/span[contains(.,'${key_panelHeading}')] | //div[contains(@class,'panel') and contains(@role,'group')]//a[contains(@class,'collapsed') and contains(.,'${key_panelHeading}')] | //div[contains(@class,'panel-heading') and @role='tab']//a[contains(@class,'collapsed') and contains(.,'${key_panelHeading}')]</td>
 	<td></td>
 </tr>
 <tr>

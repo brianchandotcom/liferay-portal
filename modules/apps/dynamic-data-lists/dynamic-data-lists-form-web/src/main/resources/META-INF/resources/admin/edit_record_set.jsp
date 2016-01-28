@@ -236,6 +236,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			Liferay.Util.openWindow(
 				{
 					dialog: {
+						cssClass: 'ddl-form-settings-modal',
 						height: 620,
 						resizable: false,
 						'toolbars.footer': [

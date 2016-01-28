@@ -32,16 +32,16 @@ public class InitStartupAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		InitFilter initFilter = new InitFilter();
+
 		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("dispatcher", new String[] {"FORWARD", "REQUEST"});
 		properties.put("servlet-context-name", "");
 		properties.put("servlet-filter-name", "Init Filter");
 		properties.put("url-pattern", "/c/*");
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		InitFilter initFilter = new InitFilter();
 
 		ServiceRegistration<InitFilter> serviceRegistration =
 			registry.registerService(

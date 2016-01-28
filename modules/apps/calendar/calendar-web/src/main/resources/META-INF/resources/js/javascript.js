@@ -1570,14 +1570,16 @@ AUI.add(
 							titleCurrentValue: ''
 						};
 
+						var now = new Date();
+
 						data.startTimeDay = date.getDate();
-						data.startTimeHour = 8;
+						data.startTimeHour = now.getHours() + 1;
 						data.startTimeMinute = 0;
 						data.startTimeMonth = date.getMonth();
 						data.startTimeYear = date.getFullYear();
 
 						data.endTimeDay = date.getDate();
-						data.endTimeHour = 9;
+						data.endTimeHour = now.getHours() + 2;
 						data.endTimeMinute = 0;
 						data.endTimeMonth = date.getMonth();
 						data.endTimeYear = date.getFullYear();

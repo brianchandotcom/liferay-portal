@@ -27,7 +27,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Raymond Augé
  */
-public class ServiceBuilderTask extends Task {
+public class BuildServiceTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

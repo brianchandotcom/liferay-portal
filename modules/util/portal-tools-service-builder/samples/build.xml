@@ -10,7 +10,7 @@
 	<taskdef classpathref="service.builder.classpath" resource="com/liferay/portal/tools/service/builder/ant/taskdefs.properties" />
 
 	<target name="build-service">
-		<service-builder
+		<build-service
 			apiDirName="../tmp/api"
 			beanLocatorUtil="com.liferay.util.bean.PortletBeanLocatorUtil"
 			hbmFileName="../tmp/src/META-INF/module-hbm.xml"

@@ -31,17 +31,14 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	</c:if>
 </liferay-ui:search-container-column-text>
 
+<%
+List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupInstance.getRuleGroupInstanceId(), 0, 10);
+%>
+
 <liferay-ui:search-container-column-text
 	name="actions"
->
-
-	<%
-	List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupInstance.getRuleGroupInstanceId(), 0, 10);
-	%>
-
-	<%= HtmlUtil.escape(ListUtil.toString(mdrActions, MDRAction.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>
-
-</liferay-ui:search-container-column-text>
+	value="<%= HtmlUtil.escape(ListUtil.toString(mdrActions, MDRAction.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>"
+/>
 
 <c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
 	<liferay-ui:search-container-column-text

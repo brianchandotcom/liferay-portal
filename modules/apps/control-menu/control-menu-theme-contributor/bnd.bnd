@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.control.menu.theme.contributor
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Product Navigation
-Theme-Contributor-Type: control-menu
+Liferay-Theme-Contributor-Type: control-menu
 Web-ContextPath: /control-menu-theme-contributor
 -include: ../../../../marketplace/web-content-management/bnd.bnd

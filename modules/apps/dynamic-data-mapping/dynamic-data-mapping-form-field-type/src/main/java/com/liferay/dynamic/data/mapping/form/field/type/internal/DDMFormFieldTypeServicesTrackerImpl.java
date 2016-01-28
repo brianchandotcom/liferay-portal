@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -123,9 +122,7 @@ public class DDMFormFieldTypeServicesTrackerImpl
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
+	protected void activate(BundleContext bundleContext) {
 		_ddmFormFieldRendererServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldRenderer.class,

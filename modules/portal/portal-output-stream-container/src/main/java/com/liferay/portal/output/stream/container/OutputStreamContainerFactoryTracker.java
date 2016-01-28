@@ -34,7 +34,6 @@ import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -138,25 +137,20 @@ public class OutputStreamContainerFactoryTracker {
 	protected void activate(BundleContext bundleContext) {
 		_logger = new org.apache.felix.utils.log.Logger(bundleContext);
 
-		try {
-			Logger rootLogger = Logger.getRootLogger();
+		Logger rootLogger = Logger.getRootLogger();
 
-			_writerAppender = new WriterAppender(
-				new SimpleLayout(), new ThreadLocalWriter());
+		_writerAppender = new WriterAppender(
+			new SimpleLayout(), new ThreadLocalWriter());
 
-			_writerAppender.setThreshold(Level.ALL);
+		_writerAppender.setThreshold(Level.ALL);
 
-			_writerAppender.activateOptions();
+		_writerAppender.activateOptions();
 
-			rootLogger.addAppender(_writerAppender);
+		rootLogger.addAppender(_writerAppender);
 
-			_outputStreamContainerFactories =
-				ServiceTrackerMapFactory.openSingleValueMap(
-					bundleContext, OutputStreamContainerFactory.class, "name");
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new IllegalStateException(ise);
-		}
+		_outputStreamContainerFactories =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, OutputStreamContainerFactory.class, "name");
 	}
 
 	@Deactivate

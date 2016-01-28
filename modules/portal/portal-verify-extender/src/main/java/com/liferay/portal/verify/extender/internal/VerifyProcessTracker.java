@@ -39,7 +39,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -132,24 +131,18 @@ public class VerifyProcessTracker {
 		_verifyProcessTrackerConfiguration = Configurable.createConfigurable(
 			VerifyProcessTrackerConfiguration.class, properties);
 
-		try {
-			VerifyServiceTrackerMapListener verifyServiceTrackerMapListener =
-				null;
+		VerifyServiceTrackerMapListener verifyServiceTrackerMapListener = null;
 
-			if (_verifyProcessTrackerConfiguration.autoVerify()) {
-				verifyServiceTrackerMapListener =
-					new VerifyServiceTrackerMapListener();
-			}
-
-			_verifyProcesses = ServiceTrackerMapFactory.singleValueMap(
-				bundleContext, VerifyProcess.class, "verify.process.name",
-				verifyServiceTrackerMapListener);
-
-			_verifyProcesses.open();
+		if (_verifyProcessTrackerConfiguration.autoVerify()) {
+			verifyServiceTrackerMapListener =
+				new VerifyServiceTrackerMapListener();
 		}
-		catch (InvalidSyntaxException ise) {
-			throw new IllegalStateException(ise);
-		}
+
+		_verifyProcesses = ServiceTrackerMapFactory.singleValueMap(
+			bundleContext, VerifyProcess.class, "verify.process.name",
+			verifyServiceTrackerMapListener);
+
+		_verifyProcesses.open();
 	}
 
 	protected void close(OutputStream outputStream) {

@@ -27,16 +27,6 @@ String editorJSP = (String)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_R
 String type = (String)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_TYPE);
 
 MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_INSTANCE);
-MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
-
-String title = null;
-
-if (action == null) {
-	title = LanguageUtil.format(request, "new-action-for-x", ruleGroup.getName(locale), false);
-}
-else {
-	title = StringUtil.appendParentheticalSuffix(action.getName(locale), ruleGroup.getName(locale));
-}
 %>
 
 <c:if test="<%= action == null %>">

@@ -31,8 +31,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.upgrade.DDMServiceUpgrade;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -409,9 +407,8 @@ public class UpgradeDynamicDataMappingTest {
 
 		_upgradeDynamicDataMapping.upgrade();
 
-		String expectedResourceName =
-			DDMStructurePermission.getStructureModelResourceName(
-				_classNameIdDDLRecordSet);
+		String expectedResourceName = getStructureModelResourceName(
+			_classNameIdDDLRecordSet);
 
 		ResourcePermission resourcePermission =
 			ResourcePermissionLocalServiceUtil.getResourcePermission(
@@ -847,9 +844,8 @@ public class UpgradeDynamicDataMappingTest {
 
 		_upgradeDynamicDataMapping.upgrade();
 
-		String expectedResourceName =
-			DDMTemplatePermission.getTemplateModelResourceName(
-				_classNameIdDDLRecordSet);
+		String expectedResourceName = getTemplateModelResourceName(
+			_classNameIdDDLRecordSet);
 
 		ResourcePermission resourcePermission =
 			ResourcePermissionLocalServiceUtil.getResourcePermission(
@@ -1262,12 +1258,46 @@ public class UpgradeDynamicDataMappingTest {
 		return structure.getDefinition();
 	}
 
+	protected String getStructureModelResourceName(long classNameId)
+		throws UpgradeException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		String structureModelResourceName = _structureModelResourceNames.get(
+			className);
+
+		if (structureModelResourceName == null) {
+			throw new UpgradeException(
+				"Model " + className + " does not support DDM structure " +
+					"permission checking");
+		}
+
+		return structureModelResourceName;
+	}
+
 	protected DDMStructureVersion getStructureVersion(
 			long structureId, String version)
 		throws Exception {
 
 		return DDMStructureVersionLocalServiceUtil.getStructureVersion(
 			structureId, version);
+	}
+
+	protected String getTemplateModelResourceName(long classNameId)
+		throws UpgradeException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		String templateModelResourceName = _templateModelResourceNames.get(
+			className);
+
+		if (templateModelResourceName == null) {
+			throw new UpgradeException(
+				"Model " + className + " does not support DDM template " +
+					"permission checking");
+		}
+
+		return templateModelResourceName;
 	}
 
 	protected String getTemplateScript(long templateId) throws Exception {
@@ -1336,6 +1366,46 @@ public class UpgradeDynamicDataMappingTest {
 		_upgradeDynamicDataMapping =
 			(UpgradeDynamicDataMapping)upgradeStepsMap.get(
 				UpgradeDynamicDataMapping.class);
+	}
+
+	private static final Map<String, String> _structureModelResourceNames =
+		new HashMap<>();
+	private static final Map<String, String> _templateModelResourceNames =
+		new HashMap<>();
+
+	static {
+		_structureModelResourceNames.put(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata",
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata-" +
+				DDMStructure.class.getName());
+
+		_structureModelResourceNames.put(
+			"com.liferay.portlet.documentlibrary.util.RawMetadataProcessor",
+			DDMStructure.class.getName());
+
+		_structureModelResourceNames.put(
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
+				DDMStructure.class.getName());
+
+		_structureModelResourceNames.put(
+			"com.liferay.portlet.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle-" +
+				DDMStructure.class.getName());
+
+		_templateModelResourceNames.put(
+			"com.liferay.portlet.display.template.PortletDisplayTemplate",
+			DDMTemplate.class.getName());
+
+		_templateModelResourceNames.put(
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
+				DDMTemplate.class.getName());
+
+		_templateModelResourceNames.put(
+			"com.liferay.portlet.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle-" +
+				DDMTemplate.class.getName());
 	}
 
 	private long _classNameIdDDLRecordSet;

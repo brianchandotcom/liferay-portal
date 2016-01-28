@@ -3522,3 +3522,33 @@ The `title` field was marked as mandatory, but it was possible to
 create a document without filling it, as the backend would infer a
 value from the source file name automatically. This was considered
 confusing from an UX prespective.
+
+---------------------------------------
+
+### DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc can return blank
+- **Date:** 2016-Jan-28
+- **JIRA Ticket:** LPS-62643
+
+#### What changed?
+
+DLUtil.getImagePreviewURL and DLUtil.getThumbnailSrc will return a blank
+string if there are not previews or thumbnails for the specific image, video or
+document.
+
+Before, if there was no previews or thumbnail it would return a url to a image
+based on the document.
+
+#### Who is affected?
+
+Any developer invoking DLUtil.getImagePreviewURL or DLUtil.getThumbnailSrc.
+
+#### How should I update my code?
+
+You should take into account that the method could return a blank string and act
+accordingly. For example, you could display the `documents-and-media` lexicon
+icon instead.
+
+#### Why was this change made?
+
+In order to display the `documents-and-media` lexicon icon in Documents and
+Media this change was necessary.

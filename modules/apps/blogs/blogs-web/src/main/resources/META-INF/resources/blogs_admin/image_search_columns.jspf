@@ -14,11 +14,24 @@
  */
 --%>
 
+<%
+String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+%>
+
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-image
-			src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-		/>
+		<c:choose>
+			<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
+				<liferay-ui:search-container-column-icon
+					icon="documents-and-media"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-image
+					src="<%= thumbnailSrc %>"
+				/>
+			</c:otherwise>
+		</c:choose>
 
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
@@ -48,14 +61,28 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:vertical-card
-				actionJsp="/blogs_admin/image_action.jsp"
-				actionJspServletContext="<%= application %>"
-				imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-				resultRow="<%= row %>"
-				rowChecker="<%= searchContainer.getRowChecker() %>"
-				title="<%= fileEntry.getTitle() %>"
-			/>
+			<c:choose>
+				<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
+					<liferay-frontend:icon-vertical-card
+						actionJsp="/blogs_admin/image_action.jsp"
+						actionJspServletContext="<%= application %>"
+						icon="documents-and-media"
+						resultRow="<%= row %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
+						title="<%= fileEntry.getTitle() %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-frontend:vertical-card
+						actionJsp="/blogs_admin/image_action.jsp"
+						actionJspServletContext="<%= application %>"
+						imageUrl="<%= thumbnailSrc %>"
+						resultRow="<%= row %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
+						title="<%= fileEntry.getTitle() %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>

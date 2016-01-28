@@ -25,8 +25,8 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+String orderByCol = ddlFormAdminDisplayContext.getOrderByCol();
+String orderByType = ddlFormAdminDisplayContext.getOrderByType();
 
 OrderByComparator<DDLRecordSet> orderByComparator = DDLFormAdminPortletUtil.getDDLRecordSetOrderByComparator(orderByCol, orderByType);
 
@@ -49,9 +49,12 @@ else {
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="deleteRecordSetIds" type="hidden" />
 
 		<liferay-ui:search-container
-			id="searchContainer"
+			emptyResultsMessage="no-forms-were-found"
+			id="ddlRecordSet"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= recordSetSearch %>"
 		>
 

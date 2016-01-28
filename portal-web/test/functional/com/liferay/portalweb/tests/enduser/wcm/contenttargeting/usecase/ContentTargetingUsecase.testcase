@@ -1261,7 +1261,7 @@
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1316,7 +1316,7 @@
 
 		<execute macro="ContentTargetingCampaign#deleteAllCP" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1387,7 +1387,7 @@
 	<command name="ExportImportSmoke" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1520,7 +1520,7 @@
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1612,7 +1612,7 @@
 	<command name="ExportImportUncheckAppCTRefAllAndContentAll" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1670,7 +1670,7 @@
 	<command name="ExportImportUncheckAppCTRefAllAndContentAT" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1724,7 +1724,7 @@
 	<command name="ExportImportUncheckAppCTRefAllAndContentWC" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1864,7 +1864,7 @@
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
@@ -1996,7 +1996,7 @@
 			<var name="webContentTitle" value="WC Title Unreferenced" />
 		</execute>
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 

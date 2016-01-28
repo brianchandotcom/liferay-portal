@@ -943,7 +943,7 @@
 			<var name="categoryName" value="Category Name" />
 		</execute>
 
-		<execute macro="LAR#gotoExportSiteCmd">
+		<execute macro="LAR#_gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 

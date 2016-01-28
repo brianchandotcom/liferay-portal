@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.portlet.action;
+package com.liferay.portal.settings.authentication.openid.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;

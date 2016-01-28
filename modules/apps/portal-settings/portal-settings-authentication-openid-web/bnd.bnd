@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Settings Authentication OpenID Web
+Bundle-SymbolicName: com.liferay.portal.settings.authentication.openid.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Portal Settings
+Web-ContextPath: /portal-settings-authentication-openid
+-include: ../../../../marketplace/platform/bnd.bnd

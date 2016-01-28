@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Login Authentication OpenID Web
+Bundle-SymbolicName: com.liferay.login.authentication.openid.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Login
+Web-ContextPath: /login-authentication-openid
+-include: ../../../../marketplace/platform/bnd.bnd

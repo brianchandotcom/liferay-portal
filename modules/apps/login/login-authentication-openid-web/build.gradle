@@ -1,0 +1,8 @@
+dependencies {
+	compile project(":apps:login:login-web")
+	compile project(":portal-security:portal-security-sso-openid")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

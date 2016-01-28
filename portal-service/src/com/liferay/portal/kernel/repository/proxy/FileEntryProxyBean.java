@@ -151,6 +151,11 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public int getFileVersionsCount(int status) {
+		return _fileEntry.getFileVersionsCount(status);
+	}
+
+	@Override
 	public Folder getFolder() {
 		Folder folder = _fileEntry.getFolder();
 

@@ -149,6 +149,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public int getFileVersionsCount(int status) {
+		return _fileEntry.getFileVersionsCount(status);
+	}
+
+	@Override
 	public Folder getFolder() {
 		return _fileEntry.getFolder();
 	}

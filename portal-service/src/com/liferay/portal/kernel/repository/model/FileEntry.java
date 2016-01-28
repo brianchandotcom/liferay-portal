@@ -105,6 +105,8 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 
 	public List<FileVersion> getFileVersions(int status);
 
+	public int getFileVersionsCount(int status);
+
 	public Folder getFolder();
 
 	public long getFolderId();

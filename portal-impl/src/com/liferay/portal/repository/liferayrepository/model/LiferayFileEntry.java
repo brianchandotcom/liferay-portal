@@ -216,6 +216,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public int getFileVersionsCount(int status) {
+		return _dlFileEntry.getFileVersionsCount(status);
+	}
+
+	@Override
 	public Folder getFolder() {
 		Folder folder = null;
 

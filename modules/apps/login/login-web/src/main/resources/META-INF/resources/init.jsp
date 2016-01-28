@@ -100,13 +100,13 @@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
 String authType = portletPreferences.getValue("authType", StringPool.BLANK);
 %>
 

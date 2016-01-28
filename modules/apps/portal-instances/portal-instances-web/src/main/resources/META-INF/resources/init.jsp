@@ -43,22 +43,15 @@ page import="com.liferay.portal.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.VirtualHostLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalInstances" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>
 
 <%@ include file="/init-ext.jsp" %>

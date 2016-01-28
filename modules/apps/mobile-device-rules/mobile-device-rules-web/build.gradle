@@ -5,6 +5,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-service")
+	compile project(":frontend:frontend-taglib")
 }
 
 liferay {

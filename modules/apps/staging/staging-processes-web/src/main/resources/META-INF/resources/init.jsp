@@ -79,7 +79,6 @@ page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.SessionClicks" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants" %><%@
 page import="com.liferay.portlet.exportimport.exception.RemoteExportException" %><%@
@@ -107,8 +106,9 @@ page import="java.util.Map" %>
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletMode" %><%@
 page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+page import="javax.portlet.PortletURL" %>
+
+<liferay-frontend:defineObjects />
 
 <liferay-staging:defineObjects />
 
@@ -117,12 +117,6 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 %>
 

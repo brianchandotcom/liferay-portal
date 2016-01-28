@@ -27,7 +27,6 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.workflow.definition.link.web.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
 page import="com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkDisplayTerms" %><%@
 page import="com.liferay.workflow.definition.link.web.search.WorkflowDefinitionLinkSearch" %><%@
@@ -36,17 +35,13 @@ page import="com.liferay.workflow.definition.link.web.search.WorkflowDefinitionL
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 WorkflowDefinitionLinkDisplayContext workflowDefinitionLinkDisplayContext = (WorkflowDefinitionLinkDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 

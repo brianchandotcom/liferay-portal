@@ -5,6 +5,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	compile project(":core:osgi-service-tracker-collections")
+	compile project(":frontend:frontend-taglib")
 }
 
 liferay {

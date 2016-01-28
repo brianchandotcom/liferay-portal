@@ -23,20 +23,12 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
-page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %>
+page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %>
 
-<%@ page import="javax.portlet.PortletPreferences" %><%@
-page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletPreferences" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>

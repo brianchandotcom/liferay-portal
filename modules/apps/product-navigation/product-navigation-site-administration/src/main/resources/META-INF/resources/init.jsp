@@ -41,7 +41,6 @@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
 page import="com.liferay.product.navigation.site.administration.display.context.SiteAdministrationPanelCategoryDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
@@ -58,9 +57,3 @@ page import="javax.portlet.PortletURL" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>

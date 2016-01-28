@@ -111,7 +111,6 @@ page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryException" %><%@
 page import="com.liferay.portlet.documentlibrary.exception.FileSizeException" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
@@ -126,17 +125,13 @@ page import="java.util.Set" %>
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(request);
 %>
 

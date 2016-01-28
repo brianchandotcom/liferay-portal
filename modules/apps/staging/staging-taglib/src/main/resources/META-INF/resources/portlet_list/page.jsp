@@ -20,17 +20,19 @@
 
 	<%
 	for (Portlet portlet : portlets) {
-		String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
+		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-		if (portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+		Class<?> portletDataHandlerClass = portletDataHandler.getClass();
+
+		String portletDataHandlerClassName = portletDataHandlerClass.getName();
+
+		if (portletDataHandlerClassNames.contains(portletDataHandlerClassName)) {
 			continue;
 		}
 
-		portletDataHandlerClasses.add(portletDataHandlerClass);
+		portletDataHandlerClassNames.add(portletDataHandlerClassName);
 
 		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
-
-		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
 		PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
 		PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();

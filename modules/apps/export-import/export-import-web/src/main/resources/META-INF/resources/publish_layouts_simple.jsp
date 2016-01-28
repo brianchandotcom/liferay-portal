@@ -112,19 +112,21 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 								<%
 								List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
 
-								Set<String> portletDataHandlerClasses = new HashSet<String>();
+								Set<String> portletDataHandlerClassNames = new HashSet<String>();
 
 								if (!dataSiteLevelPortlets.isEmpty()) {
 									for (Portlet portlet : dataSiteLevelPortlets) {
-										String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
+										PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-										if (portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+										Class<?> portletDataHandlerClass = portletDataHandler.getClass();
+
+										String portletDataHandlerClassName = portletDataHandlerClass.getName();
+
+										if (portletDataHandlerClassNames.contains(portletDataHandlerClassName)) {
 											continue;
 										}
 
-										portletDataHandlerClasses.add(portletDataHandlerClass);
-
-										PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+										portletDataHandlerClassNames.add(portletDataHandlerClassName);
 
 										Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
 

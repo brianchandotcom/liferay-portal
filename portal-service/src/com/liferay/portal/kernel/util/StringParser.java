@@ -103,7 +103,7 @@ public class StringParser {
 				return null;
 			}
 
-			s = s.replace(stringParserFragment.getToken(), value);
+			s = StringUtil.replace(s, stringParserFragment.getToken(), value);
 		}
 
 		for (StringParserFragment stringParserFragment :
@@ -256,10 +256,11 @@ public class StringParser {
 
 			_stringParserFragments.add(stringParserFragment);
 
-			pattern = pattern.replace(chunk, stringParserFragment.getToken());
+			pattern = StringUtil.replace(
+				pattern, chunk, stringParserFragment.getToken());
 
-			regex = regex.replace(
-				escapeRegex(chunk),
+			regex = StringUtil.replace(
+				regex, escapeRegex(chunk),
 				StringPool.OPEN_PARENTHESIS.concat(
 					stringParserFragment.getPattern().concat(
 						StringPool.CLOSE_PARENTHESIS)));

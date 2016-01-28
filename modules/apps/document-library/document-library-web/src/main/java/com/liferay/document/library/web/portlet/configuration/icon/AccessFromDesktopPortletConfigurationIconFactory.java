@@ -49,7 +49,7 @@ public class AccessFromDesktopPortletConfigurationIconFactory
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
 			return new AccessFromDesktopPortletConfigurationIcon(
-				portletRequest, folder);
+				getServletContext(), getJspPath(), portletRequest, folder);
 		}
 		catch (Exception e) {
 		}

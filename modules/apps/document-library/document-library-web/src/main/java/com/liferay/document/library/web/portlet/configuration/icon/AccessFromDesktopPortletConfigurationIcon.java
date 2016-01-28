@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.theme.PortletDisplay;
@@ -23,16 +23,19 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Roberto Díaz
  */
 public class AccessFromDesktopPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	public AccessFromDesktopPortletConfigurationIcon(
+		ServletContext servletContext, String jspPath,
 		PortletRequest portletRequest, Folder folder) {
 
-		super(portletRequest);
+		super(servletContext, jspPath, portletRequest);
 
 		_folder = folder;
 	}

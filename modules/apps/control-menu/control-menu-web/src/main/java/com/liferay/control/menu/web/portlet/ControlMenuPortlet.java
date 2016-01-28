@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
 		"com.liferay.portlet.use-default-template=false",
+		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ControlMenuPortletKeys.CONTROL_MENU,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supports.mime-type=text/html"

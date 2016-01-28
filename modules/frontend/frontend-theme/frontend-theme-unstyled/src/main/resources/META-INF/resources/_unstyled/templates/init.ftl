@@ -1,6 +1,5 @@
 <#-- ---------- Common variables ---------- -->
 
-<#assign liferay_control_menu=PortalJspTagLibs["/META-INF/resources/liferay-control-menu.tld"]>
 <#assign liferay_portlet=PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"]>
 <#assign liferay_theme=PortalJspTagLibs["/WEB-INF/tld/liferay-theme.tld"]>
 <#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>

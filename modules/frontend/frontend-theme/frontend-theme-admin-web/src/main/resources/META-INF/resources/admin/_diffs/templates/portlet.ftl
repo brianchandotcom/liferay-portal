@@ -5,5 +5,5 @@
 </section>
 
 <#if portletDisplay.isStateMax()>
-	<@liferay_control_menu["control-menu"] />
+	<@liferay.control_menu />
 </#if>

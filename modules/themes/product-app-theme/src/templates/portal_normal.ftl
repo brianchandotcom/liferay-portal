@@ -16,9 +16,7 @@
 
 		${theme.include(body_top_include)}
 
-		<#if is_setup_complete && is_signed_in>
-			<@liferay_control_menu["control-menu"] />
-		</#if>
+		<@liferay.control_menu />
 
 		<div id="wrapper">
 			<header id="banner" role="banner">

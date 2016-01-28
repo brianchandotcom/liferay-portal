@@ -18,6 +18,12 @@
 	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW, "", $!default_preferences)
 #end
 
+#macro (control_menu)
+	#if ($themeDisplay.isImpersonated() || ($is_setup_complete && $is_signed_in))
+		$theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", $portletProviderAction.VIEW)
+	#end
+#end
+
 #macro (css $file_name)
 	#if ($file_name == $css_main_file)
 		<link class="lfr-css-file" href="$file_name" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />

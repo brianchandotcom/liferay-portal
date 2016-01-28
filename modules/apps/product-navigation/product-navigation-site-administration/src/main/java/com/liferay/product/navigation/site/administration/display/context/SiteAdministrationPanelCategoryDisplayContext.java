@@ -24,15 +24,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -54,7 +50,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Julio Camarero
@@ -200,31 +195,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return _logoURL;
 	}
 
-	public String getManageSitesURL() throws PortalException {
-		if (_manageSitesURL != null) {
-			return _manageSitesURL;
-		}
-
-		_manageSitesURL = StringPool.BLANK;
-
-		String portletId = PortletProviderUtil.getPortletId(
-			Group.class.getName(), PortletProvider.Action.MANAGE);
-
-		if (Validator.isNotNull(portletId) &&
-			PortletPermissionUtil.hasControlPanelAccessPermission(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), portletId)) {
-
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_portletRequest, Group.class.getName(),
-				PortletProvider.Action.MANAGE);
-
-			_manageSitesURL = portletURL.toString();
-		}
-
-		return _manageSitesURL;
-	}
-
 	public List<Group> getMySites() throws PortalException {
 		if (_mySites != null) {
 			return _mySites;
@@ -339,37 +309,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return false;
 	}
 
-	public boolean isSelectedSite() {
-		if (_selectedSite != null) {
-			return _selectedSite.booleanValue();
-		}
-
-		_selectedSite = false;
-
-		Group group = getGroup();
-
-		if (group == null) {
-			return false;
-		}
-
-		Layout layout = _themeDisplay.getLayout();
-
-		if (layout != null) {
-			if (layout.getGroupId() == group.getGroupId()) {
-				_selectedSite = true;
-			}
-			else if (group.hasStagingGroup()) {
-				Group stagingGroup = group.getStagingGroup();
-
-				if (layout.getGroupId() == stagingGroup.getGroupId()) {
-					_selectedSite = true;
-				}
-			}
-		}
-
-		return _selectedSite;
-	}
-
 	public boolean isShowSiteAdministration() throws PortalException {
 		Group group = getGroup();
 
@@ -452,13 +391,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			"content.Language", _themeDisplay.getLocale(), getClass());
 	}
 
-	protected HttpSession getSession() {
-		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
-			PortalUtil.getHttpServletRequest(_portletRequest));
-
-		return request.getSession();
-	}
-
 	protected boolean hasStagingPermission() throws PortalException {
 		if (!GroupPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(), getGroup(),
@@ -505,7 +437,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	private final GroupURLProvider _groupURLProvider;
 	private String _liveGroupURL;
 	private String _logoURL;
-	private String _manageSitesURL;
 	private List<Group> _mySites;
 	private Integer _notificationsCount;
 	private final PanelCategory _panelCategory;
@@ -513,7 +444,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 	private final RecentGroupManager _recentGroupManager;
-	private Boolean _selectedSite;
 	private Boolean _showStagingInfo = null;
 	private String _stagingGroupURL;
 	private String _stagingLabel;

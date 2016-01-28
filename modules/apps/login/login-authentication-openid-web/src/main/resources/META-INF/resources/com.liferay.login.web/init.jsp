@@ -23,17 +23,13 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.exception.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.exception.UserEmailAddressException" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.security.sso.openid.OpenIdServiceException" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.WindowState" %>
 
-<%@ page import="org.openid4java.association.AssociationException" %><%@
-page import="org.openid4java.consumer.ConsumerException" %><%@
-page import="org.openid4java.discovery.DiscoveryException" %><%@
-page import="org.openid4java.message.MessageException" %>
-
-<liferay-frontend:defineObjects />
+<liferay-theme:defineObjects />
 
 <liferay-theme:defineObjects />
 

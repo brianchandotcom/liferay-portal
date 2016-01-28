@@ -1,6 +1,3 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-<#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
-
 <#if entries?has_content>
 	<style>
 		#<@liferay_portlet.namespace />carousel .carousel-item {
@@ -29,7 +26,7 @@
 		</#list>
 	</div>
 
-	<@aui.script use="aui-carousel">
+	<@liferay_aui.script use="aui-carousel">
 		new A.Carousel(
 			{
 				contentBox: '#<@liferay_portlet.namespace />carousel',
@@ -38,5 +35,5 @@
 				width: 700
 			}
 		).render();
-	</@aui.script>
+	</@liferay_aui.script>
 </#if>

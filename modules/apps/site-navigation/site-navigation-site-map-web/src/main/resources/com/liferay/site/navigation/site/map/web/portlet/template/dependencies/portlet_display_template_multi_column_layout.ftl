@@ -1,9 +1,7 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-
 <#if entries?has_content>
-	<@aui.layout>
+	<@liferay_aui.layout>
 		<#list entries as entry>
-		    <@aui.column columnWidth=25>
+		    <@liferay_aui.column columnWidth=25>
 				<div class="results-header">
 					<h3>
 						<a
@@ -19,9 +17,9 @@
 				</div>
 
 				<@displayPages pages=entry.getChildren() />
-		    </@aui.column>
+		    </@liferay_aui.column>
 		</#list>
-	</@aui.layout>
+	</@liferay_aui.layout>
 </#if>
 
 <#macro displayPages

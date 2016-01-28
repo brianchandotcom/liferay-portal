@@ -509,9 +509,7 @@
 
 		<var name="templateScript">
 				<![CDATA[
-<#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"] />
-
-<@liferay_portlet["runtime"] portletName="com_liferay_currency_converter_web_portlet_CurrencyConverterPortlet" />
+<@liferay_portlet_ext["runtime"] portletName="com_liferay_currency_converter_web_portlet_CurrencyConverterPortlet" />
 				]]>
 			</var>
 
@@ -1877,7 +1875,7 @@
 		<execute macro="WebContentStructures#addCP">
 			<var name="localization1Name" value="nom de la structure de wc" />
 			<var name="localization1NameKey" value="fr_FR" />
-			<var name="localization2Name" value="wc 结构�??称" />
+			<var name="localization2Name" value="wc 结构�??称" />
 			<var name="localization2NameKey" value="zh_CN" />
 			<var name="structureDescription" value="WC Structure Description" />
 			<var name="structureName" value="WC Structure Name" />
@@ -1910,7 +1908,7 @@
 		<execute macro="WebContentTemplates#localizeTemplateName">
 			<var name="localization1Name" value="nom de la template de wc" />
 			<var name="localization1NameKey" value="fr_FR" />
-			<var name="localization2Name" value="wc 模�?��??称" />
+			<var name="localization2Name" value="wc 模�?��??称" />
 			<var name="localization2NameKey" value="zh_CN" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
@@ -2011,9 +2009,9 @@
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#viewTranslationPGViaWCD">
-			<var name="panelHeading" value="结构和模�?�" />
-			<var name="structureLocalizationName" value="wc 结构�??称" />
-			<var name="templateLocalizationName" value="wc 模�?��??称" />
+			<var name="panelHeading" value="结构和模�?�" />
+			<var name="structureLocalizationName" value="wc 结构�??称" />
+			<var name="templateLocalizationName" value="wc 模�?��??称" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

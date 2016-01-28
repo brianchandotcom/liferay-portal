@@ -1,10 +1,5 @@
 <#-- ---------- Common variables ---------- -->
 
-<#assign liferay_portlet=PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"]>
-<#assign liferay_theme=PortalJspTagLibs["/WEB-INF/tld/liferay-theme.tld"]>
-<#assign liferay_ui=PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
-<#assign liferay_util=PortalJspTagLibs["/WEB-INF/tld/liferay-util.tld"]>
-
 <#assign theme_display = themeDisplay />
 <#assign portlet_display = portletDisplay />
 

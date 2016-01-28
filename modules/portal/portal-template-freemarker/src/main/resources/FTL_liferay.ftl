@@ -7,16 +7,6 @@ LPS-30525.
 
 <#setting number_format = "computer">
 
-<#if PortalJspTagLibs??>
-	<#assign liferay_control_menu = PortalJspTagLibs["/META-INF/resources/liferay-control-menu.tld"]>
-	<#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"] />
-	<#assign liferay_ui = PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"] />
-<#elseif taglibLiferayHash??>
-	<#assign liferay_control_menu = taglibLiferayHash["/META-INF/resources/liferay-control-menu.tld"]>
-	<#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet-ext.tld"] />
-	<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-</#if>
-
 <#assign css_main_file = "" />
 <#assign is_signed_in = false />
 <#assign js_main_file = "" />
@@ -52,7 +42,7 @@ LPS-30525.
 <#macro breadcrumbs
 	default_preferences = ""
 >
-	<@liferay_portlet["runtime"]
+	<@liferay_portlet_ext["runtime"]
 		defaultPreferences=default_preferences
 		portletProviderAction=portletProviderAction.VIEW
 		portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"
@@ -104,7 +94,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 <#macro languages
 	default_preferences = ""
 >
-	<@liferay_portlet["runtime"]
+	<@liferay_portlet_ext["runtime"]
 		defaultPreferences=default_preferences
 		portletProviderAction=portletProviderAction.VIEW
 		portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
@@ -115,7 +105,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	default_preferences = ""
 	instance_id = ""
 >
-	<@liferay_portlet["runtime"]
+	<@liferay_portlet_ext["runtime"]
 		defaultPreferences=default_preferences
 		instanceId=instance_id
 		portletProviderAction=portletProviderAction.VIEW
@@ -127,7 +117,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	default_preferences = ""
 >
 	<#if is_setup_complete>
-		<@liferay_portlet["runtime"]
+		<@liferay_portlet_ext["runtime"]
 			defaultPreferences=default_preferences
 			portletProviderAction=portletProviderAction.VIEW
 			portletProviderClassName="com.liferay.admin.kernel.util.PortalSearchApplicationType$Search"
@@ -143,7 +133,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 
 <#macro user_personal_bar>
 	<#if themeDisplay.isImpersonated() || is_setup_complete || !is_signed_in>
-		<@liferay_portlet["runtime"]
+		<@liferay_portlet_ext["runtime"]
 			portletProviderAction=portletProviderAction.VIEW
 			portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar"
 		/>

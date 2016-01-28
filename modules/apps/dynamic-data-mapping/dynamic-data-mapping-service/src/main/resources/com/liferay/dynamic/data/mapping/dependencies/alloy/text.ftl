@@ -1,8 +1,8 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] data=data>
+<@liferay_aui["field-wrapper"] data=data>
 	<div class="form-group">
-		<@aui.input
+		<@liferay_aui.input
 			cssClass=cssClass
 			dir=requestedLanguageDir
 			helpMessage=escape(fieldStructure.tip)

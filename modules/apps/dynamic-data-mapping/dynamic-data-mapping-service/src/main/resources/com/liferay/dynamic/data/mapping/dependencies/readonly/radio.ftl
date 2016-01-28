@@ -6,7 +6,7 @@
 
 <div class="field-wrapper-content lfr-forms-field-wrapper">
 	<#if !disabled>
-		<@aui.input
+		<@liferay_aui.input
 			name=namespacedFieldName
 			type="hidden"
 			value=fieldValue

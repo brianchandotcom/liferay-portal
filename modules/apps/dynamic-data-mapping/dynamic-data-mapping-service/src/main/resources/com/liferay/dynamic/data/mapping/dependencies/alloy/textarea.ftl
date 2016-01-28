@@ -1,12 +1,12 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] data=data>
+<@liferay_aui["field-wrapper"] data=data>
 	<div class="form-group">
-		<@aui.input cssClass=cssClass dir=requestedLanguageDir helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName required=required type="textarea" value=fieldValue>
+		<@liferay_aui.input cssClass=cssClass dir=requestedLanguageDir helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName required=required type="textarea" value=fieldValue>
 			<#if required>
-				<@aui.validator name="required" />
+				<@liferay_aui.validator name="required" />
 			</#if>
-		</@aui.input>
+		</@liferay_aui.input>
 	</div>
 
 	${fieldStructure.children}

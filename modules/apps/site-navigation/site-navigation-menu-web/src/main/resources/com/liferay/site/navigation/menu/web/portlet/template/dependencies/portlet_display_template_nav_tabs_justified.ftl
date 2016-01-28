@@ -1,6 +1,3 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-<#assign liferay_theme = taglibLiferayHash["/WEB-INF/tld/liferay-theme.tld"] />
-
 <#if !entries?has_content>
 	<#if preview>
 		<div class="alert alert-info">
@@ -71,7 +68,7 @@
 		</ul>
 	</div>
 
-	<@aui.script use="liferay-navigation-interaction">
+	<@liferay_aui.script use="liferay-navigation-interaction">
 		var navigation = A.one('#${navbarId}');
 
 		if (navigation) {

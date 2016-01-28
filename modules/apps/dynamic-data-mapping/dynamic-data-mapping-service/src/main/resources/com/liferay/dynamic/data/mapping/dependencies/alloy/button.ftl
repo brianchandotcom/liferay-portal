@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] data=data>
-	<@aui.input
+<@liferay_aui["field-wrapper"] data=data>
+	<@liferay_aui.input
 		cssClass=cssClass
 		helpMessage=escape(fieldStructure.tip)
 		label=escape(label)

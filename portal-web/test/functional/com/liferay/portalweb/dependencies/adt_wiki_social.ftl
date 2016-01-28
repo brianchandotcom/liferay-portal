@@ -1,5 +1,3 @@
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-
 <#assign wikiPageClassName = "com.liferay.wiki.model.WikiPage" />
 
 <#assign assetRenderer = assetEntry.getAssetRenderer() />

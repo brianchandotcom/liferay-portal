@@ -2449,9 +2449,7 @@ In Velocity:
 
 In FreeMarker:
 
-    <#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"] />
-
-    <@liferay_portlet["runtime"] portletName="145" />
+    <@liferay_portlet_ext["runtime"] portletName="145" />
 
 #### Why was this change made?
 

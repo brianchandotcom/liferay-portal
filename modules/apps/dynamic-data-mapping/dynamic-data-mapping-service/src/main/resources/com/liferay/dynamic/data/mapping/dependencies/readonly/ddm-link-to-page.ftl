@@ -9,7 +9,7 @@
 
 	<#if hasFieldValue>
 		<#if !disabled>
-			<@aui.input
+			<@liferay_aui.input
 				name=namespacedFieldName
 				type="hidden"
 				value=fieldValue

@@ -12,9 +12,9 @@
 	<#assign longitude = geolocationJSONObject.getDouble("longitude")>
 </#if>
 
-<@aui["field-wrapper"] cssClass="geolocation-field" data=data label=label required=required>
+<@liferay_aui["field-wrapper"] cssClass="geolocation-field" data=data label=label required=required>
 	<div class="form-group">
-		<@aui.input
+		<@liferay_aui.input
 			name=namespacedFieldName
 			type="hidden"
 			value=fieldRawValue

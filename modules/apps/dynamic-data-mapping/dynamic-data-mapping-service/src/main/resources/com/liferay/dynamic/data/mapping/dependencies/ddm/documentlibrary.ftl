@@ -18,11 +18,11 @@
 	</#if>
 </#if>
 
-<@aui["field-wrapper"] data=data required=required>
+<@liferay_aui["field-wrapper"] data=data required=required>
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 
-		<@aui.input
+		<@liferay_aui.input
 			helpMessage=escape(fieldStructure.tip)
 			inlineField=true label=escape(label)
 			name="${namespacedFieldName}Title"
@@ -30,20 +30,20 @@
 			value=(fileEntryTitle?has_content)?string(fileEntryTitle, '')
 		/>
 
-		<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue>
+		<@liferay_aui.input name=namespacedFieldName type="hidden" value=fieldRawValue>
 			<#if required>
-				<@aui.validator name="required" />
+				<@liferay_aui.validator name="required" />
 			</#if>
 		</@>
 
-		<@aui["button-row"]>
-			<@aui.button
+		<@liferay_aui["button-row"]>
+			<@liferay_aui.button
 				cssClass="select-button"
 				id="${namespacedFieldName}SelectButton"
 				value="choose-from-document-library"
 			/>
 
-			<@aui.button
+			<@liferay_aui.button
 				cssClass="clear-button ${(fieldRawValue?has_content)?string('', 'hide')}"
 				id="${namespacedFieldName}ClearButton"
 				value="clear"

@@ -1,6 +1,3 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
-<#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
-
 <#if entries?has_content>
 	<#assign languageId = localeUtil.toLanguageId(locale) />
 
@@ -17,13 +14,13 @@
 		</#list>
 	</style>
 
-	<@aui["form"]
+	<@liferay_aui["form"]
 		action=formAction
 		method="post"
 		name='${namespace + formName}'
 		useNamespace=false
 	>
-		<@aui["select"]
+		<@liferay_aui["select"]
 			changesContext=true
 			id='${namespace + formName}'
 			label=""
@@ -32,7 +29,7 @@
 			title="language"
 		>
 			<#list entries as entry>
-				<@aui["option"]
+				<@liferay_aui["option"]
 					cssClass="taglib-language-option taglib-language-option-${entry.getW3cLanguageId()}"
 					disabled=entry.isDisabled()
 					label=entry.getLongDisplayName()
@@ -44,7 +41,7 @@
 		</@>
 	</@>
 
-	<@aui["script"]>
+	<@liferay_aui["script"]>
 		function ${namespace}changeLanguage() {
 			var languageId = AUI.$(document.${namespace + formName}.${name}).val();
 

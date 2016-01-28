@@ -1,6 +1,3 @@
-<#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"]>
-<#assign liferay_ui = PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"]>
-
 <#assign portlet_display = portletDisplay>
 <#assign portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack())>
 <#assign portlet_content_css_class = "portlet-content">
@@ -32,7 +29,7 @@
 
 				<#if portlet_configuration_icons?has_content>
 					<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
-						<@liferay_portlet["icon-options"]
+						<@liferay_portlet_ext["icon-options"]
 							portletConfigurationIcons=portlet_configuration_icons
 						/>
 					</menu>

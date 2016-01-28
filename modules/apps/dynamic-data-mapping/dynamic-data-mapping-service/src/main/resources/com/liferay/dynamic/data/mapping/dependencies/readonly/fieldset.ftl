@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
 <div class="field-wrapper-content lfr-forms-field-wrapper">
-	<@aui.fieldset label=escape(label)>
+	<@liferay_aui.fieldset label=escape(label)>
 		${fieldStructure.children}
-	</@aui.fieldset>
+	</@liferay_aui.fieldset>
 </div>

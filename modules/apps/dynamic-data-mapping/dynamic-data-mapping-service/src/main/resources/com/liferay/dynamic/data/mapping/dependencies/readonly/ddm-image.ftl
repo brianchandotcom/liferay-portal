@@ -9,7 +9,7 @@
 	<#assign src = fileJSONObject.getString("data")>
 </#if>
 
-<@aui["field-wrapper"] data=data>
+<@liferay_aui["field-wrapper"] data=data>
 	<#if hasFieldValue || showEmptyFieldLabel>
 		<label>
 			<@liferay_ui.message key=escape(label) />
@@ -24,13 +24,13 @@
 		</div>
 
 		<#if !disabled>
-			<@aui.input
+			<@liferay_aui.input
 				name="${namespacedFieldName}URL"
 				type="hidden"
 				value="${src}"
 			/>
 
-			<@aui.input
+			<@liferay_aui.input
 				label="image-description"
 				name="${namespacedFieldName}Alt"
 				type="hidden"
@@ -42,7 +42,7 @@
 	${fieldStructure.children}
 </@>
 
-<@aui.script>
+<@liferay_aui.script>
 	function ${portletNamespace}${namespacedFieldName}ToggleImage() {
 		var toggleText = '${languageUtil.get(locale, "show")}';
 

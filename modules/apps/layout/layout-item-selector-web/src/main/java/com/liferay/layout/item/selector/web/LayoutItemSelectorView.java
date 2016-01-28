@@ -23,6 +23,7 @@ import com.liferay.layout.item.selector.web.display.context.LayoutItemSelectorVi
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -68,8 +69,7 @@ public class LayoutItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content/Language", locale, getClass());
+		ResourceBundle resourceBundle = PortalUtil.getResourceBundle(locale);
 
 		return ResourceBundleUtil.getString(resourceBundle, "layouts");
 	}

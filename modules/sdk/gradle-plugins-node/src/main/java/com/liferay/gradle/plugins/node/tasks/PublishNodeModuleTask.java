@@ -95,6 +95,12 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 	}
 
 	@Input
+	@Optional
+	public String getModuleMain() {
+		return GradleUtil.toString(_moduleMain);
+	}
+
+	@Input
 	public String getModuleName() {
 		return GradleUtil.toString(_moduleName);
 	}
@@ -153,6 +159,10 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 
 	public void setModuleLicense(Object moduleLicense) {
 		_moduleLicense = moduleLicense;
+	}
+
+	public void setModuleMain(Object moduleMain) {
+		_moduleMain = moduleMain;
 	}
 
 	public void setModuleName(Object moduleName) {
@@ -222,6 +232,12 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 			map.put("license", license);
 		}
 
+		String main = getModuleMain();
+
+		if (Validator.isNotNull(main)) {
+			map.put("main", main);
+		}
+
 		map.put("name", getModuleName());
 
 		String repository = getModuleRepository();
@@ -280,6 +296,7 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 	private Object _moduleDescription;
 	private final List<Object> _moduleKeywords = new ArrayList<>();
 	private Object _moduleLicense;
+	private Object _moduleMain;
 	private Object _moduleName;
 	private Object _moduleRepository;
 	private Object _moduleVersion;

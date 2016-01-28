@@ -17,37 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
+long groupId = siteAdminDisplayContext.getGroupId();
 
-Group group = null;
-
-if (groupId > 0) {
-	group = GroupServiceUtil.getGroup(groupId);
-}
-
-LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-userParams.put("inherit", Boolean.TRUE);
-userParams.put("usersGroups", Long.valueOf(groupId));
-
-int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
-
-LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-organizationParams.put("groupOrganization", Long.valueOf(groupId));
-organizationParams.put("organizationsGroups", Long.valueOf(groupId));
-
-int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
-
-LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-userGroupParams.put("userGroupsGroups", Long.valueOf(groupId));
-
-int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, userGroupParams);
+Group group = siteAdminDisplayContext.getGroup();
 
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-request.setAttribute("view_entries.jspf-site", group);
 %>
 
 <div class="sidebar-header">
@@ -82,7 +56,7 @@ request.setAttribute("view_entries.jspf-site", group);
 
 	<h5><liferay-ui:message key="members" /></h5>
 
-	<c:if test="<%= (usersCount == 0) && (organizationsCount == 0) && (userGroupsCount == 0) %>">
+	<c:if test="<%= (siteAdminDisplayContext.getUsersCount() == 0) && (siteAdminDisplayContext.getOrganizationsCount() == 0) && (siteAdminDisplayContext.getUserGroupsCount() == 0) %>">
 		<p>
 			<liferay-ui:message key="none" />
 		</p>
@@ -96,33 +70,25 @@ request.setAttribute("view_entries.jspf-site", group);
 	assignMembersURL.setParameter("redirect", currentURL);
 	%>
 
-	<c:if test="<%= usersCount > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getUsersCount() > 0 %>">
 		<p>
-			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (usersCount == 1) ? "x-user" : "x-users", usersCount, false) %>' />
+			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount() == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(), false) %>' />
 		</p>
 	</c:if>
 
-	<c:if test="<%= organizationsCount > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getOrganizationsCount() > 0 %>">
 		<p>
-			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount, false) %>' />
+			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getOrganizationsCount() == 1) ? "x-organization" : "x-organizations", siteAdminDisplayContext.getOrganizationsCount(), false) %>' />
 		</p>
 	</c:if>
 
-	<c:if test="<%= userGroupsCount > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getUserGroupsCount() > 0 %>">
 		<p>
-			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount, false) %>' />
+			<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUserGroupsCount() == 1) ? "x-user-groups" : "x-user-groups", siteAdminDisplayContext.getUserGroupsCount(), false) %>' />
 		</p>
 	</c:if>
 
-	<%
-	int pendingRequests = 0;
-
-	if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
-		pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
-	}
-	%>
-
-	<c:if test="<%= pendingRequests > 0 %>">
+	<c:if test="<%= siteAdminDisplayContext.getPendingRequestsCount() > 0 %>">
 		<h5><liferay-ui:message key="request-pending" /></h5>
 
 		<liferay-portlet:renderURL portletName="<%= portletId %>" var="viewMembershipRequestsURL">
@@ -132,7 +98,7 @@ request.setAttribute("view_entries.jspf-site", group);
 		</liferay-portlet:renderURL>
 
 		<p>
-			<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>' />
+			<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getPendingRequestsCount() == 1) ? "x-request-pending" : "x-requests-pending", siteAdminDisplayContext.getPendingRequestsCount(), false) %>' />
 		</p>
 	</c:if>
 

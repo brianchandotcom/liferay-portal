@@ -17,31 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
+long groupId = siteAdminDisplayContext.getGroupId();
 
-Group group = null;
+Group group = siteAdminDisplayContext.getGroup();
 
-if (groupId > 0) {
-	group = GroupServiceUtil.getGroup(groupId);
-}
+String displayStyle = siteAdminDisplayContext.getDisplayStyle();
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+SearchContainer groupSearch = siteAdminDisplayContext.getSearchContainer();
 
-String keywords = ParamUtil.getString(request, "keywords");
+PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("groupId", String.valueOf(groupId));
-
-String portletURLString = portletURL.toString();
-
-PortletURL searchURL = renderResponse.createRenderURL();
+PortletURL searchURL = siteAdminDisplayContext.getSearchURL();
 
 pageContext.setAttribute("searchURL", searchURL);
-
-String searchURLString = searchURL.toString();
-
-SearchContainer groupSearch = new GroupSearch(renderRequest, portletURL);
 
 if (group != null) {
 	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
@@ -54,7 +42,7 @@ if (group != null) {
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<aui:form action="<%= searchURLString %>" name="searchFm">
+		<aui:form action="<%= searchURL.toString() %>" name="searchFm">
 			<liferay-portlet:renderURLParams varImpl="searchURL" />
 
 			<liferay-ui:input-search markupView="lexicon" />
@@ -67,12 +55,12 @@ if (group != null) {
 	searchContainerId="sites"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= Validator.isNull(keywords) && (group != null) %>">
+		<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
 			<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" icon="info-circle" label="info" />
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"list", "icon"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -95,7 +83,7 @@ if (group != null) {
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<div class="sidenav-menu-slider">
 		<div class="sidebar sidebar-default sidenav-menu">
-			<c:if test="<%= Validator.isNull(keywords) && (group != null) %>">
+			<c:if test="<%= Validator.isNull(siteAdminDisplayContext.getKeywords()) && (group != null) %>">
 				<liferay-util:include page="/view_site_info.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</div>
@@ -105,7 +93,7 @@ if (group != null) {
 		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
 
 		<aui:form action="<%= deleteGroupsURL %>" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
+			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 			<div id="breadcrumb">
 				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
@@ -128,14 +116,7 @@ if (group != null) {
 			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
 			<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
 
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(keywords) %>">
-					<%@ include file="/search_results.jspf" %>
-				</c:when>
-				<c:otherwise>
-					<%@ include file="/view_entries.jspf" %>
-				</c:otherwise>
-			</c:choose>
+			<%@ include file="/view_entries.jspf" %>
 		</aui:form>
 	</div>
 </div>

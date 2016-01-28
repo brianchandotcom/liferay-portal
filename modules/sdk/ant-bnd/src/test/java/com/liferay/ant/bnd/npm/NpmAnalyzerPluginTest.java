@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ant.bnd.bower;
+package com.liferay.ant.bnd.npm;
 
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Constants;
@@ -21,7 +21,7 @@ import aQute.bnd.osgi.URLResource;
 
 import aQute.lib.filter.Filter;
 
-import com.liferay.ant.bnd.bower.BowerAnalyzerPlugin.BowerModule;
+import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin.NpmModule;
 
 import java.net.URL;
 
@@ -31,22 +31,21 @@ import org.junit.Test;
 /**
  * @author Raymond Augé
  */
-public class BowerAnalyzerPluginTest {
+public class NpmAnalyzerPluginTest {
 
 	@Test
 	public void testConversion() throws Exception {
-		BowerAnalyzerPlugin bowerAnalyzerPlugin = new BowerAnalyzerPlugin();
+		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		URL url = getResource("dependencies/bower.json");
+		URL url = getResource("dependencies/package.json");
 
-		BowerModule bowerModule = bowerAnalyzerPlugin.getBowerModule(
-			url.openStream());
+		NpmModule npmModule = npmAnalyzerPlugin.getNpmModule(url.openStream());
 
-		Assert.assertNotNull(bowerModule);
-		Assert.assertEquals("liferay", bowerModule.name);
-		Assert.assertEquals("1.2.4", bowerModule.version);
-		Assert.assertTrue(bowerModule.dependencies.containsKey("lodash"));
-		Assert.assertEquals("~3.9.3", bowerModule.dependencies.get("lodash"));
+		Assert.assertNotNull(npmModule);
+		Assert.assertEquals("liferay", npmModule.name);
+		Assert.assertEquals("1.2.4", npmModule.version);
+		Assert.assertTrue(npmModule.dependencies.containsKey("lodash"));
+		Assert.assertEquals("~3.9.3", npmModule.dependencies.get("lodash"));
 	}
 
 	@Test
@@ -294,19 +293,19 @@ public class BowerAnalyzerPluginTest {
 		Jar jar = new Jar("test");
 
 		jar.putResource(
-			"bower.json",
-			new URLResource(getResource("dependencies/bower.json")));
+			"package.json",
+			new URLResource(getResource("dependencies/package.json")));
 
 		analyzer.setJar(jar);
 
-		BowerAnalyzerPlugin bowerAnalyzerPlugin = new BowerAnalyzerPlugin();
+		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		bowerAnalyzerPlugin.analyzeJar(analyzer);
+		npmAnalyzerPlugin.analyzeJar(analyzer);
 
 		Assert.assertEquals("1.2.4", analyzer.getBundleVersion());
 		Assert.assertEquals(
 			"/liferay-1.2.4",
-			analyzer.getProperty(BowerAnalyzerPlugin.WEB_CONTEXT_PATH));
+			analyzer.getProperty(NpmAnalyzerPlugin.WEB_CONTEXT_PATH));
 
 		String property = analyzer.getProperty(Constants.PROVIDE_CAPABILITY);
 
@@ -330,20 +329,20 @@ public class BowerAnalyzerPluginTest {
 		Jar jar = new Jar("test");
 
 		jar.putResource(
-			"bower.json",
+			"package.json",
 			new URLResource(
-				getResource("dependencies/bower.bad.version.json")));
+				getResource("dependencies/package.bad.version.json")));
 
 		analyzer.setJar(jar);
 
-		BowerAnalyzerPlugin bowerAnalyzerPlugin = new BowerAnalyzerPlugin();
+		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		bowerAnalyzerPlugin.analyzeJar(analyzer);
+		npmAnalyzerPlugin.analyzeJar(analyzer);
 
 		Assert.assertEquals("0.0.0.1word-cha_rs", analyzer.getBundleVersion());
 		Assert.assertEquals(
 			"/liferay-0.0.0.1word-cha_rs",
-			analyzer.getProperty(BowerAnalyzerPlugin.WEB_CONTEXT_PATH));
+			analyzer.getProperty(NpmAnalyzerPlugin.WEB_CONTEXT_PATH));
 
 		String property = analyzer.getProperty(Constants.PROVIDE_CAPABILITY);
 
@@ -360,23 +359,22 @@ public class BowerAnalyzerPluginTest {
 		Jar jar = new Jar("test");
 
 		jar.putResource(
-			"bower.json",
-			new URLResource(getResource("dependencies/bower.empty.json")));
+			"package.json",
+			new URLResource(getResource("dependencies/package.empty.json")));
 
 		analyzer.setJar(jar);
 
-		BowerAnalyzerPlugin bowerAnalyzerPlugin = new BowerAnalyzerPlugin();
+		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		bowerAnalyzerPlugin.analyzeJar(analyzer);
+		npmAnalyzerPlugin.analyzeJar(analyzer);
 	}
 
 	protected void assertVersionFilter(
 		String version, String expectedFilterString) {
 
-		BowerAnalyzerPlugin bowerAnalyzerPlugin = new BowerAnalyzerPlugin();
+		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 
-		String filterString = bowerAnalyzerPlugin.getBowerVersionFilter(
-			version);
+		String filterString = npmAnalyzerPlugin.getNpmVersionFilter(version);
 
 		Assert.assertEquals(expectedFilterString, filterString);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ant.bnd.bower;
+package com.liferay.ant.bnd.npm;
 
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 /**
  * @author Raymond Augé
  */
-public class BowerAnalyzerPlugin implements AnalyzerPlugin {
+public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 
 	public static final String WEB_CONTEXT_PATH = "Web-ContextPath";
 
@@ -44,21 +44,20 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 	public boolean analyzeJar(Analyzer analyzer) throws Exception {
 		Jar jar = analyzer.getJar();
 
-		Resource bowerJSONResource = jar.getResource("bower.json");
+		Resource npmJSONResource = jar.getResource("package.json");
 
-		if (bowerJSONResource == null) {
+		if (npmJSONResource == null) {
 			return false;
 		}
 
-		BowerModule bowerModule = processBowerJsonResource(
-			analyzer, bowerJSONResource);
+		NpmModule npmModule = processNpmJsonResource(analyzer, npmJSONResource);
 
-		processDepedencies(analyzer, bowerModule);
+		processDependencies(analyzer, npmModule);
 
 		return false;
 	}
 
-	public static class BowerModule {
+	public static class NpmModule {
 
 		public Map<String, String> dependencies;
 		public String name;
@@ -259,19 +258,17 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 		return minor;
 	}
 
-	protected BowerModule getBowerModule(InputStream inputStream)
-		throws Exception {
-
+	protected NpmModule getNpmModule(InputStream inputStream) throws Exception {
 		JSONCodec jsonCodec = new JSONCodec();
 
 		Decoder decoder = jsonCodec.dec();
 
 		decoder = decoder.from(inputStream);
 
-		return decoder.get(BowerModule.class);
+		return decoder.get(NpmModule.class);
 	}
 
-	protected String getBowerVersionFilter(String version) {
+	protected String getNpmVersionFilter(String version) {
 		StringBuilder sb = new StringBuilder();
 
 		String[] comparatorSets = version.split("\\|\\|");
@@ -321,12 +318,47 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 		return sb.toString();
 	}
 
-	protected BowerModule processBowerJsonResource(
-			Analyzer analyzer, Resource bowerJSONResource)
+	protected void processDependencies(Analyzer analyzer, NpmModule npmModule) {
+		if (npmModule.runtime == null) {
+			return;
+		}
+
+		Parameters parameters = new Parameters();
+
+		for (Entry<String, String> entry : npmModule.runtime.entrySet()) {
+			Attrs attrs = new Attrs();
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("(&(");
+			sb.append(_OSGI_WEBRESOURCE);
+			sb.append("=");
+
+			String name = entry.getKey();
+
+			sb.append(name);
+
+			sb.append(")");
+
+			String version = entry.getValue();
+
+			sb.append(getNpmVersionFilter(version));
+
+			sb.append(")");
+
+			attrs.put(Constants.FILTER_DIRECTIVE, sb.toString());
+
+			parameters.add(_OSGI_WEBRESOURCE, attrs);
+		}
+
+		setCapabilities(analyzer, Constants.REQUIRE_CAPABILITY, parameters);
+	}
+
+	protected NpmModule processNpmJsonResource(
+			Analyzer analyzer, Resource npmJSONResource)
 		throws Exception {
 
-		BowerModule bowerModule = getBowerModule(
-			bowerJSONResource.openInputStream());
+		NpmModule npmModule = getNpmModule(npmJSONResource.openInputStream());
 
 		String bundleVersion = analyzer.getBundleVersion();
 
@@ -334,10 +366,10 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 			Version version = null;
 
 			try {
-				version = new Version(bowerModule.version);
+				version = new Version(npmModule.version);
 			}
 			catch (IllegalArgumentException iae) {
-				String sanitizedQualifier = bowerModule.version.replaceAll(
+				String sanitizedQualifier = npmModule.version.replaceAll(
 					"[^-_\\da-zA-Z]", "");
 
 				version = new Version("0.0.0." + sanitizedQualifier);
@@ -377,21 +409,21 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 
 		Attrs attrs = new Attrs();
 
-		String bowerName = bowerModule.name;
+		String npmName = npmModule.name;
 
 		String webContextPath = analyzer.getProperty(WEB_CONTEXT_PATH);
 
-		if ((webContextPath == null) && (bowerName != null)) {
-			if (bowerName.indexOf('/') == 0) {
-				bowerName = bowerName.substring(1);
+		if ((webContextPath == null) && (npmName != null)) {
+			if (npmName.indexOf('/') == 0) {
+				npmName = npmName.substring(1);
 			}
 
 			analyzer.setProperty(
 				WEB_CONTEXT_PATH,
-				'/' + bowerName + "-" + analyzer.getBundleVersion());
+				'/' + npmName + "-" + analyzer.getBundleVersion());
 		}
 
-		attrs.put(_OSGI_WEBRESOURCE, bowerName);
+		attrs.put(_OSGI_WEBRESOURCE, npmName);
 
 		attrs.put(
 			Constants.VERSION_ATTRIBUTE + ":Version",
@@ -401,46 +433,7 @@ public class BowerAnalyzerPlugin implements AnalyzerPlugin {
 
 		setCapabilities(analyzer, Constants.PROVIDE_CAPABILITY, parameters);
 
-		return bowerModule;
-	}
-
-	protected void processDepedencies(
-			Analyzer analyzer, BowerModule bowerModule)
-		throws Exception {
-
-		if (bowerModule.runtime == null) {
-			return;
-		}
-
-		Parameters parameters = new Parameters();
-
-		for (Entry<String, String> entry : bowerModule.runtime.entrySet()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("(&(");
-			sb.append(_OSGI_WEBRESOURCE);
-			sb.append("=");
-
-			String name = entry.getKey();
-
-			sb.append(name);
-
-			sb.append(")");
-
-			String version = entry.getValue();
-
-			sb.append(getBowerVersionFilter(version));
-
-			sb.append(")");
-
-			Attrs attrs = new Attrs();
-
-			attrs.put(Constants.FILTER_DIRECTIVE, sb.toString());
-
-			parameters.add(_OSGI_WEBRESOURCE, attrs);
-		}
-
-		setCapabilities(analyzer, Constants.REQUIRE_CAPABILITY, parameters);
+		return npmModule;
 	}
 
 	protected void setCapabilities(

@@ -92,7 +92,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 			"Generates the config file needed to load AMD files via " +
 				"combo loader in Liferay.");
 		configJSModulesTask.setGroup(BasePlugin.BUILD_GROUP);
-		configJSModulesTask.setModuleConfigFile(project.file("bower.json"));
+		configJSModulesTask.setModuleConfigFile(project.file("package.json"));
 
 		PluginContainer pluginContainer = project.getPlugins();
 

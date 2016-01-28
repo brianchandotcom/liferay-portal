@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Frontend Theme Contributor Control Menu
-Bundle-SymbolicName: com.liferay.frontend.theme.contributor.control.menu
-Bundle-Version: 1.0.0
-Theme-Contributor-Type: control-menu
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
-Web-ContextPath: /frontend-theme-contributor-control-menu

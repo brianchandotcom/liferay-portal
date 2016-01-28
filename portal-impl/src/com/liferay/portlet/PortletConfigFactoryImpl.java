@@ -54,7 +54,7 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 			portlet.getPortletId());
 
 		if (portletConfig == null) {
-			PortletContext portletContext = PortletContextFactory.create(
+			PortletContext portletContext = _portletContextFactory.create(
 				portlet, servletContext);
 
 			portletConfig = new PortletConfigImpl(portlet, portletContext);
@@ -88,6 +88,12 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 		return portletConfigs.get(portletId);
 	}
 
+	public void setPortletContextFactory(
+		PortletContextFactory portletContextFactory) {
+
+		_portletContextFactory = portletContextFactory;
+	}
+
 	@Override
 	public PortletConfig update(Portlet portlet) {
 		Map<String, PortletConfig> portletConfigs = _pool.get(
@@ -110,5 +116,6 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 	}
 
 	private final Map<String, Map<String, PortletConfig>> _pool;
+	private PortletContextFactory _portletContextFactory;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletException;
@@ -59,7 +60,7 @@ public abstract class BasePortalSettingsMVCRenderCommand
 				"Unable to include JSP " + getJspPath(), e);
 		}
 
-		return MVC_PATH_SKIP_DISPATCH;
+		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
 	protected abstract String getJspPath();

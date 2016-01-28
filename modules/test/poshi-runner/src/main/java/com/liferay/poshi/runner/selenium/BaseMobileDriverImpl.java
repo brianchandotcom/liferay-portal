@@ -609,28 +609,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public String getElementText(String locator) throws Exception {
-		return getElementText(locator, null);
-	}
-
-	public String getElementText(String locator, String timeout)
-		throws Exception {
-
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (webElement == null) {
-			throw new Exception(
-				"Element is not present at \"" + locator + "\"");
-		}
-
-		if (!isInViewport(locator)) {
-			swipeWebElementIntoView(locator);
-		}
-
-		String text = webElement.getText();
-
-		text = text.trim();
-
-		return text.replace("\n", " ");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -818,7 +797,26 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public String getText(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		return getText(locator, null);
+	}
+
+	public String getText(String locator, String timeout) throws Exception {
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
 	}
 
 	@Override

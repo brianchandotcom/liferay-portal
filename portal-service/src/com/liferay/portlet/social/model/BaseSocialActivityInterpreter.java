@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -387,6 +387,8 @@ public abstract class BaseSocialActivityInterpreter
 		return StringPool.BLANK;
 	}
 
+	protected abstract ResourceBundleLoader getResourceBundleLoader();
+
 	protected String getTitle(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -589,16 +591,14 @@ public abstract class BaseSocialActivityInterpreter
 	protected String wrapLink(
 		String link, String key, ServiceContext serviceContext) {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", serviceContext.getLocale(), getClass());
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
 
-		String title = LanguageUtil.get(resourceBundle, HtmlUtil.escape(key));
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			serviceContext.getLanguageId());
 
-		if (link == null) {
-			return title;
-		}
+		String title = LanguageUtil.get(resourceBundle, key);
 
-		return buildLink(link, title);
+		return wrapLink(link, title);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1146,7 +1146,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public String getText(String locator) {
+	public String getText(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 

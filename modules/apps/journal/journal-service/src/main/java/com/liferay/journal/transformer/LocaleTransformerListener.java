@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -118,7 +120,12 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 				"language-id", languageId);
 
 			if (StringUtil.equalsIgnoreCase(tempLanguageId, languageId)) {
-				hasLanguageIdElement = true;
+				if (Validator.isNotNull(
+						element.attributeValue(
+							"language-id", StringPool.BLANK))) {
+
+					hasLanguageIdElement = true;
+				}
 
 				filterByLanguage(element, languageId, defaultLanguageId);
 			}

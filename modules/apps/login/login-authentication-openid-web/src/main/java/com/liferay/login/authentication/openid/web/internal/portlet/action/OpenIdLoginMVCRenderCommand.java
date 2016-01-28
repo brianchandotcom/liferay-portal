@@ -95,7 +95,7 @@ public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.openid)",
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

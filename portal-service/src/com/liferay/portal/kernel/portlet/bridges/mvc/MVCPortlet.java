@@ -548,7 +548,9 @@ public class MVCPortlet extends LiferayPortlet {
 
 		PortletContext portletContext =
 			(PortletContext)httpServletRequest.getAttribute(
-				MVCRenderCommand.PORTLET_CONTEXT_OVERRIDE_PREFIX + path);
+				MVCRenderConstants.
+					PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path
+			);
 
 		if (portletContext == null) {
 			portletContext = getPortletContext();

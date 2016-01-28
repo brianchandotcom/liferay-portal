@@ -852,6 +852,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				"(https://github.com/natecavanaugh)");
 		publishNodeModuleTask.setModuleBugsUrl("https://issues.liferay.com/");
 		publishNodeModuleTask.setModuleLicense("LGPL");
+		publishNodeModuleTask.setModuleMain("package.json");
 		publishNodeModuleTask.setModuleRepository("liferay/liferay-portal");
 	}
 

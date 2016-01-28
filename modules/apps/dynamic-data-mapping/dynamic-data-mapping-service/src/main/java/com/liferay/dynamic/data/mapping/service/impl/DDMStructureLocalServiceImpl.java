@@ -679,6 +679,12 @@ public class DDMStructureLocalServiceImpl
 		return null;
 	}
 
+	@Override
+	public List<DDMStructure> getChildrenStructures(long parentStructureId) {
+		return ddmStructurePersistence.findByParentStructureId(
+			parentStructureId);
+	}
+
 	/**
 	 * Returns all the structures matching the class name ID.
 	 *

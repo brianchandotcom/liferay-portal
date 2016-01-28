@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
-		"service.ranking:Integer=200"
+		"control.menu.category.key=" + ControlMenuCategoryKeys.USER,
+		"service.ranking:Integer=100"
 	},
 	service = ControlMenuEntry.class
 )

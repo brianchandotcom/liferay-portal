@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"control.menu.category.key=" + ControlMenuCategoryKeys.USER,
-		"service.ranking:Integer=500"
+		"service.ranking:Integer=200"
 	},
 	service = ControlMenuEntry.class
 )

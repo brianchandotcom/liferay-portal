@@ -14,11 +14,9 @@
 
 package com.liferay.portal.servlet.filters.init;
 
+import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.registry.ServiceRegistration;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +39,7 @@ public class InitFilter extends BasePortalFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		if (_setup.compareAndSet(false, true)) {
+		if (_competeLatch.compete()) {
 			try {
 				processFilter(
 					InitFilter.class.getName(), request, response, filterChain);
@@ -49,19 +47,18 @@ public class InitFilter extends BasePortalFilter {
 			finally {
 				_serviceRegistration.unregister();
 
-				_countDownLatch.countDown();
+				_competeLatch.done();
 			}
 		}
 		else {
-			_countDownLatch.await();
+			_competeLatch.await();
 
 			processFilter(
 				InitFilter.class.getName(), request, response, filterChain);
 		}
 	}
 
-	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+	private final CompeteLatch _competeLatch = new CompeteLatch();
 	private ServiceRegistration<InitFilter> _serviceRegistration;
-	private final AtomicBoolean _setup = new AtomicBoolean();
 
 }

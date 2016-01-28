@@ -16,12 +16,53 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:management-bar>
+<%
+PortletURL portletURL = renderResponse.createRenderURL();
+%>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="ddlRecordSet"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/sort_buttons.jsp" servletContext="<%= application %>" />
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= ddlDisplayContext.getOrderByCol() %>"
+			orderByType="<%= ddlDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"modified-date", "id"} %>'
+			portletURL="<%= portletURL %>"
+		/>
 	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteRecordSets();";
+		%>
+
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="trash" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<aui:script>
+	function <portlet:namespace />deleteRecordSets() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			var searchContainer = AUI.$('#<portlet:namespace />ddlRecordSet', form);
+
+			form.attr('method', 'post');
+			form.fm('deleteRecordSetIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		}
+	}
+</aui:script>

@@ -27,22 +27,47 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 
 	title = title + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + articleGroup.getDescriptiveName(locale) + StringPool.CLOSE_PARENTHESIS;
 }
+
+String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
 %>
 
-<liferay-frontend:vertical-card
-	cssClass="article-preview-content"
-	imageUrl="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>"
-	subtitle="<%= assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse) %>"
-	title="<%= title %>"
->
-	<liferay-frontend:vertical-card-sticker-bottom>
-		<liferay-ui:user-portrait
-			imageCssClass="user-icon-lg"
-			userId="<%= assetRenderer.getUserId() %>"
-		/>
-	</liferay-frontend:vertical-card-sticker-bottom>
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
+		<liferay-frontend:vertical-card
+			imageUrl="<%= articleImageURL %>"
+			subtitle="<%= assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse) %>"
+			title="<%= title %>"
+		>
+			<liferay-frontend:vertical-card-sticker-bottom>
+				<liferay-ui:user-portrait
+					cssClass="sticker sticker-bottom"
+					imageCssClass="user-icon-lg"
+					userId="<%= assetRenderer.getUserId() %>"
+				/>
+			</liferay-frontend:vertical-card-sticker-bottom>
 
-	<liferay-frontend:vertical-card-footer>
-		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
-	</liferay-frontend:vertical-card-footer>
-</liferay-frontend:vertical-card>
+			<liferay-frontend:vertical-card-footer>
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+			</liferay-frontend:vertical-card-footer>
+		</liferay-frontend:vertical-card>
+	</c:when>
+	<c:otherwise>
+		<liferay-frontend:icon-vertical-card
+			icon="web-content"
+			subtitle="<%= assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse) %>"
+			title="<%= title %>"
+		>
+			<liferay-frontend:vertical-card-sticker-bottom>
+				<liferay-ui:user-portrait
+					cssClass="sticker sticker-bottom"
+					imageCssClass="user-icon-lg"
+					userId="<%= assetRenderer.getUserId() %>"
+				/>
+			</liferay-frontend:vertical-card-sticker-bottom>
+
+			<liferay-frontend:vertical-card-footer>
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+			</liferay-frontend:vertical-card-footer>
+		</liferay-frontend:icon-vertical-card>
+	</c:otherwise>
+</c:choose>

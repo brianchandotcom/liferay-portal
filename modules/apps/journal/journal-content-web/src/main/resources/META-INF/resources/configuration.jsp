@@ -26,97 +26,93 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 
 <liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-web-content-could-not-be-found" />
 
-<div class="article-preview row row-spacing">
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
-
-		<div class="hidden loading-animation"></div>
-
-		<div class="alert alert-danger hidden">
-			<liferay-ui:message key="an-unexpected-error-occurred" />
-		</div>
-
-		<div class="article-preview-content-container">
-			<c:if test="<%= article != null %>">
-				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
-				</liferay-util:include>
-			</c:if>
-		</div>
-	</div>
-</div>
-
-<div class="row row-button row-spacing">
-	<div class="col-md-12">
-		<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
-	</div>
-</div>
-
-<div class="row row-spacing template-preview <%= article == null ? "hidden" : "" %>">
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<p class="text-muted"><liferay-ui:message key="template" /></p>
-
-		<div class="hidden loading-animation"></div>
-
-		<div class="alert alert-danger hidden">
-			<liferay-ui:message key="an-unexpected-error-occurred" />
-		</div>
-
-		<div class="template-preview-content-container">
-			<c:if test="<%= article != null %>">
-				<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
-				</liferay-util:include>
-			</c:if>
-		</div>
-	</div>
-</div>
-
-<div class="row row-button row-spacing template-preview-button <%= ddmTemplates.size() > 1 ? StringPool.BLANK : "hidden" %>">
-	<div class="col-md-12">
-		<aui:button name="templateSelector" value="change" />
-	</div>
-</div>
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
-<%
-String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
-%>
-
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<div class="<%= article == null ? "hidden" : "" %> configuration-options-container">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-		<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
-		<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
+	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= journalContentDisplayContext.getDDMTemplateKey() %>" />
 
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:field-wrapper label="user-tools">
-				<liferay-ui:asset-addon-entry-selector
-					assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
-					hiddenInput="preferences--userToolAssetAddonEntryKeys--"
-					id="userToolsAssetAddonEntriesSelector"
-					selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
-					title="select-user-tools"
-				/>
-			</aui:field-wrapper>
+			<div class="article-preview row">
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
 
-			<aui:field-wrapper label="content-metadata">
-				<liferay-ui:asset-addon-entry-selector
-					assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
-					hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
-					id="contentMetadataAssetAddonEntriesSelector"
-					selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
-					title="select-content-metadata"
-				/>
-			</aui:field-wrapper>
+					<div class="hidden loading-animation"></div>
 
-			<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+					<div class="alert alert-danger hidden">
+						<liferay-ui:message key="an-unexpected-error-occurred" />
+					</div>
+
+					<div class="article-preview-content-container">
+						<c:if test="<%= article != null %>">
+							<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
+							</liferay-util:include>
+						</c:if>
+					</div>
+
+					<div class="button-holder">
+						<aui:button cssClass="btn-lg web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+					</div>
+				</div>
+			</div>
+
+			<div class="row template-preview <%= article == null ? "hidden" : "" %>">
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<p class="text-muted"><liferay-ui:message key="template" /></p>
+
+					<div class="hidden loading-animation"></div>
+
+					<div class="alert alert-danger hidden">
+						<liferay-ui:message key="an-unexpected-error-occurred" />
+					</div>
+
+					<div class="template-preview-content-container">
+						<c:if test="<%= article != null %>">
+							<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
+							</liferay-util:include>
+						</c:if>
+					</div>
+
+					<div class="button-holder template-preview-button <%= ddmTemplates.size() > 1 ? StringPool.BLANK : "hidden" %>">
+						<aui:button cssClass="btn-lg" name="templateSelector" value="change" />
+					</div>
+				</div>
+			</div>
+
+			<div class="<%= article == null ? "hidden" : "" %> configuration-options-container row">
+				<aui:fieldset>
+					<aui:field-wrapper label="user-tools">
+						<liferay-ui:asset-addon-entry-selector
+							assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
+							hiddenInput="preferences--userToolAssetAddonEntryKeys--"
+							id="userToolsAssetAddonEntriesSelector"
+							selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+							title="select-user-tools"
+						/>
+					</aui:field-wrapper>
+
+					<aui:field-wrapper label="content-metadata">
+						<liferay-ui:asset-addon-entry-selector
+							assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
+							hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
+							id="contentMetadataAssetAddonEntriesSelector"
+							selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
+							title="select-content-metadata"
+						/>
+					</aui:field-wrapper>
+
+					<aui:input name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+				</aui:fieldset>
+			</div>
 		</aui:fieldset>
-	</div>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" name="saveButton" type="submit" />

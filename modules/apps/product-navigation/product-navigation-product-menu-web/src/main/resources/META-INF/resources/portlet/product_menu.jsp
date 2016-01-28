@@ -30,7 +30,7 @@
 					<div class="panel-title">
 						<c:if test="<%= !childPanelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
 							<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Validator.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="collapse-icon collapse-icon-middle panel-toggler <%= Validator.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %>" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" role="button">
-								<span class="category-name"><%= childPanelCategory.getLabel(locale) %></span>
+								<span class="category-name truncate-text"><%= childPanelCategory.getLabel(locale) %></span>
 
 								<%
 								int notificationsCount = productMenuDisplayContext.getNotificationsCount(childPanelCategory);

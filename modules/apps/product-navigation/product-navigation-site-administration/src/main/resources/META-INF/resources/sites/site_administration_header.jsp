@@ -54,20 +54,20 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 			{
 				align: {
 					node: '#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler',
-					points:[A.WidgetPositionAlign.LT, A.WidgetPositionAlign.RT]
+					points: [A.WidgetPositionAlign.LT, A.WidgetPositionAlign.RT]
 				},
 				bodyContent: A.one('#<portlet:namespace/>siteSelectorContent'),
-				cssClass: 'product-menu',
 				constrain: true,
+				cssClass: 'product-menu',
 				hideOn: [
 					{
-						node: A.one('document'),
 						eventName: 'key',
-						keyCode: 'esc'
+						keyCode: 'esc',
+						node: A.one('document')
 					},
 					{
-						node: A.one('document'),
-						eventName: 'clickoutside'
+						eventName: 'clickoutside',
+						node: A.one('document')
 					}
 				],
 				position: 'right',
@@ -82,7 +82,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 
 <c:choose>
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null %>">
-		<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %>" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %>>
+		<div aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= siteAdministrationPanelCategoryDisplayContext.getGroup() != null ? "role=\"button\"" : StringPool.BLANK %>>
 			<div>
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
@@ -95,7 +95,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 					</c:otherwise>
 				</c:choose>
 
-				<span class="site-name">
+				<span class="site-name truncate-text">
 					<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
 					<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() %>">

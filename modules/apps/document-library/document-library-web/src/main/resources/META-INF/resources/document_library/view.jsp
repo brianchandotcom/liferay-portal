@@ -180,7 +180,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 %>
 
 <aui:script>
-	$('#<portlet:namespace />infoPanelId').sideNavigation(
+	AUI.$('#<portlet:namespace />infoPanelId').sideNavigation(
 		{
 			gutter: 15,
 			position: 'right',
@@ -196,7 +196,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 
 		var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0;
 
-		$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
+		AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 	}
 
 	<portlet:namespace />toggleActionsButton();

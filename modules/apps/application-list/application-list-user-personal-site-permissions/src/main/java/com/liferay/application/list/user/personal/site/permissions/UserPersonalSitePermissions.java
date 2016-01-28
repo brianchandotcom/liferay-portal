@@ -48,7 +48,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true)
+@Component(immediate = true, service = UserPersonalSitePermissions.class)
 public class UserPersonalSitePermissions {
 
 	public void initPermissions(List<Company> companies, Portlet portlet) {
@@ -73,6 +73,35 @@ public class UserPersonalSitePermissions {
 				initPermissions(
 					companyId, powerUserRole.getRoleId(), rootPortletId,
 					userPersonalSite.getGroupId());
+			}
+			catch (PortalException e) {
+				_log.error(
+					"Unable to initialize user personal site permissions" +
+						" for portlet " + portlet.getPortletId() +
+						" in company " + companyId
+					, e);
+			}
+		}
+	}
+
+	public void initPermissions(long companyId, List<Portlet> portlets) {
+		Role powerUserRole = getPowerUserRole(companyId);
+
+		if (powerUserRole == null) {
+			return;
+		}
+
+		Group userPersonalSite = getPersonalSiteGroup(companyId);
+
+		if (userPersonalSite == null) {
+			return;
+		}
+
+		for (Portlet portlet : portlets) {
+			try {
+				initPermissions(
+					companyId, powerUserRole.getRoleId(),
+					portlet.getRootPortletId(), userPersonalSite.getGroupId());
 			}
 			catch (PortalException e) {
 				_log.error(

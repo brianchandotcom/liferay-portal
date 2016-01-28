@@ -82,6 +82,12 @@ public class TestTemplateManager implements TemplateManager {
 	}
 
 	@Override
+	public void addTaglibSupport(
+		Map<String, Object> contextObjects, HttpServletRequest request,
+		HttpServletResponse response) {
+	}
+
+	@Override
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String string,
 		HttpServletRequest request, HttpServletResponse response) {

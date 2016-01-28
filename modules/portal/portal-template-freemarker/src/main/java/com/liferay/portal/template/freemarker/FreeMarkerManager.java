@@ -158,6 +158,23 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	}
 
 	@Override
+	public void addTaglibSupport(
+		Map<String, Object> contextObjects, HttpServletRequest request,
+		HttpServletResponse response) {
+
+		ServletContext servletContext = request.getServletContext();
+
+		addTaglibApplication(contextObjects, "Application", servletContext);
+		addTaglibRequest(contextObjects, "Request", request, response);
+
+		// Legacy taglib factory names
+
+		addTaglibFactory(contextObjects, "PortalJspTagLibs", servletContext);
+		addTaglibFactory(contextObjects, "PortletJspTagLibs", servletContext);
+		addTaglibFactory(contextObjects, "taglibLiferayHash", servletContext);
+	}
+
+	@Override
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String themeName,
 		HttpServletRequest request, HttpServletResponse response) {

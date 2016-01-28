@@ -92,7 +92,6 @@ if (ddlDisplayContext.isAdminPortlet()) {
 			<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
 
 			<liferay-ui:icon
-				iconCssClass="icon-search"
 				label="<%= true %>"
 				linkCssClass="btn btn-default"
 				message="select"
@@ -136,11 +135,13 @@ if (ddlDisplayContext.isAdminPortlet()) {
 		</c:if>
 
 		<c:if test="<%= recordSet == null %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= DDLRecordSet.class.getName() %>"
-				/>
-			</aui:field-wrapper>
+			<liferay-ui:panel-container cssClass="permission-panel-container" extended="<%= true %>">
+				<liferay-ui:panel markupView="lexicon" title="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= DDLRecordSet.class.getName() %>"
+					/>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
 		</c:if>
 
 		<aui:button-row>

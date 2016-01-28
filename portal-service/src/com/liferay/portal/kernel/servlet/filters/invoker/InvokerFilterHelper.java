@@ -39,10 +39,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -108,7 +107,9 @@ public class InvokerFilterHelper {
 	}
 
 	public void registerFilterMapping(
-		FilterMapping filterMapping, String filterName, boolean after) {
+		FilterMapping filterMapping, String positionFilterName, boolean after) {
+
+		String filterName = filterMapping.getFilterName();
 
 		while (true) {
 			List<FilterMapping> oldFilterMappings = _filterMappingsMap.get(
@@ -123,18 +124,23 @@ public class InvokerFilterHelper {
 				newFilterMappings = new ArrayList<>(oldFilterMappings);
 			}
 
-			if (after) {
-				newFilterMappings.add(filterMapping);
-			}
-			else {
-				newFilterMappings.add(0, filterMapping);
-			}
+			newFilterMappings.add(filterMapping);
 
 			if (newFilterMappings.size() == 1) {
 				if (_filterMappingsMap.putIfAbsent(
 						filterName, newFilterMappings) == null) {
 
-					_filterNames.add(filterName);
+					int index = _filterNames.indexOf(positionFilterName);
+
+					if (index == -1) {
+						_filterNames.add(filterName);
+					}
+					else if (after) {
+						_filterNames.add(index + 1, filterName);
+					}
+					else {
+						_filterNames.add(index, filterName);
+					}
 
 					break;
 				}
@@ -386,7 +392,7 @@ public class InvokerFilterHelper {
 				filterName, filterObjectValuePair.getKey(),
 				filterObjectValuePair.getValue(), urlPatterns, dispatchers);
 
-			registerFilterMapping(filterMapping, filterName, true);
+			registerFilterMapping(filterMapping, null, true);
 		}
 	}
 
@@ -395,7 +401,7 @@ public class InvokerFilterHelper {
 
 	private final ConcurrentMap<String, List<FilterMapping>>
 		_filterMappingsMap = new ConcurrentHashMap<>();
-	private final Set<String> _filterNames = new CopyOnWriteArraySet<>();
+	private final List<String> _filterNames = new CopyOnWriteArrayList<>();
 	private final List<InvokerFilter> _invokerFilters = new ArrayList<>();
 	private ServiceTracker<Filter, FilterMapping> _serviceTracker;
 

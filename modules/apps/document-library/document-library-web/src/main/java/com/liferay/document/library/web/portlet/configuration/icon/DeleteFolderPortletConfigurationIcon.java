@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -36,16 +37,18 @@ public class DeleteFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	public DeleteFolderPortletConfigurationIcon(
-		PortletRequest portletRequest, Folder fileEntry) {
+		PortletRequest portletRequest, Folder folder) {
 
 		super(portletRequest);
 
-		_folder = fileEntry;
+		_folder = folder;
 	}
 
 	@Override
 	public String getMessage() {
-		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+		if ((_folder.getModel() instanceof DLFolder) &&
+				isTrashEnabled(themeDisplay.getScopeGroupId())) {
+
 			return "move-to-the-recycle-bin";
 		}
 
@@ -67,11 +70,23 @@ public class DeleteFolderPortletConfigurationIcon
 				ActionRequest.ACTION_NAME, "/document_library/edit_folder");
 		}
 
-		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
+		if ((_folder.getModel() instanceof DLFolder) &&
+			isTrashEnabled(themeDisplay.getScopeGroupId())) {
+
 			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
 		}
 		else {
 			portletURL.setParameter(Constants.CMD, Constants.DELETE);
+		}
+
+		if (_folder.isMountPoint() ||
+				!isTrashEnabled(themeDisplay.getScopeGroupId()) ||
+					!(_folder.getModel() instanceof DLFolder)) {
+
+			portletURL.setParameter(Constants.CMD, Constants.DELETE);
+		}
+		else {
+			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
 		}
 
 		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
@@ -90,15 +105,6 @@ public class DeleteFolderPortletConfigurationIcon
 		}
 
 		redirectURL.setParameter("folderId", String.valueOf(parentFolderId));
-
-		if (_folder.isMountPoint() ||
-			!isTrashEnabled(themeDisplay.getScopeGroupId()) ) {
-
-			portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		}
-		else {
-			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
-		}
 
 		portletURL.setParameter("redirect", redirectURL.toString());
 		portletURL.setParameter(

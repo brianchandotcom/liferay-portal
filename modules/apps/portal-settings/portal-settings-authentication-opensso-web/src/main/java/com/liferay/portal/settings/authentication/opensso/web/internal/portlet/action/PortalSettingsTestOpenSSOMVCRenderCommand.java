@@ -17,6 +17,7 @@ package com.liferay.portal.settings.authentication.opensso.web.internal.portlet.
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.util.PortalUtil;
 
@@ -68,7 +69,7 @@ public class PortalSettingsTestOpenSSOMVCRenderCommand
 			throw new PortletException("Unable to include JSP " + _JSP_PATH, e);
 		}
 
-		return MVC_PATH_SKIP_DISPATCH;
+		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
 	@Reference(

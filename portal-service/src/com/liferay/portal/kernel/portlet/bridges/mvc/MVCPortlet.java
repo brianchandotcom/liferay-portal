@@ -278,7 +278,9 @@ public class MVCPortlet extends LiferayPortlet {
 					renderRequest, renderResponse);
 			}
 
-			if (MVCRenderCommand.MVC_PATH_SKIP_DISPATCH.equals(mvcPath)) {
+			if (MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH.equals(
+					mvcPath)) {
+
 				return;
 			}
 
@@ -483,7 +485,8 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	protected String getMVCPathAttributeName(String namespace) {
-		return namespace.concat(StringPool.PERIOD).concat(_MVC_PATH);
+		return namespace.concat(StringPool.PERIOD).concat(
+			MVCRenderConstants.MVC_PATH_REQUEST_ATTRIBUTE_NAME);
 	}
 
 	protected String getPath(
@@ -634,9 +637,6 @@ public class MVCPortlet extends LiferayPortlet {
 
 		return null;
 	}
-
-	private static final String _MVC_PATH =
-		MVCPortlet.class.getName() + "#MVC_PATH";
 
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 

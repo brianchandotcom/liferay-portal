@@ -247,6 +247,8 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMNavigator#gotoDocumentType" />
+
 		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text" />
@@ -841,6 +843,8 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentType" />
 
 		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />

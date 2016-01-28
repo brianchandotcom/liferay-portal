@@ -1,7 +1,5 @@
 <definition>
 	<command name="add">
-		<execute macro="DMNavigator#gotoDocumentType" />
-
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMediaDocumentTypes#TOOLBAR_ADD" value1="Add" />

@@ -25,8 +25,8 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 
 RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+String orderByCol = ddlDisplayContext.getOrderByCol();
+String orderByType = ddlDisplayContext.getOrderByType();
 
 OrderByComparator<DDLRecordSet> orderByComparator = DDLPortletUtil.getDDLRecordSetOrderByComparator(orderByCol, orderByType);
 
@@ -40,10 +40,17 @@ recordSetSearch.setOrderByType(orderByType);
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+	<h5>
+		<%= portletDisplay.getTitle() %>
+	</h5>
+
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="deleteRecordSetIds" type="hidden" />
 
 		<liferay-ui:search-container
+			id="ddlRecordSet"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= recordSetSearch %>"
 		>
 
@@ -79,9 +86,9 @@ recordSetSearch.setOrderByType(orderByType);
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-image
-							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-							toggleRowChecker="<%= true %>"
+						<liferay-ui:search-container-column-icon
+							cssClass="asset-icon"
+							icon="dynamic-data-list"
 						/>
 
 						<liferay-ui:search-container-column-jsp

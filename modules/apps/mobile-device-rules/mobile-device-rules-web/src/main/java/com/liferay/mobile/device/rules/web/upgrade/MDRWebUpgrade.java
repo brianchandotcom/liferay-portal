@@ -15,47 +15,30 @@
 package com.liferay.mobile.device.rules.web.upgrade;
 
 import com.liferay.mobile.device.rules.web.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = MDRWebUpgrade.class)
-public class MDRWebUpgrade {
+@Component(
+	immediate = true,
+	service = {MDRWebUpgrade.class, UpgradeStepRegistrator.class}
+)
+public class MDRWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Override
+	public void register(UpgradeStepRegistrator.Registry registry) {
+		registry.register(
+			"com.liferay.mobile.device.rules.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.mobile.device.rules.web", "0.0.1", "1.0.0",
+			new UpgradePortletId()
+		);
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradePortletId());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.mobile.device.rules.web", upgradeProcesses, 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

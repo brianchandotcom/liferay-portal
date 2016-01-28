@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import freemarker.cache.ClassTemplateLoader;
 
 import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 
 import java.io.Writer;
@@ -52,12 +52,15 @@ public class FreeMarkerUtil {
 			return _configuration;
 		}
 
-		_configuration = new Configuration();
+		_configuration = new Configuration(Configuration.getVersion());
 
-		_configuration.setObjectWrapper(new DefaultObjectWrapper());
+		DefaultObjectWrapperBuilder defaultObjectWrapperBuilder =
+			new DefaultObjectWrapperBuilder(Configuration.getVersion());
+
+		_configuration.setObjectWrapper(defaultObjectWrapperBuilder.build());
 		_configuration.setTemplateLoader(
 			new ClassTemplateLoader(FreeMarkerUtil.class, StringPool.SLASH));
-		_configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
+		_configuration.setTemplateUpdateDelayMilliseconds(Long.MAX_VALUE);
 
 		return _configuration;
 	}

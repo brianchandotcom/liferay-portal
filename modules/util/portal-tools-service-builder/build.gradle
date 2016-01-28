@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay", name: "org.freemarker", transitive: false, version: "2.3.17.LIFERAY-PATCHED-1"
+	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.23"
 	compile group: "com.thoughtworks.qdox", name: "qdox", transitive: false, version: "1.12.1"
 	compile group: "dom4j", name: "dom4j", transitive: false, version: "1.6.1"
 	compile group: "jalopy", name: "jalopy", transitive: false, version: "1.5rc3"

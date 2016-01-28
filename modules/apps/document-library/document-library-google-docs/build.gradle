@@ -4,7 +4,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 
-	provided group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	provided group: "org.freemarker", name: "freemarker", version: "2.3.23"
 }
 
 liferay {

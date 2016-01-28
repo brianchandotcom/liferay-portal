@@ -12,7 +12,7 @@ Import-Package:\
 	!org.slf4j.spi,\
 	!org.zeroturnaround.javarebel,\
 	*
-Include-Resource: @lib/org.freemarker.jar
+Include-Resource: @lib/freemarker.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 Web-ContextPath: /document-library-google-docs

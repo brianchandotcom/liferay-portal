@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import freemarker.cache.ClassTemplateLoader;
 
 import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -35,13 +35,17 @@ import java.util.Map;
 public class FreeMarkerRenderer {
 
 	public FreeMarkerRenderer(String templatePath) throws IOException {
-		Configuration configuration = new Configuration();
+		Configuration configuration = new Configuration(
+			Configuration.getVersion());
 
-		configuration.setObjectWrapper(new DefaultObjectWrapper());
+		DefaultObjectWrapperBuilder defaultObjectWrapperBuilder =
+			new DefaultObjectWrapperBuilder(Configuration.getVersion());
+
+		configuration.setObjectWrapper(defaultObjectWrapperBuilder.build());
 		configuration.setTemplateLoader(
 			new ClassTemplateLoader(
 				FreeMarkerRenderer.class, StringPool.SLASH));
-		configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
+		configuration.setTemplateUpdateDelayMilliseconds(Long.MAX_VALUE);
 
 		_template = configuration.getTemplate(templatePath);
 	}

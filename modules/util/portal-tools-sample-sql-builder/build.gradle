@@ -14,6 +14,8 @@ dependencies {
 	compile project(":apps:message-boards:message-boards-web")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-service")
+
+	provided group: "org.freemarker", name: "freemarker", version: "2.3.23"
 }
 
 liferay {

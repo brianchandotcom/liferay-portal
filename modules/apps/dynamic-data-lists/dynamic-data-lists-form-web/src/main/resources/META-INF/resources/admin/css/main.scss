@@ -3,6 +3,14 @@
 
 $horizontal-spacing: 35px;
 
+.ddl-form-builder-buttons .icon-spinner,
+.ddl-form-settings-modal .btn-toolbar-button .icon-spinner,
+.lfr-ddl-field-settings-modal .btn-toolbar-button .icon-spinner {
+	line-height: 21px;
+	margin-left: 10px;
+	position: absolute;
+}
+
 .ddl-publish-modal {
 	.alert-info {
 		text-align: center;
@@ -199,16 +207,6 @@ $horizontal-spacing: 35px;
 			.lfr-ddm-form-field-container {
 				position: relative;
 
-				@include keyframes(spin) {
-					100% {
-						transform: rotate(359deg);
-					}
-				}
-
-				.icon-spinner {
-					@include animation(spin 1000ms infinite linear);
-				}
-
 				.lfr-form-row {
 					border-width: 0;
 					padding-bottom: 5px;
@@ -340,17 +338,6 @@ $horizontal-spacing: 35px;
 
 .lfr-ddl-field-settings-modal,
 .portlet-forms {
-	@include keyframes(spin) {
-		100% {
-			transform: rotate(359deg);
-		}
-	}
-
-	.form-builder-field-settings-save .icon-spinner {
-		display: inline-block;
-		margin: -2px 0 0 4px;
-	}
-
 	.form-control {
 		font-size: 14px;
 		height: 40px;
@@ -369,10 +356,6 @@ $horizontal-spacing: 35px;
 
 	.icon-asterisk {
 		margin-left: 4px;
-	}
-
-	.icon-spinner {
-		@include animation(spin 1000ms infinite linear);
 	}
 
 	label.radio-inline {

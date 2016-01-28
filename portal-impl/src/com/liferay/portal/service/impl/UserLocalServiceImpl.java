@@ -2720,6 +2720,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user.getUserId();
 	}
 
+	@Override
+	public List<User> getUsersByKeywords(
+		long companyId, String keywords, int status,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<User> obc) {
+
+		return userFinder.findByKeywords(
+			companyId, keywords, status, params, start, end, obc);
+	}
+
+	@Override
+	public int getUsersByKeywordsCount(
+		long companyId, String keywords, int status,
+		LinkedHashMap<String, Object> params) {
+
+		return userFinder.countByKeywords(companyId, keywords, status, params);
+	}
+
 	/**
 	 * Returns <code>true</code> if the password policy has been assigned to the
 	 * user.

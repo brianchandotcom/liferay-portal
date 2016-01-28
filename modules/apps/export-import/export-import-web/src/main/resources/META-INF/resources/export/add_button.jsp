@@ -39,7 +39,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 			<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>" url="<%= addNewExportProcessURL %>" />
+		<liferay-frontend:add-menu-item title="<%= exportImportConfiguration.getName() %>" url="<%= addNewExportProcessURL %>" />
 
 	<%
 	}

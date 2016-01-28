@@ -26,10 +26,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
-page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
-page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
+<%@ page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.exception.DuplicateGroupException" %><%@
@@ -52,7 +49,6 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants" %><%@
@@ -75,9 +71,7 @@ page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
-page import="com.liferay.portal.model.Company" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.GroupConstants" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
@@ -86,7 +80,6 @@ page import="com.liferay.portal.model.LayoutSetPrototype" %><%@
 page import="com.liferay.portal.model.MembershipRequest" %><%@
 page import="com.liferay.portal.model.MembershipRequestConstants" %><%@
 page import="com.liferay.portal.model.Organization" %><%@
-page import="com.liferay.portal.model.OrganizationConstants" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.model.Role" %><%@
 page import="com.liferay.portal.model.RoleConstants" %><%@
@@ -118,17 +111,14 @@ page import="com.liferay.portlet.ratings.display.context.CompanyPortletRatingsDe
 page import="com.liferay.portlet.ratings.display.context.GroupPortletRatingsDefinitionDisplayContext" %><%@
 page import="com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil" %><%@
 page import="com.liferay.portlet.sitesadmin.search.SiteChecker" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
 page import="com.liferay.site.admin.web.constants.SiteAdminPortletKeys" %><%@
+page import="com.liferay.site.admin.web.display.context.SiteAdminDisplayContext" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
 page import="com.liferay.util.PKParser" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Collections" %><%@
 page import="java.util.HashMap" %><%@
-page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
@@ -146,17 +136,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-boolean filterManageableGroups = true;
-
-if (permissionChecker.isCompanyAdmin()) {
-	filterManageableGroups = false;
-}
-
-if (GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
-	filterManageableGroups = false;
-}
-
-long[] classNameIds = new long[] {PortalUtil.getClassNameId(Company.class), PortalUtil.getClassNameId(Group.class), PortalUtil.getClassNameId(Organization.class)};
+SiteAdminDisplayContext siteAdminDisplayContext = new SiteAdminDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -31,10 +31,6 @@ import org.apache.maven.plugin.MojoExecutionException;
  */
 public class BuildServiceMojo extends AbstractMojo {
 
-	public BuildServiceMojo() {
-		_serviceBuilderArgs = new ServiceBuilderArgs();
-	}
-
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
@@ -180,6 +176,7 @@ public class BuildServiceMojo extends AbstractMojo {
 	 */
 	protected File baseDir;
 
-	private final ServiceBuilderArgs _serviceBuilderArgs;
+	private final ServiceBuilderArgs _serviceBuilderArgs =
+		new ServiceBuilderArgs();
 
 }

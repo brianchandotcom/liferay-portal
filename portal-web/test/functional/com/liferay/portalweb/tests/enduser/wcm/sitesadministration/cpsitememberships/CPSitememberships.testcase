@@ -262,10 +262,7 @@
 		</execute>
 
 		<execute macro="Team#assignMembersCP">
-			<var name="siteName" value="Site Name" />
 			<var name="teamName" value="Site Team Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 

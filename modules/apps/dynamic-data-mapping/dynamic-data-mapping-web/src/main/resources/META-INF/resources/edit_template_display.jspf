@@ -25,7 +25,7 @@ if (Validator.isNotNull(scriptContent)) {
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
 
 <liferay-ui:panel-container extended="<%= false %>" id="templateScriptContainer" persistState="<%= true %>">
-	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
+	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" markupView="lexicon" persistState="<%= true %>" title="script">
 		<div class="form-group lfr-template-editor-container">
 			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">

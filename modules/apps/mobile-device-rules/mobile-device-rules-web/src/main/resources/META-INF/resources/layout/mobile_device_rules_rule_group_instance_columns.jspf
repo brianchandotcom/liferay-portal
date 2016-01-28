@@ -19,6 +19,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 %>
 
 <liferay-ui:search-container-column-text
+	cssClass="text-strong"
 	href="<%= rowURL %>"
 	name="name"
 >
@@ -36,22 +37,9 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 
 	<%
 	List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupInstance.getRuleGroupInstanceId(), 0, 10);
-
-	StringBundler sb = new StringBundler(mdrActions.size() * 2);
-
-	for (int i = 0; i < mdrActions.size(); i++) {
-		MDRAction mdrAction = mdrActions.get(i);
-
-		sb.append(HtmlUtil.escape(mdrAction.getName(locale)));
-		sb.append(", ");
-	}
-
-	if (mdrActions.size() > 0) {
-		sb.setIndex(sb.index() - 1);
-	}
 	%>
 
-	<%= sb.toString() %>
+	<%= HtmlUtil.escape(ListUtil.toString(mdrActions, MDRAction.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>
 
 </liferay-ui:search-container-column-text>
 

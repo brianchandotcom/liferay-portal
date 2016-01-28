@@ -79,6 +79,8 @@ OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByCom
 				<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 				<liferay-util:param name="eventName" value="<%= eventName %>" />
 				<liferay-util:param name="includeCheckBox" value="<%= Boolean.FALSE.toString() %>" />
+				<liferay-util:param name="orderByCol" value="<%= orderByCol %>" />
+				<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 			</liferay-util:include>
 		</c:when>
 		<c:otherwise>

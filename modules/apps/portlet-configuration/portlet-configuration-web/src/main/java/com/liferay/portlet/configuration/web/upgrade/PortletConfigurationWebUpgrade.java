@@ -14,59 +14,46 @@
 
 package com.liferay.portlet.configuration.web.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.portlet.configuration.web.constants.PortletConfigurationPortletKeys;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juergen Kappler
  */
-@Component(immediate = true, service = PortletConfigurationWebUpgrade.class)
-public class PortletConfigurationWebUpgrade {
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+@Component(
+	immediate = true,
+	service = {
+		PortletConfigurationWebUpgrade.class, UpgradeStepRegistrator.class
 	}
+)
+public class PortletConfigurationWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
+	@Override
+	public void register(UpgradeStepRegistrator.Registry registry) {
+		registry.register(
+			"com.liferay.portlet.configuration.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
 
-		_releaseLocalService = releaseLocalService;
+		registry.register(
+			"com.liferay.portlet.configuration.web", "0.0.1", "1.0.0",
+			new UpgradePortletId() {
+
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {
+							"86",
+							PortletConfigurationPortletKeys.
+								PORTLET_CONFIGURATION
+						}
+					};
+				}
+
+			});
 	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"86",
-						PortletConfigurationPortletKeys.PORTLET_CONFIGURATION
-					}
-				};
-			}
-
-		};
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.portlet.configuration.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

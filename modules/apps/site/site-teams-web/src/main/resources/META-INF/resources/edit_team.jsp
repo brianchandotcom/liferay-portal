@@ -54,9 +54,9 @@ renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") 
 				<aui:input name="teamId" type="resource" value="<%= String.valueOf(team.getTeamId()) %>" />
 			</c:if>
 
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 
-			<aui:input name="description" />
+			<aui:input name="description" placeholder="description" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

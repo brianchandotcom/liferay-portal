@@ -653,11 +653,11 @@ public class CalendarPortlet extends MVCPortlet {
 
 			firstDayJCalendar.set(java.util.Calendar.DAY_OF_WEEK, 7);
 
-			calendarBooking.setEndTime(
-				firstDayJCalendar.getTimeInMillis() +
-					calendarBooking.getDuration());
+			long startTime = firstDayJCalendar.getTimeInMillis();
+			long endTime = startTime + calendarBooking.getDuration();
 
-			calendarBooking.setStartTime(firstDayJCalendar.getTimeInMillis());
+			calendarBooking.setStartTime(startTime);
+			calendarBooking.setEndTime(endTime);
 
 			calendarBooking.setRecurrence(
 				RecurrenceSerializer.serialize(recurrenceObj));

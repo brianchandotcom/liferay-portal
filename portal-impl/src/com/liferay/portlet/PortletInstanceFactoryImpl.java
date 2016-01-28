@@ -247,7 +247,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 	protected void destroyRelated(Portlet portlet) {
 		PortletConfigFactoryUtil.destroy(portlet);
-		PortletContextFactory.destroy(portlet);
+		PortletContextFactoryUtil.destroy(portlet);
 	}
 
 	protected InvokerPortlet init(

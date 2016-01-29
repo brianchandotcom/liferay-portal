@@ -72,18 +72,12 @@ public class SolrSearchEngineConfigurator
 		return clazz.getClassLoader();
 	}
 
-	@Reference(
-		target = "(search.engine.impl=Solr)",
-		unbind = "-"
-	)
+	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
 	protected void setIndexSearcher(IndexSearcher indexSearcher) {
 		_indexSearcher = indexSearcher;
 	}
 
-	@Reference(
-		target = "(search.engine.impl=Solr)",
-		unbind = "-"
-	)
+	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
 	protected void setIndexWriter(IndexWriter indexWriter) {
 		_indexWriter = indexWriter;
 	}

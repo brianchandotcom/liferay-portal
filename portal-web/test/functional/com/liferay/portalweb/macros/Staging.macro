@@ -843,12 +843,7 @@
 	</command>
 
 	<command name="undoStagingPageVersioningPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
 		<execute function="ClickNoError" locator1="Staging#STAGING_MENU_UNDO_BUTTON" />
 		<execute function="Confirm" value1="Are you sure you want to undo your last changes?" />

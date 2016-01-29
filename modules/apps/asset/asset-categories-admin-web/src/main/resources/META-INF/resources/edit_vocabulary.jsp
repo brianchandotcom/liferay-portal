@@ -54,9 +54,9 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-n
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="title" />
+			<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="title" />
 
-			<aui:input name="description" />
+			<aui:input name="description" placeholder="description" />
 
 			<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
 		</aui:fieldset>

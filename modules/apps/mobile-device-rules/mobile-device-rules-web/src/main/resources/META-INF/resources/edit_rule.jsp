@@ -72,9 +72,9 @@ renderResponse.setTitle(title);
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="name" />
+			<aui:input name="name" placeholder="name" />
 
-			<aui:input name="description" />
+			<aui:input name="description" placeholder="description" />
 
 			<c:choose>
 				<c:when test="<%= ruleHandlerTypes.size() == 1 %>">

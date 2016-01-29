@@ -527,7 +527,7 @@ public class DDMStructureLocalServiceImpl
 			DDMStructureIndexerBackgroundTaskExecutor.getBackgroundTaskName(
 				structure.getStructureId());
 
-		backgroundTaskLocalService.deleteBackgroundTasks(
+		backgroundTaskLocalService.deleteGroupBackgroundTasks(
 			structure.getGroupId(), backgroundTaskName,
 			DDMStructureIndexerBackgroundTaskExecutor.class.getName());
 	}

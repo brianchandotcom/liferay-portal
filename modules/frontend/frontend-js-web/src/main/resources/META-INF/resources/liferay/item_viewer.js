@@ -166,16 +166,23 @@ AUI.add(
 
 						var link = instance.get('links').item(instance.get('currentIndex'));
 
-						var imageValue = {
-							fileEntryId: imageData.file.fileEntryId,
-							groupId: imageData.file.groupId,
-							title: imageData.file.title,
-							type: imageData.file.type,
-							url: imageUrl,
-							uuid: imageData.file.uuid
-						};
+						var returnType = link.attr('data-returnType');
 
-						link.setData('value', JSON.stringify(imageValue));
+						if (returnType === 'com.liferay.item.selector.criteria.URLItemSelectorReturnType') {
+							link.setData('value', imageUrl);
+						}
+						else {
+							var imageValue = {
+								fileEntryId: imageData.file.fileEntryId,
+								groupId: imageData.file.groupId,
+								title: imageData.file.title,
+								type: imageData.file.type,
+								url: imageUrl,
+								uuid: imageData.file.uuid
+							};
+
+							link.setData('value', JSON.stringify(imageValue));
+						}
 					},
 
 					_afterBindUI: function() {

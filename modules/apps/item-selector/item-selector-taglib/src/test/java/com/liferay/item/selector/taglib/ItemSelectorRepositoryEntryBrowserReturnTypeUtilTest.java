@@ -32,49 +32,6 @@ import org.junit.Test;
 public class ItemSelectorRepositoryEntryBrowserReturnTypeUtilTest {
 
 	@Test
-	public void testGetFirstAvailableDraggableFileReturnTypeFirst()
-		throws Exception {
-
-		List<ItemSelectorReturnType> itemSelectorReturnTypes =
-			new ArrayList<>();
-
-		UploadableFileReturnType draggableItemSelectorReturnType =
-			new UploadableFileReturnType();
-
-		itemSelectorReturnTypes.add(draggableItemSelectorReturnType);
-		itemSelectorReturnTypes.add(new URLItemSelectorReturnType());
-
-		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
-				getFirstAvailableDraggableFileReturnType(
-					itemSelectorReturnTypes);
-
-		Assert.assertEquals(
-			draggableItemSelectorReturnType, itemSelectorReturnType);
-	}
-
-	@Test
-	public void testGetFirstAvailableDraggableFileReturnTypeSecond()
-		throws Exception {
-
-		List<ItemSelectorReturnType> itemSelectorReturnTypes =
-			new ArrayList<>();
-
-		UploadableFileReturnType draggableFileReturnType =
-			new UploadableFileReturnType();
-
-		itemSelectorReturnTypes.add(new URLItemSelectorReturnType());
-		itemSelectorReturnTypes.add(draggableFileReturnType);
-
-		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
-				getFirstAvailableDraggableFileReturnType(
-					itemSelectorReturnTypes);
-
-		Assert.assertEquals(draggableFileReturnType, itemSelectorReturnType);
-	}
-
-	@Test
 	public void testGetFirstAvailableExistingFileEntryReturnTypeFirst()
 		throws Exception {
 
@@ -119,7 +76,7 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtilTest {
 	}
 
 	@Test
-	public void testGetFirstAvailableMethodsDoNotModifyOriginalList()
+	public void testGetFirstAvailableMethodDoNotModifyOriginalList()
 		throws Exception {
 
 		List<ItemSelectorReturnType> itemSelectorReturnTypes =
@@ -128,9 +85,6 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtilTest {
 		itemSelectorReturnTypes.add(new Base64ItemSelectorReturnType());
 		itemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 		itemSelectorReturnTypes.add(new UploadableFileReturnType());
-
-		ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
-			getFirstAvailableDraggableFileReturnType(itemSelectorReturnTypes);
 
 		ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
 			getFirstAvailableExistingFileEntryReturnType(

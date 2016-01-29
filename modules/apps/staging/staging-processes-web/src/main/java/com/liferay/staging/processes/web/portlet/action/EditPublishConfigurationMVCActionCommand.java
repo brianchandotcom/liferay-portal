@@ -132,10 +132,10 @@ public class EditPublishConfigurationMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		setLayoutIds(actionRequest);
-
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				setLayoutIds(actionRequest);
+
 				updatePublishConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {

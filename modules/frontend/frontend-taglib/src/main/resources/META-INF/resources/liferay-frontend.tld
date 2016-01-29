@@ -309,6 +309,16 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<name>horizontal-card-icon</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardIconTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>icon-vertical-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.IconVerticalCardTag</tag-class>

@@ -1,3 +1,17 @@
+apply plugin: "com.liferay.maven.plugin.builder"
+
+buildPluginDescriptor {
+	ext {
+		autoClean = false
+	}
+
+	finalizedBy formatSource
+	finalizedBy formatXML
+
+	forcedExclusions "com.ibm.icu:icu4j:2.6.1"
+	goalPrefix = "liferay"
+}
+
 dependencies {
 	compile group: "com.thoughtworks.qdox", name: "qdox", transitive: false, version: "1.12.1"
 	compile group: "dom4j", name: "dom4j", transitive: false, version: "1.6.1"
@@ -13,6 +27,14 @@ dependencies {
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+}
+
+formatSource {
+	mustRunAfter formatXML
+}
+
+formatXML {
+	exclude "**/jalopy.xml"
 }
 
 liferay {

@@ -79,6 +79,13 @@ public class BackgroundTaskLockHelperUtil {
 				backgroundTask.getTaskExecutorClassName() +
 					StringPool.POUND + backgroundTask.getGroupId();
 		}
+		else if (backgroundTaskExecutor.getIsolationLevel() ==
+					BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME) {
+
+			lockKey =
+				backgroundTask.getTaskExecutorClassName() +
+					StringPool.POUND + backgroundTask.getName();
+		}
 		else {
 			lockKey =
 				backgroundTask.getTaskExecutorClassName() +

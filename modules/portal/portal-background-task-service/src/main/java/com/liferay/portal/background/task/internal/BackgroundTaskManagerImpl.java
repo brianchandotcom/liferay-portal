@@ -172,6 +172,15 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
+	public void deleteGroupBackgroundTasks(
+			long groupId, String name, String taskExecutorClassName)
+		throws PortalException {
+
+		_backgroundTaskLocalService.deleteGroupBackgroundTasks(
+			groupId, name, taskExecutorClassName);
+	}
+
+	@Override
 	public BackgroundTask
 		fetchBackgroundTask(long backgroundTaskId) {
 

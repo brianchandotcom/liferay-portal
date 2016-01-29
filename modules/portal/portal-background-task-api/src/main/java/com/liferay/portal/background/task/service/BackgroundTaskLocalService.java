@@ -135,6 +135,9 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	public void deleteGroupBackgroundTasks(long groupId)
 		throws PortalException;
 
+	public void deleteGroupBackgroundTasks(long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName) throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/

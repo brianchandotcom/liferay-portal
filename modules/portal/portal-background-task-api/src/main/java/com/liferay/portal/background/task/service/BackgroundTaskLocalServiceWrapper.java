@@ -168,6 +168,14 @@ public class BackgroundTaskLocalServiceWrapper
 		_backgroundTaskLocalService.deleteGroupBackgroundTasks(groupId);
 	}
 
+	@Override
+	public void deleteGroupBackgroundTasks(long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_backgroundTaskLocalService.deleteGroupBackgroundTasks(groupId, name,
+			taskExecutorClassName);
+	}
+
 	/**
 	* @throws PortalException
 	*/

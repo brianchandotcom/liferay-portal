@@ -74,6 +74,10 @@ public interface BackgroundTaskManager {
 
 	public void deleteGroupBackgroundTasks(long groupId) throws PortalException;
 
+	public void deleteGroupBackgroundTasks(
+			long groupId, String name, String taskExecutorClassName)
+		throws PortalException;
+
 	public BackgroundTask fetchBackgroundTask(long backgroundTaskId);
 
 	public BackgroundTask fetchFirstBackgroundTask(

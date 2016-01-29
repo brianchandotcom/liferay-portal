@@ -310,6 +310,20 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public void deleteGroupBackgroundTasks(
+			long groupId, String name, String taskExecutorClassName)
+		throws PortalException {
+
+		List<BackgroundTask> backgroundTasks =
+			backgroundTaskPersistence.findByG_N_T(
+				groupId, name, taskExecutorClassName);
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			deleteBackgroundTask(backgroundTask);
+		}
+	}
+
+	@Override
 	public BackgroundTask fetchBackgroundTask(long backgroundTaskId) {
 		return backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
 	}

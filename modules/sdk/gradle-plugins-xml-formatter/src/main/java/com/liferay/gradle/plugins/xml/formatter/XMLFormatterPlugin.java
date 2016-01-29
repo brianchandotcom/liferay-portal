@@ -16,12 +16,21 @@ package com.liferay.gradle.plugins.xml.formatter;
 
 import com.liferay.gradle.util.GradleUtil;
 
+import java.io.File;
+
+import java.util.Collections;
+import java.util.concurrent.Callable;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -73,11 +82,24 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected FormatXMLTask addTaskFormatXML(Project project) {
-		FormatXMLTask formatXMLTask = GradleUtil.addTask(
+		final FormatXMLTask formatXMLTask = GradleUtil.addTask(
 			project, FORMAT_XML_TASK_NAME, FormatXMLTask.class);
 
 		formatXMLTask.setDescription(
 			"Runs Liferay XML Formatter to format files.");
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
+
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					configureTaskFormatXMLForJavaPlugin(formatXMLTask);
+				}
+
+			});
 
 		return formatXMLTask;
 	}
@@ -86,6 +108,28 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 		FormatXMLTask formatXMLTask, FileCollection fileCollection) {
 
 		formatXMLTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTaskFormatXMLForJavaPlugin(
+		FormatXMLTask formatXMLTask) {
+
+		formatXMLTask.setIncludes(Collections.singleton("**/*.xml"));
+
+		final SourceSet sourceSet = GradleUtil.getSourceSet(
+			formatXMLTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
+
+		formatXMLTask.setSource(
+			new Callable<Iterable<File>>() {
+
+				@Override
+				public Iterable<File> call() throws Exception {
+					SourceDirectorySet sourceDirectorySet =
+						sourceSet.getResources();
+
+					return sourceDirectorySet.getSrcDirs();
+				}
+
+			});
 	}
 
 	protected void configureTasksFormatXML(

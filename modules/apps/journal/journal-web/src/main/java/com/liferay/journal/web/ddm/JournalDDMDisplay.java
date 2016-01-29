@@ -24,11 +24,11 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
@@ -74,7 +74,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		portletURL.setParameter(
 			"classPK", String.valueOf(structure.getStructureId()));
 		portletURL.setParameter("ddmStructureKey", structure.getStructureKey());
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
 	}
@@ -137,16 +136,31 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		throws Exception {
 
 		if (classPK <= 0) {
-			return StringPool.BLANK;
+			String redirect = ParamUtil.getString(
+				liferayPortletRequest, "redirect");
+
+			return redirect;
 		}
 
-		return super.getViewTemplatesBackURL(
-			liferayPortletRequest, liferayPortletResponse, classPK);
+		String portletId = PortletProviderUtil.getPortletId(
+			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		return portletURL.toString();
 	}
 
 	@Override
 	public Set<String> getViewTemplatesExcludedColumnNames() {
 		return _viewTemplateExcludedColumnNames;
+	}
+
+	@Override
+	public boolean isShowBackURLInTitleBar() {
+		return true;
 	}
 
 	@Override

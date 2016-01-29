@@ -1,0 +1,5 @@
+<definition>
+	<command name="gotoAdd">
+		<execute function="Click" locator1="Button#PLUS" />
+	</command>
+</definition>

@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
-		<execute macro="WebContentNavigator#gotoAddTemplate" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${templateName}" />
 
@@ -57,7 +57,7 @@
 	<command name="addNullCP">
 		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
-		<execute macro="WebContentNavigator#gotoAddTemplate" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -101,8 +101,6 @@
 		<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 
 		<execute function="SelectFrameTop" />
-
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
 		<execute macro="WebContentNavigator#showTemplateDetails" />
 

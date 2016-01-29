@@ -1,9 +1,7 @@
 <definition>
 	<command name="addCP">
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="SelectFrame" />
 
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${structureName}" />
 
 		<if>
@@ -47,8 +45,6 @@
 
 				<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 			</then>
 		</if>
 
@@ -57,9 +53,7 @@
 
 	<command name="addNullCP">
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
@@ -209,9 +203,6 @@
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
-		<execute function="SelectFrameTop" />
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
-
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
 			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
 			<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="structureFieldName" />
@@ -221,13 +212,8 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
-
-		<execute function="SelectFrameTop" />
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
 			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
@@ -238,21 +224,14 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="gotoCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#STRUCTURES" value1="Structures" />
-
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
-	</command>
-
 	<command name="saveCP">
-		<execute macro="DDLDataDefinition#saveCP" />
+		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<if>
 			<isset var="addRoleViewPermissions" />
 			<then>
-				<execute function="SelectFrame" locator1="IFrame#STRUCTURES" />
-
 				<var name="key_rowEntry" value="${structureName}" />
 
 				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
@@ -262,8 +241,6 @@
 					<var name="addOrRemoveViewPermission" value="Add" />
 					<var name="roleList" value="${addRoleViewPermissions}" />
 				</execute>
-
-				<execute function="SelectFrameTop" />
 			</then>
 		</if>
 	</command>
@@ -324,9 +301,6 @@
 		</if>
 
 		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
-
-		<execute function="SelectFrameTop" />
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<execute macro="WebContentNavigator#showStructureDetails" />
 

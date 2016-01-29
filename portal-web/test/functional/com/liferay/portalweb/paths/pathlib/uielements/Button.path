@@ -485,7 +485,7 @@
 </tr>
 <tr>
 	<td>SAVE</td>
-	<td>//button[contains(.,'Save')] | //div[@class='button-holder ']/button[contains(.,'Save')]</td>
+	<td>//button[contains(.,'Save')] | //div[contains(@class,'button-holder ')]/button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

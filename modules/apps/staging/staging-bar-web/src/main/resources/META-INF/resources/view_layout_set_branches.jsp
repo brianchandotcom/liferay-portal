@@ -67,7 +67,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 						<strong>
 					</c:if>
 
-					<liferay-ui:message key="<%= curLayoutSetBranch.getName() %>" />
+					<liferay-ui:message key="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>" />
 
 					<c:if test="<%= curLayoutSetBranch.isMaster() %>">
 						<i class="icon-asterisk"></i>

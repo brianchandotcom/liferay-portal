@@ -63,24 +63,41 @@ public class StringParserFragment {
 	}
 
 	protected StringParserFragment(String chunk) {
-		if ((chunk == null) || (chunk.length() < 4)) {
-			throw new IllegalArgumentException("Fragment is invalid:" + chunk);
+		chunk = chunk.substring(1, chunk.length() - 1);
+
+		if (Validator.isNull(chunk)) {
+			throw new IllegalArgumentException("Fragment is null");
 		}
 
-		int index = chunk.indexOf(CharPool.COLON);
+		String[] chunkParts = chunk.split(StringPool.COLON, 2);
 
-		String name = chunk.substring(1, index);
+		String name = null;
 
-		if (name.isEmpty()) {
+		if (chunkParts.length == 2) {
+			name = chunkParts[0];
+			String pattern = chunkParts[1];
+
+			if (Validator.isNull(pattern)) {
+				throw new IllegalArgumentException("Pattern is null");
+			}
+
+			_pattern = Pattern.compile(pattern);
+		}
+		else {
+			name = chunkParts[0];
+			_pattern = _defaultPattern;
+		}
+
+		if (Validator.isNull(name)) {
 			throw new IllegalArgumentException("Name is null");
 		}
 
-		if (name.charAt(0) == CharPool.PERCENT) {
-			if (name.length() == 1) {
+		if (name.startsWith(StringPool.PERCENT)) {
+			name = name.substring(1);
+
+			if (Validator.isNull(name)) {
 				throw new IllegalArgumentException("Name is null");
 			}
-
-			name = name.substring(1);
 
 			_raw = true;
 		}
@@ -89,15 +106,6 @@ public class StringParserFragment {
 		}
 
 		_name = name;
-
-		String pattern = chunk.substring(index + 1, chunk.length() - 1);
-
-		if (pattern.isEmpty()) {
-			_pattern = _defaultPattern;
-		}
-		else {
-			_pattern = Pattern.compile(pattern);
-		}
 
 		_token = StringPool.OPEN_CURLY_BRACE.concat(_name).concat(
 			StringPool.CLOSE_CURLY_BRACE);

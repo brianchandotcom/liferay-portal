@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
@@ -136,25 +137,40 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	protected String sortLiferayVariables(String content) {
 		Matcher matcher = _liferayVariablesPattern.matcher(content);
 
-		if (!matcher.find()) {
-			return content;
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			Matcher matcher2 = _liferayVariablePattern.matcher(match);
+
+			String previousVariable = null;
+
+			while (matcher2.find()) {
+				String variable = matcher2.group();
+
+				if (Validator.isNotNull(previousVariable) &&
+					(previousVariable.compareTo(variable) > 0)) {
+
+					String replacement = StringUtil.replaceFirst(
+						match, previousVariable, variable);
+					replacement = StringUtil.replaceLast(
+						replacement, variable, previousVariable);
+
+					return StringUtil.replace(content, match, replacement);
+				}
+
+				previousVariable = variable;
+			}
 		}
 
-		String match = matcher.group();
-
-		String[] lines = StringUtil.splitLines(match);
-
-		Arrays.sort(lines);
-
-		String replacement = StringUtil.merge(lines, "\n") + "\n";
-
-		return StringUtil.replace(content, match, replacement);
+		return content;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
+	private Pattern _liferayVariablePattern = Pattern.compile(
+		"^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
 	private Pattern _liferayVariablesPattern = Pattern.compile(
-		"(^<#assign liferay_.*>\n)+", Pattern.MULTILINE);
+		"(^\t*<#assign liferay_.*>\n)+", Pattern.MULTILINE);
 	private Pattern _multiParameterTagPattern = Pattern.compile(
 		"\n(\t*)<@.+=.+=.+/>");
 	private Pattern _singleParameterTagPattern = Pattern.compile(

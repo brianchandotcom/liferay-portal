@@ -46,7 +46,7 @@ recordSetSearch.setOrderByType(orderByType);
 
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="deleteRecordSetIds" type="hidden" />
+		<aui:input name="recordSetIds" type="hidden" />
 
 		<liferay-ui:search-container
 			id="ddlRecordSet"
@@ -86,10 +86,12 @@ recordSetSearch.setOrderByType(orderByType);
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<liferay-ui:search-container-column-icon
-							cssClass="asset-icon"
-							icon="dynamic-data-list"
-						/>
+						<liferay-ui:search-container-column-text>
+							<liferay-ui:user-portrait
+								cssClass="user-icon-lg"
+								userId="<%= recordSet.getUserId() %>"
+							/>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
 							colspan="2"

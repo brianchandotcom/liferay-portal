@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.init.filter.action;
+package com.liferay.portal.init.filter;
 
-import com.liferay.portal.init.filter.InitFilter;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -30,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Matthew Tambara
  */
 @Component(immediate = true)
-public class InitStartupAction {
+public class InitFilterInstaller {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

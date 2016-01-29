@@ -1853,8 +1853,8 @@ this task.
 		</echo>
 
 		<replace file="${app.server.tomcat.dir}/conf/catalina.properties">
-			<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
-			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
+			<replacetoken><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar"]]></replacetoken>
+			<replacevalue><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar","${catalina.home}/lib/ext","${catalina.home}/lib/ext/*.jar"]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.tomcat.dir}/conf/server.xml">

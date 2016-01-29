@@ -410,7 +410,7 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 		}
 		catch (IOException ioe) {
 			throw new SystemException(
-				"Unable to communicate with OpenId provider", e);
+				"Unable to communicate with OpenId provider", ioe);
 		}
 	}
 

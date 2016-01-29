@@ -27,7 +27,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Builds Liferay Service Builder services.
+ *
  * @author Raymond Augé
+ * @goal build-service
  */
 public class BuildServiceMojo extends AbstractMojo {
 
@@ -52,10 +55,16 @@ public class BuildServiceMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setApiDirName(String apiDirName) {
 		_serviceBuilderArgs.setApiDirName(apiDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setAutoImportDefaultReferences(
 		boolean autoImportDefaultReferences) {
 
@@ -63,42 +72,72 @@ public class BuildServiceMojo extends AbstractMojo {
 			autoImportDefaultReferences);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setAutoNamespaceTables(boolean autoNamespaceTables) {
 		_serviceBuilderArgs.setAutoNamespaceTables(autoNamespaceTables);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setBeanLocatorUtil(String beanLocatorUtil) {
 		_serviceBuilderArgs.setBeanLocatorUtil(beanLocatorUtil);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setBuildNumber(long buildNumber) {
 		_serviceBuilderArgs.setBuildNumber(buildNumber);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setBuildNumberIncrement(boolean buildNumberIncrement) {
 		_serviceBuilderArgs.setBuildNumberIncrement(buildNumberIncrement);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setHbmFileName(String hbmFileName) {
 		_serviceBuilderArgs.setHbmFileName(hbmFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setImplDirName(String implDirName) {
 		_serviceBuilderArgs.setImplDirName(implDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setInputFileName(String inputFileName) {
 		_serviceBuilderArgs.setInputFileName(inputFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setMergeModelHintsConfigs(String mergeModelHintsConfigs) {
 		_serviceBuilderArgs.setMergeModelHintsConfigs(mergeModelHintsConfigs);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setMergeReadOnlyPrefixes(String mergeReadOnlyPrefixes) {
 		_serviceBuilderArgs.setMergeReadOnlyPrefixes(mergeReadOnlyPrefixes);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setMergeResourceActionsConfigs(
 		String mergeResourceActionsConfigs) {
 
@@ -106,72 +145,120 @@ public class BuildServiceMojo extends AbstractMojo {
 			mergeResourceActionsConfigs);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setModelHintsConfigs(String modelHintsConfigs) {
 		_serviceBuilderArgs.setModelHintsConfigs(modelHintsConfigs);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setModelHintsFileName(String modelHintsFileName) {
 		_serviceBuilderArgs.setModelHintsFileName(modelHintsFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setOsgiModule(boolean osgiModule) {
 		_serviceBuilderArgs.setOsgiModule(osgiModule);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setPluginName(String pluginName) {
 		_serviceBuilderArgs.setPluginName(pluginName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setPropsUtil(String propsUtil) {
 		_serviceBuilderArgs.setPropsUtil(propsUtil);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setReadOnlyPrefixes(String readOnlyPrefixes) {
 		_serviceBuilderArgs.setReadOnlyPrefixes(readOnlyPrefixes);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setResourceActionsConfigs(String resourceActionsConfigs) {
 		_serviceBuilderArgs.setResourceActionsConfigs(resourceActionsConfigs);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setResourcesDirName(String resourcesDirName) {
 		_serviceBuilderArgs.setResourcesDirName(resourcesDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setSpringFileName(String springFileName) {
 		_serviceBuilderArgs.setSpringFileName(springFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setSpringNamespaces(String springNamespaces) {
 		_serviceBuilderArgs.setSpringNamespaces(springNamespaces);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setSqlDirName(String sqlDirName) {
 		_serviceBuilderArgs.setSqlDirName(sqlDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setSqlFileName(String sqlFileName) {
 		_serviceBuilderArgs.setSqlFileName(sqlFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setSqlIndexesFileName(String sqlIndexesFileName) {
 		_serviceBuilderArgs.setSqlIndexesFileName(sqlIndexesFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setSqlSequencesFileName(String sqlSequencesFileName) {
 		_serviceBuilderArgs.setSqlSequencesFileName(sqlSequencesFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setTargetEntityName(String targetEntityName) {
 		_serviceBuilderArgs.setTargetEntityName(targetEntityName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setTestDirName(String testDirName) {
 		_serviceBuilderArgs.setTestDirName(testDirName);
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}
+	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
 	protected File baseDir;

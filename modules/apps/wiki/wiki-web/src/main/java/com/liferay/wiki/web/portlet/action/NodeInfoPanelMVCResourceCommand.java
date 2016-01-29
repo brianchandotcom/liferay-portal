@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"mvc.command.name=/wiki/info_panel"
+		"mvc.command.name=/wiki/node_info_panel"
 	},
 	service = MVCResourceCommand.class
 )
-public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
+public class NodeInfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	public void doServeResource(
@@ -50,11 +50,10 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		resourceRequest.setAttribute(
 			WikiWebKeys.WIKI_NODES, ActionUtil.getNodes(resourceRequest));
-		resourceRequest.setAttribute(
-			WikiWebKeys.WIKI_PAGES, ActionUtil.getPages(resourceRequest));
 
 		include(
-			resourceRequest, resourceResponse, "/wiki_admin/info_panel.jsp");
+			resourceRequest, resourceResponse,
+			"/wiki_admin/node_info_panel.jsp");
 	}
 
 }

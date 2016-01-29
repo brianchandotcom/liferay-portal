@@ -1,7 +1,7 @@
 configurations {
- compile {
-  transitive = false
- }
+	compile {
+		transitive = false
+	}
 }
 
 dependencies {

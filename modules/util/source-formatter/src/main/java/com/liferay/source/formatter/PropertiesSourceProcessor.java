@@ -314,9 +314,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatProperties(String content)
-		throws Exception {
-
+	protected String formatProperties(String content) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =

@@ -4,7 +4,7 @@
 			<var name="portlet" value="App Manager" />
 		</execute>
 
-		<execute function="AssertClick" locator1="ListGroupItem#UNCATEGORIZED_LINK" value1="Uncategorized" />
+		<execute function="AssertClick" locator1="ListGroupItem#INDEPENDENT_MODULES_LINK" value1="Independent Modules" />
 
 		<var name="key_itemName" value="${appName}" />
 

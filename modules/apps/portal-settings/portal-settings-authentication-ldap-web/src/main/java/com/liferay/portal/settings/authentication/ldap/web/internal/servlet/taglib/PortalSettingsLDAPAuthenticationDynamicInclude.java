@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.ldap.internal.portal.settings.web.servlet.taglib;
+package com.liferay.portal.settings.authentication.ldap.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

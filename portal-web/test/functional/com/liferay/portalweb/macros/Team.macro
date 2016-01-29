@@ -27,6 +27,8 @@
 
 		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
+		<execute function="AssertVisible" locator1="NavBar#USERS" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

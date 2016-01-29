@@ -15,7 +15,6 @@
 package com.liferay.gradle.plugins.xml.formatter;
 
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.xml.formatter.XMLFormatterArgs;
 
 import groovy.lang.Closure;
 
@@ -47,11 +46,11 @@ public class FormatXMLTask extends SourceTask {
 	}
 
 	public boolean isStripComments() {
-		return _xmlFormatterArgs.isStripComments();
+		return _stripComments;
 	}
 
 	public void setStripComments(boolean stripComments) {
-		_xmlFormatterArgs.setStripComments(stripComments);
+		_stripComments = stripComments;
 	}
 
 	protected void formatXML(final File file) {
@@ -92,6 +91,6 @@ public class FormatXMLTask extends SourceTask {
 		return systemProperties;
 	}
 
-	private final XMLFormatterArgs _xmlFormatterArgs = new XMLFormatterArgs();
+	private boolean _stripComments;
 
 }

@@ -379,6 +379,14 @@ public class DDMTemplateStagedModelDataHandler
 				if (existingTemplate == null) {
 					serviceContext.setUuid(template.getUuid());
 
+					existingTemplate = _ddmTemplateLocalService.fetchTemplate(
+						portletDataContext.getScopeGroupId(),
+						template.getClassNameId(), template.getTemplateKey());
+
+					if (existingTemplate != null) {
+						template.setTemplateKey(StringPool.BLANK);
+					}
+
 					importedTemplate = _ddmTemplateLocalService.addTemplate(
 						userId, portletDataContext.getScopeGroupId(),
 						template.getClassNameId(), classPK, resourceClassNameId,

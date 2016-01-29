@@ -74,7 +74,7 @@ public class FormatXMLTask extends SourceTask {
 	}
 
 	protected void formatXML(final File file) {
-		final Project project = getProject();
+		Project project = getProject();
 
 		project.javaexec(
 			new Action<JavaExecSpec>() {
@@ -84,7 +84,6 @@ public class FormatXMLTask extends SourceTask {
 					javaExecSpec.setClasspath(getClasspath());
 					javaExecSpec.setMain(getMainClassName());
 					javaExecSpec.setSystemProperties(getSystemProperties(file));
-					javaExecSpec.setWorkingDir(project.getProjectDir());
 				}
 
 			});

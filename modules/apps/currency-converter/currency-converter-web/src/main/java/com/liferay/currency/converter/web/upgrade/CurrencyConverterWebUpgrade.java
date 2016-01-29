@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true,
-	service = {CurrencyConverterWebUpgrade.class, UpgradeStepRegistrator.class}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class CurrencyConverterWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

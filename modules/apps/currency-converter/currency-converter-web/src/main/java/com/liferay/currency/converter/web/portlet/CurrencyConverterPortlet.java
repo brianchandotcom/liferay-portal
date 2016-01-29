@@ -17,8 +17,8 @@ package com.liferay.currency.converter.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
-import com.liferay.currency.converter.web.upgrade.CurrencyConverterWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import java.io.IOException;
 
@@ -109,9 +109,11 @@ public class CurrencyConverterPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCurrencyConverterWebUpgrade(
-		CurrencyConverterWebUpgrade currencyConverterWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.currency.converter.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private volatile CurrencyConverterConfiguration

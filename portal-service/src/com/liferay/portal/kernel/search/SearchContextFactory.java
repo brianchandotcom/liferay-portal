@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -67,6 +68,20 @@ public class SearchContextFactory {
 				else {
 					attributes.put(name, values);
 				}
+			}
+		}
+
+		if (!parameters.containsKey("groupId")) {
+			String[] scope = parameters.get("scope");
+
+			if (scope != null) {
+				String groupId = "0";
+
+				if (Validator.equals(scope[0], "this-site")) {
+					groupId = String.valueOf(themeDisplay.getScopeGroupId());
+				}
+
+				attributes.put("groupId", groupId);
 			}
 		}
 

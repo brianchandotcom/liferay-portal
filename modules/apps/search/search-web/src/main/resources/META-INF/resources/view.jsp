@@ -17,9 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, SearchPortletParams.GROUP_ID);
 
-String keywords = ParamUtil.getString(request, "keywords");
+String keywords = ParamUtil.getString(request, SearchPortletParams.KEYWORDS);
+
+String scopeParam = ParamUtil.getString(request, SearchPortletParams.SCOPE);
+
+SearchDisplayContext.Preferences preferences = searchDisplayContext.getPreferences();
+
+SearchDisplayContext.Scope scope = searchDisplayContext.getScope(scopeParam);
+
+boolean scopeEverything = (groupId == 0);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -44,25 +52,17 @@ pageContext.setAttribute("portletURL", portletURL);
 		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
 		<c:choose>
-			<c:when test='<%= Validator.equals(searchDisplayContext.getSearchScope(), "let-the-user-choose") %>'>
-				<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="groupId" title="scope">
-
-					<%
-					Group group = themeDisplay.getScopeGroup();
-					%>
-
-					<c:if test="<%= !group.isStagingGroup() %>">
-						<aui:option label="everything" selected="<%= (groupId == 0) %>" value="0" />
+			<c:when test="<%= preferences.isScopeLetTheUserChoose() %>">
+				<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="scope" title="scope">
+					<c:if test="<%= preferences.isScopeEverythingAvailable() %>">
+						<aui:option label="everything" selected="<%= scopeEverything %>" value="everything" />
 					</c:if>
 
-					<aui:option label="this-site" selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
+					<aui:option label="this-site" selected="<%= !scopeEverything %>" value="this-site" />
 				</aui:select>
 			</c:when>
-			<c:when test='<%= Validator.equals(searchDisplayContext.getSearchScope(), "everything") %>'>
-				<aui:input name="groupId" type="hidden" value="0" />
-			</c:when>
 			<c:otherwise>
-				<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
+				<aui:input name="scope" type="hidden" value="<%= scope.getScope() %>" />
 			</c:otherwise>
 		</c:choose>
 

@@ -17,6 +17,14 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
+if (Validator.isNull(fieldParam)) {
+	String scopeParam = ParamUtil.getString(request, SearchPortletParams.SCOPE);
+
+	SearchDisplayContext.Scope scope = searchDisplayContext.getScope(scopeParam);
+
+	fieldParam = String.valueOf(scope.getGroupId());
+}
+
 if (termCollectors.isEmpty()) {
 %>
 

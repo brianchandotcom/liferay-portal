@@ -23,11 +23,15 @@ if (Validator.isNotNull(redirect)) {
 	portletDisplay.setURLBack(redirect);
 }
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, SearchPortletParams.GROUP_ID);
 
-String keywords = ParamUtil.getString(request, "keywords");
+String keywords = ParamUtil.getString(request, SearchPortletParams.KEYWORDS);
 
-String format = ParamUtil.getString(request, "format");
+String format = ParamUtil.getString(request, SearchPortletParams.FORMAT);
+
+String scopeParam = ParamUtil.getString(request, SearchPortletParams.SCOPE);
+
+SearchDisplayContext.Scope scope = searchDisplayContext.getScope(scopeParam);
 
 PortletURL portletURL = PortletURLUtil.getCurrent(renderRequest, renderResponse);
 
@@ -51,6 +55,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 	<aui:fieldset id="searchContainer">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" value="<%= HtmlUtil.escape(keywords) %>" />
+		<aui:input name="scope" type="hidden" value="<%= scope.getScope() %>" />
 
 		<aui:field-wrapper inlineField="<%= true %>">
 			<aui:button icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />

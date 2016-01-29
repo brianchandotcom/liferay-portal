@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.search.facet.SearchFacet;
 import com.liferay.search.facet.util.SearchFacetTracker;
+import com.liferay.search.web.constants.SearchPortletParams;
 
 import java.util.List;
 
@@ -46,8 +48,7 @@ public class SearchDisplayContext {
 	}
 
 	public String checkViewURL(String viewURL, String currentURL) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		if (Validator.isNotNull(viewURL) &&
 			viewURL.startsWith(themeDisplay.getURLPortal())) {
@@ -103,6 +104,10 @@ public class SearchDisplayContext {
 		return _enabledSearchFacets;
 	}
 
+	public Preferences getPreferences() {
+		return _preferences;
+	}
+
 	public int getQueryIndexingThreshold() {
 		if (_queryIndexingThreshold != null) {
 			return _queryIndexingThreshold;
@@ -153,6 +158,14 @@ public class SearchDisplayContext {
 		}
 
 		return _querySuggestionsMax;
+	}
+
+	public Scope getScope(String scopeString) {
+		if (Validator.isNotNull(scopeString)) {
+			return new Scope(scopeString);
+		}
+
+		return new Scope(_preferences.getScope());
 	}
 
 	public String getSearchConfiguration() {
@@ -222,11 +235,10 @@ public class SearchDisplayContext {
 			return _displayResultsInDocumentForm;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_displayResultsInDocumentForm = GetterUtil.getBoolean(
 			_portletPreferences.getValue("displayResultsInDocumentForm", null));
+
+		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -303,6 +315,68 @@ public class SearchDisplayContext {
 		return _viewInContext;
 	}
 
+	public class Preferences {
+
+		public String getScope() {
+			String scope = getSearchScope();
+
+			if (Validator.isNotNull(scope)) {
+				return scope;
+			}
+
+			return SearchPortletParams.THIS_SITE;
+		}
+
+		public boolean isScopeEverythingAvailable() {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			Group group = themeDisplay.getScopeGroup();
+
+			if (group.isStagingGroup()) {
+				return false;
+			}
+
+			return true;
+		}
+
+		public boolean isScopeLetTheUserChoose() {
+			if (Validator.equals(getScope(), "let-the-user-choose")) {
+				return true;
+			}
+
+			return false;
+		}
+
+	}
+
+	public class Scope {
+
+		public long getGroupId() {
+			if (Validator.equals(_scope, "everything")) {
+				return 0;
+			}
+
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			return themeDisplay.getScopeGroupId();
+		}
+
+		public String getScope() {
+			return _scope;
+		}
+
+		protected Scope(String scope) {
+			_scope = scope;
+		}
+
+		private final String _scope;
+
+	}
+
+	protected ThemeDisplay getThemeDisplay() {
+		return (ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+	}
+
 	private Integer _collatedSpellCheckResultDisplayThreshold;
 	private Boolean _collatedSpellCheckResultEnabled;
 	private Boolean _displayMainQuery;
@@ -312,6 +386,7 @@ public class SearchDisplayContext {
 	private List<SearchFacet> _enabledSearchFacets;
 	private Boolean _includeSystemPortlets;
 	private final PortletPreferences _portletPreferences;
+	private final Preferences _preferences = new Preferences();
 	private Boolean _queryIndexingEnabled;
 	private Integer _queryIndexingThreshold;
 	private Integer _querySuggestionsDisplayThreshold;

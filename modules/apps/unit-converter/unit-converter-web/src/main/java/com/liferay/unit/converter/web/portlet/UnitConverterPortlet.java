@@ -15,7 +15,7 @@
 package com.liferay.unit.converter.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.unit.converter.web.upgrade.UnitConverterWebUpgrade;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -47,9 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UnitConverterPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setUnitConverterWebUpgrade(
-		UnitConverterWebUpgrade unitConverterWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.unit.converter.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

@@ -14,13 +14,12 @@
 
 package com.liferay.site.my.sites.web.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.site.my.sites.web.constants.MySitesPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -31,22 +30,23 @@ public class MySitesWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.site.my.sites", "0.0.1", "1.0.0",
+			"com.liferay.site.my.sites.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.site.my.sites.web", "0.0.1", "1.0.0",
 			new UpgradePortletId() {
 
 				@Override
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
-						new String[] {"29", MySitesPortletKeys.MY_SITES}
+						new String[] {
+							"29", MySitesPortletKeys.MY_SITES
+						}
 					};
 				}
 
 			});
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

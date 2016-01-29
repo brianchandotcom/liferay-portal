@@ -15,58 +15,40 @@
 package com.liferay.currency.converter.web.upgrade;
 
 import com.liferay.currency.converter.web.constants.CurrencyConverterPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = CurrencyConverterWebUpgrade.class)
-public class CurrencyConverterWebUpgrade {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class CurrencyConverterWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.currency.converter.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.currency.converter.web", "0.0.1", "1.0.0",
+			new UpgradePortletId() {
+
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {
+							"67",
+							CurrencyConverterPortletKeys.CURRENCY_CONVERTER
+						}
+					};
+				}
+
+			});
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"67", CurrencyConverterPortletKeys.CURRENCY_CONVERTER
-					}
-				};
-			}
-
-		};
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.currency.converter.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

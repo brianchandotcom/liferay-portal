@@ -5,6 +5,7 @@ dependencies {
 	// @formatter:on
 	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }

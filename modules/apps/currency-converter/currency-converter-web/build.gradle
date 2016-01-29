@@ -11,6 +11,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-metatype")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {

@@ -29,13 +29,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletSetupUtil;
-import com.liferay.portlet.css.web.upgrade.PortletCSSWebUpgrade;
 
 import java.io.IOException;
 
@@ -266,9 +266,11 @@ public class PortletCSSPortlet extends MVCPortlet {
 		portletSetup.store();
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletCSSWebUpgrade(
-		PortletCSSWebUpgrade portletCSSWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portlet.css.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

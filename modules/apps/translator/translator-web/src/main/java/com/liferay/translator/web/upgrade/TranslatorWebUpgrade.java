@@ -14,59 +14,38 @@
 
 package com.liferay.translator.web.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.translator.web.constants.TranslatorPortletKeys;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = TranslatorWebUpgrade.class)
-public class TranslatorWebUpgrade {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class TranslatorWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.translator.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.translator.web", "0.0.1", "1.0.0",
+			new UpgradePortletId() {
+
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {"26", TranslatorPortletKeys.TRANSLATOR}
+					};
+				}
+
+			});
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"26",
-						"com_liferay_translator_web_portlet_TranslatorPortlet"
-					}
-				};
-			}
-
-		};
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.translator.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

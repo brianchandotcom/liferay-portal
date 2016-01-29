@@ -11,6 +11,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":frontend:frontend-taglib")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay", name: "org.portletbridge.core", version: "1.1.2"
 	provided group: "com.liferay", name: "org.portletbridge.portlet", version: "1.1.2"

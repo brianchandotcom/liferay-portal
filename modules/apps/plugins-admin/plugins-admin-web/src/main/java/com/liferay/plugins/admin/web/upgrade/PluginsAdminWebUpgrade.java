@@ -15,58 +15,39 @@
 package com.liferay.plugins.admin.web.upgrade;
 
 import com.liferay.plugins.admin.web.constants.PluginsAdminPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
-
-import javax.servlet.ServletContext;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = PluginsAdminWebUpgrade.class)
-public class PluginsAdminWebUpgrade {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class PluginsAdminWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.plugins.admin.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
 
-		_releaseLocalService = releaseLocalService;
+		registry.register(
+			"com.liferay.plugins.admin.web", "0.0.1", "1.0.0",
+			new UpgradePortletId() {
+
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {
+							"132", PluginsAdminPortletKeys.PLUGINS_ADMIN
+						}
+					};
+				}
+
+			});
 	}
-
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"132", PluginsAdminPortletKeys.PLUGINS_ADMIN
-					}
-				};
-			}
-
-		};
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.plugins.admin.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

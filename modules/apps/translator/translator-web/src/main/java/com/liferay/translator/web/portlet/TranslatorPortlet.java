@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheException;
+import com.liferay.portal.model.Release;
 import com.liferay.translator.web.configuration.TranslatorConfiguration;
 import com.liferay.translator.web.model.Translation;
-import com.liferay.translator.web.upgrade.TranslatorWebUpgrade;
 import com.liferay.translator.web.util.TranslatorUtil;
 
 import java.io.IOException;
@@ -128,9 +128,11 @@ public class TranslatorPortlet extends MVCPortlet {
 			TranslatorConfiguration.class, properties);
 	}
 
-	@Reference(unbind = "-")
-	protected void setTranslatorWebUpgrade(
-		TranslatorWebUpgrade translatorWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.translator.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private volatile TranslatorConfiguration _translatorConfiguration;

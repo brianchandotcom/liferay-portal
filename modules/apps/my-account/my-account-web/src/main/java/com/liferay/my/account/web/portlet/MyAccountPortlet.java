@@ -15,8 +15,8 @@
 package com.liferay.my.account.web.portlet;
 
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
-import com.liferay.my.account.web.upgrade.MyAccountWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -53,9 +53,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MyAccountPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setMyAccountWebUpgrade(
-		MyAccountWebUpgrade MyAccountWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.my.account.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

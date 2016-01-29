@@ -14,60 +14,39 @@
 
 package com.liferay.hello.velocity.web.upgrade;
 
-import com.liferay.hello.velocity.web.portlet.HelloVelocityPortlet;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.hello.velocity.web.constants.HelloVelocityPortletKeys;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = HelloVelocityWebUpgrade.class)
-public class HelloVelocityWebUpgrade {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class HelloVelocityWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.hello.velocity.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.hello.velocity.web", "0.0.1", "1.0.0",
+			new UpgradePortletId() {
+
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {
+							"50", HelloVelocityPortletKeys.HELLO_VELOCITY
+						}
+					};
+				}
+
+			});
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"50",
-						"com_liferay_hello_velocity_web_portlet_" +
-							"HelloVelocityPortlet"
-					}
-				};
-			}
-
-		};
-
-		_releaseLocalService.updateRelease(
-			HelloVelocityPortlet.class.getName(),
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

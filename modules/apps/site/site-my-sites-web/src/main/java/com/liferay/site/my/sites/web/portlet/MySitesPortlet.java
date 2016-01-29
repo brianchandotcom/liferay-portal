@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.service.MembershipRequestService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -163,6 +164,13 @@ public class MySitesPortlet extends MVCPortlet {
 		MembershipRequestService membershipRequestService) {
 
 		_membershipRequestService = membershipRequestService;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.site.my.sites.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference(unbind = "-")

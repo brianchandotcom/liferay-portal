@@ -14,8 +14,8 @@
 
 package com.liferay.password.generator.web.portlet;
 
-import com.liferay.password.generator.web.upgrade.PasswordGeneratorWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -47,9 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PasswordGeneratorPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setPasswordGeneratorWebUpgrade(
-		PasswordGeneratorWebUpgrade passwordGeneratorWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.password.generator.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

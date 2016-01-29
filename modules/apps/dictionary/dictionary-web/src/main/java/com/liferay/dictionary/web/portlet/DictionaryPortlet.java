@@ -14,8 +14,8 @@
 
 package com.liferay.dictionary.web.portlet;
 
-import com.liferay.dictionary.web.upgrade.DictionaryWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -47,9 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DictionaryPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setDictionaryWebUpgrade(
-		DictionaryWebUpgrade dictionaryWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.dictionary.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

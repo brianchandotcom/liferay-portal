@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 SocialActivity socialActivity = null;
 
 if (row == null) {
-	socialActivity = (SocialActivity)request.getAttribute("info_panel.jsp-socialActivity");
+	socialActivity = (SocialActivity)request.getAttribute("page_info_panel.jsp-socialActivity");
 }
 else {
 	socialActivity = (SocialActivity)row.getObject();

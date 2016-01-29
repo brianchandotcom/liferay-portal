@@ -141,17 +141,6 @@ public class StagingPermissionChecker implements PermissionChecker {
 	}
 
 	@Override
-	public boolean hasUserPermission(
-		long groupId, String name, String primKey, String actionId,
-		boolean checkAdmin) {
-
-		long liveGroupId = StagingUtil.getLiveGroupId(groupId);
-
-		return _permissionChecker.hasUserPermission(
-			liveGroupId, name, primKey, actionId, checkAdmin);
-	}
-
-	@Override
 	public void init(User user) {
 		_permissionChecker.init(user);
 	}

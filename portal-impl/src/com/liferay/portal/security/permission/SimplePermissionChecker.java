@@ -48,14 +48,6 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 	}
 
 	@Override
-	public boolean hasUserPermission(
-		long groupId, String name, String primKey, String actionId,
-		boolean checkAdmin) {
-
-		return hasPermission(actionId);
-	}
-
-	@Override
 	public boolean isCompanyAdmin() {
 		return signedIn;
 	}

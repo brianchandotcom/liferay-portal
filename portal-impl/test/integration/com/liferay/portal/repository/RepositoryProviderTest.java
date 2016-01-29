@@ -198,14 +198,6 @@ public class RepositoryProviderTest {
 						return false;
 					}
 
-					@Override
-					public boolean hasUserPermission(
-						long groupId, String name, String primKey,
-						String actionId, boolean checkAdmin) {
-
-						return false;
-					}
-
 				};
 
 			permissionChecker.init(originalPermissionChecker.getUser());

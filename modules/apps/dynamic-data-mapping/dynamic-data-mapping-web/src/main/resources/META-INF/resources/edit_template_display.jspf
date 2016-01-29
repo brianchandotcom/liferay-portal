@@ -566,8 +566,8 @@ private String _getPaletteItemTitle(HttpServletRequest request, String label, Cl
 
 	String javadocURL = null;
 
-	if (className.startsWith("com.liferay")) {
-		javadocURL = "http://docs.liferay.com/portal/6.2/javadocs/";
+	if (className.startsWith("com.liferay.portal")) {
+		javadocURL = "http://docs.liferay.com/portal/7.0/javadocs/";
 	}
 
 	if (Validator.isNotNull(javadocURL)) {

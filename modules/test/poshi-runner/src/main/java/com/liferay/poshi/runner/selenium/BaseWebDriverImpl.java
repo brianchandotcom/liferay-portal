@@ -853,11 +853,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public String getElementText(String locator) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getElementValue(String locator) throws Exception {
 		return getElementValue(locator, null);
 	}

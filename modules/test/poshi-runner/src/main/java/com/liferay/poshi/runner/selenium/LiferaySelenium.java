@@ -242,8 +242,6 @@ public interface LiferaySelenium {
 
 	public Number getElementPositionTop(String locator);
 
-	public String getElementText(String locator) throws Exception;
-
 	public String getElementValue(String locator) throws Exception;
 
 	public Number getElementWidth(String locator);

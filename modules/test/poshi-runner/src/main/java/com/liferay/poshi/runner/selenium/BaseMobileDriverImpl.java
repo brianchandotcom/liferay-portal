@@ -608,11 +608,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public String getElementText(String locator) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getElementValue(String locator) throws Exception {
 		return getElementValue(locator, null);
 	}

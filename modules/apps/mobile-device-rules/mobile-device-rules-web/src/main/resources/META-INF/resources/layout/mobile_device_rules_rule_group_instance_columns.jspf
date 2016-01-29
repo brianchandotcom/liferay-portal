@@ -20,7 +20,6 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 
 <liferay-ui:search-container-column-text
 	cssClass="text-strong"
-	href="<%= rowURL %>"
 	name="name"
 >
 

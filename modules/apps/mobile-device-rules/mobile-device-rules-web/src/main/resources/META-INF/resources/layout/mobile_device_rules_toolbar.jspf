@@ -129,6 +129,9 @@
 			Liferay.Util.openWindow(
 				{
 					id: '<portlet:namespace />ruleGroupsPriorities',
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
 					title: '<%= UnicodeLanguageUtil.get(request, "rule-priorities") %>',
 
 					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

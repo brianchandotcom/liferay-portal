@@ -41,7 +41,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	String label = null;
 
 	if (journalDisplayContext.isNavigationStructure()) {
-		label = LanguageUtil.get(request, "structure") + StringPool.COLON + StringPool.SPACE + journalDisplayContext.getDdmStructureName();
+		label = LanguageUtil.get(request, "structure") + StringPool.COLON + StringPool.SPACE + journalDisplayContext.getDDMStructureName();
 	}
 	%>
 

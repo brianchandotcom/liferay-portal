@@ -483,6 +483,8 @@ public interface LiferaySelenium {
 
 	public void selectAndWait(String selectLocator, String optionLocator);
 
+	public void selectFieldText();
+
 	public void selectFrame(String locator);
 
 	public void selectPopUp(String windowID);

@@ -1883,6 +1883,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void selectFieldText() {
+		LiferaySeleniumHelper.selectFieldText();
+	}
+
+	@Override
 	public void selectFrame(String locator) {
 		WebDriverHelper.selectFrame(this, locator);
 	}

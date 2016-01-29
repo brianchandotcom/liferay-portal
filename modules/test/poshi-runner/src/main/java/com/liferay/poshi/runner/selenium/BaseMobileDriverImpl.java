@@ -1316,6 +1316,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void selectFieldText() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void selectFrame(String locator) {
 		WebDriverHelper.selectFrame(this, locator);
 	}

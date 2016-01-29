@@ -24,14 +24,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	immediate = true,
-	service = {MyAccountWebUpgrade.class, UpgradeStepRegistrator.class}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class MyAccountWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public void register(UpgradeStepRegistrator.Registry registry) {
+	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.my.account.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());

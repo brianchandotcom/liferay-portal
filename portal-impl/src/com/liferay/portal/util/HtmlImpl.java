@@ -232,7 +232,7 @@ public class HtmlImpl implements Html {
 			return escape(text);
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(text.length());
 
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);

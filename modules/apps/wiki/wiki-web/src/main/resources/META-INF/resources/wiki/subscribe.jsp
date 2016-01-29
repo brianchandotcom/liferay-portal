@@ -34,8 +34,8 @@ if (row != null) {
 	}
 }
 else {
-	node = (WikiNode)request.getAttribute("info_panel.jsp-wikiNode");
-	wikiPage = (WikiPage)request.getAttribute("info_panel.jsp-wikiPage");
+	node = (WikiNode)request.getAttribute("node_info_panel.jsp-wikiNode");
+	wikiPage = (WikiPage)request.getAttribute("page_info_panel.jsp-wikiPage");
 }
 %>
 

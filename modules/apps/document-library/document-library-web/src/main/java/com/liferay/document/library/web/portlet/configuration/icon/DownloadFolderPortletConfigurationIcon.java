@@ -14,26 +14,24 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceURL;
 
 /**
  * @author Roberto Díaz
  */
-public class FolderPermissionPortletConfigurationIcon
+public class DownloadFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public FolderPermissionPortletConfigurationIcon(
+	public DownloadFolderPortletConfigurationIcon(
 		PortletRequest portletRequest, Folder folder) {
 
 		super(portletRequest);
@@ -43,46 +41,37 @@ public class FolderPermissionPortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		return "permissions";
+		return "download";
+	}
+
+	@Override
+	public String getMethod() {
+		return "get";
 	}
 
 	@Override
 	public String getURL() {
-		String url = StringPool.BLANK;
+		ResourceURL portletURL =
+			(ResourceURL)PortalUtil.getControlPanelPortletURL(
+				portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+				PortletRequest.RESOURCE_PHASE);
 
-		try {
-			if (_folder != null) {
-				url = PermissionsURLTag.doTag(
-					null, DLFolderConstants.getClassName(),
-					HtmlUtil.unescape(_folder.getName()), null,
-					String.valueOf(_folder.getFolderId()),
-					LiferayWindowState.POP_UP.toString(), null,
-					themeDisplay.getRequest());
-			}
-			else {
-				url = PermissionsURLTag.doTag(
-					null, "com.liferay.portlet.documentlibrary",
-					HtmlUtil.unescape(themeDisplay.getScopeGroupName()), null,
-					String.valueOf(themeDisplay.getScopeGroupId()),
-					LiferayWindowState.POP_UP.toString(), null,
-					themeDisplay.getRequest());
-			}
-		}
-		catch (Exception e) {
-		}
+		portletURL.setResourceID("/document_library/edit_folder");
+		portletURL.setParameter(
+			"folderId", String.valueOf(_folder.getFolderId()));
+		portletURL.setParameter(
+			"repositoryId", String.valueOf(_folder.getRepositoryId()));
 
-		return url;
+		return portletURL.toString();
 	}
 
 	@Override
 	public boolean isShow() {
 		try {
-			if (_folder != null) {
-				return DLFolderPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), _folder.getFolderId(),
-					ActionKeys.PERMISSIONS);
-			}
+			return DLFolderPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), _folder.getFolderId(),
+				ActionKeys.VIEW);
 		}
 		catch (PortalException e) {
 		}
@@ -93,11 +82,6 @@ public class FolderPermissionPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
-	}
-
-	@Override
-	public boolean isUseDialog() {
-		return true;
 	}
 
 	private final Folder _folder;

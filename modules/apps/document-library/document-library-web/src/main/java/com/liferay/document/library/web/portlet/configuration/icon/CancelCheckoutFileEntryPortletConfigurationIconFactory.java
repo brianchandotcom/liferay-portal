@@ -55,7 +55,7 @@ public class CancelCheckoutFileEntryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 103.0;
+		return 103;
 	}
 
 }

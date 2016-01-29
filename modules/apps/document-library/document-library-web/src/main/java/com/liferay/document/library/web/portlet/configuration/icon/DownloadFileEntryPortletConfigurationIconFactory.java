@@ -59,7 +59,7 @@ public class DownloadFileEntryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 108.0;
+		return 108;
 	}
 
 }

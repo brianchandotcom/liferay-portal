@@ -148,7 +148,7 @@ public class DLFolderAssetRenderer
 			liferayPortletResponse, windowState);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
+			"mvcRenderCommandName", "/document_library/view_folder");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);

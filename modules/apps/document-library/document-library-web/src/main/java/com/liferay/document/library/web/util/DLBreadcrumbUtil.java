@@ -126,6 +126,9 @@ public class DLBreadcrumbUtil {
 			request, themeDisplay.translate("home"), portletURL.toString(),
 			data);
 
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view_folder");
+
 		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
 
@@ -233,8 +236,20 @@ public class DLBreadcrumbUtil {
 				ignoreRootFolder, portletURL);
 		}
 		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view");
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (folder != null) {
+				folderId = folder.getFolderId();
+			}
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				portletURL.setParameter(
+					"mvcRenderCommandName", "/document_library/view_folder");
+			}
+			else {
+				portletURL.setParameter(
+					"mvcRenderCommandName", "/document_library/view");
+			}
 		}
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);

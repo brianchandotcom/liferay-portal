@@ -16,14 +16,17 @@ package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -32,20 +35,21 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/view_file_entry"
+		"path=/document_library/view", "path=/document_library/view_folder",
+		"path=-"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class DeleteFileEntryPortletConfigurationIconFactory
-	extends BasePortletConfigurationIconFactory {
+public class AccessFromDesktopPortletConfigurationIconFactory
+	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
 		try {
-			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			return new DeleteFileEntryPortletConfigurationIcon(
-				portletRequest, fileEntry);
+			return new AccessFromDesktopPortletConfigurationIcon(
+				getServletContext(), getJspPath(), portletRequest, folder);
 		}
 		catch (Exception e) {
 		}
@@ -54,8 +58,22 @@ public class DeleteFileEntryPortletConfigurationIconFactory
 	}
 
 	@Override
+	public String getJspPath() {
+		return "/document_library/access_from_desktop.jsp";
+	}
+
+	@Override
 	public double getWeight() {
-		return 100;
+		return 102;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

@@ -15,65 +15,51 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
  * @author Roberto Díaz
  */
-public class MoveFileEntryPortletConfigurationIcon
+public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public MoveFileEntryPortletConfigurationIcon(
-		PortletRequest portletRequest, FileEntry fileEntry) {
+	public DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon(
+		PortletRequest portletRequest, Folder folder) {
 
 		super(portletRequest);
 
-		_fileEntry = fileEntry;
+		_folder = folder;
 	}
 
 	@Override
 	public String getMessage() {
-		return "move";
+		return "delete-expired-temporary-files";
 	}
 
 	@Override
 	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.RENDER_PHASE);
+			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/move_entry");
-
-		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		long folderId = _fileEntry.getFolderId();
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view");
-		}
-		else {
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view_folder");
-		}
-
-		redirectURL.setParameter("folderId", String.valueOf(folderId));
-
-		portletURL.setParameter("redirect", redirectURL.toString());
-
+			ActionRequest.ACTION_NAME, "/document_library/edit_folder");
 		portletURL.setParameter(
-			"rowIdsFileEntry", String.valueOf(_fileEntry.getFileEntryId()));
+			Constants.CMD, "deleteExpiredTemporaryFileEntries");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"repositoryId", String.valueOf(_folder.getRepositoryId()));
 
 		return portletURL.toString();
 	}
@@ -81,11 +67,19 @@ public class MoveFileEntryPortletConfigurationIcon
 	@Override
 	public boolean isShow() {
 		try {
-			FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
-				new FileEntryDisplayContextHelper(
-					themeDisplay.getPermissionChecker(), _fileEntry);
+			if (!_folder.isMountPoint()) {
+				return false;
+			}
 
-			return fileEntryDisplayContextHelper.isMoveActionAvailable();
+			LocalRepository localRepository =
+				RepositoryProviderUtil.getLocalRepository(
+					_folder.getRepositoryId());
+
+			if (localRepository.isCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				return true;
+			}
 		}
 		catch (PortalException pe) {
 		}
@@ -98,6 +92,6 @@ public class MoveFileEntryPortletConfigurationIcon
 		return false;
 	}
 
-	private final FileEntry _fileEntry;
+	private final Folder _folder;
 
 }

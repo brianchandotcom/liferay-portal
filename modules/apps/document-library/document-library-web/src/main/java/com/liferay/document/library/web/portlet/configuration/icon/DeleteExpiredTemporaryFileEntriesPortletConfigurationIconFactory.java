@@ -19,7 +19,7 @@ import com.liferay.document.library.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 
 import javax.portlet.PortletRequest;
 
@@ -32,20 +32,21 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/view_file_entry"
+		"path=/document_library/view_folder"
 	},
 	service = PortletConfigurationIconFactory.class
 )
-public class DeleteFileEntryPortletConfigurationIconFactory
+public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(PortletRequest portletRequest) {
 		try {
-			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			return new DeleteFileEntryPortletConfigurationIcon(
-				portletRequest, fileEntry);
+			return
+				new DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon(
+					portletRequest, folder);
 		}
 		catch (Exception e) {
 		}
@@ -55,7 +56,7 @@ public class DeleteFileEntryPortletConfigurationIconFactory
 
 	@Override
 	public double getWeight() {
-		return 100;
+		return 103;
 	}
 
 }

@@ -29,7 +29,7 @@ String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System
 
 PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
+rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
 rowURL.setParameter("redirect", currentURL);
 rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>

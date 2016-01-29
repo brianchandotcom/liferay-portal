@@ -211,7 +211,13 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 				}
 			}
 
-			int index = inputFileName.lastIndexOf("/") + 1;
+			int index = inputFileName.lastIndexOf(File.separatorChar);
+
+			if ((index == -1) && (File.separatorChar != '/')) {
+				index = inputFileName.lastIndexOf('/');
+			}
+
+			index += 1;
 
 			String path = inputFileName.substring(0, index);
 			String fileName = inputFileName.substring(index);

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Site Item Selector Web
+Bundle-SymbolicName: com.liferay.site.item.selector.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+Web-ContextPath: /site-item-selector-web
+-include: ../../../../marketplace/web-content-management/bnd.bnd

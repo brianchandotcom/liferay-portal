@@ -89,37 +89,6 @@ recordSetSearch.setOrderByType(orderByType);
 							path="/admin/record_set_action.jsp"
 						/>
 					</c:when>
-					<c:when test='<%= displayStyle.equals("icon") %>'>
-
-						<%
-						row.setCssClass("col-md-3 col-sm-4 col-xs-12");
-						%>
-
-						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-							<liferay-frontend:icon-vertical-card
-								actionJsp="/admin/record_set_action.jsp"
-								actionJspServletContext="<%= application %>"
-								cssClass="entry-display-style"
-								icon="forms"
-								resultRow="<%= row %>"
-								showCheckbox= "<%= false %>"
-								title="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
-								url="<%= rowURL %>"
-							>
-								<liferay-frontend:vertical-card-sticker-bottom>
-									<liferay-ui:user-portrait
-										cssClass="sticker sticker-bottom"
-										imageCssClass="user-icon-lg"
-										userId="<%= recordSet.getUserId() %>"
-									/>
-								</liferay-frontend:vertical-card-sticker-bottom>
-
-								<liferay-frontend:vertical-card-header>
-									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-								</liferay-frontend:vertical-card-header>
-							</liferay-frontend:icon-vertical-card>
-						</liferay-ui:search-container-column-text>
-					</c:when>
 					<c:otherwise>
 
 						<liferay-ui:search-container-column-text

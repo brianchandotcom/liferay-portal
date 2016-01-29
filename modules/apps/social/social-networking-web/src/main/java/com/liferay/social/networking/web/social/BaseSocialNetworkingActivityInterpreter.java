@@ -15,17 +15,19 @@
 package com.liferay.social.networking.web.social;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.social.networking.friends.social.FriendsActivityKeys;
+import com.liferay.social.networking.web.util.SocialNetworkingResourceBundleLoader;
 
 /**
  * @author Adolfo Pérez
  */
-public class BaseSocialNetworkingActivityInterpreter
+public abstract class BaseSocialNetworkingActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 
 	@Override
@@ -39,6 +41,11 @@ public class BaseSocialNetworkingActivityInterpreter
 		throws Exception {
 
 		return getUserName(activity.getReceiverUserId(), serviceContext);
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return SocialNetworkingResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

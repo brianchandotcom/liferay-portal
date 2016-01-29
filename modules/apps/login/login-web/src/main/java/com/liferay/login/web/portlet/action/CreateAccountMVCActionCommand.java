@@ -456,7 +456,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			themeDisplay.getLocale(), firstName, middleName, lastName, prefixId,
 			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			sendEmail, updateUserInformation, serviceContext);
+			updateUserInformation, sendEmail, serviceContext);
 
 		if (facebookId > 0) {
 			_userLocalService.updateLastLogin(

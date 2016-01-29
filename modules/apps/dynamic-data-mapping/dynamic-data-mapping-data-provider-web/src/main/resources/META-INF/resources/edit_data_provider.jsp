@@ -49,27 +49,29 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="languageId" type="hidden" value="<%= String.valueOf(themeDisplay.getLanguageId()) %>" />
 
-	<div class="container-fluid-1280">
-		<aui:fieldset>
-			<liferay-util:buffer var="requiredMark">
-				<span class="icon-asterisk text-warning">
-					<span class="hide-accessible"><liferay-ui:message key="required" /></span>
-				</span>
-			</liferay-util:buffer>
+	<aui:fieldset-group markupView="lexicon">
+		<div class="container-fluid-1280">
+			<aui:fieldset>
+				<liferay-util:buffer var="requiredMark">
+					<span class="icon-asterisk text-warning">
+						<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+					</span>
+				</liferay-util:buffer>
 
-			<label class="required-warning">
-				<liferay-ui:message arguments="<%= requiredMark %>" key="all-fields-marked-with-x-are-required" translateArguments="<%= false %>" />
-			</label>
+				<label class="required-warning">
+					<liferay-ui:message arguments="<%= requiredMark %>" key="all-fields-marked-with-x-are-required" translateArguments="<%= false %>" />
+				</label>
 
-			<aui:input name="name" placeholder="enter-the-data-provider-name" required="<%= true %>" type="text" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceName() %>" />
+				<aui:input name="name" placeholder="enter-the-data-provider-name" required="<%= true %>" type="text" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceName() %>" />
 
-			<aui:input name="description" placeholder="enter-a-short-description" type="textarea" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceDescription() %>" />
-		</aui:fieldset>
+				<aui:input name="description" placeholder="enter-a-short-description" type="textarea" value="<%= ddmDataProviderDisplayContext.getDataProviderInstanceDescription() %>" />
+			</aui:fieldset>
 
-		<aui:fieldset>
-			<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML() %>
-		</aui:fieldset>
-	</div>
+			<aui:fieldset>
+				<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML() %>
+			</aui:fieldset>
+		</div>
+	</aui:fieldset-group>
 
 	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
 		<div class="container-fluid-1280">

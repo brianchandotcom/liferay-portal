@@ -9,8 +9,6 @@
 	<artifactId>com.liferay.portal.tools.service.builder</artifactId>
 	<version>1.0.83</version>
 	<goalPrefix>liferay</goalPrefix>
-	<isolatedRealm>false</isolatedRealm>
-	<inheritedByDefault>true</inheritedByDefault>
 	<mojos>
 		<mojo>
 			<goal>build-service</goal>
@@ -46,13 +44,6 @@
 					<type>boolean</type>
 					<required>false</required>
 					<editable>true</editable>
-					<description/>
-				</parameter>
-				<parameter>
-					<name>baseDir</name>
-					<type>java$io$File</type>
-					<required>false</required>
-					<editable>false</editable>
 					<description/>
 				</parameter>
 				<parameter>
@@ -231,89 +222,6 @@
 					<description/>
 				</parameter>
 			</parameters>
-			<configuration>
-				<baseDir implementation="java$io$File" default-value="${project.basedir}" />
-			</configuration>
 		</mojo>
 	</mojos>
-	<dependencies>
-		<dependency>
-			<groupId>com.thoughtworks.qdox</groupId>
-			<artifactId>qdox</artifactId>
-			<type>jar</type>
-			<version>1.12.1</version>
-		</dependency>
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<type>jar</type>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<type>jar</type>
-			<version>1.0.b2</version>
-		</dependency>
-		<dependency>
-			<groupId>jalopy</groupId>
-			<artifactId>jalopy</artifactId>
-			<type>jar</type>
-			<version>1.5rc3</version>
-		</dependency>
-		<dependency>
-			<groupId>jaxen</groupId>
-			<artifactId>jaxen</artifactId>
-			<type>jar</type>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<type>jar</type>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<type>jar</type>
-			<version>2.6.2</version>
-		</dependency>
-		<dependency>
-			<groupId>xom</groupId>
-			<artifactId>xom</artifactId>
-			<type>jar</type>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xmlParserAPIs</artifactId>
-			<type>jar</type>
-			<version>2.6.2</version>
-		</dependency>
-		<dependency>
-			<groupId>xalan</groupId>
-			<artifactId>xalan</artifactId>
-			<type>jar</type>
-			<version>2.6.0</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<type>jar</type>
-			<version>1.2.17</version>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<type>jar</type>
-			<version>2.3.23</version>
-		</dependency>
-		<dependency>
-			<groupId>com.ibm.icu</groupId>
-			<artifactId>icu4j</artifactId>
-			<type>jar</type>
-			<version>2.6.1</version>
-		</dependency>
-	</dependencies>
 </plugin>

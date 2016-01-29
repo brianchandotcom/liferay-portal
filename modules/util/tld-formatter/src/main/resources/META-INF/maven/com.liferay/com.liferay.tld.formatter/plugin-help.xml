@@ -9,8 +9,6 @@
 	<artifactId>com.liferay.tld.formatter</artifactId>
 	<version>1.0.1</version>
 	<goalPrefix>liferay</goalPrefix>
-	<isolatedRealm>false</isolatedRealm>
-	<inheritedByDefault>true</inheritedByDefault>
 	<mojos>
 		<mojo>
 			<goal>format-tld</goal>
@@ -28,13 +26,6 @@
 			<threadSafe>false</threadSafe>
 			<parameters>
 				<parameter>
-					<name>baseDir</name>
-					<type>java$io$File</type>
-					<required>false</required>
-					<editable>false</editable>
-					<description/>
-				</parameter>
-				<parameter>
 					<name>baseDirName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
@@ -49,29 +40,6 @@
 					<description/>
 				</parameter>
 			</parameters>
-			<configuration>
-				<baseDir implementation="java$io$File" default-value="${project.basedir}" />
-			</configuration>
 		</mojo>
 	</mojos>
-	<dependencies>
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<type>jar</type>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<type>jar</type>
-			<version>1.0.b2</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<type>jar</type>
-			<version>1.2.17</version>
-		</dependency>
-	</dependencies>
 </plugin>

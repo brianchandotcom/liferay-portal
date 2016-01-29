@@ -15,19 +15,19 @@
 package com.liferay.gradle.plugins.xml.formatter;
 
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.xml.formatter.XMLFormatterArgs;
-
-import groovy.lang.Closure;
+import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.JavaExecSpec;
@@ -46,40 +46,47 @@ public class FormatXMLTask extends SourceTask {
 		}
 	}
 
+	@InputFiles
+	public FileCollection getClasspath() {
+		return _classpath;
+	}
+
+	@Input
+	public String getMainClassName() {
+		return GradleUtil.toString(_mainClassName);
+	}
+
+	@Input
 	public boolean isStripComments() {
-		return _xmlFormatterArgs.isStripComments();
+		return _stripComments;
+	}
+
+	public void setClasspath(FileCollection classpath) {
+		_classpath = classpath;
+	}
+
+	public void setMainClassName(Object mainClassName) {
+		_mainClassName = mainClassName;
 	}
 
 	public void setStripComments(boolean stripComments) {
-		_xmlFormatterArgs.setStripComments(stripComments);
+		_stripComments = stripComments;
 	}
 
 	protected void formatXML(final File file) {
-		final Project project = getProject();
+		Project project = getProject();
 
 		project.javaexec(
-			new Closure<Void>(null) {
+			new Action<JavaExecSpec>() {
 
-				@SuppressWarnings("unused")
-				public void doCall(JavaExecSpec javaExecSpec) {
+				@Override
+				public void execute(JavaExecSpec javaExecSpec) {
 					javaExecSpec.setClasspath(getClasspath());
-					javaExecSpec.setMain(
-						"com.liferay.xml.formatter.XMLFormatter");
+					javaExecSpec.setMain(getMainClassName());
 					javaExecSpec.setSystemProperties(getSystemProperties(file));
-					javaExecSpec.setWorkingDir(project.getProjectDir());
 				}
 
 			});
-	}
-
-	protected FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			XMLFormatterPlugin.CONFIGURATION_NAME);
 	}
 
 	protected Map<String, Object> getSystemProperties(File file) {
@@ -92,6 +99,8 @@ public class FormatXMLTask extends SourceTask {
 		return systemProperties;
 	}
 
-	private final XMLFormatterArgs _xmlFormatterArgs = new XMLFormatterArgs();
+	private FileCollection _classpath;
+	private Object _mainClassName = "com.liferay.xml.formatter.XMLFormatter";
+	private boolean _stripComments;
 
 }

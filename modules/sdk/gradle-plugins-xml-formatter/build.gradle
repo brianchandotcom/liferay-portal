@@ -1,6 +1,4 @@
 dependencies {
 	compile gradleApi()
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.19"
-
-	provided project(":util:xml-formatter")
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 }

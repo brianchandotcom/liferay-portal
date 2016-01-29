@@ -60,7 +60,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			var searchContainer = AUI.$('#<portlet:namespace />ddlRecordSet', form);
 
 			form.attr('method', 'post');
-			form.fm('deleteRecordSetIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+			form.fm('recordSetIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
 
 			submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}

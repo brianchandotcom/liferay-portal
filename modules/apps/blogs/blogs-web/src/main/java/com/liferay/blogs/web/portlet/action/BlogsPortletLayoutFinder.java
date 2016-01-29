@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet.action;
+package com.liferay.blogs.web.portlet.action;
 
-import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.struts.BasePortletPageFinder;
-import com.liferay.portal.struts.PortletPageFinder;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.portal.struts.BasePortletLayoutFinder;
+import com.liferay.portal.struts.PortletLayoutFinder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,21 +25,21 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
-		"model.class.name=com.liferay.portal.kernel.repository.model.Folder"
-	},
-	service = PortletPageFinder.class
+	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	service = PortletLayoutFinder.class
 )
-public class DLPortletPageFinder extends BasePortletPageFinder {
+public class BlogsPortletLayoutFinder extends BasePortletLayoutFinder {
 
 	@Override
 	protected String[] getPortletIds() {
 		return _PORTLET_IDS;
 	}
 
+	// Order is important. See LPS-23770.
+
 	private static final String[] _PORTLET_IDS = {
-		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
+		BlogsPortletKeys.BLOGS_ADMIN, BlogsPortletKeys.BLOGS,
+		BlogsPortletKeys.BLOGS_AGGREGATOR
 	};
 
 }

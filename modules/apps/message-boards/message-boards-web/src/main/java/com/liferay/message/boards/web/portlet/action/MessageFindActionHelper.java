@@ -16,7 +16,7 @@ package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portal.struts.PortletPageFinder;
+import com.liferay.portal.struts.PortletLayoutFinder;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
@@ -74,7 +74,7 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 	}
 
 	@Override
-	protected PortletPageFinder getPortletPageFinder() {
+	protected PortletLayoutFinder getPortletLayoutFinder() {
 		return _portletPageFinder;
 	}
 
@@ -89,11 +89,13 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBMessage)",
 		unbind = "-"
 	)
-	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
 		_portletPageFinder = portletPageFinder;
 	}
 
 	private MBMessageLocalService _mbMessageLocalService;
-	private PortletPageFinder _portletPageFinder;
+	private PortletLayoutFinder _portletPageFinder;
 
 }

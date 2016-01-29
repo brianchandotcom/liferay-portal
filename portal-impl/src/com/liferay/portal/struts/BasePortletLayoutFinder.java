@@ -32,7 +32,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BasePortletPageFinder implements PortletPageFinder {
+public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 	@Override
 	public Result find(ThemeDisplay themeDisplay, long groupId)
@@ -151,7 +151,7 @@ public abstract class BasePortletPageFinder implements PortletPageFinder {
 
 	protected abstract String[] getPortletIds();
 
-	protected class ResultImpl implements PortletPageFinder.Result {
+	protected class ResultImpl implements PortletLayoutFinder.Result {
 
 		public ResultImpl(long plid, String portletId) {
 			_plid = plid;

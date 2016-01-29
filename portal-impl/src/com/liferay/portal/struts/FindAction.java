@@ -66,8 +66,8 @@ public abstract class FindAction extends Action {
 			}
 
 			@Override
-			protected PortletPageFinder getPortletPageFinder() {
-				return FindAction.this._portletPageFinder;
+			protected PortletLayoutFinder getPortletLayoutFinder() {
+				return FindAction.this._portletLayoutFinder;
 			}
 
 		};
@@ -110,8 +110,8 @@ public abstract class FindAction extends Action {
 
 	private final FindActionHelper _findActionHelper;
 
-	private final PortletPageFinder _portletPageFinder =
-		new BasePortletPageFinder() {
+	private final PortletLayoutFinder _portletLayoutFinder =
+		new BasePortletLayoutFinder() {
 
 			@Override
 			protected String[] getPortletIds() {

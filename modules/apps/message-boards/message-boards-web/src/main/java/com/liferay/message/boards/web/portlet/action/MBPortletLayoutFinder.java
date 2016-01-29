@@ -15,8 +15,8 @@
 package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.struts.BasePortletPageFinder;
-import com.liferay.portal.struts.PortletPageFinder;
+import com.liferay.portal.struts.BasePortletLayoutFinder;
+import com.liferay.portal.struts.PortletLayoutFinder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
 		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
 	},
-	service = PortletPageFinder.class
+	service = PortletLayoutFinder.class
 )
-public class MBPortletPageFinder extends BasePortletPageFinder {
+public class MBPortletLayoutFinder extends BasePortletLayoutFinder {
 
 	@Override
 	protected String[] getPortletIds() {

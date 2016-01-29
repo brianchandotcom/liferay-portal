@@ -16,7 +16,7 @@ package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portal.struts.PortletPageFinder;
+import com.liferay.portal.struts.PortletLayoutFinder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;
@@ -65,7 +65,7 @@ public class DLFileEntryFindActionHelper extends BaseDLFindActionHelper {
 	}
 
 	@Override
-	protected PortletPageFinder getPortletPageFinder() {
+	protected PortletLayoutFinder getPortletLayoutFinder() {
 		return _portletPageFinder;
 	}
 
@@ -78,11 +78,13 @@ public class DLFileEntryFindActionHelper extends BaseDLFindActionHelper {
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)",
 		unbind = "-"
 	)
-	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
 		_portletPageFinder = portletPageFinder;
 	}
 
 	private DLAppLocalService _dlAppLocalService;
-	private PortletPageFinder _portletPageFinder;
+	private PortletLayoutFinder _portletPageFinder;
 
 }

@@ -20,7 +20,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 /**
  * @author Adolfo Pérez
  */
-public interface PortletPageFinder {
+public interface PortletLayoutFinder {
 
 	public Result find(ThemeDisplay themeDisplay, long groupId)
 		throws PortalException;

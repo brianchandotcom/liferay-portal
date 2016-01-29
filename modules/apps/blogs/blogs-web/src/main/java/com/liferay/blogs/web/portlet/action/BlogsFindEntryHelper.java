@@ -18,7 +18,7 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portal.struts.PortletPageFinder;
+import com.liferay.portal.struts.PortletLayoutFinder;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
@@ -112,8 +112,8 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 	}
 
 	@Override
-	protected PortletPageFinder getPortletPageFinder() {
-		return _portletPageFinder;
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return _portletLayoutFinder;
 	}
 
 	@Reference(unbind = "-")
@@ -127,11 +127,13 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 		target = "(model.class.name=com.liferay.portlet.blogs.model.BlogsEntry)",
 		unbind = "-"
 	)
-	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
-		_portletPageFinder = portletPageFinder;
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
+		_portletLayoutFinder = portletPageFinder;
 	}
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
-	private PortletPageFinder _portletPageFinder;
+	private PortletLayoutFinder _portletLayoutFinder;
 
 }

@@ -66,8 +66,8 @@ public abstract class FindStrutsAction extends BaseStrutsAction {
 			}
 
 			@Override
-			protected PortletPageFinder getPortletPageFinder() {
-				return FindStrutsAction.this._portletPageFinder;
+			protected PortletLayoutFinder getPortletLayoutFinder() {
+				return FindStrutsAction.this._portletLayoutFinder;
 			}
 
 		};
@@ -109,8 +109,8 @@ public abstract class FindStrutsAction extends BaseStrutsAction {
 
 	private final FindActionHelper _findActionHelper;
 
-	private final PortletPageFinder _portletPageFinder =
-		new BasePortletPageFinder() {
+	private final PortletLayoutFinder _portletLayoutFinder =
+		new BasePortletLayoutFinder() {
 
 			@Override
 			protected String[] getPortletIds() {

@@ -78,9 +78,9 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 				}
 			}
 
-			PortletPageFinder portletPageFinder = getPortletPageFinder();
+			PortletLayoutFinder portletLayoutFinder = getPortletLayoutFinder();
 
-			PortletPageFinder.Result result = portletPageFinder.find(
+			PortletLayoutFinder.Result result = portletLayoutFinder.find(
 				themeDisplay, groupId);
 
 			long plid = result.getPlid();
@@ -196,7 +196,7 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 	protected abstract void addRequiredParameters(
 		HttpServletRequest request, String portletId, PortletURL portletURL);
 
-	protected abstract PortletPageFinder getPortletPageFinder();
+	protected abstract PortletLayoutFinder getPortletLayoutFinder();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFindActionHelper.class);

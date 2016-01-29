@@ -76,7 +76,7 @@ public class FindActionTest {
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW)
 		};
 
-		_portletPageFinder = new BasePortletPageFinder() {
+		_portletLayoutFinder = new BasePortletLayoutFinder() {
 
 			@Override
 			protected String[] getPortletIds() {
@@ -90,7 +90,7 @@ public class FindActionTest {
 	public void testGetPlidAndPortletIdViewInContext() throws Exception {
 		addLayouts(true, false);
 
-		PortletPageFinder.Result result = _portletPageFinder.find(
+		PortletLayoutFinder.Result result = _portletLayoutFinder.find(
 			getThemeDisplay(), _blogsEntry.getGroupId());
 
 		Assert.assertEquals(_blogLayout.getPlid(), result.getPlid());
@@ -108,7 +108,7 @@ public class FindActionTest {
 		addLayouts(false, false);
 
 		try {
-			_portletPageFinder.find(
+			_portletLayoutFinder.find(
 				getThemeDisplay(), _blogsEntry.getGroupId());
 
 			Assert.fail();
@@ -224,7 +224,7 @@ public class FindActionTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private PortletPageFinder _portletPageFinder;
+	private PortletLayoutFinder _portletLayoutFinder;
 	private String _testPortletId;
 
 }

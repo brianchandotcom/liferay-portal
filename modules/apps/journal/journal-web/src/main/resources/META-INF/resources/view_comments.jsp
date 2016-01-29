@@ -18,12 +18,11 @@
 
 <%
 String displayStyle = journalDisplayContext.getDisplayStyle();
-SearchContainer<MBMessage> commentsSearchContainer = journalDisplayContext.getCommentsSearchContainer();
 %>
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-comment-was-found"
-	searchContainer="<%= commentsSearchContainer %>"
+	searchContainer="<%= journalDisplayContext.getCommentsSearchContainer() %>"
 >
 
 	<liferay-ui:search-container-row

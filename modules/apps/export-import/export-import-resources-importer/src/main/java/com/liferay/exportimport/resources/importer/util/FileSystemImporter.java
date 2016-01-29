@@ -1107,6 +1107,10 @@ public class FileSystemImporter extends BaseImporter {
 		String portletId = layoutTypePortlet.addPortletId(
 			userId, rootPortletId, columnId, -1, false);
 
+		if (portletId == null) {
+			return;
+		}
+
 		JSONObject portletPreferencesJSONObject =
 			portletJSONObject.getJSONObject("portletPreferences");
 

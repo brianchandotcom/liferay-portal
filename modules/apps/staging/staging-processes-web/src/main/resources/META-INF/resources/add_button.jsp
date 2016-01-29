@@ -37,6 +37,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 	<portlet:renderURL var="addNewProcessURL">
 		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:renderURL>
 
@@ -49,6 +50,7 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 	<portlet:renderURL var="addNewCustomProcessURL">
 		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 		<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 	</portlet:renderURL>
 

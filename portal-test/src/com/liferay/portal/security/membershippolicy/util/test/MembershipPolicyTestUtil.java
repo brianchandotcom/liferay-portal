@@ -95,7 +95,7 @@ public class MembershipPolicyTestUtil {
 
 		return OrganizationServiceUtil.addOrganization(
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, name,
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
+			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			false, populateServiceContext(Organization.class, true));
 	}

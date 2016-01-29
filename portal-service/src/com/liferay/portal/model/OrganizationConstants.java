@@ -31,8 +31,18 @@ public class OrganizationConstants {
 
 	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String TYPE_LOCATION = "location";
 
+	public static final String TYPE_ORGANIZATION = "organization";
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String TYPE_REGULAR_ORGANIZATION =
 		"regular-organization";
 

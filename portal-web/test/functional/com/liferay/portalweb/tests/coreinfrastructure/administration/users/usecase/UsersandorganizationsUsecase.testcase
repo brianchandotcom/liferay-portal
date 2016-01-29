@@ -41,7 +41,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Staging Organization Web Content Display" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -57,7 +57,7 @@
 
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Staging Organization Web Content Display" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 	</command>
 
@@ -328,7 +328,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Name 1" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -342,7 +342,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Name 2" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -374,7 +374,7 @@
 			<then>
 				<execute macro="Organization#addCP">
 					<var name="orgName" value="Suborganization Name ${count}" />
-					<var name="orgType" value="Regular Organization" />
+					<var name="orgType" value="Organization" />
 				</execute>
 
 				<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -421,7 +421,7 @@
 
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name 1" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="Navigator#gotoBack" />
@@ -433,7 +433,7 @@
 
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name 2" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -647,7 +647,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -784,7 +784,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Site Name M" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -822,7 +822,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Site Bravo" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -891,7 +891,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1189,7 +1189,7 @@
 
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="North America" />
-			<var name="orgType" value="Regular Organization" />
+			<var name="orgType" value="Organization" />
 		</execute>
 
 		<execute macro="Organization#addCP">

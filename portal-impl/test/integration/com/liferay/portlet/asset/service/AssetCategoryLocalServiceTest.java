@@ -98,7 +98,7 @@ public class AssetCategoryLocalServiceTest {
 			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
+			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			RandomTestUtil.randomString(), true, serviceContext);
 

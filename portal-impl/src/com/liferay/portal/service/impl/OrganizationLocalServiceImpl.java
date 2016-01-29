@@ -135,7 +135,7 @@ public class OrganizationLocalServiceImpl
 
 		return addOrganization(
 			userId, parentOrganizationId, name,
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
+			PropsValues.ORGANIZATIONS_TYPES[0], 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			site, null);
 	}

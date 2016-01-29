@@ -530,7 +530,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION</td>
-	<td>//li[contains(@class,'open')]//a[@title='Organization']</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(@id,'menuItem') and contains(.,'Organization')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -591,11 +591,6 @@
 <tr>
 	<td>PUBLISH_TO_REMOTE_LIVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Publish to Remote Live')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REGULAR_ORGANIZATION</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[text()='Regular Organization']</td>
 	<td></td>
 </tr>
 <tr>

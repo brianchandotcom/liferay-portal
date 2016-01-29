@@ -190,56 +190,55 @@ public class SetupWizardSampleDataUtil {
 
 	private static final Object[][] _ORGANIZATION_ARRAYS = {
 		{
-			"Chicago", 19014L, 19L, OrganizationConstants.TYPE_LOCATION, "ORD"
+			"Chicago", 19014L, 19L, OrganizationConstants.TYPE_ORGANIZATION,
+			"ORD"
 		},
 		{
-			"Consulting", 19005L, 19L,
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION
+			"Consulting", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
 		},
 		{
-			"Dalian", 0L, 2L, OrganizationConstants.TYPE_LOCATION, "DLC"
+			"Dalian", 0L, 2L, OrganizationConstants.TYPE_ORGANIZATION, "DLC"
 		},
 		{
-			"Engineering", 19005L, 19L,
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION
+			"Engineering", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
 		},
 		{
-			"Frankfurt", 0L, 4L, OrganizationConstants.TYPE_LOCATION, "FRA"
+			"Frankfurt", 0L, 4L, OrganizationConstants.TYPE_ORGANIZATION, "FRA"
 		},
 		{
-			"Hong Kong", 0L, 2L, OrganizationConstants.TYPE_LOCATION, "HKG"
+			"Hong Kong", 0L, 2L, OrganizationConstants.TYPE_ORGANIZATION, "HKG"
 		},
 		{
-			"Kuala Lumpur", 0L, 135L, OrganizationConstants.TYPE_LOCATION, "KUL"
+			"Kuala Lumpur", 0L, 135L, OrganizationConstants.TYPE_ORGANIZATION,
+			"KUL"
 		},
 		{
-			"Los Angeles", 19005L, 19L, OrganizationConstants.TYPE_LOCATION,
+			"Los Angeles", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION,
 			"LAX"
 		},
 		{
-			"Madrid", 0L, 15L, OrganizationConstants.TYPE_LOCATION, "MAD"
+			"Madrid", 0L, 15L, OrganizationConstants.TYPE_ORGANIZATION, "MAD"
 		},
 		{
-			"Marketing", 19005L, 19L,
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION
+			"Marketing", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
 		},
 		{
-			"New York", 19033L, 19L, OrganizationConstants.TYPE_LOCATION, "NYC"
+			"New York", 19033L, 19L, OrganizationConstants.TYPE_ORGANIZATION,
+			"NYC"
 		},
 		{
-			"Saint Paulo", 0L, 48L, OrganizationConstants.TYPE_LOCATION, "GRU"
+			"Saint Paulo", 0L, 48L, OrganizationConstants.TYPE_ORGANIZATION,
+			"GRU"
 		},
 		{
-			"Sales", 19005L, 19L,
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION
+			"Sales", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
 		},
 		{
-			"San Francisco", 19005L, 19L, OrganizationConstants.TYPE_LOCATION,
-			"SFO"
+			"San Francisco", 19005L, 19L,
+			OrganizationConstants.TYPE_ORGANIZATION, "SFO"
 		},
 		{
-			"Support", 19005L, 19L,
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION
+			"Support", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
 		}
 	};
 

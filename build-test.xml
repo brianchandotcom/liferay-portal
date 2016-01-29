@@ -2681,7 +2681,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	</macrodef>
 
 	<macrodef name="start-test-smtp-server">
- 		<sequential>
+		<sequential>
 			<mirrors-get dest="${test.smtp.server.dir}/MockMock.jar" src="${test.smtp.server.url}" />
 
 			<parallel>

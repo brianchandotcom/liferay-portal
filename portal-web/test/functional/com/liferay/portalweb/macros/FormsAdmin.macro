@@ -1,4 +1,5 @@
 <definition>
+	<var name="formDescription" value="Created Form Description" />
 	<var name="formName" value="Created Form Name" />
 
 	<command name="deleteForm">

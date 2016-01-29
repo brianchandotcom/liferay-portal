@@ -23,7 +23,7 @@ List<Portlet> portlets = (List<Portlet>)GetterUtil.getObject(request.getAttribut
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:portlet-list:type"));
 
 Set<String> displayedControls = new HashSet<String>();
-Set<String> portletDataHandlerClasses = new HashSet<String>();
+Set<String> portletDataHandlerClassNames = new HashSet<String>();
 
 String defaultRange = null;
 long exportGroupId = groupId;

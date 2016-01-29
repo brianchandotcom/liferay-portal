@@ -17,16 +17,16 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <%
-WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiInfoPanelDisplayContext(request, response);
+WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiNodeInfoPanelDisplayContext(request, response);
 %>
 
 <div class="sidebar-header">
 	<c:choose>
-		<c:when test="<%= wikiInfoPanelDisplayContext.isSingleNodeSelection() %>">
+		<c:when test="<%= wikiNodeInfoPanelDisplayContext.isSingleNodeSelection() %>">
 			<ul class="list-inline list-unstyled sidebar-header-actions">
 
 				<%
-				request.setAttribute("node_info_panel.jsp-wikiNode", wikiInfoPanelDisplayContext.getFirstNode());
+				request.setAttribute("node_info_panel.jsp-wikiNode", wikiNodeInfoPanelDisplayContext.getFirstNode());
 				%>
 
 				<li>
@@ -39,7 +39,7 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 			</ul>
 
 			<%
-			WikiNode node = wikiInfoPanelDisplayContext.getFirstNode();
+			WikiNode node = wikiNodeInfoPanelDisplayContext.getFirstNode();
 			%>
 
 			<h4>
@@ -50,11 +50,11 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 				<liferay-ui:message key="wiki" />
 			</p>
 		</c:when>
-		<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleItemSelection() %>">
-			<h4><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedItemsCount() %>" key="x-items-are-selected" /></h4>
+		<c:when test="<%= wikiNodeInfoPanelDisplayContext.isMultipleNodeSelection() %>">
+			<h4><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h4>
 		</c:when>
 		<c:otherwise>
-			<h4><liferay-ui:message key="<%= wikiInfoPanelDisplayContext.getItemNameLabel() %>" /></h4>
+			<h4><liferay-ui:message key="wikis" /></h4>
 		</c:otherwise>
 	</c:choose>
 </div>
@@ -63,10 +63,10 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 	<liferay-ui:section>
 		<div class="sidebar-body">
 			<c:choose>
-				<c:when test="<%= wikiInfoPanelDisplayContext.isSingleNodeSelection() %>">
+				<c:when test="<%= wikiNodeInfoPanelDisplayContext.isSingleNodeSelection() %>">
 
 					<%
-					WikiNode node = wikiInfoPanelDisplayContext.getFirstNode();
+					WikiNode node = wikiNodeInfoPanelDisplayContext.getFirstNode();
 					%>
 
 					<c:if test="<%= Validator.isNotNull(node.getDescription()) %>">
@@ -106,14 +106,14 @@ WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext = wikiDisplayContextProv
 						<%= dateFormatDateTime.format(node.getModifiedDate()) %>
 					</p>
 				</c:when>
-				<c:when test="<%= wikiInfoPanelDisplayContext.isMultipleItemSelection() %>">
-					<h5><liferay-ui:message arguments="<%= wikiInfoPanelDisplayContext.getSelectedItemsCount() %>" key="x-items-are-selected" /></h5>
+				<c:when test="<%= wikiNodeInfoPanelDisplayContext.isMultipleNodeSelection() %>">
+					<h5><liferay-ui:message arguments="<%= wikiNodeInfoPanelDisplayContext.getSelectedNodesCount() %>" key="x-items-are-selected" /></h5>
 				</c:when>
 				<c:otherwise>
 					<h5><liferay-ui:message key="num-of-items" /></h5>
 
 					<p>
-						<%= wikiInfoPanelDisplayContext.getItemsCount() %>
+						<%= wikiNodeInfoPanelDisplayContext.getNodesCount() %>
 					</p>
 				</c:otherwise>
 			</c:choose>

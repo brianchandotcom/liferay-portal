@@ -16,8 +16,9 @@ package com.liferay.wiki.web.display.context;
 
 import com.liferay.wiki.display.context.WikiDisplayContextFactory;
 import com.liferay.wiki.display.context.WikiEditPageDisplayContext;
-import com.liferay.wiki.display.context.WikiInfoPanelDisplayContext;
 import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
+import com.liferay.wiki.display.context.WikiNodeInfoPanelDisplayContext;
+import com.liferay.wiki.display.context.WikiPageInfoPanelDisplayContext;
 import com.liferay.wiki.display.context.WikiViewPageDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -65,26 +66,6 @@ public class WikiDisplayContextProvider {
 		return wikiEditPageDisplayContext;
 	}
 
-	public WikiInfoPanelDisplayContext getWikiInfoPanelDisplayContext(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
-			_wikiDisplayContextFactories.values();
-
-		WikiInfoPanelDisplayContext wikiInfoPanelDisplayContext =
-			new DefaultWikiInfoPanelDisplayContext(request, response);
-
-		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				wikiDisplayContextFactories) {
-
-			wikiInfoPanelDisplayContext =
-				wikiDisplayContextFactory.getWikiInfoPanelDisplayContext(
-					wikiInfoPanelDisplayContext, request, response);
-		}
-
-		return wikiInfoPanelDisplayContext;
-	}
-
 	public WikiListPagesDisplayContext getWikiListPagesDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		WikiNode wikiNode) {
@@ -104,6 +85,46 @@ public class WikiDisplayContextProvider {
 		}
 
 		return wikiListPagesDisplayContext;
+	}
+
+	public WikiNodeInfoPanelDisplayContext getWikiNodeInfoPanelDisplayContext(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
+			_wikiDisplayContextFactories.values();
+
+		WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext =
+			new DefaultWikiNodeInfoPanelDisplayContext(request, response);
+
+		for (WikiDisplayContextFactory wikiDisplayContextFactory :
+				wikiDisplayContextFactories) {
+
+			wikiNodeInfoPanelDisplayContext =
+				wikiDisplayContextFactory.getWikiNodeInfoPanelDisplayContext(
+					wikiNodeInfoPanelDisplayContext, request, response);
+		}
+
+		return wikiNodeInfoPanelDisplayContext;
+	}
+
+	public WikiPageInfoPanelDisplayContext getWikiPageInfoPanelDisplayContext(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
+			_wikiDisplayContextFactories.values();
+
+		WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext =
+			new DefaultWikiPageInfoPanelDisplayContext(request, response);
+
+		for (WikiDisplayContextFactory wikiDisplayContextFactory :
+				wikiDisplayContextFactories) {
+
+			wikiPageInfoPanelDisplayContext =
+				wikiDisplayContextFactory.getWikiPageInfoPanelDisplayContext(
+					wikiPageInfoPanelDisplayContext, request, response);
+		}
+
+		return wikiPageInfoPanelDisplayContext;
 	}
 
 	public WikiViewPageDisplayContext getWikiViewPageDisplayContext(

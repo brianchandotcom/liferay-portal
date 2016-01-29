@@ -420,7 +420,37 @@ portletDisplay.setURLPortlet(themeDisplay.getCDNHost() + portletIcon);
 
 // URL close
 
-String urlClose = themeDisplay.getPathMain() + "/portal/update_layout?p_auth=" + AuthTokenUtil.getToken(request) + "&p_l_id=" + plid + "&p_p_id=" + portletDisplay.getId() + "&p_v_l_s_g_id=" + themeDisplay.getSiteGroupId() + "&doAsUserId=" + HttpUtil.encodeURL(themeDisplay.getDoAsUserId()) + "&" + Constants.CMD + "=" + Constants.DELETE + "&referer=" + HttpUtil.encodeURL(themeDisplay.getPathMain() + "/portal/layout?p_l_id=" + plid + "&doAsUserId=" + themeDisplay.getDoAsUserId()) + "&refresh=1";
+StringBundler sb = new StringBundler(18);
+
+sb.append(themeDisplay.getPathMain());
+sb.append("/portal/update_layout?p_auth=");
+sb.append(AuthTokenUtil.getToken(request));
+sb.append("&p_l_id=");
+sb.append(plid);
+sb.append("&p_p_id=");
+sb.append(portletDisplay.getId());
+sb.append("&p_v_l_s_g_id=");
+sb.append(themeDisplay.getSiteGroupId());
+sb.append("&doAsUserId=");
+sb.append(HttpUtil.encodeURL(themeDisplay.getDoAsUserId()));
+sb.append("&");
+sb.append(Constants.CMD);
+sb.append("=");
+sb.append(Constants.DELETE);
+sb.append("&referer=");
+
+StringBundler innerSb = new StringBundler(5);
+
+innerSb.append(themeDisplay.getPathMain());
+innerSb.append("/portal/layout?p_l_id=");
+innerSb.append(plid);
+innerSb.append("&doAsUserId=");
+innerSb.append(themeDisplay.getDoAsUserId());
+
+sb.append(HttpUtil.encodeURL(innerSb.toString()));
+sb.append("&refresh=1");
+
+String urlClose = sb.toString();
 
 if (themeDisplay.isAddSessionIdToURL()) {
 	urlClose = PortalUtil.getURLWithSessionId(urlClose, themeDisplay.getSessionId());
@@ -637,9 +667,37 @@ portletDisplay.setURLMax(urlMax.toString());
 
 // URL min
 
-String urlMin = themeDisplay.getPathMain() + "/portal/update_layout?p_l_id=" + plid + "&p_p_id=" + portletDisplay.getId() + "&p_p_restore=" + portletDisplay.isStateMin() + "&p_v_l_s_g_id=" + themeDisplay.getSiteGroupId() + "&doAsUserId=" + HttpUtil.encodeURL(themeDisplay.getDoAsUserId()) + "&" + Constants.CMD + "=minimize&referer=" + HttpUtil.encodeURL(themeDisplay.getPathMain() + "/portal/layout?p_auth=" + AuthTokenUtil.getToken(request) + "&p_l_id=" + plid + "&doAsUserId=" + themeDisplay.getDoAsUserId()) + "&refresh=1";
+sb = new StringBundler(16);
 
-portletDisplay.setURLMin(urlMin);
+sb.append(themeDisplay.getPathMain());
+sb.append("/portal/update_layout?p_l_id=");
+sb.append(plid);
+sb.append("&p_p_id=");
+sb.append(portletDisplay.getId());
+sb.append("&p_p_restore=");
+sb.append(portletDisplay.isStateMin());
+sb.append("&p_v_l_s_g_id=");
+sb.append(themeDisplay.getSiteGroupId());
+sb.append("&doAsUserId=");
+sb.append(HttpUtil.encodeURL(themeDisplay.getDoAsUserId()));
+sb.append("&");
+sb.append(Constants.CMD);
+sb.append("=minimize&referer=");
+
+innerSb = new StringBundler(7);
+
+innerSb.append(themeDisplay.getPathMain());
+innerSb.append("/portal/layout?p_auth=");
+innerSb.append(AuthTokenUtil.getToken(request));
+innerSb.append("&p_l_id=");
+innerSb.append(plid);
+innerSb.append("&doAsUserId=");
+innerSb.append(themeDisplay.getDoAsUserId());
+
+sb.append(HttpUtil.encodeURL(innerSb.toString()));
+sb.append("&refresh=1");
+
+portletDisplay.setURLMin(sb.toString());
 
 // URL portlet css
 
@@ -832,7 +890,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 	String cssClasses = StringPool.BLANK;
 
 	if (themeDisplay.isFreeformLayout() && !themeDisplay.isStatePopUp() && !runtimePortlet && !layoutTypePortlet.hasStateMax()) {
-		StringBundler sb = new StringBundler(7);
+		sb = new StringBundler(7);
 
 		Properties freeformStyleProps = PropertiesUtil.load(portletSetup.getValue("portlet-freeform-styles", StringPool.BLANK));
 

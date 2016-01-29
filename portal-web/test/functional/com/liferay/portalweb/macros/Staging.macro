@@ -84,6 +84,7 @@
 			<else>
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 				<execute function="Confirm" value1="Are you sure you want to activate local staging for ${siteName}?" />
+				<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="Successful" />
 			</else>
 		</if>
 

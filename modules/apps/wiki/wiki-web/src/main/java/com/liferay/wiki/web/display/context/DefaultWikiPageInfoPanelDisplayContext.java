@@ -16,12 +16,11 @@ package com.liferay.wiki.web.display.context;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.wiki.display.context.WikiInfoPanelDisplayContext;
+import com.liferay.wiki.display.context.WikiPageInfoPanelDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.web.display.context.util.WikiInfoPanelRequestHelper;
+import com.liferay.wiki.web.display.context.util.WikiPageInfoPanelRequestHelper;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,68 +31,37 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Adolfo Pérez
  */
-public class DefaultWikiInfoPanelDisplayContext
-	implements WikiInfoPanelDisplayContext {
+public class DefaultWikiPageInfoPanelDisplayContext
+	implements WikiPageInfoPanelDisplayContext {
 
-	public DefaultWikiInfoPanelDisplayContext(
+	public DefaultWikiPageInfoPanelDisplayContext(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		_wikiInfoPanelRequestHelper = new WikiInfoPanelRequestHelper(request);
-	}
-
-	@Override
-	public WikiNode getFirstNode() {
-		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
-
-		if (nodes.isEmpty()) {
-			return null;
-		}
-
-		return nodes.get(0);
+		_wikiPageInfoPanelRequestHelper = new WikiPageInfoPanelRequestHelper(
+			request);
 	}
 
 	@Override
 	public WikiPage getFirstPage() {
-		List<WikiPage> pages = _wikiInfoPanelRequestHelper.getPages();
+		List<WikiPage> pages = _wikiPageInfoPanelRequestHelper.getPages();
 
 		if (pages.isEmpty()) {
-			return null;
+			return _wikiPageInfoPanelRequestHelper.getPage();
 		}
 
 		return pages.get(0);
 	}
 
 	@Override
-	public String getItemNameLabel() {
-		if (_wikiInfoPanelRequestHelper.getNodeId() == 0) {
-			return "wikis";
-		}
-
-		return "pages";
-	}
-
-	@Override
-	public int getItemsCount() {
-		WikiNode node = _wikiInfoPanelRequestHelper.getNode();
-
-		if (node == null) {
-			return WikiNodeLocalServiceUtil.getNodesCount(
-				_wikiInfoPanelRequestHelper.getScopeGroupId());
-		}
-
-		return WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
-	}
-
-	@Override
 	public String getPageRSSURL(WikiPage page) {
 		ThemeDisplay themeDisplay =
-			_wikiInfoPanelRequestHelper.getThemeDisplay();
+			_wikiPageInfoPanelRequestHelper.getThemeDisplay();
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/wiki/rss?nodeId=");
-		sb.append(_wikiInfoPanelRequestHelper.getNodeId());
+		sb.append(page.getNodeId());
 		sb.append("&title=");
 		sb.append(page.getTitle());
 
@@ -101,8 +69,15 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
-	public int getSelectedItemsCount() {
-		List<?> items = getSelectedItems();
+	public int getPagesCount() {
+		WikiNode node = _wikiPageInfoPanelRequestHelper.getCurrentNode();
+
+		return WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true);
+	}
+
+	@Override
+	public int getSelectedPagesCount() {
+		List<?> items = getSelectedPages();
 
 		return items.size();
 	}
@@ -113,8 +88,8 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
-	public boolean isMultipleItemSelection() {
-		List<?> items = getSelectedItems();
+	public boolean isMultiplePageSelection() {
+		List<?> items = getSelectedPages();
 
 		if (items.size() > 1) {
 			return true;
@@ -125,40 +100,31 @@ public class DefaultWikiInfoPanelDisplayContext
 	}
 
 	@Override
-	public boolean isSingleNodeSelection() {
-		List<WikiNode> nodes = _wikiInfoPanelRequestHelper.getNodes();
-
-		if (nodes.size() == 1) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
 	public boolean isSinglePageSelection() {
-		List<WikiPage> pages = _wikiInfoPanelRequestHelper.getPages();
+		List<WikiPage> pages = _wikiPageInfoPanelRequestHelper.getPages();
 
 		if (pages.size() == 1) {
 			return true;
 		}
 		else {
+			WikiPage page = _wikiPageInfoPanelRequestHelper.getPage();
+
+			if (page != null) {
+				return true;
+			}
+
 			return false;
 		}
 	}
 
-	protected List<?> getSelectedItems() {
-		if (_wikiInfoPanelRequestHelper.getNodeId() != 0) {
-			return _wikiInfoPanelRequestHelper.getPages();
-		}
-
-		return _wikiInfoPanelRequestHelper.getNodes();
+	protected List<WikiPage> getSelectedPages() {
+		return _wikiPageInfoPanelRequestHelper.getPages();
 	}
 
 	private static final UUID _UUID = UUID.fromString(
 		"7099F1F8-ED73-47D8-9CDC-ED292BF7779F");
 
-	private final WikiInfoPanelRequestHelper _wikiInfoPanelRequestHelper;
+	private final WikiPageInfoPanelRequestHelper
+		_wikiPageInfoPanelRequestHelper;
 
 }

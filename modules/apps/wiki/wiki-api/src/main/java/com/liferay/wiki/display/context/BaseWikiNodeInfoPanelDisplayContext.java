@@ -14,30 +14,24 @@
 
 package com.liferay.wiki.display.context;
 
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public interface WikiInfoPanelDisplayContext extends WikiDisplayContext {
+public abstract class BaseWikiNodeInfoPanelDisplayContext
+	extends BaseWikiDisplayContext<WikiNodeInfoPanelDisplayContext>
+	implements WikiNodeInfoPanelDisplayContext {
 
-	public WikiNode getFirstNode();
+	public BaseWikiNodeInfoPanelDisplayContext(
+		UUID uuid,
+		WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext,
+		HttpServletRequest request, HttpServletResponse response) {
 
-	public WikiPage getFirstPage();
-
-	public String getItemNameLabel();
-
-	public int getItemsCount();
-
-	public String getPageRSSURL(WikiPage page);
-
-	public int getSelectedItemsCount();
-
-	public boolean isMultipleItemSelection();
-
-	public boolean isSingleNodeSelection();
-
-	public boolean isSinglePageSelection();
+		super(uuid, wikiNodeInfoPanelDisplayContext, request, response);
+	}
 
 }

@@ -15,10 +15,8 @@
 package com.liferay.wiki.web.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.model.WikiPage;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,10 +25,11 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class WikiInfoPanelRequestHelper extends BaseRequestHelper {
+public class WikiNodeInfoPanelRequestHelper extends BaseRequestHelper {
 
-	public WikiInfoPanelRequestHelper(HttpServletRequest request) {
+	public WikiNodeInfoPanelRequestHelper(HttpServletRequest request) {
 		super(request);
 	}
 
@@ -44,10 +43,6 @@ public class WikiInfoPanelRequestHelper extends BaseRequestHelper {
 		_node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 		return _node;
-	}
-
-	public long getNodeId() {
-		return ParamUtil.getLong(getRequest(), "nodeId");
 	}
 
 	public List<WikiNode> getNodes() {
@@ -66,24 +61,7 @@ public class WikiInfoPanelRequestHelper extends BaseRequestHelper {
 		return _nodes;
 	}
 
-	public List<WikiPage> getPages() {
-		if (_pages != null) {
-			return _pages;
-		}
-
-		HttpServletRequest request = getRequest();
-
-		_pages = (List<WikiPage>)request.getAttribute(WikiWebKeys.WIKI_PAGES);
-
-		if (_pages == null) {
-			_pages = Collections.emptyList();
-		}
-
-		return _pages;
-	}
-
 	private WikiNode _node;
 	private List<WikiNode> _nodes;
-	private List<WikiPage> _pages;
 
 }

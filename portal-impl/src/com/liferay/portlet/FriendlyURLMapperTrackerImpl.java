@@ -35,6 +35,7 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -181,13 +182,15 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 				return null;
 			}
 
-			Router router = new RouterImpl();
-
 			Document document = UnsecureSAXReaderUtil.read(xml, true);
 
 			Element rootElement = document.getRootElement();
 
-			for (Element routeElement : rootElement.elements("route")) {
+			List<Element> routeElements = rootElement.elements("route");
+
+			Router router = new RouterImpl(routeElements.size());
+
+			for (Element routeElement : routeElements) {
 				String pattern = routeElement.elementText("pattern");
 
 				Route route = router.addRoute(pattern);

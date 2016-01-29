@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
+
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,53 +27,17 @@ import java.util.regex.Pattern;
  */
 public class StringParserFragment {
 
-	public StringParserFragment(String chunk) {
-		chunk = chunk.substring(1, chunk.length() - 1);
+	public static StringParserFragment create(String chunk) {
+		StringParserFragment stringParserFragment =
+			_stringParserFragmentsCache.get(chunk);
 
-		if (Validator.isNull(chunk)) {
-			throw new IllegalArgumentException("Fragment is null");
+		if (stringParserFragment == null) {
+			stringParserFragment = new StringParserFragment(chunk);
+
+			_stringParserFragmentsCache.put(chunk, stringParserFragment);
 		}
 
-		String[] chunkParts = chunk.split(StringPool.COLON, 2);
-
-		String name = null;
-
-		if (chunkParts.length == 2) {
-			name = chunkParts[0];
-			String pattern = chunkParts[1];
-
-			if (Validator.isNull(pattern)) {
-				throw new IllegalArgumentException("Pattern is null");
-			}
-
-			_pattern = Pattern.compile(pattern);
-		}
-		else {
-			name = chunkParts[0];
-			_pattern = _defaultPattern;
-		}
-
-		if (Validator.isNull(name)) {
-			throw new IllegalArgumentException("Name is null");
-		}
-
-		if (name.startsWith(StringPool.PERCENT)) {
-			name = name.substring(1);
-
-			if (Validator.isNull(name)) {
-				throw new IllegalArgumentException("Name is null");
-			}
-
-			_raw = true;
-		}
-		else {
-			_raw = false;
-		}
-
-		_name = name;
-
-		_token = StringPool.OPEN_CURLY_BRACE.concat(_name).concat(
-			StringPool.CLOSE_CURLY_BRACE);
+		return stringParserFragment;
 	}
 
 	public String getName() {
@@ -94,7 +62,51 @@ public class StringParserFragment {
 		return matcher.matches();
 	}
 
+	protected StringParserFragment(String chunk) {
+		if ((chunk == null) || (chunk.length() < 4)) {
+			throw new IllegalArgumentException("Fragment is invalid:" + chunk);
+		}
+
+		int index = chunk.indexOf(CharPool.COLON);
+
+		String name = chunk.substring(1, index);
+
+		if (name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null");
+		}
+
+		if (name.charAt(0) == CharPool.PERCENT) {
+			if (name.length() == 1) {
+				throw new IllegalArgumentException("Name is null");
+			}
+
+			name = name.substring(1);
+
+			_raw = true;
+		}
+		else {
+			_raw = false;
+		}
+
+		_name = name;
+
+		String pattern = chunk.substring(index + 1, chunk.length() - 1);
+
+		if (pattern.isEmpty()) {
+			_pattern = _defaultPattern;
+		}
+		else {
+			_pattern = Pattern.compile(pattern);
+		}
+
+		_token = StringPool.OPEN_CURLY_BRACE.concat(_name).concat(
+			StringPool.CLOSE_CURLY_BRACE);
+	}
+
 	private static final Pattern _defaultPattern = Pattern.compile("[^/\\.]+");
+	private static final Map<String, StringParserFragment>
+		_stringParserFragmentsCache = new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 	private final String _name;
 	private final Pattern _pattern;

@@ -14,7 +14,10 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -121,7 +124,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return trimContent(content, false);
+		return formatFTL(content);
 	}
 
 	@Override
@@ -132,6 +135,40 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
+	}
+
+	protected String formatFTL(String content) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = trimLine(line, false);
+
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				if (trimmedLine.startsWith("<#assign ")) {
+					line = formatWhitespace(line, trimmedLine, true);
+
+					line = formatIncorrectSyntax(line, "=[", "= [", false);
+					line = formatIncorrectSyntax(line, "+[", "+ [", false);
+				}
+
+				sb.append(line);
+				sb.append("\n");
+			}
+		}
+
+		String newContent = sb.toString();
+
+		if (newContent.endsWith("\n")) {
+			newContent = newContent.substring(0, newContent.length() - 1);
+		}
+
+		return newContent;
 	}
 
 	protected String sortLiferayVariables(String content) {

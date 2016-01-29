@@ -153,7 +153,7 @@ recordSearchContainer.setOrderByType(orderByType);
 
 <div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-		<aui:input name="deleteRecordIds" type="hidden" />
+		<aui:input name="recordIds" type="hidden" />
 
 		<liferay-ui:search-container
 			id="ddlRecord"
@@ -246,7 +246,7 @@ recordSearchContainer.setOrderByType(orderByType);
 			var searchContainer = AUI.$('#<portlet:namespace />ddlRecord', form);
 
 			form.attr('method', 'post');
-			form.fm('deleteRecordIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+			form.fm('recordIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
 
 			submitForm(form, '<portlet:actionURL name="deleteRecord"><portlet:param name="mvcPath" value="/view_records.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}

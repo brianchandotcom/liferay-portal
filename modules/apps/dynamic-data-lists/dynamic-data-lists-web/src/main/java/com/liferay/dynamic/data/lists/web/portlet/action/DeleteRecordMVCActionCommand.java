@@ -46,21 +46,22 @@ public class DeleteRecordMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteRecordIds = null;
+		long[] recordIds = getRecordIds(actionRequest);
 
+		for (long recordId : recordIds) {
+			_ddlRecordService.deleteRecord(recordId);
+		}
+	}
+
+	protected long[] getRecordIds(ActionRequest actionRequest) {
 		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
 		if (recordId > 0) {
-			deleteRecordIds = new long[] {recordId};
-		}
-		else {
-			deleteRecordIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteRecordIds"), 0L);
+			return new long[] {recordId};
 		}
 
-		for (long deleteRecordId : deleteRecordIds) {
-			_ddlRecordService.deleteRecord(deleteRecordId);
-		}
+		return StringUtil.split(
+			ParamUtil.getString(actionRequest, "recordIds"), 0L);
 	}
 
 	@Reference(unbind = "-")

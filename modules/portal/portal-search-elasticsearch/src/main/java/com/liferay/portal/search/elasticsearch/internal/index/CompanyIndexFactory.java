@@ -208,7 +208,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	protected void loadAdditionalTypeMappings(
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
-		if (_additionalTypeMappings == null) {
+		if (Validator.isNull(_additionalTypeMappings)) {
 			return;
 		}
 

@@ -26,7 +26,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 >
 
 	<liferay-ui:search-container-row
-		className="MBMessage"
+		className="com.liferay.portlet.messageboards.model.MBMessage"
 		cssClass="entry-display-style selectable"
 		modelVar="mbMessage"
 	>

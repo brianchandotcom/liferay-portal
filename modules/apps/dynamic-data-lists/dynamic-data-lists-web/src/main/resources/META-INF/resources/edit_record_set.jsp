@@ -77,79 +77,81 @@ if (ddlDisplayContext.isAdminPortlet()) {
 
 	<aui:model-context bean="<%= recordSet %>" model="<%= DDLRecordSet.class %>" />
 
-	<aui:fieldset>
-		<c:if test="<%= (recordSet != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(recordSet.getDDMStructureId()) > 0) %>">
-			<div class="alert alert-warning">
-				<liferay-ui:message key="updating-the-data-definition-may-cause-data-loss" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<c:if test="<%= (recordSet != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(recordSet.getDDMStructureId()) > 0) %>">
+				<div class="alert alert-warning">
+					<liferay-ui:message key="updating-the-data-definition-may-cause-data-loss" />
+				</div>
+			</c:if>
+
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+
+			<aui:input name="description" />
+
+			<div class="form-group">
+				<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
+
+				<liferay-ui:icon
+					label="<%= true %>"
+					linkCssClass="btn btn-default"
+					message="select"
+					url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+				/>
 			</div>
-		</c:if>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+			<c:if test="<%= WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DDLRecord.class.getName()) != null) %>">
+				<aui:select label="workflow" name="workflowDefinition">
 
-		<aui:input name="description" />
+					<%
+					WorkflowDefinitionLink workflowDefinitionLink = null;
 
-		<div class="form-group">
-			<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
-
-			<liferay-ui:icon
-				label="<%= true %>"
-				linkCssClass="btn btn-default"
-				message="select"
-				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-			/>
-		</div>
-
-		<c:if test="<%= WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DDLRecord.class.getName()) != null) %>">
-			<aui:select label="workflow" name="workflowDefinition">
-
-				<%
-				WorkflowDefinitionLink workflowDefinitionLink = null;
-
-				try {
-					workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, 0, true);
-				}
-				catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-				}
-				%>
-
-				<aui:option><liferay-ui:message key="no-workflow" /></aui:option>
-
-				<%
-				List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-				for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-					boolean selected = false;
-
-					if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-						selected = true;
+					try {
+						workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, 0, true);
 					}
-				%>
+					catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+					}
+					%>
 
-					<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+					<aui:option><liferay-ui:message key="no-workflow" /></aui:option>
 
-				<%
-				}
-				%>
+					<%
+					List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-			</aui:select>
-		</c:if>
+					for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+						boolean selected = false;
 
-		<c:if test="<%= recordSet == null %>">
-			<liferay-ui:panel-container cssClass="permission-panel-container" extended="<%= true %>">
-				<liferay-ui:panel markupView="lexicon" title="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= DDLRecordSet.class.getName() %>"
-					/>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
-		</c:if>
+						if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+							selected = true;
+						}
+					%>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
+						<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
+					<%
+					}
+					%>
+
+				</aui:select>
+			</c:if>
+
+			<c:if test="<%= recordSet == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+					<aui:field-wrapper label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= DDLRecordSet.class.getName() %>"
+						/>
+					</aui:field-wrapper>
+				</aui:fieldset>
+			</c:if>
+		</aui:fieldset>
+	</aui:fieldset-group>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

@@ -1,0 +1,11 @@
+dependencies {
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile project(":apps:portal-settings:portal-settings-api")
+	compile project(":apps:portal-settings:portal-settings-web")
+	compile project(":portal:portal-language-resource-bundle")
+	compile project(":portal-security:portal-security-sso-facebook-connect")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

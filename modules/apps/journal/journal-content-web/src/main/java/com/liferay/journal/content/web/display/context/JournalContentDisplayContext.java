@@ -46,8 +46,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -439,6 +441,19 @@ public class JournalContentDisplayContext {
 			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
 
 		return _contentMetadataAssetAddonEntries;
+	}
+
+	public long[] getSelectedGroupIds() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.getScopeGroupId() == themeDisplay.getSiteGroupId()) {
+			return PortalUtil.getSharedContentSiteGroupIds(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getUserId());
+		}
+
+		return new long[] {themeDisplay.getScopeGroupId()};
 	}
 
 	public List<UserToolAssetAddonEntry>

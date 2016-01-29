@@ -237,6 +237,18 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
+	public int getFileVersionsCount(int status) {
+		try {
+			List<Document> documents = getAllVersions();
+
+			return documents.size();
+		}
+		catch (PortalException pe) {
+			throw new RepositoryException(pe);
+		}
+	}
+
+	@Override
 	public Folder getFolder() {
 		Folder parentFolder = null;
 

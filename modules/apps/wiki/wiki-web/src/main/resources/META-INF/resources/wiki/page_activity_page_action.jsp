@@ -77,3 +77,5 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 		/>
 	</liferay-ui:icon-menu>
 </c:if>
+
+<%@ include file="/wiki/compare_versions_popup.jspf" %>

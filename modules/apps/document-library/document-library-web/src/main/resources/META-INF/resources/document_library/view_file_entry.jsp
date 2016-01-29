@@ -364,106 +364,14 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= dlViewFileVersionDisplayContext.isVersionInfoVisible() %>">
 					<liferay-ui:section>
+						<div class="sidebar-body">
 
-						<%
-						boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
-						boolean showNonApprovedDocuments = false;
+							<%
+							request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
+							%>
 
-						if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-							showNonApprovedDocuments = true;
-						}
-
-						PortletURL viewFileEntryURL = renderResponse.createRenderURL();
-
-						viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
-						viewFileEntryURL.setParameter("redirect", currentURL);
-						viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-
-						RowChecker rowChecker = null;
-
-						if (comparableFileEntry) {
-							rowChecker = new RowChecker(renderResponse);
-
-							rowChecker.setAllRowIds(null);
-						}
-
-						int status = WorkflowConstants.STATUS_APPROVED;
-
-						if (showNonApprovedDocuments) {
-							status = WorkflowConstants.STATUS_ANY;
-						}
-
-						List fileVersions = fileEntry.getFileVersions(status);
-						%>
-
-						<liferay-ui:search-container
-							iteratorURL="<%= viewFileEntryURL %>"
-							rowChecker="<%= rowChecker %>"
-							total="<%= fileVersions.size() %>"
-						>
-							<liferay-ui:search-container-results
-								results="<%= ListUtil.subList(fileVersions, searchContainer.getStart(), searchContainer.getEnd()) %>"
-							/>
-
-							<liferay-ui:search-container-row
-								className="com.liferay.portal.kernel.repository.model.FileVersion"
-								keyProperty="fileVersionId"
-								modelVar="curFileVersion"
-							>
-
-								<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-									<h4><liferay-ui:message arguments="<%= curFileVersion.getVersion() %>" key="version-x" /></h4>
-
-									<small class="text-muted">
-
-										<% Date modifiedDate = curFileVersion.getModifiedDate(); %>
-
-										<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" />
-									</small>
-
-									<p class='<%= Validator.isNull(curFileVersion.getChangeLog()) ? "text-muted" : StringPool.BLANK %>'>
-										<c:choose>
-											<c:when test="<%= Validator.isNull(curFileVersion.getChangeLog()) %>">
-												<liferay-ui:message key="no-change-log" />
-											</c:when>
-											<c:otherwise>
-												<%= curFileVersion.getChangeLog() %>
-											</c:otherwise>
-										</c:choose>
-									</p>
-								</liferay-ui:search-container-column-text>
-
-								<liferay-ui:search-container-column-jsp path="/document_library/file_entry_history_action.jsp" />
-							</liferay-ui:search-container-row>
-
-							<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
-						</liferay-ui:search-container>
-
-						<%
-						if (comparableFileEntry && !fileVersions.isEmpty()) {
-							FileVersion curFileVersion = (FileVersion)fileVersions.get(0);
-						%>
-
-							<div class="version-history-compare">
-								<portlet:renderURL var="compareVersionsURL">
-									<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
-								</portlet:renderURL>
-
-								<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
-									<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
-									<aui:input name="sourceFileVersionId" type="hidden" value="<%= curFileVersion.getFileVersionId() %>" />
-									<aui:input name="targetFileVersionId" type="hidden" value="<%= fileVersion.getFileVersionId() %>" />
-
-									<aui:button-row>
-										<aui:button type="submit" value="compare-versions" />
-									</aui:button-row>
-								</aui:form>
-							</div>
-
-						<%
-						}
-						%>
-
+							<liferay-util:include page="/document_library/file_entry_history.jsp" servletContext="<%= application %>" />
+						</div>
 					</liferay-ui:section>
 				</c:if>
 			</liferay-ui:tabs>

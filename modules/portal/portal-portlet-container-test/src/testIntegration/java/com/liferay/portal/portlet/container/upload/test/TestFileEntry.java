@@ -140,6 +140,11 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
+	public int getFileVersionsCount(int status) {
+		return 0;
+	}
+
+	@Override
 	public Folder getFolder() {
 		try {
 			return DLAppLocalServiceUtil.getFolder(_folderId);

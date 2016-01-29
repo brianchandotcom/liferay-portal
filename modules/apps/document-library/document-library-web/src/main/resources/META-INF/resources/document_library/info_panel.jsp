@@ -250,45 +250,10 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				<div class="sidebar-body">
 
 					<%
-					int status = WorkflowConstants.STATUS_APPROVED;
-
-					if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-						status = WorkflowConstants.STATUS_ANY;
-					}
-
-					List<FileVersion> fileVersions = fileEntry.getFileVersions(status);
-
-					for (FileVersion fileVersion : fileVersions) {
-						request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+					request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
 					%>
 
-						<div>
-							<ul class="list-inline list-unstyled sidebar-header-actions">
-								<li>
-									<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
-								</li>
-							</ul>
-
-							<h4><liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" /></h4>
-
-							<p>
-								<c:choose>
-									<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
-										<small class="text-muted">
-											<liferay-ui:message key="no-change-log" />
-										</small>
-									</c:when>
-									<c:otherwise>
-										<%= fileVersion.getChangeLog() %>
-									</c:otherwise>
-								</c:choose>
-							</p>
-						</div>
-
-					<%
-					}
-					%>
-
+					<liferay-util:include page="/document_library/file_entry_history.jsp" servletContext="<%= application %>" />
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>

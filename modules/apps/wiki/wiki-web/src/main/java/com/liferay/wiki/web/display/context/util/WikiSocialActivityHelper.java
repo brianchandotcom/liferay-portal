@@ -167,7 +167,7 @@ public class WikiSocialActivityHelper {
 					new Object[] {userName, titleLink}, false);
 			}
 			else if (type == WikiActivityKeys.UPDATE_PAGE) {
-				String title = String.valueOf(page.getVersion());
+				String title = String.valueOf(version);
 				String url = pageURL;
 
 				if ((socialActivityWikiPage != null) &&

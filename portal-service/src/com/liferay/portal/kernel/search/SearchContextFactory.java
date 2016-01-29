@@ -77,7 +77,7 @@ public class SearchContextFactory {
 			if (scope != null) {
 				String groupId = "0";
 
-				if (Validator.equals( scope[0], "this-site")) {
+				if (Validator.equals(scope[0], "this-site")) {
 					groupId = String.valueOf(themeDisplay.getScopeGroupId());
 				}
 

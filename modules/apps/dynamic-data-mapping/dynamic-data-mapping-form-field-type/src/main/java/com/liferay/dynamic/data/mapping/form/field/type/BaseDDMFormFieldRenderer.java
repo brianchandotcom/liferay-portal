@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Writer;
 
@@ -72,6 +74,14 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		return new URLTemplateResource(templateURL.getPath(), templateURL);
 	}
 
+	protected String getValueString(Value value, Locale locale) {
+		if (value != null) {
+			return value.getString(locale);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	protected void populateOptionalContext(
 		Template template, DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
@@ -92,6 +102,7 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.put("readOnly", ddmFormFieldRenderingContext.isReadOnly());
 		template.put("required", ddmFormFieldRenderingContext.isRequired());
 		template.put("showLabel", ddmFormField.isShowLabel());
+		template.put("tip", ddmFormFieldRenderingContext.getTip());
 		template.put("value", ddmFormFieldRenderingContext.getValue());
 		template.put("visible", ddmFormFieldRenderingContext.isVisible());
 	}

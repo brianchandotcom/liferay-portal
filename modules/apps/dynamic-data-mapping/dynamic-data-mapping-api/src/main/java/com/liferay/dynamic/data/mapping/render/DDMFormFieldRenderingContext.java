@@ -67,6 +67,10 @@ public class DDMFormFieldRenderingContext {
 		return _portletNamespace;
 	}
 
+	public String getTip() {
+		return _tip;
+	}
+
 	public String getValue() {
 		return _value;
 	}
@@ -149,6 +153,10 @@ public class DDMFormFieldRenderingContext {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
 	}
 
+	public void setTip(String tip) {
+		_tip = tip;
+	}
+
 	public void setValue(String value) {
 		_value = value;
 	}
@@ -170,6 +178,7 @@ public class DDMFormFieldRenderingContext {
 	private boolean _readOnly;
 	private boolean _required;
 	private boolean _showEmptyFieldLabel;
+	private String _tip;
 	private String _value;
 	private boolean _visible;
 

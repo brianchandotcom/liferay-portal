@@ -68,11 +68,8 @@ public interface ParagraphDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%title",
-		properties = {
-			"placeholder=%enter-title", "setting.category=basic",
-			"setting.weight=4"
-		},
-		required = true, tip = "%enter-title", type = "key-value"
+		properties = {"placeholder=%enter-title", "tooltip=%enter-title"},
+		required = true, type = "key-value"
 	)
 	@Override
 	public LocalizedValue label();
@@ -95,8 +92,8 @@ public interface ParagraphDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%body-text",
-		properties = {"setting.category=basic", "displayStyle=multiline"},
-		required = true, tip = "%enter-body-text", type = "text"
+		properties = {"displayStyle=multiline", "tooltip=%enter-body-text"},
+		required = true, type = "text"
 	)
 	public String text();
 

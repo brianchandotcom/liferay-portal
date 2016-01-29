@@ -93,18 +93,12 @@ public class ElasticsearchEngineConfigurator
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
-	@Reference(
-		target = "(search.engine.impl=Elasticsearch)",
-		unbind = "-"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setIndexSearcher(IndexSearcher indexSearcher) {
 		_indexSearcher = indexSearcher;
 	}
 
-	@Reference(
-		target = "(search.engine.impl=Elasticsearch)",
-		unbind = "-"
-	)
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setIndexWriter(IndexWriter indexWriter) {
 		_indexWriter = indexWriter;
 	}

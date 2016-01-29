@@ -391,6 +391,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*/
 	public boolean isLayoutPrototypeLinkActive();
 
+	public boolean isPortletEmbedded(java.lang.String portletId);
+
 	/**
 	* Returns <code>true</code> if the current layout is part of the public
 	* {@link LayoutSet}.

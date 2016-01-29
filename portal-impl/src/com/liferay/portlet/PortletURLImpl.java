@@ -813,17 +813,6 @@ public class PortletURLImpl
 			return StringPool.BLANK;
 		}
 
-		String portalURL = null;
-
-		if (themeDisplay.isFacebook()) {
-			portalURL =
-				FacebookUtil.FACEBOOK_APPS_URL +
-					themeDisplay.getFacebookCanvasPageURL();
-		}
-		else {
-			portalURL = PortalUtil.getPortalURL(_request, _secure);
-		}
-
 		try {
 			if (_layoutFriendlyURL == null) {
 				Layout layout = getLayout();
@@ -858,7 +847,7 @@ public class PortletURLImpl
 		}
 
 		if (Validator.isNull(_layoutFriendlyURL)) {
-			sb.append(portalURL);
+			sb.append(PortalUtil.getPortalURL(_request, _secure));
 			sb.append(themeDisplay.getPathMain());
 			sb.append("/portal/layout?");
 
@@ -871,7 +860,8 @@ public class PortletURLImpl
 		}
 		else {
 			if (themeDisplay.isFacebook()) {
-				sb.append(portalURL);
+				sb.append(FacebookUtil.FACEBOOK_APPS_URL);
+				sb.append(themeDisplay.getFacebookCanvasPageURL());
 			}
 			else {
 
@@ -882,7 +872,7 @@ public class PortletURLImpl
 				if (!_layoutFriendlyURL.startsWith(Http.HTTP_WITH_SLASH) &&
 					!_layoutFriendlyURL.startsWith(Http.HTTPS_WITH_SLASH)) {
 
-					sb.append(portalURL);
+					sb.append(PortalUtil.getPortalURL(_request, _secure));
 				}
 
 				sb.append(_layoutFriendlyURL);
@@ -1325,15 +1315,14 @@ public class PortletURLImpl
 	protected String prependNamespace(String name) {
 		String namespace = getNamespace();
 
-		if (!PortalUtil.isReservedParameter(name) &&
-			!name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) &&
-			!name.startsWith(namespace)) {
+		if (!name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) &&
+			!name.startsWith(namespace) &&
+			!PortalUtil.isReservedParameter(name)) {
 
 			return namespace.concat(name);
 		}
-		else {
-			return name;
-		}
+
+		return name;
 	}
 
 	protected String processValue(Key key, int value) {

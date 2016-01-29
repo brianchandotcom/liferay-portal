@@ -403,29 +403,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public List<Portlet> getEmbeddedPortlets(long groupId) {
-		List<PortletPreferences> portletPreferences =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
-				groupId, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				PortletKeys.PREFS_PLID_SHARED);
-
-		if (isTypePortlet()) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)getLayoutType();
-
-			PortalPreferences portalPreferences =
-				layoutTypePortlet.getPortalPreferences();
-
-			if (layoutTypePortlet.isCustomizable() &&
-				(portalPreferences != null)) {
-
-				portletPreferences = ListUtil.copy(portletPreferences);
-
-				portletPreferences.addAll(
-					PortletPreferencesLocalServiceUtil.getPortletPreferences(
-						portalPreferences.getUserId(),
-						PortletKeys.PREFS_OWNER_TYPE_USER, getPlid()));
-			}
-		}
+		List<PortletPreferences> portletPreferences = _getPortletPreferences(
+			groupId);
 
 		if (portletPreferences.isEmpty()) {
 			return Collections.emptyList();
@@ -1040,6 +1019,34 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return false;
 	}
 
+	public boolean isPortletEmbedded(String portletId) {
+		List<PortletPreferences> portletPreferences = _getPortletPreferences(
+			getGroupId());
+
+		if (portletPreferences.isEmpty()) {
+			return false;
+		}
+
+		for (PortletPreferences portletPreference : portletPreferences) {
+			String currentPortletId = portletPreference.getPortletId();
+
+			if (!portletId.equals(currentPortletId)) {
+				continue;
+			}
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				getCompanyId(), currentPortletId);
+
+			if ((portlet != null) && portlet.isReady() &&
+				!portlet.isUndeployedPortlet() && portlet.isActive()) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the current layout is part of the public
 	 * {@link LayoutSet}.
@@ -1332,6 +1339,34 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return layoutTypePortlet;
+	}
+
+	private List<PortletPreferences> _getPortletPreferences(long groupId) {
+		List<PortletPreferences> portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				groupId, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED);
+
+		if (isTypePortlet()) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)getLayoutType();
+
+			PortalPreferences portalPreferences =
+				layoutTypePortlet.getPortalPreferences();
+
+			if ((portalPreferences != null) &&
+				layoutTypePortlet.isCustomizable()) {
+
+				portletPreferences = ListUtil.copy(portletPreferences);
+
+				portletPreferences.addAll(
+					PortletPreferencesLocalServiceUtil.getPortletPreferences(
+						portalPreferences.getUserId(),
+						PortletKeys.PREFS_OWNER_TYPE_USER, getPlid()));
+			}
+		}
+
+		return portletPreferences;
 	}
 
 	private String _getURL(

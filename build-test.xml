@@ -7424,10 +7424,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<antcall target="clean-up-web-xml" />
 	</target>
 
-	<target name="run-test-smtp-server">
-		<start-test-smtp-server />
-	</target>
-
 	<target name="set-portal-impl-portal-ext-properties">
 		<set-portal-impl-portal-ext-properties />
 	</target>
@@ -7507,6 +7503,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 		>
 			<arg line="-port 14444 -singleWindow" />
 		</java>
+	</target>
+
+	<target name="start-test-smtp-server">
+		<start-test-smtp-server />
 	</target>
 
 	<target name="stop-app-server">

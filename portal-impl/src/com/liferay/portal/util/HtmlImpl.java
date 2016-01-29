@@ -259,9 +259,8 @@ public class HtmlImpl implements Html {
 		if (sb.length() == text.length()) {
 			return text;
 		}
-		else {
-			return sb.toString();
-		}
+
+		return sb.toString();
 	}
 
 	/**

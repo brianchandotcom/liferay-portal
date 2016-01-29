@@ -1319,9 +1319,8 @@ public class PortletURLImpl
 
 			return namespace.concat(name);
 		}
-		else {
-			return name;
-		}
+
+		return name;
 	}
 
 	protected String processValue(Key key, int value) {

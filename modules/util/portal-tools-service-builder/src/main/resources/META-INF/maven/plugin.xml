@@ -36,7 +36,7 @@
 					<type>java.io.File</type>
 					<required>false</required>
 					<editable>false</editable>
-					<description></description>
+					<description/>
 				</parameter>
 				<parameter>
 					<name>autoImportDefaultReferences</name>

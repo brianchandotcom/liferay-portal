@@ -1,17 +1,13 @@
 <?xml version="1.0"?>
 
-<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	<context-param>
-		<description>
-			A comma delimited list of files in the WAR that should be deployed to the deployment-path. The paths must be absolute paths within the WAR.
-		</description>
+		<description>A comma delimited list of files in the WAR that should be deployed to the deployment-path. The paths must be absolute paths within the WAR.</description>
 		<param-name>deployment-files</param-name>
 		<param-value>${deployment.files}</param-value>
 	</context-param>
 	<context-param>
-		<description>
-			The absolute path to the Liferay deploy folder on the target system.
-		</description>
+		<description>The absolute path to the Liferay deploy folder on the target system.</description>
 		<param-name>deployment-path</param-name>
 		<param-value>${deployment.path}</param-value>
 	</context-param>

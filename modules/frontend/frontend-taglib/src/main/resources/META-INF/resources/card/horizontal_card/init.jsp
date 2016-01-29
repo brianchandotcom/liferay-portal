@@ -17,6 +17,6 @@
 <%@ include file="/card/init.jsp" %>
 
 <%
-String iconHTML = (String)request.getAttribute("liferay-frontend:card:iconHTML");
+String colHTML = (String)request.getAttribute("liferay-frontend:card:colHTML");
 String text = (String)request.getAttribute("liferay-frontend:card:text");
 %>

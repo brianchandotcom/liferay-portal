@@ -25,7 +25,7 @@ import javax.servlet.jsp.tagext.BodyTag;
 /**
  * @author Roberto Díaz
  */
-public class HorizontalCardIconTag extends IncludeTag implements BodyTag {
+public class HorizontalCardColTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doEndTag() {
@@ -36,7 +36,7 @@ public class HorizontalCardIconTag extends IncludeTag implements BodyTag {
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
-			horizontalCardTag.setIconHTML(bodyContent.getString());
+			horizontalCardTag.setColHTML(bodyContent.getString());
 		}
 
 		return EVAL_PAGE;
@@ -67,7 +67,7 @@ public class HorizontalCardIconTag extends IncludeTag implements BodyTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:horizontal-card-icon:";
+		"liferay-frontend:horizontal-card-col:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 

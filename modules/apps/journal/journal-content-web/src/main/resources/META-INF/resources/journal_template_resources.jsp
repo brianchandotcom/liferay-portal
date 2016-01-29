@@ -39,7 +39,7 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 	data="<%= data %>"
 	text="<%= ddmTemplate.getName(locale) %>"
 >
-	<liferay-frontend:horizontal-card-icon>
+	<liferay-frontend:horizontal-card-col>
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(ddmTemplateImageURL) %>">
 				<img alt="" class="<%= Validator.isNotNull(ddmTemplateImageURL) ? "icon-monospaced" : StringPool.BLANK %>" src="<%= ddmTemplateImageURL %>" />
@@ -50,5 +50,5 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 				</div>
 			</c:otherwise>
 		</c:choose>
-	</liferay-frontend:horizontal-card-icon>
+	</liferay-frontend:horizontal-card-col>
 </liferay-frontend:horizontal-card>

@@ -296,9 +296,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								text="<%= HtmlUtil.escape(curFolder.getName()) %>"
 								url="<%= rowURL.toString() %>"
 							>
-								<liferay-frontend:horizontal-card-icon>
+								<liferay-frontend:horizontal-card-col>
 									<span class="icon-folder-close-alt icon-monospaced"></span>
-								</liferay-frontend:horizontal-card-icon>
+								</liferay-frontend:horizontal-card-col>
 							</liferay-frontend:horizontal-card>
 						</liferay-ui:search-container-column-text>
 					</c:when>

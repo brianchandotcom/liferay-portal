@@ -14,8 +14,8 @@
 
 package com.liferay.background.task.portlet.web.action;
 
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.exception.NoSuchBackgroundTaskException;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -27,6 +27,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -47,7 +48,7 @@ public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
 		long backgroundTaskId = ParamUtil.getLong(
 			actionRequest, "backgroundTaskId");
 
-		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
+		_backgroundTaskLocalService.deleteBackgroundTask(backgroundTaskId);
 	}
 
 	@Override
@@ -71,5 +72,14 @@ public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskLocalService(
+		BackgroundTaskLocalService backgroundTaskLocalService) {
+
+		_backgroundTaskLocalService = backgroundTaskLocalService;
+	}
+
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 }

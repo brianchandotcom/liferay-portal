@@ -89,10 +89,12 @@ public class CalendarUtil {
 
 			long maxStartTime = Math.max(
 				calendarBooking.getStartTime(), startTime);
-			long minEndTime = Math.min(calendarBooking.getEndTime(), endTime);
 
 			java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
 				maxStartTime, displayTimeZone);
+
+			long minEndTime = Math.min(calendarBooking.getEndTime(), endTime);
+
 			java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(
 				minEndTime, displayTimeZone);
 

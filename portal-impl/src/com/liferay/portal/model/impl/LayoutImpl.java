@@ -415,8 +415,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 			PortalPreferences portalPreferences =
 				layoutTypePortlet.getPortalPreferences();
 
-			if (layoutTypePortlet.isCustomizable() &&
-				(portalPreferences != null)) {
+			if ((portalPreferences != null) &&
+				layoutTypePortlet.isCustomizable()) {
 
 				portletPreferences = ListUtil.copy(portletPreferences);
 

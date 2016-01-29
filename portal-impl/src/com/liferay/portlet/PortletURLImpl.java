@@ -1323,9 +1323,9 @@ public class PortletURLImpl
 	protected String prependNamespace(String name) {
 		String namespace = getNamespace();
 
-		if (!PortalUtil.isReservedParameter(name) &&
-			!name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) &&
-			!name.startsWith(namespace)) {
+		if (!name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) &&
+			!name.startsWith(namespace) &&
+			!PortalUtil.isReservedParameter(name)) {
 
 			return namespace.concat(name);
 		}

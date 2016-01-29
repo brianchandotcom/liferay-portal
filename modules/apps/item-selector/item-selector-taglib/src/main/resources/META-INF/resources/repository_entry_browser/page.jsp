@@ -20,7 +20,6 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_repository_entry_browse_page") + StringPool.UNDERLINE;
 
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:displayStyle"));
-ItemSelectorReturnType draggableFileReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:draggableFileReturnType");
 String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:emptyResultsMessage"));
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:existingFileEntryReturnType");
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectedEventName"));
@@ -169,7 +168,7 @@ if (Validator.isNotNull(keywords)) {
 	}
 	%>
 
-	<c:if test="<%= (draggableFileReturnType != null) && showDragAndDropZone && !showSearchInfo %>">
+	<c:if test="<%= showDragAndDropZone && !showSearchInfo %>">
 		<liferay-util:buffer var="selectFileHTML">
 			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 
@@ -443,7 +442,7 @@ if (Validator.isNotNull(keywords)) {
 			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new RepositoryEntryResultRowSplitter() %>" searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>
 
-		<c:if test="<%= (draggableFileReturnType != null) && !showSearchInfo %>">
+		<c:if test="<%= !showSearchInfo %>">
 			<liferay-ui:drop-here-info message="drop-files-here" />
 		</c:if>
 	</c:if>
@@ -460,8 +459,8 @@ if (Validator.isNotNull(keywords)) {
 			},
 			rootNode: '#<%= randomNamespace %>ItemSelectorContainer'
 
-			<c:if test="<%= draggableFileReturnType != null %>">
-				, uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>',
+			<c:if test="<%= uploadURL != null %>">
+				, uploadItemReturnType: '<%= ClassUtil.getClassName(existingFileEntryReturnType) %>',
 				uploadItemUrl: '<%= uploadURL.toString() %>'
 			</c:if>
 		}

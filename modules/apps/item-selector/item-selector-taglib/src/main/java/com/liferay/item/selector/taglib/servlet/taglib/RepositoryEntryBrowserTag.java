@@ -15,14 +15,12 @@
 package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortalPreferences;
@@ -140,23 +138,6 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 			DISPLAY_STYLES[0]);
 	}
 
-	protected ItemSelectorReturnType getDraggableFileReturnType() {
-		ItemSelectorReturnType firstDraggableFileReturnType =
-			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
-				getFirstAvailableDraggableFileReturnType(
-					_desiredItemSelectorReturnTypes);
-
-		if (Validator.equals(
-				ClassUtil.getClassName(firstDraggableFileReturnType),
-				UploadableFileReturnType.class.getName()) &&
-			(_uploadURL == null)) {
-
-			return null;
-		}
-
-		return firstDraggableFileReturnType;
-	}
-
 	@Override
 	protected String getPage() {
 		return "/repository_entry_browser/page.jsp";
@@ -175,10 +156,6 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:displayStyle",
 			getDisplayStyle());
-		request.setAttribute(
-			"liferay-item-selector:repository-entry-browser:" +
-				"draggableFileReturnType",
-			getDraggableFileReturnType());
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"emptyResultsMessage",

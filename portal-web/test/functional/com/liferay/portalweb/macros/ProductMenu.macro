@@ -76,6 +76,19 @@
 		</execute>
 	</command>
 
+	<command name="gotoLocalizedEditPage" summary="Navigate to Navigate to Product Menu > Sites > ${category} > ${page}">
+
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="${category}" />
+		</execute>
+
+		<var name="key_page" value="${page}" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+	</command>
+
 	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 

@@ -81,6 +81,10 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Welcome" />
+		</execute>
+
 		<execute macro="Page#editPageLayoutColumn">
 			<var name="columnName" value="2_columns_i" />
 		</execute>

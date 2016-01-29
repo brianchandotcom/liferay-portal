@@ -30,14 +30,6 @@
 			<var name="pageName" value="Language Test Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#configureCurrentLanguagesCP">
-			<var name="currentPortalLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
-		</execute>
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -58,13 +50,7 @@
 			<var name="currentPortalLanguages" value="Arabic (Saudi Arabia),Czech (Czech Republic),French (France)" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Language Test Page" />
-		</execute>
-
-		<execute macro="Page#viewPageLocalization">
-			<var name="defaultSiteLanguageKey" value="es_ES" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -77,6 +63,11 @@
 			<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
 			<var name="defaultSiteLanguage" value="English (United States)" />
 			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="Page#viewPageLocalization">
+			<var name="defaultSiteLanguageKey" value="es_ES" />
+			<var name="page" value="Language Test Page" />
 		</execute>
 	</command>
 
@@ -700,6 +691,11 @@
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLocalizedEditPage">
+			<var name="category" value="Páginas" />
+			<var name="page" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Page#viewFriendlyURLLanguageOptionsPG">

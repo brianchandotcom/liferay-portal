@@ -36,6 +36,10 @@
 			<var name="pageName" value="Company Picnic" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Company Picnic" />
+		</execute>
+
 		<execute macro="Page#editPageLayoutColumn">
 			<var name="columnName" value="1_column" />
 		</execute>

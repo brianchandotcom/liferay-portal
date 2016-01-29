@@ -1144,6 +1144,10 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Knowledge Base Display Page" />
+		</execute>
+
 		<execute macro="Page#editPageLayoutColumn">
 			<var name="columnName" value="1_column" />
 		</execute>

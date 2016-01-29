@@ -235,25 +235,22 @@
 	</command>
 
 	<command name="deleteLivePG">
-		<execute function="Click" locator1="ControlMenu#EDIT" />
 		<execute function="ClickNoError" locator1="ControlMenu#EDIT_LIVE_DELETE" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 	</command>
 
 	<command name="deletePG">
-		<var name="key_pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${pageName}" />
+		</execute>
 
-		<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE" />
-		<execute function="ClickNoError" locator1="ControlMenu#EDIT" />
 		<execute function="ClickNoError" locator1="Home#PAGE_DELETE" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this page?" />
 		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
 	</command>
 
 	<command name="editPageLayoutColumn">
-		<execute function="Click" locator1="ControlMenu#EDIT" />
-
 		<var name="key_columnName" value="${columnName}" />
 
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
@@ -280,10 +277,6 @@
 		<var name="key_childPageName" value="${childPageName}" />
 
 		<execute function="AssertClick" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
-	</command>
-
-	<command name="gotoEdit">
-		<execute function="Click" locator1="ControlMenu#EDIT" />
 	</command>
 
 	<command name="gotoMyAccount">
@@ -529,8 +522,6 @@
 	</command>
 
 	<command name="viewFriendlyURLLanguageOptionsPG">
-		<execute function="Click" locator1="ControlMenu#EDIT" />
-
 		<for list="${currentLanguageList}" param="languageKey">
 			<execute function="AssertElementPresent" locator1="DockbarEditpanel#${languageKey}" />
 		</for>
@@ -552,8 +543,6 @@
 	</command>
 
 	<command name="viewPageFriendURLPG">
-		<execute function="Click" locator1="ControlMenu#EDIT" />
-
 		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${pageName}" />
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/2" />
 	</command>
@@ -570,7 +559,9 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="ControlMenu#EDIT" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
 
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 

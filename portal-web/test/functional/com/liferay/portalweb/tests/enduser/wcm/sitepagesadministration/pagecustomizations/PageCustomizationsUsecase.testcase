@@ -56,6 +56,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
 		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />
 
 		<execute macro="PageCustomizations#enableSectionCustomizablePG">
@@ -164,6 +168,10 @@
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Site Page Name" />
 		</execute>
 
 		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />
@@ -285,6 +293,10 @@
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Site Page Name" />
 		</execute>
 
 		<execute macro="PageCustomizations#gotoCustomizationSettingsPG" />

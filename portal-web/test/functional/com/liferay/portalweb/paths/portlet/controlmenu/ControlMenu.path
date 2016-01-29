@@ -29,11 +29,6 @@
 	<td>Admin Drop Down Button</td>
 </tr>
 <tr>
-	<td>EDIT</td>
-	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='edit']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO</td>
 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='info']</td>
 	<td></td>

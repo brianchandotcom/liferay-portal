@@ -37,6 +37,10 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		return _availableLocales;
 	}
 
+	public boolean getChangeableDefaultLanguage() {
+		return _changeableDefaultLanguage;
+	}
+
 	public java.lang.String getDefaultLanguageId() {
 		return _defaultLanguageId;
 	}
@@ -61,6 +65,12 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		_availableLocales = availableLocales;
 
 		setScopedAttribute("availableLocales", availableLocales);
+	}
+
+	public void setChangeableDefaultLanguage(boolean changeableDefaultLanguage) {
+		_changeableDefaultLanguage = changeableDefaultLanguage;
+
+		setScopedAttribute("changeableDefaultLanguage", changeableDefaultLanguage);
 	}
 
 	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
@@ -98,6 +108,7 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		super.cleanUp();
 
 		_availableLocales = null;
+		_changeableDefaultLanguage = true;
 		_defaultLanguageId = null;
 		_editingLanguageId = null;
 		_id = null;
@@ -113,6 +124,7 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "availableLocales", _availableLocales);
+		setNamespacedAttribute(request, "changeableDefaultLanguage", _changeableDefaultLanguage);
 		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
 		setNamespacedAttribute(request, "editingLanguageId", _editingLanguageId);
 		setNamespacedAttribute(request, "id", _id);
@@ -126,6 +138,7 @@ public abstract class BaseTranslationManagerTag extends com.liferay.taglib.util.
 		"/html/taglib/aui/translation_manager/page.jsp";
 
 	private java.util.Locale[] _availableLocales = null;
+	private boolean _changeableDefaultLanguage = true;
 	private java.lang.String _defaultLanguageId = null;
 	private java.lang.String _editingLanguageId = null;
 	private java.lang.String _id = null;

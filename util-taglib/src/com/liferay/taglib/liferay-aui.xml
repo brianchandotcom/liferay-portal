@@ -1600,6 +1600,13 @@
 				<outputType>java.util.Locale[]</outputType>
 			</attribute>
 			<attribute>
+				<description>Whether to make the translation manager default language changeable. The default value is <![CDATA[<code>true</code>]]>. If this is set to <![CDATA[<code>false</code>]]>, the translation manager default language will not be changeable.</description>
+				<name>changeableDefaultLanguage</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<description>The language ID to which the translation manager defaults when no other translations are available in the user's language</description>
 				<name>defaultLanguageId</name>
 				<inputType>java.lang.String</inputType>

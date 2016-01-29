@@ -20,6 +20,7 @@
 
 <%
 java.util.Locale[] availableLocales = (java.util.Locale[])request.getAttribute("aui:translation-manager:availableLocales");
+boolean changeableDefaultLanguage = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:translation-manager:changeableDefaultLanguage")), true);
 java.lang.String defaultLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:defaultLanguageId"));
 java.lang.String editingLanguageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:editingLanguageId"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:translation-manager:id"));

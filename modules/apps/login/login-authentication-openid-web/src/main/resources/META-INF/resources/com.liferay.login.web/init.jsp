@@ -29,7 +29,7 @@ page import="com.liferay.portal.security.sso.openid.OpenIdServiceException" %>
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.WindowState" %>
 
-<liferay-theme:defineObjects />
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 

@@ -24,16 +24,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Juergen Kappler
  */
-@Component(
-	immediate = true,
-	service = {
-		PortletConfigurationWebUpgrade.class, UpgradeStepRegistrator.class
-	}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class PortletConfigurationWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public void register(UpgradeStepRegistrator.Registry registry) {
+	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.portlet.configuration.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());

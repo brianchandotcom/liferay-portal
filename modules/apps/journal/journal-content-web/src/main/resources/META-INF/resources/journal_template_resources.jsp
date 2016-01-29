@@ -45,9 +45,9 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 				<img alt="" class="<%= Validator.isNotNull(ddmTemplateImageURL) ? "icon-monospaced" : StringPool.BLANK %>" src="<%= ddmTemplateImageURL %>" />
 			</c:when>
 			<c:otherwise>
-				<div class="icon-monospaced sticker-default sticker-lg">
-					<aui:icon cssClass="text-default" image="edit-layout" markupView="lexicon" />
-				</div>
+				<liferay-frontend:horizontal-card-icon
+					icon="edit-layout"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</liferay-frontend:horizontal-card-col>

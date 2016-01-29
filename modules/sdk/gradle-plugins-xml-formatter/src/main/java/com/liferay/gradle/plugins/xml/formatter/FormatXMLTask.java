@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.xml.formatter;
 
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
 
@@ -52,12 +53,21 @@ public class FormatXMLTask extends SourceTask {
 	}
 
 	@Input
+	public String getMainClassName() {
+		return GradleUtil.toString(_mainClassName);
+	}
+
+	@Input
 	public boolean isStripComments() {
 		return _stripComments;
 	}
 
 	public void setClasspath(FileCollection classpath) {
 		_classpath = classpath;
+	}
+
+	public void setMainClassName(Object mainClassName) {
+		_mainClassName = mainClassName;
 	}
 
 	public void setStripComments(boolean stripComments) {
@@ -73,8 +83,7 @@ public class FormatXMLTask extends SourceTask {
 				@SuppressWarnings("unused")
 				public void doCall(JavaExecSpec javaExecSpec) {
 					javaExecSpec.setClasspath(getClasspath());
-					javaExecSpec.setMain(
-						"com.liferay.xml.formatter.XMLFormatter");
+					javaExecSpec.setMain(getMainClassName());
 					javaExecSpec.setSystemProperties(getSystemProperties(file));
 					javaExecSpec.setWorkingDir(project.getProjectDir());
 				}
@@ -93,6 +102,7 @@ public class FormatXMLTask extends SourceTask {
 	}
 
 	private FileCollection _classpath;
+	private Object _mainClassName = "com.liferay.xml.formatter.XMLFormatter";
 	private boolean _stripComments;
 
 }

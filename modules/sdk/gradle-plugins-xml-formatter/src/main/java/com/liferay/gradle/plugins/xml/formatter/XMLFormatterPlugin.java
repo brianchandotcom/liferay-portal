@@ -20,6 +20,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -32,9 +34,12 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addConfigurationXMLFormatter(project);
+		Configuration xmlFormatterConfiguration = addConfigurationXMLFormatter(
+			project);
 
 		addTaskFormatXML(project);
+
+		configureTasksFormatXML(project, xmlFormatterConfiguration);
 	}
 
 	protected Configuration addConfigurationXMLFormatter(
@@ -75,6 +80,30 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 			"Runs Liferay XML Formatter to format files.");
 
 		return formatXMLTask;
+	}
+
+	protected void configureTaskFormatXMLClasspath(
+		FormatXMLTask formatXMLTask, FileCollection fileCollection) {
+
+		formatXMLTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTasksFormatXML(
+		Project project, final Configuration xmlFormatterConfiguration) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			FormatXMLTask.class,
+			new Action<FormatXMLTask>() {
+
+				@Override
+				public void execute(FormatXMLTask formatXMLTask) {
+					configureTaskFormatXMLClasspath(
+						formatXMLTask, xmlFormatterConfiguration);
+				}
+
+			});
 	}
 
 }

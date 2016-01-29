@@ -24,10 +24,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.JavaExecSpec;
@@ -46,9 +46,18 @@ public class FormatXMLTask extends SourceTask {
 		}
 	}
 
+	@InputFiles
+	public FileCollection getClasspath() {
+		return _classpath;
+	}
+
 	@Input
 	public boolean isStripComments() {
 		return _stripComments;
+	}
+
+	public void setClasspath(FileCollection classpath) {
+		_classpath = classpath;
 	}
 
 	public void setStripComments(boolean stripComments) {
@@ -73,16 +82,6 @@ public class FormatXMLTask extends SourceTask {
 			});
 	}
 
-	protected FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			XMLFormatterPlugin.CONFIGURATION_NAME);
-	}
-
 	protected Map<String, Object> getSystemProperties(File file) {
 		Map<String, Object> systemProperties = new HashMap<>();
 
@@ -93,6 +92,7 @@ public class FormatXMLTask extends SourceTask {
 		return systemProperties;
 	}
 
+	private FileCollection _classpath;
 	private boolean _stripComments;
 
 }

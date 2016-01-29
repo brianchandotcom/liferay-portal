@@ -59,8 +59,6 @@ import com.thoughtworks.qdox.model.Type;
 
 import freemarker.ext.beans.BeansWrapper;
 
-import freemarker.log.Logger;
-
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModelException;
 
@@ -2636,11 +2634,7 @@ public class ServiceBuilder {
 
 		// Content
 
-		Logger.selectLoggerLibrary(Logger.LIBRARY_NONE);
-
 		String content = _processTemplate(_tplPersistenceImpl, context);
-
-		Logger.selectLoggerLibrary(Logger.LIBRARY_AUTO);
 
 		// Write file
 

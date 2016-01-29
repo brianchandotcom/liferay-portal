@@ -24,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>UNCATEGORIZED_LINK</td>
-	<td>//ul[@class='tabular-list-group']/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'Uncategorized')]</td>
+	<td>INDEPENDENT_MODULES_LINK</td>
+	<td>//ul[@class='tabular-list-group']/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'Independent Modules')]</td>
 	<td></td>
 </tr>
 </tbody>

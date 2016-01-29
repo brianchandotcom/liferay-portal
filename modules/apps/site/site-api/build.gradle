@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

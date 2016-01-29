@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Site API
+Bundle-SymbolicName: com.liferay.site.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.site.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+-dsannotations-options: inherit
+-include: ../../../../marketplace/web-content-management/bnd.bnd

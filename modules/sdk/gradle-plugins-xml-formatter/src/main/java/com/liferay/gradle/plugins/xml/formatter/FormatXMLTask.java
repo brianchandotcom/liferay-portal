@@ -17,13 +17,12 @@ package com.liferay.gradle.plugins.xml.formatter;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
@@ -78,10 +77,10 @@ public class FormatXMLTask extends SourceTask {
 		final Project project = getProject();
 
 		project.javaexec(
-			new Closure<Void>(null) {
+			new Action<JavaExecSpec>() {
 
-				@SuppressWarnings("unused")
-				public void doCall(JavaExecSpec javaExecSpec) {
+				@Override
+				public void execute(JavaExecSpec javaExecSpec) {
 					javaExecSpec.setClasspath(getClasspath());
 					javaExecSpec.setMain(getMainClassName());
 					javaExecSpec.setSystemProperties(getSystemProperties(file));

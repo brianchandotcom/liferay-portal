@@ -25,6 +25,11 @@
 </tr>
 <!--PROCESSES-->
 <tr>
+	<td>INITIAL_PROCESS_SUCCESSFUL</td>
+	<td>//tr[contains(.,'Initial Publication')]//strong[contains(@class,'background-task-status-successful')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULED</td>
 	<td>//ul[contains(@id,'StagingProcessesPortlet')]/li/a[contains(@title,'Scheduled')]</td>
 	<td></td>

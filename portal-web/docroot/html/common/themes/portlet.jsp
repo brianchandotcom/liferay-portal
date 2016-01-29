@@ -41,7 +41,7 @@ if (portletDisplay.isAccess() && portletDisplay.isActive() && (portletTitle == n
 	portletTitle = renderResponseImpl.getTitle();
 }
 
-if (portletTitle == null) {
+if (Validator.isNull(portletTitle)) {
 	portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 }
 

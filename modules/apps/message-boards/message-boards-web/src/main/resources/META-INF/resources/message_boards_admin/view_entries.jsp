@@ -31,13 +31,13 @@ int offset = GetterUtil.getInteger(recentPostsDateOffset);
 
 calendar.add(Calendar.DATE, -offset);
 
+boolean showBreadcrumb = ParamUtil.getBoolean(request, "showBreadcrumb", true);
+
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 if (groupThreadsUserId > 0) {
 	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
 }
-
-boolean showBreadcrumb = ParamUtil.getBoolean(request, "showBreadcrumb", true);
 %>
 
 <div class="container-fluid-1280 view-entries-container">

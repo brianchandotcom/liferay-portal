@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -703,7 +704,14 @@ public class ServletResponseUtil {
 		// LEP-2201
 
 		if (Validator.isNotNull(contentType)) {
-			response.setContentType(contentType);
+			if (BrowserSnifferUtil.isIe(request) &&
+				contentType.equals("image/x-ms-bmp")) {
+
+				response.setContentType(ContentTypes.IMAGE_BMP);
+			}
+			else {
+				response.setContentType(contentType);
+			}
 		}
 
 		if (!response.containsHeader(HttpHeaders.CACHE_CONTROL)) {

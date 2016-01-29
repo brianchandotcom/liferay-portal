@@ -25,14 +25,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true,
-	service = {UnitConverterWebUpgrade.class, UpgradeStepRegistrator.class}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class UnitConverterWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public void register(UpgradeStepRegistrator.Registry registry) {
+	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.unit.converter.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());

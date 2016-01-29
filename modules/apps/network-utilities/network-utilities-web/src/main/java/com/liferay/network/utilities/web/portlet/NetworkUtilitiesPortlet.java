@@ -14,8 +14,8 @@
 
 package com.liferay.network.utilities.web.portlet;
 
-import com.liferay.network.utilities.web.upgrade.NetworkUtilitiesWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -47,9 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class NetworkUtilitiesPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setNetworkUtilitiesWebUpgrade(
-		NetworkUtilitiesWebUpgrade networkUtilitiesWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.network.utilities.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

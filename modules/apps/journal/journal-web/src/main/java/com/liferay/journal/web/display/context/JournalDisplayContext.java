@@ -128,11 +128,11 @@ public class JournalDisplayContext {
 
 		searchContext.setAttribute("discussion", true);
 
+		List<MBMessage> mbMessages = new ArrayList<>();
+
 		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
 
 		Hits hits = indexer.search(searchContext);
-
-		List<MBMessage> mbMessages = new ArrayList<>();
 
 		for (Document document : hits.getDocs()) {
 			long entryClassPK = GetterUtil.getLong(
@@ -144,8 +144,9 @@ public class JournalDisplayContext {
 			mbMessages.add(mbMessage);
 		}
 
-		searchContainer.setTotal(hits.getLength());
 		searchContainer.setResults(mbMessages);
+
+		searchContainer.setTotal(hits.getLength());
 
 		return searchContainer;
 	}
@@ -564,16 +565,16 @@ public class JournalDisplayContext {
 			if (journalWebConfiguration.journalArticlesSearchWithIndex()) {
 				boolean orderByAsc = false;
 
-				if (getOrderByType().equals("asc")) {
+				if (Validator.equals(getOrderByType(), "asc")) {
 					orderByAsc = true;
 				}
 
 				Sort sort = null;
 
-				if (getOrderByCol().equals("display-date")) {
+				if (Validator.equals(getOrderByCol(), "display-date")) {
 					sort = new Sort("displayDate", Sort.LONG_TYPE, orderByAsc);
 				}
-				else if (getOrderByCol().equals("modified-date")) {
+				else if (Validator.equals(getOrderByCol(), "modified-date")) {
 					sort = new Sort(
 						Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 				}

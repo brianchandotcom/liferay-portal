@@ -23,14 +23,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mate Thurzo
  */
-@Component(
-	immediate = true,
-	service = {MDRWebUpgrade.class, UpgradeStepRegistrator.class}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class MDRWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public void register(UpgradeStepRegistrator.Registry registry) {
+	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.mobile.device.rules.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());

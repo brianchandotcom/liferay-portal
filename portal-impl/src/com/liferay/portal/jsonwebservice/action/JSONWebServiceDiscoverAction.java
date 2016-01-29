@@ -167,14 +167,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			for (int i = 0; i < methodParameters.length; i++) {
 				MethodParameter methodParameter = methodParameters[i];
 
-				Class<?>[] genericTypes = null;
-
-				try {
-					genericTypes = methodParameter.getGenericTypes();
-				}
-				catch (ClassNotFoundException cnfe) {
-					throw new PortalException(cnfe);
-				}
+				Class<?>[] genericTypes = methodParameter.getGenericTypes();
 
 				Map<String, String> parameterMap = new HashMap<>();
 

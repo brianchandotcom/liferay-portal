@@ -22,41 +22,29 @@ import java.util.List;
  */
 public class MethodParameter {
 
-	public MethodParameter(
-		String name, String signatures, Class<?> type, boolean initialize) {
-
+	public MethodParameter(String name, String signatures, Class<?> type) {
 		_name = name;
-		_signatures = signatures;
 		_type = type;
 
-		if (initialize) {
-			try {
-				getGenericTypes();
-			}
-			catch (ClassNotFoundException cnfe) {
-				throw new IllegalArgumentException(cnfe);
-			}
+		try {
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader contextClassLoader =
+				currentThread.getContextClassLoader();
+
+			_genericTypes = _getGenericTypes(contextClassLoader, signatures);
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new IllegalArgumentException(cnfe);
 		}
 	}
 
-	public Class<?>[] getGenericTypes() throws ClassNotFoundException {
-		if (_initialized) {
-			return _genericTypes;
-		}
-
-		_genericTypes = _getGenericTypes(_signatures);
-
-		_initialized = true;
-
+	public Class<?>[] getGenericTypes() {
 		return _genericTypes;
 	}
 
 	public String getName() {
 		return _name;
-	}
-
-	public String getSignature() {
-		return _signatures;
 	}
 
 	public Class<?> getType() {
@@ -89,18 +77,6 @@ public class MethodParameter {
 		return className;
 	}
 
-	private ClassLoader _getContextClassLoader() {
-		if (_contextClassLoader != null) {
-			return _contextClassLoader;
-		}
-
-		Thread currentThread = Thread.currentThread();
-
-		_contextClassLoader = currentThread.getContextClassLoader();
-
-		return _contextClassLoader;
-	}
-
 	private String _getGenericName(String typeName) {
 		if (typeName.equals(StringPool.STAR)) {
 			return null;
@@ -115,10 +91,9 @@ public class MethodParameter {
 		return typeName;
 	}
 
-	private Class<?> _getGenericType(String signature)
+	private Class<?> _getGenericType(
+			ClassLoader contextClassLoader, String signature)
 		throws ClassNotFoundException {
-
-		ClassLoader contextClassLoader = _getContextClassLoader();
 
 		String className = _getClassName(signature);
 
@@ -133,7 +108,8 @@ public class MethodParameter {
 		return contextClassLoader.loadClass(className);
 	}
 
-	private Class<?>[] _getGenericTypes(String signatures)
+	private Class<?>[] _getGenericTypes(
+			ClassLoader contextClassLoader, String signatures)
 		throws ClassNotFoundException {
 
 		if (signatures == null) {
@@ -218,7 +194,8 @@ public class MethodParameter {
 
 				if (Validator.isNotNull(extractedTopLevelGenericName)) {
 					genericTypeslist.add(
-						_getGenericType(extractedTopLevelGenericName));
+						_getGenericType(
+							contextClassLoader, extractedTopLevelGenericName));
 				}
 			}
 		}
@@ -242,11 +219,8 @@ public class MethodParameter {
 		}
 	}
 
-	private ClassLoader _contextClassLoader;
-	private Class<?>[] _genericTypes;
-	private boolean _initialized;
+	private final Class<?>[] _genericTypes;
 	private final String _name;
-	private final String _signatures;
 	private final Class<?> _type;
 
 }

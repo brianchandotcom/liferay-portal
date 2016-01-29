@@ -100,6 +100,20 @@ public class JSONWebServiceNaming {
 			return true;
 		}
 
+		Class<?> returnType = method.getReturnType();
+
+		if (returnType.isArray()) {
+			returnType = returnType.getComponentType();
+		}
+
+		String returnTypeName = returnType.getName();
+
+		for (String excludedTypesName : excludedTypesNames) {
+			if (excludedTypesName.startsWith(returnTypeName)) {
+				return false;
+			}
+		}
+
 		MethodParameter[] methodParameters =
 			MethodParametersResolverUtil.resolveMethodParameters(method);
 
@@ -117,40 +131,21 @@ public class JSONWebServiceNaming {
 			String parameterTypeName = parameterType.getName();
 
 			for (String excludedTypesName : excludedTypesNames) {
-				String signature = methodParameter.getSignature();
-
-				if (signature.contains(StringPool.LESS_THAN)) {
-					String excludedName = 'L' + excludedTypesName;
-
-					if (!excludedName.endsWith(StringPool.PERIOD)) {
-						excludedName = excludedName.concat(
-							StringPool.SEMICOLON);
-					}
-
-					excludedName = StringUtil.replace(excludedName, '.', '/');
-
-					if (signature.contains(excludedName)) {
-						return false;
-					}
-				}
-
 				if (parameterTypeName.startsWith(excludedTypesName)) {
 					return false;
 				}
-			}
-		}
 
-		Class<?> returnType = method.getReturnType();
+				Class<?>[] genericTypes = methodParameter.getGenericTypes();
 
-		if (returnType.isArray()) {
-			returnType = returnType.getComponentType();
-		}
+				if (genericTypes != null) {
+					for (Class<?> genericType : genericTypes) {
+						String genericName = genericType.getName();
 
-		String returnTypeName = returnType.getName();
-
-		for (String excludedTypesName : excludedTypesNames) {
-			if (excludedTypesName.startsWith(returnTypeName)) {
-				return false;
+						if (genericName.startsWith(excludedTypesName)) {
+							return false;
+						}
+					}
+				}
 			}
 		}
 

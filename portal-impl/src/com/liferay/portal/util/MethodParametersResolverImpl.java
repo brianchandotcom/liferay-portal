@@ -49,8 +49,8 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 		for (int i = 0; i < joddMethodParameters.length; i++) {
 			methodParameters[i] = new MethodParameter(
 				joddMethodParameters[i].getName(),
-				joddMethodParameters[i].getSignature(), methodParameterTypes[i],
-				true);
+				joddMethodParameters[i].getSignature(),
+				methodParameterTypes[i]);
 		}
 
 		_methodParameters.put(method, methodParameters);

@@ -153,6 +153,8 @@ public class AuthenticatedSessionManagerImpl
 			String login, String password, boolean rememberMe, String authType)
 		throws Exception {
 
+		request = PortalUtil.getOriginalServletRequest(request);
+
 		CookieKeys.validateSupportCookie(request);
 
 		HttpSession session = request.getSession();

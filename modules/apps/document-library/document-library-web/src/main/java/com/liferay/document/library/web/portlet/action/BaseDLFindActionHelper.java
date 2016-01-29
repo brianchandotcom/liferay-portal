@@ -12,31 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.struts;
+package com.liferay.document.library.web.portlet.action;
+
+import com.liferay.portal.struts.BaseFindActionHelper;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
  */
-public interface FindActionHelper {
+public abstract class BaseDLFindActionHelper extends BaseFindActionHelper {
 
-	public void execute(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception;
-
-	public long getGroupId(long primaryKey) throws Exception;
-
-	public String getPrimaryKeyParameterName();
-
+	@Override
 	public PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
-		throws Exception;
+		throws Exception {
 
-	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
-		throws Exception;
+		return portletURL;
+	}
 
 }

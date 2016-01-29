@@ -75,22 +75,30 @@ public class FindActionTest {
 			PortletProviderUtil.getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW)
 		};
+
+		_portletPageFinder = new BasePortletPageFinder() {
+
+			@Override
+			protected String[] getPortletIds() {
+				return _portletIds;
+			}
+
+		};
 	}
 
 	@Test
 	public void testGetPlidAndPortletIdViewInContext() throws Exception {
 		addLayouts(true, false);
 
-		Object[] plidAndPorltetId = BaseFindActionHelper.getPlidAndPortletId(
-			getThemeDisplay(), _blogsEntry.getGroupId(), _assetLayout.getPlid(),
-			_portletIds);
+		PortletPageFinder.Result result = _portletPageFinder.find(
+			getThemeDisplay(), _blogsEntry.getGroupId());
 
-		Assert.assertEquals(_blogLayout.getPlid(), plidAndPorltetId[0]);
+		Assert.assertEquals(_blogLayout.getPlid(), result.getPlid());
 
 		String portletId = PortletProviderUtil.getPortletId(
 			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-		Assert.assertEquals(portletId, plidAndPorltetId[1]);
+		Assert.assertEquals(portletId, result.getPortletId());
 	}
 
 	@Test
@@ -100,9 +108,8 @@ public class FindActionTest {
 		addLayouts(false, false);
 
 		try {
-			BaseFindActionHelper.getPlidAndPortletId(
-				getThemeDisplay(), _blogsEntry.getGroupId(),
-				_assetLayout.getPlid(), _portletIds);
+			_portletPageFinder.find(
+				getThemeDisplay(), _blogsEntry.getGroupId());
 
 			Assert.fail();
 		}
@@ -203,6 +210,8 @@ public class FindActionTest {
 
 		themeDisplay.setPermissionChecker(permissionChecker);
 
+		themeDisplay.setPlid(_assetLayout.getPlid());
+
 		return themeDisplay;
 	}
 
@@ -215,6 +224,7 @@ public class FindActionTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private PortletPageFinder _portletPageFinder;
 	private String _testPortletId;
 
 }

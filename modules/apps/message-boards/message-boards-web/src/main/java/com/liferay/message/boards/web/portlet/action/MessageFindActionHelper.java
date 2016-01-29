@@ -14,23 +14,32 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
+	service = FindActionHelper.class
+)
 public class MessageFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(primaryKey);
+		MBMessage message = _mbMessageLocalService.getMessage(primaryKey);
 
 		return message.getGroupId();
 	}
@@ -38,16 +47,6 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 	@Override
 	public String getPrimaryKeyParameterName() {
 		return "messageId";
-	}
-
-	@Override
-	public String[] initPortletIds() {
-
-		// Order is important. See LPS-23770.
-
-		return new String[] {
-			MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS
-		};
 	}
 
 	@Override
@@ -73,5 +72,28 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_message");
 	}
+
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBMessage)",
+		unbind = "-"
+	)
+	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+		_portletPageFinder = portletPageFinder;
+	}
+
+	private MBMessageLocalService _mbMessageLocalService;
+	private PortletPageFinder _portletPageFinder;
 
 }

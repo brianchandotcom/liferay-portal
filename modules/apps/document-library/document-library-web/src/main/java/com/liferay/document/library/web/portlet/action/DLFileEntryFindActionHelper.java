@@ -15,20 +15,30 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.PortletPageFinder;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Sergio González
  */
-public class DLFileEntryFindActionHelper extends DLFolderFindActionHelper {
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
+	service = FindActionHelper.class
+)
+public class DLFileEntryFindActionHelper extends BaseDLFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(primaryKey);
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(primaryKey);
 
 		return fileEntry.getRepositoryId();
 	}
@@ -53,5 +63,26 @@ public class DLFileEntryFindActionHelper extends DLFolderFindActionHelper {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry");
 	}
+
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)",
+		unbind = "-"
+	)
+	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+		_portletPageFinder = portletPageFinder;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
+	private PortletPageFinder _portletPageFinder;
 
 }

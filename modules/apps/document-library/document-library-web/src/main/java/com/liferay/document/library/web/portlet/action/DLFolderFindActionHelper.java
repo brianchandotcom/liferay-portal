@@ -17,21 +17,30 @@ package com.liferay.document.library.web.portlet.action;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.struts.BaseFindActionHelper;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.PortletPageFinder;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Iván Zaera
  */
-public class DLFolderFindActionHelper extends BaseFindActionHelper {
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder",
+	service = FindActionHelper.class
+)
+public class DLFolderFindActionHelper extends BaseDLFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		Folder folder = DLAppLocalServiceUtil.getFolder(primaryKey);
+		Folder folder = _dlAppLocalService.getFolder(primaryKey);
 
 		return folder.getRepositoryId();
 	}
@@ -42,25 +51,10 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 	}
 
 	@Override
-	public String[] initPortletIds() {
-		return new String[] {
-			DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
-		};
-	}
-
-	@Override
-	public PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
-		throws Exception {
-
-		return portletURL;
-	}
-
-	@Override
 	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
-		Folder folder = DLAppLocalServiceUtil.getFolder(primaryKey);
+		Folder folder = _dlAppLocalService.getFolder(primaryKey);
 
 		portletURL.setParameter(
 			"folderId", String.valueOf(folder.getFolderId()));
@@ -81,5 +75,26 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 				"mvcRenderCommandName", "/document_library/view");
 		}
 	}
+
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)",
+		unbind = "-"
+	)
+	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+		_portletPageFinder = portletPageFinder;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
+	private PortletPageFinder _portletPageFinder;
 
 }

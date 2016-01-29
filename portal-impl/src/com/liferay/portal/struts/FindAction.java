@@ -50,11 +50,6 @@ public abstract class FindAction extends Action {
 			}
 
 			@Override
-			public String[] initPortletIds() {
-				return FindAction.this.initPortletIds();
-			}
-
-			@Override
 			public PortletURL processPortletURL(
 					HttpServletRequest request, PortletURL portletURL)
 				throws Exception {
@@ -68,6 +63,11 @@ public abstract class FindAction extends Action {
 				throws Exception {
 
 				FindAction.this.setPrimaryKeyParameter(portletURL, primaryKey);
+			}
+
+			@Override
+			protected PortletPageFinder getPortletPageFinder() {
+				return FindAction.this._portletPageFinder;
 			}
 
 		};
@@ -109,5 +109,15 @@ public abstract class FindAction extends Action {
 	}
 
 	private final FindActionHelper _findActionHelper;
+
+	private final PortletPageFinder _portletPageFinder =
+		new BasePortletPageFinder() {
+
+			@Override
+			protected String[] getPortletIds() {
+				return FindAction.this.initPortletIds();
+			}
+
+		};
 
 }

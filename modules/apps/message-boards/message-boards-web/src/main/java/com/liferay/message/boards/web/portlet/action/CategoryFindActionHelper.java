@@ -14,24 +14,32 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.PortletPageFinder;
 import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
+	service = FindActionHelper.class
+)
 public class CategoryFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			primaryKey);
+		MBCategory category = _mbCategoryLocalService.getCategory(primaryKey);
 
 		return category.getGroupId();
 	}
@@ -39,16 +47,6 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 	@Override
 	public String getPrimaryKeyParameterName() {
 		return "mbCategoryId";
-	}
-
-	@Override
-	public String[] initPortletIds() {
-
-		// Order is important. See LPS-23770.
-
-		return new String[] {
-			MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS
-		};
 	}
 
 	@Override
@@ -74,5 +72,28 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_category");
 	}
+
+	@Override
+	protected PortletPageFinder getPortletPageFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBCategory)",
+		unbind = "-"
+	)
+	protected void setPortletPageFinder(PortletPageFinder portletPageFinder) {
+		_portletPageFinder = portletPageFinder;
+	}
+
+	private MBCategoryLocalService _mbCategoryLocalService;
+	private PortletPageFinder _portletPageFinder;
 
 }

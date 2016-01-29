@@ -14,29 +14,23 @@
 
 package com.liferay.portal.struts;
 
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author Adolfo Pérez
  */
-public interface FindActionHelper {
+public interface PortletPageFinder {
 
-	public void execute(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception;
+	public Result find(ThemeDisplay themeDisplay, long groupId)
+		throws PortalException;
 
-	public long getGroupId(long primaryKey) throws Exception;
+	public interface Result {
 
-	public String getPrimaryKeyParameterName();
+		public long getPlid();
 
-	public PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
-		throws Exception;
+		public String getPortletId();
 
-	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
-		throws Exception;
+	}
 
 }

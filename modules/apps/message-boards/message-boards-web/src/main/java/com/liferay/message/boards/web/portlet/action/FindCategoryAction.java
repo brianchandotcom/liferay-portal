@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,7 +48,14 @@ public class FindCategoryAction extends BaseStrutsAction {
 		return null;
 	}
 
-	private final FindActionHelper _findActionHelper =
-		new CategoryFindActionHelper();
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBCategory)",
+		unbind = "-"
+	)
+	protected void setFindActionHelper(FindActionHelper findActionHelper) {
+		_findActionHelper = findActionHelper;
+	}
+
+	private FindActionHelper _findActionHelper;
 
 }

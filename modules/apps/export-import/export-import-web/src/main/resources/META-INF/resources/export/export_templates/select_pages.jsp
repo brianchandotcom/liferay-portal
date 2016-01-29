@@ -28,8 +28,6 @@ if (groupId > 0) {
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 
-boolean disableInputs = ParamUtil.getBoolean(request, "disableInputs");
-
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("select_pages.jsp-parameterMap"), Collections.emptyMap());
 %>
 
@@ -41,21 +39,21 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 			<c:choose>
 				<c:when test="<%= privateLayout %>">
 					<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPublicLayoutsURL">
-						<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
+						<portlet:param name="mvcPath" value="/export/export_templates/edit_template.jsp" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 					</liferay-portlet:renderURL>
 
-					<aui:button disabled="<%= disableInputs %>" href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
+					<aui:button href="<%= changeToPublicLayoutsURL %>" value="change-to-public-pages" />
 				</c:when>
 				<c:otherwise>
 					<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="changeToPrivateLayoutsURL">
-						<portlet:param name="mvcPath" value="/export/new_export/export_layouts.jsp" />
+						<portlet:param name="mvcPath" value="/export/export_templates/edit_template.jsp" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 					</liferay-portlet:renderURL>
 
-					<aui:button disabled="<%= disableInputs %>" href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
+					<aui:button href="<%= changeToPrivateLayoutsURL %>" value="change-to-private-pages" />
 				</c:otherwise>
 			</c:choose>
 		</aui:fieldset>
@@ -89,11 +87,11 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 	<li class="layout-selector-options">
 		<aui:fieldset label="look-and-feel">
-			<aui:input disabled="<%= disableInputs %>" helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, true) %>" />
+			<aui:input helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, true) %>" />
 
-			<aui:input disabled="<%= disableInputs %>" label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />
+			<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, true) %>" />
 
-			<aui:input disabled="<%= disableInputs %>" label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true) %>" />
+			<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true) %>" />
 		</aui:fieldset>
 	</li>
 </ul>

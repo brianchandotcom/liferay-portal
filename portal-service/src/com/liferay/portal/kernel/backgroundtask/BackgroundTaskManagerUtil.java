@@ -107,6 +107,14 @@ public class BackgroundTaskManagerUtil {
 		_backgroundTaskManager.deleteGroupBackgroundTasks(groupId);
 	}
 
+	public static void deleteGroupBackgroundTasks(
+			long groupId, String name, String taskExecutorClassName)
+		throws PortalException {
+
+		_backgroundTaskManager.deleteGroupBackgroundTasks(
+			groupId, name, taskExecutorClassName);
+	}
+
 	public static BackgroundTask fetchBackgroundTask(long backgroundTaskId) {
 		return _backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
 	}

@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=false",
 		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Product Menu",
 		"javax.portlet.init-param.view-template=/portlet/view.jsp",

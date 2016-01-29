@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.css-class-wrapper=portlet-control-menu",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
+		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Control Menu",
 		"javax.portlet.init-param.view-template=/view.jsp",

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
+package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

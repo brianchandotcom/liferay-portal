@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
+package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
@@ -28,11 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/test_ldap_groups"
+		"mvc.command.name=/portal_settings/edit_ldap_server"
 	},
 	service = MVCRenderCommand.class
 )
-public class PortalSettingsTestLDAPGroupsMVCRenderCommand
+public class PortalSettingsEditLDAPServerMVCRenderCommand
 	extends BasePortalSettingsMVCRenderCommand {
 
 	@Override
@@ -48,6 +48,6 @@ public class PortalSettingsTestLDAPGroupsMVCRenderCommand
 	}
 
 	private static final String _JSP_PATH =
-		"/com.liferay.portal.settings.web/test_ldap_groups.jsp";
+		"/com.liferay.portal.settings.web/edit_ldap_server.jsp";
 
 }

@@ -162,7 +162,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The template cannot be deleted because it is required by one or more template links." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The template cannot be deleted because it is required by one or more template links." />
 			</then>
 			<else>
 				<execute macro="Alert#viewRequestCompletedSuccessMessage" />

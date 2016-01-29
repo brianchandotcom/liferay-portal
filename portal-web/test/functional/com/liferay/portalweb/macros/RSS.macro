@@ -136,6 +136,6 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="${warningMessage}" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="${errorMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="${errorMessage}" />
 	</command>
 </definition>

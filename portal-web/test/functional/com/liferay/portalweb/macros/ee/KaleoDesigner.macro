@@ -448,7 +448,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter valid content." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter valid content." />
 	</command>
 
 	<command name="publishWorkflowDefinitionViaKDCP">

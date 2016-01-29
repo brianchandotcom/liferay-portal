@@ -221,7 +221,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="editCategoryPropertyCP">

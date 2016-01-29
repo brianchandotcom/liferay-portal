@@ -53,7 +53,7 @@
 		<if>
 			<equals arg1="${invalidSize}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Request is larger than ${maxAttachmentFileSize}KB and could not be processed." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Request is larger than ${maxAttachmentFileSize}KB and could not be processed." />
 			</then>
 		</if>
 	</command>
@@ -941,7 +941,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_THREAD"  />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" />

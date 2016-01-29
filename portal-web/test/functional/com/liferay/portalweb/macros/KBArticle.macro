@@ -128,14 +128,14 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter valid content." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter valid content." />
 			</then>
 			<elseif>
 				<equals arg1="${kbArticleDuplicateFriendlyURL}" arg2="true" />
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a unique friendly URL." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a unique friendly URL." />
 				</then>
 			</elseif>
 			<elseif>
@@ -143,7 +143,7 @@
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
 				</then>
 			</elseif>
 			<else>

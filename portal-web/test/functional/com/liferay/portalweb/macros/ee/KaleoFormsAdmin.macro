@@ -515,7 +515,7 @@
 	<command name="viewInvalidDefinitionMessage">
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid XML schema definition." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid XML schema definition." />
 	</command>
 
 	<command name="viewNextFieldSetPage">

@@ -1766,7 +1766,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The last repeating date should come after the event start date." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The last repeating date should come after the event start date." />
 	</command>
 
 	<command name="viewRepeatingEventViaViewDetails">

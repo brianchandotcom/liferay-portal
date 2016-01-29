@@ -555,7 +555,7 @@
 			<else>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
 			</else>
 		</if>
 	</command>
@@ -603,7 +603,7 @@
 
 				<execute function="AssertClick" locator1="SiteSettingsSiteURL#SITE_URL_LABEL" value1="Site URL" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The friendly URL has too many slashes." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The friendly URL has too many slashes." />
 				<execute function="AssertTextEquals" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 			</then>
 			<else>
@@ -1004,7 +1004,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a unique name." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a unique name." />
 			</then>
 			<elseif>
 				<equals arg1="${siteNameInvalid}" arg2="Null" />
@@ -1015,7 +1015,7 @@
 			<else>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The Site Name cannot be blank, numeric or a reserved word such as null. The Site Name cannot contain the following invalid characters: *." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The Site Name cannot be blank, numeric or a reserved word such as null. The Site Name cannot contain the following invalid characters: *." />
 			</else>
 		</if>
 	</command>

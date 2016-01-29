@@ -23,6 +23,8 @@ public interface Constants {
 
 	public static final String ADD = "add";
 
+	public static final String ADD_ANSWER = "add_answer";
+
 	public static final String ADD_DYNAMIC = "add_dynamic";
 
 	public static final String ADD_MULTIPLE = "add_multiple";
@@ -54,6 +56,8 @@ public interface Constants {
 	public static final String DEACTIVATE = "deactivate";
 
 	public static final String DELETE = "delete";
+
+	public static final String DELETE_ANSWER = "delete_answer";
 
 	public static final String DELETE_TEMP = "delete_temp";
 

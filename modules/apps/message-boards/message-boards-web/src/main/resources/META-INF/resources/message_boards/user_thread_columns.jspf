@@ -14,7 +14,25 @@
  */
 --%>
 
-<%@ include file="/message_boards/thread_priority.jspf" %>
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="thread"
+>
+
+	<%
+	String[] threadPriority = MBUtil.getThreadPriority(mbGroupServiceSettings, themeDisplay.getLanguageId(), thread.getPriority(), themeDisplay);
+	%>
+
+	<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
+		<img alt="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>" class="thread-priority" src="<%= HtmlUtil.escapeAttribute(threadPriority[1]) %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>" />
+	</c:if>
+
+	<c:if test="<%= thread.isLocked() %>">
+		<i class="icon-lock" title="<liferay-ui:message key="thread-locked" />"></i>
+	</c:if>
+
+	<%= message.getSubject() %>
+</liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
@@ -34,7 +52,12 @@
 	value="<%= String.valueOf(thread.getViewCount()) %>"
 />
 
-<%@ include file="/message_boards/thread_columns_last_post.jspf" %>
+<liferay-ui:search-container-column-user
+	date="<%= thread.getLastPostDate() %>"
+	name="last-post"
+	property="lastPostByUserId"
+	userId="<%= thread.getLastPostByUserId() %>"
+/>
 
 <c:if test='<%= mvcRenderCommandName.equals("/message_boards/view_my_posts") %>'>
 	<liferay-ui:search-container-column-status
@@ -47,4 +70,8 @@
 row.setObject(new Object[] {message, threadSubscriptionClassPKs});
 %>
 
-<%@ include file="/message_boards/user_thread_columns_action.jspf" %>
+<liferay-ui:search-container-column-jsp
+	align="right"
+	cssClass="entry-action"
+	path="/message_boards/message_action.jsp"
+/>

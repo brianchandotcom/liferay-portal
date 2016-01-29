@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.exception.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 
@@ -49,25 +47,13 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			MBMessageDisplay messageDisplay = ActionUtil.getMessageDisplay(
 				renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_MESSAGE_DISPLAY, messageDisplay);
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			if (MBPortletKeys.MESSAGE_BOARDS_ADMIN.equals(
-					portletDisplay.getId())) {
-
-				return "/message_boards_admin/view_message.jsp";
-			}
-			else {
-				return "/message_boards/view_message.jsp";
-			}
+			return "/message_boards/view_message.jsp";
 		}
 		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());

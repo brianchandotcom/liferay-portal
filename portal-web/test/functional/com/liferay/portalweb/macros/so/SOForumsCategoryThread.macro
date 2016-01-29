@@ -73,7 +73,7 @@
 					</elseif>
 				</if>
 
-				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" value1="${userName}" />
 
 				<if>
@@ -112,7 +112,7 @@
 					</else>
 				</if>
 
-				<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
 
@@ -344,7 +344,7 @@
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
 		<if>
 			<isset var="categoryCount" />
@@ -376,7 +376,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG" />
 	</command>

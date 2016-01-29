@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.init;
+package com.liferay.portal.init.filter;
 
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.concurrent.CountDownLatch;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Matthew Tambara
@@ -30,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class InitFilter extends BasePortalFilter {
 
 	public void setServiceRegistration(
-		ServiceRegistration<InitFilter> serviceRegistration) {
+		ServiceRegistration<Filter> serviceRegistration) {
 
 		_serviceRegistration = serviceRegistration;
 
@@ -66,6 +68,6 @@ public class InitFilter extends BasePortalFilter {
 
 	private final CompeteLatch _competeLatch = new CompeteLatch();
 	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
-	private ServiceRegistration<InitFilter> _serviceRegistration;
+	private ServiceRegistration<Filter> _serviceRegistration;
 
 }

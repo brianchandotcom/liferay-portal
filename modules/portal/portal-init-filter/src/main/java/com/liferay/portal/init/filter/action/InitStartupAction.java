@@ -12,40 +12,39 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.portal.init.filter.action;
 
-import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.servlet.filters.init.InitFilter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
+import com.liferay.portal.init.filter.InitFilter;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Dictionary;
 
 import javax.servlet.Filter;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Matthew Tambara
  */
-public class InitStartupAction extends SimpleAction {
+@Component(immediate = true)
+public class InitStartupAction {
 
-	@Override
-	public void run(String[] ids) {
-		Registry registry = RegistryUtil.getRegistry();
-
+	@Activate
+	protected void activate(BundleContext bundleContext) {
 		InitFilter initFilter = new InitFilter();
 
-		Map<String, Object> properties = new HashMap<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("dispatcher", new String[] {"FORWARD", "REQUEST"});
 		properties.put("servlet-context-name", "");
 		properties.put("servlet-filter-name", "Init Filter");
 		properties.put("url-pattern", "/c/*");
 
-		ServiceRegistration<InitFilter> serviceRegistration =
-			registry.registerService(
-				Filter.class.getName(), initFilter, properties);
+		ServiceRegistration<Filter> serviceRegistration =
+			bundleContext.registerService(Filter.class, initFilter, properties);
 
 		initFilter.setServiceRegistration(serviceRegistration);
 	}

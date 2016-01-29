@@ -27,6 +27,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.SourceTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.JavaExecSpec;
@@ -45,6 +46,7 @@ public class FormatXMLTask extends SourceTask {
 		}
 	}
 
+	@Input
 	public boolean isStripComments() {
 		return _stripComments;
 	}

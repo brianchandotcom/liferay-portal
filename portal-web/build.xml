@@ -386,6 +386,7 @@ ${oversize.files.jsp}</fail>
 			<pathelement location="${app.server.dir}/lib/servlet-api.jar" />
 			<pathelement location="${app.server.dir}/lib/tomcat-api.jar" />
 			<pathelement location="${app.server.dir}/lib/tomcat-util.jar" />
+			<pathelement location="${app.server.dir}/lib/tomcat-util-scan.jar" />
 			<pathelement location="${app.server.bin.dir}/tomcat-juli.jar" />
 		</path>
 

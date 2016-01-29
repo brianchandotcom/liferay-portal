@@ -7424,6 +7424,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<antcall target="clean-up-web-xml" />
 	</target>
 
+	<target name="run-test-smtp-server">
+		<start-test-smtp-server />
+	</target>
+
 	<target name="set-portal-impl-portal-ext-properties">
 		<set-portal-impl-portal-ext-properties />
 	</target>

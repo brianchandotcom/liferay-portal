@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.util;
 
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -35,6 +37,11 @@ public class PortalActivityInterpreter extends BaseSocialActivityInterpreter {
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
 
 	private static final String[] _CLASS_NAMES =

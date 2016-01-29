@@ -21,8 +21,10 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.social.JournalActivityKeys;
+import com.liferay.journal.web.util.JournalResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
@@ -71,6 +73,11 @@ public class JournalArticleActivityInterpreter
 		}
 
 		return null;
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return JournalResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

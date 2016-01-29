@@ -15,8 +15,10 @@
 package com.liferay.document.library.web.social;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.util.DLResourceBundleLoader;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -116,6 +118,11 @@ public class DLFileEntryActivityInterpreter
 
 		return "/document_library/find_file_entry?fileEntryId=" +
 			activity.getClassPK();
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return DLResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

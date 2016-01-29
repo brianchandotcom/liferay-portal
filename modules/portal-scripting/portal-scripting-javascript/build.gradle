@@ -14,5 +14,5 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
+	deployDir = file("${liferayHome}/osgi/modules")
 }

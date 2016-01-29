@@ -1,5 +1,5 @@
 dependencies {
-	compile project(":portal:portal-scripting-api")
+	compile project(":portal-scripting:portal-scripting-api")
 
 	provided group: "org.apache-extras.beanshell", name: "bsh", version: "2.0b5"
 }

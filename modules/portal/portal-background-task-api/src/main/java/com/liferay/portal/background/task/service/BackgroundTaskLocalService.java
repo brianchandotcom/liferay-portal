@@ -129,14 +129,14 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	public com.liferay.portal.background.task.model.BackgroundTask deleteBackgroundTask(
 		long backgroundTaskId) throws PortalException;
 
-	public void deleteBackgroundTasks(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName) throws PortalException;
-
 	public void deleteCompanyBackgroundTasks(long companyId)
 		throws PortalException;
 
 	public void deleteGroupBackgroundTasks(long groupId)
 		throws PortalException;
+
+	public void deleteGroupBackgroundTasks(long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName) throws PortalException;
 
 	/**
 	* @throws PortalException

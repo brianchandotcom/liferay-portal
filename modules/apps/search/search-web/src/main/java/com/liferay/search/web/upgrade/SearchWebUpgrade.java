@@ -14,13 +14,12 @@
 
 package com.liferay.search.web.upgrade;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.search.web.upgrade.v1_0_0.UpgradePortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -31,13 +30,11 @@ public class SearchWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
+			"com.liferay.search.web", "0.0.0", "1.0.0", new DummyUpgradeStep());
+
+		registry.register(
 			"com.liferay.search.web", "0.0.1", "1.0.0", new UpgradePortletId(),
 			new UpgradePortletPreferences());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

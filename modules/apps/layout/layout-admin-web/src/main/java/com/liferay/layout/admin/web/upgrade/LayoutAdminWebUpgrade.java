@@ -15,13 +15,12 @@
 package com.liferay.layout.admin.web.upgrade;
 
 import com.liferay.layout.admin.web.upgrade.v_1_0_0.UpgradeLayout;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.rmi.registry.Registry;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -32,13 +31,12 @@ public class LayoutAdminWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
+			"com.liferay.layout.admin.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
 			"com.liferay.layout.admin.web", "0.0.1", "1.0.0",
 			new UpgradeLayout());
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

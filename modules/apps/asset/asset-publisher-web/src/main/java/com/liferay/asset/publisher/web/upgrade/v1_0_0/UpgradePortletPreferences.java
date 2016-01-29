@@ -50,6 +50,16 @@ import javax.portlet.PortletPreferences;
  */
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
+	public UpgradePortletPreferences(
+		DateFormatFactoryUtil dateFormatFactoryUtil) {
+
+		_newDateFormat = dateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
+		_oldDateFormat = dateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
+	}
+
 	protected JSONObject getDDMStructureJSONObject(long structureId)
 		throws Exception {
 
@@ -362,9 +372,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	private static final Map<Long, JSONObject> _ddmSructureJSONObjects =
 		new HashMap<>();
 
-	private final DateFormat _newDateFormat =
-		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
-	private final DateFormat _oldDateFormat =
-		DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
+	private final DateFormat _newDateFormat;
+	private final DateFormat _oldDateFormat;
 
 }

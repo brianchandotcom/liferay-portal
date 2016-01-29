@@ -34,9 +34,12 @@ import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,12 +52,15 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecSpec;
+import org.gradle.util.GUtil;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -97,6 +103,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			buildPomFile(pomFile, preparedSourceDir);
 
 			buildPluginDescriptor(pomFile);
+
+			readdForcedExclusions();
 		}
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);
@@ -116,6 +124,20 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		_configurationScopeMappings.put(configurationName, scope);
 	}
 
+	public BuildPluginDescriptorTask forcedExclusions(
+		Iterable<String> forcedExclusions) {
+
+		GUtil.addToCollection(_forcedExclusions, forcedExclusions);
+
+		return this;
+	}
+
+	public BuildPluginDescriptorTask forcedExclusions(
+		String ... forcedExclusions) {
+
+		return forcedExclusions(Arrays.asList(forcedExclusions));
+	}
+
 	@InputDirectory
 	public File getClassesDir() {
 		return GradleUtil.toFile(getProject(), _classesDir);
@@ -123,6 +145,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public Map<String, String> getConfigurationScopeMappings() {
 		return _configurationScopeMappings;
+	}
+
+	@Input
+	public Set<String> getForcedExclusions() {
+		return _forcedExclusions;
 	}
 
 	@Input
@@ -167,6 +194,16 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public void setClassesDir(Object classesDir) {
 		_classesDir = classesDir;
+	}
+
+	public void setForcedExclusions(Iterable<String> forcedExclusions) {
+		_forcedExclusions.clear();
+
+		forcedExclusions(forcedExclusions);
+	}
+
+	public void setForcedExclusions(String ... forcedExclusions) {
+		setForcedExclusions(Arrays.asList(forcedExclusions));
 	}
 
 	public void setMavenExecutable(Object mavenExecutable) {
@@ -219,6 +256,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		Set<Dependency> dependencies = configuration.getDependencies();
 
+		Set<String> forcedExclusions = getForcedExclusions();
+
 		for (Dependency dependency : dependencies) {
 			Element dependencyEl = doc.createElement("dependency");
 
@@ -231,7 +270,41 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			XMLUtil.appendElement(
 				doc, dependencyEl, "version", dependency.getVersion());
 			XMLUtil.appendElement(doc, dependencyEl, "scope", scope);
+
+			if (!forcedExclusions.isEmpty()) {
+				Element exclusionsEl = doc.createElement("exclusions");
+
+				dependencyEl.appendChild(exclusionsEl);
+
+				for (String dependencyNotation : forcedExclusions) {
+					appendDependencyExclusionElement(
+						doc, exclusionsEl, dependencyNotation);
+				}
+			}
 		}
+	}
+
+	protected void appendDependencyExclusionElement(
+		Document doc, Element exclusionsEl, String dependencyNotation) {
+
+		String[] tokens = parseDependencyNotation(dependencyNotation);
+
+		String groupId = tokens[0];
+		String artifactId = tokens[1];
+
+		appendDependencyExclusionElement(
+			doc, exclusionsEl, groupId, artifactId);
+	}
+
+	protected void appendDependencyExclusionElement(
+		Document doc, Element exclusionsEl, String groupId, String artifactId) {
+
+		Element exclusionEl = doc.createElement("exclusion");
+
+		exclusionsEl.appendChild(exclusionEl);
+
+		XMLUtil.appendElement(doc, exclusionEl, "artifactId", artifactId);
+		XMLUtil.appendElement(doc, exclusionEl, "groupId", groupId);
 	}
 
 	protected void buildPluginDescriptor(final File pomFile) throws Exception {
@@ -343,6 +416,17 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return code.substring(start, end + 2);
 	}
 
+	protected String[] parseDependencyNotation(String dependencyNotation) {
+		String[] tokens = dependencyNotation.split(":");
+
+		if (tokens.length != 3) {
+			throw new GradleException(
+				"Unable to parse dependency notation " + dependencyNotation);
+		}
+
+		return tokens;
+	}
+
 	protected void prepareSource(JavaClass javaClass) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
@@ -414,9 +498,74 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 	}
 
+	protected void readdForcedExclusions() throws Exception {
+		Set<String> forcedExclusions = getForcedExclusions();
+
+		if (forcedExclusions.isEmpty()) {
+			return;
+		}
+
+		File file = new File(getOutputDir(), "plugin.xml");
+
+		Path path = file.toPath();
+
+		String content = new String(
+			Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+		int pos = content.lastIndexOf("</dependencies>");
+
+		if (pos == -1) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn("Unable to readd forced exclusions");
+			}
+
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(content, 0, pos - 1);
+
+		for (String dependencyNotation : forcedExclusions) {
+			String[] tokens = parseDependencyNotation(dependencyNotation);
+
+			String groupId = tokens[0];
+			String artifactId = tokens[1];
+			String version = tokens[2];
+
+			sb.append("<dependency>");
+
+			sb.append("<groupId>");
+			sb.append(groupId);
+			sb.append("</groupId>");
+
+			sb.append("<artifactId>");
+			sb.append(artifactId);
+			sb.append("</artifactId>");
+
+			sb.append("<type>jar</type>");
+
+			sb.append("<version>");
+			sb.append(version);
+			sb.append("</version>");
+
+			sb.append("</dependency>");
+		}
+
+		sb.append(content, pos, content.length());
+
+		content = sb.toString();
+
+		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private static final Logger _logger = Logging.getLogger(
+		BuildPluginDescriptorTask.class);
+
 	private Object _classesDir;
 	private final Map<String, String> _configurationScopeMappings =
 		new HashMap<>();
+	private final Set<String> _forcedExclusions = new HashSet<>();
 	private Object _mavenExecutable;
 	private Object _mavenVersion = "3.4";
 	private Object _outputDir;

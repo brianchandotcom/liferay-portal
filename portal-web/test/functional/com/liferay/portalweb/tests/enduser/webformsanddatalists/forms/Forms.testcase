@@ -155,7 +155,7 @@
 
 		<execute macro="FormFields#selectSelectOption">
 			<var name="fieldName" value="DisplayView" />
-			<var name="selectOption" value="Icon" />
+			<var name="selectOption" value="List" />
 		</execute>
 
 		<execute macro="Button#clickSave" />
@@ -167,7 +167,7 @@
 		</execute>
 
 		<execute macro="Portlet#viewDefaultDisplayStyle">
-			<var name="displayStyle" value="Icon" />
+			<var name="displayStyle" value="List" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

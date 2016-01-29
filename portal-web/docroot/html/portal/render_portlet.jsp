@@ -46,6 +46,9 @@ boolean modeHelp = layoutTypePortlet.hasModeHelpPortletId(portletId);
 boolean modePreview = layoutTypePortlet.hasModePreviewPortletId(portletId);
 boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
 
+boolean isCustomizable = layoutTypePortlet.isCustomizable();
+boolean isColumnDisabled = layoutTypePortlet.isColumnDisabled(columnId);
+
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
 
 PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
@@ -206,7 +209,7 @@ if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
 	}
 }
 
-if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+if (isCustomizable && !isColumnDisabled && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
 	showConfigurationIcon = true;
 
 	if (PropsValues.PORTLET_CSS_ENABLED) {
@@ -260,7 +263,7 @@ if ((!themeDisplay.isSignedIn()) ||
 	showMaxIcon = PropsValues.LAYOUT_GUEST_SHOW_MAX_ICON;
 	showMinIcon = PropsValues.LAYOUT_GUEST_SHOW_MIN_ICON;
 
-	if (!(layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) {
+	if (!(isCustomizable && !isColumnDisabled && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) {
 		showCloseIcon = false;
 		showMoveIcon = false;
 	}
@@ -268,7 +271,7 @@ if ((!themeDisplay.isSignedIn()) ||
 
 // Portlets cannot be moved if the column is not customizable
 
-if (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isColumnDisabled(columnId)) {
+if (isCustomizable && isColumnDisabled) {
 	showCloseIcon = false;
 	showMoveIcon = false;
 }
@@ -849,7 +852,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 	}
 
 	if (!portletDisplay.isShowMoveIcon()) {
-		if (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isColumnDisabled(columnId)) {
+		if (isCustomizable && isColumnDisabled) {
 			cssClasses += " portlet-static";
 		}
 		else if (portlet.isStaticStart()) {

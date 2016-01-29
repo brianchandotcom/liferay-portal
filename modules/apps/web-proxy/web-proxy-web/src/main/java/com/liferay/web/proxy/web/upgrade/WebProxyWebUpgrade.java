@@ -24,14 +24,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Raymond Augé
  */
-@Component(
-	immediate = true,
-	service = {WebProxyWebUpgrade.class, UpgradeStepRegistrator.class}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class WebProxyWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public void register(UpgradeStepRegistrator.Registry registry) {
+	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.web.proxy.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());

@@ -1,9 +1,0 @@
-dependencies {
-	compile project(":portal:portal-scripting-api")
-
-	provided group: "org.codehaus.groovy", name: "groovy", version: "2.4.5"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

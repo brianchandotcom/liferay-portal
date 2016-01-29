@@ -1,0 +1,16 @@
+configurations {
+	compile {
+		transitive = false
+	}
+}
+
+dependencies {
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided group: "org.python", name: "jython-standalone", version: "2.5.3"
+	provided project(":portal-scripting:portal-scripting-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

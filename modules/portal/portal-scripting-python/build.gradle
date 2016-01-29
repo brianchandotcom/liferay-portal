@@ -1,9 +1,0 @@
-dependencies {
-	compile project(":portal:portal-scripting-api")
-
-	provided group: "org.python", name: "jython-standalone", version: "2.5.3"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

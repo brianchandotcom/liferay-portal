@@ -1,9 +1,0 @@
-dependencies {
-	compile project(":portal:portal-scripting-api")
-
-	provided group: "org.apache-extras.beanshell", name: "bsh", version: "2.0b5"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
-}

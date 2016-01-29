@@ -398,8 +398,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
+		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
+			PortalUtil.getHttpServletRequest(actionRequest));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

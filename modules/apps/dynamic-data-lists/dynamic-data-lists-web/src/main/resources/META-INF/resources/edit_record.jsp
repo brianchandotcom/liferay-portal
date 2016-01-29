@@ -127,82 +127,84 @@ else {
 	<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 	<c:if test="<%= !translating %>">
-		<c:if test="<%= recordVersion != null %>">
-			<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
-
-			<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
-		</c:if>
-
-		<liferay-util:include page="/record_toolbar.jsp" servletContext="<%= application %>" />
+		<aui:translation-manager
+			availableLocales="<%= availableLocales %>"
+			defaultLanguageId="<%= defaultLanguageId %>"
+			id="translationManager"
+		/>
 	</c:if>
 
-	<aui:fieldset>
+	<aui:fieldset-group markupView="lexicon">
 		<c:if test="<%= !translating %>">
-			<aui:translation-manager
-				availableLocales="<%= availableLocales %>"
-				changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
-				defaultLanguageId="<%= defaultLanguageId %>"
-				id="translationManager"
-			/>
+			<c:if test="<%= recordVersion != null %>">
+				<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
+
+				<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
+			</c:if>
+
+			<liferay-util:include page="/record_toolbar.jsp" servletContext="<%= application %>" />
 		</c:if>
 
-		<%
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-
-		long classPK = recordSet.getDDMStructureId();
-
-		if (formDDMTemplateId > 0) {
-			classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
-
-			classPK = formDDMTemplateId;
-		}
-		%>
-
-		<liferay-ddm:html
-			classNameId="<%= classNameId %>"
-			classPK="<%= classPK %>"
-			ddmFormValues="<%= ddmFormValues %>"
-			repeatable="<%= translating ? false : true %>"
-			requestedLocale="<%= LocaleUtil.fromLanguageId(languageId) %>"
-		/>
-
-		<%
-		boolean pending = false;
-
-		if (recordVersion != null) {
-			pending = recordVersion.isPending();
-		}
-		%>
-
-		<c:if test="<%= pending %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-			</div>
-		</c:if>
-
-		<aui:button-row>
+		<aui:fieldset>
 
 			<%
-			String saveButtonLabel = "save";
+			long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
-			if ((recordVersion == null) || recordVersion.isDraft() || recordVersion.isApproved()) {
-				saveButtonLabel = "save-as-draft";
-			}
+			long classPK = recordSet.getDDMStructureId();
 
-			String publishButtonLabel = "publish";
+			if (formDDMTemplateId > 0) {
+				classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
 
-			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, DDLRecordSet.class.getName(), recordSetId)) {
-				publishButtonLabel = "submit-for-publication";
+				classPK = formDDMTemplateId;
 			}
 			%>
 
-			<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+			<liferay-ddm:html
+				classNameId="<%= classNameId %>"
+				classPK="<%= classPK %>"
+				ddmFormValues="<%= ddmFormValues %>"
+				repeatable="<%= translating ? false : true %>"
+				requestedLocale="<%= LocaleUtil.fromLanguageId(languageId) %>"
+			/>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
-			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+	<%
+	boolean pending = false;
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
+	if (recordVersion != null) {
+		pending = recordVersion.isPending();
+	}
+	%>
+
+	<c:if test="<%= pending %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+		</div>
+	</c:if>
+
+	<aui:button-row>
+
+		<%
+		String saveButtonLabel = "save";
+
+		if ((recordVersion == null) || recordVersion.isDraft() || recordVersion.isApproved()) {
+			saveButtonLabel = "save-as-draft";
+		}
+
+		String publishButtonLabel = "publish";
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, DDLRecordSet.class.getName(), recordSetId)) {
+			publishButtonLabel = "submit-for-publication";
+		}
+		%>
+
+		<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

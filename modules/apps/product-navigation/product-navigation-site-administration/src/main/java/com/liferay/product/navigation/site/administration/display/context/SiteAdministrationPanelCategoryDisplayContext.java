@@ -42,6 +42,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.product.navigation.product.menu.web.display.context.ProductMenuDisplayContext;
 import com.liferay.product.navigation.site.administration.application.list.SiteAdministrationPanelCategory;
+import com.liferay.product.navigation.site.administration.constants.SiteAdministrationWebKeys;
+import com.liferay.site.util.RecentGroupManager;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -77,6 +79,8 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		_panelCategoryHelper =
 			(PanelCategoryHelper)_portletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+		_recentGroupManager = (RecentGroupManager)portletRequest.getAttribute(
+			SiteAdministrationWebKeys.RECENT_GROUP_MANAGER);
 		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -522,6 +526,9 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return;
 		}
 
+		_recentGroupManager.addRecentGroup(
+			PortalUtil.getHttpServletRequest(_portletRequest), groupId);
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_portletRequest);
 
@@ -546,6 +553,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
+	private final RecentGroupManager _recentGroupManager;
 	private Boolean _selectedSite;
 	private Boolean _showStagingInfo = null;
 	private String _stagingGroupURL;

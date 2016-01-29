@@ -9,9 +9,9 @@
 </#if>
 
 <#if macroName??>
-	<#assign selenium="liferaySelenium" />
+	<#assign selenium ="liferaySelenium" />
 <#else>
-	<#assign selenium="selenium" />
+	<#assign selenium ="selenium" />
 </#if>
 
 <#if varElement.attributeValue("locator-key")?? && varElement.attributeValue("path")??>
@@ -97,7 +97,7 @@
 		${methodReturnType}.toString(
 	</#if>
 
-	<#assign methodParameters  = method?substring(y + 1, z)>
+	<#assign methodParameters = method?substring(y + 1, z)>
 
 	<#if "${method}"?starts_with("MathUtil")>
 		<#assign objectName = "MathUtil">

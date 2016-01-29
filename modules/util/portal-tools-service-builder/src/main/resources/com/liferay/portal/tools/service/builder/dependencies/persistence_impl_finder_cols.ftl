@@ -1,6 +1,6 @@
 <#list finderColsList as finderCol>
 	<#if sqlQuery?? && sqlQuery && (finderCol.name != finderCol.DBName)>
-		<#assign finderFieldSuffix= finderFieldSQLSuffix>
+		<#assign finderFieldSuffix = finderFieldSQLSuffix>
 	<#else>
 		<#assign finderFieldSuffix = "">
 	</#if>

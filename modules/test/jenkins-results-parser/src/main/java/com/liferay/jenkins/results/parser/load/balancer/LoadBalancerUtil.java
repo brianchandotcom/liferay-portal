@@ -37,6 +37,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.tools.ant.Project;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,6 +46,17 @@ import org.json.JSONObject;
  * @author Peter Yoo
  */
 public class LoadBalancerUtil {
+
+	public static String getMostAvailableMasterURL(Project project)
+		throws Exception {
+
+		return getMostAvailableMasterURL(
+			"base.invocation.url", project.getProperty("base.invocation.url"),
+			"invoked.job.batch.size",
+			project.getProperty("invoked.job.batch.size"),
+			"top.level.shared.dir",
+			project.getProperty("top.level.shared.dir"));
+	}
 
 	public static String getMostAvailableMasterURL(Properties properties)
 		throws Exception {

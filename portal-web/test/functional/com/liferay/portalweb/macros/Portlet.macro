@@ -128,6 +128,8 @@
 
 		<execute function="AssertElementNotPresent" locator1="Home#LOADING_ANIMATION" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute macro="Panel#expandSidebarPanel">
 			<var name="panelHeading" value="Applications" />
 		</execute>

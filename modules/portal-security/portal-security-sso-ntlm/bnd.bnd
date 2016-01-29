@@ -12,5 +12,4 @@ Import-Package:\
 Include-Resource: @lib/jcifs.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
-Web-ContextPath: /portal-security-sso-ntlm
 -include: ../../../marketplace/platform/bnd.bnd

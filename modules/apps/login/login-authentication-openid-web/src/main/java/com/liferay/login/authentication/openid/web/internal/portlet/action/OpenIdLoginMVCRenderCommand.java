@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.portlet.action;
+package com.liferay.login.authentication.openid.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -95,7 +95,7 @@ public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.openid)",
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

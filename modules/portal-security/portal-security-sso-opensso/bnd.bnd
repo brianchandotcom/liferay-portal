@@ -6,5 +6,4 @@ Export-Package:\
 	com.liferay.portal.security.sso.opensso.configuration.*;version=${plugin.full.version}
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
-Web-ContextPath: /portal-security-sso-opensso
 -include: ../../../marketplace/platform/bnd.bnd

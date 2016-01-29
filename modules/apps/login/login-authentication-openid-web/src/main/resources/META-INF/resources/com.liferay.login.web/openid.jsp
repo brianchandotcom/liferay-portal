@@ -27,11 +27,11 @@ String openId = ParamUtil.getString(request, "openId");
 <aui:form action="<%= openIdURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 
-	<liferay-ui:error exception="<%= AssociationException.class %>" message="an-error-occurred-while-establishing-an-association-with-the-openid-provider" />
-	<liferay-ui:error exception="<%= ConsumerException.class %>" message="an-error-occurred-while-initializing-the-openid-consumer" />
-	<liferay-ui:error exception="<%= DiscoveryException.class %>" message="an-error-occurred-while-discovering-the-openid-provider" />
 	<liferay-ui:error exception="<%= DuplicateOpenIdException.class %>" message="a-user-with-that-openid-already-exists" />
-	<liferay-ui:error exception="<%= MessageException.class %>" message="an-error-occurred-while-communicating-with-the-openid-provider" />
+	<liferay-ui:error exception="<%= OpenIdServiceException.AssociationException.class %>" message="an-error-occurred-while-establishing-an-association-with-the-openid-provider" />
+	<liferay-ui:error exception="<%= OpenIdServiceException.ConsumerException.class %>" message="an-error-occurred-while-initializing-the-openid-consumer" />
+	<liferay-ui:error exception="<%= OpenIdServiceException.DiscoveryException.class %>" message="an-error-occurred-while-discovering-the-openid-provider" />
+	<liferay-ui:error exception="<%= OpenIdServiceException.MessageException.class %>" message="an-error-occurred-while-communicating-with-the-openid-provider" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>" message="the-email-address-associated-with-your-openid-account-is-already-being-used" />
 
 	<aui:fieldset>

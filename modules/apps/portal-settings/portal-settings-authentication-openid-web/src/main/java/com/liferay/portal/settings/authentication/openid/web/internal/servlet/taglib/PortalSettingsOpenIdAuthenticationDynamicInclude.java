@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.openid.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,7 +50,7 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.openid)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

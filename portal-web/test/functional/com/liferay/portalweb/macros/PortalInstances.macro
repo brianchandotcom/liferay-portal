@@ -32,7 +32,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ACTIVE" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 

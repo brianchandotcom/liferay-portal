@@ -189,7 +189,12 @@
 	<command name="definePermissionPG">
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<if>
+			<condition function="IsElementPresent#isElementPresentAfterWait" locator1="IFrame#DIALOG" />
+			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+			</then>
+		</if>
 
 		<execute function="Check" locator1="Permissions#${permissionDefinitionKey}" />
 
@@ -300,7 +305,7 @@
 
 		<if>
 			<and>
-				<condition function="IsElementPresent" locator1="Message#INFO" />
+				<condition function="IsElementPresent#isElementPresentAfterWait" locator1="Message#INFO" />
 				<condition function="IsVisible" locator1="Message#INFO" />
 			</and>
 			<then>
@@ -731,7 +736,12 @@
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<if>
+			<condition function="IsElementPresent#isElementPresentAfterWait" locator1="IFrame#DIALOG" />
+			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+			</then>
+		</if>
 
 		<execute function="Uncheck" locator1="Permissions#${permissionDefinitionKey}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

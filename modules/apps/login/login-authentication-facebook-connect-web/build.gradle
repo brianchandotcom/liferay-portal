@@ -1,33 +1,10 @@
-/*
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-
 dependencies {
-    compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-    compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-    compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
-    compile group: "javax.portlet", name: "portlet-api", version: "2.0"
-    compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-    compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
-    compile project(":apps:portal-settings:portal-settings-api")
-    compile project(":apps:portal-settings:portal-settings-web")
-    compile project(":portal:portal-language-resource-bundle")
-    compile project(":portal:portal-upgrade")
-    compile project(":portal-security:portal-security-sso-facebook-connect")
-
-    provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compile project(":portal-security:portal-security-sso-facebook-connect")
 }
 
 liferay {
-    deployDir = file("${liferayHome}/osgi/modules")
+	deployDir = file("${liferayHome}/osgi/modules")
 }

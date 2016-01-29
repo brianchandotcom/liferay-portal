@@ -15,10 +15,8 @@
 package com.liferay.item.selector.taglib;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,14 +35,6 @@ import java.util.List;
  */
 public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 	implements ItemSelectorReturnType {
-
-	public static ItemSelectorReturnType
-		getFirstAvailableDraggableFileReturnType(
-			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
-
-		return getFirstAvailableItemSelectorReturnType(
-			desiredItemSelectorReturnTypes, _draggableFileReturnTypeNames);
-	}
 
 	public static ItemSelectorReturnType
 		getFirstAvailableExistingFileEntryReturnType(
@@ -114,12 +104,6 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 		return null;
 	}
 
-	private static final List<String> _draggableFileReturnTypeNames =
-		ListUtil.fromArray(
-			new String[] {
-				ClassUtil.getClassName(new Base64ItemSelectorReturnType()),
-				ClassUtil.getClassName(new UploadableFileReturnType())
-			});
 	private static final List<String> _existingFileEntryReturnTypeNames =
 		ListUtil.fromArray(
 			new String[] {

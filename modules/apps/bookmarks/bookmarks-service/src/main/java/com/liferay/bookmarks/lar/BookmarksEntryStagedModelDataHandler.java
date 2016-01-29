@@ -115,7 +115,7 @@ public class BookmarksEntryStagedModelDataHandler
 				portletDataContext, importedEntry);
 		}
 		else {
-			entry.setEntryId(existingEntry.getEntryId());
+			importedEntry.setEntryId(existingEntry.getEntryId());
 
 			importedEntry = _stagedModelRepository.updateStagedModel(
 				portletDataContext, importedEntry);

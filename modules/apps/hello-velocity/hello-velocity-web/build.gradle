@@ -8,7 +8,6 @@ dependencies {
 	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
-
 }
 
 liferay {

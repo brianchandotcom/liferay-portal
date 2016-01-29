@@ -52,7 +52,7 @@
 		</#if>
 	</#list>
 
-	) throws ${noSuchEntity}Exception {
+	) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
 		${entity.name} ${entity.varName} = findBy${finder.name}(
 
 		<#list finderColsList as finderCol>

@@ -318,7 +318,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		${finderCol.type} ${finderCol.name},
 	</#list>
 
-	OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
+	OrderByComparator<${entity.name}> orderByComparator) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
 		${entity.name} ${entity.varName} = fetchBy${finder.name}_First(
 
 		<#list finderColsList as finderCol>
@@ -344,7 +344,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		</#list>
 
-		throw new ${noSuchEntity}Exception(msg.toString());
+		throw new ${apiPackagePath}.exception.${noSuchEntity}Exception(msg.toString());
 	}
 
 	/**
@@ -396,7 +396,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		${finderCol.type} ${finderCol.name},
 	</#list>
 
-	OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
+	OrderByComparator<${entity.name}> orderByComparator) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
 		${entity.name} ${entity.varName} = fetchBy${finder.name}_Last(
 
 		<#list finderColsList as finderCol>
@@ -422,7 +422,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#if>
 		</#list>
 
-		throw new ${noSuchEntity}Exception(msg.toString());
+		throw new ${apiPackagePath}.exception.${noSuchEntity}Exception(msg.toString());
 	}
 
 	/**
@@ -492,7 +492,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			${finderCol.type} ${finderCol.name},
 		</#list>
 
-		OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
+		OrderByComparator<${entity.name}> orderByComparator) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
 			${entity.name} ${entity.varName} = findByPrimaryKey(${entity.PKVarName});
 
 			Session session = null;
@@ -787,7 +787,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				${finderCol.type} ${finderCol.name},
 			</#list>
 
-			OrderByComparator<${entity.name}> orderByComparator) throws ${noSuchEntity}Exception {
+			OrderByComparator<${entity.name}> orderByComparator) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
 				if (!InlineSQLHelperUtil.isEnabled(<#if finder.hasColumn("groupId")>groupId</#if>)) {
 					return findBy${finder.name}_PrevAndNext(${entity.PKVarName},
 
@@ -1675,7 +1675,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 <#if !finder.isCollection() || finder.isUnique()>
 	/**
-	 * Returns the ${entity.humanName} where ${finder.getHumanConditions(false)} or throws a {@link ${packagePath}.exception.${noSuchEntity}Exception} if it could not be found.
+	 * Returns the ${entity.humanName} where ${finder.getHumanConditions(false)} or throws a {@link ${apiPackagePath}.exception.${noSuchEntity}Exception} if it could not be found.
 	 *
 	<#list finderColsList as finderCol>
 	 * @param ${finderCol.name} the ${finderCol.humanName}
@@ -1694,7 +1694,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#if>
 	</#list>
 
-	) throws ${noSuchEntity}Exception {
+	) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
 		${entity.name} ${entity.varName} = fetchBy${finder.name}(
 
 		<#list finderColsList as finderCol>
@@ -1725,7 +1725,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				_log.warn(msg.toString());
 			}
 
-			throw new ${noSuchEntity}Exception(msg.toString());
+			throw new ${apiPackagePath}.exception.${noSuchEntity}Exception(msg.toString());
 		}
 
 		return ${entity.varName};

@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.internal.list.ServiceTracker
 import java.util.Comparator;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -30,19 +29,17 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ServiceTrackerListFactory {
 
 	public static <S, T> ServiceTrackerList<S, T> create(
-			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<S> clazz, String filterString,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
 
 		return new ServiceTrackerListImpl<>(
 			bundleContext, clazz, filterString, serviceTrackerCustomizer, null);
 	}
 
 	public static <S, T> ServiceTrackerList<S, T> create(
-			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer,
-			Comparator<ServiceReference<S>> comparator)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<S> clazz, String filterString,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer,
+		Comparator<ServiceReference<S>> comparator) {
 
 		return new ServiceTrackerListImpl<>(
 			bundleContext, clazz, filterString, serviceTrackerCustomizer,
@@ -50,8 +47,7 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> create(
-			BundleContext bundleContext, Class<T> clazz)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz) {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
 			new DefaultServiceTrackerCustomizer<>(bundleContext);
@@ -61,9 +57,8 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> create(
-			BundleContext bundleContext, Class<T> clazz,
-			Comparator<ServiceReference<T>> comparator)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz,
+		Comparator<ServiceReference<T>> comparator) {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
 			new DefaultServiceTrackerCustomizer<>(bundleContext);
@@ -73,8 +68,7 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> create(
-			BundleContext bundleContext, Class<T> clazz, String filterString)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz, String filterString) {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
 			new DefaultServiceTrackerCustomizer<>(bundleContext);
@@ -84,9 +78,8 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> create(
-			BundleContext bundleContext, Class<T> clazz, String filterString,
-			Comparator<ServiceReference<T>> comparator)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz, String filterString,
+		Comparator<ServiceReference<T>> comparator) {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
 			new DefaultServiceTrackerCustomizer<>(bundleContext);
@@ -97,9 +90,8 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <S, T> ServiceTrackerList<S, T> open(
-			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<S> clazz, String filterString,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer) {
 
 		ServiceTrackerList<S, T> serviceTrackerList = create(
 			bundleContext, clazz, filterString, serviceTrackerCustomizer);
@@ -110,10 +102,9 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <S, T> ServiceTrackerList<S, T> open(
-			BundleContext bundleContext, Class<S> clazz, String filterString,
-			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer,
-			Comparator<ServiceReference<S>> comparator)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<S> clazz, String filterString,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer,
+		Comparator<ServiceReference<S>> comparator) {
 
 		ServiceTrackerList<S, T> serviceTrackerList = create(
 			bundleContext, clazz, filterString, serviceTrackerCustomizer,
@@ -125,8 +116,7 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> open(
-			BundleContext bundleContext, Class<T> clazz)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz) {
 
 		ServiceTrackerList<T, T> serviceTrackerList = create(
 			bundleContext, clazz);
@@ -137,9 +127,8 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> open(
-			BundleContext bundleContext, Class<T> clazz,
-			Comparator<ServiceReference<T>> comparator)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz,
+		Comparator<ServiceReference<T>> comparator) {
 
 		ServiceTrackerList<T, T> serviceTrackerList = create(
 			bundleContext, clazz, comparator);
@@ -150,8 +139,7 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> open(
-			BundleContext bundleContext, Class<T> clazz, String filterString)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz, String filterString) {
 
 		ServiceTrackerList<T, T> serviceTrackerList = create(
 			bundleContext, clazz, filterString);
@@ -162,9 +150,8 @@ public class ServiceTrackerListFactory {
 	}
 
 	public static <T> ServiceTrackerList<T, T> open(
-			BundleContext bundleContext, Class<T> clazz, String filterString,
-			Comparator<ServiceReference<T>> comparator)
-		throws InvalidSyntaxException {
+		BundleContext bundleContext, Class<T> clazz, String filterString,
+		Comparator<ServiceReference<T>> comparator) {
 
 		ServiceTrackerList<T, T> serviceTrackerList = create(
 			bundleContext, clazz, filterString, comparator);

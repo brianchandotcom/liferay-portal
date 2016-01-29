@@ -27,9 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Iván Zaera
@@ -98,11 +98,14 @@ public class IGDisplayContextProvider {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
+	protected void activate(BundleContext bundleContext) {
 		_igDisplayContextFactories = ServiceTrackerListFactory.open(
 			bundleContext, IGDisplayContextFactory.class);
+	}
+
+	@Deactivate
+	protected void deactivate(BundleContext bundleContext) {
+		_igDisplayContextFactories.close();
 	}
 
 	private ServiceTrackerList<IGDisplayContextFactory, IGDisplayContextFactory>

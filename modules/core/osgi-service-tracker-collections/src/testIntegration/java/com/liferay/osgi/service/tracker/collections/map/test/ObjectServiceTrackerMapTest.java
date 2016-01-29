@@ -45,7 +45,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -140,9 +139,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testGetServiceInvokesCustomizerOnlyOnce()
-		throws InvalidSyntaxException {
-
+	public void testGetServiceInvokesCustomizerOnlyOnce() {
 		final AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
@@ -224,9 +221,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testGetServiceWithCustomComparator()
-		throws InvalidSyntaxException {
-
+	public void testGetServiceWithCustomComparator() {
 		ServiceReferenceMapper<String, TrackedOne>
 			propertyServiceReferenceMapper =
 				new PropertyServiceReferenceMapper<>("target");
@@ -273,9 +268,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testGetServiceWithCustomServiceReferenceMapper()
-		throws InvalidSyntaxException {
-
+	public void testGetServiceWithCustomServiceReferenceMapper() {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 
 			ServiceTrackerMapFactory.openSingleValueMap(
@@ -367,9 +360,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testGetServiceWithServiceTrackerCustomizer()
-		throws InvalidSyntaxException {
-
+	public void testGetServiceWithServiceTrackerCustomizer() {
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "target",
@@ -421,9 +412,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testGetServiceWithServiceTrackerCustomizerAndServiceReferenceMapper()
-		throws InvalidSyntaxException {
-
+	public void testGetServiceWithServiceTrackerCustomizerAndServiceReferenceMapper() {
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, ("(target=*)"),
@@ -493,9 +482,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testGetServiceWithServiceTrackerCustomizerReturningNull()
-		throws InvalidSyntaxException {
-
+	public void testGetServiceWithServiceTrackerCustomizerReturningNull() {
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "target",
@@ -580,9 +567,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testServiceWrapperServiceTrackerCustomizer()
-		throws InvalidSyntaxException {
-
+	public void testServiceWrapperServiceTrackerCustomizer() {
 		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
 			serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "target",
@@ -624,9 +609,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testUnkeyedServiceReferencesBalanceReferenceCount()
-		throws InvalidSyntaxException {
-
+	public void testUnkeyedServiceReferencesBalanceReferenceCount() {
 		BundleContextWrapper wrappedBundleContext = wrapContext();
 
 		ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
@@ -669,13 +652,8 @@ public class ObjectServiceTrackerMapTest {
 	protected ServiceTrackerMap<String, TrackedOne> createServiceTrackerMap(
 		BundleContext bundleContext) {
 
-		try {
-			return ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, TrackedOne.class, "target");
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new RuntimeException(ise);
-		}
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, TrackedOne.class, "target");
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(

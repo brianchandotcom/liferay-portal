@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -134,9 +133,7 @@ public class PanelCategoryRegistry {
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
+	protected void activate(final BundleContext bundleContext) {
 		_childPanelCategoriesServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, PanelCategory.class, "(panel.category.key=*)",

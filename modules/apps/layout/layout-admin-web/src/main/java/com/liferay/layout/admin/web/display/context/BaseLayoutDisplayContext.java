@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.display.context;
 
-import com.liferay.application.list.util.LatentGroupManagerUtil;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -32,6 +31,7 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
+import com.liferay.site.util.LatentGroupManagerUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

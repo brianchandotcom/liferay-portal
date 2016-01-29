@@ -18,7 +18,6 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.application.list.util.LatentGroupManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -42,6 +41,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.product.navigation.product.menu.web.display.context.ProductMenuDisplayContext;
 import com.liferay.product.navigation.site.administration.application.list.SiteAdministrationPanelCategory;
+import com.liferay.site.util.LatentGroupManagerUtil;
 
 import java.util.List;
 import java.util.ResourceBundle;

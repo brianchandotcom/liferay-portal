@@ -8,6 +8,7 @@ dependencies {
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-service")
 	compile project(":apps:product-navigation:product-navigation-site-administration")
+	compile project(":apps:site:site-api")
 	compile project(":portal:portal-upgrade")
 }
 

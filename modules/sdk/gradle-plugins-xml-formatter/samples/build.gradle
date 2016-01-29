@@ -13,11 +13,7 @@ buildscript {
 }
 
 apply plugin: "com.liferay.xml.formatter"
-
-formatXML {
-	include "**/*.xml"
-	source projectDir
-}
+apply plugin: "java"
 
 repositories {
 	mavenLocal()

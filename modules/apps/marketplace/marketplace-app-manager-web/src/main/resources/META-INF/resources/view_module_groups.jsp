@@ -47,7 +47,7 @@ renderResponse.setTitle(appDisplay.getTitle());
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewURL">
 			<portlet:param name="mvcPath" value="/view_module_groups.jsp" />
@@ -59,6 +59,18 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 			selected="<%= true %>"
 		/>
 	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcPath" value="/view_search_results.jsp" />
+		</liferay-portlet:renderURL>
+
+		<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar

@@ -241,52 +241,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--EMBEDDED_PORTLETS-->
-<tr>
-	<td>EMBEDDED_PORTLETS_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'embeddedPortlets')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_CHECKBOX_1</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[1]/td[1]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_CHECKBOX_2</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[2]/td[1]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_PORTLET_ID_1</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[1]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_PORTLET_ID_2</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[2]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_TITLE_1</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[1]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_TITLE_2</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[2]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_STATUS_1</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[1]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_STATUS_2</td>
-	<td>//div[contains(@id,'embeddedPortlets')]//tbody/tr[2]/td[4]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

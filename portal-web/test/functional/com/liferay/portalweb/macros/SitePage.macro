@@ -73,16 +73,12 @@
 	<command name="changePageTypeLayoutPG">
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
-
 		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
 
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="copyApplicationsFromPageToPagePG">
-		<execute function="Click" locator1="ControlMenu#EDIT" />
-
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#COPY_APPLICATIONS" value1="Copy Applications" />
@@ -182,8 +178,6 @@
 	</command>
 
 	<command name="editPG">
-		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
-
 		<execute function="Type" locator1="TextInput#NAME" value1="${sitePageNameEdit}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -196,8 +190,6 @@
 	</command>
 
 	<command name="embeddedPageTypePG">
-		<execute function="Click" locator1="ControlMenu#EDIT" value1="Edit" />
-
 		<execute function="AssertClick" locator1="SitePagesEditPage#TYPE_PAGE_OPTIONS" value1="Embedded" />
 
 		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD" value1="http://www.liferay.com" />
@@ -569,11 +561,23 @@
 	</command>
 
 	<command name="viewPageTemplatePG">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute function="Click" locator1="ControlMenu#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 
-		<execute function="Click#clickAt" locator1="ControlMenu#EDIT" />
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
+		<var name="key_page" value="${page}" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL_GENERIC" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC" />

@@ -198,7 +198,9 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute macro="Page#gotoEdit" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Page Name" />
+		</execute>
 
 		<execute macro="Page#addFriendlyURLLocalizedPG">
 			<var name="friendlyUrlLocalized" value="de_DE" />
@@ -214,6 +216,10 @@
 		</execute>
 
 		<execute function="AssertConsoleTextNotPresent" value1="java.lang.StringIndexOutOfBoundsException: String index out of range: -1" />
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Page Name" />
+		</execute>
 
 		<execute macro="Page#viewPageFriendURLPG">
 			<var name="localizedFriendlyURL" value="/german" />

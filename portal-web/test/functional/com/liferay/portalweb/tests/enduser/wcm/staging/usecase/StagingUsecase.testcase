@@ -118,7 +118,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Page#deleteLivePG" />
+		<execute macro="Page#deletePG">
+			<var name="pageName" value="Delete Live Page" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />

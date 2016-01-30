@@ -102,7 +102,9 @@
 
 		<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#CONTENT_ACCORDION_PANEL_TITLE" />
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#SIMULATION" />
 

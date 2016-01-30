@@ -273,7 +273,9 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="ControlMenu#EDIT" />
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="${pageName}" />
+		</execute>
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

@@ -144,69 +144,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			className="org.osgi.framework.Bundle"
 			modelVar="bundle"
 		>
-			<liferay-ui:search-container-column-text>
-				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#modules" %>' />
-				</liferay-util:include>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-
-				<%
-				Dictionary<String, String> headers = bundle.getHeaders();
-				%>
-
-				<h5 class="text-default">
-					<c:choose>
-						<c:when test="<%= bundle.getState() == BundleStateConstants.RESOLVED %>">
-							<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
-						</c:when>
-						<c:otherwise>
-							<portlet:renderURL var="rowURL">
-								<portlet:param name="mvcPath" value="/view_module.jsp" />
-								<portlet:param name="app" value="<%= app %>" />
-								<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
-								<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
-								<portlet:param name="version" value="<%= String.valueOf(bundle.getVersion()) %>" />
-							</portlet:renderURL>
-
-							<a href="<%= HtmlUtil.escapeHREF(rowURL) %>">
-								<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
-							</a>
-						</c:otherwise>
-					</c:choose>
-				</h5>
-
-				<h6 class="text-default">
-					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_DESCRIPTION)) %>
-				</h6>
-
-				<h6 class="text-default">
-					<%= bundle.getSymbolicName() %>
-				</h6>
-
-				<div class="additional-info text-default">
-					<div class="additional-info-item">
-						<strong>
-							<liferay-ui:message key="version" />:
-						</strong>
-
-						<%= bundle.getVersion() %>
-					</div>
-
-					<div class="additional-info-item">
-						<strong>
-							<liferay-ui:message key="status" />:
-						</strong>
-
-						<liferay-ui:message key="<%= BundleStateConstants.getLabel(bundle.getState()) %>" />
-					</div>
-				</div>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-jsp
-				path="/bundle_action.jsp"
-			/>
+			<%@ include file="/bundle_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />

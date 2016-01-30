@@ -657,13 +657,13 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="3">
@@ -1136,7 +1136,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1146,7 +1146,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">

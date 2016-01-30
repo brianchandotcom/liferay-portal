@@ -114,7 +114,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The organization name is already taken." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The organization name is already taken." />
 			</then>
 			<else>
 				<var name="key_orgType" value="${orgType}" />

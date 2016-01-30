@@ -78,7 +78,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid definition." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid definition." />
 	</command>
 
 	<command name="AddListWithXSSWorkflowDefinition" priority="4">
@@ -933,7 +933,7 @@
 
 		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="Catalan (Spain)" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -944,7 +944,7 @@
 		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
 		<execute function="Type" locator1="DDLEditRecord#FIELD_1" value1="${fieldFieldLabel1Edit}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${adminEditURL}" />
 
@@ -962,12 +962,12 @@
 
 		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CLEAR_BUTTON" value1="Clear" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${adminEditURL}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="3">

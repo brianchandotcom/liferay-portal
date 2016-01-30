@@ -56,7 +56,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
 
 		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
 		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
@@ -64,7 +64,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
 	</command>
 
 	<command name="AddSchedule" priority="4">

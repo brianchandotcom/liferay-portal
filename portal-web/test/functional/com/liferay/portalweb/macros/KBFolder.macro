@@ -15,7 +15,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a unique folder name." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a unique folder name." />
 			</then>
 			<else>
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />

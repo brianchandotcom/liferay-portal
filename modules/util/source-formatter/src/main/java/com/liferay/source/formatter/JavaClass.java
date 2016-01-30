@@ -1294,6 +1294,12 @@ public class JavaClass {
 		JavaTerm previousJavaTerm, JavaTerm javaTerm,
 		List<String> javaTermSortExcludes) {
 
+		if (_fileName.endsWith("Configuration.java") &&
+			_content.contains("@Meta.AD(")) {
+
+			return;
+		}
+
 		if (previousJavaTerm == null) {
 			return;
 		}

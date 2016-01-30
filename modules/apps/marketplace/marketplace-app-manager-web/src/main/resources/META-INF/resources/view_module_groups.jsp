@@ -45,6 +45,13 @@ portletURL.setParameter("orderByType", orderByType);
 renderResponse.setTitle(appDisplay.getTitle());
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
+
+PortletURL backPortletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/view.jsp");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backPortletURL.toString());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

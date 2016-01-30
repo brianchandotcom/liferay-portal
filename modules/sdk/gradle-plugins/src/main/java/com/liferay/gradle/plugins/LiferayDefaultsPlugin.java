@@ -205,7 +205,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
-		jar.dependsOn(javadoc);
 		jar.from(javadoc);
 
 		return jar;

@@ -130,7 +130,7 @@
 
 			<liferay-util:buffer var="publishOnLayoutLink">
 				<li class="control-menu-nav-item">
-					<div class="btn-group dropdown publish-btn-group">
+					<div class="dropdown publish-btn-group">
 						<button class="btn btn-primary btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>' type="button">
 							<liferay-ui:message key="publish-to-live" />
 						</button>

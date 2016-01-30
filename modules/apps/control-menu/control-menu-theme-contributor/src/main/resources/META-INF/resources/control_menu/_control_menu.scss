@@ -25,6 +25,10 @@ body.open {
 
 	> .container-fluid-1280 {
 		padding: 6px 5px 7px;
+
+		@include sm() {
+			padding: 15px 5px 14px;
+		}
 	}
 
 	a {
@@ -112,8 +116,8 @@ body.open {
 		position: relative;
 
 		&:after {
-			bottom: -13px;
-			content: "";
+			bottom: -20px;
+			content: '';
 			left: 0;
 			position: absolute;
 			right: 0;

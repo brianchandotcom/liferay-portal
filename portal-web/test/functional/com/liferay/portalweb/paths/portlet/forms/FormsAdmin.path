@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>FORMS_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@id,'searchContainer')]//h6[contains(.,'${key_formName}')]/a</td>
+	<td>//div[contains(@id,'searchContainer')]//h6[contains(.,'${key_formDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

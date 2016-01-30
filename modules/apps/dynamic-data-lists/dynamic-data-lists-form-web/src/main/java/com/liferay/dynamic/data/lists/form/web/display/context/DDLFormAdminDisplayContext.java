@@ -457,8 +457,7 @@ public class DDLFormAdminDisplayContext {
 		return jsonObject;
 	}
 
-	private static final String[] _DISPLAY_VIEWS =
-		{"descriptive", "list", "icon"};
+	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
 	private static final ServiceTracker
 		<DDMFormRenderer, DDMFormRenderer> _ddmFormRendererServiceTracker =

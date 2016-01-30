@@ -31,8 +31,8 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
 public interface DDLFormWebConfiguration {
 
 	@Meta.AD(
-		deflt = "descriptive", optionLabels = {"Descriptive", "List", "Icon"},
-		optionValues = {"descriptive", "list", "icon"}, required = false
+		deflt = "descriptive", optionLabels = {"Descriptive", "List"},
+		optionValues = {"descriptive", "list"}, required = false
 	)
 	public String defaultDisplayView();
 

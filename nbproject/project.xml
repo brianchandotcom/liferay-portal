@@ -325,6 +325,7 @@
 				<classpath mode="compile">lib/development/spring-instrument-tomcat.jar</classpath>
 				<classpath mode="compile">lib/development/spring-test.jar</classpath>
 				<classpath mode="compile">lib/development/tlddoc.jar</classpath>
+				<classpath mode="compile">lib/development/tomcat-api.jar</classpath>
 				<classpath mode="compile">lib/development/tomcat-coyote.jar</classpath>
 				<classpath mode="compile">lib/development/velocity.jar</classpath>
 				<classpath mode="compile">lib/development/velocity-tools.jar</classpath>

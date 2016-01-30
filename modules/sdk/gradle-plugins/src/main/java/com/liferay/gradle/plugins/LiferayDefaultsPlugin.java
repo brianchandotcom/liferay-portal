@@ -198,7 +198,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		jar.setClassifier("javadoc");
 		jar.setDescription(
-			"Assembles a zip archive containing the Javadoc files for this " +
+			"Assembles a jar archive containing the Javadoc files for this " +
 				"project.");
 		jar.setGroup(BasePlugin.BUILD_GROUP);
 

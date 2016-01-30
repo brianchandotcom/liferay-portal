@@ -104,7 +104,7 @@ if (Validator.isNotNull(keywords)) {
 
 			<liferay-ui:search-container-column-text name="name">
 				<c:choose>
-					<c:when test="<%= configurationModel.isFactory() %>">
+					<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
 						<aui:a href="<%= viewFactoryInstancesURL %>"><strong><%= configurationModel.getName() %></strong></aui:a>
 					</c:when>
 					<c:otherwise>
@@ -144,9 +144,9 @@ if (Validator.isNotNull(keywords)) {
 					showWhenSingleIcon="<%= true %>"
 				>
 					<c:choose>
-						<c:when test="<%= configurationModel.isFactory() %>">
+						<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
 							<liferay-ui:icon
-								message="view"
+								message="edit"
 								method="post"
 								url="<%= viewFactoryInstancesURL %>"
 							/>
@@ -158,7 +158,7 @@ if (Validator.isNotNull(keywords)) {
 								url="<%= editURL %>"
 							/>
 
-							<c:if test="<%= configurationModel.getConfiguration() != null %>">
+							<c:if test="<%= configurationModel.hasConfiguration() %>">
 								<portlet:actionURL name="deleteConfiguration" var="deleteConfigActionURL">
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
@@ -166,7 +166,7 @@ if (Validator.isNotNull(keywords)) {
 								</portlet:actionURL>
 
 								<liferay-ui:icon
-									message='<%= configurationModel.isFactory() ? "delete" : "reset-default-values" %>'
+									message="reset-default-values"
 									method="post"
 									url="<%= deleteConfigActionURL %>"
 								/>

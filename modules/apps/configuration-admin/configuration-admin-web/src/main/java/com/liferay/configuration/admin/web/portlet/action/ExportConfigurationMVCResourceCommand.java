@@ -132,7 +132,7 @@ public class ExportConfigurationMVCResourceCommand
 							languageId, curFactoryPid, curPid));
 				}
 			}
-			else if (configurationModel.getConfiguration() != null) {
+			else if (configurationModel.hasConfiguration()) {
 				String curPid = configurationModel.getID();
 				String curFileName = getFileName(null, curPid);
 

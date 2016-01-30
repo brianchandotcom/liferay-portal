@@ -18,6 +18,7 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.metatype.definitions.ExtendedMetaTypeService;
 
@@ -150,23 +151,8 @@ public class ConfigurationModelRetrieverImpl
 			ConfigurationModel factoryConfigurationModel)
 		throws IOException {
 
-		StringBundler filter = new StringBundler(5);
-
-		filter.append(StringPool.OPEN_PARENTHESIS);
-		filter.append(ConfigurationAdmin.SERVICE_FACTORYPID);
-		filter.append(StringPool.EQUAL);
-		filter.append(factoryConfigurationModel.getFactoryPid());
-		filter.append(StringPool.CLOSE_PARENTHESIS);
-
-		Configuration[] configurations = null;
-
-		try {
-			configurations = _configurationAdmin.listConfigurations(
-				filter.toString());
-		}
-		catch (InvalidSyntaxException ise) {
-			ReflectionUtil.throwException(ise);
-		}
+		Configuration[] configurations = getFactoryConfigurations(
+			factoryConfigurationModel.getFactoryPid());
 
 		if (configurations == null) {
 			return Collections.emptyList();
@@ -223,6 +209,27 @@ public class ConfigurationModelRetrieverImpl
 		}
 	}
 
+	protected Configuration getCompanyDefaultConfiguration(String factoryPid) {
+		Configuration configuration = null;
+
+		try {
+			Configuration[] factoryConfigurations = getFactoryConfigurations(
+				factoryPid, ConfigurationModel.PROPERTY_COMPANY_ID,
+				ConfigurationModel.PROPERTY_COMPANY_ID_DEFAULT);
+
+			if ((factoryConfigurations != null) &&
+				(factoryConfigurations.length > 0)) {
+
+				configuration = factoryConfigurations[0];
+			}
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
+
+		return configuration;
+	}
+
 	protected Comparator<String> getConfigurationCategoryComparator() {
 		return new ConfigurationCategoryComparator();
 	}
@@ -237,13 +244,69 @@ public class ConfigurationModelRetrieverImpl
 			return null;
 		}
 
-		return new ConfigurationModel(
+		ConfigurationModel configurationModel = new ConfigurationModel(
 			metaTypeInformation.getObjectClassDefinition(pid, locale),
 			getConfiguration(pid), StringPool.QUESTION, factory);
+
+		if (configurationModel.isCompanyFactory()) {
+			Configuration configuration = getCompanyDefaultConfiguration(pid);
+
+			configurationModel = new ConfigurationModel(
+				configurationModel.getExtendedObjectClassDefinition(),
+				configuration, configurationModel.getBundleLocation(),
+				configurationModel.isFactory());
+		}
+
+		return configurationModel;
 	}
 
 	protected Comparator<ConfigurationModel> getConfigurationModelComparator() {
 		return new ConfigurationModelComparator();
+	}
+
+	protected Configuration[] getFactoryConfigurations(String factoryPid)
+		throws IOException {
+
+		return getFactoryConfigurations(factoryPid, null, null);
+	}
+
+	protected Configuration[] getFactoryConfigurations(
+			String factoryPid, String property, String value)
+		throws IOException {
+
+		StringBundler filter = new StringBundler(5);
+
+		if (Validator.isNotNull(property) && Validator.isNotNull(value)) {
+			filter.append(StringPool.OPEN_PARENTHESIS);
+			filter.append(StringPool.AMPERSAND);
+		}
+
+		filter.append(StringPool.OPEN_PARENTHESIS);
+		filter.append(ConfigurationAdmin.SERVICE_FACTORYPID);
+		filter.append(StringPool.EQUAL);
+		filter.append(factoryPid);
+		filter.append(StringPool.CLOSE_PARENTHESIS);
+
+		if (Validator.isNotNull(property) && Validator.isNotNull(value)) {
+			filter.append(StringPool.OPEN_PARENTHESIS);
+			filter.append(property);
+			filter.append(StringPool.EQUAL);
+			filter.append(value);
+			filter.append(StringPool.CLOSE_PARENTHESIS);
+			filter.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		Configuration[] configurations = null;
+
+		try {
+			configurations = _configurationAdmin.listConfigurations(
+				filter.toString());
+		}
+		catch (InvalidSyntaxException ise) {
+			ReflectionUtil.throwException(ise);
+		}
+
+		return configurations;
 	}
 
 	protected String getPidFilterString(String pid, boolean factory) {

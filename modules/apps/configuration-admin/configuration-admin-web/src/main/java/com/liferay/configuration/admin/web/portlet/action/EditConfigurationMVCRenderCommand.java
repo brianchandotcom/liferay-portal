@@ -19,7 +19,6 @@ import com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.util.DDMFormRendererHelper;
-import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,6 +32,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -71,11 +71,15 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			configurationModel = configurationModels.get(factoryPid);
 		}
 
-		if (configurationModel != null) {
+		if ((configurationModel != null) &&
+			!configurationModel.isCompanyFactory()) {
+
+			Configuration configuration =
+				_configurationModelRetriever.getConfiguration(pid);
+
 			configurationModel = new ConfigurationModel(
 				configurationModel.getExtendedObjectClassDefinition(),
-				_configurationModelRetriever.getConfiguration(pid),
-				configurationModel.getBundleLocation(),
+				configuration, configurationModel.getBundleLocation(),
 				configurationModel.isFactory());
 		}
 
@@ -87,7 +91,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			_ddmFormRenderer);
 
 		renderRequest.setAttribute(
-			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML,
+			ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML,
 			ddmFormRendererHelper.getDDMFormHTML());
 
 		return "/edit_configuration.jsp";

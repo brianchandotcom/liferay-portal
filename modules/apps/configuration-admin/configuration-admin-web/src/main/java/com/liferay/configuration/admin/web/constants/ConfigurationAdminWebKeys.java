@@ -27,6 +27,9 @@ public class ConfigurationAdminWebKeys {
 
 	public static final String CONFIGURATION_MODEL = "CONFIGURATION_MODEL";
 
+	public static final String CONFIGURATION_MODEL_FORM_HTML =
+		"CONFIGURATION_MODEL_FORM_HTML";
+
 	public static final String CONFIGURATION_MODEL_ITERATOR =
 		"CONFIGURATION_MODEL_ITERATOR";
 

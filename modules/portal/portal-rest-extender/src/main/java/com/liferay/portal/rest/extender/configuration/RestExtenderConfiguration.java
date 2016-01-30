@@ -22,8 +22,7 @@ import com.liferay.portal.metatype.annotations.ExtendedObjectClassDefinition;
  * @author Carlos Sierra Andrés
  */
 @ExtendedObjectClassDefinition(
-	category = "platform", factoryInstanceLabelAttribute = "companyId",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "platform", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	factory = true,

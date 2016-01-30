@@ -99,6 +99,7 @@
 	<classpathentry kind="lib" path="lib/development/spring-instrument-tomcat.jar"/>
 	<classpathentry kind="lib" path="lib/development/spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/development/tlddoc.jar"/>
+	<classpathentry kind="lib" path="lib/development/tomcat-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/tomcat-coyote.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity.jar"/>
 	<classpathentry kind="lib" path="lib/development/velocity-tools.jar"/>

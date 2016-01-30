@@ -325,7 +325,7 @@
 
 	<command name="ChangePageLayout" priority="3">
 		<execute macro="Page#add">
-			<var name="pageName" value="site Page Name" />
+			<var name="pageName" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -334,6 +334,10 @@
 
 		<execute macro="SitePage#viewPageLayoutPG">
 			<var name="pageLayout" value="2 Column (30/70)" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Site Page Name" />
 		</execute>
 
 		<execute macro="SitePage#changePageTypeLayoutPG">
@@ -380,6 +384,10 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Blog Page" />
 		</execute>
 
 		<execute macro="SitePage#copyApplicationsFromPageToPagePG">
@@ -479,6 +487,10 @@
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoEditPage">
+			<var name="page" value="Site Page" />
 		</execute>
 
 		<execute macro="SitePage#embeddedPageTypePG" />

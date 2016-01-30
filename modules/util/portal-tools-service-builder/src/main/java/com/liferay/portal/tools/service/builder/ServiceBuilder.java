@@ -4202,7 +4202,7 @@ public class ServiceBuilder {
 			}
 
 			if (colName.equals("mvccVersion")) {
-				sb.append(" default 0");
+				sb.append(" default 0 not null");
 			}
 
 			if (((i + 1) != regularColList.size()) || entity.hasCompoundPK()) {

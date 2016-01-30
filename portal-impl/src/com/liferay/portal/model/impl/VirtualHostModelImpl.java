@@ -75,7 +75,7 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		TABLE_COLUMNS_MAP.put("hostname", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table VirtualHost (mvccVersion LONG default 0,virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table VirtualHost (mvccVersion LONG default 0 not null,virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 	public static final String ORDER_BY_JPQL = " ORDER BY virtualHost.virtualHostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY VirtualHost.virtualHostId ASC";

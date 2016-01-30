@@ -78,7 +78,7 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ClassName_ (mvccVersion LONG default 0,classNameId LONG not null primary key,value VARCHAR(200) null)";
+	public static final String TABLE_SQL_CREATE = "create table ClassName_ (mvccVersion LONG default 0 not null,classNameId LONG not null primary key,value VARCHAR(200) null)";
 	public static final String TABLE_SQL_DROP = "drop table ClassName_";
 	public static final String ORDER_BY_JPQL = " ORDER BY className.classNameId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ClassName_.classNameId ASC";

@@ -84,7 +84,7 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RecentLayoutRevision (mvccVersion LONG default 0,recentLayoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutRevisionId LONG,layoutSetBranchId LONG,plid LONG)";
+	public static final String TABLE_SQL_CREATE = "create table RecentLayoutRevision (mvccVersion LONG default 0 not null,recentLayoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutRevisionId LONG,layoutSetBranchId LONG,plid LONG)";
 	public static final String TABLE_SQL_DROP = "drop table RecentLayoutRevision";
 	public static final String ORDER_BY_JPQL = " ORDER BY recentLayoutRevision.recentLayoutRevisionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RecentLayoutRevision.recentLayoutRevisionId ASC";

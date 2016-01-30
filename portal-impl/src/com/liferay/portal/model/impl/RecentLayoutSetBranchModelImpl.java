@@ -82,7 +82,7 @@ public class RecentLayoutSetBranchModelImpl extends BaseModelImpl<RecentLayoutSe
 		TABLE_COLUMNS_MAP.put("layoutSetId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RecentLayoutSetBranch (mvccVersion LONG default 0,recentLayoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutSetBranchId LONG,layoutSetId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table RecentLayoutSetBranch (mvccVersion LONG default 0 not null,recentLayoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutSetBranchId LONG,layoutSetId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table RecentLayoutSetBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY recentLayoutSetBranch.recentLayoutSetBranchId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RecentLayoutSetBranch.recentLayoutSetBranchId ASC";

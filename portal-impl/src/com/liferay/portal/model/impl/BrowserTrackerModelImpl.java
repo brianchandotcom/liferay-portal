@@ -78,7 +78,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		TABLE_COLUMNS_MAP.put("browserKey", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table BrowserTracker (mvccVersion LONG default 0,browserTrackerId LONG not null primary key,companyId LONG,userId LONG,browserKey LONG)";
+	public static final String TABLE_SQL_CREATE = "create table BrowserTracker (mvccVersion LONG default 0 not null,browserTrackerId LONG not null primary key,companyId LONG,userId LONG,browserKey LONG)";
 	public static final String TABLE_SQL_DROP = "drop table BrowserTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY browserTracker.browserTrackerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BrowserTracker.browserTrackerId ASC";

@@ -80,7 +80,7 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserGroupRole (mvccVersion LONG default 0,userId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (userId, groupId, roleId))";
+	public static final String TABLE_SQL_CREATE = "create table UserGroupRole (mvccVersion LONG default 0 not null,userId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (userId, groupId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table UserGroupRole";
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroupRole.id.userId ASC, userGroupRole.id.groupId ASC, userGroupRole.id.roleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroupRole.userId ASC, UserGroupRole.groupId ASC, UserGroupRole.roleId ASC";

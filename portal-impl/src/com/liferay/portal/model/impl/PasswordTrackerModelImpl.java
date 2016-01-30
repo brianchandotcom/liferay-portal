@@ -82,7 +82,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		TABLE_COLUMNS_MAP.put("password_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PasswordTracker (mvccVersion LONG default 0,passwordTrackerId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,password_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordTracker (mvccVersion LONG default 0 not null,passwordTrackerId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,password_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordTracker.userId DESC, passwordTracker.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordTracker.userId DESC, PasswordTracker.createDate DESC";

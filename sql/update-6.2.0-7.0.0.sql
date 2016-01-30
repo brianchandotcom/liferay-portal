@@ -37,7 +37,7 @@ update DLFolder set restrictionType = 1 where overrideFileEntryTypes = 1;
 alter table DLFolder drop column overrideFileEntryTypes;
 
 create table ExportImportConfiguration (
-	mvccVersion LONG default 0,
+	mvccVersion LONG default 0 not null,
 	exportImportConfigurationId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -74,7 +74,7 @@ alter table Organization_ add logoId LONG;
 alter table RatingsEntry add uuid_ VARCHAR(75) null;
 
 create table RecentLayoutBranch (
-	mvccVersion LONG default 0,
+	mvccVersion LONG default 0 not null,
 	recentLayoutBranchId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -85,7 +85,7 @@ create table RecentLayoutBranch (
 );
 
 create table RecentLayoutRevision (
-	mvccVersion LONG default 0,
+	mvccVersion LONG default 0 not null,
 	recentLayoutRevisionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -96,7 +96,7 @@ create table RecentLayoutRevision (
 );
 
 create table RecentLayoutSetBranch (
-	mvccVersion LONG default 0,
+	mvccVersion LONG default 0 not null,
 	recentLayoutSetBranchId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

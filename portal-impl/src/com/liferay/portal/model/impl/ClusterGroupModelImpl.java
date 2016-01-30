@@ -75,7 +75,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		TABLE_COLUMNS_MAP.put("wholeCluster", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ClusterGroup (mvccVersion LONG default 0,clusterGroupId LONG not null primary key,name VARCHAR(75) null,clusterNodeIds VARCHAR(75) null,wholeCluster BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table ClusterGroup (mvccVersion LONG default 0 not null,clusterGroupId LONG not null primary key,name VARCHAR(75) null,clusterNodeIds VARCHAR(75) null,wholeCluster BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table ClusterGroup";
 	public static final String ORDER_BY_JPQL = " ORDER BY clusterGroup.clusterGroupId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ClusterGroup.clusterGroupId ASC";

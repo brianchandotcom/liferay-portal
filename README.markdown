@@ -11,35 +11,35 @@ To get started, check out the project's community homepage at
 
 ## Latest Release Details
 
-The latest release, Liferay version 7, is built from the source code of
-Liferay Portal and several other related open source projects. It includes
-features for end users, business professionals, system administrators,
-and enterprise developers.
+The latest release, Liferay version 7, is built from the source code of Liferay
+Portal and several other related open source projects. It includes features for
+end users, business professionals, system administrators, and enterprise
+developers.
 
-* Modular architecture for maximum flexibility and reliability
-* Portal features for managing users, groups, and permissions
-* Single Page Applications for blazingly fast performance
-* Rich web services for integrating with other systems
-* Web Content Management including Personalization and Content Targeting
-* Documents and Rich Media Management
-* Complete Mobile development platform
-* Business Forms and Workflow
-* Collaboration features such as blogs, wikis, and social networking
-* Consistent and powerful Lexicon User Experience
-* Integrated Development Environment using [Liferay IDE](https://www.liferay.com/community/liferay-projects/liferay-ide/overview)
+*   Modular architecture for maximum flexibility and reliability
+*   Portal features for managing users, groups, and permissions
+*   Single page applications for blazingly fast performance
+*   Rich web services for integrating with other systems
+*   Web content management including Personalization and Content Targeting
+*   Documents and rich media management
+*   Mobile development platform
+*   Business forms and workflow
+*   Collaboration features such as blogs, wikis, and social networking
+*   Consistent and powerful Lexicon user experience
+*   Integrated development environment using [Liferay IDE](https://www.liferay.com/community/liferay-projects/liferay-ide/overview)
 
-For more details on these and other features, please see the
-[Discover](https://dev.liferay.com/discover/portal) section on the
-[Liferay Developer Network](https://dev.liferay.com).
+For more details on these and other features, please refer to the [user
+guide](https://dev.liferay.com/discover/portal) on the [Liferay Developer
+Network](https://dev.liferay.com).
 
 ## Quick Start
 
 To get up and running quickly, *download* a [pre-built Liferay
 release](http://liferay.com/downloads) and follow the [Quick
 Start](http://liferay.com/quick-start) instructions. For more detailed
-installation instructions, please read the
-[Deployment](https://dev.liferay.com/discover/deployment) section of
-documentation on the [Liferay Developer Network](https://dev.liferay.com).
+installation instructions, please refer to the [system administrator
+guide](https://dev.liferay.com/discover/deployment) on the [Liferay Developer
+Network](https://dev.liferay.com).
 
 If you wish to *build* core Liferay or its plugins, read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).
@@ -63,7 +63,7 @@ the apps to the Liferay Marketplace.
 The Liferay Developer Network is not only your home for Liferay development, but
 it's also your place to [participate](https://dev.liferay.com/participate) in
 making Liferay better. Come check out the [Liferay Developer
-Network](https://dev.liferay.com). 
+Network](https://dev.liferay.com).
 
 ## Source Code
 
@@ -87,11 +87,13 @@ questions, and connect with other Liferay community members.
 
 Follow us on Twitter:
 
-- [@Liferay](http://twitter.com/Liferay) tweets the Liferay's latest
-announcements
-- [@Liferaydocs](http://twitter.com/Liferaydocs) tweets about new articles
-- [@Liferayeng](http://twitter.com/Liferayeng) tweets from the core engineering
-team
+-   [@Liferay](http://twitter.com/Liferay) tweets the Liferay's latest
+    announcements
+
+-   [@Liferaydocs](http://twitter.com/Liferaydocs) tweets about new articles
+
+-   [@Liferayeng](http://twitter.com/Liferayeng) tweets from the core
+    engineering team
 
 ### Blog
 
@@ -130,23 +132,23 @@ Did you find a bug? Please file an issue for it at
 [https://issues.liferay.com](https://issues.liferay.com) following [Liferay's
 JIRA Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
 
-If you'd like to suggest a new feature for Liferay, visit the
-[Ideas Dashboard](https://dev.liferay.com/participate/ideas) to submit and
-track the progress of your idea!
+If you'd like to suggest a new feature for Liferay, visit the [Ideas
+Dashboard](https://dev.liferay.com/participate/ideas) to submit and track the
+progress of your idea!
 
 ## Professional Services
 
-If you need professional consultation or help with Liferay and your business, 
+If you need professional consultation or help with Liferay and your business,
 check out the [offerings from Liferay, Inc.](http://www.liferay.com/services)
 and its [partner network](http://www.liferay.com/partners/service-partners).
 
 ## The Liferay Development Team
 
-Liferay is produced by the worldwide Liferay Portal engineering team, and
-involves many hours of development, testing, writing documentation, and working
-with the wider Liferay community of customers, partners, and open source
-developers. We are glad you have chosen Liferay, and hope that it meets or
-exceeds your expectations!
+Liferay is produced by the worldwide Liferay engineering team, and involves many
+hours of development, testing, writing documentation, and working with the wider
+Liferay community of customers, partners, and open source developers. We are
+glad you have chosen Liferay, and hope that it meets or exceeds your
+expectations!
 
 In addition to Liferay's engineering staff, a special thanks goes to the many
 open source developers who volunteere their time and energy to help with the

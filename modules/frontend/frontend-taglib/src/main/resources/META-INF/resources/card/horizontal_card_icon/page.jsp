@@ -14,9 +14,25 @@
  */
 --%>
 
-<%@ include file="/card/init.jsp" %>
+<%@ include file="/card/horizontal_card_icon/init.jsp" %>
 
 <%
-String colHTML = (String)request.getAttribute("liferay-frontend:card:colHTML");
-String text = (String)request.getAttribute("liferay-frontend:card:text");
+Object bodyContent = request.getAttribute("liferay-frontend:horizontal-card-icon:bodyContent");
+
+String bodyContentString = StringPool.BLANK;
+
+if (bodyContent != null) {
+	bodyContentString = bodyContent.toString();
+}
 %>
+
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(bodyContentString) %>">
+		<%= bodyContentString %>
+	</c:when>
+	<c:otherwise>
+		<div class="icon-monospaced sticker-default sticker-lg">
+			<aui:icon cssClass="text-default" image="<%= icon %>" markupView="lexicon" />
+		</div>
+	</c:otherwise>
+</c:choose>

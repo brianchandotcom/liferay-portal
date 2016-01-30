@@ -17,24 +17,36 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyContent;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
- * @author Eudaldo Alonso
+ * @author Roberto Díaz
  */
-public class HorizontalCardIconTag extends IncludeTag {
+public class HorizontalCardColTag extends IncludeTag implements BodyTag {
+
+	@Override
+	public int doEndTag() {
+		HorizontalCardTag horizontalCardTag =
+			(HorizontalCardTag)findAncestorWithClass(
+				this, HorizontalCardTag.class);
+
+		BodyContent bodyContent = getBodyContent();
+
+		if (bodyContent != null) {
+			horizontalCardTag.setColHTML(bodyContent.getString());
+		}
+
+		return EVAL_PAGE;
+	}
 
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
-	}
-
-	public void setIcon(String icon) {
-		_icon = icon;
 	}
 
 	@Override
@@ -45,35 +57,18 @@ public class HorizontalCardIconTag extends IncludeTag {
 	}
 
 	@Override
-	protected void cleanUp() {
-		_icon = null;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
-
-		request.setAttribute(
-			"liferay-frontend:horizontal-card-icon:icon", _icon);
+	protected int processStartTag() throws Exception {
+		return EVAL_BODY_BUFFERED;
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
 		"liferay-frontend:horizontal-card-col:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
-	private static final String _PAGE = "/card/horizontal_card_icon/page.jsp";
-
-	private String _icon;
 
 }

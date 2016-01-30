@@ -107,6 +107,10 @@ journalContentSearch.setResults(documents);
 			summary.setQueryTerms(queryTerms);
 			%>
 
+			<liferay-ui:search-container-column-icon
+				icon="web-content"
+			/>
+
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
 			>

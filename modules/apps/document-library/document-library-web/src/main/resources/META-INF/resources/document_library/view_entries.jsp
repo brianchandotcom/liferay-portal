@@ -485,9 +485,11 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									text="<%= HtmlUtil.escape(curFolder.getName()) %>"
 									url="<%= rowURL.toString() %>"
 								>
-									<liferay-frontend:horizontal-card-icon>
-										<span class="icon-monospaced <%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close-alt" %>"></span>
-									</liferay-frontend:horizontal-card-icon>
+									<liferay-frontend:horizontal-card-col>
+										<liferay-frontend:horizontal-card-icon
+											icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
+										/>
+									</liferay-frontend:horizontal-card-col>
 								</liferay-frontend:horizontal-card>
 							</liferay-ui:search-container-column-text>
 						</c:when>

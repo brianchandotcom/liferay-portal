@@ -317,9 +317,11 @@ if (Validator.isNotNull(keywords)) {
 											text="<%= HtmlUtil.escape(folder.getName()) %>"
 											url="<%= viewFolderURL.toString() %>"
 										>
-											<liferay-frontend:horizontal-card-icon>
-												<span class="icon-folder-close-alt icon-monospaced"></span>
-											</liferay-frontend:horizontal-card-icon>
+											<liferay-frontend:horizontal-card-col>
+												<liferay-frontend:horizontal-card-icon
+													icon="folder"
+												/>
+											</liferay-frontend:horizontal-card-col>
 										</liferay-frontend:horizontal-card>
 									</liferay-ui:search-container-column-text>
 

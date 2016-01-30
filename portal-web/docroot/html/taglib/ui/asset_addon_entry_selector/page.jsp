@@ -41,7 +41,7 @@
 
 	</ul>
 
-	<aui:button cssClass="select-button" name='<%= id + "selectButton" %>' value="select" />
+	<aui:button cssClass="btn-lg select-button" name='<%= id + "selectButton" %>' value="select" />
 </div>
 
 <aui:script use="liferay-asset-addon-entry-selector">

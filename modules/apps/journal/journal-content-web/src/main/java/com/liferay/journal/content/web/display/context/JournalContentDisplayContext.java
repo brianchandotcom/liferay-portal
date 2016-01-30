@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -59,10 +60,10 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
-import com.liferay.util.PropertyComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -347,8 +348,7 @@ public class JournalContentDisplayContext {
 				});
 
 		return ListUtil.sort(
-			contentMetadataAssetAddonEntries,
-			new PropertyComparator("weight", true, false));
+			contentMetadataAssetAddonEntries, _assetAddonEntryComparator);
 	}
 
 	public List<UserToolAssetAddonEntry> getEnabledUserToolAssetAddonEntries() {
@@ -367,8 +367,7 @@ public class JournalContentDisplayContext {
 				});
 
 		return ListUtil.sort(
-			userToolAssetAddonEntries,
-			new PropertyComparator("weight", true, false));
+			userToolAssetAddonEntries, _assetAddonEntryComparator);
 	}
 
 	public JournalArticle getLatestArticle() {
@@ -743,6 +742,20 @@ public class JournalContentDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentDisplayContext.class);
+
+	private static final Comparator<AssetAddonEntry>
+		_assetAddonEntryComparator = new Comparator<AssetAddonEntry>() {
+
+			@Override
+			public int compare(
+				AssetAddonEntry assetAddonEntry1,
+				AssetAddonEntry assetAddonEntry2) {
+
+				return Double.compare(
+					assetAddonEntry1.getWeight(), assetAddonEntry2.getWeight());
+			}
+
+		};
 
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;

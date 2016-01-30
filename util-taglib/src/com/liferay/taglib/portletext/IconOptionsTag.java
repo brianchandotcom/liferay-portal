@@ -15,15 +15,14 @@
 package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactoryComparator;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.ui.IconTag;
-import com.liferay.util.PropertyComparator;
 
-import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -42,12 +41,10 @@ public class IconOptionsTag extends IconTag {
 			return _portletConfigurationIcons;
 		}
 
-		Comparator<?> comparator = new PropertyComparator(
-			"weight", false, false);
-
 		_portletConfigurationIcons =
 			PortletConfigurationIconTracker.getPortletConfigurationIcons(
-				getPortletId(), getPortletRequest(), comparator);
+				getPortletId(), getPortletRequest(),
+				PortletConfigurationIconFactoryComparator.INSTANCE);
 
 		return _portletConfigurationIcons;
 	}

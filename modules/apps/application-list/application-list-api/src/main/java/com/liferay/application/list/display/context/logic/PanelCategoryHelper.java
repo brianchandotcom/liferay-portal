@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,6 +81,21 @@ public class PanelCategoryHelper {
 
 		return hasPortlet(
 			portletId, panelCategoryKey, permissionChecker, group);
+	}
+
+	public List<PanelApp> getAllPanelApps(String panelCategoryKey) {
+		List<PanelApp> panelApps = new ArrayList<>();
+
+		panelApps.addAll(_panelAppRegistry.getPanelApps(panelCategoryKey));
+
+		for (PanelCategory curPanelCategory :
+				_panelCategoryRegistry.getChildPanelCategories(
+					panelCategoryKey)) {
+
+			panelApps.addAll(getAllPanelApps(curPanelCategory.getKey()));
+		}
+
+		return panelApps;
 	}
 
 	public String getFirstPortletId(

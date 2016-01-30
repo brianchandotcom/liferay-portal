@@ -67,7 +67,7 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 				runSQL(
 					"alter table " + tableName +
-						" add mvccVersion LONG default 0");
+						" add mvccVersion LONG not null default 0");
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(

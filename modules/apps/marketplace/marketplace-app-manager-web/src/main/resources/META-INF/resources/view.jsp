@@ -34,7 +34,7 @@ portletURL.setParameter("orderByType", orderByType);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), null);
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewURL" />
 
@@ -44,6 +44,18 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			selected="<%= true %>"
 		/>
 	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcPath" value="/view_search_results.jsp" />
+		</liferay-portlet:renderURL>
+
+		<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
@@ -120,45 +132,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			className="com.liferay.marketplace.app.manager.web.util.AppDisplay"
 			modelVar="appDisplay"
 		>
-			<liferay-ui:search-container-column-text>
-				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="iconURL" value="<%= appDisplay.getIconURL(request) %>" />
-				</liferay-util:include>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-				<h5>
-					<a href="<%= HtmlUtil.escapeHREF(appDisplay.getDisplayURL(renderResponse)) %>">
-						<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(appDisplay.getTitle()) %>
-					</a>
-				</h5>
-
-				<h6 class="text-default">
-					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(appDisplay.getDescription()) %>
-				</h6>
-
-				<div class="additional-info text-default">
-					<div class="additional-info-item">
-						<strong>
-							<liferay-ui:message key="version" />:
-						</strong>
-
-						<%= appDisplay.getVersion() %>
-					</div>
-
-					<div class="additional-info-item">
-						<strong>
-							<liferay-ui:message key="status" />:
-						</strong>
-
-						<liferay-ui:message key="<%= BundleStateConstants.getLabel(appDisplay.getState()) %>" />
-					</div>
-				</div>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-jsp
-				path="/app_display_action.jsp"
-			/>
+			<%@ include file="/app_display_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new MarketplaceAppManagerResultRowSplitter() %>" />

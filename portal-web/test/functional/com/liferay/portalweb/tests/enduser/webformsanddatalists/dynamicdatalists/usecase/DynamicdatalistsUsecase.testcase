@@ -1598,6 +1598,202 @@
 		</execute>
 	</command>
 
+	<command name="EditDefaultLanguageAndPublishRecord" priority="3">
+		<description message="This is a use case for LPS-59154." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListName" value="List Name" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="ddlListName" value="List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Text Spanish" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#changeDefaultLanguage">
+			<var name="defaultLanguage" value="Spanish (Spain)" />
+		</execute>
+
+		<execute macro="DDLRecord#editTranslation">
+			<var name="localizedLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Text English" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#publish" />
+
+		<execute macro="DDLRecord#viewFieldCP">
+			<var name="ddlRecordFieldData" value="Text English" />
+			<var name="fieldFieldLabel" value="Text" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#editCP">
+			<var name="ddlListName" value="List Name" />
+			<var name="ddlRecordFieldData" value="Text English" />
+		</execute>
+
+		<execute macro="DDLRecord#removeTranslation">
+			<var name="localizedLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="DDLRecord#addTranslation">
+			<var name="localizedLanguage" value="Hebrew (Israel)" />
+		</execute>
+
+		<execute macro="DDLRecord#editTranslation">
+			<var name="localizedLanguage" value="Hebrew (Israel)" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Text Hebrew" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#publish" />
+
+		<execute macro="DDLRecord#viewFieldCP">
+			<var name="ddlRecordFieldData" value="Text Spanish" />
+			<var name="fieldFieldLabel" value="Text" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Dynamic Data Lists Display" />
+		</execute>
+
+		<execute macro="DDLList#addViaDDLDisplayPG">
+			<var name="ddlListName" value="List Name Display" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
+		</execute>
+
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Text Spanish" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#changeDefaultLanguage">
+			<var name="defaultLanguage" value="Spanish (Spain)" />
+		</execute>
+
+		<execute macro="DDLRecord#editTranslation">
+			<var name="localizedLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Text English" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#publish" />
+
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
+			<var name="ddlListName" value="List Name Display" />
+			<var name="ddlRecordFieldData" value="Text English" />
+			<var name="fieldFieldLabel" value="Text" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
+		</execute>
+
+		<execute macro="DDLRecord#editPG" />
+
+		<execute macro="DDLRecord#removeTranslation">
+			<var name="localizedLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="DDLRecord#addTranslation">
+			<var name="localizedLanguage" value="Hebrew (Israel)" />
+		</execute>
+
+		<execute macro="DDLRecord#editTranslation">
+			<var name="localizedLanguage" value="Hebrew (Israel)" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Text Hebrew" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#publish" />
+
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
+			<var name="ddlListName" value="List Name Display" />
+			<var name="ddlRecordFieldData" value="Text Spanish" />
+			<var name="fieldFieldLabel" value="Text" />
+		</execute>
+	</command>
+
 	<command name="EditListRecordWithNestedFieldViaSpreadsheetView" priority="3">
 		<description message="This is a use case for LPS-59272." />
 

@@ -35,6 +35,12 @@
 		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
+	<command name="changeDefaultLanguage">
+		<execute function="AssertClick" locator1="Translation#CHANGE_DEFAULT_LANGUAGE" value1="Change" />
+
+		<execute function="Select" locator1="Translation#DEFAULT_LANGUAGE_SELECT" value1="${defaultLanguage}" />
+	</command>
+
 	<command name="deleteCP">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
 
@@ -357,6 +363,14 @@
 		</if>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="removeTranslation">
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute function="ClickNoError" locator1="Translation#REMOVE_TRANSLATION" />
+
+		<execute function="Confirm" value1="Are you sure you want to deactivate this language?" />
 	</command>
 
 	<command name="save">

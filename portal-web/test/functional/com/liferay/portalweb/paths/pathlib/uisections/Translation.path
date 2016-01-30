@@ -58,6 +58,11 @@
 	<td>//li[@data-value='${key_localizationName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REMOVE_TRANSLATION</td>
+	<td>//span[contains(.,'${key_localizedLanguage}')]//i[contains(@class,'icon-remove')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

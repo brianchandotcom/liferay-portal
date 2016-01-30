@@ -162,12 +162,13 @@
 	</command>
 
 	<command name="addCreateAccountPG">
-		<execute function="AssertClick" locator1="Link#CREATE_ACCOUNT" value1="Create Account" />
-		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${userFirstName}" />
-		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${userLastName}" />
-		<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="User#createAccount">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Thank you for creating an account. Your email verification code has been sent to ${userEmailAddress}. Your password has been sent to ${userEmailAddress}." />
 	</command>
 
@@ -934,6 +935,17 @@
 				</execute>
 			</else>
 		</if>
+	</command>
+
+	<command name="createAccount">
+		<execute function="AssertClick" locator1="Link#CREATE_ACCOUNT" value1="Create Account" />
+
+		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${userFirstName}" />
+		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${userLastName}" />
+		<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="deactivateCP">

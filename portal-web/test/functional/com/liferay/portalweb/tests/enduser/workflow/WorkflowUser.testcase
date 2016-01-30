@@ -1,0 +1,93 @@
+<definition component-name="portal-workflow">
+	<property name="testray.main.component.name" value="Workflow" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Workflow#tearDownPortalWorkflow" />
+
+				<execute macro="User#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="CreateNewUserAccount" priority="5">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="User" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="WorkflowAsset#createNewUserAccount">
+			<var name="userEmailAddress" value="user@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+			<var name="workflow" value="true" />
+		</execute>
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewNoUsersFoundCP" />
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="userfn userln" />
+			<var name="workflowAssetType" value="User" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="userfn userln" />
+			<var name="workflowAssetType" value="User" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="user@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="user@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+</definition>

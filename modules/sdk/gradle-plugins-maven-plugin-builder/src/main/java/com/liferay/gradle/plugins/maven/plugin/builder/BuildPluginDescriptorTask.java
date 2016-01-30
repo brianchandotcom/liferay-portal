@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.maven.plugin.builder;
 import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
+import com.liferay.gradle.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.BeanProperty;
@@ -153,6 +154,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	@Input
+	public String getGoalPrefix() {
+		return GradleUtil.toString(_goalPrefix);
+	}
+
+	@Input
 	public String getMavenExecutable() {
 		return GradleUtil.toString(_mavenExecutable);
 	}
@@ -204,6 +210,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public void setForcedExclusions(String ... forcedExclusions) {
 		setForcedExclusions(Arrays.asList(forcedExclusions));
+	}
+
+	public void setGoalPrefix(Object goalPrefix) {
+		_goalPrefix = goalPrefix;
 	}
 
 	public void setMavenExecutable(Object mavenExecutable) {
@@ -325,9 +335,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 					execSpec.args("-Dencoding=UTF-8");
 
-					execSpec.args(
-						"org.apache.maven.plugins:maven-plugin-plugin:" +
-							getMavenVersion() + ":descriptor");
+					execSpec.args("plugin:descriptor");
 
 					execSpec.setExecutable(getMavenExecutable());
 					execSpec.setWorkingDir(project.getProjectDir());
@@ -378,6 +386,33 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.appendElement(
 			document, buildElement, "sourceDirectory",
 			project.relativePath(sourceDir));
+
+		Element pluginsElement = document.createElement("plugins");
+
+		buildElement.appendChild(pluginsElement);
+
+		Element pluginElement = document.createElement("plugin");
+
+		pluginsElement.appendChild(pluginElement);
+
+		XMLUtil.appendElement(
+			document, pluginElement, "groupId", "org.apache.maven.plugins");
+		XMLUtil.appendElement(
+			document, pluginElement, "artifactId", "maven-plugin-plugin");
+		XMLUtil.appendElement(
+			document, pluginElement, "version", getMavenVersion());
+
+		String goalPrefix = getGoalPrefix();
+
+		if (Validator.isNotNull(goalPrefix)) {
+			Element configurationElement = document.createElement(
+				"configuration");
+
+			pluginElement.appendChild(configurationElement);
+
+			XMLUtil.appendElement(
+				document, configurationElement, "goalPrefix", goalPrefix);
+		}
 
 		Element dependenciesElement = document.createElement("dependencies");
 
@@ -567,6 +602,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private final Map<String, String> _configurationScopeMappings =
 		new HashMap<>();
 	private final Set<String> _forcedExclusions = new HashSet<>();
+	private Object _goalPrefix;
 	private Object _mavenExecutable;
 	private Object _mavenVersion = "3.4";
 	private Object _outputDir;

@@ -64,7 +64,18 @@ String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME
 
 renderResponse.setTitle(bundleName);
 
-MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, bundle, request, renderResponse);
+if (Validator.isNull(app)) {
+	PortletURL viewURL = renderResponse.createRenderURL();
+
+	viewURL.setParameter("mvcPath", "/view.jsp");
+
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), viewURL.toString());
+
+	PortalUtil.addPortletBreadcrumbEntry(request, bundleName, null);
+}
+else {
+	MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, bundle, request, renderResponse);
+}
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -104,7 +115,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	searchContainerId="appDisplays"
+	searchContainerId="components"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons

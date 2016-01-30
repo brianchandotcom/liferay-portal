@@ -25,7 +25,6 @@ String state = ParamUtil.getString(request, "state", "all-statuses");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 List<App> apps = AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-List<Bundle> bundles = BundleManagerUtil.getBundles();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -99,6 +98,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 		<liferay-ui:search-container-results>
 
 			<%
+			List<Bundle> bundles = BundleManagerUtil.getBundles();
+
 			results = MarketplaceAppManagerSearchUtil.getResults(bundles, keywords);
 
 			results = ListUtil.sort(results, new MarketplaceAppManagerComparator(orderByType));
@@ -122,10 +123,31 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 		>
 			<c:choose>
 				<c:when test="<%= result instanceof AppDisplay %>">
+
+					<%
+					AppDisplay appDisplay = (AppDisplay)result;
+					%>
+
+					<%@ include file="/app_display_columns.jspf" %>
 				</c:when>
 				<c:when test="<%= result instanceof ModuleGroupDisplay %>">
+
+					<%
+					ModuleGroupDisplay moduleGroupDisplay = (ModuleGroupDisplay)result;
+					%>
+
+					<%@ include file="/module_group_display_columns.jspf" %>
 				</c:when>
 				<c:when test="<%= result instanceof Bundle %>">
+
+					<%
+					Bundle bundle = (Bundle)result;
+
+					String app = StringPool.BLANK;
+					String moduleGroup = StringPool.BLANK;
+					%>
+
+					<%@ include file="/bundle_columns.jspf" %>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>

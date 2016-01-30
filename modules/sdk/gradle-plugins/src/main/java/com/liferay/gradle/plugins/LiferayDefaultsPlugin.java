@@ -91,7 +91,6 @@ import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
-import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
@@ -118,11 +117,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String DEFAULT_REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
 
+	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
+
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
-
-	public static final String ZIP_JAVADOC_TASK_NAME = "zipJavadoc";
 
 	protected Configuration addConfigurationPortalTest(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -194,6 +193,23 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return copy;
 	}
 
+	protected Jar addTaskJarJavadoc(Project project) {
+		Jar jar = GradleUtil.addTask(project, JAR_JAVADOC_TASK_NAME, Jar.class);
+
+		jar.setClassifier("javadoc");
+		jar.setDescription(
+			"Assembles a jar archive containing the Javadoc files for this " +
+				"project.");
+		jar.setGroup(BasePlugin.BUILD_GROUP);
+
+		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		jar.from(javadoc);
+
+		return jar;
+	}
+
 	protected Jar addTaskJarSources(Project project, boolean testProject) {
 		final Jar jar = GradleUtil.addTask(
 			project, JAR_SOURCES_TASK_NAME, Jar.class);
@@ -259,24 +275,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			});
 
 		return jar;
-	}
-
-	protected Zip addTaskZipJavadoc(Project project) {
-		Zip zip = GradleUtil.addTask(project, ZIP_JAVADOC_TASK_NAME, Zip.class);
-
-		zip.setClassifier("javadoc");
-		zip.setDescription(
-			"Assembles a zip archive containing the Javadoc files for this " +
-				"project.");
-		zip.setGroup(BasePlugin.BUILD_GROUP);
-
-		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
-			project, JavaPlugin.JAVADOC_TASK_NAME);
-
-		zip.dependsOn(javadoc);
-		zip.from(javadoc);
-
-		return zip;
 	}
 
 	protected void applyConfigScripts(Project project) {
@@ -355,11 +353,11 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		};
 
 		if (FileUtil.hasSourceFiles(javadocTask, spec)) {
-			Task zipJavadocTask = GradleUtil.getTask(
-				project, ZIP_JAVADOC_TASK_NAME);
+			Task jarJavadocTask = GradleUtil.getTask(
+				project, JAR_JAVADOC_TASK_NAME);
 
 			artifactHandler.add(
-				Dependency.ARCHIVES_CONFIGURATION, zipJavadocTask);
+				Dependency.ARCHIVES_CONFIGURATION, jarJavadocTask);
 		}
 	}
 
@@ -470,8 +468,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		addDependenciesPortalTest(project);
 		addDependenciesTestCompile(project);
+		addTaskJarJavadoc(project);
 		addTaskJarSources(project, testProject);
-		addTaskZipJavadoc(project);
 		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
 		configureEclipse(project, portalTestConfiguration);

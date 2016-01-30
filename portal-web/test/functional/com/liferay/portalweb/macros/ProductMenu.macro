@@ -118,6 +118,10 @@
 		<execute function="Pause" locator1="5000" />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
 	</command>
 
 	<command name="gotoPrivateSite" summary="Navigate to Product Menu > Sites > Site Popup > ${site}">

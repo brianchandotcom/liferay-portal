@@ -1,8 +1,8 @@
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile project(":apps:portal-settings:portal-settings-api")
-	compile project(":frontend:frontend-taglib")
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided project(":apps:portal-settings:portal-settings-api")
+	provided project(":frontend:frontend-taglib")
 
 	provided group: "org.eclipse.birt.runtime.3_7_1", name: "org.apache.xml.resolver", transitive: false, version: "1.2.0"
 	provided group: "org.openid4java", name: "openid4java", version: "0.9.8"

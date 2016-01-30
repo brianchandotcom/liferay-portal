@@ -5,11 +5,11 @@ task processSanitizerConfiguration(type: Copy)
 String sanitizerConfigurationUrl = "https://owaspantisamy.googlecode.com/files/antisamy-ebay-1.4.4.xml"
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile project(":portal:portal-metatype")
-
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.owasp.antisamy", name: "antisamy", version: "1.5.3"
+	provided project(":portal:portal-metatype")
 }
 
 liferay {

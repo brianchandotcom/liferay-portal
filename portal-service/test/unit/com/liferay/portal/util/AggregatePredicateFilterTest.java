@@ -110,7 +110,8 @@ public class AggregatePredicateFilterTest {
 			ListUtil.filter(list, aggregatePredicateFilter));
 	}
 
-	private class EndsWithPredicateFilter implements PredicateFilter<String> {
+	private static class EndsWithPredicateFilter
+		implements PredicateFilter<String> {
 
 		public EndsWithPredicateFilter(String lastLetter) {
 			_lastLetter = lastLetter;
@@ -131,7 +132,8 @@ public class AggregatePredicateFilterTest {
 
 	}
 
-	private class StartsWithPredicateFilter implements PredicateFilter<String> {
+	private static class StartsWithPredicateFilter
+		implements PredicateFilter<String> {
 
 		public StartsWithPredicateFilter(String firstLetter) {
 			_firstLetter = firstLetter;

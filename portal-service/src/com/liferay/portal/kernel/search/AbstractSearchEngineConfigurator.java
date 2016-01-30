@@ -417,7 +417,7 @@ public abstract class AbstractSearchEngineConfigurator
 		new ArrayList<>();
 	private Map<String, SearchEngine> _searchEngines;
 
-	private class SearchEngineRegistration {
+	private static class SearchEngineRegistration {
 
 		public void addOriginalSearchReaderMessageListener(
 			InvokerMessageListener messageListener) {

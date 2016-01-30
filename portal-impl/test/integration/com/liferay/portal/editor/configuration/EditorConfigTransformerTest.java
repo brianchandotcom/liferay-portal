@@ -311,7 +311,7 @@ public class EditorConfigTransformerTest {
 	private ServiceRegistration<EditorOptionsContributor>
 		_editorOptionsContributorServiceRegistration2;
 
-	private class BasicHTMLEditorConfigContributor
+	private static class BasicHTMLEditorConfigContributor
 		implements EditorConfigContributor {
 
 		@Override
@@ -328,7 +328,7 @@ public class EditorConfigTransformerTest {
 
 	}
 
-	private class TestEditorConfigTransformer
+	private static class TestEditorConfigTransformer
 		implements EditorConfigTransformer {
 
 		@Override
@@ -354,7 +354,7 @@ public class EditorConfigTransformerTest {
 
 	}
 
-	private class TextEditorOptionsContributor
+	private static class TextEditorOptionsContributor
 		implements EditorOptionsContributor {
 
 		@Override
@@ -369,7 +369,7 @@ public class EditorConfigTransformerTest {
 
 	}
 
-	private class UploadImagesEditorOptionsContributor
+	private static class UploadImagesEditorOptionsContributor
 		implements EditorOptionsContributor {
 
 		@Override

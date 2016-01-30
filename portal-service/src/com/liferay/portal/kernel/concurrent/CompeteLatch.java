@@ -114,7 +114,7 @@ public class CompeteLatch {
 
 	private final Sync _sync = new Sync();
 
-	private class Sync extends AbstractQueuedSynchronizer {
+	private static class Sync extends AbstractQueuedSynchronizer {
 
 		@Override
 		protected int tryAcquireShared(int arg) {

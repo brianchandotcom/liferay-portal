@@ -72,6 +72,22 @@ public class RepositoryConfigurationBuilder {
 		new ArrayList<>();
 	private final String _resourceBundleBaseName;
 
+	private static class RepositoryConfigurationImpl
+		implements RepositoryConfiguration {
+
+		public RepositoryConfigurationImpl(Collection<Parameter> parameters) {
+			_parameters = parameters;
+		}
+
+		@Override
+		public Collection<Parameter> getParameters() {
+			return _parameters;
+		}
+
+		private final Collection<Parameter> _parameters;
+
+	}
+
 	private class ParameterImpl implements RepositoryConfiguration.Parameter {
 
 		public ParameterImpl(String name, String labelKey) {
@@ -94,22 +110,6 @@ public class RepositoryConfigurationBuilder {
 
 		private final String _labelKey;
 		private final String _name;
-
-	}
-
-	private class RepositoryConfigurationImpl
-		implements RepositoryConfiguration {
-
-		public RepositoryConfigurationImpl(Collection<Parameter> parameters) {
-			_parameters = parameters;
-		}
-
-		@Override
-		public Collection<Parameter> getParameters() {
-			return _parameters;
-		}
-
-		private final Collection<Parameter> _parameters;
 
 	}
 

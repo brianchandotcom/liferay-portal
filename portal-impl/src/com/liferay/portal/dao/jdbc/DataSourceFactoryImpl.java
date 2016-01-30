@@ -587,16 +587,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	private ServiceTracker <MBeanServer, MBeanServer> _serviceTracker;
 
-	private static class NoPACL implements PACL {
-
-		@Override
-		public DataSource getDataSource(DataSource dataSource) {
-			return dataSource;
-		}
-
-	}
-
-	private class MBeanServerServiceTrackerCustomizer
+	private static class MBeanServerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {
 
 		public MBeanServerServiceTrackerCustomizer(
@@ -658,6 +649,15 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		private final org.apache.tomcat.jdbc.pool.DataSource _dataSource;
 		private final ObjectName _objectName;
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		@Override
+		public DataSource getDataSource(DataSource dataSource) {
+			return dataSource;
+		}
 
 	}
 

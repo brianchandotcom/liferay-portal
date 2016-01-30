@@ -391,7 +391,7 @@ public class ResourceBlockLocalServiceTest {
 
 	private static final int _THREAD_COUNT = 10;
 
-	private class MockPermissionedModel implements PermissionedModel {
+	private static class MockPermissionedModel implements PermissionedModel {
 
 		@Override
 		public long getResourceBlockId() {
@@ -411,7 +411,8 @@ public class ResourceBlockLocalServiceTest {
 
 	}
 
-	private class ReleaseResourceBlockCallable implements Callable<Void> {
+	private static class ReleaseResourceBlockCallable
+		implements Callable<Void> {
 
 		@Override
 		public Void call() throws Exception {
@@ -437,7 +438,8 @@ public class ResourceBlockLocalServiceTest {
 
 	}
 
-	private class UpdateResourceBlockIdCallable implements Callable<Void> {
+	private static class UpdateResourceBlockIdCallable
+		implements Callable<Void> {
 
 		@Override
 		public Void call() throws Exception {

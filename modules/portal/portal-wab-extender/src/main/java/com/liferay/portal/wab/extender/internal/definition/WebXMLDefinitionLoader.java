@@ -396,7 +396,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	private String _taglibUri;
 	private final WebXMLDefinition _webXMLDefinition;
 
-	private class FilterMapping {
+	private static class FilterMapping {
 
 		protected List<String> dispatchers = new ArrayList<>();
 		protected String filterName;
@@ -405,13 +405,13 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	}
 
-	private class JSPConfig {
+	private static class JSPConfig {
 
 		protected Map<String, String> mappings = new HashMap<>();
 
 	}
 
-	private class ServletMapping {
+	private static class ServletMapping {
 
 		protected String servletName;
 		protected List<String> urlPatterns = new ArrayList<>();

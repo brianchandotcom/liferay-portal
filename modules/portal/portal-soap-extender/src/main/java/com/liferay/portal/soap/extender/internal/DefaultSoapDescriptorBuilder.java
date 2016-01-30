@@ -35,7 +35,7 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 		return new DefaultSoapDescriptor(service, properties);
 	}
 
-	private class DefaultSoapDescriptor implements SoapDescriptor {
+	private static class DefaultSoapDescriptor implements SoapDescriptor {
 
 		public DefaultSoapDescriptor(
 			Object service, Map<String, Object> properties) {

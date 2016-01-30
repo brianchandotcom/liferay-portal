@@ -195,7 +195,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 	private int _resourceModificationCheckInterval = 60;
 	private TemplateResourceLoader _templateResourceLoader;
 
-	private class LiferayTemplate extends Template {
+	private static class LiferayTemplate extends Template {
 
 		public LiferayTemplate(TemplateResource templateResource) {
 			_templateResource = templateResource;

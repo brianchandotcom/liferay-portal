@@ -186,7 +186,7 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
-	private class ImportCommentsCallable implements Callable<Void> {
+	private static class ImportCommentsCallable implements Callable<Void> {
 
 		public ImportCommentsCallable(PortletDataContext portletDataContext) {
 			_portletDataContext = portletDataContext;

@@ -920,7 +920,7 @@ public class ExportImportHelperUtilTest {
 	private Layout _stagingPrivateLayout;
 	private Layout _stagingPublicLayout;
 
-	private class TestReaderWriter implements ZipReader, ZipWriter {
+	private static class TestReaderWriter implements ZipReader, ZipWriter {
 
 		@Override
 		public void addEntry(String name, byte[] bytes) {
@@ -1002,7 +1002,7 @@ public class ExportImportHelperUtilTest {
 
 	}
 
-	private class TestUserIdStrategy implements UserIdStrategy {
+	private static class TestUserIdStrategy implements UserIdStrategy {
 
 		@Override
 		public long getUserId(String userUuid) {

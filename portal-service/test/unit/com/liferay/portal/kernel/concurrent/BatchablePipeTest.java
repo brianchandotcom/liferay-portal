@@ -361,7 +361,7 @@ public class BatchablePipeTest {
 		Assert.assertNull(batchablePipe.take());
 	}
 
-	private class IntegerIncreasableEntry
+	private static class IntegerIncreasableEntry
 		extends IncreasableEntry<String, Integer> {
 
 		public IntegerIncreasableEntry(String key, Integer value) {

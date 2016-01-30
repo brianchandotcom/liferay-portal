@@ -100,7 +100,7 @@ public class WebXMLDefinitionLoaderTest {
 	@Mock
 	private ServletContextListener _servletContextListener;
 
-	private class EntryLoaderMockBundle extends MockBundle {
+	private static class EntryLoaderMockBundle extends MockBundle {
 
 		@Override
 		public URL getEntry(String path) {

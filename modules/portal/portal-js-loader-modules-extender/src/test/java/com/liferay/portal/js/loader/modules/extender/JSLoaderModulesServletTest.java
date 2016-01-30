@@ -576,7 +576,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 
 	private final AtomicInteger _counter = new AtomicInteger(0);
 
-	private class TestServiceReference
+	private static class TestServiceReference
 		implements ServiceReference<ServletContext> {
 
 		public TestServiceReference(

@@ -279,7 +279,7 @@ public class CustomSQLTest {
 	private final QueryDefinition<Object> _queryDefinition =
 		new QueryDefinition<>();
 
-	private class TestCustomSQL extends CustomSQL {
+	private static class TestCustomSQL extends CustomSQL {
 
 		public TestCustomSQL() throws SQLException {
 		}

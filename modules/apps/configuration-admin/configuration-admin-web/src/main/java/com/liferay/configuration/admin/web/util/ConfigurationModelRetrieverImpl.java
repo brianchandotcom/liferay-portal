@@ -283,7 +283,7 @@ public class ConfigurationModelRetrieverImpl
 	private ConfigurationAdmin _configurationAdmin;
 	private ExtendedMetaTypeService _extendedMetaTypeService;
 
-	private class ConfigurationCategoryComparator
+	private static class ConfigurationCategoryComparator
 		implements Comparator<String> {
 
 		@Override
@@ -325,7 +325,7 @@ public class ConfigurationModelRetrieverImpl
 
 	}
 
-	private class ConfigurationModelComparator
+	private static class ConfigurationModelComparator
 		implements Comparator<ConfigurationModel> {
 
 		@Override

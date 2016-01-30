@@ -2444,7 +2444,7 @@ public class HookHotDeployListener
 		_serviceRegistrations = newMap();
 	private final Set<String> _servletContextNames = new HashSet<>();
 
-	private class DLFileEntryProcessorContainer {
+	private static class DLFileEntryProcessorContainer {
 
 		public void registerDLProcessor(DLProcessor dlProcessor) {
 			DLProcessorRegistryUtil.register(dlProcessor);
@@ -2464,7 +2464,7 @@ public class HookHotDeployListener
 
 	}
 
-	private class DLRepositoryContainer {
+	private static class DLRepositoryContainer {
 
 		public void registerRepositoryFactory(
 			String className,
@@ -2490,7 +2490,7 @@ public class HookHotDeployListener
 
 	}
 
-	private class HotDeployListenersContainer {
+	private static class HotDeployListenersContainer {
 
 		public void registerHotDeployListener(
 			HotDeployListener hotDeployListener) {
@@ -2511,7 +2511,8 @@ public class HookHotDeployListener
 
 	}
 
-	private class MergeStringArraysContainer implements StringArraysContainer {
+	private static class MergeStringArraysContainer
+		implements StringArraysContainer {
 
 		@Override
 		public String[] getStringArray() {
@@ -2551,7 +2552,7 @@ public class HookHotDeployListener
 
 	}
 
-	private class OverrideStringArraysContainer
+	private static class OverrideStringArraysContainer
 		implements StringArraysContainer {
 
 		@Override

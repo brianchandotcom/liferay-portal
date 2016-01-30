@@ -884,7 +884,7 @@ public class ArrayUtilTest {
 
 		};
 
-	private class User {
+	private static class User {
 
 		public User(String name, int age) {
 			_name = name;

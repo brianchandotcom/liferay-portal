@@ -58,7 +58,7 @@ public class ServiceWrapperRegistry {
 	private final ServiceTracker<ServiceWrapper<?>, ServiceBag<?>>
 		_serviceTracker;
 
-	private class ServiceWrapperServiceTrackerCustomizer
+	private static class ServiceWrapperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<ServiceWrapper<?>, ServiceBag<?>> {
 
 		@Override

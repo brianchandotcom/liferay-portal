@@ -1436,7 +1436,7 @@ public class PortletTracker
 	private ServiceTracker<Portlet, com.liferay.portal.model.Portlet>
 		_serviceTracker;
 
-	private class JspServletWrapper extends HttpServlet {
+	private static class JspServletWrapper extends HttpServlet {
 
 		@Override
 		public void destroy() {
@@ -1465,7 +1465,7 @@ public class PortletTracker
 
 	}
 
-	private class PortletServletWrapper extends HttpServlet {
+	private static class PortletServletWrapper extends HttpServlet {
 
 		@Override
 		protected void service(
@@ -1480,7 +1480,7 @@ public class PortletTracker
 
 	}
 
-	private class RestrictPortletServletRequestFilter implements Filter {
+	private static class RestrictPortletServletRequestFilter implements Filter {
 
 		@Override
 		public void destroy() {

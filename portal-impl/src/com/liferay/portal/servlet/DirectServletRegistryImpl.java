@@ -216,7 +216,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 	private final Map<String, ServletInfo> _servletInfos =
 		new ConcurrentHashMap<>();
 
-	private class ServletInfo {
+	private static class ServletInfo {
 
 		public long getLastModified() {
 			return _lastModified;

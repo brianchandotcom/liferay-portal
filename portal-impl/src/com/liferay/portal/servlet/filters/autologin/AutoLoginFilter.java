@@ -285,7 +285,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 	private final ServiceTracker<?, AutoLogin> _serviceTracker;
 
-	private class AutoLoginServiceTrackerCustomizer
+	private static class AutoLoginServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<AutoLogin, AutoLogin> {
 
 		@Override

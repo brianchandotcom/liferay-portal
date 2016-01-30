@@ -46,7 +46,7 @@ public class HTMLParser {
 	private final List<String> _images = new ArrayList<>();
 	private final List<String> _links = new ArrayList<>();
 
-	private class DefaultParser extends HTMLEditorKit {
+	private static class DefaultParser extends HTMLEditorKit {
 
 		@Override
 		public HTMLEditorKit.Parser getParser() {

@@ -48,7 +48,8 @@ public class ModelHintsImpl extends BaseModelHintsImpl {
 		new CompileTimeModelHintsCallback();
 	private String[] _modelHintsConfigs;
 
-	private class CompileTimeModelHintsCallback implements ModelHintsCallback {
+	private static class CompileTimeModelHintsCallback
+		implements ModelHintsCallback {
 
 		@Override
 		public void execute(ClassLoader classLoader, String name) {

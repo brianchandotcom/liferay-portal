@@ -1426,6 +1426,149 @@ public class TableMapperTest {
 	private MockBasePersistence<Right> _rightBasePersistence;
 	private TableMapperImpl<Left, Right> _tableMapperImpl;
 
+	private static class RecorderModelListener<T extends BaseModel<T>>
+		extends BaseModelListener<T> {
+
+		public void assertOnAfterAddAssociation(
+			boolean called, Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_assertCall(
+				0, called, classPK, associationClassName, associationClassPK);
+		}
+
+		public void assertOnAfterRemoveAssociation(
+			boolean called, Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_assertCall(
+				1, called, classPK, associationClassName, associationClassPK);
+		}
+
+		public void assertOnBeforeAddAssociation(
+			boolean called, Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_assertCall(
+				2, called, classPK, associationClassName, associationClassPK);
+		}
+
+		public void assertOnBeforeRemoveAssociation(
+			boolean called, Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_assertCall(
+				3, called, classPK, associationClassName, associationClassPK);
+		}
+
+		@Override
+		public void onAfterAddAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_record(0, classPK, associationClassName, associationClassPK);
+		}
+
+		@Override
+		public void onAfterRemoveAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_record(1, classPK, associationClassName, associationClassPK);
+		}
+
+		@Override
+		public void onBeforeAddAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_record(2, classPK, associationClassName, associationClassPK);
+		}
+
+		@Override
+		public void onBeforeRemoveAssociation(
+			Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_record(3, classPK, associationClassName, associationClassPK);
+		}
+
+		private void _assertCall(
+			int index, boolean called, Object classPK,
+			String associationClassName, Object associationClassPK) {
+
+			if (called) {
+				Assert.assertSame(_classPKs[index], classPK);
+				Assert.assertEquals(
+					_associationClassNames[index], associationClassName);
+				Assert.assertSame(
+					_associationClassPKs[index], associationClassPK);
+			}
+			else {
+				Assert.assertFalse(
+					"Called onAfterAddAssociation", _markers[index]);
+			}
+		}
+
+		private void _record(
+			int index, Object classPK, String associationClassName,
+			Object associationClassPK) {
+
+			_markers[index] = true;
+			_classPKs[index] = classPK;
+			_associationClassNames[index] = associationClassName;
+			_associationClassPKs[index] = associationClassPK;
+		}
+
+		private final String[] _associationClassNames = new String[4];
+		private final Object[] _associationClassPKs = new Object[4];
+		private final Object[] _classPKs = new Object[4];
+		private final boolean[] _markers = new boolean[4];
+
+	}
+
+	private static class RecordInvocationHandler implements InvocationHandler {
+
+		public void assertCall(String methodName, Object... args) {
+			Object[] record = _records.get(methodName);
+
+			Assert.assertArrayEquals(record, args);
+		}
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) {
+			_records.put(method.getName(), args);
+
+			Class<?> returnType = method.getReturnType();
+
+			if (returnType == boolean.class) {
+				return false;
+			}
+			else if (returnType == int.class) {
+				return 0;
+			}
+			else if (returnType == List.class) {
+				return Collections.emptyList();
+			}
+			else if (returnType == long[].class) {
+				return new long[0];
+			}
+			else if (returnType == TableMapper.class) {
+				return _tableMapper;
+			}
+
+			return null;
+		}
+
+		public void setTableMapper(TableMapper<?, ?> tableMapper) {
+			_tableMapper = tableMapper;
+		}
+
+		private final Map<String, Object[]> _records = new HashMap<>();
+		private TableMapper<?, ?> _tableMapper;
+
+	}
+
 	private class GetPrimaryKeyObjInvocationHandler
 		implements InvocationHandler {
 
@@ -1857,149 +2000,6 @@ public class TableMapperTest {
 		}
 
 		private int _count;
-
-	}
-
-	private class RecorderModelListener<T extends BaseModel<T>>
-		extends BaseModelListener<T> {
-
-		public void assertOnAfterAddAssociation(
-			boolean called, Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_assertCall(
-				0, called, classPK, associationClassName, associationClassPK);
-		}
-
-		public void assertOnAfterRemoveAssociation(
-			boolean called, Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_assertCall(
-				1, called, classPK, associationClassName, associationClassPK);
-		}
-
-		public void assertOnBeforeAddAssociation(
-			boolean called, Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_assertCall(
-				2, called, classPK, associationClassName, associationClassPK);
-		}
-
-		public void assertOnBeforeRemoveAssociation(
-			boolean called, Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_assertCall(
-				3, called, classPK, associationClassName, associationClassPK);
-		}
-
-		@Override
-		public void onAfterAddAssociation(
-			Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_record(0, classPK, associationClassName, associationClassPK);
-		}
-
-		@Override
-		public void onAfterRemoveAssociation(
-			Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_record(1, classPK, associationClassName, associationClassPK);
-		}
-
-		@Override
-		public void onBeforeAddAssociation(
-			Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_record(2, classPK, associationClassName, associationClassPK);
-		}
-
-		@Override
-		public void onBeforeRemoveAssociation(
-			Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_record(3, classPK, associationClassName, associationClassPK);
-		}
-
-		private void _assertCall(
-			int index, boolean called, Object classPK,
-			String associationClassName, Object associationClassPK) {
-
-			if (called) {
-				Assert.assertSame(_classPKs[index], classPK);
-				Assert.assertEquals(
-					_associationClassNames[index], associationClassName);
-				Assert.assertSame(
-					_associationClassPKs[index], associationClassPK);
-			}
-			else {
-				Assert.assertFalse(
-					"Called onAfterAddAssociation", _markers[index]);
-			}
-		}
-
-		private void _record(
-			int index, Object classPK, String associationClassName,
-			Object associationClassPK) {
-
-			_markers[index] = true;
-			_classPKs[index] = classPK;
-			_associationClassNames[index] = associationClassName;
-			_associationClassPKs[index] = associationClassPK;
-		}
-
-		private final String[] _associationClassNames = new String[4];
-		private final Object[] _associationClassPKs = new Object[4];
-		private final Object[] _classPKs = new Object[4];
-		private final boolean[] _markers = new boolean[4];
-
-	}
-
-	private class RecordInvocationHandler implements InvocationHandler {
-
-		public void assertCall(String methodName, Object... args) {
-			Object[] record = _records.get(methodName);
-
-			Assert.assertArrayEquals(record, args);
-		}
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args) {
-			_records.put(method.getName(), args);
-
-			Class<?> returnType = method.getReturnType();
-
-			if (returnType == boolean.class) {
-				return false;
-			}
-			else if (returnType == int.class) {
-				return 0;
-			}
-			else if (returnType == List.class) {
-				return Collections.emptyList();
-			}
-			else if (returnType == long[].class) {
-				return new long[0];
-			}
-			else if (returnType == TableMapper.class) {
-				return _tableMapper;
-			}
-
-			return null;
-		}
-
-		public void setTableMapper(TableMapper<?, ?> tableMapper) {
-			_tableMapper = tableMapper;
-		}
-
-		private final Map<String, Object[]> _records = new HashMap<>();
-		private TableMapper<?, ?> _tableMapper;
 
 	}
 

@@ -195,7 +195,7 @@ public class DateUtilTest extends PowerMockito {
 	@Mock
 	private TimeZone _timeZone;
 
-	private class TestSimpleDateFormat extends SimpleDateFormat {
+	private static class TestSimpleDateFormat extends SimpleDateFormat {
 
 		public TestSimpleDateFormat(String pattern) {
 			super(pattern);

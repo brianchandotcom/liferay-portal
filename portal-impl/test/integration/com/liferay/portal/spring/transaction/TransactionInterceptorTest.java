@@ -110,7 +110,7 @@ public class TransactionInterceptorTest {
 		}
 	}
 
-	private class MockPlatformTransactionManager
+	private static class MockPlatformTransactionManager
 		implements PlatformTransactionManager {
 
 		public MockPlatformTransactionManager(

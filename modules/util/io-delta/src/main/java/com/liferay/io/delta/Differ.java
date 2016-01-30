@@ -223,7 +223,7 @@ public class Differ {
 	private ReadableByteChannel _modifiedReadableByteChannel;
 	private RollingChecksum _rollingChecksum;
 
-	private class BlockData {
+	private static class BlockData {
 
 		public BlockData(int blockNumber, byte[] strongChecksum) {
 			_blockNumber = blockNumber;

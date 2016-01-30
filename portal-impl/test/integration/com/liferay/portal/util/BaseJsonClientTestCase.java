@@ -200,7 +200,7 @@ public class BaseJsonClientTestCase {
 		return responseContent.substring(beginIndex, endIndex);
 	}
 
-	private class StringHandler implements ResponseHandler<String> {
+	private static class StringHandler implements ResponseHandler<String> {
 
 		@Override
 		public String handleResponse(HttpResponse response)

@@ -555,7 +555,7 @@ public class DeepNamedValueScanner {
 	private boolean _visitSets;
 	private boolean _visitStaticFields;
 
-	private class Dataset
+	private static class Dataset
 		extends ObjectValuePair<String, IntegerWrapper>
 		implements Comparable<Dataset> {
 

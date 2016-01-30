@@ -345,10 +345,10 @@ public class ServiceDependencyManagerTest {
 		}
 	}
 
-	private class TestInstance1 implements TestInterface1 {
+	private static class TestInstance1 implements TestInterface1 {
 	}
 
-	private class TestInstance2 implements TestInterface2 {
+	private static class TestInstance2 implements TestInterface2 {
 	}
 
 	private interface TestInterface1 {

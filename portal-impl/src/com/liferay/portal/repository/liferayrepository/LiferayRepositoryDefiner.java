@@ -154,7 +154,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		new LiferayProcessorCapability();
 	private RepositoryFactory _repositoryFactory;
 
-	private class LiferayRepositoryFactoryWrapper implements RepositoryFactory {
+	private static class LiferayRepositoryFactoryWrapper
+		implements RepositoryFactory {
 
 		public LiferayRepositoryFactoryWrapper(
 			RepositoryFactory repositoryFactory) {

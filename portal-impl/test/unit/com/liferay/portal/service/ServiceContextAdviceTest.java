@@ -153,7 +153,7 @@ public class ServiceContextAdviceTest {
 	private ServiceContextAdvice _serviceContextAdvice;
 	private TestServiceBeanAopCacheManager _testServiceBeanAopCacheManager;
 
-	private class TestInterceptedClass {
+	private static class TestInterceptedClass {
 
 		@SuppressWarnings("unused")
 		public void method() {
@@ -173,7 +173,7 @@ public class ServiceContextAdviceTest {
 
 	}
 
-	private class TestServiceBeanAopCacheManager
+	private static class TestServiceBeanAopCacheManager
 		extends ServiceBeanAopCacheManager {
 
 		public boolean isRemovedMethodInterceptor() {
@@ -192,7 +192,7 @@ public class ServiceContextAdviceTest {
 
 	}
 
-	private class TestServiceContextWrapper extends ServiceContext {
+	private static class TestServiceContextWrapper extends ServiceContext {
 	}
 
 }

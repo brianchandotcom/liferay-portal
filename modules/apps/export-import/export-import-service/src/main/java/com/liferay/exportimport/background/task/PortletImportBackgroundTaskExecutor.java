@@ -107,7 +107,7 @@ public class PortletImportBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletImportBackgroundTaskExecutor.class);
 
-	private class PortletImportCallable implements Callable<Void> {
+	private static class PortletImportCallable implements Callable<Void> {
 
 		public PortletImportCallable(
 			ExportImportConfiguration exportImportConfiguration, File file) {

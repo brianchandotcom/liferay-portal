@@ -969,7 +969,7 @@ public class ExpandoValueConversionTest {
 
 	private final Converter _converter = new Converter();
 
-	private class Converter extends ExpandoValueLocalServiceImpl {
+	private static class Converter extends ExpandoValueLocalServiceImpl {
 
 		@Override
 		public <T> T convertType(int type, Object data) {

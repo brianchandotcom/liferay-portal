@@ -126,7 +126,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 
-	private class ImportRatingsCallable implements Callable<Void> {
+	private static class ImportRatingsCallable implements Callable<Void> {
 
 		public ImportRatingsCallable(PortletDataContext portletDataContext) {
 			_portletDataContext = portletDataContext;

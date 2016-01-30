@@ -75,7 +75,7 @@ public class UpgradeInfoTest {
 		Assert.assertTrue(upgradeInfo1.equals(upgradeInfo2));
 	}
 
-	private class TestUpgradeStep implements UpgradeStep {
+	private static class TestUpgradeStep implements UpgradeStep {
 
 		@Override
 		public void upgrade(DBProcessContext dbProcessContext) {

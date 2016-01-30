@@ -83,6 +83,22 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleJavaScriptMinifier.class);
 
+	private static class SimpleMessageFormatter implements MessageFormatter {
+
+		@Override
+		public String formatError(JSError jsError) {
+			return String.format(
+				"(%s:%d): %s", jsError.sourceName, jsError.lineNumber,
+				jsError.description);
+		}
+
+		@Override
+		public String formatWarning(JSError jsError) {
+			return formatError(jsError);
+		}
+
+	}
+
 	private class LogErrorManager extends BasicErrorManager {
 
 		@Override
@@ -119,22 +135,6 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 		private final MessageFormatter _simpleMessageFormatter =
 			new SimpleMessageFormatter();
-
-	}
-
-	private class SimpleMessageFormatter implements MessageFormatter {
-
-		@Override
-		public String formatError(JSError jsError) {
-			return String.format(
-				"(%s:%d): %s", jsError.sourceName, jsError.lineNumber,
-				jsError.description);
-		}
-
-		@Override
-		public String formatWarning(JSError jsError) {
-			return formatError(jsError);
-		}
 
 	}
 

@@ -155,7 +155,7 @@ public class DDMFormValuesTransformerTest extends BaseDDMTestCase {
 		Assert.assertEquals(expectedValue, value.getString(defaultLocale));
 	}
 
-	private class DDMFormFieldValuePrefixAppender
+	private static class DDMFormFieldValuePrefixAppender
 		implements DDMFormFieldValueTransformer {
 
 		@Override

@@ -147,7 +147,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 	private final ClassLoader _portalClassLoader =
 		DynamicQueryFactoryImpl.class.getClassLoader();
 
-	private class DynamicQueryPrivilegedAction
+	private static class DynamicQueryPrivilegedAction
 		implements PrivilegedAction<DynamicQuery> {
 
 		public DynamicQueryPrivilegedAction(Class<?> clazz, String alias) {

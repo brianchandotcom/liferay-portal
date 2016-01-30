@@ -468,7 +468,7 @@ public class BasicRegistryImpl implements Registry {
 	private final Map<ServiceTracker<?, ?>, Filter> _serviceTrackers =
 		new ConcurrentHashMap<>();
 
-	private class BasicFilter implements Filter {
+	private static class BasicFilter implements Filter {
 
 		public BasicFilter(String filterString) {
 			_filter = new aQute.lib.filter.Filter(filterString);
@@ -505,6 +505,15 @@ public class BasicRegistryImpl implements Registry {
 		}
 
 		private aQute.lib.filter.Filter _filter;
+
+	}
+
+	private static class LowerCaseKeyTreeMap extends TreeMap<String, Object> {
+
+		@Override
+		public Object put(String key, Object value) {
+			return super.put(key.toLowerCase(), value);
+		}
 
 	}
 
@@ -893,15 +902,6 @@ public class BasicRegistryImpl implements Registry {
 		private final AtomicInteger _stateCounter = new AtomicInteger();
 		private final NavigableMap<ServiceReference<S>, T> _trackedServices =
 			new ConcurrentSkipListMap<>();
-
-	}
-
-	private class LowerCaseKeyTreeMap extends TreeMap<String, Object> {
-
-		@Override
-		public Object put(String key, Object value) {
-			return super.put(key.toLowerCase(), value);
-		}
 
 	}
 

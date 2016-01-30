@@ -123,7 +123,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 
-	private class DefinitionComparator implements Comparator<String> {
+	private static class DefinitionComparator implements Comparator<String> {
 
 		@Override
 		public int compare(String definition1, String definition2) {

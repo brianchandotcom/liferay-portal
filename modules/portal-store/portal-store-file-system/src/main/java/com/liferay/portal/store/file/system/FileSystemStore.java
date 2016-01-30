@@ -717,7 +717,7 @@ public class FileSystemStore extends BaseStore {
 		new ConcurrentHashMap<>();
 	private File _rootDir;
 
-	private class RepositoryDirKey {
+	private static class RepositoryDirKey {
 
 		public RepositoryDirKey(long companyId, long repositoryId) {
 			_companyId = companyId;

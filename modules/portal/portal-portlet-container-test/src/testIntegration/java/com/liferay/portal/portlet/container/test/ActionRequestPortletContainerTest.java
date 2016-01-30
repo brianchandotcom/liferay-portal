@@ -343,7 +343,7 @@ public class ActionRequestPortletContainerTest
 		Assert.assertTrue(testPortlet.isCalledAction());
 	}
 
-	private class ActionRequestTestPortlet extends TestPortlet {
+	private static class ActionRequestTestPortlet extends TestPortlet {
 
 		@Override
 		public void serveResource(

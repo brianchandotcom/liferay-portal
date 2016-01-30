@@ -216,10 +216,11 @@ public class AbstractMessagingConfiguratorTest {
 		}
 	}
 
-	private class TestClassLoader extends ClassLoader {
+	private static class TestClassLoader extends ClassLoader {
 	}
 
-	private class TestClassLoaderMessageListener implements MessageListener {
+	private static class TestClassLoaderMessageListener
+		implements MessageListener {
 
 		public TestClassLoaderMessageListener(TestClassLoader testClassLoader) {
 			_testClassLoader = testClassLoader;
@@ -239,7 +240,7 @@ public class AbstractMessagingConfiguratorTest {
 
 	}
 
-	private class TestMessageListener implements MessageListener {
+	private static class TestMessageListener implements MessageListener {
 
 		public TestMessageListener(String destinationName) {
 			_destinationName = destinationName;

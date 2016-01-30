@@ -547,7 +547,7 @@ public class EditorConfigContributorTest {
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration2;
 
-	private class EmoticonsEditorConfigContributor
+	private static class EmoticonsEditorConfigContributor
 		implements EditorConfigContributor {
 
 		@Override
@@ -574,7 +574,7 @@ public class EditorConfigContributorTest {
 
 	}
 
-	private class ImageEditorConfigContributor
+	private static class ImageEditorConfigContributor
 		implements EditorConfigContributor {
 
 		@Override
@@ -597,7 +597,7 @@ public class EditorConfigContributorTest {
 
 	}
 
-	private class TablesEditorConfigContributor
+	private static class TablesEditorConfigContributor
 		implements EditorConfigContributor {
 
 		@Override
@@ -624,7 +624,7 @@ public class EditorConfigContributorTest {
 
 	}
 
-	private class TextFormatEditorConfigContributor
+	private static class TextFormatEditorConfigContributor
 		implements EditorConfigContributor {
 
 		@Override
@@ -654,7 +654,7 @@ public class EditorConfigContributorTest {
 
 	}
 
-	private class VideoEditorConfigContributor
+	private static class VideoEditorConfigContributor
 		implements EditorConfigContributor {
 
 		@Override

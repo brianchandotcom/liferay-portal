@@ -220,7 +220,7 @@ public class StartupAction extends SimpleAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(StartupAction.class);
 
-	private class PortalResiliencyServiceDependencyLister
+	private static class PortalResiliencyServiceDependencyLister
 		implements ServiceDependencyListener {
 
 		@Override

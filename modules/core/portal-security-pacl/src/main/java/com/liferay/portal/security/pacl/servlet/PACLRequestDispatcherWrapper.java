@@ -90,7 +90,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 	private RequestDispatcher _requestDispatcher;
 	private final ServletContext _servletContext;
 
-	private class DispatchPrivilegedExceptionAction
+	private static class DispatchPrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Void> {
 
 		public DispatchPrivilegedExceptionAction(

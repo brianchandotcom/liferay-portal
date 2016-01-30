@@ -108,7 +108,7 @@ public class HitsProcessorRegistryImpl implements HitsProcessorRegistry {
 	private final Set<SortableHitsProcessor> _hitsProcessors =
 		new ConcurrentSkipListSet<>();
 
-	private class SortableHitsProcessor
+	private static class SortableHitsProcessor
 		implements Comparable<SortableHitsProcessor>, HitsProcessor {
 
 		public SortableHitsProcessor(

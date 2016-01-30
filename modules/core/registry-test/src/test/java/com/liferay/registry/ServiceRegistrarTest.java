@@ -72,7 +72,7 @@ public class ServiceRegistrarTest {
 		}
 	}
 
-	private class Foo {
+	private static class Foo {
 	}
 
 }

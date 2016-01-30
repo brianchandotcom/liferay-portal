@@ -104,7 +104,7 @@ public class PBKDF2PasswordEncryptor
 	private static final Pattern _pattern = Pattern.compile(
 		"^.*/?([0-9]+)?/([0-9]+)$");
 
-	private class PBKDF2EncryptionConfiguration {
+	private static class PBKDF2EncryptionConfiguration {
 
 		public void configure(String algorithm, String encryptedPassword)
 			throws PwdEncryptorException {

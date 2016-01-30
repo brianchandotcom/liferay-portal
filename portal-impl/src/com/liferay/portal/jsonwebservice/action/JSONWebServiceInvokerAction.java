@@ -658,10 +658,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	private final HttpServletRequest _request;
 	private final List<Statement> _statements = new ArrayList<>();
 
-	private class Flag extends NameValue<String, String> {
+	private static class Flag extends NameValue<String, String> {
 	}
 
-	private class Statement {
+	private static class Statement {
 
 		public List<Flag> getFlags() {
 			return _flags;

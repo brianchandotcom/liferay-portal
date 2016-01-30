@@ -161,7 +161,7 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock(className, key, owner2);
 	}
 
-	private class LockingJob implements Callable<Void> {
+	private static class LockingJob implements Callable<Void> {
 
 		@Override
 		public Void call() {

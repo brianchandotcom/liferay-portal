@@ -316,7 +316,8 @@ public class FreeMarkerTemplateTest {
 			FreeMarkerEngineConfiguration.class, Collections.emptyMap());
 	private TemplateContextHelper _templateContextHelper;
 
-	private class MockTemplateContextHelper extends TemplateContextHelper {
+	private static class MockTemplateContextHelper
+		extends TemplateContextHelper {
 
 		@Override
 		public Map<String, Object> getHelperUtilities(
@@ -341,7 +342,7 @@ public class FreeMarkerTemplateTest {
 
 	}
 
-	private class MockTemplateResource implements TemplateResource {
+	private static class MockTemplateResource implements TemplateResource {
 
 		/**
 		 * The empty constructor is required by {@link java.io.Externalizable}.

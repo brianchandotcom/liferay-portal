@@ -1716,7 +1716,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		<PortalInstanceLifecycleManager, PortalInstanceLifecycleManager>
 			_serviceTracker;
 
-	private class CustomCompanyProvider implements CompanyProvider {
+	private static class CustomCompanyProvider implements CompanyProvider {
 
 		public CustomCompanyProvider(long companyId) {
 			_companyId = companyId;

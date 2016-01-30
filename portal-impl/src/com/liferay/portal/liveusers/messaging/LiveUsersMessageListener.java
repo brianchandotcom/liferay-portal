@@ -115,7 +115,7 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 		new MethodHandler(
 			new MethodKey(LiveUsers.class, "getLocalClusterUsers"));
 
-	private class LiveUsersClusterResponseFutureListener
+	private static class LiveUsersClusterResponseFutureListener
 		extends BaseFutureListener<ClusterNodeResponses> {
 
 		public LiveUsersClusterResponseFutureListener(String clusterNodeId) {

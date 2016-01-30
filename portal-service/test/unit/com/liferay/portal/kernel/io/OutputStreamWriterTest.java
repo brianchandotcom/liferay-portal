@@ -366,7 +366,7 @@ public class OutputStreamWriterTest {
 			unsyncByteArrayOutputStream.toByteArray());
 	}
 
-	private class MarkerOutputStream extends OutputStream {
+	private static class MarkerOutputStream extends OutputStream {
 
 		@Override
 		public void close() {

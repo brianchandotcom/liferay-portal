@@ -107,7 +107,8 @@ public class TableNameOrderByComparatorTest {
 			"table.column ASC", tableNameOrderByComparator.getOrderBy());
 	}
 
-	private class TestGetOrderByComparator extends OrderByComparator<Object> {
+	private static class TestGetOrderByComparator
+		extends OrderByComparator<Object> {
 
 		public TestGetOrderByComparator(String orderBy) {
 			_orderBy = orderBy;

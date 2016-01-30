@@ -20,12 +20,12 @@ package com.liferay.portal.kernel.util;
 public class AggregatePredicateFilter<T> implements PredicateFilter<T> {
 
 	public AggregatePredicateFilter(PredicateFilter<T> predicateFilter) {
-		_predicateFilter = new IdentityPredicateFilter(predicateFilter);
+		_predicateFilter = new IdentityPredicateFilter<>(predicateFilter);
 	}
 
 	public AggregatePredicateFilter<T> and(PredicateFilter<T> predicateFilter) {
-		_predicateFilter = new AndPredicateFilter(
-			_predicateFilter, new IdentityPredicateFilter(predicateFilter));
+		_predicateFilter = new AndPredicateFilter<>(
+			_predicateFilter, new IdentityPredicateFilter<>(predicateFilter));
 
 		return this;
 	}
@@ -36,21 +36,21 @@ public class AggregatePredicateFilter<T> implements PredicateFilter<T> {
 	}
 
 	public AggregatePredicateFilter<T> negate() {
-		_predicateFilter = new NegatePredicateFilter(_predicateFilter);
+		_predicateFilter = new NegatePredicateFilter<>(_predicateFilter);
 
 		return this;
 	}
 
 	public AggregatePredicateFilter<T> or(PredicateFilter<T> predicateFilter) {
-		_predicateFilter = new OrPredicateFilter(
-			_predicateFilter, new IdentityPredicateFilter(predicateFilter));
+		_predicateFilter = new OrPredicateFilter<>(
+			_predicateFilter, new IdentityPredicateFilter<>(predicateFilter));
 
 		return this;
 	}
 
 	private PredicateFilter<T> _predicateFilter;
 
-	private class AndPredicateFilter implements PredicateFilter<T> {
+	private static class AndPredicateFilter<T> implements PredicateFilter<T> {
 
 		public AndPredicateFilter(
 			PredicateFilter<T> leftPredicateFilter,
@@ -76,7 +76,8 @@ public class AggregatePredicateFilter<T> implements PredicateFilter<T> {
 
 	}
 
-	private class IdentityPredicateFilter implements PredicateFilter<T> {
+	private static class IdentityPredicateFilter<T>
+		implements PredicateFilter<T> {
 
 		public IdentityPredicateFilter(PredicateFilter<T> predicateFilter) {
 			_predicateFilter = predicateFilter;
@@ -91,7 +92,8 @@ public class AggregatePredicateFilter<T> implements PredicateFilter<T> {
 
 	}
 
-	private class NegatePredicateFilter implements PredicateFilter<T> {
+	private static class NegatePredicateFilter<T>
+		implements PredicateFilter<T> {
 
 		public NegatePredicateFilter(PredicateFilter<T> predicateFilter) {
 			_predicateFilter = predicateFilter;
@@ -106,7 +108,7 @@ public class AggregatePredicateFilter<T> implements PredicateFilter<T> {
 
 	}
 
-	private class OrPredicateFilter implements PredicateFilter<T> {
+	private static class OrPredicateFilter<T> implements PredicateFilter<T> {
 
 		public OrPredicateFilter(
 			PredicateFilter<T> leftPredicateFilter,

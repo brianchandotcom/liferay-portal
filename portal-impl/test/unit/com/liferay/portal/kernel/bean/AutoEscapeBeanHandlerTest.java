@@ -53,18 +53,7 @@ public class AutoEscapeBeanHandlerTest {
 
 	private Bean _bean;
 
-	private interface Bean extends Serializable {
-
-		@AutoEscape
-		public String getAttribute();
-
-		public String getUnescapedAttribute();
-
-		public Bean toEscapedBean();
-
-	}
-
-	private class BeanImpl implements Bean {
+	private static class BeanImpl implements Bean {
 
 		public BeanImpl(String attribute) {
 			_attribute = attribute;
@@ -92,6 +81,17 @@ public class AutoEscapeBeanHandlerTest {
 
 		private final String _attribute;
 		private final String _unescapedAttribute;
+
+	}
+
+	private interface Bean extends Serializable {
+
+		@AutoEscape
+		public String getAttribute();
+
+		public String getUnescapedAttribute();
+
+		public Bean toEscapedBean();
 
 	}
 

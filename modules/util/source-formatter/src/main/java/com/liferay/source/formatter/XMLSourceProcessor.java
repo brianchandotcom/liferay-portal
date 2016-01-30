@@ -1395,7 +1395,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ElementComparator extends NaturalOrderStringComparator {
+	private static class ElementComparator
+		extends NaturalOrderStringComparator {
 
 		public int compare(Element element1, Element element2) {
 			String elementName1 = getElementName(element1);
@@ -1416,7 +1417,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ResourceActionActionKeyElementComparator
+	private static class ResourceActionActionKeyElementComparator
 		extends ElementComparator {
 
 		@Override
@@ -1426,7 +1427,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ResourceActionPortletResourceElementComparator
+	private static class ResourceActionPortletResourceElementComparator
 		extends ElementComparator {
 
 		@Override
@@ -1439,7 +1440,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ServiceExceptionElementComparator extends ElementComparator {
+	private static class ServiceExceptionElementComparator
+		extends ElementComparator {
 
 		@Override
 		protected String getElementName(Element exceptionElement) {
@@ -1514,7 +1516,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ServiceReferenceElementComparator extends ElementComparator {
+	private static class ServiceReferenceElementComparator
+		extends ElementComparator {
 
 		@Override
 		public int compare(
@@ -1578,7 +1581,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class StrutsActionElementComparator extends ElementComparator {
+	private static class StrutsActionElementComparator
+		extends ElementComparator {
 
 		@Override
 		public int compare(Element actionElement1, Element actionElement2) {
@@ -1605,7 +1609,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class TilesDefinitionElementComparator extends ElementComparator {
+	private static class TilesDefinitionElementComparator
+		extends ElementComparator {
 
 		@Override
 		public int compare(

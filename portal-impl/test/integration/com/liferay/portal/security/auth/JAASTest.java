@@ -416,7 +416,7 @@ public class JAASTest {
 	private Field _jaasEnabledField;
 	private User _user;
 
-	private class JAASAction extends Action {
+	private static class JAASAction extends Action {
 
 		public boolean isRan() {
 			return _ran;
@@ -433,7 +433,7 @@ public class JAASTest {
 
 	}
 
-	private class JAASCallbackHandler implements CallbackHandler {
+	private static class JAASCallbackHandler implements CallbackHandler {
 
 		public JAASCallbackHandler(String name, String password) {
 			_name = name;
@@ -469,7 +469,7 @@ public class JAASTest {
 
 	}
 
-	private class JAASConfiguration extends Configuration {
+	private static class JAASConfiguration extends Configuration {
 
 		@Override
 		public AppConfigurationEntry[] getAppConfigurationEntry(String name) {

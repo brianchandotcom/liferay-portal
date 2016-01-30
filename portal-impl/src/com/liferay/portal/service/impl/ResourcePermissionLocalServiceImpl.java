@@ -1419,7 +1419,8 @@ public class ResourcePermissionLocalServiceImpl
 	private static final String _UPDATE_ACTION_IDS =
 		ResourcePermissionLocalServiceImpl.class.getName() + ".updateActionIds";
 
-	private class UpdateResourcePermissionCallable implements Callable<Void> {
+	private static class UpdateResourcePermissionCallable
+		implements Callable<Void> {
 
 		public UpdateResourcePermissionCallable(String name, String primKey) {
 			_name = name;

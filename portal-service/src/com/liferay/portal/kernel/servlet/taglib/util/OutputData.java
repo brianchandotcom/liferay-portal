@@ -121,7 +121,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	private final Map<DataKey, StringBundler> _dataMap = new HashMap<>();
 	private final Set<String> _outputKeys = new HashSet<>();
 
-	private class DataKey implements Serializable {
+	private static class DataKey implements Serializable {
 
 		public DataKey(String outputKey, String webKey) {
 			_outputKey = GetterUtil.getString(outputKey);

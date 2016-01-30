@@ -80,7 +80,7 @@ public class ServiceTrackerCustomizersTest {
 		}
 	}
 
-	private class TrackedOne {
+	private static class TrackedOne {
 	}
 
 }

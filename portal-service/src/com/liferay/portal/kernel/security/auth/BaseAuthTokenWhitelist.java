@@ -198,7 +198,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	protected final List<ServiceTracker<Object, Object>> serviceTrackers =
 		new ArrayList<>();
 
-	private class TokenWhitelistTrackerCustomizer
+	private static class TokenWhitelistTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {
 
 		public TokenWhitelistTrackerCustomizer(

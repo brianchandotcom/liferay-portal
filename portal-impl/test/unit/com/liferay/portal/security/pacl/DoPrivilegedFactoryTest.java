@@ -71,7 +71,7 @@ public class DoPrivilegedFactoryTest {
 		Assert.assertTrue(user instanceof DoPrivilegedBean);
 	}
 
-	private class ClassWithNoInterfaces {
+	private static class ClassWithNoInterfaces {
 	}
 
 }

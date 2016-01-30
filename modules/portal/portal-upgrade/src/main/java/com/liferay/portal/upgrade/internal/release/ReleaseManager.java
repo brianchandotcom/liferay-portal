@@ -240,6 +240,57 @@ public class ReleaseManager {
 	private ReleasePublisher _releasePublisher;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
 
+	private static class UpgradeServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<UpgradeStep, UpgradeInfo> {
+
+		public UpgradeServiceTrackerCustomizer(BundleContext bundleContext) {
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public UpgradeInfo addingService(
+			ServiceReference<UpgradeStep> serviceReference) {
+
+			String fromSchemaVersionString =
+				(String)serviceReference.getProperty(
+					"upgrade.from.schema.version");
+			String toSchemaVersionString = (String)serviceReference.getProperty(
+				"upgrade.to.schema.version");
+
+			UpgradeStep upgradeStep = _bundleContext.getService(
+				serviceReference);
+
+			if (upgradeStep == null) {
+				_logger.log(
+					Logger.LOG_WARNING,
+					"Skipping service " + serviceReference +
+						" because it does not implement UpgradeStep");
+
+				return null;
+			}
+
+			return new UpgradeInfo(
+				fromSchemaVersionString, toSchemaVersionString, upgradeStep);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<UpgradeStep> serviceReference,
+			UpgradeInfo upgradeInfo) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<UpgradeStep> serviceReference,
+			UpgradeInfo upgradeInfo) {
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+
+	}
+
 	private class UpgradeInfoServiceTrackerMapListener
 		implements ServiceTrackerMapListener
 			<String, UpgradeInfo, List<UpgradeInfo>> {
@@ -308,57 +359,6 @@ public class ReleaseManager {
 		private final String _bundleSymbolicName;
 		private final OutputStream _outputStream;
 		private final List<UpgradeInfo> _upgradeInfos;
-
-	}
-
-	private class UpgradeServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<UpgradeStep, UpgradeInfo> {
-
-		public UpgradeServiceTrackerCustomizer(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
-		@Override
-		public UpgradeInfo addingService(
-			ServiceReference<UpgradeStep> serviceReference) {
-
-			String fromSchemaVersionString =
-				(String)serviceReference.getProperty(
-					"upgrade.from.schema.version");
-			String toSchemaVersionString = (String)serviceReference.getProperty(
-				"upgrade.to.schema.version");
-
-			UpgradeStep upgradeStep = _bundleContext.getService(
-				serviceReference);
-
-			if (upgradeStep == null) {
-				_logger.log(
-					Logger.LOG_WARNING,
-					"Skipping service " + serviceReference +
-						" because it does not implement UpgradeStep");
-
-				return null;
-			}
-
-			return new UpgradeInfo(
-				fromSchemaVersionString, toSchemaVersionString, upgradeStep);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<UpgradeStep> serviceReference,
-			UpgradeInfo upgradeInfo) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<UpgradeStep> serviceReference,
-			UpgradeInfo upgradeInfo) {
-
-			_bundleContext.ungetService(serviceReference);
-		}
-
-		private final BundleContext _bundleContext;
 
 	}
 

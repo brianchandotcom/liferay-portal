@@ -95,7 +95,7 @@ public class PACLInvocationHandler
 	private final AdvisedSupport _advisedSupport;
 	private InvocationHandler _invocationHandler;
 
-	private class InvokePrivilegedExceptionAction
+	private static class InvokePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Object> {
 
 		public InvokePrivilegedExceptionAction(

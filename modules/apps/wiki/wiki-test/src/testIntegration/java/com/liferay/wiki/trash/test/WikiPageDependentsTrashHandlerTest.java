@@ -1093,7 +1093,7 @@ public class WikiPageDependentsTrashHandlerTest {
 
 	private WikiNode _node;
 
-	private class RelatedPages {
+	private static class RelatedPages {
 
 		public RelatedPages(
 			WikiPage parentPage, WikiPage page, WikiPage childPage,

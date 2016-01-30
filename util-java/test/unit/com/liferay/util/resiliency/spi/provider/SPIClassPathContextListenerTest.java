@@ -546,7 +546,7 @@ public class SPIClassPathContextListenerTest {
 
 	private File _portalServiceJarFile;
 
-	private class TestClass {
+	private static class TestClass {
 	}
 
 }

@@ -206,7 +206,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 	private Indexer<Object> _indexer;
 	private final SearchContext _searchContext = new SearchContext();
 
-	private class TestIndexer extends BaseIndexer<Object> {
+	private static class TestIndexer extends BaseIndexer<Object> {
 
 		@Override
 		public String getClassName() {

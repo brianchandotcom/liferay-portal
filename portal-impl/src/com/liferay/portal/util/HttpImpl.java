@@ -1807,7 +1807,7 @@ public class HttpImpl implements Http {
 	private final Credentials _proxyCredentials;
 	private final HttpClient _proxyHttpClient = new HttpClient();
 
-	private class FastProtocolSocketFactory
+	private static class FastProtocolSocketFactory
 		extends DefaultProtocolSocketFactory {
 
 		@Override

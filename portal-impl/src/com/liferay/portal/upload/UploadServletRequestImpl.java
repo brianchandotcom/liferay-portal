@@ -623,7 +623,8 @@ public class UploadServletRequestImpl
 	private final LiferayServletRequest _liferayServletRequest;
 	private final Map<String, List<String>> _regularParameters;
 
-	private class GroupedFileItems implements Comparable<GroupedFileItems> {
+	private static class GroupedFileItems
+		implements Comparable<GroupedFileItems> {
 
 		public GroupedFileItems(String key) {
 			_key = key;

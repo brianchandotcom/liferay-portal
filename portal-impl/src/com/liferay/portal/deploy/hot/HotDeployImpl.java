@@ -337,21 +337,7 @@ public class HotDeployImpl implements HotDeploy {
 	private final Set<String> _deployedServletContextNames;
 	private final List<HotDeployListener> _hotDeployListeners;
 
-	private static class NoPACL implements PACL {
-
-		@Override
-		public void initPolicy(
-			String contextName, URLContainer urlContainer,
-			ClassLoader classLoader, Properties properties) {
-		}
-
-		@Override
-		public void unregister(ClassLoader classLoader) {
-		}
-
-	}
-
-	private class HotDeployPortalLifecycle extends BasePortalLifecycle {
+	private static class HotDeployPortalLifecycle extends BasePortalLifecycle {
 
 		public HotDeployPortalLifecycle(HotDeployEvent hotDeployEvent) {
 			_servletContext = hotDeployEvent.getServletContext();
@@ -395,6 +381,20 @@ public class HotDeployImpl implements HotDeploy {
 
 		private final ClassLoader _classLoader;
 		private final ServletContext _servletContext;
+
+	}
+
+	private static class NoPACL implements PACL {
+
+		@Override
+		public void initPolicy(
+			String contextName, URLContainer urlContainer,
+			ClassLoader classLoader, Properties properties) {
+		}
+
+		@Override
+		public void unregister(ClassLoader classLoader) {
+		}
 
 	}
 

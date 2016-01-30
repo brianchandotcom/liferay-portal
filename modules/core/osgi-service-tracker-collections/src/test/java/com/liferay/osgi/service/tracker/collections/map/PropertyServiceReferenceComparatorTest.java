@@ -180,7 +180,8 @@ public class PropertyServiceReferenceComparatorTest {
 				null, serviceReference1));
 	}
 
-	private class TestServiceReference<S> implements ServiceReference<S> {
+	private static class TestServiceReference<S>
+		implements ServiceReference<S> {
 
 		public TestServiceReference(Object... arguments) {
 			Map<String, Object> properties = new HashMap<>();

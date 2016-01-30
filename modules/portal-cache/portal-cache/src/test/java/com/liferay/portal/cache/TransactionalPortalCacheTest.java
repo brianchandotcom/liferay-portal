@@ -1112,7 +1112,7 @@ public class TransactionalPortalCacheTest {
 	private TestPortalCacheReplicator<String, String> _testCacheReplicator;
 	private TransactionalPortalCache<String, String> _transactionalPortalCache;
 
-	private class TestProps implements Props {
+	private static class TestProps implements Props {
 
 		@Override
 		public boolean contains(String key) {

@@ -106,7 +106,7 @@ public class LayoutImportBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutImportBackgroundTaskExecutor.class);
 
-	private class LayoutImportCallable implements Callable<Void> {
+	private static class LayoutImportCallable implements Callable<Void> {
 
 		public LayoutImportCallable(
 			ExportImportConfiguration exportImportConfiguration, File file) {

@@ -1469,7 +1469,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final Map<Long, Long> _templateResourceClassNameIds =
 		new HashMap<>();
 
-	private class DateDDMFormFieldValueTransformer
+	private static class DateDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {
 
 		@Override
@@ -1503,7 +1503,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	}
 
-	private class DDMFormValuesXSDDeserializer {
+	private static class DDMFormValuesXSDDeserializer {
 
 		public DDMFormValuesXSDDeserializer(long companyId) {
 			_companyId = companyId;

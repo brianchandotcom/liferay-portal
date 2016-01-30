@@ -268,7 +268,7 @@ public class BooleanFilter extends BaseFilter {
 	private final List<BooleanClause<Filter>> _shouldBooleanClauses =
 		new SortedArrayList<>(new BooleanClauseComparator());
 
-	private class BooleanClauseComparator
+	private static class BooleanClauseComparator
 		implements Comparator<BooleanClause<Filter>> {
 
 		@Override

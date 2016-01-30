@@ -152,7 +152,7 @@ public class DoPrivilegedHandler
 	private boolean _hasNotPrivilegedMethods = false;
 	private List<MethodKey> _notPrivilegedMethods;
 
-	private class InvokePrivilegedExceptionAction
+	private static class InvokePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Object> {
 
 		public InvokePrivilegedExceptionAction(
@@ -180,7 +180,7 @@ public class DoPrivilegedHandler
 	 * implementation, while the method being checked will be from an interface,
 	 * therefore the <code>equals</code> check is not symmetrical.
 	 */
-	private class MethodKey {
+	private static class MethodKey {
 
 		public MethodKey(Method method) {
 			_declaringClass = method.getDeclaringClass();

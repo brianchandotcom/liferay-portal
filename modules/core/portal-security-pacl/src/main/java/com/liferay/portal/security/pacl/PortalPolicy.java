@@ -283,7 +283,7 @@ public class PortalPolicy extends Policy {
 		_urlPermissionCollections = new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
-	private class FieldPrivilegedExceptionAction
+	private static class FieldPrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Field> {
 
 		@Override

@@ -1520,7 +1520,7 @@ public class PortletPreferencesLocalServiceTest {
 	private Portlet _portlet;
 	private ServiceBag<PortletPreferencesLocalService> _serviceBag;
 
-	private class TestPortletPreferencesLocalServiceWrapper
+	private static class TestPortletPreferencesLocalServiceWrapper
 		extends PortletPreferencesLocalServiceWrapper {
 
 		public TestPortletPreferencesLocalServiceWrapper(

@@ -35,7 +35,7 @@ public class CounterCallbackPreferringTransactionExecutor
 			transactionAttribute, methodInvocation);
 	}
 
-	private class CounterCallbackPreferringTransactionCallback
+	private static class CounterCallbackPreferringTransactionCallback
 		implements TransactionCallback<Object> {
 
 		@Override

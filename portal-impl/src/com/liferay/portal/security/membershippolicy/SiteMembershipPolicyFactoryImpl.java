@@ -58,7 +58,7 @@ public class SiteMembershipPolicyFactoryImpl
 
 	private final ServiceTracker<?, SiteMembershipPolicy> _serviceTracker;
 
-	private class SiteMembershipPolicyTrackerCustomizer
+	private static class SiteMembershipPolicyTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer
 				<SiteMembershipPolicy, SiteMembershipPolicy> {

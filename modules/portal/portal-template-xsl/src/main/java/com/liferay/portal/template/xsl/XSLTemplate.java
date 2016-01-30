@@ -310,7 +310,7 @@ public class XSLTemplate implements Template {
 	private StreamSource _xmlStreamSource;
 	private final XSLTemplateResource _xslTemplateResource;
 
-	private class TransformerPrivilegedExceptionAction
+	private static class TransformerPrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Transformer> {
 
 		public TransformerPrivilegedExceptionAction(

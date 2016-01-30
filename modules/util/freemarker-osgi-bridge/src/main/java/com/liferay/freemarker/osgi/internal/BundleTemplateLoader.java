@@ -74,7 +74,7 @@ public class BundleTemplateLoader implements TemplateLoader {
 
 	private final Bundle _bundle;
 
-	private class BundleTemplateSource {
+	private static class BundleTemplateSource {
 
 		public BundleTemplateSource(URL url) throws IOException {
 			_inputStream = url.openStream();

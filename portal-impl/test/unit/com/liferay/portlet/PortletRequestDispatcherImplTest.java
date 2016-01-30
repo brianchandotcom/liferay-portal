@@ -205,7 +205,7 @@ public class PortletRequestDispatcherImplTest {
 
 	}
 
-	private class TestRequestDispatcher implements RequestDispatcher {
+	private static class TestRequestDispatcher implements RequestDispatcher {
 
 		public void assertPropogatedInformation(
 			HttpServletRequest httpServletRequest) {

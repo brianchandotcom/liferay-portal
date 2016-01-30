@@ -262,7 +262,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
 	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
 
-	private class DesiredItemSelectorReturnTypesJSONTransformer
+	private static class DesiredItemSelectorReturnTypesJSONTransformer
 		implements JSONTransformer {
 
 		@Override

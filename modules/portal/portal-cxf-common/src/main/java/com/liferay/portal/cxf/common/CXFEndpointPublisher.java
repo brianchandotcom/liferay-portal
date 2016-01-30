@@ -332,7 +332,7 @@ public class CXFEndpointPublisher {
 			_servletContextHelperServiceRegistration;
 		private ServiceRegistration<Servlet> _servletServiceRegistration;
 
-		private class RemoteAccessFilter implements Filter {
+		private static class RemoteAccessFilter implements Filter {
 
 			@Override
 			public void destroy() {

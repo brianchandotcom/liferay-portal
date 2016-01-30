@@ -122,7 +122,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	private final PortalCache<String, DDMRESTDataProviderResult> _portalCache =
 		MultiVMPoolUtil.getPortalCache(DDMRESTDataProvider.class.getName());
 
-	private class DDMRESTDataProviderResult implements Serializable {
+	private static class DDMRESTDataProviderResult implements Serializable {
 
 		public DDMRESTDataProviderResult(List<KeyValuePair> keyValuePairs) {
 			_keyValuePairs = keyValuePairs;

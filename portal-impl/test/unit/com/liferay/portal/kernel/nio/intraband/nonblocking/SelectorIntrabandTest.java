@@ -1470,7 +1470,7 @@ public class SelectorIntrabandTest {
 
 	}
 
-	private class WakeUpRunnable implements Runnable {
+	private static class WakeUpRunnable implements Runnable {
 
 		public WakeUpRunnable(SelectorIntraband selectorIntraband) {
 			_selectorIntraband = selectorIntraband;

@@ -737,6 +737,8 @@
 
 		<execute macro="WebContentTemplates#save" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -1051,6 +1053,8 @@
 
 		<execute macro="WebContentTemplates#save" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -1222,6 +1226,8 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#save" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />

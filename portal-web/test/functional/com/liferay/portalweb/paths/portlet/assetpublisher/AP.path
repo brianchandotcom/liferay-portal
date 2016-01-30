@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_DESCRIPTION</td>
-	<td>//div[contains(@class,'asset-abstract') and contains(.,'${key_assetTitle}')]//div[@class='asset-summary']</td>
+	<td>//div[@class='asset-abstract ' and h4[contains(.,'${key_assetTitle}')]]/div[@class='asset-content']</td>
 	<td></td>
 </tr>
 <tr>

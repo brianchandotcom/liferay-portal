@@ -378,6 +378,8 @@
 
 		<execute macro="WebContentTemplates#save" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -416,6 +418,8 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page 1" />
 		</execute>
@@ -443,7 +447,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetContent" value="WC WebContent Text" />
 			<var name="assetTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
@@ -497,6 +501,8 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#save" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
@@ -587,7 +593,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
-			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetContent" value="WC WebContent Text" />
 			<var name="assetTitle" value="WC WebContent Title" />
 		</execute>
 	</command>

@@ -561,15 +561,23 @@
 	</command>
 
 	<command name="viewPageTemplatePG">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute function="Click" locator1="ControlMenu#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
+		
+		<execute macro="ProductMenuHelper#expandPanelSites" />
 
-		<execute function="Refresh" />
-
-		<execute macro="ProductMenu#gotoEditPage">
-			<var name="page" value="${page}" />
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
 		</execute>
+
+		<var name="key_page" value="${page}" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL_GENERIC" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC" />

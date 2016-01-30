@@ -1315,9 +1315,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
-		_authPipelineEnableLiferayCheck = GetterUtil.getBoolean(
-			props.get(PropsKeys.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK));
-
 		_companySecurityAuthType = GetterUtil.getString(
 			props.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
 	}
@@ -1595,7 +1592,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPUserImporterImpl.class);
 
 	private AttributesTransformer _attributesTransformer;
-	private boolean _authPipelineEnableLiferayCheck;
 	private CompanyLocalService _companyLocalService;
 	private String _companySecurityAuthType;
 	private ExpandoValueLocalService _expandoValueLocalService;

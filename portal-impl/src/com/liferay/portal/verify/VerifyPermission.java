@@ -206,52 +206,37 @@ public class VerifyPermission extends VerifyProcess {
 			Role userRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.USER);
 
-			StringBundler joinSB = new StringBundler(22);
+			StringBundler joinSB = new StringBundler(6);
 
-			joinSB.append("ResourcePermission resourcePermission1 left outer ");
-			joinSB.append("join ResourcePermission resourcePermission2 on ");
-			joinSB.append("resourcePermission1.companyId = ");
-			joinSB.append("resourcePermission2.companyId and ");
-			joinSB.append("resourcePermission1.name = ");
-			joinSB.append("resourcePermission2.name and ");
-			joinSB.append("resourcePermission1.primKey = ");
-			joinSB.append("resourcePermission2.primKey and ");
-			joinSB.append("resourcePermission1.scope = ");
-			joinSB.append("resourcePermission2.scope and ");
-			joinSB.append("resourcePermission2.roleId = ");
-			joinSB.append(userRole.getRoleId());
-			joinSB.append(" inner join Layout on ");
-			joinSB.append("resourcePermission1.companyId = Layout.companyId ");
-			joinSB.append("and resourcePermission1.primKey like ");
-			joinSB.append("replace('[$PLID$]");
-			joinSB.append(PortletConstants.LAYOUT_SEPARATOR);
-			joinSB.append("%', '[$PLID$]', cast_text(Layout.plid)) inner ");
-			joinSB.append("join Group_ on Layout.groupId = ");
-			joinSB.append("Group_.groupId and Layout.type_ = '");
-			joinSB.append(LayoutConstants.TYPE_PORTLET);
-			joinSB.append(StringPool.APOSTROPHE);
+			joinSB.append("ResourcePermission inner join Layout on ");
+			joinSB.append("ResourcePermission.companyId = Layout.companyId ");
+			joinSB.append("and ResourcePermission.primKey like ");
+			joinSB.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
+			joinSB.append("cast_text(Layout.plid)) inner join Group_ on ");
+			joinSB.append("Layout.groupId = Group_.groupId");
 
-			StringBundler whereSB = new StringBundler(12);
+			StringBundler whereSB = new StringBundler(13);
 
-			whereSB.append("where resourcePermission1.scope = ");
+			whereSB.append("where ResourcePermission.scope = ");
 			whereSB.append(ResourceConstants.SCOPE_INDIVIDUAL);
-			whereSB.append(" and resourcePermission1.primKey like '%");
+			whereSB.append(" and ResourcePermission.primKey like '%");
 			whereSB.append(PortletConstants.LAYOUT_SEPARATOR);
-			whereSB.append("%' and resourcePermission1.roleId = ");
+			whereSB.append("%' and ResourcePermission.roleId = ");
 			whereSB.append(powerUserRole.getRoleId());
-			whereSB.append(" and resourcePermission2.roleId is null and ");
-			whereSB.append("(Group_.classNameId = ");
+			whereSB.append(" and (Group_.classNameId = ");
 			whereSB.append(userClassNameId);
 			whereSB.append(" or Group_.classNameId = ");
 			whereSB.append(userGroupClassNameId);
-			whereSB.append(StringPool.CLOSE_PARENTHESIS);
+			whereSB.append(") and Layout.type_ = '");
+			whereSB.append(LayoutConstants.TYPE_PORTLET);
+			whereSB.append(StringPool.APOSTROPHE);
 
 			StringBundler sb = new StringBundler(8);
 
 			if (db.getDBType() == DBType.MYSQL) {
 				sb.append("update ");
 				sb.append(joinSB.toString());
-				sb.append(" set resourcePermission1.roleId = ");
+				sb.append(" set ResourcePermission.roleId = ");
 				sb.append(userRole.getRoleId());
 				sb.append(StringPool.SPACE);
 				sb.append(whereSB.toString());
@@ -260,7 +245,7 @@ public class VerifyPermission extends VerifyProcess {
 				sb.append("update ResourcePermission set roleId = ");
 				sb.append(userRole.getRoleId());
 				sb.append(" where resourcePermissionId in (select ");
-				sb.append("resourcePermission1.resourcePermissionId from ");
+				sb.append("resourcePermissionId from ");
 				sb.append(joinSB.toString());
 				sb.append(StringPool.SPACE);
 				sb.append(whereSB.toString());

@@ -118,7 +118,9 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 
 		if (_log.isWarnEnabled()) {
 			for (Theme theme : themes) {
-				if (theme.getTemplateExtension().equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
+				if (theme.getTemplateExtension(
+						).equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
+
 					_log.warn("Velocity support is deprecated. Update " +
 						theme.getName() + " theme to FreeMarker");
 				}

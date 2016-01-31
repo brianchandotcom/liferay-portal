@@ -224,6 +224,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (company == null) {
 			long companyId = counterLocalService.increment();
 
+			preregisterCompany(companyId);
+
 			company = companyPersistence.create(companyId);
 
 			try {
@@ -1398,6 +1400,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 
 		return company;
+	}
+
+	protected void preregisterCompany(long companyId) {
+		SearchEngineHelperUtil.initialize(companyId);
 	}
 
 	protected void registerCompany(Company company) {

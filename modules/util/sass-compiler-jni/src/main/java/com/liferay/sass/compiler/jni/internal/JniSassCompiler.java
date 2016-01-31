@@ -164,7 +164,7 @@ public class JniSassCompiler implements SassCompiler {
 
 		try {
 			if ((inputFileName == null) || inputFileName.equals("")) {
-				inputFileName = _tmpDirName + "tmp.scss";
+				inputFileName = _tmpDirName + File.separator + "tmp.scss";
 
 				if (generateSourceMap) {
 					System.out.println("Source maps require a valid file name");

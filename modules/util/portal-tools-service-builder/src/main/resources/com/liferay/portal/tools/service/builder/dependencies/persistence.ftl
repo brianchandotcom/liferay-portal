@@ -1,5 +1,8 @@
 package ${apiPackagePath}.service.persistence;
 
+<#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)>
+
+import ${apiPackagePath}.exception.${noSuchEntity}Exception;
 import ${apiPackagePath}.model.${entity.name};
 
 import aQute.bnd.annotation.ProviderType;

@@ -14,6 +14,7 @@ package ${packagePath}.service.persistence.impl;
 
 <#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)>
 
+import ${apiPackagePath}.exception.${noSuchEntity}Exception;
 import ${apiPackagePath}.model.${entity.name};
 import ${packagePath}.model.impl.${entity.name}Impl;
 import ${packagePath}.model.impl.${entity.name}ModelImpl;
@@ -420,10 +421,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 *
 	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName} that was removed
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
-	public ${entity.name} remove(${entity.PKClassName} ${entity.PKVarName}) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
+	public ${entity.name} remove(${entity.PKClassName} ${entity.PKVarName}) throws ${noSuchEntity}Exception {
 		return remove((Serializable)${entity.PKVarName});
 	}
 
@@ -432,10 +433,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 *
 	 * @param primaryKey the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName} that was removed
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
-	public ${entity.name} remove(Serializable primaryKey) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
+	public ${entity.name} remove(Serializable primaryKey) throws ${noSuchEntity}Exception {
 		Session session = null;
 
 		try {
@@ -448,12 +449,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new ${apiPackagePath}.exception.${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(${entity.varName});
 		}
-		catch (${apiPackagePath}.exception.${noSuchEntity}Exception nsee) {
+		catch (${noSuchEntity}Exception nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -815,10 +816,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 *
 	 * @param primaryKey the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName}
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
-	public ${entity.name} findByPrimaryKey(Serializable primaryKey) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
+	public ${entity.name} findByPrimaryKey(Serializable primaryKey) throws ${noSuchEntity}Exception {
 		${entity.name} ${entity.varName} = fetchByPrimaryKey(primaryKey);
 
 		if (${entity.varName} == null) {
@@ -826,21 +827,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new ${apiPackagePath}.exception.${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return ${entity.varName};
 	}
 
 	/**
-	 * Returns the ${entity.humanName} with the primary key or throws a {@link ${apiPackagePath}.exception.${noSuchEntity}Exception} if it could not be found.
+	 * Returns the ${entity.humanName} with the primary key or throws a {@link ${noSuchEntity}Exception} if it could not be found.
 	 *
 	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName}
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
-	public ${entity.name} findByPrimaryKey(${entity.PKClassName} ${entity.PKVarName}) throws ${apiPackagePath}.exception.${noSuchEntity}Exception {
+	public ${entity.name} findByPrimaryKey(${entity.PKClassName} ${entity.PKVarName}) throws ${noSuchEntity}Exception {
 		return findByPrimaryKey((Serializable)${entity.PKVarName});
 	}
 

@@ -81,6 +81,10 @@ public class ElasticsearchUpdateDocumentCommandImpl
 		BulkResponse bulkResponse = doUpdateDocuments(
 			documentType, searchContext, Arrays.asList(document), deleteFirst);
 
+		if (bulkResponse.hasFailures()) {
+			throw new SearchException(bulkResponse.buildFailureMessage());
+		}
+
 		BulkItemResponse[] bulkItemResponses = bulkResponse.getItems();
 
 		for (BulkItemResponse bulkItemResponse : bulkItemResponses) {

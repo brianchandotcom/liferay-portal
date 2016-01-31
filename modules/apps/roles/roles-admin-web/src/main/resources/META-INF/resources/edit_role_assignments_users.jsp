@@ -23,16 +23,22 @@ int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
 
 Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
-%>
+String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 
-<aui:input name="addUserIds" type="hidden" />
-<aui:input name="removeUserIds" type="hidden" />
+PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
+
+EmptyOnClickRowChecker rowChecker = new UnsetUserRoleChecker(renderResponse, role);
+
+if (tabs3.equals("available")) {
+	rowChecker = new SetUserRoleChecker(renderResponse, role);
+}
+%>
 
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container
-	rowChecker="<%= new UserRoleChecker(renderResponse, role) %>"
+	id="assigneesSearch"
+	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 	var="userSearchContainer"
 >
@@ -56,22 +62,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		modelVar="user2"
 		rowIdProperty="screenName"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			property="fullName"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="screen-name"
-			property="screenName"
-		/>
+		<%@ include file="/user_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<%
-	String taglibOnClick = renderResponse.getNamespace() + "updateRoleUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-	<liferay-ui:search-iterator markupView="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>

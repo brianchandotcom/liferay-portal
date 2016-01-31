@@ -19,7 +19,6 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
 String tabs2 = ParamUtil.getString(request, "tabs2", "users");
-String tabs3 = ParamUtil.getString(request, "tabs3", "current");
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
@@ -38,18 +37,20 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("tabs3", tabs3);
+portletURL.setParameter("tabs3", "current");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("orderByCol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
-request.setAttribute("edit_role_assignments.jsp-tabs3", tabs3);
+request.setAttribute("edit_role_assignments.jsp-tabs3", "current");
 
 request.setAttribute("edit_role_assignments.jsp-cur", cur);
 
 request.setAttribute("edit_role_assignments.jsp-role", role);
+
+request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
 
 request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 
@@ -57,13 +58,42 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(role.getTitle(locale));
+
+int type = role.getType();
+
+String rootBreadcrumbKey = null;
+
+if (type == RoleConstants.TYPE_SITE) {
+	rootBreadcrumbKey = "site-roles";
+}
+else if (type == RoleConstants.TYPE_ORGANIZATION) {
+	rootBreadcrumbKey = "organization-roles";
+}
+else {
+	rootBreadcrumbKey = "regular-roles";
+}
+
+String rootBreadcrumbEntry = LanguageUtil.get(request, rootBreadcrumbKey);
+
+PortalUtil.addPortletBreadcrumbEntry(request, rootBreadcrumbEntry, redirect);
+PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 %>
 
-<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="assign-members" />
-	<liferay-util:param name="backURL" value="<%= redirect %>" />
-	<liferay-util:param name="portletURL" value="<%= String.valueOf(portletURL) %>" />
-</liferay-util:include>
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-assignees") %>' url="javascript:;" />
+</liferay-frontend:add-menu>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= portletURL.toString() %>" label="assignees" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
@@ -72,47 +102,54 @@ renderResponse.setTitle(role.getTitle(locale));
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
+	<aui:input name="tabs3" type="hidden" value="current" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
+	<aui:input name="addUserIds" type="hidden" />
+	<aui:input name="removeUserIds" type="hidden" />
+	<aui:input name="addGroupIds" type="hidden" />
+	<aui:input name="removeGroupIds" type="hidden" />
 
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"
+		searchContainerId="assigneesSearch"
 	>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"users", "sites", "organizations", "user-groups"} %>'
+				navigationParam="tabs2"
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"name"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-filters>
-				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"users", "sites", "organizations", "user-groups"} %>'
-					navigationParam="tabs2"
-					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				/>
-
-				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"current", "available"} %>'
-					navigationParam="tabs3"
-					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				/>
-
-				<liferay-frontend:management-bar-sort
-					orderByCol="<%= orderByCol %>"
-					orderByType="<%= orderByType %>"
-					orderColumns='<%= new String[] {"name"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				/>
-			</liferay-frontend:management-bar-filters>
-
 			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
+				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="unsetRoleAssignments" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
 	<%
 	String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
 	%>
+
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+		showPortletBreadcrumb="<%= true %>"
+	/>
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("users") %>'>
@@ -130,30 +167,71 @@ renderResponse.setTitle(role.getTitle(locale));
 	</c:choose>
 </aui:form>
 
-<aui:script>
-	function <portlet:namespace />updateRoleGroups(assignmentsRedirect) {
-		var Util = Liferay.Util;
+<aui:script use="liferay-item-selector-dialog,liferay-portlet-url">
+	var form = AUI.$(document.<portlet:namespace />fm);
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+	<portlet:renderURL var="selectAssigneesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/select_assignees.jsp" />
+		<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
+		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		<portlet:param name="tabs2" value="<%= tabs2 %>" />
+	</portlet:renderURL>
 
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+	AUI.$('#<portlet:namespace />addUsers').on(
+		'click',
+		function(event) {
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectAssignees',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
 
-		submitForm(form, '<%= editRoleAssignmentsURL %>');
-	}
+							if (selectedItem) {
+								var assignmentsRedirect = Liferay.PortletURL.createURL('<%= portletURL.toString() %>');
 
-	function <portlet:namespace />updateRoleUsers(assignmentsRedirect) {
-		var Util = Liferay.Util;
+								if (selectedItem.type === 'users') {
+									form.fm('addUserIds').val(selectedItem.value);
+								}
+								else {
+									form.fm('addGroupIds').val(selectedItem.value);
+								}
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+								assignmentsRedirect.setParameter('tabs2', selectedItem.type);
 
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+								form.fm('redirect').val(assignmentsRedirect.toString());
 
-		submitForm(form, '<%= editRoleAssignmentsURL %>');
-	}
+								submitForm(form, '<%= editRoleAssignmentsURL %>');
+							}
+						}
+					},
+					title: '<liferay-ui:message arguments="<%= role.getName() %>" key="add-assignees-to-x" />',
+					url: '<%= selectAssigneesURL %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+
+	AUI.$('#<portlet:namespace />unsetRoleAssignments').on(
+		'click',
+		function() {
+			var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';
+			var ids = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+
+			form.fm('assignmentsRedirect').val('<%= portletURL.toString() %>');
+
+			if (assigneeType === 'users') {
+				form.fm('removeUserIds').val(ids);
+			}
+			else {
+				form.fm('removeGroupIds').val(ids);
+			}
+
+			submitForm(form, '<%= editRoleAssignmentsURL %>');
+		}
+	);
 </aui:script>
 
 <%

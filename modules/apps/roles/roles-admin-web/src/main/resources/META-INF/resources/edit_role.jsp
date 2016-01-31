@@ -26,6 +26,7 @@ long roleId = ParamUtil.getLong(request, "roleId");
 Role role = RoleServiceUtil.fetchRole(roleId);
 
 int type = ParamUtil.getInteger(request, "type");
+
 String subtype = BeanParamUtil.getString(role, request, "subtype");
 
 portletDisplay.setShowBackIcon(true);
@@ -33,13 +34,6 @@ portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") : role.getTitle(locale));
 %>
-
-<c:if test="<%= role != null %>">
-	<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="edit" />
-		<liferay-util:param name="backURL" value="<%= backURL %>" />
-	</liferay-util:include>
-</c:if>
 
 <portlet:actionURL name="editRole" var="editRoleURL">
 	<portlet:param name="mvcPath" value="/edit_role.jsp" />

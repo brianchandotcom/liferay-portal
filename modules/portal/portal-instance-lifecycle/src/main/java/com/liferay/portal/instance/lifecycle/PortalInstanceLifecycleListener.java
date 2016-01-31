@@ -25,4 +25,6 @@ public interface PortalInstanceLifecycleListener {
 
 	public void portalInstanceUnregistered(Company company) throws Exception;
 
+	public void preregisterPortalInstance(long companyId);
+	
 }

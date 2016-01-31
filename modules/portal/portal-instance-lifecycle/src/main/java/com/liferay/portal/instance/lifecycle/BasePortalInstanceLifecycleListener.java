@@ -30,6 +30,10 @@ public abstract class BasePortalInstanceLifecycleListener
 	public void portalInstanceUnregistered(Company company) throws Exception {
 	}
 
+	@Override
+	public void preregisterPortalInstance(long companyId) {
+	}
+
 	protected ClassLoader getClassLoader() {
 		Class<?> clazz = getClass();
 

@@ -1403,7 +1403,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	protected void preregisterCompany(long companyId) {
-		SearchEngineHelperUtil.initialize(companyId);
+		PortalInstanceLifecycleManager portalInstanceLifecycleManager =
+			_serviceTracker.getService();
+
+		if (portalInstanceLifecycleManager != null) {
+			portalInstanceLifecycleManager.preregisterCompany(companyId);
+		}
 	}
 
 	protected void registerCompany(Company company) {

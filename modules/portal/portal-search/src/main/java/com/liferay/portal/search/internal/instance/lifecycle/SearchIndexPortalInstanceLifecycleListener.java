@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.instance.lifecycle;
 
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.model.Company;
@@ -26,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)
 public class SearchIndexPortalInstanceLifecycleListener
-	implements PortalInstanceLifecycleListener {
+	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
@@ -38,6 +39,11 @@ public class SearchIndexPortalInstanceLifecycleListener
 		_searchEngineHelper.removeCompany(company.getCompanyId());
 	}
 
+	@Override
+	public void preregisterPortalInstance(long companyId) {
+		_searchEngineHelper.initialize(companyId);
+	}
+	
 	@Reference(unbind = "-")
 	protected void setSearchEngineHelper(
 		SearchEngineHelper searchEngineHelper) {

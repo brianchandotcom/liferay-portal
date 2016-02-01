@@ -701,7 +701,7 @@ public class PortalImpl implements Portal {
 			groupId = getScopeGroupId(layout, portlet.getPortletId());
 		}
 
-		addRootModelDefaultResource(
+		addRootModelResource(
 			themeDisplay.getCompanyId(), groupId, portlet);
 	}
 
@@ -712,7 +712,7 @@ public class PortalImpl implements Portal {
 
 		long groupId = getScopeGroupId(layout, portlet.getPortletId());
 
-		addRootModelDefaultResource(companyId, groupId, portlet);
+		addRootModelResource(companyId, groupId, portlet);
 	}
 
 	@Override
@@ -7122,7 +7122,7 @@ public class PortalImpl implements Portal {
 
 		long groupId = getScopeGroupId(layout, portlet.getPortletId());
 
-		addRootModelDefaultResource(companyId, groupId, portlet);
+		addRootModelResource(companyId, groupId, portlet);
 	}
 
 	@Deprecated
@@ -7131,10 +7131,10 @@ public class PortalImpl implements Portal {
 			boolean portletActions)
 		throws PortalException {
 
-		addRootModelDefaultResource(companyId, groupId, portlet);
+		addRootModelResource(companyId, groupId, portlet);
 	}
 
-	protected void addRootModelDefaultResource(
+	protected void addRootModelResource(
 			long companyId, long groupId, Portlet portlet)
 		throws PortalException {
 

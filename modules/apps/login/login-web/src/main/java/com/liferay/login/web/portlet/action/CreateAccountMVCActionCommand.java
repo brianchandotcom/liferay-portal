@@ -501,13 +501,11 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay, User user, String password1)
 		throws Exception {
 
-		_userLocalService.updateLastLogin(
-			user.getUserId(), user.getLoginIP());
+		_userLocalService.updateLastLogin(user.getUserId(), user.getLoginIP());
 
 		_userLocalService.updatePasswordReset(user.getUserId(), false);
 
-		_userLocalService.updateEmailAddressVerified(
-			user.getUserId(), true);
+		_userLocalService.updateEmailAddressVerified(user.getUserId(), true);
 
 		// Send redirect
 

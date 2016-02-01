@@ -908,6 +908,36 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
+	protected String formatWhitespace(String line, boolean javaSource) {
+		String trimmedLine = StringUtil.trimLeading(line);
+
+		line = formatWhitespace(line, trimmedLine, javaSource);
+
+		if (javaSource) {
+			return line;
+		}
+
+		Matcher matcher = javaSourceInsideJSPTagPattern.matcher(line);
+
+		while (matcher.find()) {
+			String linePart = matcher.group(1);
+
+			if (!linePart.startsWith(StringPool.SPACE)) {
+				return StringUtil.replace(
+					line, matcher.group(), "<%= " + linePart + "%>");
+			}
+
+			if (!linePart.endsWith(StringPool.SPACE)) {
+				return StringUtil.replace(
+					line, matcher.group(), "<%=" + linePart + " %>");
+			}
+
+			line = formatWhitespace(line, linePart, true);
+		}
+
+		return line;
+	}
+
 	protected String formatWhitespace(
 		String line, String linePart, boolean javaSource) {
 
@@ -1072,36 +1102,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return formatIncorrectSyntax(
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
-	}
-
-	protected String formatWhitespace(String line, boolean javaSource) {
-		String trimmedLine = StringUtil.trimLeading(line);
-
-		line = formatWhitespace(line, trimmedLine, javaSource);
-
-		if (javaSource) {
-			return line;
-		}
-
-		Matcher matcher = javaSourceInsideJSPTagPattern.matcher(line);
-
-		while (matcher.find()) {
-			String linePart = matcher.group(1);
-
-			if (!linePart.startsWith(StringPool.SPACE)) {
-				return StringUtil.replace(
-					line, matcher.group(), "<%= " + linePart + "%>");
-			}
-
-			if (!linePart.endsWith(StringPool.SPACE)) {
-				return StringUtil.replace(
-					line, matcher.group(), "<%=" + linePart + " %>");
-			}
-
-			line = formatWhitespace(line, linePart, true);
-		}
-
-		return line;
 	}
 
 	protected String getAbsolutePath(File file) throws Exception {

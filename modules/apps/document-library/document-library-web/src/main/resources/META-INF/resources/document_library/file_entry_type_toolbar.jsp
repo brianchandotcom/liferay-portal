@@ -24,7 +24,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicFileEntryType");
 %>
 
-<aui:nav-bar>
+<aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewFileEntryTypesURL">
 			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
@@ -48,7 +48,7 @@ boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicF
 			</liferay-portlet:renderURL>
 
 			<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
-				<liferay-ui:input-search />
+				<liferay-ui:input-search markupView="lexicon" />
 			</aui:form>
 		</div>
 	</aui:nav-bar-search>

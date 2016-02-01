@@ -46,115 +46,117 @@ if (fileEntryType != null) {
 String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields", "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE");
 %>
 
-<liferay-util:buffer var="removeStructureIcon">
-	<liferay-ui:icon
-		iconCssClass="icon-remove"
-		label="<%= true %>"
-		message="remove"
-	/>
-</liferay-util:buffer>
+<div class="container-fluid-1280">
+	<c:if test="<%= DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructureId) > 0 %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
+		</div>
+	</c:if>
 
-<portlet:actionURL name="/document_library/edit_file_entry_type" var="editFileEntryTypeURL">
-	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
-</portlet:actionURL>
+	<liferay-util:buffer var="removeStructureIcon">
+		<liferay-ui:icon
+			iconCssClass="icon-remove"
+			label="<%= true %>"
+			message="remove"
+		/>
+	</liferay-util:buffer>
 
-<aui:form action="<%= editFileEntryTypeURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
-	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-	<aui:input name="definition" type="hidden" />
+	<portlet:actionURL name="/document_library/edit_file_entry_type" var="editFileEntryTypeURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
+	</portlet:actionURL>
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (fileEntryType == null) %>"
-		title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName(locale) %>'
-	/>
+	<aui:form action="<%= editFileEntryTypeURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
+		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+		<aui:input name="definition" type="hidden" />
 
-	<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />
-	<liferay-ui:error exception="<%= NoSuchMetadataSetException.class %>" message="please-enter-a-valid-metadata-set-or-enter-a-metadata-field" />
-	<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
-	<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
-	<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-metadata-field-names-(including-field-names-inherited-from-the-parent)" />
-	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= (fileEntryType == null) %>"
+			title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName(locale) %>'
+		/>
 
-	<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
+		<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />
+		<liferay-ui:error exception="<%= NoSuchMetadataSetException.class %>" message="please-enter-a-valid-metadata-set-or-enter-a-metadata-field" />
+		<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
+		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
+		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-metadata-field-names-(including-field-names-inherited-from-the-parent)" />
+		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:fieldset cssClass="edit-file-entry-type">
-		<c:if test="<%= DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructureId) > 0 %>">
-			<div class="alert alert-warning">
-				<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-			</div>
-		</c:if>
+		<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
 
-		<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+		<aui:fieldset-group cssClass="edit-file-entry-type" markupView="lexicon">
+			<aui:fieldset collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
+				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
-			<aui:input name="description" />
-		</liferay-ui:panel>
+				<aui:input name="description" />
+			</aui:fieldset>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
-			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW) %>">
-				<portlet:param name="refererPortletName" value="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" />
-				<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
-				<portlet:param name="script" value="<%= script %>" />
-				<portlet:param name="fieldsJSONArrayString" value="<%= (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK %>" />
-			</liferay-util:include>
-		</liferay-ui:panel>
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
+				<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW) %>">
+					<portlet:param name="refererPortletName" value="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" />
+					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
+					<portlet:param name="script" value="<%= script %>" />
+					<portlet:param name="fieldsJSONArrayString" value="<%= (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK %>" />
+				</liferay-util:include>
+			</aui:fieldset>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="additionalMetadataFields" persistState="<%= true %>" title="additional-metadata-fields">
-			<liferay-ui:search-container
-				headerNames="name,null"
-				total="<%= (ddmStructures != null) ? ddmStructures.size() : 0 %>"
-			>
-				<liferay-ui:search-container-results
-					results="<%= ddmStructures %>"
-				/>
-
-				<liferay-ui:search-container-row
-					className="com.liferay.dynamic.data.mapping.kernel.DDMStructure"
-					escapedModel="<%= true %>"
-					keyProperty="structureId"
-					modelVar="curDDMStructure"
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="additionalMetadataFields" label="additional-metadata-fields">
+				<liferay-ui:search-container
+					headerNames="name,null"
+					total="<%= (ddmStructures != null) ? ddmStructures.size() : 0 %>"
 				>
-					<liferay-ui:search-container-column-text
-						name="name"
-						value="<%= HtmlUtil.escape(curDDMStructure.getName(locale)) %>"
+					<liferay-ui:search-container-results
+						results="<%= ddmStructures %>"
 					/>
 
-					<liferay-ui:search-container-column-text>
-						<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;"><%= removeStructureIcon %></a>
-					</liferay-ui:search-container-column-text>
-				</liferay-ui:search-container-row>
+					<liferay-ui:search-container-row
+						className="com.liferay.dynamic.data.mapping.kernel.DDMStructure"
+						escapedModel="<%= true %>"
+						keyProperty="structureId"
+						modelVar="curDDMStructure"
+					>
+						<liferay-ui:search-container-column-text
+							name="name"
+							value="<%= HtmlUtil.escape(curDDMStructure.getName(locale)) %>"
+						/>
 
-				<liferay-ui:search-iterator paginate="<%= false %>" />
-			</liferay-ui:search-container>
+						<liferay-ui:search-container-column-text>
+							<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;"><%= removeStructureIcon %></a>
+						</liferay-ui:search-container-column-text>
+					</liferay-ui:search-container-row>
 
-			<liferay-ui:icon
-				cssClass="modify-link select-metadata"
-				iconCssClass="icon-search"
-				label="<%= true %>"
-				linkCssClass="btn btn-default"
-				message="select-metadata-set"
-				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-			/>
-		</liferay-ui:panel>
+					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+				</liferay-ui:search-container>
 
-		<c:if test="<%= fileEntryType == null %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= DLFileEntryType.class.getName() %>"
+				<liferay-ui:icon
+					cssClass="modify-link select-metadata"
+					iconCssClass="icon-search"
+					label="<%= true %>"
+					linkCssClass="btn btn-default"
+					message="select-metadata-set"
+					url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 				/>
-			</aui:field-wrapper>
-		</c:if>
-	</aui:fieldset>
-</aui:form>
+			</aui:fieldset>
 
-<aui:button-row>
-	<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' type="submit" />
+			<c:if test="<%= fileEntryType == null %>">
+				<aui:fieldset label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= DLFileEntryType.class.getName() %>"
+					/>
+				</aui:fieldset>
+			</c:if>
+		</aui:fieldset-group>
+	</aui:form>
 
-	<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-</aui:button-row>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</div>
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {

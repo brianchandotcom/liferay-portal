@@ -128,7 +128,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void lockThreads(ActionRequest actionRequest) throws Exception {
-		long[] threadIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+		long[] threadIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsMBThread");
 
 		for (long threadId : threadIds) {
 			_mbThreadService.lockThread(threadId);
@@ -146,7 +147,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void unlockThreads(ActionRequest actionRequest) throws Exception {
-		long[] threadIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+		long[] threadIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsMBThread");
 
 		for (long threadId : threadIds) {
 			_mbThreadService.unlockThread(threadId);

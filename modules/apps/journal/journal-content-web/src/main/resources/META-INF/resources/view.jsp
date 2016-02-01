@@ -31,8 +31,15 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 	<c:when test="<%= article == null %>">
 		<c:choose>
 			<c:when test="<%= Validator.isNull(journalContentDisplayContext.getArticleId()) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="select-existing-web-content-or-add-some-web-content-to-be-displayed-in-this-portlet" />
+				<div class="alert alert-info text-center">
+					<div>
+						<liferay-ui:message key="this-application-wont-be-visible-for-the-users-while-you-dont-select-web-content" />
+					</div>
+					<div>
+						<liferay-ui:message key="you-can-select-it" />
+
+						<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select" /></aui:a>
+					</div>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -191,19 +198,6 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					method="get"
 					url="<%= editTemplateURL.toString() %>"
 					useDialog="<%= true %>"
-				/>
-			</c:if>
-
-			<c:if test="<%= journalContentDisplayContext.isShowSelectArticleIcon() %>">
-				<liferay-ui:icon
-					cssClass="lfr-icon-action"
-					icon="cog"
-					label="<%= true %>"
-					markupView="lexicon"
-					message="select-web-content"
-					method="get"
-					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
-					url="<%= portletDisplay.getURLConfiguration() %>"
 				/>
 			</c:if>
 		</div>

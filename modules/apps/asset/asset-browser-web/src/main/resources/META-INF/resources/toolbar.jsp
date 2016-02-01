@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
-
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
 
 if (groupId == 0) {
@@ -32,8 +30,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
 AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
 %>
-
-<aui:nav-item href="<%= portletURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
 
 <c:choose>
 	<c:when test="<%= assetRendererFactory.isSupportsClassTypes() && (subtypeSelectionId > 0) %>">

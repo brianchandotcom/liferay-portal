@@ -16,6 +16,8 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.calendar.model.CalendarBooking;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,7 +26,14 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CalendarBooking. Methods of this
@@ -50,33 +59,31 @@ public interface CalendarBookingService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarBookingServiceUtil} to access the calendar booking remote service. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarBookingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.calendar.model.CalendarBooking addCalendarBooking(
-		long calendarId, long[] childCalendarIds, long parentCalendarBookingId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+	public CalendarBooking addCalendarBooking(long calendarId,
+		long[] childCalendarIds, long parentCalendarBookingId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long startTime, long endTime,
 		boolean allDay, java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
-		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String secondReminderType, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking addCalendarBooking(
-		long calendarId, long[] childCalendarIds, long parentCalendarBookingId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+	public CalendarBooking addCalendarBooking(long calendarId,
+		long[] childCalendarIds, long parentCalendarBookingId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, int startTimeYear, int startTimeMonth,
 		int startTimeDay, int startTimeHour, int startTimeMinute,
 		int endTimeYear, int endTimeMonth, int endTimeDay, int endTimeHour,
 		int endTimeMinute, java.lang.String timeZoneId, boolean allDay,
 		java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
-		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String secondReminderType, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking deleteCalendarBooking(
-		long calendarBookingId) throws PortalException;
+	public CalendarBooking deleteCalendarBooking(long calendarBookingId)
+		throws PortalException;
 
 	public void deleteCalendarBookingInstance(long calendarBookingId,
 		int instanceIndex, boolean allFollowing) throws PortalException;
@@ -88,53 +95,49 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String type) throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.calendar.model.CalendarBooking fetchCalendarBooking(
-		long calendarBookingId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.calendar.model.CalendarBooking getCalendarBooking(
-		long calendarBookingId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.calendar.model.CalendarBooking getCalendarBooking(
-		long calendarId, long parentCalendarBookingId)
+	public CalendarBooking fetchCalendarBooking(long calendarBookingId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.calendar.model.CalendarBooking getCalendarBookingInstance(
-		long calendarBookingId, int instanceIndex) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
-		long calendarId, long startTime, long endTime)
+	public CalendarBooking getCalendarBooking(long calendarBookingId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
-		long calendarId, long startTime, long endTime, int max)
-		throws PortalException;
+	public CalendarBooking getCalendarBooking(long calendarId,
+		long parentCalendarBookingId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
-		long calendarId, int[] statuses) throws PortalException;
+	public CalendarBooking getCalendarBookingInstance(long calendarBookingId,
+		int instanceIndex) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getCalendarBookings(long calendarId,
+		long startTime, long endTime) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getCalendarBookings(long calendarId,
+		long startTime, long endTime, int max) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CalendarBooking> getCalendarBookings(long calendarId,
+		int[] statuses) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getCalendarBookingsRSS(long calendarId,
 		long startTime, long endTime, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		double version, java.lang.String displayStyle, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
+	public List<CalendarBooking> getChildCalendarBookings(
 		long parentCalendarBookingId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
+	public List<CalendarBooking> getChildCalendarBookings(
 		long parentCalendarBookingId, int status) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.calendar.model.CalendarBooking getNewStartTimeAndDurationCalendarBooking(
+	public CalendarBooking getNewStartTimeAndDurationCalendarBooking(
 		long calendarBookingId, long offset, long duration)
 		throws PortalException;
 
@@ -149,34 +152,31 @@ public interface CalendarBookingService extends BaseService {
 	public boolean hasChildCalendarBookings(long parentCalendarBookingId);
 
 	public void invokeTransition(long calendarBookingId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		ServiceContext serviceContext) throws PortalException;
+
+	public CalendarBooking moveCalendarBookingToTrash(long calendarBookingId)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking moveCalendarBookingToTrash(
-		long calendarBookingId) throws PortalException;
-
-	public com.liferay.calendar.model.CalendarBooking restoreCalendarBookingFromTrash(
+	public CalendarBooking restoreCalendarBookingFromTrash(
 		long calendarBookingId) throws PortalException;
 
 	@AccessControlled(guestAccessEnabled = true)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> search(
-		long companyId, long[] groupIds, long[] calendarIds,
-		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String keywords, long startTime, long endTime,
-		boolean recurring, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator)
+	public List<CalendarBooking> search(long companyId, long[] groupIds,
+		long[] calendarIds, long[] calendarResourceIds,
+		long parentCalendarBookingId, java.lang.String keywords,
+		long startTime, long endTime, boolean recurring, int[] statuses,
+		int start, int end, OrderByComparator<CalendarBooking> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> search(
-		long companyId, long[] groupIds, long[] calendarIds,
-		long[] calendarResourceIds, long parentCalendarBookingId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String location, long startTime, long endTime,
-		boolean recurring, int[] statuses, boolean andOperator, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator)
+	public List<CalendarBooking> search(long companyId, long[] groupIds,
+		long[] calendarIds, long[] calendarResourceIds,
+		long parentCalendarBookingId, java.lang.String title,
+		java.lang.String description, java.lang.String location,
+		long startTime, long endTime, boolean recurring, int[] statuses,
+		boolean andOperator, int start, int end,
+		OrderByComparator<CalendarBooking> orderByComparator)
 		throws PortalException;
 
 	@AccessControlled(guestAccessEnabled = true)
@@ -194,84 +194,74 @@ public interface CalendarBookingService extends BaseService {
 		boolean recurring, int[] statuses, boolean andOperator)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking updateCalendarBooking(
-		long calendarBookingId, long calendarId, long[] childCalendarIds,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+	public CalendarBooking updateCalendarBooking(long calendarBookingId,
+		long calendarId, long[] childCalendarIds,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long startTime, long endTime,
 		boolean allDay, java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
-		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String secondReminderType, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking updateCalendarBooking(
-		long calendarBookingId, long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+	public CalendarBooking updateCalendarBooking(long calendarBookingId,
+		long calendarId, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long startTime, long endTime,
 		boolean allDay, java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
-		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String secondReminderType, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking updateCalendarBookingInstance(
+	public CalendarBooking updateCalendarBookingInstance(
 		long calendarBookingId, int instanceIndex, long calendarId,
-		long[] childCalendarIds,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] childCalendarIds, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long startTime, long endTime,
 		boolean allDay, java.lang.String recurrence, boolean allFollowing,
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking updateCalendarBookingInstance(
+	public CalendarBooking updateCalendarBookingInstance(
 		long calendarBookingId, int instanceIndex, long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long startTime, long endTime,
 		boolean allDay, java.lang.String recurrence, boolean allFollowing,
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking updateCalendarBookingInstance(
+	public CalendarBooking updateCalendarBookingInstance(
 		long calendarBookingId, int instanceIndex, long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, int startTimeYear, int startTimeMonth,
 		int startTimeDay, int startTimeHour, int startTimeMinute,
 		int endTimeYear, int endTimeMonth, int endTimeDay, int endTimeHour,
 		int endTimeMinute, java.lang.String timeZoneId, boolean allDay,
 		java.lang.String recurrence, boolean allFollowing, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
-		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String secondReminderType, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking updateOffsetAndDuration(
-		long calendarBookingId, long calendarId, long[] childCalendarIds,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+	public CalendarBooking updateOffsetAndDuration(long calendarBookingId,
+		long calendarId, long[] childCalendarIds,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long offset, long duration, boolean allDay,
 		java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
-		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String secondReminderType, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.calendar.model.CalendarBooking updateOffsetAndDuration(
-		long calendarBookingId, long calendarId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+	public CalendarBooking updateOffsetAndDuration(long calendarBookingId,
+		long calendarId, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long offset, long duration, boolean allDay,
 		java.lang.String recurrence, long firstReminder,
 		java.lang.String firstReminderType, long secondReminder,
-		java.lang.String secondReminderType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String secondReminderType, ServiceContext serviceContext)
 		throws PortalException;
 }

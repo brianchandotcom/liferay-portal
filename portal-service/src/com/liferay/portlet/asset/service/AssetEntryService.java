@@ -25,6 +25,12 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+
+import java.util.Date;
+import java.util.List;
+
 /**
  * Provides the remote service interface for AssetEntry. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -48,29 +54,24 @@ public interface AssetEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AssetEntryServiceUtil} to access the asset entry remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.asset.model.AssetEntry fetchEntry(long entryId)
-		throws PortalException;
+	public AssetEntry fetchEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getCompanyEntries(
-		long companyId, int start, int end);
+	public List<AssetEntry> getCompanyEntries(long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyEntriesCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getEntries(
-		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery)
+	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getEntriesCount(
-		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery)
+	public int getEntriesCount(AssetEntryQuery entryQuery)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.asset.model.AssetEntry getEntry(long entryId)
-		throws PortalException;
+	public AssetEntry getEntry(long entryId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -79,15 +80,14 @@ public interface AssetEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portlet.asset.model.AssetEntry incrementViewCounter(
-		java.lang.String className, long classPK) throws PortalException;
+	public AssetEntry incrementViewCounter(java.lang.String className,
+		long classPK) throws PortalException;
 
-	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
-		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean visible, java.util.Date startDate, java.util.Date endDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
+	public AssetEntry updateEntry(long groupId, Date createDate,
+		Date modifiedDate, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean visible, Date startDate,
+		Date endDate, Date expirationDate, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
 		java.lang.String summary, java.lang.String url,
 		java.lang.String layoutUuid, int height, int width,
@@ -100,12 +100,11 @@ public interface AssetEntryService extends BaseService {
 	String, int, int, Double)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
-		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
-		boolean visible, java.util.Date startDate, java.util.Date endDate,
-		java.util.Date expirationDate, java.lang.String mimeType,
+	public AssetEntry updateEntry(long groupId, Date createDate,
+		Date modifiedDate, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean visible, Date startDate,
+		Date endDate, Date expirationDate, java.lang.String mimeType,
 		java.lang.String title, java.lang.String description,
 		java.lang.String summary, java.lang.String url,
 		java.lang.String layoutUuid, int height, int width,

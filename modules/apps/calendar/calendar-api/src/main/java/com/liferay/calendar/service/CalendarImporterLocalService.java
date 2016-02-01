@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
 
+import com.liferay.portlet.calendar.model.CalEvent;
+
 /**
  * Provides the local service interface for CalendarImporter. Methods of this
  * service will not have security checks based on the propagated JAAS
@@ -51,9 +53,7 @@ public interface CalendarImporterLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public void importCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent)
-		throws PortalException;
+	public void importCalEvent(CalEvent calEvent) throws PortalException;
 
 	public void importCalEvents() throws PortalException;
 

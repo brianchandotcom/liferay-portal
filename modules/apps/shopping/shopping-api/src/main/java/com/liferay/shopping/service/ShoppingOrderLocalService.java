@@ -16,14 +16,29 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.shopping.model.ShoppingCart;
+import com.liferay.shopping.model.ShoppingOrder;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for ShoppingOrder. Methods of this
@@ -47,8 +62,8 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingOrderLocalServiceUtil} to access the shopping order local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingOrderLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.shopping.model.ShoppingOrder addLatestOrder(
-		long userId, long groupId) throws PortalException;
+	public ShoppingOrder addLatestOrder(long userId, long groupId)
+		throws PortalException;
 
 	/**
 	* Adds the shopping order to the database. Also notifies the appropriate model listeners.
@@ -56,16 +71,14 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param shoppingOrder the shopping order
 	* @return the shopping order that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingOrder addShoppingOrder(
-		com.liferay.shopping.model.ShoppingOrder shoppingOrder);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingOrder addShoppingOrder(ShoppingOrder shoppingOrder);
 
 	public void completeOrder(java.lang.String number,
 		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
 		double ppPaymentGross, java.lang.String ppReceiverEmail,
 		java.lang.String ppPayerEmail, boolean updateInventory,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new shopping order with the primary key. Does not add the shopping order to the database.
@@ -73,11 +86,9 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param orderId the primary key for the new shopping order
 	* @return the new shopping order
 	*/
-	public com.liferay.shopping.model.ShoppingOrder createShoppingOrder(
-		long orderId);
+	public ShoppingOrder createShoppingOrder(long orderId);
 
-	public void deleteOrder(com.liferay.shopping.model.ShoppingOrder order)
-		throws PortalException;
+	public void deleteOrder(ShoppingOrder order) throws PortalException;
 
 	public void deleteOrder(long orderId) throws PortalException;
 
@@ -87,8 +98,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -98,9 +108,9 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @return the shopping order that was removed
 	* @throws PortalException if a shopping order with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingOrder deleteShoppingOrder(
-		long orderId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingOrder deleteShoppingOrder(long orderId)
+		throws PortalException;
 
 	/**
 	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
@@ -108,11 +118,10 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param shoppingOrder the shopping order
 	* @return the shopping order that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingOrder deleteShoppingOrder(
-		com.liferay.shopping.model.ShoppingOrder shoppingOrder);
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingOrder deleteShoppingOrder(ShoppingOrder shoppingOrder);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -120,8 +129,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -135,8 +143,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -152,10 +159,8 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -163,8 +168,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -173,23 +177,21 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingOrder fetchShoppingOrder(
-		long orderId);
+	public ShoppingOrder fetchShoppingOrder(long orderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingOrder getLatestOrder(
-		long userId, long groupId) throws PortalException;
+	public ShoppingOrder getLatestOrder(long userId, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -199,21 +201,20 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingOrder getOrder(
-		java.lang.String number) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingOrder getOrder(long orderId)
+	public ShoppingOrder getOrder(java.lang.String number)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingOrder getPayPalTxnIdOrder(
-		java.lang.String ppTxnId) throws PortalException;
+	public ShoppingOrder getOrder(long orderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingOrder getPayPalTxnIdOrder(java.lang.String ppTxnId)
+		throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the shopping order with the primary key.
@@ -223,8 +224,8 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @throws PortalException if a shopping order with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingOrder getShoppingOrder(
-		long orderId) throws PortalException;
+	public ShoppingOrder getShoppingOrder(long orderId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the shopping orders.
@@ -238,8 +239,7 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @return the range of shopping orders
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingOrder> getShoppingOrders(
-		int start, int end);
+	public List<ShoppingOrder> getShoppingOrders(int start, int end);
 
 	/**
 	* Returns the number of shopping orders.
@@ -249,12 +249,12 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getShoppingOrdersCount();
 
-	public com.liferay.shopping.model.ShoppingOrder saveLatestOrder(
-		com.liferay.shopping.model.ShoppingCart cart) throws PortalException;
+	public ShoppingOrder saveLatestOrder(ShoppingCart cart)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingOrder> search(
-		long groupId, long companyId, long userId, java.lang.String number,
+	public List<ShoppingOrder> search(long groupId, long companyId,
+		long userId, java.lang.String number,
 		java.lang.String billingFirstName, java.lang.String billingLastName,
 		java.lang.String billingEmailAddress,
 		java.lang.String shippingFirstName, java.lang.String shippingLastName,
@@ -270,33 +270,13 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		java.lang.String shippingEmailAddress,
 		java.lang.String ppPaymentStatus, boolean andOperator);
 
-	public void sendEmail(com.liferay.shopping.model.ShoppingOrder order,
-		java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public void sendEmail(ShoppingOrder order, java.lang.String emailType,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void sendEmail(long orderId, java.lang.String emailType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.shopping.model.ShoppingOrder updateLatestOrder(
-		long userId, long groupId, java.lang.String billingFirstName,
-		java.lang.String billingLastName, java.lang.String billingEmailAddress,
-		java.lang.String billingCompany, java.lang.String billingStreet,
-		java.lang.String billingCity, java.lang.String billingState,
-		java.lang.String billingZip, java.lang.String billingCountry,
-		java.lang.String billingPhone, boolean shipToBilling,
-		java.lang.String shippingFirstName, java.lang.String shippingLastName,
-		java.lang.String shippingEmailAddress,
-		java.lang.String shippingCompany, java.lang.String shippingStreet,
-		java.lang.String shippingCity, java.lang.String shippingState,
-		java.lang.String shippingZip, java.lang.String shippingCountry,
-		java.lang.String shippingPhone, java.lang.String ccName,
-		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
-		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
-		throws PortalException;
-
-	public com.liferay.shopping.model.ShoppingOrder updateOrder(long orderId,
+	public ShoppingOrder updateLatestOrder(long userId, long groupId,
 		java.lang.String billingFirstName, java.lang.String billingLastName,
 		java.lang.String billingEmailAddress, java.lang.String billingCompany,
 		java.lang.String billingStreet, java.lang.String billingCity,
@@ -313,10 +293,27 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
 		throws PortalException;
 
-	public com.liferay.shopping.model.ShoppingOrder updateOrder(long orderId,
-		java.lang.String ppTxnId, java.lang.String ppPaymentStatus,
-		double ppPaymentGross, java.lang.String ppReceiverEmail,
-		java.lang.String ppPayerEmail) throws PortalException;
+	public ShoppingOrder updateOrder(long orderId,
+		java.lang.String billingFirstName, java.lang.String billingLastName,
+		java.lang.String billingEmailAddress, java.lang.String billingCompany,
+		java.lang.String billingStreet, java.lang.String billingCity,
+		java.lang.String billingState, java.lang.String billingZip,
+		java.lang.String billingCountry, java.lang.String billingPhone,
+		boolean shipToBilling, java.lang.String shippingFirstName,
+		java.lang.String shippingLastName,
+		java.lang.String shippingEmailAddress,
+		java.lang.String shippingCompany, java.lang.String shippingStreet,
+		java.lang.String shippingCity, java.lang.String shippingState,
+		java.lang.String shippingZip, java.lang.String shippingCountry,
+		java.lang.String shippingPhone, java.lang.String ccName,
+		java.lang.String ccType, java.lang.String ccNumber, int ccExpMonth,
+		int ccExpYear, java.lang.String ccVerNumber, java.lang.String comments)
+		throws PortalException;
+
+	public ShoppingOrder updateOrder(long orderId, java.lang.String ppTxnId,
+		java.lang.String ppPaymentStatus, double ppPaymentGross,
+		java.lang.String ppReceiverEmail, java.lang.String ppPayerEmail)
+		throws PortalException;
 
 	/**
 	* Updates the shopping order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -324,7 +321,6 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	* @param shoppingOrder the shopping order
 	* @return the shopping order that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingOrder updateShoppingOrder(
-		com.liferay.shopping.model.ShoppingOrder shoppingOrder);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingOrder updateShoppingOrder(ShoppingOrder shoppingOrder);
 }

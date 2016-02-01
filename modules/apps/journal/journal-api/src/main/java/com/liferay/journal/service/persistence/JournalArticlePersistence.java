@@ -20,6 +20,8 @@ import com.liferay.journal.model.JournalArticle;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import java.util.Date;
+
 /**
  * The persistence interface for the journal article service.
  *
@@ -4240,8 +4242,8 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param status the status
 	* @return the matching journal articles
 	*/
-	public java.util.List<JournalArticle> findByLtD_S(
-		java.util.Date displayDate, int status);
+	public java.util.List<JournalArticle> findByLtD_S(Date displayDate,
+		int status);
 
 	/**
 	* Returns a range of all the journal articles where displayDate &lt; &#63; and status = &#63;.
@@ -4256,8 +4258,8 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of matching journal articles
 	*/
-	public java.util.List<JournalArticle> findByLtD_S(
-		java.util.Date displayDate, int status, int start, int end);
+	public java.util.List<JournalArticle> findByLtD_S(Date displayDate,
+		int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal articles where displayDate &lt; &#63; and status = &#63;.
@@ -4273,8 +4275,8 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal articles
 	*/
-	public java.util.List<JournalArticle> findByLtD_S(
-		java.util.Date displayDate, int status, int start, int end,
+	public java.util.List<JournalArticle> findByLtD_S(Date displayDate,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator);
 
 	/**
@@ -4292,8 +4294,8 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching journal articles
 	*/
-	public java.util.List<JournalArticle> findByLtD_S(
-		java.util.Date displayDate, int status, int start, int end,
+	public java.util.List<JournalArticle> findByLtD_S(Date displayDate,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -4306,8 +4308,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the first matching journal article
 	* @throws NoSuchArticleException if a matching journal article could not be found
 	*/
-	public JournalArticle findByLtD_S_First(java.util.Date displayDate,
-		int status,
+	public JournalArticle findByLtD_S_First(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchArticleException;
 
@@ -4319,8 +4320,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public JournalArticle fetchByLtD_S_First(java.util.Date displayDate,
-		int status,
+	public JournalArticle fetchByLtD_S_First(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator);
 
 	/**
@@ -4332,8 +4332,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the last matching journal article
 	* @throws NoSuchArticleException if a matching journal article could not be found
 	*/
-	public JournalArticle findByLtD_S_Last(java.util.Date displayDate,
-		int status,
+	public JournalArticle findByLtD_S_Last(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchArticleException;
 
@@ -4345,8 +4344,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
 	*/
-	public JournalArticle fetchByLtD_S_Last(java.util.Date displayDate,
-		int status,
+	public JournalArticle fetchByLtD_S_Last(Date displayDate, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator);
 
 	/**
@@ -4359,8 +4357,8 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the previous, current, and next journal article
 	* @throws NoSuchArticleException if a journal article with the primary key could not be found
 	*/
-	public JournalArticle[] findByLtD_S_PrevAndNext(long id,
-		java.util.Date displayDate, int status,
+	public JournalArticle[] findByLtD_S_PrevAndNext(long id, Date displayDate,
+		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator)
 		throws com.liferay.journal.exception.NoSuchArticleException;
 
@@ -4370,7 +4368,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param displayDate the display date
 	* @param status the status
 	*/
-	public void removeByLtD_S(java.util.Date displayDate, int status);
+	public void removeByLtD_S(Date displayDate, int status);
 
 	/**
 	* Returns the number of journal articles where displayDate &lt; &#63; and status = &#63;.
@@ -4379,7 +4377,7 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @param status the status
 	* @return the number of matching journal articles
 	*/
-	public int countByLtD_S(java.util.Date displayDate, int status);
+	public int countByLtD_S(Date displayDate, int status);
 
 	/**
 	* Returns all the journal articles where resourcePrimKey = &#63; and indexable = &#63; and status = &#63;.

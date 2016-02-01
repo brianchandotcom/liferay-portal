@@ -16,6 +16,8 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.mobile.device.rules.model.MDRRule;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,7 +27,12 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for MDRRule. Methods of this
@@ -51,29 +58,23 @@ public interface MDRRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleServiceUtil} to access the m d r rule remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.mobile.device.rules.model.MDRRule addRule(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MDRRule addRule(long ruleGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public com.liferay.mobile.device.rules.model.MDRRule addRule(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MDRRule addRule(long ruleGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteRule(long ruleId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRule fetchRule(long ruleId)
-		throws PortalException;
+	public MDRRule fetchRule(long ruleId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -83,21 +84,17 @@ public interface MDRRuleService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRule getRule(long ruleId)
+	public MDRRule getRule(long ruleId) throws PortalException;
+
+	public MDRRule updateRule(long ruleId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.mobile.device.rules.model.MDRRule updateRule(
-		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public com.liferay.mobile.device.rules.model.MDRRule updateRule(
-		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MDRRule updateRule(long ruleId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 }

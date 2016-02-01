@@ -16,15 +16,33 @@ package com.liferay.portlet.messageboards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.messageboards.model.MBCategory;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for MBCategory. Methods of this
@@ -48,43 +66,35 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBCategoryLocalServiceUtil} to access the message boards category local service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.messageboards.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous,
-		boolean mailingListActive,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MBCategory addCategory(long userId, long parentCategoryId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String displayStyle, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean mailingListActive,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.portlet.messageboards.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MBCategory addCategory(long userId, long parentCategoryId,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void addCategoryResources(
-		com.liferay.portlet.messageboards.model.MBCategory category,
+	public void addCategoryResources(MBCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addCategoryResources(
-		com.liferay.portlet.messageboards.model.MBCategory category,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+	public void addCategoryResources(MBCategory category,
+		ModelPermissions modelPermissions) throws PortalException;
 
 	public void addCategoryResources(long categoryId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
 	public void addCategoryResources(long categoryId,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
 	* Adds the message boards category to the database. Also notifies the appropriate model listeners.
@@ -92,9 +102,8 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param mbCategory the message boards category
 	* @return the message boards category that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.messageboards.model.MBCategory addMBCategory(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory);
+	@Indexable(type = IndexableType.REINDEX)
+	public MBCategory addMBCategory(MBCategory mbCategory);
 
 	/**
 	* Creates a new message boards category with the primary key. Does not add the message boards category to the database.
@@ -102,18 +111,14 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param categoryId the primary key for the new message boards category
 	* @return the new message boards category
 	*/
-	public com.liferay.portlet.messageboards.model.MBCategory createMBCategory(
-		long categoryId);
+	public MBCategory createMBCategory(long categoryId);
 
 	public void deleteCategories(long groupId) throws PortalException;
 
-	public void deleteCategory(
-		com.liferay.portlet.messageboards.model.MBCategory category)
-		throws PortalException;
+	public void deleteCategory(MBCategory category) throws PortalException;
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteCategory(
-		com.liferay.portlet.messageboards.model.MBCategory category,
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteCategory(MBCategory category,
 		boolean includeTrashedEntries) throws PortalException;
 
 	public void deleteCategory(long categoryId) throws PortalException;
@@ -125,9 +130,9 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the message boards category that was removed
 	* @throws PortalException if a message boards category with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
-		long categoryId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public MBCategory deleteMBCategory(long categoryId)
+		throws PortalException;
 
 	/**
 	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
@@ -135,19 +140,17 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param mbCategory the message boards category
 	* @return the message boards category that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory);
+	@Indexable(type = IndexableType.DELETE)
+	public MBCategory deleteMBCategory(MBCategory mbCategory);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -155,8 +158,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -170,8 +172,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -187,10 +188,8 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -198,8 +197,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -208,13 +206,11 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBCategory fetchMBCategory(
-		long categoryId);
+	public MBCategory fetchMBCategory(long categoryId);
 
 	/**
 	* Returns the message boards category matching the UUID and group.
@@ -224,57 +220,55 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBCategory fetchMBCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
+	public MBCategory fetchMBCategoryByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long excludedCategoryId, long parentCategoryId,
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long excludedCategoryId, long parentCategoryId, int status, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] excludedCategoryIds, long[] parentCategoryIds, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
 		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
-		int status, int start, int end);
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long parentCategoryId, int start, int end);
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long parentCategoryId, int status, int start, int end);
+	public List<MBCategory> getCategories(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int start, int end);
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int status, int start, int end);
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCategories(
-		long groupId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status, int start, int end);
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId);
@@ -312,22 +306,21 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public int getCategoriesCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBCategory getCategory(
-		long categoryId) throws PortalException;
+	public MBCategory getCategory(long categoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getCompanyCategories(
-		long companyId, int start, int end);
+	public List<MBCategory> getCompanyCategories(long companyId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyCategoriesCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the message boards categories.
@@ -341,8 +334,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the range of message boards categories
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getMBCategories(
-		int start, int end);
+	public List<MBCategory> getMBCategories(int start, int end);
 
 	/**
 	* Returns all the message boards categories matching the UUID and company.
@@ -352,7 +344,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the matching message boards categories, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getMBCategoriesByUuidAndCompanyId(
+	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -366,9 +358,9 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @return the range of matching message boards categories, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getMBCategoriesByUuidAndCompanyId(
+	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBCategory> orderByComparator);
+		OrderByComparator<MBCategory> orderByComparator);
 
 	/**
 	* Returns the number of message boards categories.
@@ -386,8 +378,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @throws PortalException if a message boards category with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBCategory getMBCategory(
-		long categoryId) throws PortalException;
+	public MBCategory getMBCategory(long categoryId) throws PortalException;
 
 	/**
 	* Returns the message boards category matching the UUID and group.
@@ -398,8 +389,8 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching message boards category could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBCategory getMBCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public MBCategory getMBCategoryByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -410,17 +401,16 @@ public interface MBCategoryLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getSubcategoryIds(
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId);
+	public List<java.lang.Long> getSubcategoryIds(
+		List<java.lang.Long> categoryIds, long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getSubscribedCategories(
-		long groupId, long userId, int start, int end);
+	public List<MBCategory> getSubscribedCategories(long groupId, long userId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSubscribedCategoriesCount(long groupId, long userId);
@@ -428,16 +418,14 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public void moveCategoriesToTrash(long groupId, long userId)
 		throws PortalException;
 
-	public com.liferay.portlet.messageboards.model.MBCategory moveCategory(
-		long categoryId, long parentCategoryId, boolean mergeWithParentCategory)
-		throws PortalException;
+	public MBCategory moveCategory(long categoryId, long parentCategoryId,
+		boolean mergeWithParentCategory) throws PortalException;
 
-	public com.liferay.portlet.messageboards.model.MBCategory moveCategoryFromTrash(
-		long userId, long categoryId, long newCategoryId)
-		throws PortalException;
+	public MBCategory moveCategoryFromTrash(long userId, long categoryId,
+		long newCategoryId) throws PortalException;
 
-	public com.liferay.portlet.messageboards.model.MBCategory moveCategoryToTrash(
-		long userId, long categoryId) throws PortalException;
+	public MBCategory moveCategoryToTrash(long userId, long categoryId)
+		throws PortalException;
 
 	public void restoreCategoryFromTrash(long userId, long categoryId)
 		throws PortalException;
@@ -448,18 +436,17 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public void unsubscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException;
 
-	public com.liferay.portlet.messageboards.model.MBCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, java.lang.String displayStyle,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous,
-		boolean mailingListActive, boolean mergeWithParentCategory,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MBCategory updateCategory(long categoryId, long parentCategoryId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String displayStyle, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean mailingListActive,
+		boolean mergeWithParentCategory, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -468,19 +455,15 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	* @param mbCategory the message boards category
 	* @return the message boards category that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.messageboards.model.MBCategory updateMBCategory(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory);
+	@Indexable(type = IndexableType.REINDEX)
+	public MBCategory updateMBCategory(MBCategory mbCategory);
 
-	public com.liferay.portlet.messageboards.model.MBCategory updateMessageCount(
-		long categoryId);
+	public MBCategory updateMessageCount(long categoryId);
 
-	public com.liferay.portlet.messageboards.model.MBCategory updateStatistics(
-		long categoryId);
+	public MBCategory updateStatistics(long categoryId);
 
-	public com.liferay.portlet.messageboards.model.MBCategory updateStatus(
-		long userId, long categoryId, int status) throws PortalException;
+	public MBCategory updateStatus(long userId, long categoryId, int status)
+		throws PortalException;
 
-	public com.liferay.portlet.messageboards.model.MBCategory updateThreadCount(
-		long categoryId);
+	public MBCategory updateThreadCount(long categoryId);
 }

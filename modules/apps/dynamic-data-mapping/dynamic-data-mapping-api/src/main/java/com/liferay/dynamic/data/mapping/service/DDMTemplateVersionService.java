@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,7 +26,10 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for DDMTemplateVersion. Methods of this
@@ -51,8 +56,8 @@ public interface DDMTemplateVersionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateVersionServiceUtil} to access the d d m template version remote service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
-		long templateId) throws PortalException;
+	public DDMTemplateVersion getLatestTemplateVersion(long templateId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -62,13 +67,13 @@ public interface DDMTemplateVersionService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
-		long templateVersionId) throws PortalException;
+	public DDMTemplateVersion getTemplateVersion(long templateVersionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
-		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator)
+	public List<DDMTemplateVersion> getTemplateVersions(long templateId,
+		int start, int end,
+		OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

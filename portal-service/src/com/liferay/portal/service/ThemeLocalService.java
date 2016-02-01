@@ -18,9 +18,17 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.ColorScheme;
+import com.liferay.portal.model.PortletDecorator;
+import com.liferay.portal.model.Theme;
+
+import java.util.List;
+
+import javax.servlet.ServletContext;
 
 /**
  * Provides the local service interface for Theme. Methods of this
@@ -44,25 +52,23 @@ public interface ThemeLocalService extends BaseLocalService {
 	 * Never modify or reference this interface directly. Always use {@link ThemeLocalServiceUtil} to access the theme local service. Add custom service methods to {@link com.liferay.portal.service.impl.ThemeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ColorScheme fetchColorScheme(
-		long companyId, java.lang.String themeId, java.lang.String colorSchemeId);
+	public ColorScheme fetchColorScheme(long companyId,
+		java.lang.String themeId, java.lang.String colorSchemeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortletDecorator fetchPortletDecorator(
-		long companyId, java.lang.String themeId, java.lang.String colorSchemeId);
+	public PortletDecorator fetchPortletDecorator(long companyId,
+		java.lang.String themeId, java.lang.String colorSchemeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Theme fetchTheme(long companyId,
-		java.lang.String themeId);
+	public Theme fetchTheme(long companyId, java.lang.String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ColorScheme getColorScheme(long companyId,
-		java.lang.String themeId, java.lang.String colorSchemeId,
+	public ColorScheme getColorScheme(long companyId, java.lang.String themeId,
+		java.lang.String colorSchemeId, boolean wapTheme);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Theme> getControlPanelThemes(long companyId, long userId,
 		boolean wapTheme);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
-		long companyId, long userId, boolean wapTheme);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -72,46 +78,39 @@ public interface ThemeLocalService extends BaseLocalService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Theme> getPageThemes(
-		long companyId, long groupId, long userId, boolean wapTheme);
+	public List<Theme> getPageThemes(long companyId, long groupId, long userId,
+		boolean wapTheme);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortletDecorator getPortletDecorator(
-		long companyId, java.lang.String themeId,
-		java.lang.String portletDecoratorId);
+	public PortletDecorator getPortletDecorator(long companyId,
+		java.lang.String themeId, java.lang.String portletDecoratorId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Theme getTheme(long companyId,
-		java.lang.String themeId, boolean wapTheme);
+	public Theme getTheme(long companyId, java.lang.String themeId,
+		boolean wapTheme);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Theme> getThemes(
-		long companyId);
+	public List<Theme> getThemes(long companyId);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Theme> getThemes(
-		long companyId, long groupId, long userId, boolean wapTheme);
+	public List<Theme> getThemes(long companyId, long groupId, long userId,
+		boolean wapTheme);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Theme> getWARThemes();
+	public List<Theme> getWARThemes();
 
-	public java.util.List<com.liferay.portal.model.Theme> init(
-		javax.servlet.ServletContext servletContext,
+	public List<Theme> init(ServletContext servletContext,
 		java.lang.String themesPath, boolean loadFromServletContext,
-		java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
+		java.lang.String[] xmls, PluginPackage pluginPackage);
 
-	public java.util.List<com.liferay.portal.model.Theme> init(
-		java.lang.String servletContextName,
-		javax.servlet.ServletContext servletContext,
-		java.lang.String themesPath, boolean loadFromServletContext,
-		java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
+	public List<Theme> init(java.lang.String servletContextName,
+		ServletContext servletContext, java.lang.String themesPath,
+		boolean loadFromServletContext, java.lang.String[] xmls,
+		PluginPackage pluginPackage);
 
-	public void uninstallThemes(
-		java.util.List<com.liferay.portal.model.Theme> themes);
+	public void uninstallThemes(List<Theme> themes);
 }

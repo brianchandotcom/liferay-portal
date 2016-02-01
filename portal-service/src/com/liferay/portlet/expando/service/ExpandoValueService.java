@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -25,6 +26,13 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+
+import com.liferay.portlet.expando.model.ExpandoValue;
+
+import java.io.Serializable;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for ExpandoValue. Methods of this
@@ -48,37 +56,35 @@ public interface ExpandoValueService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoValueServiceUtil} to access the expando value remote service. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.String data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		java.lang.String data) throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Object data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		java.lang.Object data) throws PortalException;
 
 	public void addValues(long companyId, java.lang.String className,
 		java.lang.String tableName, long classPK,
-		java.util.Map<java.lang.String, java.io.Serializable> attributeValues)
+		Map<java.lang.String, Serializable> attributeValues)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.io.Serializable getData(long companyId,
+	public Serializable getData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.String, Serializable> getData(long companyId,
 		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.String, java.io.Serializable> getData(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.util.Collection<java.lang.String> columnNames, long classPK)
+		Collection<java.lang.String> columnNames, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONObject getJSONData(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK) throws PortalException;
+	public JSONObject getJSONData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

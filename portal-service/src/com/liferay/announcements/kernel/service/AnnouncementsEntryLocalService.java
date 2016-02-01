@@ -16,14 +16,31 @@ package com.liferay.announcements.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Provides the local service interface for AnnouncementsEntry. Methods of this
@@ -54,15 +71,15 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param announcementsEntry the announcements entry
 	* @return the announcements entry that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry addAnnouncementsEntry(
-		com.liferay.announcements.kernel.model.AnnouncementsEntry announcementsEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public AnnouncementsEntry addAnnouncementsEntry(
+		AnnouncementsEntry announcementsEntry);
 
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		long userId, long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
+	public AnnouncementsEntry addEntry(long userId, long classNameId,
+		long classPK, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert) throws PortalException;
@@ -75,8 +92,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new announcements entry
 	* @return the new announcements entry
 	*/
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry createAnnouncementsEntry(
-		long entryId);
+	public AnnouncementsEntry createAnnouncementsEntry(long entryId);
 
 	/**
 	* Deletes the announcements entry from the database. Also notifies the appropriate model listeners.
@@ -84,9 +100,9 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param announcementsEntry the announcements entry
 	* @return the announcements entry that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry deleteAnnouncementsEntry(
-		com.liferay.announcements.kernel.model.AnnouncementsEntry announcementsEntry);
+	@Indexable(type = IndexableType.DELETE)
+	public AnnouncementsEntry deleteAnnouncementsEntry(
+		AnnouncementsEntry announcementsEntry);
 
 	/**
 	* Deletes the announcements entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -95,13 +111,11 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @return the announcements entry that was removed
 	* @throws PortalException if a announcements entry with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry deleteAnnouncementsEntry(
-		long entryId) throws PortalException;
-
-	public void deleteEntry(
-		com.liferay.announcements.kernel.model.AnnouncementsEntry entry)
+	@Indexable(type = IndexableType.DELETE)
+	public AnnouncementsEntry deleteAnnouncementsEntry(long entryId)
 		throws PortalException;
+
+	public void deleteEntry(AnnouncementsEntry entry) throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;
 
@@ -109,11 +123,10 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -121,8 +134,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -136,8 +148,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -153,10 +164,8 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -164,8 +173,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -174,13 +182,11 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry fetchAnnouncementsEntry(
-		long entryId);
+	public AnnouncementsEntry fetchAnnouncementsEntry(long entryId);
 
 	/**
 	* Returns the announcements entry with the matching UUID and company.
@@ -190,11 +196,11 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @return the matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
+	public AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the announcements entries.
@@ -208,8 +214,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @return the range of announcements entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getAnnouncementsEntries(
-		int start, int end);
+	public List<AnnouncementsEntry> getAnnouncementsEntries(int start, int end);
 
 	/**
 	* Returns the number of announcements entries.
@@ -227,8 +232,8 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a announcements entry with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry getAnnouncementsEntry(
-		long entryId) throws PortalException;
+	public AnnouncementsEntry getAnnouncementsEntry(long entryId)
+		throws PortalException;
 
 	/**
 	* Returns the announcements entry with the matching UUID and company.
@@ -239,33 +244,32 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching announcements entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
+	public AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-		long classNameId, long classPK, boolean alert, int start, int end);
+	public List<AnnouncementsEntry> getEntries(long classNameId, long classPK,
+		boolean alert, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-		long userId, long classNameId, long[] classPKs, int displayDateMonth,
+	public List<AnnouncementsEntry> getEntries(long userId, long classNameId,
+		long[] classPKs, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean alert,
+		int flagValue, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnnouncementsEntry> getEntries(long userId,
+		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
+		int flagValue, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnnouncementsEntry> getEntries(long userId,
+		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean alert, int flagValue, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-		long userId, java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
-		boolean alert, int flagValue, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
-		long userId, java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end);
 
@@ -285,27 +289,26 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long userId,
-		java.util.LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
+		LinkedHashMap<java.lang.Long, long[]> scopes, boolean alert,
 		int flagValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long userId,
-		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		LinkedHashMap<java.lang.Long, long[]> scopes, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry getEntry(
-		long entryId) throws PortalException;
+	public AnnouncementsEntry getEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -316,12 +319,12 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getUserEntries(
-		long userId, int start, int end);
+	public List<AnnouncementsEntry> getUserEntries(long userId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserEntriesCount(long userId);
@@ -332,16 +335,15 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @param announcementsEntry the announcements entry
 	* @return the announcements entry that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateAnnouncementsEntry(
-		com.liferay.announcements.kernel.model.AnnouncementsEntry announcementsEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public AnnouncementsEntry updateAnnouncementsEntry(
+		AnnouncementsEntry announcementsEntry);
 
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
-		long userId, long entryId, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, int priority)
-		throws PortalException;
+	public AnnouncementsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String content, java.lang.String url,
+		java.lang.String type, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean displayImmediately, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, int priority) throws PortalException;
 }

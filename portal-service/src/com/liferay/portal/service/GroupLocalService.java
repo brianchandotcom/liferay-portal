@@ -16,12 +16,32 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.UserGroup;
+
+import java.io.Serializable;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for Group. Methods of this
@@ -52,9 +72,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param group the group
 	* @return the group that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Group addGroup(
-		com.liferay.portal.model.Group group);
+	@Indexable(type = IndexableType.REINDEX)
+	public Group addGroup(Group group);
 
 	/**
 	* Adds a group.
@@ -87,69 +106,61 @@ public interface GroupLocalService extends BaseLocalService,
 	boolean, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.Group addGroup(long userId,
-		long parentGroupId, java.lang.String className, long classPK,
-		long liveGroupId, java.lang.String name, java.lang.String description,
-		int type, boolean manualMembership, int membershipRestriction,
+	public Group addGroup(long userId, long parentGroupId,
+		java.lang.String className, long classPK, long liveGroupId,
+		java.lang.String name, java.lang.String description, int type,
+		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.Group addGroup(long userId,
-		long parentGroupId, java.lang.String className, long classPK,
-		long liveGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, boolean manualMembership, int membershipRestriction,
+	public Group addGroup(long userId, long parentGroupId,
+		java.lang.String className, long classPK, long liveGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int type,
+		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.Group addGroup(long userId,
-		long parentGroupId, java.lang.String className, long classPK,
-		long liveGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, boolean manualMembership, int membershipRestriction,
+	public Group addGroup(long userId, long parentGroupId,
+		java.lang.String className, long classPK, long liveGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int type,
+		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean site, boolean inheritContent,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addOrganizationGroup(long organizationId,
-		com.liferay.portal.model.Group group);
+	public void addOrganizationGroup(long organizationId, Group group);
 
 	public void addOrganizationGroup(long organizationId, long groupId);
 
-	public void addOrganizationGroups(long organizationId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void addOrganizationGroups(long organizationId, List<Group> Groups);
 
 	public void addOrganizationGroups(long organizationId, long[] groupIds);
 
-	public void addRoleGroup(long roleId, com.liferay.portal.model.Group group);
+	public void addRoleGroup(long roleId, Group group);
 
 	public void addRoleGroup(long roleId, long groupId);
 
-	public void addRoleGroups(long roleId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void addRoleGroups(long roleId, List<Group> Groups);
 
 	public void addRoleGroups(long roleId, long[] groupIds);
 
-	public void addUserGroup(long userId, com.liferay.portal.model.Group group);
+	public void addUserGroup(long userId, Group group);
 
 	public void addUserGroup(long userId, long groupId);
 
-	public void addUserGroupGroup(long userGroupId,
-		com.liferay.portal.model.Group group);
+	public void addUserGroupGroup(long userGroupId, Group group);
 
 	public void addUserGroupGroup(long userGroupId, long groupId);
 
-	public void addUserGroupGroups(long userGroupId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void addUserGroupGroups(long userGroupId, List<Group> Groups);
 
 	public void addUserGroupGroups(long userGroupId, long[] groupIds);
 
-	public void addUserGroups(long userId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void addUserGroups(long userId, List<Group> Groups);
 
 	public void addUserGroups(long userId, long[] groupIds);
 
@@ -163,8 +174,7 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkCompanyGroup(long companyId) throws PortalException;
 
-	public com.liferay.portal.model.Group checkScopeGroup(
-		com.liferay.portal.model.Layout layout, long userId)
+	public Group checkScopeGroup(Layout layout, long userId)
 		throws PortalException;
 
 	/**
@@ -192,7 +202,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param groupId the primary key for the new group
 	* @return the new group
 	*/
-	public com.liferay.portal.model.Group createGroup(long groupId);
+	public Group createGroup(long groupId);
 
 	/**
 	* Deletes the group from the database. Also notifies the appropriate model listeners.
@@ -201,9 +211,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Group deleteGroup(
-		com.liferay.portal.model.Group group) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Group deleteGroup(Group group) throws PortalException;
 
 	/**
 	* Deletes the group with the primary key from the database. Also notifies the appropriate model listeners.
@@ -212,17 +221,14 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group that was removed
 	* @throws PortalException if a group with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Group deleteGroup(long groupId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Group deleteGroup(long groupId) throws PortalException;
 
-	public void deleteOrganizationGroup(long organizationId,
-		com.liferay.portal.model.Group group);
+	public void deleteOrganizationGroup(long organizationId, Group group);
 
 	public void deleteOrganizationGroup(long organizationId, long groupId);
 
-	public void deleteOrganizationGroups(long organizationId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void deleteOrganizationGroups(long organizationId, List<Group> Groups);
 
 	public void deleteOrganizationGroups(long organizationId, long[] groupIds);
 
@@ -230,43 +236,36 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteRoleGroup(long roleId,
-		com.liferay.portal.model.Group group);
+	public void deleteRoleGroup(long roleId, Group group);
 
 	public void deleteRoleGroup(long roleId, long groupId);
 
-	public void deleteRoleGroups(long roleId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void deleteRoleGroups(long roleId, List<Group> Groups);
 
 	public void deleteRoleGroups(long roleId, long[] groupIds);
 
-	public void deleteUserGroup(long userId,
-		com.liferay.portal.model.Group group);
+	public void deleteUserGroup(long userId, Group group);
 
 	public void deleteUserGroup(long userId, long groupId);
 
-	public void deleteUserGroupGroup(long userGroupId,
-		com.liferay.portal.model.Group group);
+	public void deleteUserGroupGroup(long userGroupId, Group group);
 
 	public void deleteUserGroupGroup(long userGroupId, long groupId);
 
-	public void deleteUserGroupGroups(long userGroupId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void deleteUserGroupGroups(long userGroupId, List<Group> Groups);
 
 	public void deleteUserGroupGroups(long userGroupId, long[] groupIds);
 
-	public void deleteUserGroups(long userId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
+	public void deleteUserGroups(long userId, List<Group> Groups);
 
 	public void deleteUserGroups(long userId, long[] groupIds);
 
 	public void disableStaging(long groupId) throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -274,8 +273,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -289,8 +287,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -306,10 +303,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -317,8 +312,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -327,9 +321,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	public void enableStaging(long groupId) throws PortalException;
 
@@ -341,7 +334,7 @@ public interface GroupLocalService extends BaseLocalService,
 	could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchCompanyGroup(long companyId);
+	public Group fetchCompanyGroup(long companyId);
 
 	/**
 	* Returns the group with the matching friendly URL.
@@ -352,8 +345,8 @@ public interface GroupLocalService extends BaseLocalService,
 	matching group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchFriendlyURLGroup(
-		long companyId, java.lang.String friendlyURL);
+	public Group fetchFriendlyURLGroup(long companyId,
+		java.lang.String friendlyURL);
 
 	/**
 	* Returns the group with the matching group key by first searching the
@@ -364,13 +357,12 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group with the group key and associated company, or
 	<code>null</code> if a matching group could not be found
 	*/
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchGroup(long companyId,
-		java.lang.String groupKey);
+	public Group fetchGroup(long companyId, java.lang.String groupKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchGroup(long groupId);
+	public Group fetchGroup(long groupId);
 
 	/**
 	* Returns the group with the matching UUID and company.
@@ -380,12 +372,11 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public Group fetchGroupByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchUserGroup(long companyId,
-		long userId);
+	public Group fetchUserGroup(long companyId, long userId);
 
 	/**
 	* Returns the default user's personal site group.
@@ -396,11 +387,11 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchUserPersonalSiteGroup(
-		long companyId) throws PortalException;
+	public Group fetchUserPersonalSiteGroup(long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns all the active or inactive groups associated with the company.
@@ -411,8 +402,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the active or inactive groups associated with the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getActiveGroups(
-		long companyId, boolean active);
+	public List<Group> getActiveGroups(long companyId, boolean active);
 
 	/**
 	* Returns the company group.
@@ -422,8 +412,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getCompanyGroup(long companyId)
-		throws PortalException;
+	public Group getCompanyGroup(long companyId) throws PortalException;
 
 	/**
 	* Returns a range of all the groups associated with the company.
@@ -444,8 +433,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the range of groups associated with the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getCompanyGroups(
-		long companyId, int start, int end);
+	public List<Group> getCompanyGroups(long companyId, int start, int end);
 
 	/**
 	* Returns the number of groups associated with the company.
@@ -465,7 +453,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getFriendlyURLGroup(long companyId,
+	public Group getFriendlyURLGroup(long companyId,
 		java.lang.String friendlyURL) throws PortalException;
 
 	/**
@@ -476,10 +464,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group with the group key
 	* @throws PortalException if a portal exception occurred
 	*/
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getGroup(long companyId,
-		java.lang.String groupKey) throws PortalException;
+	public Group getGroup(long companyId, java.lang.String groupKey)
+		throws PortalException;
 
 	/**
 	* Returns the group with the primary key.
@@ -488,10 +476,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group
 	* @throws PortalException if a group with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getGroup(long groupId)
-		throws PortalException;
+	public Group getGroup(long groupId) throws PortalException;
 
 	/**
 	* Returns the group with the matching UUID and company.
@@ -502,8 +489,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a matching group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public Group getGroupByUuidAndCompanyId(java.lang.String uuid,
+		long companyId) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
@@ -511,8 +498,7 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getGroupDescriptiveName(
-		com.liferay.portal.model.Group group, java.util.Locale locale)
+	public java.lang.String getGroupDescriptiveName(Group group, Locale locale)
 		throws PortalException;
 
 	/**
@@ -521,8 +507,8 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getGroupDescriptiveName(long groupId,
-		java.util.Locale locale) throws PortalException;
+	public java.lang.String getGroupDescriptiveName(long groupId, Locale locale)
+		throws PortalException;
 
 	/**
 	* Returns all the groups that are direct children of the parent group with
@@ -535,8 +521,8 @@ public interface GroupLocalService extends BaseLocalService,
 	found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(
-		long companyId, java.lang.String className, long parentGroupId);
+	public List<Group> getGroups(long companyId, java.lang.String className,
+		long parentGroupId);
 
 	/**
 	* Returns a range of all the groups that are direct children of the parent
@@ -550,9 +536,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the range of matching groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(
-		long companyId, java.lang.String className, long parentGroupId,
-		int start, int end);
+	public List<Group> getGroups(long companyId, java.lang.String className,
+		long parentGroupId, int start, int end);
 
 	/**
 	* Returns all the groups that are direct children of the parent group.
@@ -564,12 +549,12 @@ public interface GroupLocalService extends BaseLocalService,
 	found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(
-		long companyId, long parentGroupId, boolean site);
+	public List<Group> getGroups(long companyId, long parentGroupId,
+		boolean site);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(
-		long companyId, long parentGroupId, boolean site, boolean inheritContent);
+	public List<Group> getGroups(long companyId, long parentGroupId,
+		boolean site, boolean inheritContent);
 
 	/**
 	* Returns the groups with the matching primary keys.
@@ -579,8 +564,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(
-		long[] groupIds) throws PortalException;
+	public List<Group> getGroups(long[] groupIds) throws PortalException;
 
 	/**
 	* Returns a range of all the groups.
@@ -594,8 +578,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the range of groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(int start,
-		int end);
+	public List<Group> getGroups(int start, int end);
 
 	/**
 	* Returns the number of groups.
@@ -631,7 +614,7 @@ public interface GroupLocalService extends BaseLocalService,
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the group associated with the layout.
@@ -642,8 +625,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getLayoutGroup(long companyId,
-		long plid) throws PortalException;
+	public Group getLayoutGroup(long companyId, long plid)
+		throws PortalException;
 
 	/**
 	* Returns the group associated with the layout prototype.
@@ -654,8 +637,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getLayoutPrototypeGroup(
-		long companyId, long layoutPrototypeId) throws PortalException;
+	public Group getLayoutPrototypeGroup(long companyId, long layoutPrototypeId)
+		throws PortalException;
 
 	/**
 	* Returns the group associated with the layout set prototype.
@@ -666,8 +649,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getLayoutSetPrototypeGroup(
-		long companyId, long layoutSetPrototypeId) throws PortalException;
+	public Group getLayoutSetPrototypeGroup(long companyId,
+		long layoutSetPrototypeId) throws PortalException;
 
 	/**
 	* Returns a range of all groups that are children of the parent group and
@@ -694,9 +677,8 @@ public interface GroupLocalService extends BaseLocalService,
 	<code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getLayoutsGroups(
-		long companyId, long parentGroupId, boolean site, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> getLayoutsGroups(long companyId, long parentGroupId,
+		boolean site, int start, int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns the number of groups that are children or the parent group and
@@ -717,7 +699,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return all live groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getLiveGroups();
+	public List<Group> getLiveGroups();
 
 	/**
 	* Returns a range of all non-system groups of a specified type (className)
@@ -741,8 +723,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the range of matching groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getNoLayoutsGroups(
-		java.lang.String className, boolean privateLayout, int start, int end);
+	public List<Group> getNoLayoutsGroups(java.lang.String className,
+		boolean privateLayout, int start, int end);
 
 	/**
 	* Returns all non-system groups having <code>null</code> or empty friendly
@@ -752,7 +734,7 @@ public interface GroupLocalService extends BaseLocalService,
 	URLs
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getNullFriendlyURLGroups();
+	public List<Group> getNullFriendlyURLGroups();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -770,21 +752,19 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getOrganizationGroup(long companyId,
-		long organizationId) throws PortalException;
+	public Group getOrganizationGroup(long companyId, long organizationId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId);
+	public List<Group> getOrganizationGroups(long organizationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId, int start, int end);
+	public List<Group> getOrganizationGroups(long organizationId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
+	public List<Group> getOrganizationGroups(long organizationId, int start,
+		int end, OrderByComparator<Group> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationGroupsCount(long organizationId);
@@ -805,8 +785,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the groups associated with the organizations
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationsGroups(
-		java.util.List<com.liferay.portal.model.Organization> organizations);
+	public List<Group> getOrganizationsGroups(List<Organization> organizations);
 
 	/**
 	* Returns all the groups related to the organizations.
@@ -815,8 +794,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the groups related to the organizations
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationsRelatedGroups(
-		java.util.List<com.liferay.portal.model.Organization> organizations);
+	public List<Group> getOrganizationsRelatedGroups(
+		List<Organization> organizations);
 
 	/**
 	* Returns the group followed by all its parent groups ordered by closest
@@ -828,26 +807,22 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getParentGroups(
-		long groupId) throws PortalException;
+	public List<Group> getParentGroups(long groupId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId);
+	public List<Group> getRoleGroups(long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId, int start, int end);
+	public List<Group> getRoleGroups(long roleId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
+	public List<Group> getRoleGroups(long roleId, int start, int end,
+		OrderByComparator<Group> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRoleGroupsCount(long roleId);
@@ -869,8 +844,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getStagingGroup(long liveGroupId)
-		throws PortalException;
+	public Group getStagingGroup(long liveGroupId) throws PortalException;
 
 	/**
 	* Returns the group directly associated with the user.
@@ -881,8 +855,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getUserGroup(long companyId,
-		long userId) throws PortalException;
+	public Group getUserGroup(long companyId, long userId)
+		throws PortalException;
 
 	/**
 	* Returns the specified "user group" group. That is, the group that
@@ -894,21 +868,18 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getUserGroupGroup(long companyId,
-		long userGroupId) throws PortalException;
+	public Group getUserGroupGroup(long companyId, long userGroupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId);
+	public List<Group> getUserGroupGroups(long userGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId, int start, int end);
+	public List<Group> getUserGroupGroups(long userGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
+	public List<Group> getUserGroupGroups(long userGroupId, int start, int end,
+		OrderByComparator<Group> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupGroupsCount(long userGroupId);
@@ -923,8 +894,7 @@ public interface GroupLocalService extends BaseLocalService,
 	public long[] getUserGroupPrimaryKeys(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId);
+	public List<Group> getUserGroups(long userId);
 
 	/**
 	* Returns all the user's site groups and immediate organization groups,
@@ -938,8 +908,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, boolean inherit) throws PortalException;
+	public List<Group> getUserGroups(long userId, boolean inherit)
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the user's site groups and immediate
@@ -967,22 +937,18 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, boolean inherit, int start, int end)
-		throws PortalException;
+	public List<Group> getUserGroups(long userId, boolean inherit, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, int start, int end);
+	public List<Group> getUserGroups(long userId, int start, int end);
 
 	/**
 	* @throws PortalException
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator)
-		throws PortalException;
+	public List<Group> getUserGroups(long userId, int start, int end,
+		OrderByComparator<Group> orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupsCount(long userId);
@@ -995,8 +961,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupsGroups(
-		java.util.List<com.liferay.portal.model.UserGroup> userGroups)
+	public List<Group> getUserGroupsGroups(List<UserGroup> userGroups)
 		throws PortalException;
 
 	/**
@@ -1006,8 +971,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the groups related to the user groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupsRelatedGroups(
-		java.util.List<com.liferay.portal.model.UserGroup> userGroups);
+	public List<Group> getUserGroupsRelatedGroups(List<UserGroup> userGroups);
 
 	/**
 	* Returns the range of all groups associated with the user's organization
@@ -1033,8 +997,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserOrganizationsGroups(
-		long userId, int start, int end) throws PortalException;
+	public List<Group> getUserOrganizationsGroups(long userId, int start,
+		int end) throws PortalException;
 
 	/**
 	* Returns the default user's personal site group.
@@ -1044,8 +1008,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getUserPersonalSiteGroup(
-		long companyId) throws PortalException;
+	public Group getUserPersonalSiteGroup(long companyId)
+		throws PortalException;
 
 	/**
 	* Returns the userIds of the users associated with the group.
@@ -1057,12 +1021,12 @@ public interface GroupLocalService extends BaseLocalService,
 	public long[] getUserPrimaryKeys(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId) throws PortalException;
+	public List<Group> getUserSitesGroups(long userId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId, boolean includeAdministrative) throws PortalException;
+	public List<Group> getUserSitesGroups(long userId,
+		boolean includeAdministrative) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasOrganizationGroup(long organizationId, long groupId);
@@ -1123,8 +1087,7 @@ public interface GroupLocalService extends BaseLocalService,
 	<code>null</code> if a matching group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group loadFetchGroup(long companyId,
-		java.lang.String groupKey);
+	public Group loadFetchGroup(long companyId, java.lang.String groupKey);
 
 	/**
 	* Returns the group with the matching group key.
@@ -1135,8 +1098,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group loadGetGroup(long companyId,
-		java.lang.String groupKey) throws PortalException;
+	public Group loadGetGroup(long companyId, java.lang.String groupKey)
+		throws PortalException;
 
 	/**
 	* Rebuilds the group tree.
@@ -1184,10 +1147,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
+	public List<Group> search(long companyId, long[] classNameIds,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the groups that match the class name IDs
@@ -1223,11 +1186,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, long[] classNameIds,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns an ordered range of all the groups that match the class name IDs,
@@ -1265,10 +1227,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<Group> search(long companyId, long[] classNameIds,
+		java.lang.String name, java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
 
 	/**
@@ -1309,12 +1270,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, long[] classNameIds,
+		java.lang.String name, java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns an ordered range of all the groups belonging to the parent group
@@ -1350,11 +1309,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
+	public List<Group> search(long companyId, long[] classNameIds,
+		long parentGroupId, java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the groups belonging to the parent group
@@ -1392,12 +1350,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, long[] classNameIds,
+		long parentGroupId, java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns an ordered range of all the groups belonging to the parent group
@@ -1436,10 +1392,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<Group> search(long companyId, long[] classNameIds,
+		long parentGroupId, java.lang.String name,
+		java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
 
 	/**
@@ -1481,12 +1437,11 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, long[] classNameIds,
+		long parentGroupId, java.lang.String name,
+		java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns an ordered range of all the groups that match the keywords,
@@ -1516,12 +1471,11 @@ public interface GroupLocalService extends BaseLocalService,
 	inclusive)
 	* @return the matching groups ordered by name
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
+	public List<Group> search(long companyId, java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the groups that match the keywords,
@@ -1554,11 +1508,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns an ordered range of all the site groups and organization groups
@@ -1593,9 +1545,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<Group> search(long companyId, java.lang.String name,
+		java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
 
 	/**
@@ -1633,11 +1585,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, java.lang.String name,
+		java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns an ordered range of all the company's groups, optionally
@@ -1667,10 +1618,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
+	public List<Group> search(long companyId,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the groups belonging to the parent group
@@ -1703,10 +1653,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long parentGroupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
+	public List<Group> search(long companyId, long parentGroupId,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the groups belonging to the parent group
@@ -1741,11 +1691,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long parentGroupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, long parentGroupId,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns an ordered range of all the site groups belonging to the parent
@@ -1781,10 +1730,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long parentGroupId, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<Group> search(long companyId, long parentGroupId,
+		java.lang.String name, java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
 
 	/**
@@ -1823,12 +1771,10 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the matching groups ordered by comparator <code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long parentGroupId, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+	public List<Group> search(long companyId, long parentGroupId,
+		java.lang.String name, java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end, OrderByComparator<Group> obc);
 
 	/**
 	* Returns the number of groups that match the class name IDs, and keywords,
@@ -1848,11 +1794,11 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
 	* Returns the number of groups that match the class name IDs, name, and
@@ -1875,11 +1821,11 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
 	/**
@@ -1902,11 +1848,11 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
 	* Returns the number of groups belonging to the parent group that match the
@@ -1931,12 +1877,12 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String name,
 		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
 	/**
@@ -1955,10 +1901,10 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
 	* Returns the number of groups and immediate organization groups that match
@@ -1980,11 +1926,11 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String name,
 		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
 	/**
@@ -2004,11 +1950,11 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
 	* Returns the number of groups belonging to the parent group and immediate
@@ -2031,11 +1977,11 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
 	public void setOrganizationGroups(long organizationId, long[] groupIds);
@@ -2072,9 +2018,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param assetTagNames the asset tag names (optionally <code>null</code>)
 	* @throws PortalException if a portal exception occurred
 	*/
-	public void updateAsset(long userId, com.liferay.portal.model.Group group,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
-		throws PortalException;
+	public void updateAsset(long userId, Group group, long[] assetCategoryIds,
+		java.lang.String[] assetTagNames) throws PortalException;
 
 	/**
 	* Updates the group's friendly URL.
@@ -2085,8 +2030,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group
 	* @throws PortalException if a portal exception occurred
 	*/
-	public com.liferay.portal.model.Group updateFriendlyURL(long groupId,
-		java.lang.String friendlyURL) throws PortalException;
+	public Group updateFriendlyURL(long groupId, java.lang.String friendlyURL)
+		throws PortalException;
 
 	/**
 	* Updates the group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -2094,9 +2039,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param group the group
 	* @return the group that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Group updateGroup(
-		com.liferay.portal.model.Group group);
+	@Indexable(type = IndexableType.REINDEX)
+	public Group updateGroup(Group group);
 
 	/**
 	* Updates the group.
@@ -2127,19 +2071,17 @@ public interface GroupLocalService extends BaseLocalService,
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.Group updateGroup(long groupId,
-		long parentGroupId, java.lang.String name,
-		java.lang.String description, int type, boolean manualMembership,
-		int membershipRestriction, java.lang.String friendlyURL,
-		boolean inheritContent, boolean active,
+	public Group updateGroup(long groupId, long parentGroupId,
+		java.lang.String name, java.lang.String description, int type,
+		boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean inheritContent, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.Group updateGroup(long groupId,
-		long parentGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, boolean manualMembership, int membershipRestriction,
+	public Group updateGroup(long groupId, long parentGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int type,
+		boolean manualMembership, int membershipRestriction,
 		java.lang.String friendlyURL, boolean inheritContent, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -2153,8 +2095,8 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group
 	* @throws PortalException if a portal exception occurred
 	*/
-	public com.liferay.portal.model.Group updateGroup(long groupId,
-		java.lang.String typeSettings) throws PortalException;
+	public Group updateGroup(long groupId, java.lang.String typeSettings)
+		throws PortalException;
 
 	/**
 	* Associates the group with a main site if the group is an organization.
@@ -2164,6 +2106,6 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group
 	* @throws PortalException if a portal exception occurred
 	*/
-	public com.liferay.portal.model.Group updateSite(long groupId, boolean site)
+	public Group updateSite(long groupId, boolean site)
 		throws PortalException;
 }

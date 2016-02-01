@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.RecentLayoutBranch;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for RecentLayoutBranch. Methods of this
@@ -52,12 +64,12 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param recentLayoutBranch the recent layout branch
 	* @return the recent layout branch that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.RecentLayoutBranch addRecentLayoutBranch(
-		com.liferay.portal.model.RecentLayoutBranch recentLayoutBranch);
+	@Indexable(type = IndexableType.REINDEX)
+	public RecentLayoutBranch addRecentLayoutBranch(
+		RecentLayoutBranch recentLayoutBranch);
 
-	public com.liferay.portal.model.RecentLayoutBranch addRecentLayoutBranch(
-		long userId, long layoutBranchId, long layoutSetBranchId, long plid)
+	public RecentLayoutBranch addRecentLayoutBranch(long userId,
+		long layoutBranchId, long layoutSetBranchId, long plid)
 		throws PortalException;
 
 	/**
@@ -66,15 +78,14 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param recentLayoutBranchId the primary key for the new recent layout branch
 	* @return the new recent layout branch
 	*/
-	public com.liferay.portal.model.RecentLayoutBranch createRecentLayoutBranch(
+	public RecentLayoutBranch createRecentLayoutBranch(
 		long recentLayoutBranchId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -83,9 +94,9 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param recentLayoutBranch the recent layout branch
 	* @return the recent layout branch that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.RecentLayoutBranch deleteRecentLayoutBranch(
-		com.liferay.portal.model.RecentLayoutBranch recentLayoutBranch);
+	@Indexable(type = IndexableType.DELETE)
+	public RecentLayoutBranch deleteRecentLayoutBranch(
+		RecentLayoutBranch recentLayoutBranch);
 
 	/**
 	* Deletes the recent layout branch with the primary key from the database. Also notifies the appropriate model listeners.
@@ -94,15 +105,15 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @return the recent layout branch that was removed
 	* @throws PortalException if a recent layout branch with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.RecentLayoutBranch deleteRecentLayoutBranch(
+	@Indexable(type = IndexableType.DELETE)
+	public RecentLayoutBranch deleteRecentLayoutBranch(
 		long recentLayoutBranchId) throws PortalException;
 
 	public void deleteRecentLayoutBranches(long layoutBranchId);
 
 	public void deleteUserRecentLayoutBranches(long userId);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -110,8 +121,7 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -125,8 +135,7 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -142,10 +151,8 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -153,8 +160,7 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -163,23 +169,21 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.RecentLayoutBranch fetchRecentLayoutBranch(
-		long recentLayoutBranchId);
+	public RecentLayoutBranch fetchRecentLayoutBranch(long recentLayoutBranchId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.RecentLayoutBranch fetchRecentLayoutBranch(
-		long userId, long layoutSetBranchId, long plid);
+	public RecentLayoutBranch fetchRecentLayoutBranch(long userId,
+		long layoutSetBranchId, long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -190,8 +194,8 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the recent layout branch with the primary key.
@@ -201,8 +205,8 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @throws PortalException if a recent layout branch with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.RecentLayoutBranch getRecentLayoutBranch(
-		long recentLayoutBranchId) throws PortalException;
+	public RecentLayoutBranch getRecentLayoutBranch(long recentLayoutBranchId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the recent layout branchs.
@@ -216,8 +220,7 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @return the range of recent layout branchs
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.RecentLayoutBranch> getRecentLayoutBranchs(
-		int start, int end);
+	public List<RecentLayoutBranch> getRecentLayoutBranchs(int start, int end);
 
 	/**
 	* Returns the number of recent layout branchs.
@@ -233,7 +236,7 @@ public interface RecentLayoutBranchLocalService extends BaseLocalService,
 	* @param recentLayoutBranch the recent layout branch
 	* @return the recent layout branch that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.RecentLayoutBranch updateRecentLayoutBranch(
-		com.liferay.portal.model.RecentLayoutBranch recentLayoutBranch);
+	@Indexable(type = IndexableType.REINDEX)
+	public RecentLayoutBranch updateRecentLayoutBranch(
+		RecentLayoutBranch recentLayoutBranch);
 }

@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import java.util.Locale;
+
 /**
  * Provides the remote service interface for ScreensJournalArticle. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -52,15 +54,15 @@ public interface ScreensJournalArticleService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getJournalArticleContent(long classPK,
-		long ddmTemplateId, java.util.Locale locale) throws PortalException;
+		long ddmTemplateId, Locale locale) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getJournalArticleContent(long classPK,
-		java.util.Locale locale) throws PortalException;
+	public java.lang.String getJournalArticleContent(long classPK, Locale locale)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getJournalArticleContent(long groupId,
-		java.lang.String articleId, long ddmTemplateId, java.util.Locale locale)
+		java.lang.String articleId, long ddmTemplateId, Locale locale)
 		throws PortalException;
 
 	/**

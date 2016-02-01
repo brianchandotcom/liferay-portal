@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.expando.model.ExpandoColumn;
+
 /**
  * Provides the remote service interface for ExpandoColumn. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -47,19 +49,17 @@ public interface ExpandoColumnService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnServiceUtil} to access the expando column remote service. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type)
+	public ExpandoColumn addColumn(long tableId, java.lang.String name, int type)
 		throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type,
-		java.lang.Object defaultData) throws PortalException;
+	public ExpandoColumn addColumn(long tableId, java.lang.String name,
+		int type, java.lang.Object defaultData) throws PortalException;
 
 	public void deleteColumn(long columnId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn fetchExpandoColumn(
-		long columnId) throws PortalException;
+	public ExpandoColumn fetchExpandoColumn(long columnId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -68,14 +68,12 @@ public interface ExpandoColumnService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type)
-		throws PortalException;
+	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
+		int type) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData) throws PortalException;
+	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
+		int type, java.lang.Object defaultData) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoColumn updateTypeSettings(
-		long columnId, java.lang.String typeSettings) throws PortalException;
+	public ExpandoColumn updateTypeSettings(long columnId,
+		java.lang.String typeSettings) throws PortalException;
 }

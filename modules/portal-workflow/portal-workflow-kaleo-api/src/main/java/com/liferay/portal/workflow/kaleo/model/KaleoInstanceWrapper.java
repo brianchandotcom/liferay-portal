@@ -18,6 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -247,7 +252,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _kaleoInstance.getExpandoBridge();
 	}
 
@@ -328,21 +333,21 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _kaleoInstance.getPrimaryKeyObj();
 	}
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getRootKaleoInstanceToken(
-		com.liferay.portal.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoInstance.getRootKaleoInstanceToken(serviceContext);
 	}
 
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getRootKaleoInstanceToken(
-		Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		Map<java.lang.String, Serializable> workflowContext,
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoInstance.getRootKaleoInstanceToken(workflowContext,
 			serviceContext);
@@ -505,14 +510,12 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_kaleoInstance.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_kaleoInstance.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -592,7 +595,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_kaleoInstance.setPrimaryKeyObj(primaryKeyObj);
 	}
 

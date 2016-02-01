@@ -16,15 +16,36 @@ package com.liferay.polls.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.model.PollsQuestion;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for PollsQuestion. Methods of this
@@ -55,26 +76,22 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param pollsQuestion the polls question
 	* @return the polls question that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.polls.model.PollsQuestion addPollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion);
+	@Indexable(type = IndexableType.REINDEX)
+	public PollsQuestion addPollsQuestion(PollsQuestion pollsQuestion);
 
-	public com.liferay.polls.model.PollsQuestion addQuestion(long userId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public PollsQuestion addQuestion(long userId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addQuestionResources(
-		com.liferay.polls.model.PollsQuestion question,
+	public void addQuestionResources(PollsQuestion question,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addQuestionResources(
-		com.liferay.polls.model.PollsQuestion question,
+	public void addQuestionResources(PollsQuestion question,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
@@ -92,15 +109,13 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param questionId the primary key for the new polls question
 	* @return the new polls question
 	*/
-	public com.liferay.polls.model.PollsQuestion createPollsQuestion(
-		long questionId);
+	public PollsQuestion createPollsQuestion(long questionId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -109,9 +124,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param pollsQuestion the polls question
 	* @return the polls question that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.polls.model.PollsQuestion deletePollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion);
+	@Indexable(type = IndexableType.DELETE)
+	public PollsQuestion deletePollsQuestion(PollsQuestion pollsQuestion);
 
 	/**
 	* Deletes the polls question with the primary key from the database. Also notifies the appropriate model listeners.
@@ -120,19 +134,19 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @return the polls question that was removed
 	* @throws PortalException if a polls question with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.polls.model.PollsQuestion deletePollsQuestion(
-		long questionId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public PollsQuestion deletePollsQuestion(long questionId)
+		throws PortalException;
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteQuestion(PollsQuestion question)
 		throws PortalException;
 
 	public void deleteQuestion(long questionId) throws PortalException;
 
 	public void deleteQuestions(long groupId) throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -140,8 +154,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -155,8 +168,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -172,10 +184,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -183,8 +193,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -193,13 +202,11 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsQuestion fetchPollsQuestion(
-		long questionId);
+	public PollsQuestion fetchPollsQuestion(long questionId);
 
 	/**
 	* Returns the polls question matching the UUID and group.
@@ -209,18 +216,18 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsQuestion fetchPollsQuestionByUuidAndGroupId(
+	public PollsQuestion fetchPollsQuestionByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -231,8 +238,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the polls question with the primary key.
@@ -242,8 +249,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @throws PortalException if a polls question with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsQuestion getPollsQuestion(
-		long questionId) throws PortalException;
+	public PollsQuestion getPollsQuestion(long questionId)
+		throws PortalException;
 
 	/**
 	* Returns the polls question matching the UUID and group.
@@ -254,7 +261,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching polls question could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsQuestion getPollsQuestionByUuidAndGroupId(
+	public PollsQuestion getPollsQuestionByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -269,8 +276,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @return the range of polls questions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.polls.model.PollsQuestion> getPollsQuestions(
-		int start, int end);
+	public List<PollsQuestion> getPollsQuestions(int start, int end);
 
 	/**
 	* Returns all the polls questions matching the UUID and company.
@@ -280,7 +286,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @return the matching polls questions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.polls.model.PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
+	public List<PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -294,9 +300,9 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @return the range of matching polls questions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.polls.model.PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
+	public List<PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.polls.model.PollsQuestion> orderByComparator);
+		OrderByComparator<PollsQuestion> orderByComparator);
 
 	/**
 	* Returns the number of polls questions.
@@ -307,16 +313,13 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	public int getPollsQuestionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
-		throws PortalException;
+	public PollsQuestion getQuestion(long questionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.polls.model.PollsQuestion> getQuestions(
-		long groupId);
+	public List<PollsQuestion> getQuestions(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.polls.model.PollsQuestion> getQuestions(
-		long groupId, int start, int end);
+	public List<PollsQuestion> getQuestions(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getQuestionsCount(long groupId);
@@ -327,17 +330,14 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	* @param pollsQuestion the polls question
 	* @return the polls question that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.polls.model.PollsQuestion updatePollsQuestion(
-		com.liferay.polls.model.PollsQuestion pollsQuestion);
+	@Indexable(type = IndexableType.REINDEX)
+	public PollsQuestion updatePollsQuestion(PollsQuestion pollsQuestion);
 
-	public com.liferay.polls.model.PollsQuestion updateQuestion(long userId,
-		long questionId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		java.util.List<com.liferay.polls.model.PollsChoice> choices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public PollsQuestion updateQuestion(long userId, long questionId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException;
 }

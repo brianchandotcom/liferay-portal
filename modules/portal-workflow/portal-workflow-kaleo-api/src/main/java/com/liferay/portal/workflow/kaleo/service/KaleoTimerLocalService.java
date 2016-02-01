@@ -16,14 +16,28 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.definition.Timer;
+import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for KaleoTimer. Methods of this
@@ -47,12 +61,9 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTimerLocalServiceUtil} to access the kaleo timer local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTimerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer addKaleoTimer(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		long kaleoDefinitionId,
-		com.liferay.portal.workflow.kaleo.definition.Timer timer,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public KaleoTimer addKaleoTimer(java.lang.String kaleoClassName,
+		long kaleoClassPK, long kaleoDefinitionId, Timer timer,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the kaleo timer to the database. Also notifies the appropriate model listeners.
@@ -60,9 +71,8 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param kaleoTimer the kaleo timer
 	* @return the kaleo timer that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer addKaleoTimer(
-		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTimer addKaleoTimer(KaleoTimer kaleoTimer);
 
 	/**
 	* Creates a new kaleo timer with the primary key. Does not add the kaleo timer to the database.
@@ -70,8 +80,7 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param kaleoTimerId the primary key for the new kaleo timer
 	* @return the new kaleo timer
 	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer createKaleoTimer(
-		long kaleoTimerId);
+	public KaleoTimer createKaleoTimer(long kaleoTimerId);
 
 	/**
 	* Deletes the kaleo timer from the database. Also notifies the appropriate model listeners.
@@ -79,9 +88,8 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param kaleoTimer the kaleo timer
 	* @return the kaleo timer that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer deleteKaleoTimer(
-		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer);
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoTimer deleteKaleoTimer(KaleoTimer kaleoTimer);
 
 	/**
 	* Deletes the kaleo timer with the primary key from the database. Also notifies the appropriate model listeners.
@@ -90,19 +98,18 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @return the kaleo timer that was removed
 	* @throws PortalException if a kaleo timer with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer deleteKaleoTimer(
-		long kaleoTimerId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoTimer deleteKaleoTimer(long kaleoTimerId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -110,8 +117,7 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -125,8 +131,7 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -142,10 +147,8 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -153,8 +156,7 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -163,19 +165,17 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer fetchKaleoTimer(
-		long kaleoTimerId);
+	public KaleoTimer fetchKaleoTimer(long kaleoTimerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the kaleo timer with the primary key.
@@ -185,16 +185,16 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @throws PortalException if a kaleo timer with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer getKaleoTimer(
-		long kaleoTimerId) throws PortalException;
+	public KaleoTimer getKaleoTimer(long kaleoTimerId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
-		java.lang.String kaleoClassName, long kaleoClassPK);
+	public List<KaleoTimer> getKaleoTimers(java.lang.String kaleoClassName,
+		long kaleoClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
-		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking);
+	public List<KaleoTimer> getKaleoTimers(java.lang.String kaleoClassName,
+		long kaleoClassPK, boolean blocking);
 
 	/**
 	* Returns a range of all the kaleo timers.
@@ -208,8 +208,7 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @return the range of kaleo timers
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
-		int start, int end);
+	public List<KaleoTimer> getKaleoTimers(int start, int end);
 
 	/**
 	* Returns the number of kaleo timers.
@@ -228,8 +227,8 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the kaleo timer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -237,7 +236,6 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	* @param kaleoTimer the kaleo timer
 	* @return the kaleo timer that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer updateKaleoTimer(
-		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTimer updateKaleoTimer(KaleoTimer kaleoTimer);
 }

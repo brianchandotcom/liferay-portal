@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.asset.model.AssetCategoryProperty;
+
+import java.util.List;
+
 /**
  * Provides the remote service interface for AssetCategoryProperty. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -47,19 +51,17 @@ public interface AssetCategoryPropertyService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetCategoryPropertyServiceUtil} to access the asset category property remote service. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetCategoryPropertyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.asset.model.AssetCategoryProperty addCategoryProperty(
-		long entryId, java.lang.String key, java.lang.String value)
-		throws PortalException;
+	public AssetCategoryProperty addCategoryProperty(long entryId,
+		java.lang.String key, java.lang.String value) throws PortalException;
 
 	public void deleteCategoryProperty(long categoryPropertyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.asset.model.AssetCategoryProperty> getCategoryProperties(
-		long entryId);
+	public List<AssetCategoryProperty> getCategoryProperties(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.asset.model.AssetCategoryProperty> getCategoryPropertyValues(
+	public List<AssetCategoryProperty> getCategoryPropertyValues(
 		long companyId, java.lang.String key);
 
 	/**
@@ -69,11 +71,11 @@ public interface AssetCategoryPropertyService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
+	public AssetCategoryProperty updateCategoryProperty(
 		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws PortalException;
 
-	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		long userId, long categoryPropertyId, java.lang.String key,
-		java.lang.String value) throws PortalException;
+	public AssetCategoryProperty updateCategoryProperty(long userId,
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws PortalException;
 }

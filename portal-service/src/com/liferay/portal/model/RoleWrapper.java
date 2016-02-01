@@ -17,8 +17,12 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
 
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -320,7 +324,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _role.getExpandoBridge();
 	}
 
@@ -365,7 +369,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _role.getPrimaryKeyObj();
 	}
 
@@ -689,14 +693,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_role.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_role.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -746,7 +748,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_role.setPrimaryKeyObj(primaryKeyObj);
 	}
 

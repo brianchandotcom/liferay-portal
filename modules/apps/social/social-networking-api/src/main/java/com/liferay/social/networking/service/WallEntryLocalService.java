@@ -16,14 +16,28 @@ package com.liferay.social.networking.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import com.liferay.social.networking.model.WallEntry;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for WallEntry. Methods of this
@@ -47,9 +61,8 @@ public interface WallEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WallEntryLocalServiceUtil} to access the wall entry local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.social.networking.model.WallEntry addWallEntry(
-		long groupId, long userId, java.lang.String comments,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+	public WallEntry addWallEntry(long groupId, long userId,
+		java.lang.String comments, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	/**
@@ -58,9 +71,8 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param wallEntry the wall entry
 	* @return the wall entry that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.social.networking.model.WallEntry addWallEntry(
-		com.liferay.social.networking.model.WallEntry wallEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public WallEntry addWallEntry(WallEntry wallEntry);
 
 	/**
 	* Creates a new wall entry with the primary key. Does not add the wall entry to the database.
@@ -68,15 +80,13 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param wallEntryId the primary key for the new wall entry
 	* @return the new wall entry
 	*/
-	public com.liferay.social.networking.model.WallEntry createWallEntry(
-		long wallEntryId);
+	public WallEntry createWallEntry(long wallEntryId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	public void deleteWallEntries(long groupId) throws PortalException;
@@ -88,9 +98,8 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @return the wall entry that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.social.networking.model.WallEntry deleteWallEntry(
-		com.liferay.social.networking.model.WallEntry wallEntry)
+	@Indexable(type = IndexableType.DELETE)
+	public WallEntry deleteWallEntry(WallEntry wallEntry)
 		throws PortalException;
 
 	/**
@@ -100,11 +109,11 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @return the wall entry that was removed
 	* @throws PortalException if a wall entry with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.social.networking.model.WallEntry deleteWallEntry(
-		long wallEntryId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public WallEntry deleteWallEntry(long wallEntryId)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -112,8 +121,7 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -127,8 +135,7 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -144,10 +151,8 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -155,8 +160,7 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -165,19 +169,17 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.social.networking.model.WallEntry fetchWallEntry(
-		long wallEntryId);
+	public WallEntry fetchWallEntry(long wallEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -188,12 +190,11 @@ public interface WallEntryLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
-		long groupId, int start, int end);
+	public List<WallEntry> getWallEntries(long groupId, int start, int end);
 
 	/**
 	* Returns a range of all the wall entries.
@@ -207,8 +208,7 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @return the range of wall entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
-		int start, int end);
+	public List<WallEntry> getWallEntries(int start, int end);
 
 	/**
 	* Returns the number of wall entries.
@@ -229,13 +229,11 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a wall entry with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.social.networking.model.WallEntry getWallEntry(
-		long wallEntryId) throws PortalException;
+	public WallEntry getWallEntry(long wallEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.social.networking.model.WallEntry> getWallToWallEntries(
-		long groupId1, long groupId2, long userId1, long userId2, int start,
-		int end);
+	public List<WallEntry> getWallToWallEntries(long groupId1, long groupId2,
+		long userId1, long userId2, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWallToWallEntriesCount(long groupId1, long groupId2,
@@ -247,10 +245,9 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @param wallEntry the wall entry
 	* @return the wall entry that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.social.networking.model.WallEntry updateWallEntry(
-		com.liferay.social.networking.model.WallEntry wallEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public WallEntry updateWallEntry(WallEntry wallEntry);
 
-	public com.liferay.social.networking.model.WallEntry updateWallEntry(
-		long wallEntryId, java.lang.String comments) throws PortalException;
+	public WallEntry updateWallEntry(long wallEntryId, java.lang.String comments)
+		throws PortalException;
 }

@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.ClusterGroup;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for ClusterGroup. Methods of this
@@ -52,15 +64,13 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param clusterGroup the cluster group
 	* @return the cluster group that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ClusterGroup addClusterGroup(
-		com.liferay.portal.model.ClusterGroup clusterGroup);
+	@Indexable(type = IndexableType.REINDEX)
+	public ClusterGroup addClusterGroup(ClusterGroup clusterGroup);
 
-	public com.liferay.portal.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds);
+	public ClusterGroup addClusterGroup(java.lang.String name,
+		List<java.lang.String> clusterNodeIds);
 
-	public com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name);
+	public ClusterGroup addWholeClusterGroup(java.lang.String name);
 
 	/**
 	* Creates a new cluster group with the primary key. Does not add the cluster group to the database.
@@ -68,8 +78,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param clusterGroupId the primary key for the new cluster group
 	* @return the new cluster group
 	*/
-	public com.liferay.portal.model.ClusterGroup createClusterGroup(
-		long clusterGroupId);
+	public ClusterGroup createClusterGroup(long clusterGroupId);
 
 	/**
 	* Deletes the cluster group from the database. Also notifies the appropriate model listeners.
@@ -77,9 +86,8 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param clusterGroup the cluster group
 	* @return the cluster group that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ClusterGroup deleteClusterGroup(
-		com.liferay.portal.model.ClusterGroup clusterGroup);
+	@Indexable(type = IndexableType.DELETE)
+	public ClusterGroup deleteClusterGroup(ClusterGroup clusterGroup);
 
 	/**
 	* Deletes the cluster group with the primary key from the database. Also notifies the appropriate model listeners.
@@ -88,19 +96,18 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @return the cluster group that was removed
 	* @throws PortalException if a cluster group with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ClusterGroup deleteClusterGroup(
-		long clusterGroupId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ClusterGroup deleteClusterGroup(long clusterGroupId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -108,8 +115,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -123,8 +129,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -140,10 +145,8 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -151,8 +154,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -161,16 +163,14 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ClusterGroup fetchClusterGroup(
-		long clusterGroupId);
+	public ClusterGroup fetchClusterGroup(long clusterGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the cluster group with the primary key.
@@ -180,8 +180,8 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @throws PortalException if a cluster group with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ClusterGroup getClusterGroup(
-		long clusterGroupId) throws PortalException;
+	public ClusterGroup getClusterGroup(long clusterGroupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the cluster groups.
@@ -195,8 +195,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @return the range of cluster groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ClusterGroup> getClusterGroups(
-		int start, int end);
+	public List<ClusterGroup> getClusterGroups(int start, int end);
 
 	/**
 	* Returns the number of cluster groups.
@@ -207,7 +206,7 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	public int getClusterGroupsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -218,8 +217,8 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the cluster group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -227,7 +226,6 @@ public interface ClusterGroupLocalService extends BaseLocalService,
 	* @param clusterGroup the cluster group
 	* @return the cluster group that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ClusterGroup updateClusterGroup(
-		com.liferay.portal.model.ClusterGroup clusterGroup);
+	@Indexable(type = IndexableType.REINDEX)
+	public ClusterGroup updateClusterGroup(ClusterGroup clusterGroup);
 }

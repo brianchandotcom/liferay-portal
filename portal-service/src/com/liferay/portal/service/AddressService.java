@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Address;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for Address. Methods of this
@@ -46,23 +49,22 @@ public interface AddressService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AddressServiceUtil} to access the address remote service. Add custom service methods to {@link com.liferay.portal.service.impl.AddressServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Address addAddress(
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, long typeId, boolean mailing, boolean primary,
+	public Address addAddress(java.lang.String className, long classPK,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long regionId, long countryId, long typeId, boolean mailing,
+		boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteAddress(long addressId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Address getAddress(long addressId)
-		throws PortalException;
+	public Address getAddress(long addressId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Address> getAddresses(
-		java.lang.String className, long classPK) throws PortalException;
+	public List<Address> getAddresses(java.lang.String className, long classPK)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -71,9 +73,9 @@ public interface AddressService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portal.model.Address updateAddress(long addressId,
-		java.lang.String street1, java.lang.String street2,
-		java.lang.String street3, java.lang.String city, java.lang.String zip,
-		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary) throws PortalException;
+	public Address updateAddress(long addressId, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long regionId,
+		long countryId, long typeId, boolean mailing, boolean primary)
+		throws PortalException;
 }

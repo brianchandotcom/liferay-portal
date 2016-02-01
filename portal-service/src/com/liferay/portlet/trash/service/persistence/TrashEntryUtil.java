@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.trash.model.TrashEntry;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -432,8 +433,7 @@ public class TrashEntryUtil {
 	* @param createDate the create date
 	* @return the matching trash entries
 	*/
-	public static List<TrashEntry> findByG_LtCD(long groupId,
-		java.util.Date createDate) {
+	public static List<TrashEntry> findByG_LtCD(long groupId, Date createDate) {
 		return getPersistence().findByG_LtCD(groupId, createDate);
 	}
 
@@ -450,8 +450,8 @@ public class TrashEntryUtil {
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of matching trash entries
 	*/
-	public static List<TrashEntry> findByG_LtCD(long groupId,
-		java.util.Date createDate, int start, int end) {
+	public static List<TrashEntry> findByG_LtCD(long groupId, Date createDate,
+		int start, int end) {
 		return getPersistence().findByG_LtCD(groupId, createDate, start, end);
 	}
 
@@ -469,9 +469,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching trash entries
 	*/
-	public static List<TrashEntry> findByG_LtCD(long groupId,
-		java.util.Date createDate, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator) {
+	public static List<TrashEntry> findByG_LtCD(long groupId, Date createDate,
+		int start, int end, OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_LtCD(groupId, createDate, start, end,
 			orderByComparator);
@@ -492,9 +491,8 @@ public class TrashEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching trash entries
 	*/
-	public static List<TrashEntry> findByG_LtCD(long groupId,
-		java.util.Date createDate, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator,
+	public static List<TrashEntry> findByG_LtCD(long groupId, Date createDate,
+		int start, int end, OrderByComparator<TrashEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_LtCD(groupId, createDate, start, end,
@@ -510,8 +508,7 @@ public class TrashEntryUtil {
 	* @return the first matching trash entry
 	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static TrashEntry findByG_LtCD_First(long groupId,
-		java.util.Date createDate,
+	public static TrashEntry findByG_LtCD_First(long groupId, Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
@@ -526,8 +523,7 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static TrashEntry fetchByG_LtCD_First(long groupId,
-		java.util.Date createDate,
+	public static TrashEntry fetchByG_LtCD_First(long groupId, Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtCD_First(groupId, createDate, orderByComparator);
@@ -542,8 +538,7 @@ public class TrashEntryUtil {
 	* @return the last matching trash entry
 	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static TrashEntry findByG_LtCD_Last(long groupId,
-		java.util.Date createDate,
+	public static TrashEntry findByG_LtCD_Last(long groupId, Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
@@ -558,8 +553,7 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static TrashEntry fetchByG_LtCD_Last(long groupId,
-		java.util.Date createDate,
+	public static TrashEntry fetchByG_LtCD_Last(long groupId, Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtCD_Last(groupId, createDate, orderByComparator);
@@ -576,7 +570,7 @@ public class TrashEntryUtil {
 	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
 	public static TrashEntry[] findByG_LtCD_PrevAndNext(long entryId,
-		long groupId, java.util.Date createDate,
+		long groupId, Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.exception.NoSuchEntryException {
 		return getPersistence()
@@ -590,7 +584,7 @@ public class TrashEntryUtil {
 	* @param groupId the group ID
 	* @param createDate the create date
 	*/
-	public static void removeByG_LtCD(long groupId, java.util.Date createDate) {
+	public static void removeByG_LtCD(long groupId, Date createDate) {
 		getPersistence().removeByG_LtCD(groupId, createDate);
 	}
 
@@ -601,7 +595,7 @@ public class TrashEntryUtil {
 	* @param createDate the create date
 	* @return the number of matching trash entries
 	*/
-	public static int countByG_LtCD(long groupId, java.util.Date createDate) {
+	public static int countByG_LtCD(long groupId, Date createDate) {
 		return getPersistence().countByG_LtCD(groupId, createDate);
 	}
 

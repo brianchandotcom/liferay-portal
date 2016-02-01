@@ -18,6 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -218,7 +223,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _exportImportConfiguration.getExpandoBridge();
 	}
 
@@ -283,7 +288,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _exportImportConfiguration.getPrimaryKeyObj();
 	}
 
@@ -298,7 +303,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public Map<java.lang.String, java.io.Serializable> getSettingsMap() {
+	public Map<java.lang.String, Serializable> getSettingsMap() {
 		return _exportImportConfiguration.getSettingsMap();
 	}
 
@@ -600,14 +605,12 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_exportImportConfiguration.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_exportImportConfiguration.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -677,7 +680,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_exportImportConfiguration.setPrimaryKeyObj(primaryKeyObj);
 	}
 

@@ -18,6 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -226,7 +231,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _kaleoTransition.getExpandoBridge();
 	}
 
@@ -301,7 +306,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _kaleoTransition.getPrimaryKeyObj();
 	}
 
@@ -474,14 +479,12 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_kaleoTransition.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_kaleoTransition.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -561,7 +564,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_kaleoTransition.setPrimaryKeyObj(primaryKeyObj);
 	}
 

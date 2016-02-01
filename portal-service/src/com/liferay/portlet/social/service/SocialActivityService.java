@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.social.model.SocialActivity;
+
+import java.util.List;
+
 /**
  * Provides the remote service interface for SocialActivity. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -67,9 +71,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end)
-		throws PortalException;
+	public List<SocialActivity> getActivities(java.lang.String className,
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
@@ -90,8 +93,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long classNameId, int start, int end) throws PortalException;
+	public List<SocialActivity> getActivities(long classNameId, int start,
+		int end) throws PortalException;
 
 	/**
 	* Returns a range of all the activities done on the asset identified by the
@@ -115,9 +118,9 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long mirrorActivityId, java.lang.String className, long classPK,
-		int start, int end) throws PortalException;
+	public List<SocialActivity> getActivities(long mirrorActivityId,
+		java.lang.String className, long classPK, int start, int end)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the activities done on the asset identified by the
@@ -141,9 +144,9 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end) throws PortalException;
+	public List<SocialActivity> getActivities(long mirrorActivityId,
+		long classNameId, long classPK, int start, int end)
+		throws PortalException;
 
 	/**
 	* Returns the number of activities done on assets identified by class name.
@@ -199,12 +202,12 @@ public interface SocialActivityService extends BaseService {
 	* @return Returns the activity
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivity getActivity(
-		long activityId) throws PortalException;
+	public SocialActivity getActivity(long activityId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivitySetActivities(
-		long activitySetId, int start, int end) throws PortalException;
+	public List<SocialActivity> getActivitySetActivities(long activitySetId,
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns a range of all the activities done in the group.
@@ -228,8 +231,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupActivities(
-		long groupId, int start, int end) throws PortalException;
+	public List<SocialActivity> getGroupActivities(long groupId, int start,
+		int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done in the group.
@@ -267,8 +270,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupUsersActivities(
-		long groupId, int start, int end) throws PortalException;
+	public List<SocialActivity> getGroupUsersActivities(long groupId,
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done by users that are members of the
@@ -291,8 +294,8 @@ public interface SocialActivityService extends BaseService {
 	* @return Returns the mirror activity
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(
-		long mirrorActivityId) throws PortalException;
+	public SocialActivity getMirrorActivity(long mirrorActivityId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -320,8 +323,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationActivities(
-		long organizationId, int start, int end) throws PortalException;
+	public List<SocialActivity> getOrganizationActivities(long organizationId,
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done in the organization. This method
@@ -352,7 +355,7 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationUsersActivities(
+	public List<SocialActivity> getOrganizationUsersActivities(
 		long organizationId, int start, int end) throws PortalException;
 
 	/**
@@ -384,8 +387,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
-		long userId, int start, int end) throws PortalException;
+	public List<SocialActivity> getRelationActivities(long userId, int start,
+		int end) throws PortalException;
 
 	/**
 	* Returns a range of all the activities done by users in a relationship of
@@ -408,8 +411,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
-		long userId, int type, int start, int end) throws PortalException;
+	public List<SocialActivity> getRelationActivities(long userId, int type,
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done by users in a relationship with the
@@ -451,8 +454,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserActivities(
-		long userId, int start, int end) throws PortalException;
+	public List<SocialActivity> getUserActivities(long userId, int start,
+		int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done by the user.
@@ -482,8 +485,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsActivities(
-		long userId, int start, int end) throws PortalException;
+	public List<SocialActivity> getUserGroupsActivities(long userId, int start,
+		int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done in user's groups. This method only
@@ -514,7 +517,7 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsAndOrganizationsActivities(
+	public List<SocialActivity> getUserGroupsAndOrganizationsActivities(
 		long userId, int start, int end) throws PortalException;
 
 	/**
@@ -546,8 +549,8 @@ public interface SocialActivityService extends BaseService {
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserOrganizationsActivities(
-		long userId, int start, int end) throws PortalException;
+	public List<SocialActivity> getUserOrganizationsActivities(long userId,
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns the number of activities done in the user's organizations. This

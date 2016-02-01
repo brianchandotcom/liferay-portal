@@ -16,15 +16,33 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.journal.model.JournalFeed;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for JournalFeed. Methods of this
@@ -48,23 +66,21 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFeedLocalServiceUtil} to access the journal feed local service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFeedLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.journal.model.JournalFeed addFeed(long userId,
-		long groupId, java.lang.String feedId, boolean autoFeedId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+	public JournalFeed addFeed(long userId, long groupId,
+		java.lang.String feedId, boolean autoFeedId, java.lang.String name,
+		java.lang.String description, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey,
 		java.lang.String ddmRendererTemplateKey, int delta,
 		java.lang.String orderByCol, java.lang.String orderByType,
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedFormat, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
-	public void addFeedResources(com.liferay.journal.model.JournalFeed feed,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+	public void addFeedResources(JournalFeed feed, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
 
-	public void addFeedResources(com.liferay.journal.model.JournalFeed feed,
+	public void addFeedResources(JournalFeed feed,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
@@ -81,9 +97,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param journalFeed the journal feed
 	* @return the journal feed that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalFeed addJournalFeed(
-		com.liferay.journal.model.JournalFeed journalFeed);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFeed addJournalFeed(JournalFeed journalFeed);
 
 	/**
 	* Creates a new journal feed with the primary key. Does not add the journal feed to the database.
@@ -91,11 +106,10 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param id the primary key for the new journal feed
 	* @return the new journal feed
 	*/
-	public com.liferay.journal.model.JournalFeed createJournalFeed(long id);
+	public JournalFeed createJournalFeed(long id);
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteFeed(com.liferay.journal.model.JournalFeed feed)
-		throws PortalException;
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteFeed(JournalFeed feed) throws PortalException;
 
 	public void deleteFeed(long feedId) throws PortalException;
 
@@ -109,9 +123,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the journal feed that was removed
 	* @throws PortalException if a journal feed with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalFeed deleteJournalFeed(long id)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFeed deleteJournalFeed(long id) throws PortalException;
 
 	/**
 	* Deletes the journal feed from the database. Also notifies the appropriate model listeners.
@@ -119,19 +132,17 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param journalFeed the journal feed
 	* @return the journal feed that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalFeed deleteJournalFeed(
-		com.liferay.journal.model.JournalFeed journalFeed);
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFeed deleteJournalFeed(JournalFeed journalFeed);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -139,8 +150,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -154,8 +164,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -171,10 +180,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -182,8 +189,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -192,16 +198,14 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed fetchFeed(long groupId,
-		java.lang.String feedId);
+	public JournalFeed fetchFeed(long groupId, java.lang.String feedId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed fetchJournalFeed(long id);
+	public JournalFeed fetchJournalFeed(long id);
 
 	/**
 	* Returns the journal feed matching the UUID and group.
@@ -211,40 +215,37 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed fetchJournalFeedByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed getFeed(long feedId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		java.lang.String feedId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> getFeeds();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> getFeeds(
+	public JournalFeed fetchJournalFeedByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> getFeeds(
-		long groupId, int start, int end);
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed getFeed(long feedId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFeed getFeed(long groupId, java.lang.String feedId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFeed> getFeeds();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFeed> getFeeds(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFeed> getFeeds(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFeedsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the journal feed with the primary key.
@@ -254,8 +255,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @throws PortalException if a journal feed with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed getJournalFeed(long id)
-		throws PortalException;
+	public JournalFeed getJournalFeed(long id) throws PortalException;
 
 	/**
 	* Returns the journal feed matching the UUID and group.
@@ -266,8 +266,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @throws PortalException if a matching journal feed could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed getJournalFeedByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public JournalFeed getJournalFeedByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal feeds.
@@ -281,8 +281,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the range of journal feeds
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> getJournalFeeds(
-		int start, int end);
+	public List<JournalFeed> getJournalFeeds(int start, int end);
 
 	/**
 	* Returns all the journal feeds matching the UUID and company.
@@ -292,7 +291,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the matching journal feeds, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> getJournalFeedsByUuidAndCompanyId(
+	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -306,9 +305,9 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @return the range of matching journal feeds, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> getJournalFeedsByUuidAndCompanyId(
+	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFeed> orderByComparator);
+		OrderByComparator<JournalFeed> orderByComparator);
 
 	/**
 	* Returns the number of journal feeds.
@@ -327,21 +326,19 @@ public interface JournalFeedLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> search(
-		long companyId, long groupId, java.lang.String feedId,
-		java.lang.String name, java.lang.String description,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFeed> obc);
+	public List<JournalFeed> search(long companyId, long groupId,
+		java.lang.String feedId, java.lang.String name,
+		java.lang.String description, boolean andOperator, int start, int end,
+		OrderByComparator<JournalFeed> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFeed> search(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFeed> obc);
+	public List<JournalFeed> search(long companyId, long groupId,
+		java.lang.String keywords, int start, int end,
+		OrderByComparator<JournalFeed> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long groupId,
@@ -352,17 +349,15 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	public int searchCount(long companyId, long groupId,
 		java.lang.String keywords);
 
-	public com.liferay.journal.model.JournalFeed updateFeed(long groupId,
-		java.lang.String feedId, java.lang.String name,
-		java.lang.String description, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
+	public JournalFeed updateFeed(long groupId, java.lang.String feedId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.lang.String ddmRendererTemplateKey, int delta,
 		java.lang.String orderByCol, java.lang.String orderByType,
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedFormat, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -370,7 +365,6 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	* @param journalFeed the journal feed
 	* @return the journal feed that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalFeed updateJournalFeed(
-		com.liferay.journal.model.JournalFeed journalFeed);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFeed updateJournalFeed(JournalFeed journalFeed);
 }

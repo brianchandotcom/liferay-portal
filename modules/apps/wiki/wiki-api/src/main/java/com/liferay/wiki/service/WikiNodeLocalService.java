@@ -16,15 +16,35 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import com.liferay.wiki.model.WikiNode;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for WikiNode. Methods of this
@@ -48,20 +68,17 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiNodeLocalServiceUtil} to access the wiki node local service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.wiki.model.WikiNode addDefaultNode(long userId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public WikiNode addDefaultNode(long userId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.wiki.model.WikiNode addNode(long userId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public WikiNode addNode(long userId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+	public void addNodeResources(WikiNode node, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
 
-	public void addNodeResources(com.liferay.wiki.model.WikiNode node,
+	public void addNodeResources(WikiNode node,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
@@ -78,9 +95,8 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param wikiNode the wiki node
 	* @return the wiki node that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.wiki.model.WikiNode addWikiNode(
-		com.liferay.wiki.model.WikiNode wikiNode);
+	@Indexable(type = IndexableType.REINDEX)
+	public WikiNode addWikiNode(WikiNode wikiNode);
 
 	/**
 	* Creates a new wiki node with the primary key. Does not add the wiki node to the database.
@@ -88,11 +104,10 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param nodeId the primary key for the new wiki node
 	* @return the new wiki node
 	*/
-	public com.liferay.wiki.model.WikiNode createWikiNode(long nodeId);
+	public WikiNode createWikiNode(long nodeId);
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteNode(com.liferay.wiki.model.WikiNode node)
-		throws PortalException;
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteNode(WikiNode node) throws PortalException;
 
 	public void deleteNode(long nodeId) throws PortalException;
 
@@ -102,8 +117,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -113,9 +127,8 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @return the wiki node that was removed
 	* @throws PortalException if a wiki node with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.wiki.model.WikiNode deleteWikiNode(long nodeId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public WikiNode deleteWikiNode(long nodeId) throws PortalException;
 
 	/**
 	* Deletes the wiki node from the database. Also notifies the appropriate model listeners.
@@ -123,11 +136,10 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param wikiNode the wiki node
 	* @return the wiki node that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.wiki.model.WikiNode deleteWikiNode(
-		com.liferay.wiki.model.WikiNode wikiNode);
+	@Indexable(type = IndexableType.DELETE)
+	public WikiNode deleteWikiNode(WikiNode wikiNode);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -135,8 +147,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -150,8 +161,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -167,10 +177,8 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -178,8 +186,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -188,20 +195,18 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode fetchNode(long groupId,
-		java.lang.String name);
+	public WikiNode fetchNode(long groupId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode fetchNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public WikiNode fetchNodeByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode fetchWikiNode(long nodeId);
+	public WikiNode fetchWikiNode(long nodeId);
 
 	/**
 	* Returns the wiki node matching the UUID and group.
@@ -211,19 +216,18 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode fetchWikiNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public WikiNode fetchWikiNodeByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
-		long companyId, int start, int end);
+	public List<WikiNode> getCompanyNodes(long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
-		long companyId, int status, int start, int end);
+	public List<WikiNode> getCompanyNodes(long companyId, int status,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyNodesCount(long companyId);
@@ -232,35 +236,33 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public int getCompanyNodesCount(long companyId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode getNode(long groupId,
-		java.lang.String nodeName) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode getNode(long nodeId)
+	public WikiNode getNode(long groupId, java.lang.String nodeName)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId) throws PortalException;
+	public WikiNode getNode(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int start, int end) throws PortalException;
+	public List<WikiNode> getNodes(long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int status) throws PortalException;
+	public List<WikiNode> getNodes(long groupId, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getNodes(
-		long groupId, int status, int start, int end) throws PortalException;
+	public List<WikiNode> getNodes(long groupId, int status)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiNode> getNodes(long groupId, int status, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNodesCount(long groupId);
@@ -277,8 +279,8 @@ public interface WikiNodeLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the wiki node with the primary key.
@@ -288,8 +290,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @throws PortalException if a wiki node with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode getWikiNode(long nodeId)
-		throws PortalException;
+	public WikiNode getWikiNode(long nodeId) throws PortalException;
 
 	/**
 	* Returns the wiki node matching the UUID and group.
@@ -300,8 +301,8 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @throws PortalException if a matching wiki node could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiNode getWikiNodeByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public WikiNode getWikiNodeByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the wiki nodes.
@@ -315,8 +316,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @return the range of wiki nodes
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodes(
-		int start, int end);
+	public List<WikiNode> getWikiNodes(int start, int end);
 
 	/**
 	* Returns all the wiki nodes matching the UUID and company.
@@ -326,7 +326,7 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @return the matching wiki nodes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+	public List<WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -340,9 +340,9 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @return the range of matching wiki nodes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+	public List<WikiNode> getWikiNodesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiNode> orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	* Returns the number of wiki nodes.
@@ -353,18 +353,18 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public int getWikiNodesCount();
 
 	public void importPages(long userId, long nodeId,
-		java.lang.String importer, java.io.InputStream[] inputStreams,
-		java.util.Map<java.lang.String, java.lang.String[]> options)
+		java.lang.String importer, InputStream[] inputStreams,
+		Map<java.lang.String, java.lang.String[]> options)
 		throws PortalException;
 
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		com.liferay.wiki.model.WikiNode node) throws PortalException;
+	public WikiNode moveNodeToTrash(long userId, WikiNode node)
+		throws PortalException;
 
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
-		long nodeId) throws PortalException;
+	public WikiNode moveNodeToTrash(long userId, long nodeId)
+		throws PortalException;
 
-	public void restoreNodeFromTrash(long userId,
-		com.liferay.wiki.model.WikiNode node) throws PortalException;
+	public void restoreNodeFromTrash(long userId, WikiNode node)
+		throws PortalException;
 
 	public void subscribeNode(long userId, long nodeId)
 		throws PortalException;
@@ -372,15 +372,12 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public void unsubscribeNode(long userId, long nodeId)
 		throws PortalException;
 
-	public com.liferay.wiki.model.WikiNode updateNode(long nodeId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public WikiNode updateNode(long nodeId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.wiki.model.WikiNode updateStatus(long userId,
-		com.liferay.wiki.model.WikiNode node, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public WikiNode updateStatus(long userId, WikiNode node, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -388,7 +385,6 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	* @param wikiNode the wiki node
 	* @return the wiki node that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.wiki.model.WikiNode updateWikiNode(
-		com.liferay.wiki.model.WikiNode wikiNode);
+	@Indexable(type = IndexableType.REINDEX)
+	public WikiNode updateWikiNode(WikiNode wikiNode);
 }

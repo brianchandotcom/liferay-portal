@@ -23,6 +23,11 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Team;
+
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Provides the remote service interface for Team. Methods of this
@@ -52,20 +57,18 @@ public interface TeamService extends BaseService {
 	String, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.Team addTeam(long groupId,
-		java.lang.String name, java.lang.String description)
-		throws PortalException;
+	public Team addTeam(long groupId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 
-	public com.liferay.portal.model.Team addTeam(long groupId,
-		java.lang.String name, java.lang.String description,
+	public Team addTeam(long groupId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteTeam(long teamId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
-		long groupId) throws PortalException;
+	public List<Team> getGroupTeams(long groupId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -75,38 +78,34 @@ public interface TeamService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Team getTeam(long groupId,
-		java.lang.String name) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Team getTeam(long teamId)
+	public Team getTeam(long groupId, java.lang.String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId) throws PortalException;
+	public Team getTeam(long teamId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, long groupId) throws PortalException;
+	public List<Team> getUserTeams(long userId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Team> getUserTeams(long userId, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserTeam(long userId, long teamId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Team> search(long groupId,
-		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> obc);
+	public List<Team> search(long groupId, java.lang.String name,
+		java.lang.String description,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, OrderByComparator<Team> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, java.lang.String name,
 		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+		LinkedHashMap<java.lang.String, java.lang.Object> params);
 
-	public com.liferay.portal.model.Team updateTeam(long teamId,
-		java.lang.String name, java.lang.String description)
-		throws PortalException;
+	public Team updateTeam(long teamId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 }

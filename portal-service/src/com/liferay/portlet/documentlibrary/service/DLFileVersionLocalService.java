@@ -16,14 +16,29 @@ package com.liferay.portlet.documentlibrary.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for DLFileVersion. Methods of this
@@ -54,9 +69,8 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param dlFileVersion the document library file version
 	* @return the document library file version that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion addDLFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileVersion addDLFileVersion(DLFileVersion dlFileVersion);
 
 	/**
 	* Creates a new document library file version with the primary key. Does not add the document library file version to the database.
@@ -64,8 +78,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param fileVersionId the primary key for the new document library file version
 	* @return the new document library file version
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion createDLFileVersion(
-		long fileVersionId);
+	public DLFileVersion createDLFileVersion(long fileVersionId);
 
 	/**
 	* Deletes the document library file version from the database. Also notifies the appropriate model listeners.
@@ -73,9 +86,8 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param dlFileVersion the document library file version
 	* @return the document library file version that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion deleteDLFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion);
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileVersion deleteDLFileVersion(DLFileVersion dlFileVersion);
 
 	/**
 	* Deletes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
@@ -84,19 +96,18 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @return the document library file version that was removed
 	* @throws PortalException if a document library file version with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion deleteDLFileVersion(
-		long fileVersionId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileVersion deleteDLFileVersion(long fileVersionId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -104,8 +115,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -119,8 +129,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -136,10 +145,8 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -147,8 +154,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -157,13 +163,11 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion fetchDLFileVersion(
-		long fileVersionId);
+	public DLFileVersion fetchDLFileVersion(long fileVersionId);
 
 	/**
 	* Returns the document library file version matching the UUID and group.
@@ -173,15 +177,15 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion fetchDLFileVersionByUuidAndGroupId(
+	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion fetchLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy);
+	public DLFileVersion fetchLatestFileVersion(long fileEntryId,
+		boolean excludeWorkingCopy);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the document library file version with the primary key.
@@ -191,8 +195,8 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @throws PortalException if a document library file version with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersion(
-		long fileVersionId) throws PortalException;
+	public DLFileVersion getDLFileVersion(long fileVersionId)
+		throws PortalException;
 
 	/**
 	* Returns the document library file version matching the UUID and group.
@@ -203,7 +207,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @throws PortalException if a matching document library file version could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersionByUuidAndGroupId(
+	public DLFileVersion getDLFileVersionByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -218,8 +222,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @return the range of document library file versions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getDLFileVersions(
-		int start, int end);
+	public List<DLFileVersion> getDLFileVersions(int start, int end);
 
 	/**
 	* Returns all the document library file versions matching the UUID and company.
@@ -229,7 +232,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @return the matching document library file versions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
+	public List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -243,9 +246,9 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @return the range of matching document library file versions, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
+	public List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileVersion> orderByComparator);
+		OrderByComparator<DLFileVersion> orderByComparator);
 
 	/**
 	* Returns the number of document library file versions.
@@ -256,38 +259,37 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	public int getDLFileVersionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileEntryId, java.lang.String version) throws PortalException;
+	public DLFileVersion getFileVersion(long fileEntryId,
+		java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileVersionId) throws PortalException;
+	public DLFileVersion getFileVersion(long fileVersionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public DLFileVersion getFileVersionByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersions(
-		long fileEntryId, int status);
+	public List<DLFileVersion> getFileVersions(long fileEntryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileVersionsCount(long fileEntryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy) throws PortalException;
+	public DLFileVersion getLatestFileVersion(long fileEntryId,
+		boolean excludeWorkingCopy) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long userId, long fileEntryId) throws PortalException;
+	public DLFileVersion getLatestFileVersion(long userId, long fileEntryId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -298,8 +300,8 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
 
@@ -312,7 +314,6 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	* @param dlFileVersion the document library file version
 	* @return the document library file version that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion updateDLFileVersion(
-		com.liferay.portlet.documentlibrary.model.DLFileVersion dlFileVersion);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileVersion updateDLFileVersion(DLFileVersion dlFileVersion);
 }

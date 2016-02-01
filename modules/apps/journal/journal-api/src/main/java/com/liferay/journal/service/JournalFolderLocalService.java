@@ -16,15 +16,36 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+
+import com.liferay.journal.exception.NoSuchFolderException;
+import com.liferay.journal.model.JournalFolder;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for JournalFolder. Methods of this
@@ -48,10 +69,9 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFolderLocalServiceUtil} to access the journal folder local service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFolderLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.journal.model.JournalFolder addFolder(long userId,
-		long groupId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public JournalFolder addFolder(long userId, long groupId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -60,9 +80,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param journalFolder the journal folder
 	* @return the journal folder that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalFolder addJournalFolder(
-		com.liferay.journal.model.JournalFolder journalFolder);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder addJournalFolder(JournalFolder journalFolder);
 
 	/**
 	* Creates a new journal folder with the primary key. Does not add the journal folder to the database.
@@ -70,27 +89,23 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param folderId the primary key for the new journal folder
 	* @return the new journal folder
 	*/
-	public com.liferay.journal.model.JournalFolder createJournalFolder(
-		long folderId);
+	public JournalFolder createJournalFolder(long folderId);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.journal.model.JournalFolder deleteFolder(
-		com.liferay.journal.model.JournalFolder folder)
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public JournalFolder deleteFolder(JournalFolder folder)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.journal.model.JournalFolder deleteFolder(
-		com.liferay.journal.model.JournalFolder folder,
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public JournalFolder deleteFolder(JournalFolder folder,
 		boolean includeTrashedEntries) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalFolder deleteFolder(long folderId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFolder deleteFolder(long folderId) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalFolder deleteFolder(long folderId,
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFolder deleteFolder(long folderId,
 		boolean includeTrashedEntries) throws PortalException;
 
 	public void deleteFolders(long groupId) throws PortalException;
@@ -102,9 +117,9 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @return the journal folder that was removed
 	* @throws PortalException if a journal folder with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalFolder deleteJournalFolder(
-		long folderId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFolder deleteJournalFolder(long folderId)
+		throws PortalException;
 
 	/**
 	* Deletes the journal folder from the database. Also notifies the appropriate model listeners.
@@ -112,19 +127,17 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param journalFolder the journal folder
 	* @return the journal folder that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalFolder deleteJournalFolder(
-		com.liferay.journal.model.JournalFolder journalFolder);
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFolder deleteJournalFolder(JournalFolder journalFolder);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -132,8 +145,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -147,8 +159,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -164,10 +175,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -175,8 +184,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -185,24 +193,21 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder fetchFolder(long folderId);
+	public JournalFolder fetchFolder(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder fetchFolder(long groupId,
+	public JournalFolder fetchFolder(long groupId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchFolder(long groupId, long parentFolderId,
 		java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder fetchFolder(long groupId,
-		long parentFolderId, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder fetchJournalFolder(
-		long folderId);
+	public JournalFolder fetchJournalFolder(long folderId);
 
 	/**
 	* Returns the journal folder matching the UUID and group.
@@ -212,69 +217,63 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
+	public JournalFolder fetchJournalFolderByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getCompanyFolders(
-		long companyId, int start, int end);
+	public List<JournalFolder> getCompanyFolders(long companyId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyFoldersCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
-		long[] groupIds, long folderId, int restrictionType)
-		throws PortalException;
+	public List<DDMStructure> getDDMStructures(long[] groupIds, long folderId,
+		int restrictionType) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder getFolder(long folderId)
-		throws PortalException;
+	public JournalFolder getFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
-		long groupId);
+	public List<JournalFolder> getFolders(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId);
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId, int start, int end);
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId, int status);
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId, int status, int start, int end);
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getFoldersAndArticles(
-		long groupId, long folderId);
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getFoldersAndArticles(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc);
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long folderId, int start, int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getFoldersAndArticles(
-		long groupId, long folderId, int status);
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long folderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getFoldersAndArticles(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc);
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long folderId, int status, int start, int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(long groupId, long folderId);
@@ -285,7 +284,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds, int status);
+		List<java.lang.Long> folderIds, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId);
@@ -294,11 +293,11 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public int getFoldersCount(long groupId, long parentFolderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getInheritedWorkflowFolderId(long folderId)
-		throws com.liferay.journal.exception.NoSuchFolderException;
+		throws NoSuchFolderException;
 
 	/**
 	* Returns the journal folder with the primary key.
@@ -308,8 +307,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @throws PortalException if a journal folder with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder getJournalFolder(
-		long folderId) throws PortalException;
+	public JournalFolder getJournalFolder(long folderId)
+		throws PortalException;
 
 	/**
 	* Returns the journal folder matching the UUID and group.
@@ -320,7 +319,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @throws PortalException if a matching journal folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder getJournalFolderByUuidAndGroupId(
+	public JournalFolder getJournalFolderByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -335,8 +334,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @return the range of journal folders
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getJournalFolders(
-		int start, int end);
+	public List<JournalFolder> getJournalFolders(int start, int end);
 
 	/**
 	* Returns all the journal folders matching the UUID and company.
@@ -346,7 +344,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @return the matching journal folders, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getJournalFoldersByUuidAndCompanyId(
+	public List<JournalFolder> getJournalFoldersByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -360,9 +358,9 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @return the range of matching journal folders, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getJournalFoldersByUuidAndCompanyId(
+	public List<JournalFolder> getJournalFoldersByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFolder> orderByComparator);
+		OrderByComparator<JournalFolder> orderByComparator);
 
 	/**
 	* Returns the number of journal folders.
@@ -373,7 +371,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public int getJournalFoldersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalFolder> getNoAssetFolders();
+	public List<JournalFolder> getNoAssetFolders();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -384,30 +382,27 @@ public interface JournalFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getOverridedDDMStructuresFolderId(long folderId)
-		throws com.liferay.journal.exception.NoSuchFolderException;
+		throws NoSuchFolderException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
-		long groupId, long folderId);
+	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+		long folderId);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalFolder moveFolder(long folderId,
-		long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder moveFolder(long folderId, long parentFolderId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public JournalFolder moveFolderFromTrash(long userId, long folderId,
+		long parentFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.journal.model.JournalFolder moveFolderFromTrash(
-		long userId, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public JournalFolder moveFolderToTrash(long userId, long folderId)
 		throws PortalException;
-
-	public com.liferay.journal.model.JournalFolder moveFolderToTrash(
-		long userId, long folderId) throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
 
@@ -424,31 +419,25 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public void unsubscribe(long userId, long groupId, long folderId)
 		throws PortalException;
 
-	public void updateAsset(long userId,
-		com.liferay.journal.model.JournalFolder folder,
+	public void updateAsset(long userId, JournalFolder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalFolder updateFolder(long userId,
-		long groupId, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, int restrictionType,
-		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder updateFolder(long userId, long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		int restrictionType, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalFolder updateFolder(long userId,
-		long groupId, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentFolder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder updateFolder(long userId, long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void updateFolderDDMStructures(
-		com.liferay.journal.model.JournalFolder folder,
+	public void updateFolderDDMStructures(JournalFolder folder,
 		long[] ddmStructureIdsArray) throws PortalException;
 
 	/**
@@ -457,13 +446,11 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param journalFolder the journal folder
 	* @return the journal folder that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalFolder updateJournalFolder(
-		com.liferay.journal.model.JournalFolder journalFolder);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder updateJournalFolder(JournalFolder journalFolder);
 
-	public com.liferay.journal.model.JournalFolder updateStatus(long userId,
-		com.liferay.journal.model.JournalFolder folder, int status)
-		throws PortalException;
+	public JournalFolder updateStatus(long userId, JournalFolder folder,
+		int status) throws PortalException;
 
 	public void validateFolderDDMStructures(long folderId, long parentFolderId)
 		throws PortalException;

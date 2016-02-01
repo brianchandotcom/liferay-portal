@@ -18,6 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -230,7 +235,7 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _kaleoDefinition.getExpandoBridge();
 	}
 
@@ -291,7 +296,7 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _kaleoDefinition.getPrimaryKeyObj();
 	}
 
@@ -537,14 +542,12 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_kaleoDefinition.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_kaleoDefinition.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -604,7 +607,7 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_kaleoDefinition.setPrimaryKeyObj(primaryKeyObj);
 	}
 

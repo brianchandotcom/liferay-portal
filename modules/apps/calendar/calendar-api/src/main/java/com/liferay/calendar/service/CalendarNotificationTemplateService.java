@@ -16,6 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.calendar.model.CalendarNotificationTemplate;
+import com.liferay.calendar.notification.NotificationTemplateType;
+import com.liferay.calendar.notification.NotificationType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,6 +28,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * Provides the remote service interface for CalendarNotificationTemplate. Methods of this
@@ -49,14 +54,12 @@ public interface CalendarNotificationTemplateService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarNotificationTemplateServiceUtil} to access the calendar notification template remote service. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarNotificationTemplateServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.calendar.model.CalendarNotificationTemplate addCalendarNotificationTemplate(
-		long calendarId,
-		com.liferay.calendar.notification.NotificationType notificationType,
+	public CalendarNotificationTemplate addCalendarNotificationTemplate(
+		long calendarId, NotificationType notificationType,
 		java.lang.String notificationTypeSettings,
-		com.liferay.calendar.notification.NotificationTemplateType notificationTemplateType,
+		NotificationTemplateType notificationTemplateType,
 		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -65,10 +68,9 @@ public interface CalendarNotificationTemplateService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.calendar.model.CalendarNotificationTemplate updateCalendarNotificationTemplate(
+	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
 		long calendarNotificationTemplateId,
 		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String body, ServiceContext serviceContext)
 		throws PortalException;
 }

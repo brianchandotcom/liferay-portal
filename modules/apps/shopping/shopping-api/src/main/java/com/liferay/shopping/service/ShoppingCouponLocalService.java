@@ -16,14 +16,28 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.shopping.model.ShoppingCoupon;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for ShoppingCoupon. Methods of this
@@ -47,15 +61,14 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingCouponLocalServiceUtil} to access the shopping coupon local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCouponLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.shopping.model.ShoppingCoupon addCoupon(long userId,
-		java.lang.String code, boolean autoCode, java.lang.String name,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, boolean neverExpire, boolean active,
-		java.lang.String limitCategories, java.lang.String limitSkus,
-		double minOrder, double discount, java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public ShoppingCoupon addCoupon(long userId, java.lang.String code,
+		boolean autoCode, java.lang.String name, java.lang.String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		boolean neverExpire, boolean active, java.lang.String limitCategories,
+		java.lang.String limitSkus, double minOrder, double discount,
+		java.lang.String discountType, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -64,9 +77,8 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param shoppingCoupon the shopping coupon
 	* @return the shopping coupon that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingCoupon addShoppingCoupon(
-		com.liferay.shopping.model.ShoppingCoupon shoppingCoupon);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingCoupon addShoppingCoupon(ShoppingCoupon shoppingCoupon);
 
 	/**
 	* Creates a new shopping coupon with the primary key. Does not add the shopping coupon to the database.
@@ -74,10 +86,9 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param couponId the primary key for the new shopping coupon
 	* @return the new shopping coupon
 	*/
-	public com.liferay.shopping.model.ShoppingCoupon createShoppingCoupon(
-		long couponId);
+	public ShoppingCoupon createShoppingCoupon(long couponId);
 
-	public void deleteCoupon(com.liferay.shopping.model.ShoppingCoupon coupon);
+	public void deleteCoupon(ShoppingCoupon coupon);
 
 	public void deleteCoupon(long couponId) throws PortalException;
 
@@ -87,8 +98,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -98,9 +108,9 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @return the shopping coupon that was removed
 	* @throws PortalException if a shopping coupon with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingCoupon deleteShoppingCoupon(
-		long couponId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCoupon deleteShoppingCoupon(long couponId)
+		throws PortalException;
 
 	/**
 	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
@@ -108,11 +118,10 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param shoppingCoupon the shopping coupon
 	* @return the shopping coupon that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingCoupon deleteShoppingCoupon(
-		com.liferay.shopping.model.ShoppingCoupon shoppingCoupon);
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCoupon deleteShoppingCoupon(ShoppingCoupon shoppingCoupon);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -120,8 +129,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -135,8 +143,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -152,10 +159,8 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -163,8 +168,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -173,27 +177,24 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCoupon fetchShoppingCoupon(
-		long couponId);
+	public ShoppingCoupon fetchShoppingCoupon(long couponId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCoupon getCoupon(
-		java.lang.String code) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long couponId)
+	public ShoppingCoupon getCoupon(java.lang.String code)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public ShoppingCoupon getCoupon(long couponId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -204,8 +205,8 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the shopping coupon with the primary key.
@@ -215,8 +216,8 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @throws PortalException if a shopping coupon with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCoupon getShoppingCoupon(
-		long couponId) throws PortalException;
+	public ShoppingCoupon getShoppingCoupon(long couponId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the shopping coupons.
@@ -230,8 +231,7 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @return the range of shopping coupons
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingCoupon> getShoppingCoupons(
-		int start, int end);
+	public List<ShoppingCoupon> getShoppingCoupons(int start, int end);
 
 	/**
 	* Returns the number of shopping coupons.
@@ -242,23 +242,22 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	public int getShoppingCouponsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingCoupon> search(
-		long groupId, long companyId, java.lang.String code, boolean active,
-		java.lang.String discountType, boolean andOperator, int start, int end);
+	public List<ShoppingCoupon> search(long groupId, long companyId,
+		java.lang.String code, boolean active, java.lang.String discountType,
+		boolean andOperator, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, long companyId, java.lang.String code,
 		boolean active, java.lang.String discountType, boolean andOperator);
 
-	public com.liferay.shopping.model.ShoppingCoupon updateCoupon(long userId,
-		long couponId, java.lang.String name, java.lang.String description,
+	public ShoppingCoupon updateCoupon(long userId, long couponId,
+		java.lang.String name, java.lang.String description,
 		int startDateMonth, int startDateDay, int startDateYear,
 		int startDateHour, int startDateMinute, int endDateMonth,
 		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
 		boolean neverExpire, boolean active, java.lang.String limitCategories,
 		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String discountType, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -267,7 +266,6 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	* @param shoppingCoupon the shopping coupon
 	* @return the shopping coupon that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingCoupon updateShoppingCoupon(
-		com.liferay.shopping.model.ShoppingCoupon shoppingCoupon);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingCoupon updateShoppingCoupon(ShoppingCoupon shoppingCoupon);
 }

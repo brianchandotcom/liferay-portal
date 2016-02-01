@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.VirtualHost;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for VirtualHost. Methods of this
@@ -52,9 +64,8 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param virtualHost the virtual host
 	* @return the virtual host that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.VirtualHost addVirtualHost(
-		com.liferay.portal.model.VirtualHost virtualHost);
+	@Indexable(type = IndexableType.REINDEX)
+	public VirtualHost addVirtualHost(VirtualHost virtualHost);
 
 	/**
 	* Creates a new virtual host with the primary key. Does not add the virtual host to the database.
@@ -62,15 +73,13 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param virtualHostId the primary key for the new virtual host
 	* @return the new virtual host
 	*/
-	public com.liferay.portal.model.VirtualHost createVirtualHost(
-		long virtualHostId);
+	public VirtualHost createVirtualHost(long virtualHostId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -79,9 +88,8 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param virtualHost the virtual host
 	* @return the virtual host that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.VirtualHost deleteVirtualHost(
-		com.liferay.portal.model.VirtualHost virtualHost);
+	@Indexable(type = IndexableType.DELETE)
+	public VirtualHost deleteVirtualHost(VirtualHost virtualHost);
 
 	/**
 	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
@@ -90,11 +98,11 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @return the virtual host that was removed
 	* @throws PortalException if a virtual host with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.VirtualHost deleteVirtualHost(
-		long virtualHostId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public VirtualHost deleteVirtualHost(long virtualHostId)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -102,8 +110,7 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -117,8 +124,7 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -134,10 +140,8 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -145,8 +149,7 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -155,27 +158,23 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long companyId, long layoutSetId);
+	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname);
+	public VirtualHost fetchVirtualHost(java.lang.String hostname);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long virtualHostId);
+	public VirtualHost fetchVirtualHost(long virtualHostId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -186,16 +185,16 @@ public interface VirtualHostLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.VirtualHost getVirtualHost(long companyId,
-		long layoutSetId) throws PortalException;
+	public VirtualHost getVirtualHost(long companyId, long layoutSetId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.VirtualHost getVirtualHost(
-		java.lang.String hostname) throws PortalException;
+	public VirtualHost getVirtualHost(java.lang.String hostname)
+		throws PortalException;
 
 	/**
 	* Returns the virtual host with the primary key.
@@ -205,8 +204,8 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @throws PortalException if a virtual host with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.VirtualHost getVirtualHost(
-		long virtualHostId) throws PortalException;
+	public VirtualHost getVirtualHost(long virtualHostId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the virtual hosts.
@@ -220,8 +219,7 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @return the range of virtual hosts
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.VirtualHost> getVirtualHosts(
-		int start, int end);
+	public List<VirtualHost> getVirtualHosts(int start, int end);
 
 	/**
 	* Returns the number of virtual hosts.
@@ -231,8 +229,8 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVirtualHostsCount();
 
-	public com.liferay.portal.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname);
+	public VirtualHost updateVirtualHost(long companyId, long layoutSetId,
+		java.lang.String hostname);
 
 	/**
 	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -240,7 +238,6 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	* @param virtualHost the virtual host
 	* @return the virtual host that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.VirtualHost updateVirtualHost(
-		com.liferay.portal.model.VirtualHost virtualHost);
+	@Indexable(type = IndexableType.REINDEX)
+	public VirtualHost updateVirtualHost(VirtualHost virtualHost);
 }

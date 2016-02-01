@@ -16,6 +16,8 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.journal.model.JournalFeed;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * Provides the remote service interface for JournalFeed. Methods of this
@@ -50,8 +53,8 @@ public interface JournalFeedService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFeedServiceUtil} to access the journal feed remote service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFeedServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.journal.model.JournalFeed addFeed(long groupId,
-		java.lang.String feedId, boolean autoFeedId, java.lang.String name,
+	public JournalFeed addFeed(long groupId, java.lang.String feedId,
+		boolean autoFeedId, java.lang.String name,
 		java.lang.String description, java.lang.String ddmStructureKey,
 		java.lang.String ddmTemplateKey,
 		java.lang.String ddmRendererTemplateKey, int delta,
@@ -59,8 +62,7 @@ public interface JournalFeedService extends BaseService {
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteFeed(long feedId) throws PortalException;
 
@@ -68,12 +70,11 @@ public interface JournalFeedService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed getFeed(long feedId)
-		throws PortalException;
+	public JournalFeed getFeed(long feedId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		java.lang.String feedId) throws PortalException;
+	public JournalFeed getFeed(long groupId, java.lang.String feedId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -82,15 +83,13 @@ public interface JournalFeedService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.journal.model.JournalFeed updateFeed(long groupId,
-		java.lang.String feedId, java.lang.String name,
-		java.lang.String description, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey,
+	public JournalFeed updateFeed(long groupId, java.lang.String feedId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.lang.String ddmRendererTemplateKey, int delta,
 		java.lang.String orderByCol, java.lang.String orderByType,
 		java.lang.String targetLayoutFriendlyUrl,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 }

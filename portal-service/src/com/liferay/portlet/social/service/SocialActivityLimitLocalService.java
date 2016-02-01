@@ -16,14 +16,27 @@ package com.liferay.portlet.social.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.social.model.SocialActivityLimit;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for SocialActivityLimit. Methods of this
@@ -48,9 +61,9 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityLimitLocalServiceUtil} to access the social activity limit local service. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public com.liferay.portlet.social.model.SocialActivityLimit addActivityLimit(
-		long userId, long groupId, long classNameId, long classPK,
-		int activityType, java.lang.String activityCounterName, int limitPeriod)
+	public SocialActivityLimit addActivityLimit(long userId, long groupId,
+		long classNameId, long classPK, int activityType,
+		java.lang.String activityCounterName, int limitPeriod)
 		throws PortalException;
 
 	/**
@@ -59,9 +72,9 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param socialActivityLimit the social activity limit
 	* @return the social activity limit that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivityLimit addSocialActivityLimit(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivityLimit addSocialActivityLimit(
+		SocialActivityLimit socialActivityLimit);
 
 	/**
 	* Creates a new social activity limit with the primary key. Does not add the social activity limit to the database.
@@ -69,15 +82,13 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param activityLimitId the primary key for the new social activity limit
 	* @return the new social activity limit
 	*/
-	public com.liferay.portlet.social.model.SocialActivityLimit createSocialActivityLimit(
-		long activityLimitId);
+	public SocialActivityLimit createSocialActivityLimit(long activityLimitId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -87,9 +98,9 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @return the social activity limit that was removed
 	* @throws PortalException if a social activity limit with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivityLimit deleteSocialActivityLimit(
-		long activityLimitId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivityLimit deleteSocialActivityLimit(long activityLimitId)
+		throws PortalException;
 
 	/**
 	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
@@ -97,11 +108,11 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param socialActivityLimit the social activity limit
 	* @return the social activity limit that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivityLimit deleteSocialActivityLimit(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit);
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivityLimit deleteSocialActivityLimit(
+		SocialActivityLimit socialActivityLimit);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -109,8 +120,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -124,8 +134,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -141,10 +150,8 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -152,8 +159,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -162,24 +168,22 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivityLimit fetchActivityLimit(
-		long groupId, long userId, long classNameId, long classPK,
-		int activityType, java.lang.String activityCounterName);
+	public SocialActivityLimit fetchActivityLimit(long groupId, long userId,
+		long classNameId, long classPK, int activityType,
+		java.lang.String activityCounterName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivityLimit fetchSocialActivityLimit(
-		long activityLimitId);
+	public SocialActivityLimit fetchSocialActivityLimit(long activityLimitId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -190,8 +194,8 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the social activity limit with the primary key.
@@ -201,8 +205,8 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @throws PortalException if a social activity limit with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivityLimit getSocialActivityLimit(
-		long activityLimitId) throws PortalException;
+	public SocialActivityLimit getSocialActivityLimit(long activityLimitId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the social activity limits.
@@ -216,8 +220,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @return the range of social activity limits
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityLimit> getSocialActivityLimits(
-		int start, int end);
+	public List<SocialActivityLimit> getSocialActivityLimits(int start, int end);
 
 	/**
 	* Returns the number of social activity limits.
@@ -233,7 +236,7 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 	* @param socialActivityLimit the social activity limit
 	* @return the social activity limit that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivityLimit updateSocialActivityLimit(
-		com.liferay.portlet.social.model.SocialActivityLimit socialActivityLimit);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivityLimit updateSocialActivityLimit(
+		SocialActivityLimit socialActivityLimit);
 }

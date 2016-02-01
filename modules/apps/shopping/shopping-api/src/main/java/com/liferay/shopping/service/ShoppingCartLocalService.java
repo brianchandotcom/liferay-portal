@@ -16,14 +16,29 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.shopping.model.ShoppingCart;
+import com.liferay.shopping.model.ShoppingCartItem;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for ShoppingCart. Methods of this
@@ -54,9 +69,8 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param shoppingCart the shopping cart
 	* @return the shopping cart that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingCart addShoppingCart(
-		com.liferay.shopping.model.ShoppingCart shoppingCart);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingCart addShoppingCart(ShoppingCart shoppingCart);
 
 	/**
 	* Creates a new shopping cart with the primary key. Does not add the shopping cart to the database.
@@ -64,8 +78,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param cartId the primary key for the new shopping cart
 	* @return the new shopping cart
 	*/
-	public com.liferay.shopping.model.ShoppingCart createShoppingCart(
-		long cartId);
+	public ShoppingCart createShoppingCart(long cartId);
 
 	public void deleteGroupCarts(long groupId);
 
@@ -73,8 +86,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -84,9 +96,9 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @return the shopping cart that was removed
 	* @throws PortalException if a shopping cart with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingCart deleteShoppingCart(
-		long cartId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCart deleteShoppingCart(long cartId)
+		throws PortalException;
 
 	/**
 	* Deletes the shopping cart from the database. Also notifies the appropriate model listeners.
@@ -94,13 +106,12 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param shoppingCart the shopping cart
 	* @return the shopping cart that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingCart deleteShoppingCart(
-		com.liferay.shopping.model.ShoppingCart shoppingCart);
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCart deleteShoppingCart(ShoppingCart shoppingCart);
 
 	public void deleteUserCarts(long userId);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -108,8 +119,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -123,8 +133,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -140,10 +149,8 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -151,8 +158,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -161,27 +167,25 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCart fetchShoppingCart(
-		long cartId);
+	public ShoppingCart fetchShoppingCart(long cartId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCart getCart(long userId,
-		long groupId) throws PortalException;
+	public ShoppingCart getCart(long userId, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
-		long groupId, java.lang.String itemIds);
+	public Map<ShoppingCartItem, java.lang.Integer> getItems(long groupId,
+		java.lang.String itemIds);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -192,8 +196,8 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the shopping cart with the primary key.
@@ -203,8 +207,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @throws PortalException if a shopping cart with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCart getShoppingCart(long cartId)
-		throws PortalException;
+	public ShoppingCart getShoppingCart(long cartId) throws PortalException;
 
 	/**
 	* Returns a range of all the shopping carts.
@@ -218,8 +221,7 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @return the range of shopping carts
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingCart> getShoppingCarts(
-		int start, int end);
+	public List<ShoppingCart> getShoppingCarts(int start, int end);
 
 	/**
 	* Returns the number of shopping carts.
@@ -229,8 +231,8 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getShoppingCartsCount();
 
-	public com.liferay.shopping.model.ShoppingCart updateCart(long userId,
-		long groupId, java.lang.String itemIds, java.lang.String couponCodes,
+	public ShoppingCart updateCart(long userId, long groupId,
+		java.lang.String itemIds, java.lang.String couponCodes,
 		int altShipping, boolean insure) throws PortalException;
 
 	/**
@@ -239,7 +241,6 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	* @param shoppingCart the shopping cart
 	* @return the shopping cart that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingCart updateShoppingCart(
-		com.liferay.shopping.model.ShoppingCart shoppingCart);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart);
 }

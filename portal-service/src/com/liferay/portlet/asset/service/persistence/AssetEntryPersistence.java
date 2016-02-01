@@ -20,6 +20,8 @@ import com.liferay.portal.service.persistence.BasePersistence;
 
 import com.liferay.portlet.asset.model.AssetEntry;
 
+import java.util.Date;
+
 /**
  * The persistence interface for the asset entry service.
  *
@@ -441,8 +443,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param publishDate the publish date
 	* @return the matching asset entries
 	*/
-	public java.util.List<AssetEntry> findByPublishDate(
-		java.util.Date publishDate);
+	public java.util.List<AssetEntry> findByPublishDate(Date publishDate);
 
 	/**
 	* Returns a range of all the asset entries where publishDate = &#63;.
@@ -456,8 +457,8 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param end the upper bound of the range of asset entries (not inclusive)
 	* @return the range of matching asset entries
 	*/
-	public java.util.List<AssetEntry> findByPublishDate(
-		java.util.Date publishDate, int start, int end);
+	public java.util.List<AssetEntry> findByPublishDate(Date publishDate,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset entries where publishDate = &#63;.
@@ -472,8 +473,8 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset entries
 	*/
-	public java.util.List<AssetEntry> findByPublishDate(
-		java.util.Date publishDate, int start, int end,
+	public java.util.List<AssetEntry> findByPublishDate(Date publishDate,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
 
 	/**
@@ -490,8 +491,8 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching asset entries
 	*/
-	public java.util.List<AssetEntry> findByPublishDate(
-		java.util.Date publishDate, int start, int end,
+	public java.util.List<AssetEntry> findByPublishDate(Date publishDate,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -503,7 +504,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the first matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
-	public AssetEntry findByPublishDate_First(java.util.Date publishDate,
+	public AssetEntry findByPublishDate_First(Date publishDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.exception.NoSuchEntryException;
 
@@ -514,7 +515,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public AssetEntry fetchByPublishDate_First(java.util.Date publishDate,
+	public AssetEntry fetchByPublishDate_First(Date publishDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
 
 	/**
@@ -525,7 +526,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the last matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
-	public AssetEntry findByPublishDate_Last(java.util.Date publishDate,
+	public AssetEntry findByPublishDate_Last(Date publishDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.exception.NoSuchEntryException;
 
@@ -536,7 +537,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public AssetEntry fetchByPublishDate_Last(java.util.Date publishDate,
+	public AssetEntry fetchByPublishDate_Last(Date publishDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
 
 	/**
@@ -549,7 +550,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @throws NoSuchEntryException if a asset entry with the primary key could not be found
 	*/
 	public AssetEntry[] findByPublishDate_PrevAndNext(long entryId,
-		java.util.Date publishDate,
+		Date publishDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.exception.NoSuchEntryException;
 
@@ -558,7 +559,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*
 	* @param publishDate the publish date
 	*/
-	public void removeByPublishDate(java.util.Date publishDate);
+	public void removeByPublishDate(Date publishDate);
 
 	/**
 	* Returns the number of asset entries where publishDate = &#63;.
@@ -566,7 +567,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param publishDate the publish date
 	* @return the number of matching asset entries
 	*/
-	public int countByPublishDate(java.util.Date publishDate);
+	public int countByPublishDate(Date publishDate);
 
 	/**
 	* Returns all the asset entries where expirationDate = &#63;.
@@ -574,8 +575,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param expirationDate the expiration date
 	* @return the matching asset entries
 	*/
-	public java.util.List<AssetEntry> findByExpirationDate(
-		java.util.Date expirationDate);
+	public java.util.List<AssetEntry> findByExpirationDate(Date expirationDate);
 
 	/**
 	* Returns a range of all the asset entries where expirationDate = &#63;.
@@ -590,7 +590,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the range of matching asset entries
 	*/
 	public java.util.List<AssetEntry> findByExpirationDate(
-		java.util.Date expirationDate, int start, int end);
+		Date expirationDate, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset entries where expirationDate = &#63;.
@@ -606,7 +606,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the ordered range of matching asset entries
 	*/
 	public java.util.List<AssetEntry> findByExpirationDate(
-		java.util.Date expirationDate, int start, int end,
+		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
 
 	/**
@@ -624,7 +624,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the ordered range of matching asset entries
 	*/
 	public java.util.List<AssetEntry> findByExpirationDate(
-		java.util.Date expirationDate, int start, int end,
+		Date expirationDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -636,8 +636,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the first matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
-	public AssetEntry findByExpirationDate_First(
-		java.util.Date expirationDate,
+	public AssetEntry findByExpirationDate_First(Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.exception.NoSuchEntryException;
 
@@ -648,8 +647,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public AssetEntry fetchByExpirationDate_First(
-		java.util.Date expirationDate,
+	public AssetEntry fetchByExpirationDate_First(Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
 
 	/**
@@ -660,7 +658,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @return the last matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
-	public AssetEntry findByExpirationDate_Last(java.util.Date expirationDate,
+	public AssetEntry findByExpirationDate_Last(Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.exception.NoSuchEntryException;
 
@@ -671,8 +669,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
-	public AssetEntry fetchByExpirationDate_Last(
-		java.util.Date expirationDate,
+	public AssetEntry fetchByExpirationDate_Last(Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator);
 
 	/**
@@ -685,7 +682,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @throws NoSuchEntryException if a asset entry with the primary key could not be found
 	*/
 	public AssetEntry[] findByExpirationDate_PrevAndNext(long entryId,
-		java.util.Date expirationDate,
+		Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntry> orderByComparator)
 		throws com.liferay.portlet.asset.exception.NoSuchEntryException;
 
@@ -694,7 +691,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	*
 	* @param expirationDate the expiration date
 	*/
-	public void removeByExpirationDate(java.util.Date expirationDate);
+	public void removeByExpirationDate(Date expirationDate);
 
 	/**
 	* Returns the number of asset entries where expirationDate = &#63;.
@@ -702,7 +699,7 @@ public interface AssetEntryPersistence extends BasePersistence<AssetEntry> {
 	* @param expirationDate the expiration date
 	* @return the number of matching asset entries
 	*/
-	public int countByExpirationDate(java.util.Date expirationDate);
+	public int countByExpirationDate(Date expirationDate);
 
 	/**
 	* Returns all the asset entries where layoutUuid = &#63;.

@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.ListType;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for ListType. Methods of this
@@ -47,12 +50,10 @@ public interface ListTypeService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ListTypeServiceUtil} to access the list type remote service. Add custom service methods to {@link com.liferay.portal.service.impl.ListTypeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ListType getListType(long listTypeId)
-		throws PortalException;
+	public ListType getListType(long listTypeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ListType> getListTypes(
-		java.lang.String type);
+	public List<ListType> getListTypes(java.lang.String type);
 
 	/**
 	* Returns the OSGi service identifier.

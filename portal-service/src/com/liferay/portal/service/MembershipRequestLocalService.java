@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.MembershipRequest;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for MembershipRequest. Methods of this
@@ -52,12 +64,12 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param membershipRequest the membership request
 	* @return the membership request that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest);
+	@Indexable(type = IndexableType.REINDEX)
+	public MembershipRequest addMembershipRequest(
+		MembershipRequest membershipRequest);
 
-	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		long userId, long groupId, java.lang.String comments,
+	public MembershipRequest addMembershipRequest(long userId, long groupId,
+		java.lang.String comments,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -67,8 +79,7 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param membershipRequestId the primary key for the new membership request
 	* @return the new membership request
 	*/
-	public com.liferay.portal.model.MembershipRequest createMembershipRequest(
-		long membershipRequestId);
+	public MembershipRequest createMembershipRequest(long membershipRequestId);
 
 	/**
 	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
@@ -76,9 +87,9 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param membershipRequest the membership request
 	* @return the membership request that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest);
+	@Indexable(type = IndexableType.DELETE)
+	public MembershipRequest deleteMembershipRequest(
+		MembershipRequest membershipRequest);
 
 	/**
 	* Deletes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,9 +98,9 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @return the membership request that was removed
 	* @throws PortalException if a membership request with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
-		long membershipRequestId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public MembershipRequest deleteMembershipRequest(long membershipRequestId)
+		throws PortalException;
 
 	public void deleteMembershipRequests(long groupId);
 
@@ -101,11 +112,10 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -113,8 +123,7 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -128,8 +137,7 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -145,10 +153,8 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -156,8 +162,7 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -166,19 +171,17 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.MembershipRequest fetchMembershipRequest(
-		long membershipRequestId);
+	public MembershipRequest fetchMembershipRequest(long membershipRequestId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the membership request with the primary key.
@@ -188,8 +191,8 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @throws PortalException if a membership request with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.MembershipRequest getMembershipRequest(
-		long membershipRequestId) throws PortalException;
+	public MembershipRequest getMembershipRequest(long membershipRequestId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the membership requests.
@@ -203,12 +206,11 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @return the range of membership requests
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
-		int start, int end);
+	public List<MembershipRequest> getMembershipRequests(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
-		long userId, long groupId, long statusId);
+	public List<MembershipRequest> getMembershipRequests(long userId,
+		long groupId, long statusId);
 
 	/**
 	* Returns the number of membership requests.
@@ -227,15 +229,15 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasMembershipRequest(long userId, long groupId, long statusId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.MembershipRequest> search(
-		long groupId, int status, int start, int end);
+	public List<MembershipRequest> search(long groupId, int status, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, int status);
@@ -246,9 +248,9 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	* @param membershipRequest the membership request
 	* @return the membership request that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.MembershipRequest updateMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest);
+	@Indexable(type = IndexableType.REINDEX)
+	public MembershipRequest updateMembershipRequest(
+		MembershipRequest membershipRequest);
 
 	public void updateStatus(long replierUserId, long membershipRequestId,
 		java.lang.String replyComments, long statusId, boolean addUserToGroup,

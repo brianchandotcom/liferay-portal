@@ -18,10 +18,24 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for DLAppHelper. Methods of this
@@ -44,50 +58,38 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLAppHelperLocalServiceUtil} to access the d l app helper local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addFolder(long userId,
-		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public void addFolder(long userId, Folder folder,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void cancelCheckOut(long userId, FileEntry fileEntry,
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
+		FileVersion draftFileVersion, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void cancelCheckOut(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
-		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public void checkAssetEntry(long userId, FileEntry fileEntry,
+		FileVersion fileVersion) throws PortalException;
 
-	public void checkAssetEntry(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
-		throws PortalException;
+	public void deleteFileEntry(FileEntry fileEntry) throws PortalException;
 
-	public void deleteFileEntry(
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
-		throws PortalException;
-
-	public void deleteFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder)
-		throws PortalException;
+	public void deleteFolder(Folder folder) throws PortalException;
 
 	public void deleteRepositoryFileEntries(long repositoryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getFileAsStream(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+	public void getFileAsStream(long userId, FileEntry fileEntry,
 		boolean incrementCounter);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
-		long groupId, long folderId, boolean active, int status);
+	public List<DLFileShortcut> getFileShortcuts(long groupId, long folderId,
+		boolean active, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries();
+	public List<FileEntry> getNoAssetFileEntries();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -102,18 +104,14 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	*/
 	@java.lang.Deprecated
 	public void moveDependentsToTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId) throws PortalException;
-
-	public void moveDependentsToTrash(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		List<java.lang.Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public void moveDependentsToTrash(DLFolder dlFolder)
+		throws PortalException;
+
+	public FileEntry moveFileEntryFromTrash(long userId, FileEntry fileEntry,
+		long newFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -123,17 +121,12 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	* @param fileEntry the file entry to be moved
 	* @return the moved file entry
 	*/
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut,
-		long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public FileShortcut moveFileShortcutFromTrash(long userId,
+		FileShortcut fileShortcut, long newFolderId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Moves the file shortcut to the recycle bin.
@@ -142,15 +135,11 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	* @param fileShortcut the file shortcut to be moved
 	* @return the moved file shortcut
 	*/
-	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
-		throws PortalException;
+	public FileShortcut moveFileShortcutToTrash(long userId,
+		FileShortcut fileShortcut) throws PortalException;
 
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
-		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
-		long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public Folder moveFolderFromTrash(long userId, Folder folder,
+		long parentFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -160,8 +149,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	* @param folder the folder to be moved
 	* @return the moved folder
 	*/
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
+	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException;
 
 	/**
@@ -170,7 +158,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	*/
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
+		List<java.lang.Object> dlFileEntriesAndDLFolders)
 		throws PortalException;
 
 	/**
@@ -179,64 +167,47 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	*/
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId) throws PortalException;
-
-	public void restoreDependentsFromTrash(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		List<java.lang.Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws PortalException;
 
-	public void restoreFileEntryFromTrash(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+	public void restoreDependentsFromTrash(DLFolder dlFolder)
+		throws PortalException;
+
+	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException;
 
 	public void restoreFileShortcutFromTrash(long userId,
-		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
+		FileShortcut fileShortcut) throws PortalException;
+
+	public void restoreFolderFromTrash(long userId, Folder folder)
 		throws PortalException;
 
-	public void restoreFolderFromTrash(long userId,
-		com.liferay.portal.kernel.repository.model.Folder folder)
+	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
+		FileVersion fileVersion, long[] assetCategoryIds,
+		java.lang.String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException;
 
-	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
+		FileVersion fileVersion, long assetClassPk) throws PortalException;
+
+	public AssetEntry updateAsset(long userId, Folder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds) throws PortalException;
 
-	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+	public void updateFileEntry(long userId, FileEntry fileEntry,
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
 		long assetClassPk) throws PortalException;
 
-	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
-		com.liferay.portal.kernel.repository.model.Folder folder,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds) throws PortalException;
+	public void updateFileEntry(long userId, FileEntry fileEntry,
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void updateFileEntry(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
-		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		long assetClassPk) throws PortalException;
+	public void updateFolder(long userId, Folder folder,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void updateFileEntry(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
-		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateFolder(long userId,
-		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateStatus(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion latestFileVersion,
-		int oldStatus, int newStatus,
-		com.liferay.portal.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+	public void updateStatus(long userId, FileEntry fileEntry,
+		FileVersion latestFileVersion, int oldStatus, int newStatus,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
 }

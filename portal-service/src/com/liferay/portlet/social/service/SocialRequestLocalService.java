@@ -16,14 +16,28 @@ package com.liferay.portlet.social.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import com.liferay.portlet.social.model.SocialRequest;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for SocialRequest. Methods of this
@@ -68,9 +82,9 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param receiverUserId the primary key of the user receiving the request
 	* @return the social request
 	*/
-	public com.liferay.portlet.social.model.SocialRequest addRequest(
-		long userId, long groupId, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public SocialRequest addRequest(long userId, long groupId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws PortalException;
 
 	/**
@@ -79,9 +93,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param socialRequest the social request
 	* @return the social request that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialRequest addSocialRequest(
-		com.liferay.portlet.social.model.SocialRequest socialRequest);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialRequest addSocialRequest(SocialRequest socialRequest);
 
 	/**
 	* Creates a new social request with the primary key. Does not add the social request to the database.
@@ -89,15 +102,13 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param requestId the primary key for the new social request
 	* @return the new social request
 	*/
-	public com.liferay.portlet.social.model.SocialRequest createSocialRequest(
-		long requestId);
+	public SocialRequest createSocialRequest(long requestId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -112,8 +123,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*
 	* @param request the social request to be removed
 	*/
-	public void deleteRequest(
-		com.liferay.portlet.social.model.SocialRequest request);
+	public void deleteRequest(SocialRequest request);
 
 	/**
 	* Removes the social request identified by its primary key from the
@@ -132,9 +142,9 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the social request that was removed
 	* @throws PortalException if a social request with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialRequest deleteSocialRequest(
-		long requestId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRequest deleteSocialRequest(long requestId)
+		throws PortalException;
 
 	/**
 	* Deletes the social request from the database. Also notifies the appropriate model listeners.
@@ -142,9 +152,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param socialRequest the social request
 	* @return the social request that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialRequest deleteSocialRequest(
-		com.liferay.portlet.social.model.SocialRequest socialRequest);
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRequest deleteSocialRequest(SocialRequest socialRequest);
 
 	/**
 	* Removes all the social requests for the requesting user.
@@ -153,7 +162,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*/
 	public void deleteUserRequests(long userId);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -161,8 +170,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -176,8 +184,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -193,10 +200,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -204,8 +209,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -214,13 +218,11 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialRequest fetchSocialRequest(
-		long requestId);
+	public SocialRequest fetchSocialRequest(long requestId);
 
 	/**
 	* Returns the social request matching the UUID and group.
@@ -230,14 +232,14 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialRequest fetchSocialRequestByUuidAndGroupId(
+	public SocialRequest fetchSocialRequestByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -248,8 +250,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the social requests for the receiving user.
@@ -270,8 +272,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the range of matching social requests
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getReceiverUserRequests(
-		long receiverUserId, int start, int end);
+	public List<SocialRequest> getReceiverUserRequests(long receiverUserId,
+		int start, int end);
 
 	/**
 	* Returns a range of all the social requests with the given status for the
@@ -294,8 +296,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the range of matching social requests
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getReceiverUserRequests(
-		long receiverUserId, int status, int start, int end);
+	public List<SocialRequest> getReceiverUserRequests(long receiverUserId,
+		int status, int start, int end);
 
 	/**
 	* Returns the number of social requests for the receiving user.
@@ -325,8 +327,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @throws PortalException if a social request with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialRequest getSocialRequest(
-		long requestId) throws PortalException;
+	public SocialRequest getSocialRequest(long requestId)
+		throws PortalException;
 
 	/**
 	* Returns the social request matching the UUID and group.
@@ -337,7 +339,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @throws PortalException if a matching social request could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialRequest getSocialRequestByUuidAndGroupId(
+	public SocialRequest getSocialRequestByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -352,8 +354,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the range of social requests
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequests(
-		int start, int end);
+	public List<SocialRequest> getSocialRequests(int start, int end);
 
 	/**
 	* Returns all the social requests matching the UUID and company.
@@ -363,7 +364,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the matching social requests, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
+	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -377,9 +378,9 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the range of matching social requests, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
+	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.social.model.SocialRequest> orderByComparator);
+		OrderByComparator<SocialRequest> orderByComparator);
 
 	/**
 	* Returns the number of social requests.
@@ -408,8 +409,7 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the range of matching social requests
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getUserRequests(
-		long userId, int start, int end);
+	public List<SocialRequest> getUserRequests(long userId, int start, int end);
 
 	/**
 	* Returns a range of all the social requests with the given status for the
@@ -432,8 +432,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @return the range of matching social requests
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getUserRequests(
-		long userId, int status, int start, int end);
+	public List<SocialRequest> getUserRequests(long userId, int status,
+		int start, int end);
 
 	/**
 	* Returns the number of social requests for the requesting user.
@@ -510,10 +510,8 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param themeDisplay the theme display
 	* @return the updated social request
 	*/
-	public com.liferay.portlet.social.model.SocialRequest updateRequest(
-		long requestId, int status,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws PortalException;
+	public SocialRequest updateRequest(long requestId, int status,
+		ThemeDisplay themeDisplay) throws PortalException;
 
 	/**
 	* Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -521,7 +519,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param socialRequest the social request
 	* @return the social request that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialRequest updateSocialRequest(
-		com.liferay.portlet.social.model.SocialRequest socialRequest);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialRequest updateSocialRequest(SocialRequest socialRequest);
 }

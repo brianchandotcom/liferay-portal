@@ -16,14 +16,30 @@ package com.liferay.portlet.messageboards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.messageboards.model.MBMailingList;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for MBMailingList. Methods of this
@@ -54,20 +70,18 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param mbMailingList the message boards mailing list
 	* @return the message boards mailing list that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.messageboards.model.MBMailingList addMBMailingList(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList);
+	@Indexable(type = IndexableType.REINDEX)
+	public MBMailingList addMBMailingList(MBMailingList mbMailingList);
 
-	public com.liferay.portlet.messageboards.model.MBMailingList addMailingList(
-		long userId, long groupId, long categoryId,
-		java.lang.String emailAddress, java.lang.String inProtocol,
-		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
-		java.lang.String inUserName, java.lang.String inPassword,
-		int inReadInterval, java.lang.String outEmailAddress,
-		boolean outCustom, java.lang.String outServerName, int outServerPort,
-		boolean outUseSSL, java.lang.String outUserName,
-		java.lang.String outPassword, boolean allowAnonymous, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MBMailingList addMailingList(long userId, long groupId,
+		long categoryId, java.lang.String emailAddress,
+		java.lang.String inProtocol, java.lang.String inServerName,
+		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
+		java.lang.String inPassword, int inReadInterval,
+		java.lang.String outEmailAddress, boolean outCustom,
+		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
+		java.lang.String outUserName, java.lang.String outPassword,
+		boolean allowAnonymous, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -76,8 +90,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param mailingListId the primary key for the new message boards mailing list
 	* @return the new message boards mailing list
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList createMBMailingList(
-		long mailingListId);
+	public MBMailingList createMBMailingList(long mailingListId);
 
 	public void deleteCategoryMailingList(long groupId, long categoryId)
 		throws PortalException;
@@ -89,9 +102,9 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @return the message boards mailing list that was removed
 	* @throws PortalException if a message boards mailing list with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.messageboards.model.MBMailingList deleteMBMailingList(
-		long mailingListId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public MBMailingList deleteMBMailingList(long mailingListId)
+		throws PortalException;
 
 	/**
 	* Deletes the message boards mailing list from the database. Also notifies the appropriate model listeners.
@@ -99,12 +112,10 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param mbMailingList the message boards mailing list
 	* @return the message boards mailing list that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.messageboards.model.MBMailingList deleteMBMailingList(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList);
+	@Indexable(type = IndexableType.DELETE)
+	public MBMailingList deleteMBMailingList(MBMailingList mbMailingList);
 
-	public void deleteMailingList(
-		com.liferay.portlet.messageboards.model.MBMailingList mailingList)
+	public void deleteMailingList(MBMailingList mailingList)
 		throws PortalException;
 
 	public void deleteMailingList(long mailingListId) throws PortalException;
@@ -113,11 +124,10 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -125,8 +135,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -140,8 +149,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -157,10 +165,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -168,8 +174,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -178,17 +183,14 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchCategoryMailingList(
-		long groupId, long categoryId);
+	public MBMailingList fetchCategoryMailingList(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchMBMailingList(
-		long mailingListId);
+	public MBMailingList fetchMBMailingList(long mailingListId);
 
 	/**
 	* Returns the message boards mailing list matching the UUID and group.
@@ -198,22 +200,22 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchMBMailingListByUuidAndGroupId(
+	public MBMailingList fetchMBMailingListByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMailingList getCategoryMailingList(
-		long groupId, long categoryId) throws PortalException;
+	public MBMailingList getCategoryMailingList(long groupId, long categoryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the message boards mailing list with the primary key.
@@ -223,8 +225,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @throws PortalException if a message boards mailing list with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMailingList getMBMailingList(
-		long mailingListId) throws PortalException;
+	public MBMailingList getMBMailingList(long mailingListId)
+		throws PortalException;
 
 	/**
 	* Returns the message boards mailing list matching the UUID and group.
@@ -235,7 +237,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @throws PortalException if a matching message boards mailing list could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMailingList getMBMailingListByUuidAndGroupId(
+	public MBMailingList getMBMailingListByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -250,8 +252,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @return the range of message boards mailing lists
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingLists(
-		int start, int end);
+	public List<MBMailingList> getMBMailingLists(int start, int end);
 
 	/**
 	* Returns all the message boards mailing lists matching the UUID and company.
@@ -261,7 +262,7 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @return the matching message boards mailing lists, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
+	public List<MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -275,9 +276,9 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @return the range of matching message boards mailing lists, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
+	public List<MBMailingList> getMBMailingListsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the number of message boards mailing lists.
@@ -296,8 +297,8 @@ public interface MBMailingListLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the message boards mailing list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -305,19 +306,16 @@ public interface MBMailingListLocalService extends BaseLocalService,
 	* @param mbMailingList the message boards mailing list
 	* @return the message boards mailing list that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.messageboards.model.MBMailingList updateMBMailingList(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList);
+	@Indexable(type = IndexableType.REINDEX)
+	public MBMailingList updateMBMailingList(MBMailingList mbMailingList);
 
-	public com.liferay.portlet.messageboards.model.MBMailingList updateMailingList(
-		long mailingListId, java.lang.String emailAddress,
-		java.lang.String inProtocol, java.lang.String inServerName,
-		int inServerPort, boolean inUseSSL, java.lang.String inUserName,
-		java.lang.String inPassword, int inReadInterval,
-		java.lang.String outEmailAddress, boolean outCustom,
-		java.lang.String outServerName, int outServerPort, boolean outUseSSL,
-		java.lang.String outUserName, java.lang.String outPassword,
-		boolean allowAnonymous, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MBMailingList updateMailingList(long mailingListId,
+		java.lang.String emailAddress, java.lang.String inProtocol,
+		java.lang.String inServerName, int inServerPort, boolean inUseSSL,
+		java.lang.String inUserName, java.lang.String inPassword,
+		int inReadInterval, java.lang.String outEmailAddress,
+		boolean outCustom, java.lang.String outServerName, int outServerPort,
+		boolean outUseSSL, java.lang.String outUserName,
+		java.lang.String outPassword, boolean allowAnonymous, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

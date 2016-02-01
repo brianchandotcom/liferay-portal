@@ -16,14 +16,31 @@ package com.liferay.portal.background.task.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.File;
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for BackgroundTask. Methods of this
@@ -54,47 +71,39 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param backgroundTask the background task
 	* @return the background task that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask);
+	@Indexable(type = IndexableType.REINDEX)
+	public BackgroundTask addBackgroundTask(BackgroundTask backgroundTask);
 
-	public com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String[] servletContextNames,
+	public BackgroundTask addBackgroundTask(long userId, long groupId,
+		java.lang.String name, java.lang.String[] servletContextNames,
 		java.lang.Class<?> taskExecutorClass,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		Map<java.lang.String, Serializable> taskContextMap,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public BackgroundTask addBackgroundTask(long userId, long groupId,
+		java.lang.String name, java.lang.String taskExecutorClassName,
+		Map<java.lang.String, Serializable> taskContextMap,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void addBackgroundTaskAttachment(long userId, long backgroundTaskId,
-		java.lang.String fileName, java.io.File file) throws PortalException;
+		java.lang.String fileName, File file) throws PortalException;
 
 	public void addBackgroundTaskAttachment(long userId, long backgroundTaskId,
-		java.lang.String fileName, java.io.InputStream inputStream)
+		java.lang.String fileName, InputStream inputStream)
 		throws PortalException;
 
-	public com.liferay.portal.background.task.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext);
+	public BackgroundTask amendBackgroundTask(long backgroundTaskId,
+		Map<java.lang.String, Serializable> taskContextMap, int status,
+		ServiceContext serviceContext);
 
-	public com.liferay.portal.background.task.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, java.lang.String statusMessage,
-		com.liferay.portal.service.ServiceContext serviceContext);
+	public BackgroundTask amendBackgroundTask(long backgroundTaskId,
+		Map<java.lang.String, Serializable> taskContextMap, int status,
+		java.lang.String statusMessage, ServiceContext serviceContext);
 
-	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
+	@Clusterable(onMaster = true)
 	public void cleanUpBackgroundTask(long backgroundTaskId, int status);
 
-	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
+	@Clusterable(onMaster = true)
 	public void cleanUpBackgroundTasks();
 
 	/**
@@ -103,8 +112,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param backgroundTaskId the primary key for the new background task
 	* @return the new background task
 	*/
-	public com.liferay.portal.background.task.model.BackgroundTask createBackgroundTask(
-		long backgroundTaskId);
+	public BackgroundTask createBackgroundTask(long backgroundTaskId);
 
 	/**
 	* Deletes the background task from the database. Also notifies the appropriate model listeners.
@@ -113,9 +121,8 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @return the background task that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.background.task.model.BackgroundTask deleteBackgroundTask(
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask)
+	@Indexable(type = IndexableType.DELETE)
+	public BackgroundTask deleteBackgroundTask(BackgroundTask backgroundTask)
 		throws PortalException;
 
 	/**
@@ -125,9 +132,9 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @return the background task that was removed
 	* @throws PortalException if a background task with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.background.task.model.BackgroundTask deleteBackgroundTask(
-		long backgroundTaskId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public BackgroundTask deleteBackgroundTask(long backgroundTaskId)
+		throws PortalException;
 
 	public void deleteCompanyBackgroundTasks(long companyId)
 		throws PortalException;
@@ -142,11 +149,10 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -154,8 +160,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -169,8 +174,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -186,10 +190,8 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -197,8 +199,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -207,31 +208,28 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.background.task.model.BackgroundTask fetchBackgroundTask(
-		long backgroundTaskId);
+	public BackgroundTask fetchBackgroundTask(long backgroundTaskId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
-		long groupId, java.lang.String taskExecutorClassName,
-		boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
+	public BackgroundTask fetchFirstBackgroundTask(long groupId,
+		java.lang.String taskExecutorClassName, boolean completed,
+		OrderByComparator<BackgroundTask> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
+	public BackgroundTask fetchFirstBackgroundTask(
 		java.lang.String taskExecutorClassName, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
+	public BackgroundTask fetchFirstBackgroundTask(
 		java.lang.String taskExecutorClassName, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
+		OrderByComparator<BackgroundTask> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the background task with the primary key.
@@ -241,56 +239,51 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @throws PortalException if a background task with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.background.task.model.BackgroundTask getBackgroundTask(
-		long backgroundTaskId) throws PortalException;
+	public BackgroundTask getBackgroundTask(long backgroundTaskId)
+		throws PortalException;
 
-	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
+	@Clusterable(onMaster = true)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String name,
+	public List<BackgroundTask> getBackgroundTasks(long groupId,
+		java.lang.String name, java.lang.String taskExecutorClassName,
+		int start, int end, OrderByComparator<BackgroundTask> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(long groupId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(long groupId,
+		java.lang.String taskExecutorClassName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(long groupId,
 		java.lang.String taskExecutorClassName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
+		OrderByComparator<BackgroundTask> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, int status);
+	public List<BackgroundTask> getBackgroundTasks(long groupId,
+		java.lang.String taskExecutorClassName, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName);
+	public List<BackgroundTask> getBackgroundTasks(long groupId,
+		java.lang.String[] taskExecutorClassNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
+	public List<BackgroundTask> getBackgroundTasks(long groupId,
+		java.lang.String[] taskExecutorClassNames, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName, int status);
+	public List<BackgroundTask> getBackgroundTasks(long groupId,
+		java.lang.String[] taskExecutorClassNames, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String[] taskExecutorClassNames);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String[] taskExecutorClassNames, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String[] taskExecutorClassNames, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long[] groupIds, java.lang.String name,
-		java.lang.String taskExecutorClassName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
+	public List<BackgroundTask> getBackgroundTasks(long[] groupIds,
+		java.lang.String name, java.lang.String taskExecutorClassName,
+		int start, int end, OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
 	* Returns a range of all the background tasks.
@@ -304,27 +297,25 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @return the range of background tasks
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		int start, int end);
+	public List<BackgroundTask> getBackgroundTasks(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+	public List<BackgroundTask> getBackgroundTasks(
 		java.lang.String taskExecutorClassName, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+	public List<BackgroundTask> getBackgroundTasks(
 		java.lang.String taskExecutorClassName, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
+		OrderByComparator<BackgroundTask> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+	public List<BackgroundTask> getBackgroundTasks(
 		java.lang.String[] taskExecutorClassNames, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+	public List<BackgroundTask> getBackgroundTasks(
 		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator);
+		int end, OrderByComparator<BackgroundTask> orderByComparator);
 
 	/**
 	* Returns the number of background tasks.
@@ -367,7 +358,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		java.lang.String taskExecutorClassName, boolean completed);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -378,13 +369,13 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
+	@Clusterable(onMaster = true)
 	public void resumeBackgroundTask(long backgroundTaskId);
 
-	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
+	@Clusterable(onMaster = true)
 	public void triggerBackgroundTask(long backgroundTaskId);
 
 	/**
@@ -393,7 +384,6 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	* @param backgroundTask the background task
 	* @return the background task that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.background.task.model.BackgroundTask updateBackgroundTask(
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask);
+	@Indexable(type = IndexableType.REINDEX)
+	public BackgroundTask updateBackgroundTask(BackgroundTask backgroundTask);
 }

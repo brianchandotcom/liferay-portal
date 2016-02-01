@@ -24,6 +24,16 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Address;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.model.Phone;
+import com.liferay.portal.model.Website;
+
+import java.io.InputStream;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for Company. Methods of this
@@ -61,13 +71,12 @@ public interface CompanyService extends BaseService {
 	* @return the company
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
+	public Company addCompany(java.lang.String webId,
 		java.lang.String virtualHost, java.lang.String mx, boolean system,
 		int maxUsers, boolean active) throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public com.liferay.portal.model.Company deleteCompany(long companyId)
-		throws PortalException;
+	public Company deleteCompany(long companyId) throws PortalException;
 
 	/**
 	* Deletes the company's logo.
@@ -83,8 +92,7 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company getCompanyById(long companyId)
-		throws PortalException;
+	public Company getCompanyById(long companyId) throws PortalException;
 
 	/**
 	* Returns the company with the logo.
@@ -93,8 +101,7 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the logo
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company getCompanyByLogoId(long logoId)
-		throws PortalException;
+	public Company getCompanyByLogoId(long logoId) throws PortalException;
 
 	/**
 	* Returns the company with the mail domian.
@@ -103,7 +110,7 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the mail domain
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company getCompanyByMx(java.lang.String mx)
+	public Company getCompanyByMx(java.lang.String mx)
 		throws PortalException;
 
 	/**
@@ -113,8 +120,8 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the virtual host name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company getCompanyByVirtualHost(
-		java.lang.String virtualHost) throws PortalException;
+	public Company getCompanyByVirtualHost(java.lang.String virtualHost)
+		throws PortalException;
 
 	/**
 	* Returns the company with the web domain.
@@ -123,8 +130,8 @@ public interface CompanyService extends BaseService {
 	* @return Returns the company with the web domain
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company getCompanyByWebId(
-		java.lang.String webId) throws PortalException;
+	public Company getCompanyByWebId(java.lang.String webId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -173,10 +180,9 @@ public interface CompanyService extends BaseService {
 	* @param size the company's account size (optionally <code>null</code>)
 	* @return the the company with the primary key
 	*/
-	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, boolean logo, byte[] logoBytes,
-		java.lang.String name, java.lang.String legalName,
+	public Company updateCompany(long companyId, java.lang.String virtualHost,
+		java.lang.String mx, java.lang.String homeURL, boolean logo,
+		byte[] logoBytes, java.lang.String name, java.lang.String legalName,
 		java.lang.String legalId, java.lang.String legalType,
 		java.lang.String sicCode, java.lang.String tickerSymbol,
 		java.lang.String industry, java.lang.String type, java.lang.String size)
@@ -216,20 +222,16 @@ public interface CompanyService extends BaseService {
 	* @return the company with the primary key
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, boolean logo, byte[] logoBytes,
-		java.lang.String name, java.lang.String legalName,
+	public Company updateCompany(long companyId, java.lang.String virtualHost,
+		java.lang.String mx, java.lang.String homeURL, boolean logo,
+		byte[] logoBytes, java.lang.String name, java.lang.String legalName,
 		java.lang.String legalId, java.lang.String legalType,
 		java.lang.String sicCode, java.lang.String tickerSymbol,
 		java.lang.String industry, java.lang.String type,
 		java.lang.String size, java.lang.String languageId,
-		java.lang.String timeZoneId,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		com.liferay.portal.kernel.util.UnicodeProperties properties)
+		java.lang.String timeZoneId, List<Address> addresses,
+		List<EmailAddress> emailAddresses, List<Phone> phones,
+		List<Website> websites, UnicodeProperties properties)
 		throws PortalException;
 
 	/**
@@ -263,9 +265,8 @@ public interface CompanyService extends BaseService {
 	String, String, String, String, String, String)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, java.lang.String name,
+	public Company updateCompany(long companyId, java.lang.String virtualHost,
+		java.lang.String mx, java.lang.String homeURL, java.lang.String name,
 		java.lang.String legalName, java.lang.String legalId,
 		java.lang.String legalType, java.lang.String sicCode,
 		java.lang.String tickerSymbol, java.lang.String industry,
@@ -311,19 +312,15 @@ public interface CompanyService extends BaseService {
 	*/
 	@java.lang.Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String homeURL, java.lang.String name,
+	public Company updateCompany(long companyId, java.lang.String virtualHost,
+		java.lang.String mx, java.lang.String homeURL, java.lang.String name,
 		java.lang.String legalName, java.lang.String legalId,
 		java.lang.String legalType, java.lang.String sicCode,
 		java.lang.String tickerSymbol, java.lang.String industry,
 		java.lang.String type, java.lang.String size,
 		java.lang.String languageId, java.lang.String timeZoneId,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		com.liferay.portal.kernel.util.UnicodeProperties properties)
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<Phone> phones, List<Website> websites, UnicodeProperties properties)
 		throws PortalException;
 
 	/**
@@ -337,9 +334,9 @@ public interface CompanyService extends BaseService {
 	* @param active whether the company is active
 	* @return the company with the primary key
 	*/
-	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHost, java.lang.String mx, int maxUsers,
-		boolean active) throws PortalException;
+	public Company updateCompany(long companyId, java.lang.String virtualHost,
+		java.lang.String mx, int maxUsers, boolean active)
+		throws PortalException;
 
 	/**
 	* Update the company's display.
@@ -358,8 +355,8 @@ public interface CompanyService extends BaseService {
 	* @param bytes the bytes of the company's logo image
 	* @return the company with the primary key
 	*/
-	public com.liferay.portal.model.Company updateLogo(long companyId,
-		byte[] bytes) throws PortalException;
+	public Company updateLogo(long companyId, byte[] bytes)
+		throws PortalException;
 
 	/**
 	* Updates the company's logo.
@@ -369,8 +366,8 @@ public interface CompanyService extends BaseService {
 	* @return the company with the primary key
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public com.liferay.portal.model.Company updateLogo(long companyId,
-		java.io.InputStream inputStream) throws PortalException;
+	public Company updateLogo(long companyId, InputStream inputStream)
+		throws PortalException;
 
 	/**
 	* Updates the company's preferences. The company's default properties are
@@ -380,8 +377,7 @@ public interface CompanyService extends BaseService {
 	* @param properties the company's properties. See {@link UnicodeProperties}
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public void updatePreferences(long companyId,
-		com.liferay.portal.kernel.util.UnicodeProperties properties)
+	public void updatePreferences(long companyId, UnicodeProperties properties)
 		throws PortalException;
 
 	/**

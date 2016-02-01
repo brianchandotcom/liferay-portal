@@ -17,6 +17,11 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -141,7 +146,7 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _resourceTypePermission.getExpandoBridge();
 	}
 
@@ -186,7 +191,7 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _resourceTypePermission.getPrimaryKeyObj();
 	}
 
@@ -282,14 +287,12 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_resourceTypePermission.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_resourceTypePermission.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -339,7 +342,7 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_resourceTypePermission.setPrimaryKeyObj(primaryKeyObj);
 	}
 

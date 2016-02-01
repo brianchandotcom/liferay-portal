@@ -16,6 +16,9 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,7 +27,13 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for DDMDataProviderInstance. Methods of this
@@ -50,24 +59,21 @@ public interface DDMDataProviderInstanceService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMDataProviderInstanceServiceUtil} to access the d d m data provider instance remote service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance addDataProviderInstance(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		java.lang.String type,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DDMDataProviderInstance addDataProviderInstance(long groupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		DDMFormValues ddmFormValues, java.lang.String type,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteDataProviderInstance(long dataProviderInstanceId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstance(
+	public DDMDataProviderInstance fetchDataProviderInstance(
 		long dataProviderInstanceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstance(
+	public DDMDataProviderInstance getDataProviderInstance(
 		long dataProviderInstanceId) throws PortalException;
 
 	/**
@@ -78,16 +84,15 @@ public interface DDMDataProviderInstanceService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator);
+	public List<DDMDataProviderInstance> search(long companyId,
+		long[] groupIds, java.lang.String keywords, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
-		long companyId, long[] groupIds, java.lang.String name,
-		java.lang.String description, boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator);
+	public List<DDMDataProviderInstance> search(long companyId,
+		long[] groupIds, java.lang.String name, java.lang.String description,
+		boolean andOperator, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
@@ -97,11 +102,9 @@ public interface DDMDataProviderInstanceService extends BaseService {
 	public int searchCount(long companyId, long[] groupIds,
 		java.lang.String name, java.lang.String description, boolean andOperator);
 
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance updateDataProviderInstance(
-		long dataProviderInstanceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DDMDataProviderInstance updateDataProviderInstance(
+		long dataProviderInstanceId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -24,6 +24,11 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.exportimport.lar.MissingReferences;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+
+import java.util.Map;
+
 /**
  * Provides the remote service interface for Staging. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -59,18 +64,17 @@ public interface StagingService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
-		long stagingRequestId,
-		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
+	public MissingReferences publishStagingRequest(long stagingRequestId,
+		ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
-		long stagingRequestId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+	public MissingReferences publishStagingRequest(long stagingRequestId,
+		boolean privateLayout,
+		Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws PortalException;
 
 	public void updateStagingRequest(long stagingRequestId,
@@ -81,8 +85,8 @@ public interface StagingService extends BaseService {
 	boolean, Map)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(
-		long stagingRequestId, boolean privateLayout,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+	public MissingReferences validateStagingRequest(long stagingRequestId,
+		boolean privateLayout,
+		Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws PortalException;
 }

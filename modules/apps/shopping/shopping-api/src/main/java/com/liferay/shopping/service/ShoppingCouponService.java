@@ -25,6 +25,11 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.shopping.model.ShoppingCoupon;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for ShoppingCoupon. Methods of this
@@ -50,23 +55,22 @@ public interface ShoppingCouponService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingCouponServiceUtil} to access the shopping coupon remote service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCouponServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.shopping.model.ShoppingCoupon addCoupon(
-		java.lang.String code, boolean autoCode, java.lang.String name,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, boolean neverExpire, boolean active,
-		java.lang.String limitCategories, java.lang.String limitSkus,
-		double minOrder, double discount, java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public ShoppingCoupon addCoupon(java.lang.String code, boolean autoCode,
+		java.lang.String name, java.lang.String description,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int endDateMonth,
+		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+		boolean neverExpire, boolean active, java.lang.String limitCategories,
+		java.lang.String limitSkus, double minOrder, double discount,
+		java.lang.String discountType, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCoupon(long groupId, long couponId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long groupId,
-		long couponId) throws PortalException;
+	public ShoppingCoupon getCoupon(long groupId, long couponId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -76,19 +80,16 @@ public interface ShoppingCouponService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingCoupon> search(
-		long groupId, long companyId, java.lang.String code, boolean active,
-		java.lang.String discountType, boolean andOperator, int start, int end)
-		throws PortalException;
+	public List<ShoppingCoupon> search(long groupId, long companyId,
+		java.lang.String code, boolean active, java.lang.String discountType,
+		boolean andOperator, int start, int end) throws PortalException;
 
-	public com.liferay.shopping.model.ShoppingCoupon updateCoupon(
-		long couponId, java.lang.String name, java.lang.String description,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int endDateMonth,
-		int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
-		boolean neverExpire, boolean active, java.lang.String limitCategories,
-		java.lang.String limitSkus, double minOrder, double discount,
-		java.lang.String discountType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public ShoppingCoupon updateCoupon(long couponId, java.lang.String name,
+		java.lang.String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, boolean neverExpire, boolean active,
+		java.lang.String limitCategories, java.lang.String limitSkus,
+		double minOrder, double discount, java.lang.String discountType,
+		ServiceContext serviceContext) throws PortalException;
 }

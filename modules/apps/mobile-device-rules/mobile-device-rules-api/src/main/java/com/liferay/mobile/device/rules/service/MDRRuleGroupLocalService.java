@@ -16,15 +16,36 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for MDRRuleGroup. Methods of this
@@ -55,26 +76,19 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param mdrRuleGroup the m d r rule group
 	* @return the m d r rule group that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup addMDRRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup);
+	@Indexable(type = IndexableType.REINDEX)
+	public MDRRuleGroup addMDRRuleGroup(MDRRuleGroup mdrRuleGroup);
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup addRuleGroup(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroup addRuleGroup(long groupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup,
-		long groupId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroup copyRuleGroup(MDRRuleGroup ruleGroup, long groupId,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroup copyRuleGroup(long ruleGroupId, long groupId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new m d r rule group with the primary key. Does not add the m d r rule group to the database.
@@ -82,8 +96,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param ruleGroupId the primary key for the new m d r rule group
 	* @return the new m d r rule group
 	*/
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup createMDRRuleGroup(
-		long ruleGroupId);
+	public MDRRuleGroup createMDRRuleGroup(long ruleGroupId);
 
 	/**
 	* Deletes the m d r rule group from the database. Also notifies the appropriate model listeners.
@@ -91,9 +104,8 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param mdrRuleGroup the m d r rule group
 	* @return the m d r rule group that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup deleteMDRRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup);
+	@Indexable(type = IndexableType.DELETE)
+	public MDRRuleGroup deleteMDRRuleGroup(MDRRuleGroup mdrRuleGroup);
 
 	/**
 	* Deletes the m d r rule group with the primary key from the database. Also notifies the appropriate model listeners.
@@ -102,27 +114,25 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the m d r rule group that was removed
 	* @throws PortalException if a m d r rule group with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup deleteMDRRuleGroup(
-		long ruleGroupId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public MDRRuleGroup deleteMDRRuleGroup(long ruleGroupId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup);
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteRuleGroup(MDRRuleGroup ruleGroup);
 
 	public void deleteRuleGroup(long ruleGroupId);
 
 	public void deleteRuleGroups(long groupId);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -130,8 +140,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -145,8 +154,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -162,10 +170,8 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -173,8 +179,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -183,13 +188,11 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup fetchMDRRuleGroup(
-		long ruleGroupId);
+	public MDRRuleGroup fetchMDRRuleGroup(long ruleGroupId);
 
 	/**
 	* Returns the m d r rule group matching the UUID and group.
@@ -199,22 +202,21 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(
+	public MDRRuleGroup fetchMDRRuleGroupByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup fetchRuleGroup(
-		long ruleGroupId);
+	public MDRRuleGroup fetchRuleGroup(long ruleGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the m d r rule group with the primary key.
@@ -224,8 +226,8 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @throws PortalException if a m d r rule group with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup getMDRRuleGroup(
-		long ruleGroupId) throws PortalException;
+	public MDRRuleGroup getMDRRuleGroup(long ruleGroupId)
+		throws PortalException;
 
 	/**
 	* Returns the m d r rule group matching the UUID and group.
@@ -236,8 +238,8 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @throws PortalException if a matching m d r rule group could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup getMDRRuleGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public MDRRuleGroup getMDRRuleGroupByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the m d r rule groups.
@@ -251,8 +253,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the range of m d r rule groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getMDRRuleGroups(
-		int start, int end);
+	public List<MDRRuleGroup> getMDRRuleGroups(int start, int end);
 
 	/**
 	* Returns all the m d r rule groups matching the UUID and company.
@@ -262,7 +263,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the matching m d r rule groups, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
+	public List<MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -276,9 +277,9 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @return the range of matching m d r rule groups, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
+	public List<MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> orderByComparator);
+		OrderByComparator<MDRRuleGroup> orderByComparator);
 
 	/**
 	* Returns the number of m d r rule groups.
@@ -297,24 +298,21 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
-		long ruleGroupId) throws PortalException;
+	public MDRRuleGroup getRuleGroup(long ruleGroupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long groupId);
+	public List<MDRRuleGroup> getRuleGroups(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long groupId, int start, int end);
+	public List<MDRRuleGroup> getRuleGroups(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long[] groupIds, int start, int end);
+	public List<MDRRuleGroup> getRuleGroups(long[] groupIds, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupsCount(long groupId);
@@ -328,37 +326,35 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name, boolean andOperator, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(
-		long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<MDRRuleGroup> search(long groupId, java.lang.String name,
 		boolean andOperator, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<MDRRuleGroup> search(long groupId, java.lang.String name,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> searchByKeywords(
-		long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+	public List<MDRRuleGroup> searchByKeywords(long groupId,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MDRRuleGroup> searchByKeywords(long groupId,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroup> obc);
+		OrderByComparator<MDRRuleGroup> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, java.lang.String name,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
 	/**
@@ -367,14 +363,11 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @param mdrRuleGroup the m d r rule group
 	* @return the m d r rule group that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateMDRRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup);
+	@Indexable(type = IndexableType.REINDEX)
+	public MDRRuleGroup updateMDRRuleGroup(MDRRuleGroup mdrRuleGroup);
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroup updateRuleGroup(long ruleGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 }

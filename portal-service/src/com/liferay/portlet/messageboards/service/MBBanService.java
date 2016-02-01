@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.messageboards.model.MBBan;
 
 /**
  * Provides the remote service interface for MBBan. Methods of this
@@ -46,12 +49,10 @@ public interface MBBanService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBBanServiceUtil} to access the message boards ban remote service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.messageboards.model.MBBan addBan(
-		long banUserId, com.liferay.portal.service.ServiceContext serviceContext)
+	public MBBan addBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteBan(long banUserId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public void deleteBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

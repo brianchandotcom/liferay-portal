@@ -17,8 +17,12 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
 
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -686,7 +690,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _user.getExpandoBridge();
 	}
 
@@ -1108,7 +1112,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _user.getPrimaryKeyObj();
 	}
 
@@ -1559,14 +1563,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_user.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_user.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -1846,7 +1848,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_user.setPrimaryKeyObj(primaryKeyObj);
 	}
 

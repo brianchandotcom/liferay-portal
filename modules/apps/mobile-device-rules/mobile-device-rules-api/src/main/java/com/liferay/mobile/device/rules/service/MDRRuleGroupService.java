@@ -16,6 +16,8 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -25,6 +27,11 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for MDRRuleGroup. Methods of this
@@ -50,23 +57,19 @@ public interface MDRRuleGroupService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupServiceUtil} to access the m d r rule group remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleGroupServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup addRuleGroup(
-		long groupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroup addRuleGroup(long groupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-		long ruleGroupId, long groupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroup copyRuleGroup(long ruleGroupId, long groupId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteRuleGroup(long ruleGroupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup fetchRuleGroup(
-		long ruleGroupId) throws PortalException;
+	public MDRRuleGroup fetchRuleGroup(long ruleGroupId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -76,20 +79,17 @@ public interface MDRRuleGroupService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
-		long ruleGroupId) throws PortalException;
+	public MDRRuleGroup getRuleGroup(long ruleGroupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long[] groupIds, int start, int end);
+	public List<MDRRuleGroup> getRuleGroups(long[] groupIds, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupsCount(long[] groupIds);
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroup updateRuleGroup(long ruleGroupId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 }

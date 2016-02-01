@@ -17,6 +17,11 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -124,7 +129,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _resourceAction.getExpandoBridge();
 	}
 
@@ -159,7 +164,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _resourceAction.getPrimaryKeyObj();
 	}
 
@@ -229,14 +234,12 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_resourceAction.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_resourceAction.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -276,7 +279,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_resourceAction.setPrimaryKeyObj(primaryKeyObj);
 	}
 

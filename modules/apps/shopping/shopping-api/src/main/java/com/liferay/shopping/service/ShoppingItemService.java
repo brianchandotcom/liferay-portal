@@ -24,7 +24,17 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.shopping.model.ShoppingItem;
+import com.liferay.shopping.model.ShoppingItemField;
+import com.liferay.shopping.model.ShoppingItemPrice;
+
+import java.io.File;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for ShoppingItem. Methods of this
@@ -50,48 +60,39 @@ public interface ShoppingItemService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingItemServiceUtil} to access the shopping item remote service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.shopping.model.ShoppingItem addItem(long groupId,
-		long categoryId, java.lang.String sku, java.lang.String name,
+	public ShoppingItem addItem(long groupId, long categoryId,
+		java.lang.String sku, java.lang.String name,
 		java.lang.String description, java.lang.String properties,
 		java.lang.String fieldsQuantities, boolean requiresShipping,
 		int stockQuantity, boolean featured, java.lang.Boolean sale,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallFile, boolean mediumImage,
-		java.lang.String mediumImageURL, java.io.File mediumFile,
-		boolean largeImage, java.lang.String largeImageURL,
-		java.io.File largeFile,
-		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
-		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		boolean smallImage, java.lang.String smallImageURL, File smallFile,
+		boolean mediumImage, java.lang.String mediumImageURL, File mediumFile,
+		boolean largeImage, java.lang.String largeImageURL, File largeFile,
+		List<ShoppingItemField> itemFields, List<ShoppingItemPrice> itemPrices,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteItem(long itemId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesItemsCount(long groupId,
-		java.util.List<java.lang.Long> categoryIds);
+		List<java.lang.Long> categoryIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem getItem(long itemId)
-		throws PortalException;
+	public ShoppingItem getItem(long itemId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId);
+	public List<ShoppingItem> getItems(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc);
+	public List<ShoppingItem> getItems(long groupId, long categoryId,
+		int start, int end, OrderByComparator<ShoppingItem> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getItemsCount(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem[] getItemsPrevAndNext(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc)
-		throws PortalException;
+	public ShoppingItem[] getItemsPrevAndNext(long itemId,
+		OrderByComparator<ShoppingItem> obc) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -100,18 +101,14 @@ public interface ShoppingItemService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.shopping.model.ShoppingItem updateItem(long itemId,
-		long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
-		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeFile,
-		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
-		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public ShoppingItem updateItem(long itemId, long groupId, long categoryId,
+		java.lang.String sku, java.lang.String name,
+		java.lang.String description, java.lang.String properties,
+		java.lang.String fieldsQuantities, boolean requiresShipping,
+		int stockQuantity, boolean featured, java.lang.Boolean sale,
+		boolean smallImage, java.lang.String smallImageURL, File smallFile,
+		boolean mediumImage, java.lang.String mediumImageURL, File mediumFile,
+		boolean largeImage, java.lang.String largeImageURL, File largeFile,
+		List<ShoppingItemField> itemFields, List<ShoppingItemPrice> itemPrices,
+		ServiceContext serviceContext) throws PortalException;
 }

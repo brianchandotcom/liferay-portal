@@ -18,6 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -157,7 +162,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _wallEntry.getExpandoBridge();
 	}
 
@@ -192,7 +197,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _wallEntry.getPrimaryKeyObj();
 	}
 
@@ -303,14 +308,12 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_wallEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_wallEntry.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -350,7 +353,7 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_wallEntry.setPrimaryKeyObj(primaryKeyObj);
 	}
 

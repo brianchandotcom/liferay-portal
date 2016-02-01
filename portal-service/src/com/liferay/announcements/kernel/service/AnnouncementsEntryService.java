@@ -16,6 +16,8 @@ package com.liferay.announcements.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -47,11 +49,11 @@ public interface AnnouncementsEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AnnouncementsEntryServiceUtil} to access the announcements entry remote service. Add custom service methods to {@link com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
-		long plid, long classNameId, long classPK, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean displayImmediately,
+	public AnnouncementsEntry addEntry(long plid, long classNameId,
+		long classPK, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert) throws PortalException;
@@ -59,8 +61,7 @@ public interface AnnouncementsEntryService extends BaseService {
 	public void deleteEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry getEntry(
-		long entryId) throws PortalException;
+	public AnnouncementsEntry getEntry(long entryId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -69,11 +70,10 @@ public interface AnnouncementsEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
-		long entryId, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, boolean displayImmediately,
+	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean displayImmediately,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException;

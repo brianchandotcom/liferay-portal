@@ -16,14 +16,35 @@ package com.liferay.portlet.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.cal.TZSRecurrence;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
+
+import com.liferay.portlet.calendar.model.CalEvent;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.File;
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Provides the local service interface for CalEvent. Methods of this
@@ -56,38 +77,30 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param calEvent the cal event
 	* @return the cal event that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.calendar.model.CalEvent addCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent);
+	@Indexable(type = IndexableType.REINDEX)
+	public CalEvent addCalEvent(CalEvent calEvent);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.calendar.model.CalEvent addEvent(long userId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String location, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int durationHour, int durationMinute, boolean allDay,
-		boolean timeZoneSensitive, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
-		int firstReminder, int secondReminder,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public CalEvent addEvent(long userId, java.lang.String title,
+		java.lang.String description, java.lang.String location,
+		int startDateMonth, int startDateDay, int startDateYear,
+		int startDateHour, int startDateMinute, int durationHour,
+		int durationMinute, boolean allDay, boolean timeZoneSensitive,
+		java.lang.String type, boolean repeating, TZSRecurrence recurrence,
+		int remindBy, int firstReminder, int secondReminder,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void addEventResources(
-		com.liferay.portlet.calendar.model.CalEvent event,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+	public void addEventResources(CalEvent event, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
 
-	public void addEventResources(
-		com.liferay.portlet.calendar.model.CalEvent event,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+	public void addEventResources(CalEvent event,
+		ModelPermissions modelPermissions) throws PortalException;
 
 	public void addEventResources(long eventId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
 	public void addEventResources(long eventId,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+		ModelPermissions modelPermissions) throws PortalException;
 
 	public void checkEvents();
 
@@ -97,8 +110,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param eventId the primary key for the new cal event
 	* @return the new cal event
 	*/
-	public com.liferay.portlet.calendar.model.CalEvent createCalEvent(
-		long eventId);
+	public CalEvent createCalEvent(long eventId);
 
 	/**
 	* Deletes the cal event from the database. Also notifies the appropriate model listeners.
@@ -106,9 +118,8 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param calEvent the cal event
 	* @return the cal event that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.calendar.model.CalEvent deleteCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent);
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteCalEvent(CalEvent calEvent);
 
 	/**
 	* Deletes the cal event with the primary key from the database. Also notifies the appropriate model listeners.
@@ -117,18 +128,14 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the cal event that was removed
 	* @throws PortalException if a cal event with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.calendar.model.CalEvent deleteCalEvent(
-		long eventId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteCalEvent(long eventId) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.calendar.model.CalEvent deleteEvent(
-		com.liferay.portlet.calendar.model.CalEvent event)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteEvent(CalEvent event) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.calendar.model.CalEvent deleteEvent(long eventId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public CalEvent deleteEvent(long eventId) throws PortalException;
 
 	public void deleteEvents(long groupId) throws PortalException;
 
@@ -136,11 +143,10 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -148,8 +154,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -163,8 +168,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -180,10 +184,8 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -191,8 +193,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -201,23 +202,20 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	public java.io.File exportEvent(long userId, long eventId)
+	public File exportEvent(long userId, long eventId)
 		throws PortalException;
 
-	public java.io.File exportEvents(long userId,
-		java.util.List<com.liferay.portlet.calendar.model.CalEvent> events,
+	public File exportEvents(long userId, List<CalEvent> events,
 		java.lang.String fileName) throws PortalException;
 
-	public java.io.File exportGroupEvents(long userId, long groupId,
+	public File exportGroupEvents(long userId, long groupId,
 		java.lang.String fileName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.calendar.model.CalEvent fetchCalEvent(
-		long eventId);
+	public CalEvent fetchCalEvent(long eventId);
 
 	/**
 	* Returns the cal event matching the UUID and group.
@@ -227,11 +225,11 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.calendar.model.CalEvent fetchCalEventByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public CalEvent fetchCalEventByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the cal event with the primary key.
@@ -241,8 +239,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @throws PortalException if a cal event with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.calendar.model.CalEvent getCalEvent(long eventId)
-		throws PortalException;
+	public CalEvent getCalEvent(long eventId) throws PortalException;
 
 	/**
 	* Returns the cal event matching the UUID and group.
@@ -253,8 +250,8 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @throws PortalException if a matching cal event could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.calendar.model.CalEvent getCalEventByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public CalEvent getCalEventByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cal events.
@@ -268,8 +265,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the range of cal events
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCalEvents(
-		int start, int end);
+	public List<CalEvent> getCalEvents(int start, int end);
 
 	/**
 	* Returns all the cal events matching the UUID and company.
@@ -279,7 +275,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the matching cal events, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCalEventsByUuidAndCompanyId(
+	public List<CalEvent> getCalEventsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -293,9 +289,9 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @return the range of matching cal events, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCalEventsByUuidAndCompanyId(
+	public List<CalEvent> getCalEventsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.calendar.model.CalEvent> orderByComparator);
+		OrderByComparator<CalEvent> orderByComparator);
 
 	/**
 	* Returns the number of cal events.
@@ -306,35 +302,32 @@ public interface CalEventLocalService extends BaseLocalService,
 	public int getCalEventsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCompanyEvents(
-		long companyId, int start, int end);
+	public List<CalEvent> getCompanyEvents(long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyEventsCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.calendar.model.CalEvent getEvent(long eventId)
-		throws PortalException;
+	public CalEvent getEvent(long eventId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getEvents(
-		long groupId, java.util.Calendar cal);
+	public List<CalEvent> getEvents(long groupId, Calendar cal);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getEvents(
-		long groupId, java.util.Calendar cal, java.lang.String type);
+	public List<CalEvent> getEvents(long groupId, Calendar cal,
+		java.lang.String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getEvents(
-		long groupId, java.util.Calendar cal, java.lang.String[] types);
+	public List<CalEvent> getEvents(long groupId, Calendar cal,
+		java.lang.String[] types);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getEvents(
-		long groupId, java.lang.String type, int start, int end);
+	public List<CalEvent> getEvents(long groupId, java.lang.String type,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getEvents(
-		long groupId, java.lang.String[] types, int start, int end);
+	public List<CalEvent> getEvents(long groupId, java.lang.String[] types,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEventsCount(long groupId, java.lang.String type);
@@ -343,14 +336,14 @@ public interface CalEventLocalService extends BaseLocalService,
 	public int getEventsCount(long groupId, java.lang.String[] types);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getNoAssetEvents();
+	public List<CalEvent> getNoAssetEvents();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -361,33 +354,30 @@ public interface CalEventLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getRepeatingEvents(
-		long groupId);
+	public List<CalEvent> getRepeatingEvents(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getRepeatingEvents(
-		long groupId, java.util.Calendar cal, java.lang.String[] types);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasEvents(long groupId, java.util.Calendar cal);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasEvents(long groupId, java.util.Calendar cal,
-		java.lang.String type);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasEvents(long groupId, java.util.Calendar cal,
+	public List<CalEvent> getRepeatingEvents(long groupId, Calendar cal,
 		java.lang.String[] types);
 
-	public void importICal4j(long userId, long groupId,
-		java.io.InputStream inputStream) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasEvents(long groupId, Calendar cal);
 
-	public void updateAsset(long userId,
-		com.liferay.portlet.calendar.model.CalEvent event,
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasEvents(long groupId, Calendar cal, java.lang.String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasEvents(long groupId, Calendar cal,
+		java.lang.String[] types);
+
+	public void importICal4j(long userId, long groupId, InputStream inputStream)
+		throws PortalException;
+
+	public void updateAsset(long userId, CalEvent event,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds) throws PortalException;
 
@@ -397,20 +387,17 @@ public interface CalEventLocalService extends BaseLocalService,
 	* @param calEvent the cal event
 	* @return the cal event that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.calendar.model.CalEvent updateCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent);
+	@Indexable(type = IndexableType.REINDEX)
+	public CalEvent updateCalEvent(CalEvent calEvent);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
-		long userId, long eventId, java.lang.String title,
-		java.lang.String description, java.lang.String location,
-		int startDateMonth, int startDateDay, int startDateYear,
-		int startDateHour, int startDateMinute, int durationHour,
-		int durationMinute, boolean allDay, boolean timeZoneSensitive,
-		java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.cal.TZSRecurrence recurrence, int remindBy,
-		int firstReminder, int secondReminder,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public CalEvent updateEvent(long userId, long eventId,
+		java.lang.String title, java.lang.String description,
+		java.lang.String location, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int durationHour, int durationMinute, boolean allDay,
+		boolean timeZoneSensitive, java.lang.String type, boolean repeating,
+		TZSRecurrence recurrence, int remindBy, int firstReminder,
+		int secondReminder, ServiceContext serviceContext)
 		throws PortalException;
 }

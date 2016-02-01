@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.PluginSetting;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for PluginSetting. Methods of this
@@ -52,9 +64,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param pluginSetting the plugin setting
 	* @return the plugin setting that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.PluginSetting addPluginSetting(
-		com.liferay.portal.model.PluginSetting pluginSetting);
+	@Indexable(type = IndexableType.REINDEX)
+	public PluginSetting addPluginSetting(PluginSetting pluginSetting);
 
 	public void checkPermission(long userId, java.lang.String pluginId,
 		java.lang.String pluginType) throws PortalException;
@@ -65,15 +76,13 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param pluginSettingId the primary key for the new plugin setting
 	* @return the new plugin setting
 	*/
-	public com.liferay.portal.model.PluginSetting createPluginSetting(
-		long pluginSettingId);
+	public PluginSetting createPluginSetting(long pluginSettingId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -82,9 +91,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param pluginSetting the plugin setting
 	* @return the plugin setting that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.PluginSetting deletePluginSetting(
-		com.liferay.portal.model.PluginSetting pluginSetting);
+	@Indexable(type = IndexableType.DELETE)
+	public PluginSetting deletePluginSetting(PluginSetting pluginSetting);
 
 	/**
 	* Deletes the plugin setting with the primary key from the database. Also notifies the appropriate model listeners.
@@ -93,11 +101,11 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @return the plugin setting that was removed
 	* @throws PortalException if a plugin setting with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.PluginSetting deletePluginSetting(
-		long pluginSettingId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public PluginSetting deletePluginSetting(long pluginSettingId)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -105,8 +113,7 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -120,8 +127,7 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -137,10 +143,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -148,8 +152,7 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -158,22 +161,20 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PluginSetting fetchPluginSetting(
-		long pluginSettingId);
+	public PluginSetting fetchPluginSetting(long pluginSettingId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PluginSetting getDefaultPluginSetting();
+	public PluginSetting getDefaultPluginSetting();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -184,12 +185,12 @@ public interface PluginSettingLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType);
+	public PluginSetting getPluginSetting(long companyId,
+		java.lang.String pluginId, java.lang.String pluginType);
 
 	/**
 	* Returns the plugin setting with the primary key.
@@ -199,8 +200,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @throws PortalException if a plugin setting with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PluginSetting getPluginSetting(
-		long pluginSettingId) throws PortalException;
+	public PluginSetting getPluginSetting(long pluginSettingId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the plugin settings.
@@ -214,8 +215,7 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @return the range of plugin settings
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PluginSetting> getPluginSettings(
-		int start, int end);
+	public List<PluginSetting> getPluginSettings(int start, int end);
 
 	/**
 	* Returns the number of plugin settings.
@@ -229,8 +229,8 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	public boolean hasPermission(long userId, java.lang.String pluginId,
 		java.lang.String pluginType);
 
-	public com.liferay.portal.model.PluginSetting updatePluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType,
+	public PluginSetting updatePluginSetting(long companyId,
+		java.lang.String pluginId, java.lang.String pluginType,
 		java.lang.String roles, boolean active);
 
 	/**
@@ -239,7 +239,6 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	* @param pluginSetting the plugin setting
 	* @return the plugin setting that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.PluginSetting updatePluginSetting(
-		com.liferay.portal.model.PluginSetting pluginSetting);
+	@Indexable(type = IndexableType.REINDEX)
+	public PluginSetting updatePluginSetting(PluginSetting pluginSetting);
 }

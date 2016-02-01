@@ -16,14 +16,27 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.wiki.model.WikiPageResource;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for WikiPageResource. Methods of this
@@ -47,16 +60,15 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageResourceLocalServiceUtil} to access the wiki page resource local service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.wiki.model.WikiPageResource addPageResource(
-		long groupId, long nodeId, java.lang.String title);
+	public WikiPageResource addPageResource(long groupId, long nodeId,
+		java.lang.String title);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addPageResource(long, long,
 	String)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.wiki.model.WikiPageResource addPageResource(
-		long nodeId, java.lang.String title);
+	public WikiPageResource addPageResource(long nodeId, java.lang.String title);
 
 	/**
 	* Adds the wiki page resource to the database. Also notifies the appropriate model listeners.
@@ -64,9 +76,9 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.wiki.model.WikiPageResource addWikiPageResource(
-		com.liferay.wiki.model.WikiPageResource wikiPageResource);
+	@Indexable(type = IndexableType.REINDEX)
+	public WikiPageResource addWikiPageResource(
+		WikiPageResource wikiPageResource);
 
 	/**
 	* Creates a new wiki page resource with the primary key. Does not add the wiki page resource to the database.
@@ -74,8 +86,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param resourcePrimKey the primary key for the new wiki page resource
 	* @return the new wiki page resource
 	*/
-	public com.liferay.wiki.model.WikiPageResource createWikiPageResource(
-		long resourcePrimKey);
+	public WikiPageResource createWikiPageResource(long resourcePrimKey);
 
 	public void deletePageResource(long nodeId, java.lang.String title)
 		throws PortalException;
@@ -84,8 +95,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -95,9 +105,9 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @return the wiki page resource that was removed
 	* @throws PortalException if a wiki page resource with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
-		long resourcePrimKey) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public WikiPageResource deleteWikiPageResource(long resourcePrimKey)
+		throws PortalException;
 
 	/**
 	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
@@ -105,11 +115,11 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
-		com.liferay.wiki.model.WikiPageResource wikiPageResource);
+	@Indexable(type = IndexableType.DELETE)
+	public WikiPageResource deleteWikiPageResource(
+		WikiPageResource wikiPageResource);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -117,8 +127,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -132,8 +141,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -149,10 +157,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -160,8 +166,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -170,21 +175,18 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		long nodeId, java.lang.String title);
+	public WikiPageResource fetchPageResource(long nodeId,
+		java.lang.String title);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		java.lang.String uuid);
+	public WikiPageResource fetchPageResource(java.lang.String uuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResource(
-		long resourcePrimKey);
+	public WikiPageResource fetchWikiPageResource(long resourcePrimKey);
 
 	/**
 	* Returns the wiki page resource matching the UUID and group.
@@ -194,14 +196,14 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
+	public WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -211,12 +213,12 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource getPageResource(
-		long nodeId, java.lang.String title) throws PortalException;
+	public WikiPageResource getPageResource(long nodeId, java.lang.String title)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource getPageResource(
-		long pageResourcePrimKey) throws PortalException;
+	public WikiPageResource getPageResource(long pageResourcePrimKey)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getPageResourcePrimKey(long groupId, long nodeId,
@@ -232,8 +234,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the wiki page resource with the primary key.
@@ -243,8 +245,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @throws PortalException if a wiki page resource with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource getWikiPageResource(
-		long resourcePrimKey) throws PortalException;
+	public WikiPageResource getWikiPageResource(long resourcePrimKey)
+		throws PortalException;
 
 	/**
 	* Returns the wiki page resource matching the UUID and group.
@@ -255,7 +257,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching wiki page resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.wiki.model.WikiPageResource getWikiPageResourceByUuidAndGroupId(
+	public WikiPageResource getWikiPageResourceByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -270,8 +272,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @return the range of wiki page resources
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResources(
-		int start, int end);
+	public List<WikiPageResource> getWikiPageResources(int start, int end);
 
 	/**
 	* Returns all the wiki page resources matching the UUID and company.
@@ -281,7 +282,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @return the matching wiki page resources, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
+	public List<WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -295,9 +296,9 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @return the range of matching wiki page resources, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
+	public List<WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator);
+		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	* Returns the number of wiki page resources.
@@ -313,7 +314,7 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.wiki.model.WikiPageResource updateWikiPageResource(
-		com.liferay.wiki.model.WikiPageResource wikiPageResource);
+	@Indexable(type = IndexableType.REINDEX)
+	public WikiPageResource updateWikiPageResource(
+		WikiPageResource wikiPageResource);
 }

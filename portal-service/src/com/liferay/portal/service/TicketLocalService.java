@@ -16,12 +16,25 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.Ticket;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the local service interface for Ticket. Methods of this
@@ -45,14 +58,14 @@ public interface TicketLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TicketLocalServiceUtil} to access the ticket local service. Add custom service methods to {@link com.liferay.portal.service.impl.TicketLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Ticket addDistinctTicket(long companyId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate,
+	public Ticket addDistinctTicket(long companyId, java.lang.String className,
+		long classPK, int type, java.lang.String extraInfo,
+		Date expirationDate,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
-	public com.liferay.portal.model.Ticket addTicket(long companyId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate,
+	public Ticket addTicket(long companyId, java.lang.String className,
+		long classPK, int type, java.lang.String extraInfo,
+		Date expirationDate,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	/**
@@ -61,9 +74,8 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param ticket the ticket
 	* @return the ticket that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Ticket addTicket(
-		com.liferay.portal.model.Ticket ticket);
+	@Indexable(type = IndexableType.REINDEX)
+	public Ticket addTicket(Ticket ticket);
 
 	/**
 	* Creates a new ticket with the primary key. Does not add the ticket to the database.
@@ -71,14 +83,13 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param ticketId the primary key for the new ticket
 	* @return the new ticket
 	*/
-	public com.liferay.portal.model.Ticket createTicket(long ticketId);
+	public Ticket createTicket(long ticketId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -87,9 +98,8 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param ticket the ticket
 	* @return the ticket that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Ticket deleteTicket(
-		com.liferay.portal.model.Ticket ticket);
+	@Indexable(type = IndexableType.DELETE)
+	public Ticket deleteTicket(Ticket ticket);
 
 	/**
 	* Deletes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
@@ -98,11 +108,10 @@ public interface TicketLocalService extends BaseLocalService,
 	* @return the ticket that was removed
 	* @throws PortalException if a ticket with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Ticket deleteTicket(long ticketId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Ticket deleteTicket(long ticketId) throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -110,8 +119,7 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -125,8 +133,7 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -142,10 +149,8 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -153,8 +158,7 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -163,21 +167,20 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Ticket fetchTicket(java.lang.String key);
+	public Ticket fetchTicket(java.lang.String key);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Ticket fetchTicket(long ticketId);
+	public Ticket fetchTicket(long ticketId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -188,12 +191,11 @@ public interface TicketLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Ticket getTicket(java.lang.String key)
-		throws PortalException;
+	public Ticket getTicket(java.lang.String key) throws PortalException;
 
 	/**
 	* Returns the ticket with the primary key.
@@ -203,8 +205,7 @@ public interface TicketLocalService extends BaseLocalService,
 	* @throws PortalException if a ticket with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Ticket getTicket(long ticketId)
-		throws PortalException;
+	public Ticket getTicket(long ticketId) throws PortalException;
 
 	/**
 	* Returns a range of all the tickets.
@@ -218,8 +219,7 @@ public interface TicketLocalService extends BaseLocalService,
 	* @return the range of tickets
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Ticket> getTickets(
-		int start, int end);
+	public List<Ticket> getTickets(int start, int end);
 
 	/**
 	* Returns the number of tickets.
@@ -235,7 +235,6 @@ public interface TicketLocalService extends BaseLocalService,
 	* @param ticket the ticket
 	* @return the ticket that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Ticket updateTicket(
-		com.liferay.portal.model.Ticket ticket);
+	@Indexable(type = IndexableType.REINDEX)
+	public Ticket updateTicket(Ticket ticket);
 }

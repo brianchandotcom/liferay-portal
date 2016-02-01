@@ -20,10 +20,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import com.liferay.portlet.blogs.model.BlogsEntry;
+
+import java.io.InputStream;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the remote service interface for BlogsEntry. Methods of this
@@ -55,97 +66,84 @@ public interface BlogsEntryService extends BaseService {
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.lang.String smallImageFileName,
-		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(
-		java.lang.String title, java.lang.String subtitle,
+	public BlogsEntry addEntry(java.lang.String title,
 		java.lang.String description, java.lang.String content,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName, InputStream smallImageInputStream,
+		ServiceContext serviceContext) throws PortalException;
+
+	public BlogsEntry addEntry(java.lang.String title,
+		java.lang.String subtitle, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
-		long companyId, java.util.Date displayDate, int status, int max)
-		throws PortalException;
+	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
+		int status, int max) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getCompanyEntriesRSS(long companyId,
-		java.util.Date displayDate, int status, int max, java.lang.String type,
+		Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+		ThemeDisplay themeDisplay) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry getEntry(long entryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry getEntry(long entryId)
-		throws PortalException;
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int max);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry getEntry(long groupId,
-		java.lang.String urlTitle) throws PortalException;
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate, int status, int max);
+	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate, int status, int start, int end);
+	public List<BlogsEntry> getGroupEntries(long groupId, int status,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int max);
+	public List<BlogsEntry> getGroupEntries(long groupId, int status,
+		int start, int end, OrderByComparator<BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
-		int status);
+	public int getGroupEntriesCount(long groupId, Date displayDate, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getGroupEntriesRSS(long groupId,
-		java.util.Date displayDate, int status, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
+	public java.lang.String getGroupEntriesRSS(long groupId, Date displayDate,
+		int status, int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc);
+	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
+		int status, int start, int end, OrderByComparator<BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc);
+	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
+		int[] statuses, int start, int end, OrderByComparator<BlogsEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupUserEntriesCount(long groupId, long userId, int status);
@@ -155,9 +153,8 @@ public interface BlogsEntryService extends BaseService {
 		int[] statuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
-		long companyId, long groupId, java.util.Date displayDate, int status,
-		int max) throws PortalException;
+	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
+		Date displayDate, int status, int max) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -167,20 +164,17 @@ public interface BlogsEntryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
-		long organizationId, java.util.Date displayDate, int status, int max)
-		throws PortalException;
+	public List<BlogsEntry> getOrganizationEntries(long organizationId,
+		Date displayDate, int status, int max) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getOrganizationEntriesRSS(long organizationId,
-		java.util.Date displayDate, int status, int max, java.lang.String type,
+		Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws PortalException;
+		ThemeDisplay themeDisplay) throws PortalException;
 
-	public com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
-		long entryId) throws PortalException;
+	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException;
 
 	public void restoreEntryFromTrash(long entryId) throws PortalException;
 
@@ -195,26 +189,22 @@ public interface BlogsEntryService extends BaseService {
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
-		long entryId, java.lang.String title, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.lang.String smallImageFileName,
-		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
-		long entryId, java.lang.String title, java.lang.String subtitle,
+	public BlogsEntry updateEntry(long entryId, java.lang.String title,
 		java.lang.String description, java.lang.String content,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName, InputStream smallImageInputStream,
+		ServiceContext serviceContext) throws PortalException;
+
+	public BlogsEntry updateEntry(long entryId, java.lang.String title,
+		java.lang.String subtitle, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 }

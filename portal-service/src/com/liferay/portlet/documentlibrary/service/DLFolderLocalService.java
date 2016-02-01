@@ -16,15 +16,37 @@ package com.liferay.portlet.documentlibrary.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for DLFolder. Methods of this
@@ -49,12 +71,12 @@ public interface DLFolderLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link DLFolderLocalServiceUtil} to access the document library folder local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
+		DLFolder dlFolder);
 
 	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId);
 
 	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders);
+		List<DLFolder> DLFolders);
 
 	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
 		long[] folderIds);
@@ -65,16 +87,13 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param dlFolder the document library folder
 	* @return the document library folder that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFolder addDLFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder addDLFolder(DLFolder dlFolder);
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
-		long userId, long groupId, long repositoryId, boolean mountPoint,
-		long parentFolderId, java.lang.String name,
+	public DLFolder addFolder(long userId, long groupId, long repositoryId,
+		boolean mountPoint, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean hidden,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId);
 
@@ -84,8 +103,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param folderId the primary key for the new document library folder
 	* @return the new document library folder
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFolder createDLFolder(
-		long folderId);
+	public DLFolder createDLFolder(long folderId);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
@@ -99,13 +117,13 @@ public interface DLFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
+		DLFolder dlFolder);
 
 	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
 		long folderId);
 
 	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> DLFolders);
+		List<DLFolder> DLFolders);
 
 	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
 		long[] folderIds);
@@ -116,9 +134,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param dlFolder the document library folder
 	* @return the document library folder that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteDLFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
+	@Indexable(type = IndexableType.DELETE)
+	public DLFolder deleteDLFolder(DLFolder dlFolder);
 
 	/**
 	* Deletes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
@@ -127,44 +144,37 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @return the document library folder that was removed
 	* @throws PortalException if a document library folder with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteDLFolder(
-		long folderId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DLFolder deleteDLFolder(long folderId) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public DLFolder deleteFolder(DLFolder dlFolder) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public DLFolder deleteFolder(DLFolder dlFolder,
 		boolean includeTrashedEntries) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long folderId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DLFolder deleteFolder(long folderId) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long folderId, boolean includeTrashedEntries) throws PortalException;
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long userId, long folderId, boolean includeTrashedEntries)
+	@Indexable(type = IndexableType.DELETE)
+	public DLFolder deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException;
+
+	@Indexable(type = IndexableType.DELETE)
+	public DLFolder deleteFolder(long userId, long folderId,
+		boolean includeTrashedEntries) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -172,8 +182,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -187,8 +196,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -204,10 +212,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -215,8 +221,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -225,13 +230,11 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchDLFolder(
-		long folderId);
+	public DLFolder fetchDLFolder(long folderId);
 
 	/**
 	* Returns the document library folder matching the UUID and group.
@@ -241,39 +244,35 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchDLFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public DLFolder fetchDLFolderByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
-		long folderId);
+	public DLFolder fetchFolder(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
-		long groupId, long parentFolderId, java.lang.String name);
+	public DLFolder fetchFolder(long groupId, long parentFolderId,
+		java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getCompanyFolders(
-		long companyId, int start, int end);
+	public List<DLFolder> getCompanyFolders(long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyFoldersCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
-		long fileEntryTypeId);
+	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
-		long fileEntryTypeId, int start, int end);
+	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFileEntryTypeDLFolders(
-		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator);
+	public List<DLFolder> getDLFileEntryTypeDLFolders(long fileEntryTypeId,
+		int start, int end, OrderByComparator<DLFolder> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLFileEntryTypeDLFoldersCount(long fileEntryTypeId);
@@ -295,8 +294,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @throws PortalException if a document library folder with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder getDLFolder(
-		long folderId) throws PortalException;
+	public DLFolder getDLFolder(long folderId) throws PortalException;
 
 	/**
 	* Returns the document library folder matching the UUID and group.
@@ -307,8 +305,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @throws PortalException if a matching document library folder could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder getDLFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public DLFolder getDLFolderByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library folders.
@@ -322,8 +320,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @return the range of document library folders
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
-		int start, int end);
+	public List<DLFolder> getDLFolders(int start, int end);
 
 	/**
 	* Returns all the document library folders matching the UUID and company.
@@ -333,7 +330,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @return the matching document library folders, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFoldersByUuidAndCompanyId(
+	public List<DLFolder> getDLFoldersByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -347,9 +344,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @return the range of matching document library folders, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFoldersByUuidAndCompanyId(
+	public List<DLFolder> getDLFoldersByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator);
+		OrderByComparator<DLFolder> orderByComparator);
 
 	/**
 	* Returns the number of document library folders.
@@ -360,26 +357,23 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public int getDLFoldersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
-		long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+	public List<java.lang.Object> getFileEntriesAndFileShortcuts(long groupId,
+		long folderId, QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesAndFileShortcutsCount(long groupId, long folderId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+		QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
-		long folderId) throws PortalException;
+	public DLFolder getFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
-		long groupId, long parentFolderId, java.lang.String name)
-		throws PortalException;
+	public DLFolder getFolder(long groupId, long parentFolderId,
+		java.lang.String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getFolderId(long companyId, long folderId);
@@ -390,45 +384,38 @@ public interface DLFolderLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getFolderIds(long groupId,
-		long parentFolderId);
+	public List<java.lang.Long> getFolderIds(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId);
+	public List<DLFolder> getFolders(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId, boolean includeMountfolders);
+	public List<DLFolder> getFolders(long groupId, long parentFolderId,
+		boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId, boolean includeMountfolders,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId, int status,
+	public List<DLFolder> getFolders(long groupId, long parentFolderId,
 		boolean includeMountfolders, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc);
+		OrderByComparator<DLFolder> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<DLFolder> getFolders(long groupId, long parentFolderId,
+		int start, int end, OrderByComparator<DLFolder> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFolder> getFolders(long groupId, long parentFolderId,
+		int status, boolean includeMountfolders, int start, int end,
+		OrderByComparator<DLFolder> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
-		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, java.lang.String[] mimeTypes,
-		boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+		boolean includeMountFolders, QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId);
@@ -442,30 +429,28 @@ public interface DLFolderLocalService extends BaseLocalService,
 		boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getGroupFolderIds(long groupId,
+	public List<java.lang.Long> getGroupFolderIds(long groupId,
 		long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getGroupSubfolderIds(java.util.List<java.lang.Long> folderIds,
+	public void getGroupSubfolderIds(List<java.lang.Long> folderIds,
 		long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFolder getMountFolder(
-		long repositoryId) throws PortalException;
+	public DLFolder getMountFolder(long repositoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getMountFolders(
-		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> obc);
+	public List<DLFolder> getMountFolders(long groupId, long parentFolderId,
+		int start, int end, OrderByComparator<DLFolder> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMountFoldersCount(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getNoAssetFolders();
+	public List<DLFolder> getNoAssetFolders();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -476,24 +461,23 @@ public interface DLFolderLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getRepositoryFolderIds(
-		long repositoryId, long parentFolderId);
+	public List<java.lang.Long> getRepositoryFolderIds(long repositoryId,
+		long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getRepositoryFolders(
-		long repositoryId, int start, int end);
+	public List<DLFolder> getRepositoryFolders(long repositoryId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRepositoryFoldersCount(long repositoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getRepositorySubfolderIds(
-		java.util.List<java.lang.Long> folderIds, long repositoryId,
-		long folderId);
+	public void getRepositorySubfolderIds(List<java.lang.Long> folderIds,
+		long repositoryId, long folderId);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
@@ -501,8 +485,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
-		long groupId, long folderId);
+	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
+		long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFileEntryTypeDLFolder(long fileEntryTypeId,
@@ -517,18 +501,15 @@ public interface DLFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasInheritableLock(long folderId) throws PortalException;
 
-	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
-		long folderId) throws PortalException;
-
-	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
-		long folderId, java.lang.String owner, boolean inheritable,
-		long expirationTime) throws PortalException;
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFolder moveFolder(
-		long userId, long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public Lock lockFolder(long userId, long folderId)
 		throws PortalException;
+
+	public Lock lockFolder(long userId, long folderId, java.lang.String owner,
+		boolean inheritable, long expirationTime) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder moveFolder(long userId, long folderId, long parentFolderId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
 
@@ -552,50 +533,41 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @param dlFolder the document library folder
 	* @return the document library folder that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateDLFolder(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder updateDLFolder(DLFolder dlFolder);
 
 	/**
 	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
 	String, String, long, List, int, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
-		long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
-		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DLFolder updateFolder(long folderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		List<java.lang.Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
+		ServiceContext serviceContext) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		long folderId, java.lang.String name, java.lang.String description,
-		long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder updateFolder(long folderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
 	String, String, long, List, int, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
-		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DLFolder updateFolder(long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId, List<java.lang.Long> fileEntryTypeIds,
+		boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder updateFolder(long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long defaultFileEntryTypeId, List<java.lang.Long> fileEntryTypeIds,
+		int restrictionType, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -604,30 +576,25 @@ public interface DLFolderLocalService extends BaseLocalService,
 	String, long, List, int, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
+	public DLFolder updateFolderAndFileEntryTypes(long userId, long folderId,
+		long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
-		boolean overrideFileEntryTypes,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		List<java.lang.Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
-		long userId, long folderId, long parentFolderId, java.lang.String name,
+	public DLFolder updateFolderAndFileEntryTypes(long userId, long folderId,
+		long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
-		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		ServiceContext serviceContext) throws PortalException;
+
+	@BufferedIncrement(configuration = "DLFolderEntry", incrementClass = com.liferay.portal.kernel.increment.DateOverrideIncrement.class)
+	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.increment.BufferedIncrement(configuration = "DLFolderEntry", incrementClass = com.liferay.portal.kernel.increment.DateOverrideIncrement.class)
-	public void updateLastPostDate(long folderId, java.util.Date lastPostDate)
-		throws PortalException;
-
-	public com.liferay.portlet.documentlibrary.model.DLFolder updateStatus(
-		long userId, long folderId, int status,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DLFolder updateStatus(long userId, long folderId, int status,
+		Map<java.lang.String, Serializable> workflowContext,
+		ServiceContext serviceContext) throws PortalException;
 
 	public boolean verifyInheritableLock(long folderId,
 		java.lang.String lockUuid) throws PortalException;

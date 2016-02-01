@@ -16,14 +16,28 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.definition.Action;
+import com.liferay.portal.workflow.kaleo.model.KaleoAction;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for KaleoAction. Methods of this
@@ -54,16 +68,13 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param kaleoAction the kaleo action
 	* @return the kaleo action that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction addKaleoAction(
-		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoAction addKaleoAction(KaleoAction kaleoAction);
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction addKaleoAction(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		long kaleoDefinitionId, java.lang.String kaleoNodeName,
-		com.liferay.portal.workflow.kaleo.definition.Action action,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public KaleoAction addKaleoAction(java.lang.String kaleoClassName,
+		long kaleoClassPK, long kaleoDefinitionId,
+		java.lang.String kaleoNodeName, Action action,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new kaleo action with the primary key. Does not add the kaleo action to the database.
@@ -71,8 +82,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param kaleoActionId the primary key for the new kaleo action
 	* @return the new kaleo action
 	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction createKaleoAction(
-		long kaleoActionId);
+	public KaleoAction createKaleoAction(long kaleoActionId);
 
 	public void deleteCompanyKaleoActions(long companyId);
 
@@ -82,9 +92,8 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param kaleoAction the kaleo action
 	* @return the kaleo action that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction deleteKaleoAction(
-		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction);
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoAction deleteKaleoAction(KaleoAction kaleoAction);
 
 	/**
 	* Deletes the kaleo action with the primary key from the database. Also notifies the appropriate model listeners.
@@ -93,9 +102,9 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @return the kaleo action that was removed
 	* @throws PortalException if a kaleo action with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction deleteKaleoAction(
-		long kaleoActionId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoAction deleteKaleoAction(long kaleoActionId)
+		throws PortalException;
 
 	public void deleteKaleoDefinitionKaleoActions(long kaleoDefinitionId);
 
@@ -103,11 +112,10 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -115,8 +123,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -130,8 +137,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -147,10 +153,8 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -158,8 +162,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -168,19 +171,17 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction fetchKaleoAction(
-		long kaleoActionId);
+	public KaleoAction fetchKaleoAction(long kaleoActionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the kaleo action with the primary key.
@@ -190,17 +191,16 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @throws PortalException if a kaleo action with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction getKaleoAction(
-		long kaleoActionId) throws PortalException;
+	public KaleoAction getKaleoAction(long kaleoActionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-		java.lang.String kaleoClassName, long kaleoClassPK);
+	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
+		long kaleoClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType);
+	public List<KaleoAction> getKaleoActions(java.lang.String kaleoClassName,
+		long kaleoClassPK, java.lang.String executionType);
 
 	/**
 	* Returns a range of all the kaleo actions.
@@ -214,8 +214,7 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @return the range of kaleo actions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-		int start, int end);
+	public List<KaleoAction> getKaleoActions(int start, int end);
 
 	/**
 	* Returns the number of kaleo actions.
@@ -234,8 +233,8 @@ public interface KaleoActionLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the kaleo action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -243,7 +242,6 @@ public interface KaleoActionLocalService extends BaseLocalService,
 	* @param kaleoAction the kaleo action
 	* @return the kaleo action that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction updateKaleoAction(
-		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoAction updateKaleoAction(KaleoAction kaleoAction);
 }

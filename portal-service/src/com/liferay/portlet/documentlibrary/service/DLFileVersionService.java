@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+
+import java.util.List;
+
 /**
  * Provides the remote service interface for DLFileVersion. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -48,24 +52,24 @@ public interface DLFileVersionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DLFileVersionServiceUtil} to access the document library file version remote service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileVersionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileVersionId) throws PortalException;
+	public DLFileVersion getFileVersion(long fileVersionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersions(
-		long fileEntryId, int status) throws PortalException;
+	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileVersionsCount(long fileEntryId, int status)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long fileEntryId) throws PortalException;
+	public DLFileVersion getLatestFileVersion(long fileEntryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy) throws PortalException;
+	public DLFileVersion getLatestFileVersion(long fileEntryId,
+		boolean excludeWorkingCopy) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

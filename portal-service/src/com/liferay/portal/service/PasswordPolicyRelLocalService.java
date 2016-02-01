@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PasswordPolicyRel;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for PasswordPolicyRel. Methods of this
@@ -45,8 +57,8 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyRelLocalServiceUtil} to access the password policy rel local service. Add custom service methods to {@link com.liferay.portal.service.impl.PasswordPolicyRelLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.PasswordPolicyRel addPasswordPolicyRel(
-		long passwordPolicyId, java.lang.String className, long classPK);
+	public PasswordPolicyRel addPasswordPolicyRel(long passwordPolicyId,
+		java.lang.String className, long classPK);
 
 	/**
 	* Adds the password policy rel to the database. Also notifies the appropriate model listeners.
@@ -54,9 +66,9 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param passwordPolicyRel the password policy rel
 	* @return the password policy rel that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.PasswordPolicyRel addPasswordPolicyRel(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel);
+	@Indexable(type = IndexableType.REINDEX)
+	public PasswordPolicyRel addPasswordPolicyRel(
+		PasswordPolicyRel passwordPolicyRel);
 
 	public void addPasswordPolicyRels(long passwordPolicyId,
 		java.lang.String className, long[] classPKs);
@@ -67,8 +79,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param passwordPolicyRelId the primary key for the new password policy rel
 	* @return the new password policy rel
 	*/
-	public com.liferay.portal.model.PasswordPolicyRel createPasswordPolicyRel(
-		long passwordPolicyRelId);
+	public PasswordPolicyRel createPasswordPolicyRel(long passwordPolicyRelId);
 
 	public void deletePasswordPolicyRel(java.lang.String className, long classPK);
 
@@ -81,9 +92,9 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param passwordPolicyRel the password policy rel
 	* @return the password policy rel that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.PasswordPolicyRel deletePasswordPolicyRel(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel);
+	@Indexable(type = IndexableType.DELETE)
+	public PasswordPolicyRel deletePasswordPolicyRel(
+		PasswordPolicyRel passwordPolicyRel);
 
 	/**
 	* Deletes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
@@ -92,9 +103,9 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @return the password policy rel that was removed
 	* @throws PortalException if a password policy rel with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.PasswordPolicyRel deletePasswordPolicyRel(
-		long passwordPolicyRelId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public PasswordPolicyRel deletePasswordPolicyRel(long passwordPolicyRelId)
+		throws PortalException;
 
 	public void deletePasswordPolicyRels(long passwordPolicyId);
 
@@ -105,11 +116,10 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -117,8 +127,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -132,8 +141,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -149,10 +157,8 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -160,8 +166,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -170,23 +175,21 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PasswordPolicyRel fetchPasswordPolicyRel(
+	public PasswordPolicyRel fetchPasswordPolicyRel(
 		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PasswordPolicyRel fetchPasswordPolicyRel(
-		long passwordPolicyRelId);
+	public PasswordPolicyRel fetchPasswordPolicyRel(long passwordPolicyRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -196,13 +199,12 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
-		java.lang.String className, long classPK) throws PortalException;
+	public PasswordPolicyRel getPasswordPolicyRel(java.lang.String className,
+		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
-		long passwordPolicyId, java.lang.String className, long classPK)
-		throws PortalException;
+	public PasswordPolicyRel getPasswordPolicyRel(long passwordPolicyId,
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Returns the password policy rel with the primary key.
@@ -212,8 +214,8 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @throws PortalException if a password policy rel with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PasswordPolicyRel getPasswordPolicyRel(
-		long passwordPolicyRelId) throws PortalException;
+	public PasswordPolicyRel getPasswordPolicyRel(long passwordPolicyRelId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the password policy rels.
@@ -227,8 +229,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @return the range of password policy rels
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PasswordPolicyRel> getPasswordPolicyRels(
-		int start, int end);
+	public List<PasswordPolicyRel> getPasswordPolicyRels(int start, int end);
 
 	/**
 	* Returns the number of password policy rels.
@@ -240,8 +241,8 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPasswordPolicyRel(long passwordPolicyId,
@@ -253,7 +254,7 @@ public interface PasswordPolicyRelLocalService extends BaseLocalService,
 	* @param passwordPolicyRel the password policy rel
 	* @return the password policy rel that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.PasswordPolicyRel updatePasswordPolicyRel(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel);
+	@Indexable(type = IndexableType.REINDEX)
+	public PasswordPolicyRel updatePasswordPolicyRel(
+		PasswordPolicyRel passwordPolicyRel);
 }

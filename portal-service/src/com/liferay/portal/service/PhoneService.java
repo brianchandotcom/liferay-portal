@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Phone;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for Phone. Methods of this
@@ -46,9 +49,9 @@ public interface PhoneService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PhoneServiceUtil} to access the phone remote service. Add custom service methods to {@link com.liferay.portal.service.impl.PhoneServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Phone addPhone(java.lang.String className,
-		long classPK, java.lang.String number, java.lang.String extension,
-		long typeId, boolean primary,
+	public Phone addPhone(java.lang.String className, long classPK,
+		java.lang.String number, java.lang.String extension, long typeId,
+		boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -62,14 +65,13 @@ public interface PhoneService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Phone getPhone(long phoneId)
-		throws PortalException;
+	public Phone getPhone(long phoneId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Phone> getPhones(
-		java.lang.String className, long classPK) throws PortalException;
+	public List<Phone> getPhones(java.lang.String className, long classPK)
+		throws PortalException;
 
-	public com.liferay.portal.model.Phone updatePhone(long phoneId,
-		java.lang.String number, java.lang.String extension, long typeId,
-		boolean primary) throws PortalException;
+	public Phone updatePhone(long phoneId, java.lang.String number,
+		java.lang.String extension, long typeId, boolean primary)
+		throws PortalException;
 }

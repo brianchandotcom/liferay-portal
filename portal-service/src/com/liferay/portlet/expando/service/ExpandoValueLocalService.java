@@ -16,14 +16,32 @@ package com.liferay.portlet.expando.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.portlet.expando.model.ExpandoValue;
+
+import java.io.Serializable;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for ExpandoValue. Methods of this
@@ -54,128 +72,104 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param expandoValue the expando value
 	* @return the expando value that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.expando.model.ExpandoValue addExpandoValue(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue);
+	@Indexable(type = IndexableType.REINDEX)
+	public ExpandoValue addExpandoValue(ExpandoValue expandoValue);
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long classNameId, long tableId, long columnId, long classPK,
+	public ExpandoValue addValue(long classNameId, long tableId, long columnId,
+		long classPK, java.lang.String data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		short data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		int data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		Date[] data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		double data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		java.lang.Number[] data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		double[] data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		long[] data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		float[] data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		boolean data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		boolean[] data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		Date data) throws PortalException;
+
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
 		java.lang.String data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, short data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		long data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, int data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		java.lang.Object data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.util.Date[] data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		int[] data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, double data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		java.lang.Number data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Number[] data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		float data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, double[] data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		java.lang.String[] data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, long[] data)
-		throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		short[] data) throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, float[] data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, boolean data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, boolean[] data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.util.Date data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.String data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, long data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Object data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, int[] data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Number data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, float data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.String[] data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, short[] data)
-		throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoValue addValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK,
-		java.util.Map<java.util.Locale, ?> dataMap,
-		java.util.Locale defautlLocale) throws PortalException;
+	public ExpandoValue addValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		Map<Locale, ?> dataMap, Locale defautlLocale) throws PortalException;
 
 	public void addValues(long classNameId, long tableId,
-		java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> columns,
-		long classPK, java.util.Map<java.lang.String, java.lang.String> data)
-		throws PortalException;
+		List<ExpandoColumn> columns, long classPK,
+		Map<java.lang.String, java.lang.String> data) throws PortalException;
 
 	public void addValues(long companyId, java.lang.String className,
 		java.lang.String tableName, long classPK,
-		java.util.Map<java.lang.String, java.io.Serializable> attributes)
+		Map<java.lang.String, Serializable> attributes)
 		throws PortalException;
 
 	public void addValues(long companyId, long classNameId,
 		java.lang.String tableName, long classPK,
-		java.util.Map<java.lang.String, java.io.Serializable> attributes)
+		Map<java.lang.String, Serializable> attributes)
 		throws PortalException;
 
 	/**
@@ -184,8 +178,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param valueId the primary key for the new expando value
 	* @return the new expando value
 	*/
-	public com.liferay.portlet.expando.model.ExpandoValue createExpandoValue(
-		long valueId);
+	public ExpandoValue createExpandoValue(long valueId);
 
 	public void deleteColumnValues(long columnId);
 
@@ -195,9 +188,8 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param expandoValue the expando value
 	* @return the expando value that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.expando.model.ExpandoValue deleteExpandoValue(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue);
+	@Indexable(type = IndexableType.DELETE)
+	public ExpandoValue deleteExpandoValue(ExpandoValue expandoValue);
 
 	/**
 	* Deletes the expando value with the primary key from the database. Also notifies the appropriate model listeners.
@@ -206,16 +198,15 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @return the expando value that was removed
 	* @throws PortalException if a expando value with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.expando.model.ExpandoValue deleteExpandoValue(
-		long valueId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ExpandoValue deleteExpandoValue(long valueId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	public void deleteRowValues(long rowId);
@@ -233,8 +224,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 		java.lang.String tableName, java.lang.String columnName, long classPK)
 		throws PortalException;
 
-	public void deleteValue(
-		com.liferay.portlet.expando.model.ExpandoValue value);
+	public void deleteValue(ExpandoValue value);
 
 	public void deleteValue(long valueId) throws PortalException;
 
@@ -242,7 +232,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 
 	public void deleteValues(long classNameId, long classPK);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -250,8 +240,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -265,8 +254,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -282,10 +270,8 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -293,8 +279,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -303,40 +288,37 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoValue fetchExpandoValue(
-		long valueId);
+	public ExpandoValue fetchExpandoValue(long valueId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getColumnValues(
-		long columnId, int start, int end);
+	public List<ExpandoValue> getColumnValues(long columnId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getColumnValues(
-		long companyId, java.lang.String className, java.lang.String tableName,
+	public List<ExpandoValue> getColumnValues(long companyId,
+		java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, java.lang.String data, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getColumnValues(
-		long companyId, java.lang.String className, java.lang.String tableName,
+	public List<ExpandoValue> getColumnValues(long companyId,
+		java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getColumnValues(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.lang.String columnName, java.lang.String data, int start, int end);
+	public List<ExpandoValue> getColumnValues(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String data, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getColumnValues(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.lang.String columnName, int start, int end);
+	public List<ExpandoValue> getColumnValues(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String columnName, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnValuesCount(long columnId);
@@ -360,9 +342,9 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 		java.lang.String data);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.io.Serializable getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK) throws PortalException;
+	public Serializable getData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getData(long companyId, java.lang.String className,
@@ -375,9 +357,9 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 		boolean defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date[] getData(long companyId, java.lang.String className,
+	public Date[] getData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.util.Date[] defaultData) throws PortalException;
+		Date[] defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public double[] getData(long companyId, java.lang.String className,
@@ -406,10 +388,9 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 		float[] defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<?, ?> getData(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK,
-		java.util.Map<?, ?> defaultData) throws PortalException;
+	public Map<?, ?> getData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		Map<?, ?> defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getData(long companyId,
@@ -448,9 +429,9 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 		int[] defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getData(long companyId, java.lang.String className,
+	public Date getData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.util.Date defaultData) throws PortalException;
+		Date defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getData(long companyId, java.lang.String className,
@@ -463,20 +444,19 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 		java.lang.Number defaultData) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.String, java.io.Serializable> getData(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.util.Collection<java.lang.String> columnNames, long classPK)
+	public Map<java.lang.String, Serializable> getData(long companyId,
+		java.lang.String className, java.lang.String tableName,
+		Collection<java.lang.String> columnNames, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getDefaultTableColumnValues(
-		long companyId, java.lang.String className,
-		java.lang.String columnName, int start, int end);
+	public List<ExpandoValue> getDefaultTableColumnValues(long companyId,
+		java.lang.String className, java.lang.String columnName, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getDefaultTableColumnValues(
-		long companyId, long classNameId, java.lang.String columnName,
-		int start, int end);
+	public List<ExpandoValue> getDefaultTableColumnValues(long companyId,
+		long classNameId, java.lang.String columnName, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefaultTableColumnValuesCount(long companyId,
@@ -494,8 +474,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @throws PortalException if a expando value with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoValue getExpandoValue(
-		long valueId) throws PortalException;
+	public ExpandoValue getExpandoValue(long valueId) throws PortalException;
 
 	/**
 	* Returns a range of all the expando values.
@@ -509,8 +488,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @return the range of expando values
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getExpandoValues(
-		int start, int end);
+	public List<ExpandoValue> getExpandoValues(int start, int end);
 
 	/**
 	* Returns the number of expando values.
@@ -521,7 +499,7 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	public int getExpandoValuesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -532,26 +510,23 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getRowValues(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		long classPK, int start, int end);
+	public List<ExpandoValue> getRowValues(long companyId,
+		java.lang.String className, java.lang.String tableName, long classPK,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getRowValues(
-		long companyId, long classNameId, java.lang.String tableName,
-		long classPK, int start, int end);
+	public List<ExpandoValue> getRowValues(long companyId, long classNameId,
+		java.lang.String tableName, long classPK, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getRowValues(
-		long rowId);
+	public List<ExpandoValue> getRowValues(long rowId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getRowValues(
-		long rowId, int start, int end);
+	public List<ExpandoValue> getRowValues(long rowId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRowValuesCount(long companyId, java.lang.String className,
@@ -565,26 +540,22 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	public int getRowValuesCount(long rowId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoValue getValue(
-		long columnId, long rowId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoValue getValue(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoValue getValue(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.lang.String columnName, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoValue getValue(
-		long tableId, long columnId, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoValue getValue(long valueId)
+	public ExpandoValue getValue(long columnId, long rowId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoValue getValue(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoValue getValue(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String columnName, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoValue getValue(long tableId, long columnId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoValue getValue(long valueId) throws PortalException;
 
 	/**
 	* Updates the expando value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -592,7 +563,6 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 	* @param expandoValue the expando value
 	* @return the expando value that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.expando.model.ExpandoValue updateExpandoValue(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue);
+	@Indexable(type = IndexableType.REINDEX)
+	public ExpandoValue updateExpandoValue(ExpandoValue expandoValue);
 }

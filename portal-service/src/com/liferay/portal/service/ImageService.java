@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Image;
 
 /**
  * Provides the remote service interface for Image. Methods of this
@@ -47,8 +48,7 @@ public interface ImageService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ImageServiceUtil} to access the image remote service. Add custom service methods to {@link com.liferay.portal.service.impl.ImageServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Image getImage(long imageId)
-		throws PortalException;
+	public Image getImage(long imageId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

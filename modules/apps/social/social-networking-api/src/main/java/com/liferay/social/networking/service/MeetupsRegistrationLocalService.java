@@ -16,14 +16,27 @@ package com.liferay.social.networking.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.social.networking.model.MeetupsRegistration;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for MeetupsRegistration. Methods of this
@@ -54,9 +67,9 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param meetupsRegistration the meetups registration
 	* @return the meetups registration that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.social.networking.model.MeetupsRegistration addMeetupsRegistration(
-		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration);
+	@Indexable(type = IndexableType.REINDEX)
+	public MeetupsRegistration addMeetupsRegistration(
+		MeetupsRegistration meetupsRegistration);
 
 	/**
 	* Creates a new meetups registration with the primary key. Does not add the meetups registration to the database.
@@ -64,7 +77,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param meetupsRegistrationId the primary key for the new meetups registration
 	* @return the new meetups registration
 	*/
-	public com.liferay.social.networking.model.MeetupsRegistration createMeetupsRegistration(
+	public MeetupsRegistration createMeetupsRegistration(
 		long meetupsRegistrationId);
 
 	/**
@@ -73,9 +86,9 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param meetupsRegistration the meetups registration
 	* @return the meetups registration that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.social.networking.model.MeetupsRegistration deleteMeetupsRegistration(
-		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration);
+	@Indexable(type = IndexableType.DELETE)
+	public MeetupsRegistration deleteMeetupsRegistration(
+		MeetupsRegistration meetupsRegistration);
 
 	/**
 	* Deletes the meetups registration with the primary key from the database. Also notifies the appropriate model listeners.
@@ -84,19 +97,18 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @return the meetups registration that was removed
 	* @throws PortalException if a meetups registration with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.social.networking.model.MeetupsRegistration deleteMeetupsRegistration(
+	@Indexable(type = IndexableType.DELETE)
+	public MeetupsRegistration deleteMeetupsRegistration(
 		long meetupsRegistrationId) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -104,8 +116,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -119,8 +130,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -136,10 +146,8 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -147,8 +155,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -157,19 +164,18 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.social.networking.model.MeetupsRegistration fetchMeetupsRegistration(
+	public MeetupsRegistration fetchMeetupsRegistration(
 		long meetupsRegistrationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the meetups registration with the primary key.
@@ -179,15 +185,15 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @throws PortalException if a meetups registration with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.social.networking.model.MeetupsRegistration getMeetupsRegistration(
+	public MeetupsRegistration getMeetupsRegistration(
 		long meetupsRegistrationId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.social.networking.model.MeetupsRegistration getMeetupsRegistration(
-		long userId, long meetupsEntryId) throws PortalException;
+	public MeetupsRegistration getMeetupsRegistration(long userId,
+		long meetupsEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> getMeetupsRegistrations(
+	public List<MeetupsRegistration> getMeetupsRegistrations(
 		long meetupsEntryId, int status, int start, int end);
 
 	/**
@@ -202,8 +208,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @return the range of meetups registrations
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> getMeetupsRegistrations(
-		int start, int end);
+	public List<MeetupsRegistration> getMeetupsRegistrations(int start, int end);
 
 	/**
 	* Returns the number of meetups registrations.
@@ -225,8 +230,8 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the meetups registration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -234,11 +239,11 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	* @param meetupsRegistration the meetups registration
 	* @return the meetups registration that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
-		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration);
+	@Indexable(type = IndexableType.REINDEX)
+	public MeetupsRegistration updateMeetupsRegistration(
+		MeetupsRegistration meetupsRegistration);
 
-	public com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
-		long userId, long meetupsEntryId, int status, java.lang.String comments)
+	public MeetupsRegistration updateMeetupsRegistration(long userId,
+		long meetupsEntryId, int status, java.lang.String comments)
 		throws PortalException;
 }

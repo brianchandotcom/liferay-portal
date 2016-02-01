@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.LayoutBranch;
 
 /**
  * Provides the remote service interface for LayoutBranch. Methods of this
@@ -45,9 +46,8 @@ public interface LayoutBranchService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutBranchServiceUtil} to access the layout branch remote service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutBranchServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.LayoutBranch addLayoutBranch(
-		long layoutRevisionId, java.lang.String name,
-		java.lang.String description, boolean master,
+	public LayoutBranch addLayoutBranch(long layoutRevisionId,
+		java.lang.String name, java.lang.String description, boolean master,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -61,9 +61,8 @@ public interface LayoutBranchService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portal.model.LayoutBranch updateLayoutBranch(
-		long layoutBranchId, java.lang.String name,
-		java.lang.String description,
+	public LayoutBranch updateLayoutBranch(long layoutBranchId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 }

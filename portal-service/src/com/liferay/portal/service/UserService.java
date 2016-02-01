@@ -16,6 +16,8 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -23,6 +25,15 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Address;
+import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.model.Phone;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.model.Website;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Provides the remote service interface for User. Methods of this
@@ -146,22 +157,18 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public com.liferay.portal.model.User addUser(long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
-		boolean sendEmail,
+	public User addUser(long companyId, boolean autoPassword,
+		java.lang.String password1, java.lang.String password2,
+		boolean autoScreenName, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, Locale locale, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<Phone> phones, List<Website> websites,
+		List<AnnouncementsDelivery> announcementsDelivers, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -210,16 +217,16 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public com.liferay.portal.model.User addUser(long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+	public User addUser(long companyId, boolean autoPassword,
+		java.lang.String password1, java.lang.String password2,
+		boolean autoScreenName, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, Locale locale, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -282,22 +289,18 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public com.liferay.portal.model.User addUserWithWorkflow(long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
-		boolean sendEmail,
+	public User addUserWithWorkflow(long companyId, boolean autoPassword,
+		java.lang.String password1, java.lang.String password2,
+		boolean autoScreenName, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, Locale locale, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<Phone> phones, List<Website> websites,
+		List<AnnouncementsDelivery> announcementsDelivers, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -346,16 +349,16 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public com.liferay.portal.model.User addUserWithWorkflow(long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+	public User addUserWithWorkflow(long companyId, boolean autoPassword,
+		java.lang.String password1, java.lang.String password2,
+		boolean autoScreenName, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, Locale locale, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -383,15 +386,14 @@ public interface UserService extends BaseService {
 	public void deleteUser(long userId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
-		long companyId, int start, int end) throws PortalException;
+	public List<User> getCompanyUsers(long companyId, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyUsersCount(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getCurrentUser()
-		throws PortalException;
+	public User getCurrentUser() throws PortalException;
 
 	/**
 	* Returns the primary keys of all the users belonging to the group.
@@ -409,8 +411,7 @@ public interface UserService extends BaseService {
 	* @return the users belonging to the group
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getGroupUsers(
-		long groupId) throws PortalException;
+	public List<User> getGroupUsers(long groupId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -436,8 +437,8 @@ public interface UserService extends BaseService {
 	* @return users belonging to the organization
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getOrganizationUsers(
-		long organizationId) throws PortalException;
+	public List<User> getOrganizationUsers(long organizationId)
+		throws PortalException;
 
 	/**
 	* Returns the primary keys of all the users belonging to the role.
@@ -456,7 +457,7 @@ public interface UserService extends BaseService {
 	* @return the user with the email address
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByEmailAddress(long companyId,
+	public User getUserByEmailAddress(long companyId,
 		java.lang.String emailAddress) throws PortalException;
 
 	/**
@@ -466,8 +467,7 @@ public interface UserService extends BaseService {
 	* @return the user with the primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserById(long userId)
-		throws PortalException;
+	public User getUserById(long userId) throws PortalException;
 
 	/**
 	* Returns the user with the screen name.
@@ -477,12 +477,12 @@ public interface UserService extends BaseService {
 	* @return the user with the screen name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByScreenName(long companyId,
-		java.lang.String screenName) throws PortalException;
+	public User getUserByScreenName(long companyId, java.lang.String screenName)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
-		long userGroupId) throws PortalException;
+	public List<User> getUserGroupUsers(long userGroupId)
+		throws PortalException;
 
 	/**
 	* Returns the primary key of the user with the email address.
@@ -705,8 +705,8 @@ public interface UserService extends BaseService {
 	* @param agreedToTermsOfUse whether the user has agree to the terms of use
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateAgreedToTermsOfUse(long userId,
-		boolean agreedToTermsOfUse) throws PortalException;
+	public User updateAgreedToTermsOfUse(long userId, boolean agreedToTermsOfUse)
+		throws PortalException;
 
 	/**
 	* Updates the user's email address.
@@ -720,9 +720,8 @@ public interface UserService extends BaseService {
 	remote host, and agent for the user.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateEmailAddress(long userId,
-		java.lang.String password, java.lang.String emailAddress1,
-		java.lang.String emailAddress2,
+	public User updateEmailAddress(long userId, java.lang.String password,
+		java.lang.String emailAddress1, java.lang.String emailAddress2,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -762,16 +761,15 @@ public interface UserService extends BaseService {
 	user.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateIncompleteUser(long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, boolean updateUserInformation,
-		boolean sendEmail,
+	public User updateIncompleteUser(long companyId, boolean autoPassword,
+		java.lang.String password1, java.lang.String password2,
+		boolean autoScreenName, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, Locale locale, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String jobTitle,
+		boolean updateUserInformation, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -782,8 +780,8 @@ public interface UserService extends BaseService {
 	* @param lockout whether the user is locked out
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateLockoutById(long userId,
-		boolean lockout) throws PortalException;
+	public User updateLockoutById(long userId, boolean lockout)
+		throws PortalException;
 
 	/**
 	* Updates the user's OpenID.
@@ -792,8 +790,8 @@ public interface UserService extends BaseService {
 	* @param openId the new OpenID
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateOpenId(long userId,
-		java.lang.String openId) throws PortalException;
+	public User updateOpenId(long userId, java.lang.String openId)
+		throws PortalException;
 
 	/**
 	* Sets the organizations that the user is in, removing and adding
@@ -818,9 +816,9 @@ public interface UserService extends BaseService {
 	password the next time they log in
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updatePassword(long userId,
-		java.lang.String password1, java.lang.String password2,
-		boolean passwordReset) throws PortalException;
+	public User updatePassword(long userId, java.lang.String password1,
+		java.lang.String password2, boolean passwordReset)
+		throws PortalException;
 
 	/**
 	* Updates the user's portrait image.
@@ -829,8 +827,8 @@ public interface UserService extends BaseService {
 	* @param bytes the new portrait image data
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updatePortrait(long userId,
-		byte[] bytes) throws PortalException;
+	public User updatePortrait(long userId, byte[] bytes)
+		throws PortalException;
 
 	/**
 	* Updates the user's password reset question and answer.
@@ -840,9 +838,8 @@ public interface UserService extends BaseService {
 	* @param answer the user's new password reset answer
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateReminderQuery(long userId,
-		java.lang.String question, java.lang.String answer)
-		throws PortalException;
+	public User updateReminderQuery(long userId, java.lang.String question,
+		java.lang.String answer) throws PortalException;
 
 	/**
 	* Updates the user's screen name.
@@ -851,8 +848,8 @@ public interface UserService extends BaseService {
 	* @param screenName the user's new screen name
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateScreenName(long userId,
-		java.lang.String screenName) throws PortalException;
+	public User updateScreenName(long userId, java.lang.String screenName)
+		throws PortalException;
 
 	/**
 	* Updates the user's workflow status.
@@ -864,8 +861,7 @@ public interface UserService extends BaseService {
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.User updateStatus(long userId, int status)
-		throws PortalException;
+	public User updateStatus(long userId, int status) throws PortalException;
 
 	/**
 	* Updates the user's workflow status.
@@ -877,7 +873,7 @@ public interface UserService extends BaseService {
 	user via attribute <code>passwordUnencrypted</code>.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateStatus(long userId, int status,
+	public User updateStatus(long userId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -942,10 +938,9 @@ public interface UserService extends BaseService {
 	List, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.User updateUser(long userId,
-		java.lang.String oldPassword, java.lang.String newPassword1,
-		java.lang.String newPassword2, boolean passwordReset,
-		java.lang.String reminderQueryQuestion,
+	public User updateUser(long userId, java.lang.String oldPassword,
+		java.lang.String newPassword1, java.lang.String newPassword2,
+		boolean passwordReset, java.lang.String reminderQueryQuestion,
 		java.lang.String reminderQueryAnswer, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
 		java.lang.String openId, java.lang.String languageId,
@@ -957,13 +952,10 @@ public interface UserService extends BaseService {
 		java.lang.String jabberSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
+		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<Phone> phones, List<Website> websites,
+		List<AnnouncementsDelivery> announcementsDelivers,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -1015,10 +1007,9 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateUser(long userId,
-		java.lang.String oldPassword, java.lang.String newPassword1,
-		java.lang.String newPassword2, boolean passwordReset,
-		java.lang.String reminderQueryQuestion,
+	public User updateUser(long userId, java.lang.String oldPassword,
+		java.lang.String newPassword1, java.lang.String newPassword2,
+		boolean passwordReset, java.lang.String reminderQueryQuestion,
 		java.lang.String reminderQueryAnswer, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
 		java.lang.String openId, java.lang.String languageId,
@@ -1030,8 +1021,7 @@ public interface UserService extends BaseService {
 		java.lang.String jabberSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
+		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -1090,10 +1080,9 @@ public interface UserService extends BaseService {
 	bridge attributes for the user.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateUser(long userId,
-		java.lang.String oldPassword, java.lang.String newPassword1,
-		java.lang.String newPassword2, boolean passwordReset,
-		java.lang.String reminderQueryQuestion,
+	public User updateUser(long userId, java.lang.String oldPassword,
+		java.lang.String newPassword1, java.lang.String newPassword2,
+		boolean passwordReset, java.lang.String reminderQueryQuestion,
 		java.lang.String reminderQueryAnswer, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
 		java.lang.String openId, boolean portrait, byte[] portraitBytes,
@@ -1106,13 +1095,10 @@ public interface UserService extends BaseService {
 		java.lang.String jabberSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
+		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<Phone> phones, List<Website> websites,
+		List<AnnouncementsDelivery> announcementsDelivers,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 }

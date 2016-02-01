@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.SystemEvent;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for SystemEvent. Methods of this
@@ -45,7 +57,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SystemEventLocalServiceUtil} to access the system event local service. Add custom service methods to {@link com.liferay.portal.service.impl.SystemEventLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.SystemEvent addSystemEvent(long companyId,
+	public SystemEvent addSystemEvent(long companyId,
 		java.lang.String className, long classPK, java.lang.String classUuid,
 		java.lang.String referrerClassName, int type, java.lang.String extraData)
 		throws PortalException;
@@ -56,14 +68,13 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param systemEvent the system event
 	* @return the system event that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.SystemEvent addSystemEvent(
-		com.liferay.portal.model.SystemEvent systemEvent);
+	@Indexable(type = IndexableType.REINDEX)
+	public SystemEvent addSystemEvent(SystemEvent systemEvent);
 
-	public com.liferay.portal.model.SystemEvent addSystemEvent(long userId,
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String classUuid, java.lang.String referrerClassName,
-		int type, java.lang.String extraData) throws PortalException;
+	public SystemEvent addSystemEvent(long userId, long groupId,
+		java.lang.String className, long classPK, java.lang.String classUuid,
+		java.lang.String referrerClassName, int type, java.lang.String extraData)
+		throws PortalException;
 
 	/**
 	* Creates a new system event with the primary key. Does not add the system event to the database.
@@ -71,15 +82,13 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param systemEventId the primary key for the new system event
 	* @return the new system event
 	*/
-	public com.liferay.portal.model.SystemEvent createSystemEvent(
-		long systemEventId);
+	public SystemEvent createSystemEvent(long systemEventId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -88,9 +97,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param systemEvent the system event
 	* @return the system event that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.SystemEvent deleteSystemEvent(
-		com.liferay.portal.model.SystemEvent systemEvent);
+	@Indexable(type = IndexableType.DELETE)
+	public SystemEvent deleteSystemEvent(SystemEvent systemEvent);
 
 	/**
 	* Deletes the system event with the primary key from the database. Also notifies the appropriate model listeners.
@@ -99,15 +107,15 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @return the system event that was removed
 	* @throws PortalException if a system event with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.SystemEvent deleteSystemEvent(
-		long systemEventId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public SystemEvent deleteSystemEvent(long systemEventId)
+		throws PortalException;
 
 	public void deleteSystemEvents(long groupId);
 
 	public void deleteSystemEvents(long groupId, long systemEventSetKey);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -115,8 +123,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -130,8 +137,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -147,10 +153,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -158,8 +162,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -168,23 +171,21 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.SystemEvent fetchSystemEvent(long groupId,
-		long classNameId, long classPK, int type);
+	public SystemEvent fetchSystemEvent(long groupId, long classNameId,
+		long classPK, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.SystemEvent fetchSystemEvent(
-		long systemEventId);
+	public SystemEvent fetchSystemEvent(long systemEventId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -195,8 +196,8 @@ public interface SystemEventLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the system event with the primary key.
@@ -206,16 +207,16 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @throws PortalException if a system event with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.SystemEvent getSystemEvent(
-		long systemEventId) throws PortalException;
+	public SystemEvent getSystemEvent(long systemEventId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
-		long groupId, long classNameId, long classPK);
+	public List<SystemEvent> getSystemEvents(long groupId, long classNameId,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
-		long groupId, long classNameId, long classPK, int type);
+	public List<SystemEvent> getSystemEvents(long groupId, long classNameId,
+		long classPK, int type);
 
 	/**
 	* Returns a range of all the system events.
@@ -229,8 +230,7 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @return the range of system events
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.SystemEvent> getSystemEvents(
-		int start, int end);
+	public List<SystemEvent> getSystemEvents(int start, int end);
 
 	/**
 	* Returns the number of system events.
@@ -246,7 +246,6 @@ public interface SystemEventLocalService extends BaseLocalService,
 	* @param systemEvent the system event
 	* @return the system event that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.SystemEvent updateSystemEvent(
-		com.liferay.portal.model.SystemEvent systemEvent);
+	@Indexable(type = IndexableType.REINDEX)
+	public SystemEvent updateSystemEvent(SystemEvent systemEvent);
 }

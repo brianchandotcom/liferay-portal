@@ -16,12 +16,26 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Image;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.File;
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for Image. Methods of this
@@ -52,9 +66,8 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param image the image
 	* @return the image that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Image addImage(
-		com.liferay.portal.model.Image image);
+	@Indexable(type = IndexableType.REINDEX)
+	public Image addImage(Image image);
 
 	/**
 	* Creates a new image with the primary key. Does not add the image to the database.
@@ -62,7 +75,7 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param imageId the primary key for the new image
 	* @return the new image
 	*/
-	public com.liferay.portal.model.Image createImage(long imageId);
+	public Image createImage(long imageId);
 
 	/**
 	* Deletes the image from the database. Also notifies the appropriate model listeners.
@@ -70,9 +83,8 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param image the image
 	* @return the image that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Image deleteImage(
-		com.liferay.portal.model.Image image);
+	@Indexable(type = IndexableType.DELETE)
+	public Image deleteImage(Image image);
 
 	/**
 	* Deletes the image with the primary key from the database. Also notifies the appropriate model listeners.
@@ -81,19 +93,17 @@ public interface ImageLocalService extends BaseLocalService,
 	* @return the image that was removed
 	* @throws PortalException if a image with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Image deleteImage(long imageId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Image deleteImage(long imageId) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -101,8 +111,7 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,8 +125,7 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -133,10 +141,8 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -144,8 +150,7 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -154,18 +159,17 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Image fetchImage(long imageId);
+	public Image fetchImage(long imageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Image getCompanyLogo(long imageId);
+	public Image getCompanyLogo(long imageId);
 
 	/**
 	* Returns the image with the primary key.
@@ -175,14 +179,13 @@ public interface ImageLocalService extends BaseLocalService,
 	* @throws PortalException if a image with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Image getImage(long imageId)
-		throws PortalException;
+	public Image getImage(long imageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Image getImageOrDefault(long imageId);
+	public Image getImageOrDefault(long imageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Image> getImages();
+	public List<Image> getImages();
 
 	/**
 	* Returns a range of all the images.
@@ -196,12 +199,10 @@ public interface ImageLocalService extends BaseLocalService,
 	* @return the range of images
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Image> getImages(int start,
-		int end);
+	public List<Image> getImages(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Image> getImagesBySize(
-		int size);
+	public List<Image> getImagesBySize(int size);
 
 	/**
 	* Returns the number of images.
@@ -212,7 +213,7 @@ public interface ImageLocalService extends BaseLocalService,
 	public int getImagesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -223,10 +224,10 @@ public interface ImageLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public com.liferay.portal.model.Image moveImage(long imageId, byte[] bytes)
+	public Image moveImage(long imageId, byte[] bytes)
 		throws PortalException;
 
 	/**
@@ -235,24 +236,20 @@ public interface ImageLocalService extends BaseLocalService,
 	* @param image the image
 	* @return the image that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Image updateImage(
-		com.liferay.portal.model.Image image);
+	@Indexable(type = IndexableType.REINDEX)
+	public Image updateImage(Image image);
 
-	public com.liferay.portal.model.Image updateImage(long imageId, byte[] bytes)
+	public Image updateImage(long imageId, byte[] bytes)
 		throws PortalException;
 
-	public com.liferay.portal.model.Image updateImage(long imageId,
-		byte[] bytes, java.lang.String type, int height, int width, int size)
+	public Image updateImage(long imageId, byte[] bytes, java.lang.String type,
+		int height, int width, int size) throws PortalException;
+
+	public Image updateImage(long imageId, File file) throws PortalException;
+
+	public Image updateImage(long imageId, InputStream is)
 		throws PortalException;
 
-	public com.liferay.portal.model.Image updateImage(long imageId,
-		java.io.File file) throws PortalException;
-
-	public com.liferay.portal.model.Image updateImage(long imageId,
-		java.io.InputStream is) throws PortalException;
-
-	public com.liferay.portal.model.Image updateImage(long imageId,
-		java.io.InputStream is, boolean cleanUpStream)
+	public Image updateImage(long imageId, InputStream is, boolean cleanUpStream)
 		throws PortalException;
 }

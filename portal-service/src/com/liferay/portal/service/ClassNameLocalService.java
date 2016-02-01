@@ -16,12 +16,25 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.ClassName;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for ClassName. Methods of this
@@ -52,12 +65,10 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param className the class name
 	* @return the class name that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ClassName addClassName(
-		com.liferay.portal.model.ClassName className);
+	@Indexable(type = IndexableType.REINDEX)
+	public ClassName addClassName(ClassName className);
 
-	public com.liferay.portal.model.ClassName addClassName(
-		java.lang.String value);
+	public ClassName addClassName(java.lang.String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkClassNames();
@@ -68,7 +79,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param classNameId the primary key for the new class name
 	* @return the new class name
 	*/
-	public com.liferay.portal.model.ClassName createClassName(long classNameId);
+	public ClassName createClassName(long classNameId);
 
 	/**
 	* Deletes the class name from the database. Also notifies the appropriate model listeners.
@@ -76,9 +87,8 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param className the class name
 	* @return the class name that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ClassName deleteClassName(
-		com.liferay.portal.model.ClassName className);
+	@Indexable(type = IndexableType.DELETE)
+	public ClassName deleteClassName(ClassName className);
 
 	/**
 	* Deletes the class name with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,19 +97,18 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @return the class name that was removed
 	* @throws PortalException if a class name with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ClassName deleteClassName(long classNameId)
+	@Indexable(type = IndexableType.DELETE)
+	public ClassName deleteClassName(long classNameId)
 		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -107,8 +116,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -122,8 +130,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -139,10 +146,8 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -150,8 +155,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -160,19 +164,17 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ClassName fetchClassName(long classNameId);
+	public ClassName fetchClassName(long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value);
+	public ClassName fetchClassName(java.lang.String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the class name with the primary key.
@@ -182,19 +184,17 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @throws PortalException if a class name with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ClassName getClassName(long classNameId)
-		throws PortalException;
+	public ClassName getClassName(long classNameId) throws PortalException;
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ClassName getClassName(
-		java.lang.String value);
+	public ClassName getClassName(java.lang.String value);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getClassNameId(java.lang.Class<?> clazz);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getClassNameId(java.lang.String value);
 
@@ -210,8 +210,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @return the range of class names
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ClassName> getClassNames(
-		int start, int end);
+	public List<ClassName> getClassNames(int start, int end);
 
 	/**
 	* Returns the number of class names.
@@ -222,7 +221,7 @@ public interface ClassNameLocalService extends BaseLocalService,
 	public int getClassNamesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -233,8 +232,8 @@ public interface ClassNameLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getRegistryName();
@@ -247,7 +246,6 @@ public interface ClassNameLocalService extends BaseLocalService,
 	* @param className the class name
 	* @return the class name that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ClassName updateClassName(
-		com.liferay.portal.model.ClassName className);
+	@Indexable(type = IndexableType.REINDEX)
+	public ClassName updateClassName(ClassName className);
 }

@@ -16,13 +16,29 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.Website;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for Website. Methods of this
@@ -46,9 +62,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteLocalServiceUtil} to access the website local service. Add custom service methods to {@link com.liferay.portal.service.impl.WebsiteLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Website addWebsite(long userId,
-		java.lang.String className, long classPK, java.lang.String url,
-		long typeId, boolean primary,
+	public Website addWebsite(long userId, java.lang.String className,
+		long classPK, java.lang.String url, long typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -58,9 +73,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param website the website
 	* @return the website that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Website addWebsite(
-		com.liferay.portal.model.Website website);
+	@Indexable(type = IndexableType.REINDEX)
+	public Website addWebsite(Website website);
 
 	/**
 	* Creates a new website with the primary key. Does not add the website to the database.
@@ -68,14 +82,13 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param websiteId the primary key for the new website
 	* @return the new website
 	*/
-	public com.liferay.portal.model.Website createWebsite(long websiteId);
+	public Website createWebsite(long websiteId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -84,10 +97,9 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param website the website
 	* @return the website that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.portal.model.Website deleteWebsite(
-		com.liferay.portal.model.Website website);
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public Website deleteWebsite(Website website);
 
 	/**
 	* Deletes the website with the primary key from the database. Also notifies the appropriate model listeners.
@@ -96,14 +108,13 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @return the website that was removed
 	* @throws PortalException if a website with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Website deleteWebsite(long websiteId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Website deleteWebsite(long websiteId) throws PortalException;
 
 	public void deleteWebsites(long companyId, java.lang.String className,
 		long classPK);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -111,8 +122,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -126,8 +136,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -143,10 +152,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -154,8 +161,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -164,12 +170,11 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Website fetchWebsite(long websiteId);
+	public Website fetchWebsite(long websiteId);
 
 	/**
 	* Returns the website with the matching UUID and company.
@@ -179,18 +184,18 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @return the matching website, or <code>null</code> if a matching website could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Website fetchWebsiteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public Website fetchWebsiteByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -201,8 +206,8 @@ public interface WebsiteLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the website with the primary key.
@@ -212,8 +217,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @throws PortalException if a website with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Website getWebsite(long websiteId)
-		throws PortalException;
+	public Website getWebsite(long websiteId) throws PortalException;
 
 	/**
 	* Returns the website with the matching UUID and company.
@@ -224,15 +228,15 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @throws PortalException if a matching website could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Website getWebsiteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public Website getWebsiteByUuidAndCompanyId(java.lang.String uuid,
+		long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Website> getWebsites();
+	public List<Website> getWebsites();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Website> getWebsites(
-		long companyId, java.lang.String className, long classPK);
+	public List<Website> getWebsites(long companyId,
+		java.lang.String className, long classPK);
 
 	/**
 	* Returns a range of all the websites.
@@ -246,8 +250,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @return the range of websites
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Website> getWebsites(
-		int start, int end);
+	public List<Website> getWebsites(int start, int end);
 
 	/**
 	* Returns the number of websites.
@@ -263,11 +266,9 @@ public interface WebsiteLocalService extends BaseLocalService,
 	* @param website the website
 	* @return the website that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Website updateWebsite(
-		com.liferay.portal.model.Website website);
+	@Indexable(type = IndexableType.REINDEX)
+	public Website updateWebsite(Website website);
 
-	public com.liferay.portal.model.Website updateWebsite(long websiteId,
-		java.lang.String url, long typeId, boolean primary)
-		throws PortalException;
+	public Website updateWebsite(long websiteId, java.lang.String url,
+		long typeId, boolean primary) throws PortalException;
 }

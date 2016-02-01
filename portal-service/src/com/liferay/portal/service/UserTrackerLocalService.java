@@ -16,12 +16,26 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.UserTracker;
+import com.liferay.portal.model.UserTrackerPath;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the local service interface for UserTracker. Methods of this
@@ -45,11 +59,10 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserTrackerLocalServiceUtil} to access the user tracker local service. Add custom service methods to {@link com.liferay.portal.service.impl.UserTrackerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.UserTracker addUserTracker(long companyId,
-		long userId, java.util.Date modifiedDate, java.lang.String sessionId,
+	public UserTracker addUserTracker(long companyId, long userId,
+		Date modifiedDate, java.lang.String sessionId,
 		java.lang.String remoteAddr, java.lang.String remoteHost,
-		java.lang.String userAgent,
-		java.util.List<com.liferay.portal.model.UserTrackerPath> userTrackerPaths);
+		java.lang.String userAgent, List<UserTrackerPath> userTrackerPaths);
 
 	/**
 	* Adds the user tracker to the database. Also notifies the appropriate model listeners.
@@ -57,9 +70,8 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param userTracker the user tracker
 	* @return the user tracker that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.UserTracker addUserTracker(
-		com.liferay.portal.model.UserTracker userTracker);
+	@Indexable(type = IndexableType.REINDEX)
+	public UserTracker addUserTracker(UserTracker userTracker);
 
 	/**
 	* Creates a new user tracker with the primary key. Does not add the user tracker to the database.
@@ -67,15 +79,13 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param userTrackerId the primary key for the new user tracker
 	* @return the new user tracker
 	*/
-	public com.liferay.portal.model.UserTracker createUserTracker(
-		long userTrackerId);
+	public UserTracker createUserTracker(long userTrackerId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -84,9 +94,8 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param userTracker the user tracker
 	* @return the user tracker that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.UserTracker deleteUserTracker(
-		com.liferay.portal.model.UserTracker userTracker);
+	@Indexable(type = IndexableType.DELETE)
+	public UserTracker deleteUserTracker(UserTracker userTracker);
 
 	/**
 	* Deletes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
@@ -95,11 +104,11 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @return the user tracker that was removed
 	* @throws PortalException if a user tracker with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.UserTracker deleteUserTracker(
-		long userTrackerId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public UserTracker deleteUserTracker(long userTrackerId)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -107,8 +116,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -122,8 +130,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -139,10 +146,8 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -150,8 +155,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -160,19 +164,17 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.UserTracker fetchUserTracker(
-		long userTrackerId);
+	public UserTracker fetchUserTracker(long userTrackerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -183,8 +185,8 @@ public interface UserTrackerLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the user tracker with the primary key.
@@ -194,12 +196,11 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @throws PortalException if a user tracker with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.UserTracker getUserTracker(
-		long userTrackerId) throws PortalException;
+	public UserTracker getUserTracker(long userTrackerId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(
-		long companyId, int start, int end);
+	public List<UserTracker> getUserTrackers(long companyId, int start, int end);
 
 	/**
 	* Returns a range of all the user trackers.
@@ -213,8 +214,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @return the range of user trackers
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(
-		int start, int end);
+	public List<UserTracker> getUserTrackers(int start, int end);
 
 	/**
 	* Returns the number of user trackers.
@@ -230,7 +230,6 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @param userTracker the user tracker
 	* @return the user tracker that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.UserTracker updateUserTracker(
-		com.liferay.portal.model.UserTracker userTracker);
+	@Indexable(type = IndexableType.REINDEX)
+	public UserTracker updateUserTracker(UserTracker userTracker);
 }

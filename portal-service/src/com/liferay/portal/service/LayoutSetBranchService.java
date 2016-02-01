@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.LayoutSetBranch;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for LayoutSetBranch. Methods of this
@@ -46,8 +49,8 @@ public interface LayoutSetBranchService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetBranchServiceUtil} to access the layout set branch remote service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetBranchServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
-		long groupId, boolean privateLayout, java.lang.String name,
+	public LayoutSetBranch addLayoutSetBranch(long groupId,
+		boolean privateLayout, java.lang.String name,
 		java.lang.String description, boolean master,
 		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -57,8 +60,8 @@ public interface LayoutSetBranchService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout);
+	public List<LayoutSetBranch> getLayoutSetBranches(long groupId,
+		boolean privateLayout);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -67,13 +70,13 @@ public interface LayoutSetBranchService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portal.model.LayoutSetBranch mergeLayoutSetBranch(
-		long layoutSetBranchId, long mergeLayoutSetBranchId,
+	public LayoutSetBranch mergeLayoutSetBranch(long layoutSetBranchId,
+		long mergeLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.LayoutSetBranch updateLayoutSetBranch(
-		long groupId, long layoutSetBranchId, java.lang.String name,
+	public LayoutSetBranch updateLayoutSetBranch(long groupId,
+		long layoutSetBranchId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

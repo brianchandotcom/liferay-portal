@@ -17,6 +17,11 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -217,7 +222,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _workflowDefinitionLink.getExpandoBridge();
 	}
 
@@ -262,7 +267,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _workflowDefinitionLink.getPrimaryKeyObj();
 	}
 
@@ -417,14 +422,12 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_workflowDefinitionLink.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_workflowDefinitionLink.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -474,7 +477,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_workflowDefinitionLink.setPrimaryKeyObj(primaryKeyObj);
 	}
 

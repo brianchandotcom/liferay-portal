@@ -16,14 +16,25 @@ package com.liferay.counter.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.counter.model.Counter;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for Counter. Methods of this
@@ -54,9 +65,8 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param counter the counter
 	* @return the counter that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.counter.model.Counter addCounter(
-		com.liferay.counter.model.Counter counter);
+	@Indexable(type = IndexableType.REINDEX)
+	public Counter addCounter(Counter counter);
 
 	/**
 	* Creates a new counter with the primary key. Does not add the counter to the database.
@@ -64,8 +74,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param name the primary key for the new counter
 	* @return the new counter
 	*/
-	public com.liferay.counter.model.Counter createCounter(
-		java.lang.String name);
+	public Counter createCounter(java.lang.String name);
 
 	/**
 	* Deletes the counter from the database. Also notifies the appropriate model listeners.
@@ -73,9 +82,8 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param counter the counter
 	* @return the counter that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.counter.model.Counter deleteCounter(
-		com.liferay.counter.model.Counter counter);
+	@Indexable(type = IndexableType.DELETE)
+	public Counter deleteCounter(Counter counter);
 
 	/**
 	* Deletes the counter with the primary key from the database. Also notifies the appropriate model listeners.
@@ -84,19 +92,18 @@ public interface CounterLocalService extends BaseLocalService,
 	* @return the counter that was removed
 	* @throws PortalException if a counter with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.counter.model.Counter deleteCounter(
-		java.lang.String name) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Counter deleteCounter(java.lang.String name)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -104,8 +111,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -119,8 +125,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -136,10 +141,8 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -147,8 +150,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -157,12 +159,11 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.counter.model.Counter fetchCounter(java.lang.String name);
+	public Counter fetchCounter(java.lang.String name);
 
 	/**
 	* Returns the counter with the primary key.
@@ -172,8 +173,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @throws PortalException if a counter with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.counter.model.Counter getCounter(java.lang.String name)
-		throws PortalException;
+	public Counter getCounter(java.lang.String name) throws PortalException;
 
 	/**
 	* Returns a range of all the counters.
@@ -187,8 +187,7 @@ public interface CounterLocalService extends BaseLocalService,
 	* @return the range of counters
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.counter.model.Counter> getCounters(
-		int start, int end);
+	public List<Counter> getCounters(int start, int end);
 
 	/**
 	* Returns the number of counters.
@@ -199,7 +198,7 @@ public interface CounterLocalService extends BaseLocalService,
 	public int getCountersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.String> getNames();
+	public List<java.lang.String> getNames();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -210,8 +209,8 @@ public interface CounterLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(isolation = Isolation.COUNTER, propagation = Propagation.REQUIRES_NEW)
 	public long increment();
@@ -237,7 +236,6 @@ public interface CounterLocalService extends BaseLocalService,
 	* @param counter the counter
 	* @return the counter that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.counter.model.Counter updateCounter(
-		com.liferay.counter.model.Counter counter);
+	@Indexable(type = IndexableType.REINDEX)
+	public Counter updateCounter(Counter counter);
 }

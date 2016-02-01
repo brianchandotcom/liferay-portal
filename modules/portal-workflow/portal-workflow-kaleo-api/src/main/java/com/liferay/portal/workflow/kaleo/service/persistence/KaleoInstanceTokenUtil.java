@@ -25,6 +25,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -822,7 +823,7 @@ public class KaleoInstanceTokenUtil {
 	* @return the matching kaleo instance tokens
 	*/
 	public static List<KaleoInstanceToken> findByC_PKITI_CD(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate) {
+		long parentKaleoInstanceTokenId, Date completionDate) {
 		return getPersistence()
 				   .findByC_PKITI_CD(companyId, parentKaleoInstanceTokenId,
 			completionDate);
@@ -843,8 +844,7 @@ public class KaleoInstanceTokenUtil {
 	* @return the range of matching kaleo instance tokens
 	*/
 	public static List<KaleoInstanceToken> findByC_PKITI_CD(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
-		int start, int end) {
+		long parentKaleoInstanceTokenId, Date completionDate, int start, int end) {
 		return getPersistence()
 				   .findByC_PKITI_CD(companyId, parentKaleoInstanceTokenId,
 			completionDate, start, end);
@@ -866,9 +866,8 @@ public class KaleoInstanceTokenUtil {
 	* @return the ordered range of matching kaleo instance tokens
 	*/
 	public static List<KaleoInstanceToken> findByC_PKITI_CD(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
-		int start, int end,
-		OrderByComparator<KaleoInstanceToken> orderByComparator) {
+		long parentKaleoInstanceTokenId, Date completionDate, int start,
+		int end, OrderByComparator<KaleoInstanceToken> orderByComparator) {
 		return getPersistence()
 				   .findByC_PKITI_CD(companyId, parentKaleoInstanceTokenId,
 			completionDate, start, end, orderByComparator);
@@ -891,9 +890,8 @@ public class KaleoInstanceTokenUtil {
 	* @return the ordered range of matching kaleo instance tokens
 	*/
 	public static List<KaleoInstanceToken> findByC_PKITI_CD(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
-		int start, int end,
-		OrderByComparator<KaleoInstanceToken> orderByComparator,
+		long parentKaleoInstanceTokenId, Date completionDate, int start,
+		int end, OrderByComparator<KaleoInstanceToken> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByC_PKITI_CD(companyId, parentKaleoInstanceTokenId,
@@ -911,7 +909,7 @@ public class KaleoInstanceTokenUtil {
 	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByC_PKITI_CD_First(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
+		long parentKaleoInstanceTokenId, Date completionDate,
 		OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException {
 		return getPersistence()
@@ -929,7 +927,7 @@ public class KaleoInstanceTokenUtil {
 	* @return the first matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken fetchByC_PKITI_CD_First(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
+		long parentKaleoInstanceTokenId, Date completionDate,
 		OrderByComparator<KaleoInstanceToken> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_PKITI_CD_First(companyId,
@@ -947,7 +945,7 @@ public class KaleoInstanceTokenUtil {
 	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByC_PKITI_CD_Last(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
+		long parentKaleoInstanceTokenId, Date completionDate,
 		OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException {
 		return getPersistence()
@@ -965,7 +963,7 @@ public class KaleoInstanceTokenUtil {
 	* @return the last matching kaleo instance token, or <code>null</code> if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken fetchByC_PKITI_CD_Last(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
+		long parentKaleoInstanceTokenId, Date completionDate,
 		OrderByComparator<KaleoInstanceToken> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_PKITI_CD_Last(companyId,
@@ -985,7 +983,7 @@ public class KaleoInstanceTokenUtil {
 	*/
 	public static KaleoInstanceToken[] findByC_PKITI_CD_PrevAndNext(
 		long kaleoInstanceTokenId, long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
+		long parentKaleoInstanceTokenId, Date completionDate,
 		OrderByComparator<KaleoInstanceToken> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException {
 		return getPersistence()
@@ -1002,7 +1000,7 @@ public class KaleoInstanceTokenUtil {
 	* @param completionDate the completion date
 	*/
 	public static void removeByC_PKITI_CD(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate) {
+		long parentKaleoInstanceTokenId, Date completionDate) {
 		getPersistence()
 			.removeByC_PKITI_CD(companyId, parentKaleoInstanceTokenId,
 			completionDate);
@@ -1017,7 +1015,7 @@ public class KaleoInstanceTokenUtil {
 	* @return the number of matching kaleo instance tokens
 	*/
 	public static int countByC_PKITI_CD(long companyId,
-		long parentKaleoInstanceTokenId, java.util.Date completionDate) {
+		long parentKaleoInstanceTokenId, Date completionDate) {
 		return getPersistence()
 				   .countByC_PKITI_CD(companyId, parentKaleoInstanceTokenId,
 			completionDate);

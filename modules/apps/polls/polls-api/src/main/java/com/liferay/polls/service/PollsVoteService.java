@@ -16,6 +16,8 @@ package com.liferay.polls.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsVote;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * Provides the remote service interface for PollsVote. Methods of this
@@ -49,9 +52,8 @@ public interface PollsVoteService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PollsVoteServiceUtil} to access the polls vote remote service. Add custom service methods to {@link com.liferay.polls.service.impl.PollsVoteServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.polls.model.PollsVote addVote(long questionId,
-		long choiceId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public PollsVote addVote(long questionId, long choiceId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

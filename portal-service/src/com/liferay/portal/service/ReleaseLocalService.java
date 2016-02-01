@@ -16,12 +16,27 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.Release;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Provides the local service interface for Release. Methods of this
@@ -52,15 +67,14 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param release the release
 	* @return the release that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Release addRelease(
-		com.liferay.portal.model.Release release);
+	@Indexable(type = IndexableType.REINDEX)
+	public Release addRelease(Release release);
 
-	public com.liferay.portal.model.Release addRelease(
-		java.lang.String servletContextName, int buildNumber);
+	public Release addRelease(java.lang.String servletContextName,
+		int buildNumber);
 
-	public com.liferay.portal.model.Release addRelease(
-		java.lang.String servletContextName, java.lang.String schemaVersion);
+	public Release addRelease(java.lang.String servletContextName,
+		java.lang.String schemaVersion);
 
 	/**
 	* Creates a new release with the primary key. Does not add the release to the database.
@@ -68,7 +82,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param releaseId the primary key for the new release
 	* @return the new release
 	*/
-	public com.liferay.portal.model.Release createRelease(long releaseId);
+	public Release createRelease(long releaseId);
 
 	public void createTablesAndPopulate();
 
@@ -76,8 +90,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -86,9 +99,8 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param release the release
 	* @return the release that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Release deleteRelease(
-		com.liferay.portal.model.Release release);
+	@Indexable(type = IndexableType.DELETE)
+	public Release deleteRelease(Release release);
 
 	/**
 	* Deletes the release with the primary key from the database. Also notifies the appropriate model listeners.
@@ -97,11 +109,10 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @return the release that was removed
 	* @throws PortalException if a release with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Release deleteRelease(long releaseId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Release deleteRelease(long releaseId) throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -109,8 +120,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -124,8 +134,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -141,10 +150,8 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -152,8 +159,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -162,25 +168,23 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Release fetchRelease(long releaseId);
+	public Release fetchRelease(long releaseId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Release fetchRelease(
-		java.lang.String servletContextName);
+	public Release fetchRelease(java.lang.String servletContextName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBuildNumberOrCreate() throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -191,8 +195,8 @@ public interface ReleaseLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the release with the primary key.
@@ -202,8 +206,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @throws PortalException if a release with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Release getRelease(long releaseId)
-		throws PortalException;
+	public Release getRelease(long releaseId) throws PortalException;
 
 	/**
 	* Returns a range of all the releases.
@@ -217,8 +220,7 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @return the range of releases
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Release> getReleases(
-		int start, int end);
+	public List<Release> getReleases(int start, int end);
 
 	/**
 	* Returns the number of releases.
@@ -234,24 +236,21 @@ public interface ReleaseLocalService extends BaseLocalService,
 	* @param release the release
 	* @return the release that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Release updateRelease(
-		com.liferay.portal.model.Release release);
+	@Indexable(type = IndexableType.REINDEX)
+	public Release updateRelease(Release release);
 
-	public com.liferay.portal.model.Release updateRelease(long releaseId,
-		int buildNumber, java.util.Date buildDate, boolean verified)
-		throws PortalException;
+	public Release updateRelease(long releaseId, int buildNumber,
+		Date buildDate, boolean verified) throws PortalException;
 
 	public void updateRelease(java.lang.String servletContextName,
 		java.lang.String schemaVersion, java.lang.String previousSchemaVersion);
 
 	public void updateRelease(java.lang.String servletContextName,
-		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
-		int buildNumber, int previousBuildNumber, boolean indexOnUpgrade)
+		List<UpgradeProcess> upgradeProcesses, int buildNumber,
+		int previousBuildNumber, boolean indexOnUpgrade)
 		throws PortalException;
 
 	public void updateRelease(java.lang.String servletContextName,
-		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
-		java.util.Properties unfilteredPortalProperties)
-		throws java.lang.Exception;
+		List<UpgradeProcess> upgradeProcesses,
+		Properties unfilteredPortalProperties) throws java.lang.Exception;
 }

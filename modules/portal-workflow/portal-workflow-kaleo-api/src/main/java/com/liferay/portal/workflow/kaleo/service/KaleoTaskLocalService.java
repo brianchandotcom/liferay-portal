@@ -16,14 +16,28 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.definition.Task;
+import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for KaleoTask. Methods of this
@@ -47,11 +61,8 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskLocalServiceUtil} to access the kaleo task local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask addKaleoTask(
-		long kaleoDefinitionId, long kaleoNodeId,
-		com.liferay.portal.workflow.kaleo.definition.Task task,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public KaleoTask addKaleoTask(long kaleoDefinitionId, long kaleoNodeId,
+		Task task, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the kaleo task to the database. Also notifies the appropriate model listeners.
@@ -59,9 +70,8 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param kaleoTask the kaleo task
 	* @return the kaleo task that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask addKaleoTask(
-		com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTask addKaleoTask(KaleoTask kaleoTask);
 
 	/**
 	* Creates a new kaleo task with the primary key. Does not add the kaleo task to the database.
@@ -69,8 +79,7 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param kaleoTaskId the primary key for the new kaleo task
 	* @return the new kaleo task
 	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask createKaleoTask(
-		long kaleoTaskId);
+	public KaleoTask createKaleoTask(long kaleoTaskId);
 
 	public void deleteCompanyKaleoTasks(long companyId);
 
@@ -82,9 +91,8 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param kaleoTask the kaleo task
 	* @return the kaleo task that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask deleteKaleoTask(
-		com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask);
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoTask deleteKaleoTask(KaleoTask kaleoTask);
 
 	/**
 	* Deletes the kaleo task with the primary key from the database. Also notifies the appropriate model listeners.
@@ -93,19 +101,18 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @return the kaleo task that was removed
 	* @throws PortalException if a kaleo task with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask deleteKaleoTask(
-		long kaleoTaskId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoTask deleteKaleoTask(long kaleoTaskId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -113,8 +120,7 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -128,8 +134,7 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -145,10 +150,8 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -156,8 +159,7 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -166,23 +168,21 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask fetchKaleoTask(
-		long kaleoTaskId);
+	public KaleoTask fetchKaleoTask(long kaleoTaskId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask getKaleoNodeKaleoTask(
-		long kaleoNodeId) throws PortalException;
+	public KaleoTask getKaleoNodeKaleoTask(long kaleoNodeId)
+		throws PortalException;
 
 	/**
 	* Returns the kaleo task with the primary key.
@@ -192,8 +192,7 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @throws PortalException if a kaleo task with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask getKaleoTask(
-		long kaleoTaskId) throws PortalException;
+	public KaleoTask getKaleoTask(long kaleoTaskId) throws PortalException;
 
 	/**
 	* Returns a range of all the kaleo tasks.
@@ -207,8 +206,7 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @return the range of kaleo tasks
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTask> getKaleoTasks(
-		int start, int end);
+	public List<KaleoTask> getKaleoTasks(int start, int end);
 
 	/**
 	* Returns the number of kaleo tasks.
@@ -227,8 +225,8 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the kaleo task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -236,7 +234,6 @@ public interface KaleoTaskLocalService extends BaseLocalService,
 	* @param kaleoTask the kaleo task
 	* @return the kaleo task that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask updateKaleoTask(
-		com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTask updateKaleoTask(KaleoTask kaleoTask);
 }

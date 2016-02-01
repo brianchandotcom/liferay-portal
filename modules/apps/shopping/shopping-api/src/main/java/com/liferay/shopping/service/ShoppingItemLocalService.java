@@ -16,14 +16,32 @@ package com.liferay.shopping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
+
+import com.liferay.shopping.model.ShoppingItem;
+import com.liferay.shopping.model.ShoppingItemField;
+import com.liferay.shopping.model.ShoppingItemPrice;
+
+import java.io.File;
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for ShoppingItem. Methods of this
@@ -47,34 +65,30 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingItemLocalServiceUtil} to access the shopping item local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingItemLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.shopping.model.ShoppingItem addItem(long userId,
-		long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
-		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallImageFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumImageFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeImageFile,
-		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
-		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public ShoppingItem addItem(long userId, long groupId, long categoryId,
+		java.lang.String sku, java.lang.String name,
+		java.lang.String description, java.lang.String properties,
+		java.lang.String fieldsQuantities, boolean requiresShipping,
+		int stockQuantity, boolean featured, java.lang.Boolean sale,
+		boolean smallImage, java.lang.String smallImageURL,
+		File smallImageFile, boolean mediumImage,
+		java.lang.String mediumImageURL, File mediumImageFile,
+		boolean largeImage, java.lang.String largeImageURL,
+		File largeImageFile, List<ShoppingItemField> itemFields,
+		List<ShoppingItemPrice> itemPrices, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
+	public void addItemResources(ShoppingItem item,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+	public void addItemResources(ShoppingItem item,
+		ModelPermissions modelPermissions) throws PortalException;
 
 	public void addItemResources(long itemId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
-	public void addItemResources(long itemId,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+	public void addItemResources(long itemId, ModelPermissions modelPermissions)
 		throws PortalException;
 
 	/**
@@ -83,9 +97,8 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingItem addShoppingItem(
-		com.liferay.shopping.model.ShoppingItem shoppingItem);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingItem addShoppingItem(ShoppingItem shoppingItem);
 
 	/**
 	* Creates a new shopping item with the primary key. Does not add the shopping item to the database.
@@ -93,11 +106,9 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param itemId the primary key for the new shopping item
 	* @return the new shopping item
 	*/
-	public com.liferay.shopping.model.ShoppingItem createShoppingItem(
-		long itemId);
+	public ShoppingItem createShoppingItem(long itemId);
 
-	public void deleteItem(com.liferay.shopping.model.ShoppingItem item)
-		throws PortalException;
+	public void deleteItem(ShoppingItem item) throws PortalException;
 
 	public void deleteItem(long itemId) throws PortalException;
 
@@ -108,8 +119,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -119,9 +129,9 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @return the shopping item that was removed
 	* @throws PortalException if a shopping item with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
-		long itemId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItem deleteShoppingItem(long itemId)
+		throws PortalException;
 
 	/**
 	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
@@ -129,11 +139,10 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
-		com.liferay.shopping.model.ShoppingItem shoppingItem);
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItem deleteShoppingItem(ShoppingItem shoppingItem);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -141,8 +150,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -156,8 +164,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -173,10 +180,8 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -184,8 +189,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -194,65 +198,58 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem fetchShoppingItem(
-		long itemId);
+	public ShoppingItem fetchShoppingItem(long itemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesItemsCount(long groupId,
-		java.util.List<java.lang.Long> categoryIds);
+		List<java.lang.Long> categoryIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getFeaturedItems(
-		long groupId, long categoryId, int numOfItems);
+	public List<ShoppingItem> getFeaturedItems(long groupId, long categoryId,
+		int numOfItems);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem getItem(long companyId,
-		java.lang.String sku) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem getItem(long itemId)
+	public ShoppingItem getItem(long companyId, java.lang.String sku)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem getItemByLargeImageId(
-		long largeImageId) throws PortalException;
+	public ShoppingItem getItem(long itemId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem getItemByMediumImageId(
-		long mediumImageId) throws PortalException;
+	public ShoppingItem getItemByLargeImageId(long largeImageId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem getItemBySmallImageId(
-		long smallImageId) throws PortalException;
+	public ShoppingItem getItemByMediumImageId(long mediumImageId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId);
+	public ShoppingItem getItemBySmallImageId(long smallImageId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getItems(
-		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc);
+	public List<ShoppingItem> getItems(long groupId, long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingItem> getItems(long groupId, long categoryId,
+		int start, int end, OrderByComparator<ShoppingItem> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getItemsCount(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem[] getItemsPrevAndNext(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc)
-		throws PortalException;
+	public ShoppingItem[] getItemsPrevAndNext(long itemId,
+		OrderByComparator<ShoppingItem> obc) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -263,12 +260,12 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getSaleItems(
-		long groupId, long categoryId, int numOfItems);
+	public List<ShoppingItem> getSaleItems(long groupId, long categoryId,
+		int numOfItems);
 
 	/**
 	* Returns the shopping item with the primary key.
@@ -278,8 +275,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @throws PortalException if a shopping item with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.shopping.model.ShoppingItem getShoppingItem(long itemId)
-		throws PortalException;
+	public ShoppingItem getShoppingItem(long itemId) throws PortalException;
 
 	/**
 	* Returns a range of all the shopping items.
@@ -293,8 +289,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @return the range of shopping items
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> getShoppingItems(
-		int start, int end);
+	public List<ShoppingItem> getShoppingItems(int start, int end);
 
 	/**
 	* Returns the number of shopping items.
@@ -305,15 +300,13 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	public int getShoppingItemsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end);
+	public List<ShoppingItem> search(long groupId, long[] categoryIds,
+		java.lang.String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.shopping.model.ShoppingItem> search(
-		long groupId, long[] categoryIds, java.lang.String keywords, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc);
+	public List<ShoppingItem> search(long groupId, long[] categoryIds,
+		java.lang.String keywords, int start, int end,
+		OrderByComparator<ShoppingItem> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, long[] categoryIds,
@@ -321,22 +314,19 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, long[] categoryIds,
-		java.lang.String keywords,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc);
+		java.lang.String keywords, OrderByComparator<ShoppingItem> obc);
 
-	public com.liferay.shopping.model.ShoppingItem updateItem(long userId,
-		long itemId, long groupId, long categoryId, java.lang.String sku,
-		java.lang.String name, java.lang.String description,
-		java.lang.String properties, java.lang.String fieldsQuantities,
-		boolean requiresShipping, int stockQuantity, boolean featured,
-		java.lang.Boolean sale, boolean smallImage,
-		java.lang.String smallImageURL, java.io.File smallImageFile,
-		boolean mediumImage, java.lang.String mediumImageURL,
-		java.io.File mediumImageFile, boolean largeImage,
-		java.lang.String largeImageURL, java.io.File largeImageFile,
-		java.util.List<com.liferay.shopping.model.ShoppingItemField> itemFields,
-		java.util.List<com.liferay.shopping.model.ShoppingItemPrice> itemPrices,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public ShoppingItem updateItem(long userId, long itemId, long groupId,
+		long categoryId, java.lang.String sku, java.lang.String name,
+		java.lang.String description, java.lang.String properties,
+		java.lang.String fieldsQuantities, boolean requiresShipping,
+		int stockQuantity, boolean featured, java.lang.Boolean sale,
+		boolean smallImage, java.lang.String smallImageURL,
+		File smallImageFile, boolean mediumImage,
+		java.lang.String mediumImageURL, File mediumImageFile,
+		boolean largeImage, java.lang.String largeImageURL,
+		File largeImageFile, List<ShoppingItemField> itemFields,
+		List<ShoppingItemPrice> itemPrices, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -345,7 +335,6 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.shopping.model.ShoppingItem updateShoppingItem(
-		com.liferay.shopping.model.ShoppingItem shoppingItem);
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingItem updateShoppingItem(ShoppingItem shoppingItem);
 }

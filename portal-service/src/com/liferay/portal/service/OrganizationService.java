@@ -23,6 +23,14 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Address;
+import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.model.OrgLabor;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.Phone;
+import com.liferay.portal.model.Website;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for Organization. Methods of this
@@ -84,15 +92,11 @@ public interface OrganizationService extends BaseService {
 	and expando bridge attributes for the organization.
 	* @return the organization
 	*/
-	public com.liferay.portal.model.Organization addOrganization(
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.OrgLabor> orgLabors,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
+	public Organization addOrganization(long parentOrganizationId,
+		java.lang.String name, java.lang.String type, long regionId,
+		long countryId, long statusId, java.lang.String comments, boolean site,
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<OrgLabor> orgLabors, List<Phone> phones, List<Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -119,10 +123,9 @@ public interface OrganizationService extends BaseService {
 	and expando bridge attributes for the organization.
 	* @return the organization
 	*/
-	public com.liferay.portal.model.Organization addOrganization(
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
+	public Organization addOrganization(long parentOrganizationId,
+		java.lang.String name, java.lang.String type, long regionId,
+		long countryId, long statusId, java.lang.String comments, boolean site,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -161,8 +164,8 @@ public interface OrganizationService extends BaseService {
 	user did not have permission to view the organization
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Organization fetchOrganization(
-		long organizationId) throws PortalException;
+	public Organization fetchOrganization(long organizationId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -178,8 +181,8 @@ public interface OrganizationService extends BaseService {
 	* @return the organization with the primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Organization getOrganization(
-		long organizationId) throws PortalException;
+	public Organization getOrganization(long organizationId)
+		throws PortalException;
 
 	/**
 	* Returns the primary key of the organization with the name.
@@ -202,8 +205,8 @@ public interface OrganizationService extends BaseService {
 	* @return the organizations belonging to the parent organization
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		long companyId, long parentOrganizationId);
+	public List<Organization> getOrganizations(long companyId,
+		long parentOrganizationId);
 
 	/**
 	* Returns a range of all the organizations belonging to the parent
@@ -228,8 +231,8 @@ public interface OrganizationService extends BaseService {
 	* @return the range of organizations belonging to the parent organization
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		long companyId, long parentOrganizationId, int start, int end);
+	public List<Organization> getOrganizations(long companyId,
+		long parentOrganizationId, int start, int end);
 
 	/**
 	* Returns the number of organizations belonging to the parent organization.
@@ -256,8 +259,8 @@ public interface OrganizationService extends BaseService {
 	* @return the organizations with which the user is explicitly associated
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId) throws PortalException;
+	public List<Organization> getUserOrganizations(long userId)
+		throws PortalException;
 
 	/**
 	* Sets the organizations in the group, removing and adding organizations to
@@ -314,16 +317,13 @@ public interface OrganizationService extends BaseService {
 	for the organization.
 	* @return the organization
 	*/
-	public com.liferay.portal.model.Organization updateOrganization(
-		long organizationId, long parentOrganizationId, java.lang.String name,
+	public Organization updateOrganization(long organizationId,
+		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean logo, byte[] logoBytes,
-		boolean site,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.OrgLabor> orgLabors,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
+		boolean site, List<Address> addresses,
+		List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
+		List<Phone> phones, List<Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -357,15 +357,12 @@ public interface OrganizationService extends BaseService {
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.Organization updateOrganization(
-		long organizationId, long parentOrganizationId, java.lang.String name,
+	public Organization updateOrganization(long organizationId,
+		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.OrgLabor> orgLabors,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
+		java.lang.String comments, boolean site, List<Address> addresses,
+		List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
+		List<Phone> phones, List<Website> websites,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -389,8 +386,8 @@ public interface OrganizationService extends BaseService {
 	for the organization.
 	* @return the organization
 	*/
-	public com.liferay.portal.model.Organization updateOrganization(
-		long organizationId, long parentOrganizationId, java.lang.String name,
+	public Organization updateOrganization(long organizationId,
+		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site,
 		com.liferay.portal.service.ServiceContext serviceContext)

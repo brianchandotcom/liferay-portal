@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.Map;
+
 /**
  * Provides the remote service interface for ResourcePermission. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -188,6 +190,6 @@ public interface ResourcePermissionService extends BaseService {
 	*/
 	public void setIndividualResourcePermissions(long groupId, long companyId,
 		java.lang.String name, java.lang.String primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws PortalException;
 }

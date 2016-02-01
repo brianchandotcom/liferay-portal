@@ -16,15 +16,39 @@ package com.liferay.portlet.blogs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
+
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for BlogsEntry. Methods of this
@@ -48,8 +72,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BlogsEntryLocalServiceUtil} to access the blogs entry local service. Add custom service methods to {@link com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
-		long userId, long groupId) throws PortalException;
+	public Folder addAttachmentsFolder(long userId, long groupId)
+		throws PortalException;
 
 	/**
 	* Adds the blogs entry to the database. Also notifies the appropriate model listeners.
@@ -57,23 +81,18 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param blogsEntry the blogs entry
 	* @return the blogs entry that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.blogs.model.BlogsEntry addBlogsEntry(
-		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry addBlogsEntry(BlogsEntry blogsEntry);
 
-	public void addCoverImage(long entryId,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+	public void addCoverImage(long entryId, ImageSelector imageSelector)
 		throws PortalException;
 
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(long userId,
-		java.lang.String title, java.lang.String content,
-		java.util.Date displayDate,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public BlogsEntry addEntry(long userId, java.lang.String title,
+		java.lang.String content, Date displayDate,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(long userId,
-		java.lang.String title, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public BlogsEntry addEntry(long userId, java.lang.String title,
+		java.lang.String content, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -83,65 +102,52 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(long userId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.lang.String smallImageFileName,
-		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(long userId,
-		java.lang.String title, java.lang.String subtitle,
-		java.lang.String description, java.lang.String content,
-		java.util.Date displayDate, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(long userId,
-		java.lang.String title, java.lang.String subtitle,
+	public BlogsEntry addEntry(long userId, java.lang.String title,
 		java.lang.String description, java.lang.String content,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName, InputStream smallImageInputStream,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry addEntry(long userId, java.lang.String title,
+		java.lang.String subtitle, java.lang.String description,
+		java.lang.String content, Date displayDate, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
 		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addEntryResources(
-		com.liferay.portlet.blogs.model.BlogsEntry entry,
+	public BlogsEntry addEntry(long userId, java.lang.String title,
+		java.lang.String subtitle, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void addEntryResources(BlogsEntry entry,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addEntryResources(
-		com.liferay.portlet.blogs.model.BlogsEntry entry,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+	public void addEntryResources(BlogsEntry entry,
+		ModelPermissions modelPermissions) throws PortalException;
 
 	public void addEntryResources(long entryId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
 	public void addEntryResources(long entryId,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+		ModelPermissions modelPermissions) throws PortalException;
 
 	public long addOriginalImageFileEntry(long userId, long groupId,
-		long entryId,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
-		throws PortalException;
+		long entryId, ImageSelector imageSelector) throws PortalException;
 
-	public void addSmallImage(long entryId,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
+	public void addSmallImage(long entryId, ImageSelector imageSelector)
 		throws PortalException;
 
 	public void checkEntries() throws PortalException;
@@ -152,8 +158,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key for the new blogs entry
 	* @return the new blogs entry
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry createBlogsEntry(
-		long entryId);
+	public BlogsEntry createBlogsEntry(long entryId);
 
 	/**
 	* Deletes the blogs entry from the database. Also notifies the appropriate model listeners.
@@ -161,9 +166,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param blogsEntry the blogs entry
 	* @return the blogs entry that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.blogs.model.BlogsEntry deleteBlogsEntry(
-		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry);
+	@Indexable(type = IndexableType.DELETE)
+	public BlogsEntry deleteBlogsEntry(BlogsEntry blogsEntry);
 
 	/**
 	* Deletes the blogs entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -172,17 +176,14 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the blogs entry that was removed
 	* @throws PortalException if a blogs entry with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.blogs.model.BlogsEntry deleteBlogsEntry(
-		long entryId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public BlogsEntry deleteBlogsEntry(long entryId) throws PortalException;
 
 	public void deleteEntries(long groupId) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.portlet.blogs.model.BlogsEntry deleteEntry(
-		com.liferay.portlet.blogs.model.BlogsEntry entry)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public BlogsEntry deleteEntry(BlogsEntry entry) throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;
 
@@ -190,11 +191,10 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -202,8 +202,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -217,8 +216,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -234,10 +232,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -245,8 +241,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -255,17 +250,14 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.repository.model.Folder fetchAttachmentsFolder(
-		long userId, long groupId);
+	public Folder fetchAttachmentsFolder(long userId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchBlogsEntry(
-		long entryId);
+	public BlogsEntry fetchBlogsEntry(long entryId);
 
 	/**
 	* Returns the blogs entry matching the UUID and group.
@@ -275,11 +267,11 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry fetchBlogsEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the blogs entries.
@@ -293,8 +285,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the range of blogs entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getBlogsEntries(
-		int start, int end);
+	public List<BlogsEntry> getBlogsEntries(int start, int end);
 
 	/**
 	* Returns all the blogs entries matching the UUID and company.
@@ -304,7 +295,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the matching blogs entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -318,9 +309,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @return the range of matching blogs entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator);
+		OrderByComparator<BlogsEntry> orderByComparator);
 
 	/**
 	* Returns the number of blogs entries.
@@ -338,8 +329,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a blogs entry with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry getBlogsEntry(
-		long entryId) throws PortalException;
+	public BlogsEntry getBlogsEntry(long entryId) throws PortalException;
 
 	/**
 	* Returns the blogs entry matching the UUID and group.
@@ -350,73 +340,65 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching blogs entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry getBlogsEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public BlogsEntry getBlogsEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
-		long companyId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
+		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyEntriesCount(long companyId,
-		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public int getCompanyEntriesCount(long companyId, Date displayDate,
+		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
-		long entryId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry getEntry(long entryId)
+	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.blogs.model.BlogsEntry getEntry(long groupId,
-		java.lang.String urlTitle) throws PortalException;
+	public BlogsEntry getEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
-		long groupId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
+		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public List<BlogsEntry> getGroupEntries(long groupId,
+		QueryDefinition<BlogsEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupEntriesCount(long groupId, Date displayDate,
+		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
+		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupUserEntriesCount(long groupId, long userId,
-		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
-		long companyId, long groupId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
+		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getNoAssetEntries();
+	public List<BlogsEntry> getNoAssetEntries();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -426,19 +408,17 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
-		long organizationId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+	public List<BlogsEntry> getOrganizationEntries(long organizationId,
+		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationEntriesCount(long organizationId,
-		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.blogs.model.BlogsEntry> queryDefinition);
+		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	public void moveEntriesToTrash(long groupId, long userId)
 		throws PortalException;
@@ -451,9 +431,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param entry the blogs entry to be moved
 	* @return the moved blogs entry
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
-		long userId, com.liferay.portlet.blogs.model.BlogsEntry entry)
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
 		throws PortalException;
 
 	/**
@@ -463,8 +442,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key of the blogs entry to be moved
 	* @return the moved blogs entry
 	*/
-	public com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
-		long userId, long entryId) throws PortalException;
+	public BlogsEntry moveEntryToTrash(long userId, long entryId)
+		throws PortalException;
 
 	/**
 	* Restores the blogs entry with the ID from the recycle bin. Social
@@ -474,17 +453,16 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param entryId the primary key of the blogs entry to be restored
 	* @return the restored blogs entry from the recycle bin
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.blogs.model.BlogsEntry restoreEntryFromTrash(
-		long userId, long entryId) throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
+		throws PortalException;
 
 	public void subscribe(long userId, long groupId) throws PortalException;
 
 	public void unsubscribe(long userId, long groupId)
 		throws PortalException;
 
-	public void updateAsset(long userId,
-		com.liferay.portlet.blogs.model.BlogsEntry entry,
+	public void updateAsset(long userId, BlogsEntry entry,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
@@ -495,14 +473,12 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param blogsEntry the blogs entry
 	* @return the blogs entry that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.blogs.model.BlogsEntry updateBlogsEntry(
-		com.liferay.portlet.blogs.model.BlogsEntry blogsEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry);
 
-	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(long userId,
-		long entryId, java.lang.String title, java.lang.String content,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String content,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
@@ -511,65 +487,55 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	ImageSelector, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(long userId,
-		long entryId, java.lang.String title, java.lang.String description,
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
-		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(long userId,
-		long entryId, java.lang.String title, java.lang.String subtitle,
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String subtitle,
 		java.lang.String description, java.lang.String content,
-		java.util.Date displayDate, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(long userId,
-		long entryId, java.lang.String title, java.lang.String subtitle,
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String subtitle,
 		java.lang.String description, java.lang.String content,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 		boolean allowTrackbacks, java.lang.String[] trackbacks,
 		java.lang.String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void updateEntryResources(
-		com.liferay.portlet.blogs.model.BlogsEntry entry,
+	public void updateEntryResources(BlogsEntry entry,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
-	public void updateEntryResources(
-		com.liferay.portlet.blogs.model.BlogsEntry entry,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
+	public void updateEntryResources(BlogsEntry entry,
+		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
-		long userId, long entryId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public BlogsEntry updateStatus(long userId, long entryId, int status,
+		ServiceContext serviceContext) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.blogs.model.BlogsEntry updateStatus(
-		long userId, long entryId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry updateStatus(long userId, long entryId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
 }

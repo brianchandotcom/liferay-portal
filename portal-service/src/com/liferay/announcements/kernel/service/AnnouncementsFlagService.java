@@ -16,6 +16,8 @@ package com.liferay.announcements.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -52,8 +54,8 @@ public interface AnnouncementsFlagService extends BaseService {
 	public void deleteFlag(long flagId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.announcements.kernel.model.AnnouncementsFlag getFlag(
-		long entryId, int value) throws PortalException;
+	public AnnouncementsFlag getFlag(long entryId, int value)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

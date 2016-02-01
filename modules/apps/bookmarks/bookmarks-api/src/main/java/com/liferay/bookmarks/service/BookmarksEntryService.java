@@ -16,15 +16,22 @@ package com.liferay.bookmarks.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for BookmarksEntry. Methods of this
@@ -50,22 +57,20 @@ public interface BookmarksEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BookmarksEntryServiceUtil} to access the bookmarks entry remote service. Add custom service methods to {@link com.liferay.bookmarks.service.impl.BookmarksEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.bookmarks.model.BookmarksEntry addEntry(long groupId,
-		long folderId, java.lang.String name, java.lang.String url,
-		java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public BookmarksEntry addEntry(long groupId, long folderId,
+		java.lang.String name, java.lang.String url,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
-		long groupId, long folderId, int start, int end);
+	public List<BookmarksEntry> getEntries(long groupId, long folderId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator);
+	public List<BookmarksEntry> getEntries(long groupId, long folderId,
+		int start, int end, OrderByComparator<BookmarksEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long groupId, long folderId);
@@ -74,26 +79,23 @@ public interface BookmarksEntryService extends BaseService {
 	public int getEntriesCount(long groupId, long folderId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.bookmarks.model.BookmarksEntry getEntry(long entryId)
-		throws PortalException;
+	public BookmarksEntry getEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersEntriesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds);
+		List<java.lang.Long> folderIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
-		long groupId, int start, int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
-		long groupId, long userId, long rootFolderId, int start, int end)
+	public List<BookmarksEntry> getGroupEntries(long groupId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
-		long groupId, long userId, int start, int end)
-		throws PortalException;
+	public List<BookmarksEntry> getGroupEntries(long groupId, long userId,
+		long rootFolderId, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BookmarksEntry> getGroupEntries(long groupId, long userId,
+		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupEntriesCount(long groupId) throws PortalException;
@@ -113,36 +115,32 @@ public interface BookmarksEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.bookmarks.model.BookmarksEntry moveEntry(long entryId,
-		long parentFolderId) throws PortalException;
-
-	public com.liferay.bookmarks.model.BookmarksEntry moveEntryFromTrash(
-		long entryId, long parentFolderId) throws PortalException;
-
-	public com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
-		long entryId) throws PortalException;
-
-	public com.liferay.bookmarks.model.BookmarksEntry openEntry(
-		com.liferay.bookmarks.model.BookmarksEntry entry)
+	public BookmarksEntry moveEntry(long entryId, long parentFolderId)
 		throws PortalException;
 
-	public com.liferay.bookmarks.model.BookmarksEntry openEntry(long entryId)
+	public BookmarksEntry moveEntryFromTrash(long entryId, long parentFolderId)
 		throws PortalException;
+
+	public BookmarksEntry moveEntryToTrash(long entryId)
+		throws PortalException;
+
+	public BookmarksEntry openEntry(BookmarksEntry entry)
+		throws PortalException;
+
+	public BookmarksEntry openEntry(long entryId) throws PortalException;
 
 	public void restoreEntryFromTrash(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		long creatorUserId, int status, int start, int end)
-		throws PortalException;
+	public Hits search(long groupId, long creatorUserId, int status, int start,
+		int end) throws PortalException;
 
 	public void subscribeEntry(long entryId) throws PortalException;
 
 	public void unsubscribeEntry(long entryId) throws PortalException;
 
-	public com.liferay.bookmarks.model.BookmarksEntry updateEntry(
-		long entryId, long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public BookmarksEntry updateEntry(long entryId, long groupId,
+		long folderId, java.lang.String name, java.lang.String url,
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Region;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for Region. Methods of this
@@ -46,16 +49,14 @@ public interface RegionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RegionServiceUtil} to access the region remote service. Add custom service methods to {@link com.liferay.portal.service.impl.RegionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Region addRegion(long countryId,
-		java.lang.String regionCode, java.lang.String name, boolean active)
-		throws PortalException;
+	public Region addRegion(long countryId, java.lang.String regionCode,
+		java.lang.String name, boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Region fetchRegion(long countryId,
-		java.lang.String regionCode);
+	public Region fetchRegion(long countryId, java.lang.String regionCode);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Region fetchRegion(long regionId);
+	public Region fetchRegion(long regionId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -65,25 +66,21 @@ public interface RegionService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Region getRegion(long countryId,
-		java.lang.String regionCode) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Region getRegion(long regionId)
+	public Region getRegion(long countryId, java.lang.String regionCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Region> getRegions();
+	public Region getRegion(long regionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Region> getRegions(
-		boolean active);
+	public List<Region> getRegions();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Region> getRegions(
-		long countryId);
+	public List<Region> getRegions(boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Region> getRegions(
-		long countryId, boolean active);
+	public List<Region> getRegions(long countryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Region> getRegions(long countryId, boolean active);
 }

@@ -20,10 +20,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashEntryList;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for TrashEntry. Methods of this
@@ -104,14 +112,11 @@ public interface TrashEntryService extends BaseService {
 	* @return the matching trash entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.trash.model.TrashEntryList getEntries(
-		long groupId)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException;
+	public TrashEntryList getEntries(long groupId) throws PrincipalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
-		long groupId, java.lang.String className)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException;
+	public List<TrashEntry> getEntries(long groupId, java.lang.String className)
+		throws PrincipalException;
 
 	/**
 	* Returns a range of all the trash entries matching the group ID.
@@ -126,10 +131,8 @@ public interface TrashEntryService extends BaseService {
 	<code>obc</code>
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.trash.model.TrashEntryList getEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> obc)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException;
+	public TrashEntryList getEntries(long groupId, int start, int end,
+		OrderByComparator<TrashEntry> obc) throws PrincipalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -168,19 +171,16 @@ public interface TrashEntryService extends BaseService {
 	<code>null</code>)
 	*/
 	public void moveEntry(java.lang.String className, long classPK,
-		long destinationContainerModelId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		long destinationContainerModelId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
-		java.lang.String className, long classPK) throws PortalException;
-
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
-		java.lang.String className, long classPK, long overrideClassPK,
-		java.lang.String name) throws PortalException;
-
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(long entryId)
+	public TrashEntry restoreEntry(java.lang.String className, long classPK)
 		throws PortalException;
+
+	public TrashEntry restoreEntry(java.lang.String className, long classPK,
+		long overrideClassPK, java.lang.String name) throws PortalException;
+
+	public TrashEntry restoreEntry(long entryId) throws PortalException;
 
 	/**
 	* Restores the trash entry to its original location. In order to handle a
@@ -216,7 +216,6 @@ public interface TrashEntryService extends BaseService {
 	(optionally <code>null</code>)
 	* @return the restored trash entry
 	*/
-	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
-		long entryId, long overrideClassPK, java.lang.String name)
-		throws PortalException;
+	public TrashEntry restoreEntry(long entryId, long overrideClassPK,
+		java.lang.String name) throws PortalException;
 }

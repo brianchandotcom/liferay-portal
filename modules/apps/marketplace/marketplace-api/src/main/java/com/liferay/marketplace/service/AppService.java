@@ -16,6 +16,8 @@ package com.liferay.marketplace.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.marketplace.model.App;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,6 +26,8 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+
+import java.io.File;
 
 /**
  * Provides the remote service interface for App. Methods of this
@@ -49,8 +53,7 @@ public interface AppService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AppServiceUtil} to access the app remote service. Add custom service methods to {@link com.liferay.marketplace.service.impl.AppServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.marketplace.model.App deleteApp(long appId)
-		throws PortalException;
+	public App deleteApp(long appId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -63,6 +66,5 @@ public interface AppService extends BaseService {
 
 	public void uninstallApp(long remoteAppId) throws PortalException;
 
-	public com.liferay.marketplace.model.App updateApp(java.io.File file)
-		throws PortalException;
+	public App updateApp(File file) throws PortalException;
 }

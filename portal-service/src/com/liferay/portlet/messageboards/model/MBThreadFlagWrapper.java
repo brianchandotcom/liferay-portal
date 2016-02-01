@@ -18,8 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
 
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -164,7 +168,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _mbThreadFlag.getExpandoBridge();
 	}
 
@@ -209,7 +213,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _mbThreadFlag.getPrimaryKeyObj();
 	}
 
@@ -330,14 +334,12 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_mbThreadFlag.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_mbThreadFlag.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -387,7 +389,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_mbThreadFlag.setPrimaryKeyObj(primaryKeyObj);
 	}
 

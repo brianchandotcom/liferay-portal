@@ -16,15 +16,43 @@ package com.liferay.portlet.documentlibrary.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.File;
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for DLFileEntry. Methods of this
@@ -55,57 +83,46 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param dlFileEntry the document library file entry
 	* @return the document library file entry that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry addDLFileEntry(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntry addDLFileEntry(DLFileEntry dlFileEntry);
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry addFileEntry(
-		long userId, long groupId, long repositoryId, long folderId,
-		java.lang.String sourceFileName, java.lang.String mimeType,
-		java.lang.String title, java.lang.String description,
-		java.lang.String changeLog, long fileEntryTypeId,
-		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
-		java.io.File file, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DLFileEntry addFileEntry(long userId, long groupId,
+		long repositoryId, long folderId, java.lang.String sourceFileName,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String changeLog,
+		long fileEntryTypeId,
+		Map<java.lang.String, DDMFormValues> ddmFormValuesMap, File file,
+		InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
-		long userId, long fileEntryId) throws PortalException;
+	public DLFileVersion cancelCheckOut(long userId, long fileEntryId)
+		throws PortalException;
 
 	public void checkInFileEntry(long userId, long fileEntryId,
-		java.lang.String lockUuid,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String lockUuid, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkInFileEntry(long userId, long fileEntryId,
 		boolean majorVersion, java.lang.String changeLog,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long userId, long fileEntryId, java.lang.String owner,
-		long expirationTime,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
+		java.lang.String owner, long expirationTime,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long userId, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void convertExtraSettings(java.lang.String[] keys)
 		throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
-		long userId, long groupId, long repositoryId, long fileEntryId,
-		long destFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DLFileEntry copyFileEntry(long userId, long groupId,
+		long repositoryId, long fileEntryId, long destFolderId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void copyFileEntryMetadata(long companyId, long fileEntryTypeId,
 		long fileEntryId, long fromFileVersionId, long toFileVersionId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
@@ -113,8 +130,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param fileEntryId the primary key for the new document library file entry
 	* @return the new document library file entry
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry createDLFileEntry(
-		long fileEntryId);
+	public DLFileEntry createDLFileEntry(long fileEntryId);
 
 	/**
 	* Deletes the document library file entry from the database. Also notifies the appropriate model listeners.
@@ -122,9 +138,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param dlFileEntry the document library file entry
 	* @return the document library file entry that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteDLFileEntry(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry);
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntry deleteDLFileEntry(DLFileEntry dlFileEntry);
 
 	/**
 	* Deletes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -133,9 +148,9 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @return the document library file entry that was removed
 	* @throws PortalException if a document library file entry with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteDLFileEntry(
-		long fileEntryId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntry deleteDLFileEntry(long fileEntryId)
+		throws PortalException;
 
 	public void deleteFileEntries(long groupId, long folderId)
 		throws PortalException;
@@ -143,31 +158,28 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public void deleteFileEntries(long groupId, long folderId,
 		boolean includeTrashedEntries) throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public DLFileEntry deleteFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
-		long fileEntryId) throws PortalException;
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
-		long userId, long fileEntryId) throws PortalException;
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileVersion(
-		long userId, long fileEntryId, java.lang.String version)
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntry deleteFileEntry(long fileEntryId)
 		throws PortalException;
+
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntry deleteFileEntry(long userId, long fileEntryId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntry deleteFileVersion(long userId, long fileEntryId,
+		java.lang.String version) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
@@ -176,7 +188,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId,
 		boolean includeTrashedEntries) throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -184,8 +196,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -199,8 +210,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -216,10 +226,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -227,8 +235,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -237,13 +244,11 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchDLFileEntry(
-		long fileEntryId);
+	public DLFileEntry fetchDLFileEntry(long fileEntryId);
 
 	/**
 	* Returns the document library file entry matching the UUID and group.
@@ -253,35 +258,33 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchDLFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	public DLFileEntry fetchDLFileEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntry(
-		long groupId, long folderId, java.lang.String title);
+	public DLFileEntry fetchFileEntry(long groupId, long folderId,
+		java.lang.String title);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByAnyImageId(
-		long imageId);
+	public DLFileEntry fetchFileEntryByAnyImageId(long imageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByFileName(
-		long groupId, long folderId, java.lang.String fileName);
+	public DLFileEntry fetchFileEntryByFileName(long groupId, long folderId,
+		java.lang.String fileName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByName(
-		long groupId, long folderId, java.lang.String name);
+	public DLFileEntry fetchFileEntryByName(long groupId, long folderId,
+		java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
+	public List<DLFileEntry> getDDMStructureFileEntries(long[] ddmStructureIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getDDMStructureFileEntries(long groupId,
 		long[] ddmStructureIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDDMStructureFileEntries(
-		long groupId, long[] ddmStructureIds);
 
 	/**
 	* Returns a range of all the document library file entries.
@@ -295,8 +298,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @return the range of document library file entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntries(
-		int start, int end);
+	public List<DLFileEntry> getDLFileEntries(int start, int end);
 
 	/**
 	* Returns all the document library file entries matching the UUID and company.
@@ -306,7 +308,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @return the matching document library file entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
+	public List<DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -320,9 +322,9 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @return the range of matching document library file entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
+	public List<DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> orderByComparator);
+		OrderByComparator<DLFileEntry> orderByComparator);
 
 	/**
 	* Returns the number of document library file entries.
@@ -340,8 +342,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a document library file entry with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntry(
-		long fileEntryId) throws PortalException;
+	public DLFileEntry getDLFileEntry(long fileEntryId)
+		throws PortalException;
 
 	/**
 	* Returns the document library file entry matching the UUID and group.
@@ -352,26 +354,25 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @throws PortalException if a matching document library file entry could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public DLFileEntry getDLFileEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getExtraSettingsFileEntries(
-		int start, int end);
+	public List<DLFileEntry> getExtraSettingsFileEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExtraSettingsFileEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.io.File getFile(long fileEntryId, java.lang.String version,
+	public File getFile(long fileEntryId, java.lang.String version,
 		boolean incrementCounter) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.io.File getFile(long fileEntryId, java.lang.String version,
+	public File getFile(long fileEntryId, java.lang.String version,
 		boolean incrementCounter, int increment) throws PortalException;
 
 	/**
@@ -380,7 +381,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.io.File getFile(long userId, long fileEntryId,
+	public File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws PortalException;
 
@@ -390,18 +391,18 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.io.File getFile(long userId, long fileEntryId,
+	public File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
 		throws PortalException;
 
-	public java.io.InputStream getFileAsStream(long fileEntryId,
+	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version) throws PortalException;
 
-	public java.io.InputStream getFileAsStream(long fileEntryId,
+	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws PortalException;
 
-	public java.io.InputStream getFileAsStream(long fileEntryId,
+	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
 		throws PortalException;
 
@@ -410,7 +411,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	String)}
 	*/
 	@java.lang.Deprecated
-	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
+	public InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version) throws PortalException;
 
 	/**
@@ -418,7 +419,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	String, boolean)}
 	*/
 	@java.lang.Deprecated
-	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
+	public InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws PortalException;
 
@@ -427,46 +428,39 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	String, boolean, int)}
 	*/
 	@java.lang.Deprecated
-	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
+	public InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long folderId, java.lang.String name);
+	public List<DLFileEntry> getFileEntries(long folderId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long groupId, long folderId);
+	public List<DLFileEntry> getFileEntries(long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
+	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
+		int start, int end, OrderByComparator<DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long groupId, long folderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
+	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
+		int status, int start, int end, OrderByComparator<DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
+	public List<DLFileEntry> getFileEntries(long groupId, long userId,
+		List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition)
+		throws java.lang.Exception;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getFileEntries(long groupId, long userId,
+		List<java.lang.Long> repositoryIds, List<java.lang.Long> folderIds,
 		java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.documentlibrary.model.DLFileEntry> queryDefinition)
+		QueryDefinition<DLFileEntry> queryDefinition)
 		throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		long groupId, long userId,
-		java.util.List<java.lang.Long> repositoryIds,
-		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.documentlibrary.model.DLFileEntry> queryDefinition)
-		throws java.lang.Exception;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
-		int start, int end);
+	public List<DLFileEntry> getFileEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount();
@@ -476,9 +470,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileEntriesCount(long groupId,
-		com.liferay.portal.kernel.util.DateRange dateRange, long repositoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.documentlibrary.model.DLFileEntry> queryDefinition);
+	public int getFileEntriesCount(long groupId, DateRange dateRange,
+		long repositoryId, QueryDefinition<DLFileEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long folderId);
@@ -488,63 +481,57 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long userId,
-		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.documentlibrary.model.DLFileEntry> queryDefinition)
+		List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition)
 		throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long userId,
-		java.util.List<java.lang.Long> repositoryIds,
-		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.documentlibrary.model.DLFileEntry> queryDefinition)
+		List<java.lang.Long> repositoryIds, List<java.lang.Long> folderIds,
+		java.lang.String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition)
 		throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
-		long fileEntryId) throws PortalException;
+	public DLFileEntry getFileEntry(long fileEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
-		long groupId, long folderId, java.lang.String title)
-		throws PortalException;
+	public DLFileEntry getFileEntry(long groupId, long folderId,
+		java.lang.String title) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByName(
-		long groupId, long folderId, java.lang.String name)
-		throws PortalException;
+	public DLFileEntry getFileEntryByName(long groupId, long folderId,
+		java.lang.String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+	public DLFileEntry getFileEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
-		long groupId, int start, int end);
+	public List<DLFileEntry> getGroupFileEntries(long groupId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
+	public List<DLFileEntry> getGroupFileEntries(long groupId, int start,
+		int end, OrderByComparator<DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
-		long groupId, long userId, long repositoryId, long rootFolderId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
+	public List<DLFileEntry> getGroupFileEntries(long groupId, long userId,
+		long repositoryId, long rootFolderId, int start, int end,
+		OrderByComparator<DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
-		long groupId, long userId, long rootFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
+	public List<DLFileEntry> getGroupFileEntries(long groupId, long userId,
+		long rootFolderId, int start, int end,
+		OrderByComparator<DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
-		long groupId, long userId, int start, int end);
+	public List<DLFileEntry> getGroupFileEntries(long groupId, long userId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
-		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> obc);
+	public List<DLFileEntry> getGroupFileEntries(long groupId, long userId,
+		int start, int end, OrderByComparator<DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId);
@@ -553,13 +540,13 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public int getGroupFileEntriesCount(long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getMisversionedFileEntries();
+	public List<DLFileEntry> getMisversionedFileEntries();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getNoAssetFileEntries();
+	public List<DLFileEntry> getNoAssetFileEntries();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -569,16 +556,16 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getOrphanedFileEntries();
+	public List<DLFileEntry> getOrphanedFileEntries();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getRepositoryFileEntries(
-		long repositoryId, int start, int end);
+	public List<DLFileEntry> getRepositoryFileEntries(long repositoryId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRepositoryFileEntriesCount(long repositoryId);
@@ -595,10 +582,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public boolean hasFileEntryLock(long userId, long fileEntryId)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.increment.BufferedIncrement(configuration = "DLFileEntry", incrementClass = com.liferay.portal.kernel.increment.NumberIncrement.class)
-	public void incrementViewCounter(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		int increment);
+	@BufferedIncrement(configuration = "DLFileEntry", incrementClass = com.liferay.portal.kernel.increment.NumberIncrement.class)
+	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isFileEntryCheckedOut(long fileEntryId)
@@ -606,35 +591,30 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isKeepFileVersionLabel(long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		ServiceContext serviceContext) throws PortalException;
+
+	public Lock lockFileEntry(long userId, long fileEntryId)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.lock.Lock lockFileEntry(long userId,
-		long fileEntryId) throws PortalException;
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
-		long userId, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntry moveFileEntry(long userId, long fileEntryId,
+		long newFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
 
 	public void revertFileEntry(long userId, long fileEntryId,
-		java.lang.String version,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String version, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		long userId, long creatorUserId, long folderId,
-		java.lang.String[] mimeTypes, int status, int start, int end)
-		throws PortalException;
+	public Hits search(long groupId, long userId, long creatorUserId,
+		long folderId, java.lang.String[] mimeTypes, int status, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long groupId,
-		long userId, long creatorUserId, int status, int start, int end)
-		throws PortalException;
+	public Hits search(long groupId, long userId, long creatorUserId,
+		int status, int start, int end) throws PortalException;
 
 	public void setTreePaths(long folderId, java.lang.String treePath,
 		boolean reindex) throws PortalException;
@@ -647,32 +627,27 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param dlFileEntry the document library file entry
 	* @return the document library file entry that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateDLFileEntry(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntry updateDLFileEntry(DLFileEntry dlFileEntry);
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
-		long userId, long fileEntryId, java.lang.String sourceFileName,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String changeLog,
-		boolean majorVersion, long fileEntryTypeId,
-		java.util.Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> ddmFormValuesMap,
-		java.io.File file, java.io.InputStream is, long size,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DLFileEntry updateFileEntry(long userId, long fileEntryId,
+		java.lang.String sourceFileName, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String changeLog, boolean majorVersion, long fileEntryTypeId,
+		Map<java.lang.String, DDMFormValues> ddmFormValuesMap, File file,
+		InputStream is, long size, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntryType(
-		long userId, long fileEntryId, long fileEntryTypeId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DLFileEntry updateFileEntryType(long userId, long fileEntryId,
+		long fileEntryTypeId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateSmallImage(long smallImageId, long largeImageId)
 		throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateStatus(
-		long userId, long fileVersionId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+	public DLFileEntry updateStatus(long userId, long fileVersionId,
+		int status, ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
 
 	public void validateFile(long groupId, long folderId, long fileEntryId,

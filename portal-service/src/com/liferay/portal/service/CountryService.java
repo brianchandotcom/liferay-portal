@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Country;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for Country. Methods of this
@@ -46,43 +49,39 @@ public interface CountryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CountryServiceUtil} to access the country remote service. Add custom service methods to {@link com.liferay.portal.service.impl.CountryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Country addCountry(java.lang.String name,
-		java.lang.String a2, java.lang.String a3, java.lang.String number,
-		java.lang.String idd, boolean active) throws PortalException;
+	public Country addCountry(java.lang.String name, java.lang.String a2,
+		java.lang.String a3, java.lang.String number, java.lang.String idd,
+		boolean active) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Country fetchCountry(long countryId);
+	public Country fetchCountry(long countryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Country fetchCountryByA2(
-		java.lang.String a2);
+	public Country fetchCountryByA2(java.lang.String a2);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Country fetchCountryByA3(
-		java.lang.String a3);
+	public Country fetchCountryByA3(java.lang.String a3);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Country> getCountries();
+	public List<Country> getCountries();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Country> getCountries(
-		boolean active);
+	public List<Country> getCountries(boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Country getCountry(long countryId)
+	public Country getCountry(long countryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getCountryByA2(java.lang.String a2)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Country getCountryByA2(java.lang.String a2)
+	public Country getCountryByA3(java.lang.String a3)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Country getCountryByA3(java.lang.String a3)
+	public Country getCountryByName(java.lang.String name)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Country getCountryByName(
-		java.lang.String name) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

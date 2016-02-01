@@ -91,10 +91,19 @@ public class ClassUtil {
 
 		while (st.nextToken() != StreamTokenizer.TT_EOF) {
 			if (st.ttype == StreamTokenizer.TT_WORD) {
-				if (st.sval.indexOf('.') >= 0) {
-					classes.add(st.sval.substring(0, st.sval.indexOf('.')));
+				int firstIndex = st.sval.indexOf('.');
+
+				if (firstIndex >= 0) {
+					classes.add(st.sval.substring(0, firstIndex));
 				}
-				else {
+
+				int lastIndex = st.sval.lastIndexOf('.');
+
+				if (lastIndex >= 0) {
+					classes.add(st.sval.substring(lastIndex + 1));
+				}
+
+				if ((firstIndex < 0) && (lastIndex < 0)) {
 					classes.add(st.sval);
 				}
 			}

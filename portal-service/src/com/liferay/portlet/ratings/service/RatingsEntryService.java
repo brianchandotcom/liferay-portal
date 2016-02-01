@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.ratings.model.RatingsEntry;
+
 /**
  * Provides the remote service interface for RatingsEntry. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -56,7 +58,6 @@ public interface RatingsEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portlet.ratings.model.RatingsEntry updateEntry(
-		java.lang.String className, long classPK, double score)
-		throws PortalException;
+	public RatingsEntry updateEntry(java.lang.String className, long classPK,
+		double score) throws PortalException;
 }

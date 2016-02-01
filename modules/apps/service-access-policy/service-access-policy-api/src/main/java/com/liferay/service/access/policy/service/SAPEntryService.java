@@ -24,7 +24,15 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.service.access.policy.model.SAPEntry;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for SAPEntry. Methods of this
@@ -50,32 +58,26 @@ public interface SAPEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SAPEntryServiceUtil} to access the s a p entry remote service. Add custom service methods to {@link com.liferay.service.access.policy.service.impl.SAPEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.service.access.policy.model.SAPEntry addSAPEntry(
-		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
-		boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public SAPEntry addSAPEntry(java.lang.String allowedServiceSignatures,
+		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.service.access.policy.model.SAPEntry deleteSAPEntry(
-		com.liferay.service.access.policy.model.SAPEntry sapEntry)
+	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException;
+
+	public SAPEntry deleteSAPEntry(long sapEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SAPEntry fetchSAPEntry(long companyId, java.lang.String name)
 		throws PortalException;
 
-	public com.liferay.service.access.policy.model.SAPEntry deleteSAPEntry(
-		long sapEntryId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SAPEntry> getCompanySAPEntries(long companyId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
-		long companyId, java.lang.String name) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.policy.model.SAPEntry> obc);
+	public List<SAPEntry> getCompanySAPEntries(long companyId, int start,
+		int end, OrderByComparator<SAPEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanySAPEntriesCount(long companyId);
@@ -88,17 +90,15 @@ public interface SAPEntryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.service.access.policy.model.SAPEntry getSAPEntry(
-		long companyId, java.lang.String name) throws PortalException;
+	public SAPEntry getSAPEntry(long companyId, java.lang.String name)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.service.access.policy.model.SAPEntry getSAPEntry(
-		long sapEntryId) throws PortalException;
+	public SAPEntry getSAPEntry(long sapEntryId) throws PortalException;
 
-	public com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
-		long sapEntryId, java.lang.String allowedServiceSignatures,
-		boolean defaultSAPEntry, boolean enabled, java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public SAPEntry updateSAPEntry(long sapEntryId,
+		java.lang.String allowedServiceSignatures, boolean defaultSAPEntry,
+		boolean enabled, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 }

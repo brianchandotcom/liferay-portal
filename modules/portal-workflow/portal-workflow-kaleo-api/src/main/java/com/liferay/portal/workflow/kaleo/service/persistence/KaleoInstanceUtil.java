@@ -25,6 +25,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -986,7 +987,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate) {
+		Date completionDate) {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
 			kaleoDefinitionVersion, completionDate);
@@ -1009,7 +1010,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate, int start, int end) {
+		Date completionDate, int start, int end) {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
 			kaleoDefinitionVersion, completionDate, start, end);
@@ -1033,7 +1034,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate, int start, int end,
+		Date completionDate, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
@@ -1060,7 +1061,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static List<KaleoInstance> findByC_KDN_KDV_CD(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate, int start, int end,
+		Date completionDate, int start, int end,
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1082,8 +1083,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static KaleoInstance findByC_KDN_KDV_CD_First(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate,
-		OrderByComparator<KaleoInstance> orderByComparator)
+		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD_First(companyId, kaleoDefinitionName,
@@ -1102,8 +1102,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static KaleoInstance fetchByC_KDN_KDV_CD_First(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate,
-		OrderByComparator<KaleoInstance> orderByComparator) {
+		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_KDN_KDV_CD_First(companyId, kaleoDefinitionName,
 			kaleoDefinitionVersion, completionDate, orderByComparator);
@@ -1122,8 +1121,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static KaleoInstance findByC_KDN_KDV_CD_Last(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate,
-		OrderByComparator<KaleoInstance> orderByComparator)
+		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD_Last(companyId, kaleoDefinitionName,
@@ -1142,8 +1140,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static KaleoInstance fetchByC_KDN_KDV_CD_Last(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate,
-		OrderByComparator<KaleoInstance> orderByComparator) {
+		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_KDN_KDV_CD_Last(companyId, kaleoDefinitionName,
 			kaleoDefinitionVersion, completionDate, orderByComparator);
@@ -1164,8 +1161,7 @@ public class KaleoInstanceUtil {
 	public static KaleoInstance[] findByC_KDN_KDV_CD_PrevAndNext(
 		long kaleoInstanceId, long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate,
-		OrderByComparator<KaleoInstance> orderByComparator)
+		Date completionDate, OrderByComparator<KaleoInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException {
 		return getPersistence()
 				   .findByC_KDN_KDV_CD_PrevAndNext(kaleoInstanceId, companyId,
@@ -1183,7 +1179,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static void removeByC_KDN_KDV_CD(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate) {
+		Date completionDate) {
 		getPersistence()
 			.removeByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
 			kaleoDefinitionVersion, completionDate);
@@ -1200,7 +1196,7 @@ public class KaleoInstanceUtil {
 	*/
 	public static int countByC_KDN_KDV_CD(long companyId,
 		java.lang.String kaleoDefinitionName, int kaleoDefinitionVersion,
-		java.util.Date completionDate) {
+		Date completionDate) {
 		return getPersistence()
 				   .countByC_KDN_KDV_CD(companyId, kaleoDefinitionName,
 			kaleoDefinitionVersion, completionDate);

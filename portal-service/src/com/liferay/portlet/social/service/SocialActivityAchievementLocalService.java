@@ -16,14 +16,28 @@ package com.liferay.portlet.social.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.social.model.SocialAchievement;
+import com.liferay.portlet.social.model.SocialActivityAchievement;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for SocialActivityAchievement. Methods of this
@@ -48,8 +62,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityAchievementLocalServiceUtil} to access the social activity achievement local service. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addActivityAchievement(long userId, long groupId,
-		com.liferay.portlet.social.model.SocialAchievement achievement)
-		throws PortalException;
+		SocialAchievement achievement) throws PortalException;
 
 	/**
 	* Adds the social activity achievement to the database. Also notifies the appropriate model listeners.
@@ -57,9 +70,9 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param socialActivityAchievement the social activity achievement
 	* @return the social activity achievement that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivityAchievement addSocialActivityAchievement(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivityAchievement addSocialActivityAchievement(
+		SocialActivityAchievement socialActivityAchievement);
 
 	/**
 	* Creates a new social activity achievement with the primary key. Does not add the social activity achievement to the database.
@@ -67,15 +80,14 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param activityAchievementId the primary key for the new social activity achievement
 	* @return the new social activity achievement
 	*/
-	public com.liferay.portlet.social.model.SocialActivityAchievement createSocialActivityAchievement(
+	public SocialActivityAchievement createSocialActivityAchievement(
 		long activityAchievementId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -85,8 +97,8 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @return the social activity achievement that was removed
 	* @throws PortalException if a social activity achievement with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivityAchievement deleteSocialActivityAchievement(
 		long activityAchievementId) throws PortalException;
 
 	/**
@@ -95,11 +107,11 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param socialActivityAchievement the social activity achievement
 	* @return the social activity achievement that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement);
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivityAchievement deleteSocialActivityAchievement(
+		SocialActivityAchievement socialActivityAchievement);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -107,8 +119,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -122,8 +133,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -139,10 +149,8 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -150,8 +158,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -160,28 +167,26 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivityAchievement fetchSocialActivityAchievement(
+	public SocialActivityAchievement fetchSocialActivityAchievement(
 		long activityAchievementId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivityAchievement fetchUserAchievement(
-		long userId, long groupId, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupAchievements(
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupAchievements(
+	public SocialActivityAchievement fetchUserAchievement(long userId,
 		long groupId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SocialActivityAchievement> getGroupAchievements(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SocialActivityAchievement> getGroupAchievements(long groupId,
+		java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupAchievementsCount(long groupId);
@@ -190,14 +195,14 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	public int getGroupAchievementsCount(long groupId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupFirstAchievements(
+	public List<SocialActivityAchievement> getGroupFirstAchievements(
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFirstAchievementsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -208,8 +213,8 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the social activity achievement with the primary key.
@@ -219,7 +224,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @throws PortalException if a social activity achievement with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivityAchievement getSocialActivityAchievement(
+	public SocialActivityAchievement getSocialActivityAchievement(
 		long activityAchievementId) throws PortalException;
 
 	/**
@@ -234,7 +239,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @return the range of social activity achievements
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getSocialActivityAchievements(
+	public List<SocialActivityAchievement> getSocialActivityAchievements(
 		int start, int end);
 
 	/**
@@ -246,8 +251,8 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	public int getSocialActivityAchievementsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getUserAchievements(
-		long userId, long groupId);
+	public List<SocialActivityAchievement> getUserAchievements(long userId,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserAchievementsCount(long userId, long groupId);
@@ -258,7 +263,7 @@ public interface SocialActivityAchievementLocalService extends BaseLocalService,
 	* @param socialActivityAchievement the social activity achievement
 	* @return the social activity achievement that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivityAchievement updateSocialActivityAchievement(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivityAchievement updateSocialActivityAchievement(
+		SocialActivityAchievement socialActivityAchievement);
 }

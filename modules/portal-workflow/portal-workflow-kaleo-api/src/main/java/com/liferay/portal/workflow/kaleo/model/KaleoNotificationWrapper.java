@@ -18,6 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -231,7 +236,7 @@ public class KaleoNotificationWrapper implements KaleoNotification,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _kaleoNotification.getExpandoBridge();
 	}
 
@@ -336,7 +341,7 @@ public class KaleoNotificationWrapper implements KaleoNotification,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _kaleoNotification.getPrimaryKeyObj();
 	}
 
@@ -467,14 +472,12 @@ public class KaleoNotificationWrapper implements KaleoNotification,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_kaleoNotification.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_kaleoNotification.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -584,7 +587,7 @@ public class KaleoNotificationWrapper implements KaleoNotification,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_kaleoNotification.setPrimaryKeyObj(primaryKeyObj);
 	}
 

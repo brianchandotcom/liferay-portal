@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.BrowserTracker;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for BrowserTracker. Methods of this
@@ -52,9 +64,8 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param browserTracker the browser tracker
 	* @return the browser tracker that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.BrowserTracker addBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker);
+	@Indexable(type = IndexableType.REINDEX)
+	public BrowserTracker addBrowserTracker(BrowserTracker browserTracker);
 
 	/**
 	* Creates a new browser tracker with the primary key. Does not add the browser tracker to the database.
@@ -62,8 +73,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param browserTrackerId the primary key for the new browser tracker
 	* @return the new browser tracker
 	*/
-	public com.liferay.portal.model.BrowserTracker createBrowserTracker(
-		long browserTrackerId);
+	public BrowserTracker createBrowserTracker(long browserTrackerId);
 
 	/**
 	* Deletes the browser tracker from the database. Also notifies the appropriate model listeners.
@@ -71,9 +81,8 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param browserTracker the browser tracker
 	* @return the browser tracker that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker);
+	@Indexable(type = IndexableType.DELETE)
+	public BrowserTracker deleteBrowserTracker(BrowserTracker browserTracker);
 
 	/**
 	* Deletes the browser tracker with the primary key from the database. Also notifies the appropriate model listeners.
@@ -82,21 +91,20 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @return the browser tracker that was removed
 	* @throws PortalException if a browser tracker with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
-		long browserTrackerId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public BrowserTracker deleteBrowserTracker(long browserTrackerId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	public void deleteUserBrowserTracker(long userId);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -104,8 +112,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -119,8 +126,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -136,10 +142,8 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -147,8 +151,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -157,16 +160,14 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.BrowserTracker fetchBrowserTracker(
-		long browserTrackerId);
+	public BrowserTracker fetchBrowserTracker(long browserTrackerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the browser tracker with the primary key.
@@ -176,12 +177,11 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @throws PortalException if a browser tracker with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long browserTrackerId) throws PortalException;
+	public BrowserTracker getBrowserTracker(long browserTrackerId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long userId, long browserKey);
+	public BrowserTracker getBrowserTracker(long userId, long browserKey);
 
 	/**
 	* Returns a range of all the browser trackers.
@@ -195,8 +195,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @return the range of browser trackers
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.BrowserTracker> getBrowserTrackers(
-		int start, int end);
+	public List<BrowserTracker> getBrowserTrackers(int start, int end);
 
 	/**
 	* Returns the number of browser trackers.
@@ -207,7 +206,7 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	public int getBrowserTrackersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -218,8 +217,8 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -227,10 +226,8 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param browserTracker the browser tracker
 	* @return the browser tracker that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker);
+	@Indexable(type = IndexableType.REINDEX)
+	public BrowserTracker updateBrowserTracker(BrowserTracker browserTracker);
 
-	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		long userId, long browserKey);
+	public BrowserTracker updateBrowserTracker(long userId, long browserKey);
 }

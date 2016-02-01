@@ -16,14 +16,27 @@ package com.liferay.portlet.ratings.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.ratings.model.RatingsStats;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for RatingsStats. Methods of this
@@ -54,12 +67,10 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param ratingsStats the ratings stats
 	* @return the ratings stats that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.ratings.model.RatingsStats addRatingsStats(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats);
+	@Indexable(type = IndexableType.REINDEX)
+	public RatingsStats addRatingsStats(RatingsStats ratingsStats);
 
-	public com.liferay.portlet.ratings.model.RatingsStats addStats(
-		long classNameId, long classPK);
+	public RatingsStats addStats(long classNameId, long classPK);
 
 	/**
 	* Creates a new ratings stats with the primary key. Does not add the ratings stats to the database.
@@ -67,15 +78,13 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param statsId the primary key for the new ratings stats
 	* @return the new ratings stats
 	*/
-	public com.liferay.portlet.ratings.model.RatingsStats createRatingsStats(
-		long statsId);
+	public RatingsStats createRatingsStats(long statsId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -84,9 +93,8 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param ratingsStats the ratings stats
 	* @return the ratings stats that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.ratings.model.RatingsStats deleteRatingsStats(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats);
+	@Indexable(type = IndexableType.DELETE)
+	public RatingsStats deleteRatingsStats(RatingsStats ratingsStats);
 
 	/**
 	* Deletes the ratings stats with the primary key from the database. Also notifies the appropriate model listeners.
@@ -95,13 +103,13 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @return the ratings stats that was removed
 	* @throws PortalException if a ratings stats with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.ratings.model.RatingsStats deleteRatingsStats(
-		long statsId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public RatingsStats deleteRatingsStats(long statsId)
+		throws PortalException;
 
 	public void deleteStats(java.lang.String className, long classPK);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -109,8 +117,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -124,8 +131,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -141,10 +147,8 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -152,8 +156,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -162,23 +165,20 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.ratings.model.RatingsStats fetchRatingsStats(
-		long statsId);
+	public RatingsStats fetchRatingsStats(long statsId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.ratings.model.RatingsStats fetchStats(
-		java.lang.String className, long classPK);
+	public RatingsStats fetchStats(java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -189,8 +189,8 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the ratings stats with the primary key.
@@ -200,8 +200,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @throws PortalException if a ratings stats with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.ratings.model.RatingsStats getRatingsStats(
-		long statsId) throws PortalException;
+	public RatingsStats getRatingsStats(long statsId) throws PortalException;
 
 	/**
 	* Returns a range of all the ratings statses.
@@ -215,8 +214,7 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @return the range of ratings statses
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.ratings.model.RatingsStats> getRatingsStatses(
-		int start, int end);
+	public List<RatingsStats> getRatingsStatses(int start, int end);
 
 	/**
 	* Returns the number of ratings statses.
@@ -227,16 +225,14 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	public int getRatingsStatsesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.ratings.model.RatingsStats getStats(
-		java.lang.String className, long classPK);
+	public RatingsStats getStats(java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.ratings.model.RatingsStats> getStats(
-		java.lang.String className, java.util.List<java.lang.Long> classPKs);
+	public List<RatingsStats> getStats(java.lang.String className,
+		List<java.lang.Long> classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.ratings.model.RatingsStats getStats(long statsId)
-		throws PortalException;
+	public RatingsStats getStats(long statsId) throws PortalException;
 
 	/**
 	* Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -244,7 +240,6 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	* @param ratingsStats the ratings stats
 	* @return the ratings stats that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.ratings.model.RatingsStats updateRatingsStats(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats);
+	@Indexable(type = IndexableType.REINDEX)
+	public RatingsStats updateRatingsStats(RatingsStats ratingsStats);
 }

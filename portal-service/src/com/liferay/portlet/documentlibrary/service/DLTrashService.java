@@ -19,10 +19,14 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * Provides the remote service interface for DLTrash. Methods of this
@@ -62,10 +66,8 @@ public interface DLTrashService extends BaseService {
 	* @param serviceContext the service context to be applied
 	* @return the file entry
 	*/
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public FileEntry moveFileEntryFromTrash(long fileEntryId, long newFolderId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Moves the file entry with the primary key to the trash portlet.
@@ -73,8 +75,8 @@ public interface DLTrashService extends BaseService {
 	* @param fileEntryId the primary key of the file entry
 	* @return the file entry
 	*/
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long fileEntryId) throws PortalException;
+	public FileEntry moveFileEntryToTrash(long fileEntryId)
+		throws PortalException;
 
 	/**
 	* Moves the file shortcut from a trashed folder to the new folder.
@@ -84,9 +86,8 @@ public interface DLTrashService extends BaseService {
 	* @param serviceContext the service context to be applied
 	* @return the file shortcut
 	*/
-	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
-		long fileShortcutId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public FileShortcut moveFileShortcutFromTrash(long fileShortcutId,
+		long newFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -95,8 +96,8 @@ public interface DLTrashService extends BaseService {
 	* @param fileShortcutId the primary key of the file shortcut
 	* @return the file shortcut
 	*/
-	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
-		long fileShortcutId) throws PortalException;
+	public FileShortcut moveFileShortcutToTrash(long fileShortcutId)
+		throws PortalException;
 
 	/**
 	* Moves the folder with the primary key from the trash portlet to the new
@@ -107,10 +108,8 @@ public interface DLTrashService extends BaseService {
 	* @param serviceContext the service context to be applied
 	* @return the file entry
 	*/
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
-		long folderId, long parentFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public Folder moveFolderFromTrash(long folderId, long parentFolderId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Moves the folder with the primary key to the trash portlet.
@@ -118,8 +117,7 @@ public interface DLTrashService extends BaseService {
 	* @param folderId the primary key of the folder
 	* @return the file entry
 	*/
-	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long folderId) throws PortalException;
+	public Folder moveFolderToTrash(long folderId) throws PortalException;
 
 	/**
 	* Restores the file entry with the primary key from the trash portlet.

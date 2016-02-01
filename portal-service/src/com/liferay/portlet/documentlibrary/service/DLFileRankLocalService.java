@@ -16,15 +16,30 @@ package com.liferay.portlet.documentlibrary.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.documentlibrary.model.DLFileRank;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for DLFileRank. Methods of this
@@ -55,13 +70,11 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param dlFileRank the document library file rank
 	* @return the document library file rank that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileRank addDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileRank addDLFileRank(DLFileRank dlFileRank);
 
-	public com.liferay.portlet.documentlibrary.model.DLFileRank addFileRank(
-		long groupId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext);
+	public DLFileRank addFileRank(long groupId, long companyId, long userId,
+		long fileEntryId, ServiceContext serviceContext);
 
 	public void checkFileRanks();
 
@@ -71,8 +84,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param fileRankId the primary key for the new document library file rank
 	* @return the new document library file rank
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileRank createDLFileRank(
-		long fileRankId);
+	public DLFileRank createDLFileRank(long fileRankId);
 
 	/**
 	* Deletes the document library file rank from the database. Also notifies the appropriate model listeners.
@@ -80,9 +92,8 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param dlFileRank the document library file rank
 	* @return the document library file rank that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileRank deleteDLFileRank(DLFileRank dlFileRank);
 
 	/**
 	* Deletes the document library file rank with the primary key from the database. Also notifies the appropriate model listeners.
@@ -91,13 +102,12 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @return the document library file rank that was removed
 	* @throws PortalException if a document library file rank with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
-		long fileRankId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileRank deleteDLFileRank(long fileRankId)
+		throws PortalException;
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteFileRank(DLFileRank dlFileRank);
 
 	public void deleteFileRank(long fileRankId) throws PortalException;
 
@@ -109,8 +119,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	public void disableFileRanks(long fileEntryId);
@@ -118,7 +127,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public void disableFileRanksByFolderId(long folderId)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -126,8 +135,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -141,8 +149,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -158,10 +165,8 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -169,8 +174,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -179,9 +183,8 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	public void enableFileRanks(long fileEntryId);
 
@@ -189,11 +192,10 @@ public interface DLFileRankLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchDLFileRank(
-		long fileRankId);
+	public DLFileRank fetchDLFileRank(long fileRankId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the document library file rank with the primary key.
@@ -203,8 +205,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @throws PortalException if a document library file rank with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileRank getDLFileRank(
-		long fileRankId) throws PortalException;
+	public DLFileRank getDLFileRank(long fileRankId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library file ranks.
@@ -218,8 +219,7 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @return the range of document library file ranks
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getDLFileRanks(
-		int start, int end);
+	public List<DLFileRank> getDLFileRanks(int start, int end);
 
 	/**
 	* Returns the number of document library file ranks.
@@ -230,11 +230,10 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	public int getDLFileRanksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getFileRanks(
-		long groupId, long userId);
+	public List<DLFileRank> getFileRanks(long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -245,8 +244,8 @@ public interface DLFileRankLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -254,11 +253,9 @@ public interface DLFileRankLocalService extends BaseLocalService,
 	* @param dlFileRank the document library file rank
 	* @return the document library file rank that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileRank updateDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileRank updateDLFileRank(DLFileRank dlFileRank);
 
-	public com.liferay.portlet.documentlibrary.model.DLFileRank updateFileRank(
-		long groupId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext);
+	public DLFileRank updateFileRank(long groupId, long companyId, long userId,
+		long fileEntryId, ServiceContext serviceContext);
 }

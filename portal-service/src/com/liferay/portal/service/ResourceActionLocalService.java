@@ -16,12 +16,25 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.ResourceAction;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for ResourceAction. Methods of this
@@ -45,8 +58,8 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceActionLocalServiceUtil} to access the resource action local service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceActionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.ResourceAction addResourceAction(
-		java.lang.String name, java.lang.String actionId, long bitwiseValue);
+	public ResourceAction addResourceAction(java.lang.String name,
+		java.lang.String actionId, long bitwiseValue);
 
 	/**
 	* Adds the resource action to the database. Also notifies the appropriate model listeners.
@@ -54,18 +67,17 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param resourceAction the resource action
 	* @return the resource action that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ResourceAction addResourceAction(
-		com.liferay.portal.model.ResourceAction resourceAction);
+	@Indexable(type = IndexableType.REINDEX)
+	public ResourceAction addResourceAction(ResourceAction resourceAction);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkResourceActions();
 
 	public void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds);
+		List<java.lang.String> actionIds);
 
 	public void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds, boolean addDefaultActions);
+		List<java.lang.String> actionIds, boolean addDefaultActions);
 
 	/**
 	* Creates a new resource action with the primary key. Does not add the resource action to the database.
@@ -73,15 +85,13 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param resourceActionId the primary key for the new resource action
 	* @return the new resource action
 	*/
-	public com.liferay.portal.model.ResourceAction createResourceAction(
-		long resourceActionId);
+	public ResourceAction createResourceAction(long resourceActionId);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -90,9 +100,8 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param resourceAction the resource action
 	* @return the resource action that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ResourceAction deleteResourceAction(
-		com.liferay.portal.model.ResourceAction resourceAction);
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceAction deleteResourceAction(ResourceAction resourceAction);
 
 	/**
 	* Deletes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
@@ -101,11 +110,11 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @return the resource action that was removed
 	* @throws PortalException if a resource action with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ResourceAction deleteResourceAction(
-		long resourceActionId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceAction deleteResourceAction(long resourceActionId)
+		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -113,8 +122,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -128,8 +136,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -145,10 +152,8 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -156,8 +161,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -166,24 +170,22 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ResourceAction fetchResourceAction(
-		java.lang.String name, java.lang.String actionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ResourceAction fetchResourceAction(
-		long resourceActionId);
+	public ResourceAction fetchResourceAction(java.lang.String name,
+		java.lang.String actionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ResourceAction fetchResourceAction(long resourceActionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -194,14 +196,13 @@ public interface ResourceActionLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
-
-	@com.liferay.portal.kernel.spring.aop.Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ResourceAction getResourceAction(
-		java.lang.String name, java.lang.String actionId)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Skip
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ResourceAction getResourceAction(java.lang.String name,
+		java.lang.String actionId) throws PortalException;
 
 	/**
 	* Returns the resource action with the primary key.
@@ -211,12 +212,11 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @throws PortalException if a resource action with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ResourceAction getResourceAction(
-		long resourceActionId) throws PortalException;
+	public ResourceAction getResourceAction(long resourceActionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
-		java.lang.String name);
+	public List<ResourceAction> getResourceActions(java.lang.String name);
 
 	/**
 	* Returns a range of all the resource actions.
@@ -230,8 +230,7 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @return the range of resource actions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
-		int start, int end);
+	public List<ResourceAction> getResourceActions(int start, int end);
 
 	/**
 	* Returns the number of resource actions.
@@ -250,7 +249,6 @@ public interface ResourceActionLocalService extends BaseLocalService,
 	* @param resourceAction the resource action
 	* @return the resource action that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ResourceAction updateResourceAction(
-		com.liferay.portal.model.ResourceAction resourceAction);
+	@Indexable(type = IndexableType.REINDEX)
+	public ResourceAction updateResourceAction(ResourceAction resourceAction);
 }

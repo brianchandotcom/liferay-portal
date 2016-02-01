@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+
+import java.util.Locale;
 
 /**
  * Provides the remote service interface for ScreensDDLRecord. Methods of this
@@ -51,18 +55,16 @@ public interface ScreensDDLRecordService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link ScreensDDLRecordServiceUtil} to access the screens d d l record remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensDDLRecordServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONObject getDDLRecord(
-		long ddlRecordId, java.util.Locale locale) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONArray getDDLRecords(
-		long ddlRecordSetId, java.util.Locale locale, int start, int end)
+	public JSONObject getDDLRecord(long ddlRecordId, Locale locale)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.json.JSONArray getDDLRecords(
-		long ddlRecordSetId, long userId, java.util.Locale locale, int start,
-		int end) throws PortalException;
+	public JSONArray getDDLRecords(long ddlRecordSetId, Locale locale,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONArray getDDLRecords(long ddlRecordSetId, long userId,
+		Locale locale, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDLRecordsCount(long ddlRecordSetId);

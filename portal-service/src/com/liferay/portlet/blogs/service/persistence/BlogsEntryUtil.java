@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -955,8 +956,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @return the matching blogs entries
 	*/
-	public static List<BlogsEntry> findByG_LtD(long groupId,
-		java.util.Date displayDate) {
+	public static List<BlogsEntry> findByG_LtD(long groupId, Date displayDate) {
 		return getPersistence().findByG_LtD(groupId, displayDate);
 	}
 
@@ -973,8 +973,8 @@ public class BlogsEntryUtil {
 	* @param end the upper bound of the range of blogs entries (not inclusive)
 	* @return the range of matching blogs entries
 	*/
-	public static List<BlogsEntry> findByG_LtD(long groupId,
-		java.util.Date displayDate, int start, int end) {
+	public static List<BlogsEntry> findByG_LtD(long groupId, Date displayDate,
+		int start, int end) {
 		return getPersistence().findByG_LtD(groupId, displayDate, start, end);
 	}
 
@@ -992,9 +992,8 @@ public class BlogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching blogs entries
 	*/
-	public static List<BlogsEntry> findByG_LtD(long groupId,
-		java.util.Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+	public static List<BlogsEntry> findByG_LtD(long groupId, Date displayDate,
+		int start, int end, OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_LtD(groupId, displayDate, start, end,
 			orderByComparator);
@@ -1015,9 +1014,8 @@ public class BlogsEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching blogs entries
 	*/
-	public static List<BlogsEntry> findByG_LtD(long groupId,
-		java.util.Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
+	public static List<BlogsEntry> findByG_LtD(long groupId, Date displayDate,
+		int start, int end, OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_LtD(groupId, displayDate, start, end,
@@ -1033,8 +1031,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry findByG_LtD_First(long groupId,
-		java.util.Date displayDate,
+	public static BlogsEntry findByG_LtD_First(long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -1049,8 +1046,7 @@ public class BlogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry fetchByG_LtD_First(long groupId,
-		java.util.Date displayDate,
+	public static BlogsEntry fetchByG_LtD_First(long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtD_First(groupId, displayDate, orderByComparator);
@@ -1065,8 +1061,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry findByG_LtD_Last(long groupId,
-		java.util.Date displayDate,
+	public static BlogsEntry findByG_LtD_Last(long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -1081,8 +1076,7 @@ public class BlogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry fetchByG_LtD_Last(long groupId,
-		java.util.Date displayDate,
+	public static BlogsEntry fetchByG_LtD_Last(long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtD_Last(groupId, displayDate, orderByComparator);
@@ -1099,7 +1093,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByG_LtD_PrevAndNext(long entryId,
-		long groupId, java.util.Date displayDate,
+		long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -1115,7 +1109,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD(long groupId,
-		java.util.Date displayDate) {
+		Date displayDate) {
 		return getPersistence().filterFindByG_LtD(groupId, displayDate);
 	}
 
@@ -1133,7 +1127,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD(long groupId,
-		java.util.Date displayDate, int start, int end) {
+		Date displayDate, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_LtD(groupId, displayDate, start, end);
 	}
@@ -1153,7 +1147,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD(long groupId,
-		java.util.Date displayDate, int start, int end,
+		Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LtD(groupId, displayDate, start, end,
@@ -1171,7 +1165,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] filterFindByG_LtD_PrevAndNext(long entryId,
-		long groupId, java.util.Date displayDate,
+		long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -1185,7 +1179,7 @@ public class BlogsEntryUtil {
 	* @param groupId the group ID
 	* @param displayDate the display date
 	*/
-	public static void removeByG_LtD(long groupId, java.util.Date displayDate) {
+	public static void removeByG_LtD(long groupId, Date displayDate) {
 		getPersistence().removeByG_LtD(groupId, displayDate);
 	}
 
@@ -1196,7 +1190,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @return the number of matching blogs entries
 	*/
-	public static int countByG_LtD(long groupId, java.util.Date displayDate) {
+	public static int countByG_LtD(long groupId, Date displayDate) {
 		return getPersistence().countByG_LtD(groupId, displayDate);
 	}
 
@@ -1207,8 +1201,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @return the number of matching blogs entries that the user has permission to view
 	*/
-	public static int filterCountByG_LtD(long groupId,
-		java.util.Date displayDate) {
+	public static int filterCountByG_LtD(long groupId, Date displayDate) {
 		return getPersistence().filterCountByG_LtD(groupId, displayDate);
 	}
 
@@ -1895,8 +1888,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @return the matching blogs entries
 	*/
-	public static List<BlogsEntry> findByC_LtD(long companyId,
-		java.util.Date displayDate) {
+	public static List<BlogsEntry> findByC_LtD(long companyId, Date displayDate) {
 		return getPersistence().findByC_LtD(companyId, displayDate);
 	}
 
@@ -1914,7 +1906,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD(long companyId,
-		java.util.Date displayDate, int start, int end) {
+		Date displayDate, int start, int end) {
 		return getPersistence().findByC_LtD(companyId, displayDate, start, end);
 	}
 
@@ -1933,7 +1925,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD(long companyId,
-		java.util.Date displayDate, int start, int end,
+		Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_LtD(companyId, displayDate, start, end,
@@ -1956,7 +1948,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD(long companyId,
-		java.util.Date displayDate, int start, int end,
+		Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1974,8 +1966,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByC_LtD_First(long companyId,
-		java.util.Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator)
+		Date displayDate, OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByC_LtD_First(companyId, displayDate, orderByComparator);
@@ -1990,8 +1981,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByC_LtD_First(long companyId,
-		java.util.Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		Date displayDate, OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_First(companyId, displayDate, orderByComparator);
 	}
@@ -2005,8 +1995,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry findByC_LtD_Last(long companyId,
-		java.util.Date displayDate,
+	public static BlogsEntry findByC_LtD_Last(long companyId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -2022,8 +2011,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByC_LtD_Last(long companyId,
-		java.util.Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		Date displayDate, OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_Last(companyId, displayDate, orderByComparator);
 	}
@@ -2039,7 +2027,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByC_LtD_PrevAndNext(long entryId,
-		long companyId, java.util.Date displayDate,
+		long companyId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -2053,7 +2041,7 @@ public class BlogsEntryUtil {
 	* @param companyId the company ID
 	* @param displayDate the display date
 	*/
-	public static void removeByC_LtD(long companyId, java.util.Date displayDate) {
+	public static void removeByC_LtD(long companyId, Date displayDate) {
 		getPersistence().removeByC_LtD(companyId, displayDate);
 	}
 
@@ -2064,7 +2052,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @return the number of matching blogs entries
 	*/
-	public static int countByC_LtD(long companyId, java.util.Date displayDate) {
+	public static int countByC_LtD(long companyId, Date displayDate) {
 		return getPersistence().countByC_LtD(companyId, displayDate);
 	}
 
@@ -2420,8 +2408,7 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the matching blogs entries
 	*/
-	public static List<BlogsEntry> findByLtD_S(java.util.Date displayDate,
-		int status) {
+	public static List<BlogsEntry> findByLtD_S(Date displayDate, int status) {
 		return getPersistence().findByLtD_S(displayDate, status);
 	}
 
@@ -2438,8 +2425,8 @@ public class BlogsEntryUtil {
 	* @param end the upper bound of the range of blogs entries (not inclusive)
 	* @return the range of matching blogs entries
 	*/
-	public static List<BlogsEntry> findByLtD_S(java.util.Date displayDate,
-		int status, int start, int end) {
+	public static List<BlogsEntry> findByLtD_S(Date displayDate, int status,
+		int start, int end) {
 		return getPersistence().findByLtD_S(displayDate, status, start, end);
 	}
 
@@ -2457,9 +2444,8 @@ public class BlogsEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching blogs entries
 	*/
-	public static List<BlogsEntry> findByLtD_S(java.util.Date displayDate,
-		int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+	public static List<BlogsEntry> findByLtD_S(Date displayDate, int status,
+		int start, int end, OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByLtD_S(displayDate, status, start, end,
 			orderByComparator);
@@ -2480,9 +2466,8 @@ public class BlogsEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching blogs entries
 	*/
-	public static List<BlogsEntry> findByLtD_S(java.util.Date displayDate,
-		int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
+	public static List<BlogsEntry> findByLtD_S(Date displayDate, int status,
+		int start, int end, OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByLtD_S(displayDate, status, start, end,
@@ -2498,8 +2483,8 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry findByLtD_S_First(java.util.Date displayDate,
-		int status, OrderByComparator<BlogsEntry> orderByComparator)
+	public static BlogsEntry findByLtD_S_First(Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByLtD_S_First(displayDate, status, orderByComparator);
@@ -2513,8 +2498,8 @@ public class BlogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry fetchByLtD_S_First(java.util.Date displayDate,
-		int status, OrderByComparator<BlogsEntry> orderByComparator) {
+	public static BlogsEntry fetchByLtD_S_First(Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByLtD_S_First(displayDate, status, orderByComparator);
 	}
@@ -2528,8 +2513,8 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry findByLtD_S_Last(java.util.Date displayDate,
-		int status, OrderByComparator<BlogsEntry> orderByComparator)
+	public static BlogsEntry findByLtD_S_Last(Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByLtD_S_Last(displayDate, status, orderByComparator);
@@ -2543,8 +2528,8 @@ public class BlogsEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry fetchByLtD_S_Last(java.util.Date displayDate,
-		int status, OrderByComparator<BlogsEntry> orderByComparator) {
+	public static BlogsEntry fetchByLtD_S_Last(Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByLtD_S_Last(displayDate, status, orderByComparator);
 	}
@@ -2560,7 +2545,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByLtD_S_PrevAndNext(long entryId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -2574,7 +2559,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @param status the status
 	*/
-	public static void removeByLtD_S(java.util.Date displayDate, int status) {
+	public static void removeByLtD_S(Date displayDate, int status) {
 		getPersistence().removeByLtD_S(displayDate, status);
 	}
 
@@ -2585,7 +2570,7 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the number of matching blogs entries
 	*/
-	public static int countByLtD_S(java.util.Date displayDate, int status) {
+	public static int countByLtD_S(Date displayDate, int status) {
 		return getPersistence().countByLtD_S(displayDate, status);
 	}
 
@@ -2598,7 +2583,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD(long groupId, long userId,
-		java.util.Date displayDate) {
+		Date displayDate) {
 		return getPersistence().findByG_U_LtD(groupId, userId, displayDate);
 	}
 
@@ -2617,7 +2602,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD(long groupId, long userId,
-		java.util.Date displayDate, int start, int end) {
+		Date displayDate, int start, int end) {
 		return getPersistence()
 				   .findByG_U_LtD(groupId, userId, displayDate, start, end);
 	}
@@ -2638,7 +2623,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD(long groupId, long userId,
-		java.util.Date displayDate, int start, int end,
+		Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_LtD(groupId, userId, displayDate, start, end,
@@ -2662,7 +2647,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD(long groupId, long userId,
-		java.util.Date displayDate, int start, int end,
+		Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -2681,8 +2666,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_U_LtD_First(long groupId, long userId,
-		java.util.Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator)
+		Date displayDate, OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_LtD_First(groupId, userId, displayDate,
@@ -2699,8 +2683,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_U_LtD_First(long groupId, long userId,
-		java.util.Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		Date displayDate, OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_LtD_First(groupId, userId, displayDate,
 			orderByComparator);
@@ -2717,8 +2700,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_U_LtD_Last(long groupId, long userId,
-		java.util.Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator)
+		Date displayDate, OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_U_LtD_Last(groupId, userId, displayDate,
@@ -2735,8 +2717,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_U_LtD_Last(long groupId, long userId,
-		java.util.Date displayDate,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		Date displayDate, OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_LtD_Last(groupId, userId, displayDate,
 			orderByComparator);
@@ -2754,7 +2735,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByG_U_LtD_PrevAndNext(long entryId,
-		long groupId, long userId, java.util.Date displayDate,
+		long groupId, long userId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -2771,7 +2752,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD(long groupId,
-		long userId, java.util.Date displayDate) {
+		long userId, Date displayDate) {
 		return getPersistence().filterFindByG_U_LtD(groupId, userId, displayDate);
 	}
 
@@ -2790,7 +2771,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD(long groupId,
-		long userId, java.util.Date displayDate, int start, int end) {
+		long userId, Date displayDate, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_U_LtD(groupId, userId, displayDate, start, end);
 	}
@@ -2811,7 +2792,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD(long groupId,
-		long userId, java.util.Date displayDate, int start, int end,
+		long userId, Date displayDate, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_LtD(groupId, userId, displayDate, start,
@@ -2830,7 +2811,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] filterFindByG_U_LtD_PrevAndNext(long entryId,
-		long groupId, long userId, java.util.Date displayDate,
+		long groupId, long userId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -2846,7 +2827,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	*/
 	public static void removeByG_U_LtD(long groupId, long userId,
-		java.util.Date displayDate) {
+		Date displayDate) {
 		getPersistence().removeByG_U_LtD(groupId, userId, displayDate);
 	}
 
@@ -2858,8 +2839,7 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @return the number of matching blogs entries
 	*/
-	public static int countByG_U_LtD(long groupId, long userId,
-		java.util.Date displayDate) {
+	public static int countByG_U_LtD(long groupId, long userId, Date displayDate) {
 		return getPersistence().countByG_U_LtD(groupId, userId, displayDate);
 	}
 
@@ -2872,7 +2852,7 @@ public class BlogsEntryUtil {
 	* @return the number of matching blogs entries that the user has permission to view
 	*/
 	public static int filterCountByG_U_LtD(long groupId, long userId,
-		java.util.Date displayDate) {
+		Date displayDate) {
 		return getPersistence()
 				   .filterCountByG_U_LtD(groupId, userId, displayDate);
 	}
@@ -3609,7 +3589,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence().findByG_LtD_S(groupId, displayDate, status);
 	}
 
@@ -3628,7 +3608,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status, int start, int end) {
+		Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_LtD_S(groupId, displayDate, status, start, end);
 	}
@@ -3649,7 +3629,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_LtD_S(groupId, displayDate, status, start, end,
@@ -3673,7 +3653,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -3692,7 +3672,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_LtD_S_First(long groupId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -3710,7 +3690,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_LtD_S_First(long groupId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtD_S_First(groupId, displayDate, status,
@@ -3727,9 +3707,8 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
-	public static BlogsEntry findByG_LtD_S_Last(long groupId,
-		java.util.Date displayDate, int status,
-		OrderByComparator<BlogsEntry> orderByComparator)
+	public static BlogsEntry findByG_LtD_S_Last(long groupId, Date displayDate,
+		int status, OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtD_S_Last(groupId, displayDate, status,
@@ -3746,7 +3725,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_LtD_S_Last(long groupId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtD_S_Last(groupId, displayDate, status,
@@ -3765,7 +3744,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByG_LtD_S_PrevAndNext(long entryId,
-		long groupId, java.util.Date displayDate, int status,
+		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -3782,7 +3761,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence().filterFindByG_LtD_S(groupId, displayDate, status);
 	}
 
@@ -3801,7 +3780,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status, int start, int end) {
+		Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_LtD_S(groupId, displayDate, status, start, end);
 	}
@@ -3822,7 +3801,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LtD_S(groupId, displayDate, status, start,
@@ -3841,7 +3820,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] filterFindByG_LtD_S_PrevAndNext(long entryId,
-		long groupId, java.util.Date displayDate, int status,
+		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -3856,8 +3835,8 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @param status the status
 	*/
-	public static void removeByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status) {
+	public static void removeByG_LtD_S(long groupId, Date displayDate,
+		int status) {
 		getPersistence().removeByG_LtD_S(groupId, displayDate, status);
 	}
 
@@ -3869,8 +3848,7 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the number of matching blogs entries
 	*/
-	public static int countByG_LtD_S(long groupId, java.util.Date displayDate,
-		int status) {
+	public static int countByG_LtD_S(long groupId, Date displayDate, int status) {
 		return getPersistence().countByG_LtD_S(groupId, displayDate, status);
 	}
 
@@ -3882,8 +3860,8 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the number of matching blogs entries that the user has permission to view
 	*/
-	public static int filterCountByG_LtD_S(long groupId,
-		java.util.Date displayDate, int status) {
+	public static int filterCountByG_LtD_S(long groupId, Date displayDate,
+		int status) {
 		return getPersistence()
 				   .filterCountByG_LtD_S(groupId, displayDate, status);
 	}
@@ -3897,7 +3875,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence().findByG_LtD_NotS(groupId, displayDate, status);
 	}
 
@@ -3916,7 +3894,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status, int start, int end) {
+		Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_LtD_NotS(groupId, displayDate, status, start, end);
 	}
@@ -3937,7 +3915,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_LtD_NotS(groupId, displayDate, status, start, end,
@@ -3961,7 +3939,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -3980,7 +3958,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_LtD_NotS_First(long groupId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -3998,7 +3976,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_LtD_NotS_First(long groupId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtD_NotS_First(groupId, displayDate, status,
@@ -4016,7 +3994,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_LtD_NotS_Last(long groupId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4034,7 +4012,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_LtD_NotS_Last(long groupId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtD_NotS_Last(groupId, displayDate, status,
@@ -4053,7 +4031,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByG_LtD_NotS_PrevAndNext(long entryId,
-		long groupId, java.util.Date displayDate, int status,
+		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4070,7 +4048,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence()
 				   .filterFindByG_LtD_NotS(groupId, displayDate, status);
 	}
@@ -4090,7 +4068,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status, int start, int end) {
+		Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_LtD_NotS(groupId, displayDate, status, start,
 			end);
@@ -4112,7 +4090,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_LtD_NotS(groupId, displayDate, status, start,
@@ -4131,7 +4109,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] filterFindByG_LtD_NotS_PrevAndNext(
-		long entryId, long groupId, java.util.Date displayDate, int status,
+		long entryId, long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4146,8 +4124,8 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @param status the status
 	*/
-	public static void removeByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status) {
+	public static void removeByG_LtD_NotS(long groupId, Date displayDate,
+		int status) {
 		getPersistence().removeByG_LtD_NotS(groupId, displayDate, status);
 	}
 
@@ -4159,8 +4137,8 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the number of matching blogs entries
 	*/
-	public static int countByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status) {
+	public static int countByG_LtD_NotS(long groupId, Date displayDate,
+		int status) {
 		return getPersistence().countByG_LtD_NotS(groupId, displayDate, status);
 	}
 
@@ -4172,8 +4150,8 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the number of matching blogs entries that the user has permission to view
 	*/
-	public static int filterCountByG_LtD_NotS(long groupId,
-		java.util.Date displayDate, int status) {
+	public static int filterCountByG_LtD_NotS(long groupId, Date displayDate,
+		int status) {
 		return getPersistence()
 				   .filterCountByG_LtD_NotS(groupId, displayDate, status);
 	}
@@ -4571,7 +4549,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence().findByC_LtD_S(companyId, displayDate, status);
 	}
 
@@ -4590,7 +4568,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status, int start, int end) {
+		Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .findByC_LtD_S(companyId, displayDate, status, start, end);
 	}
@@ -4611,7 +4589,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_LtD_S(companyId, displayDate, status, start, end,
@@ -4635,7 +4613,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -4654,7 +4632,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByC_LtD_S_First(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4672,7 +4650,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByC_LtD_S_First(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_S_First(companyId, displayDate, status,
@@ -4690,7 +4668,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByC_LtD_S_Last(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4708,7 +4686,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByC_LtD_S_Last(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_S_Last(companyId, displayDate, status,
@@ -4727,7 +4705,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByC_LtD_S_PrevAndNext(long entryId,
-		long companyId, java.util.Date displayDate, int status,
+		long companyId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4742,8 +4720,8 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @param status the status
 	*/
-	public static void removeByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status) {
+	public static void removeByC_LtD_S(long companyId, Date displayDate,
+		int status) {
 		getPersistence().removeByC_LtD_S(companyId, displayDate, status);
 	}
 
@@ -4755,8 +4733,8 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the number of matching blogs entries
 	*/
-	public static int countByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status) {
+	public static int countByC_LtD_S(long companyId, Date displayDate,
+		int status) {
 		return getPersistence().countByC_LtD_S(companyId, displayDate, status);
 	}
 
@@ -4769,7 +4747,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence().findByC_LtD_NotS(companyId, displayDate, status);
 	}
 
@@ -4788,7 +4766,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status, int start, int end) {
+		Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .findByC_LtD_NotS(companyId, displayDate, status, start, end);
 	}
@@ -4809,7 +4787,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByC_LtD_NotS(companyId, displayDate, status, start,
@@ -4833,7 +4811,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -4852,7 +4830,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByC_LtD_NotS_First(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4870,7 +4848,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByC_LtD_NotS_First(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_NotS_First(companyId, displayDate, status,
@@ -4888,7 +4866,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByC_LtD_NotS_Last(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4906,7 +4884,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByC_LtD_NotS_Last(long companyId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LtD_NotS_Last(companyId, displayDate, status,
@@ -4925,7 +4903,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByC_LtD_NotS_PrevAndNext(long entryId,
-		long companyId, java.util.Date displayDate, int status,
+		long companyId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -4940,8 +4918,8 @@ public class BlogsEntryUtil {
 	* @param displayDate the display date
 	* @param status the status
 	*/
-	public static void removeByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status) {
+	public static void removeByC_LtD_NotS(long companyId, Date displayDate,
+		int status) {
 		getPersistence().removeByC_LtD_NotS(companyId, displayDate, status);
 	}
 
@@ -4953,8 +4931,8 @@ public class BlogsEntryUtil {
 	* @param status the status
 	* @return the number of matching blogs entries
 	*/
-	public static int countByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status) {
+	public static int countByC_LtD_NotS(long companyId, Date displayDate,
+		int status) {
 		return getPersistence().countByC_LtD_NotS(companyId, displayDate, status);
 	}
 
@@ -4968,7 +4946,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_S(long groupId, long userId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence()
 				   .findByG_U_LtD_S(groupId, userId, displayDate, status);
 	}
@@ -4989,7 +4967,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_S(long groupId, long userId,
-		java.util.Date displayDate, int status, int start, int end) {
+		Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_U_LtD_S(groupId, userId, displayDate, status,
 			start, end);
@@ -5012,7 +4990,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_S(long groupId, long userId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_LtD_S(groupId, userId, displayDate, status,
@@ -5037,7 +5015,7 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_S(long groupId, long userId,
-		java.util.Date displayDate, int status, int start, int end,
+		Date displayDate, int status, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -5057,7 +5035,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_U_LtD_S_First(long groupId, long userId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -5076,7 +5054,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_U_LtD_S_First(long groupId, long userId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_LtD_S_First(groupId, userId, displayDate,
@@ -5095,7 +5073,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_U_LtD_S_Last(long groupId, long userId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -5114,7 +5092,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_U_LtD_S_Last(long groupId, long userId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_LtD_S_Last(groupId, userId, displayDate, status,
@@ -5134,7 +5112,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByG_U_LtD_S_PrevAndNext(long entryId,
-		long groupId, long userId, java.util.Date displayDate, int status,
+		long groupId, long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -5152,7 +5130,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD_S(long groupId,
-		long userId, java.util.Date displayDate, int status) {
+		long userId, Date displayDate, int status) {
 		return getPersistence()
 				   .filterFindByG_U_LtD_S(groupId, userId, displayDate, status);
 	}
@@ -5173,7 +5151,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD_S(long groupId,
-		long userId, java.util.Date displayDate, int status, int start, int end) {
+		long userId, Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_U_LtD_S(groupId, userId, displayDate, status,
 			start, end);
@@ -5196,8 +5174,8 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD_S(long groupId,
-		long userId, java.util.Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator) {
+		long userId, Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_LtD_S(groupId, userId, displayDate, status,
 			start, end, orderByComparator);
@@ -5216,7 +5194,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] filterFindByG_U_LtD_S_PrevAndNext(long entryId,
-		long groupId, long userId, java.util.Date displayDate, int status,
+		long groupId, long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -5233,7 +5211,7 @@ public class BlogsEntryUtil {
 	* @param status the status
 	*/
 	public static void removeByG_U_LtD_S(long groupId, long userId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		getPersistence().removeByG_U_LtD_S(groupId, userId, displayDate, status);
 	}
 
@@ -5247,7 +5225,7 @@ public class BlogsEntryUtil {
 	* @return the number of matching blogs entries
 	*/
 	public static int countByG_U_LtD_S(long groupId, long userId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence()
 				   .countByG_U_LtD_S(groupId, userId, displayDate, status);
 	}
@@ -5262,7 +5240,7 @@ public class BlogsEntryUtil {
 	* @return the number of matching blogs entries that the user has permission to view
 	*/
 	public static int filterCountByG_U_LtD_S(long groupId, long userId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence()
 				   .filterCountByG_U_LtD_S(groupId, userId, displayDate, status);
 	}
@@ -5277,7 +5255,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_NotS(long groupId,
-		long userId, java.util.Date displayDate, int status) {
+		long userId, Date displayDate, int status) {
 		return getPersistence()
 				   .findByG_U_LtD_NotS(groupId, userId, displayDate, status);
 	}
@@ -5298,7 +5276,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_NotS(long groupId,
-		long userId, java.util.Date displayDate, int status, int start, int end) {
+		long userId, Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_U_LtD_NotS(groupId, userId, displayDate, status,
 			start, end);
@@ -5321,8 +5299,8 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_NotS(long groupId,
-		long userId, java.util.Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator) {
+		long userId, Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U_LtD_NotS(groupId, userId, displayDate, status,
 			start, end, orderByComparator);
@@ -5346,8 +5324,8 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries
 	*/
 	public static List<BlogsEntry> findByG_U_LtD_NotS(long groupId,
-		long userId, java.util.Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator,
+		long userId, Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_U_LtD_NotS(groupId, userId, displayDate, status,
@@ -5366,7 +5344,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_U_LtD_NotS_First(long groupId,
-		long userId, java.util.Date displayDate, int status,
+		long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -5385,7 +5363,7 @@ public class BlogsEntryUtil {
 	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_U_LtD_NotS_First(long groupId,
-		long userId, java.util.Date displayDate, int status,
+		long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_LtD_NotS_First(groupId, userId, displayDate,
@@ -5404,7 +5382,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry findByG_U_LtD_NotS_Last(long groupId, long userId,
-		java.util.Date displayDate, int status,
+		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -5423,7 +5401,7 @@ public class BlogsEntryUtil {
 	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	*/
 	public static BlogsEntry fetchByG_U_LtD_NotS_Last(long groupId,
-		long userId, java.util.Date displayDate, int status,
+		long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_LtD_NotS_Last(groupId, userId, displayDate,
@@ -5443,7 +5421,7 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] findByG_U_LtD_NotS_PrevAndNext(long entryId,
-		long groupId, long userId, java.util.Date displayDate, int status,
+		long groupId, long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
@@ -5461,7 +5439,7 @@ public class BlogsEntryUtil {
 	* @return the matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD_NotS(long groupId,
-		long userId, java.util.Date displayDate, int status) {
+		long userId, Date displayDate, int status) {
 		return getPersistence()
 				   .filterFindByG_U_LtD_NotS(groupId, userId, displayDate,
 			status);
@@ -5483,7 +5461,7 @@ public class BlogsEntryUtil {
 	* @return the range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD_NotS(long groupId,
-		long userId, java.util.Date displayDate, int status, int start, int end) {
+		long userId, Date displayDate, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_U_LtD_NotS(groupId, userId, displayDate,
 			status, start, end);
@@ -5506,8 +5484,8 @@ public class BlogsEntryUtil {
 	* @return the ordered range of matching blogs entries that the user has permission to view
 	*/
 	public static List<BlogsEntry> filterFindByG_U_LtD_NotS(long groupId,
-		long userId, java.util.Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator) {
+		long userId, Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_LtD_NotS(groupId, userId, displayDate,
 			status, start, end, orderByComparator);
@@ -5526,8 +5504,8 @@ public class BlogsEntryUtil {
 	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
 	*/
 	public static BlogsEntry[] filterFindByG_U_LtD_NotS_PrevAndNext(
-		long entryId, long groupId, long userId, java.util.Date displayDate,
-		int status, OrderByComparator<BlogsEntry> orderByComparator)
+		long entryId, long groupId, long userId, Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
 		throws com.liferay.portlet.blogs.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByG_U_LtD_NotS_PrevAndNext(entryId, groupId,
@@ -5543,7 +5521,7 @@ public class BlogsEntryUtil {
 	* @param status the status
 	*/
 	public static void removeByG_U_LtD_NotS(long groupId, long userId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		getPersistence()
 			.removeByG_U_LtD_NotS(groupId, userId, displayDate, status);
 	}
@@ -5558,7 +5536,7 @@ public class BlogsEntryUtil {
 	* @return the number of matching blogs entries
 	*/
 	public static int countByG_U_LtD_NotS(long groupId, long userId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence()
 				   .countByG_U_LtD_NotS(groupId, userId, displayDate, status);
 	}
@@ -5573,7 +5551,7 @@ public class BlogsEntryUtil {
 	* @return the number of matching blogs entries that the user has permission to view
 	*/
 	public static int filterCountByG_U_LtD_NotS(long groupId, long userId,
-		java.util.Date displayDate, int status) {
+		Date displayDate, int status) {
 		return getPersistence()
 				   .filterCountByG_U_LtD_NotS(groupId, userId, displayDate,
 			status);

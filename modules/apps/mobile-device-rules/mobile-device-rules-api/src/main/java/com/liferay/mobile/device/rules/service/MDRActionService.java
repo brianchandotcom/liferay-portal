@@ -16,6 +16,8 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.mobile.device.rules.model.MDRAction;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,7 +26,12 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for MDRAction. Methods of this
@@ -50,32 +57,25 @@ public interface MDRActionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRActionServiceUtil} to access the m d r action remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRActionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.mobile.device.rules.model.MDRAction addAction(
-		long ruleGroupInstanceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MDRAction addAction(long ruleGroupInstanceId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.mobile.device.rules.model.MDRAction addAction(
-		long ruleGroupInstanceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MDRAction addAction(long ruleGroupInstanceId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteAction(long actionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRAction fetchAction(
-		long actionId) throws PortalException;
+	public MDRAction fetchAction(long actionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.mobile.device.rules.model.MDRAction getAction(
-		long actionId) throws PortalException;
+	public MDRAction getAction(long actionId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -84,20 +84,15 @@ public interface MDRActionService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.mobile.device.rules.model.MDRAction updateAction(
-		long actionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MDRAction updateAction(long actionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.mobile.device.rules.model.MDRAction updateAction(
-		long actionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public MDRAction updateAction(long actionId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 }

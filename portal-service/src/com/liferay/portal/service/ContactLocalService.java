@@ -16,12 +16,24 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for Contact. Methods of this
@@ -52,17 +64,16 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param contact the contact
 	* @return the contact that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Contact addContact(
-		com.liferay.portal.model.Contact contact);
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact addContact(Contact contact);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Contact addContact(long userId,
-		java.lang.String className, long classPK,
-		java.lang.String emailAddress, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact addContact(long userId, java.lang.String className,
+		long classPK, java.lang.String emailAddress,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String smsSn, java.lang.String facebookSn,
 		java.lang.String jabberSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws PortalException;
@@ -73,7 +84,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param contactId the primary key for the new contact
 	* @return the new contact
 	*/
-	public com.liferay.portal.model.Contact createContact(long contactId);
+	public Contact createContact(long contactId);
 
 	/**
 	* Deletes the contact from the database. Also notifies the appropriate model listeners.
@@ -81,9 +92,8 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param contact the contact
 	* @return the contact that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Contact deleteContact(
-		com.liferay.portal.model.Contact contact);
+	@Indexable(type = IndexableType.DELETE)
+	public Contact deleteContact(Contact contact);
 
 	/**
 	* Deletes the contact with the primary key from the database. Also notifies the appropriate model listeners.
@@ -92,19 +102,17 @@ public interface ContactLocalService extends BaseLocalService,
 	* @return the contact that was removed
 	* @throws PortalException if a contact with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Contact deleteContact(long contactId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Contact deleteContact(long contactId) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -112,8 +120,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -127,8 +134,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -144,10 +150,8 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -155,8 +159,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -165,15 +168,14 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Contact fetchContact(long contactId);
+	public Contact fetchContact(long contactId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the contact with the primary key.
@@ -183,13 +185,11 @@ public interface ContactLocalService extends BaseLocalService,
 	* @throws PortalException if a contact with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Contact getContact(long contactId)
-		throws PortalException;
+	public Contact getContact(long contactId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Contact> getContacts(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+	public List<Contact> getContacts(long classNameId, long classPK, int start,
+		int end, OrderByComparator<Contact> orderByComparator);
 
 	/**
 	* Returns a range of all the contacts.
@@ -203,8 +203,7 @@ public interface ContactLocalService extends BaseLocalService,
 	* @return the range of contacts
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Contact> getContacts(
-		int start, int end);
+	public List<Contact> getContacts(int start, int end);
 
 	/**
 	* Returns the number of contacts.
@@ -218,7 +217,7 @@ public interface ContactLocalService extends BaseLocalService,
 	public int getContactsCount(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -229,8 +228,8 @@ public interface ContactLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -238,16 +237,15 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param contact the contact
 	* @return the contact that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Contact updateContact(
-		com.liferay.portal.model.Contact contact);
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact updateContact(Contact contact);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Contact updateContact(long contactId,
-		java.lang.String emailAddress, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact updateContact(long contactId, java.lang.String emailAddress,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String smsSn, java.lang.String facebookSn,
 		java.lang.String jabberSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws PortalException;

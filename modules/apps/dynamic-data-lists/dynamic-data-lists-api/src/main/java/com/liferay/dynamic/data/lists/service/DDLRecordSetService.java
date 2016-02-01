@@ -16,6 +16,9 @@ package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,7 +27,13 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for DDLRecordSet. Methods of this
@@ -50,13 +59,10 @@ public interface DDLRecordSetService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDLRecordSetServiceUtil} to access the d d l record set remote service. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet addRecordSet(
-		long groupId, long ddmStructureId, java.lang.String recordSetKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows, int scope,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DDLRecordSet addRecordSet(long groupId, long ddmStructureId,
+		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		int scope, ServiceContext serviceContext) throws PortalException;
 
 	public void deleteRecordSet(long recordSetId) throws PortalException;
 
@@ -68,25 +74,22 @@ public interface DDLRecordSetService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
-		long recordSetId) throws PortalException;
+	public DDLRecordSet getRecordSet(long recordSetId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
-		long[] groupIds);
+	public List<DDLRecordSet> getRecordSets(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
-		long companyId, long groupId, java.lang.String keywords, int scope,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
+	public List<DDLRecordSet> search(long companyId, long groupId,
+		java.lang.String keywords, int scope, int start, int end,
+		OrderByComparator<DDLRecordSet> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int scope, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
+	public List<DDLRecordSet> search(long companyId, long groupId,
+		java.lang.String name, java.lang.String description, int scope,
+		boolean andOperator, int start, int end,
+		OrderByComparator<DDLRecordSet> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long groupId,
@@ -96,29 +99,20 @@ public interface DDLRecordSetService extends BaseService {
 	public int searchCount(long companyId, long groupId, java.lang.String name,
 		java.lang.String description, int scope, boolean andOperator);
 
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
-		long recordSetId, int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DDLRecordSet updateMinDisplayRows(long recordSetId,
+		int minDisplayRows, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long groupId, long ddmStructureId, java.lang.String recordSetKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DDLRecordSet updateRecordSet(long groupId, long ddmStructureId,
+		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId, long ddmStructureId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int minDisplayRows,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId,
-		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues)
-		throws PortalException;
+	public DDLRecordSet updateRecordSet(long recordSetId,
+		DDMFormValues settingsDDMFormValues) throws PortalException;
 }

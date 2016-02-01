@@ -16,14 +16,27 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.journal.model.JournalArticleResource;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for JournalArticleResource. Methods of this
@@ -54,9 +67,9 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param journalArticleResource the journal article resource
 	* @return the journal article resource that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalArticleResource addJournalArticleResource(
-		com.liferay.journal.model.JournalArticleResource journalArticleResource);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticleResource addJournalArticleResource(
+		JournalArticleResource journalArticleResource);
 
 	/**
 	* Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
@@ -64,7 +77,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param resourcePrimKey the primary key for the new journal article resource
 	* @return the new journal article resource
 	*/
-	public com.liferay.journal.model.JournalArticleResource createJournalArticleResource(
+	public JournalArticleResource createJournalArticleResource(
 		long resourcePrimKey);
 
 	public void deleteArticleResource(long groupId, java.lang.String articleId)
@@ -76,9 +89,9 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param journalArticleResource the journal article resource
 	* @return the journal article resource that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalArticleResource deleteJournalArticleResource(
-		com.liferay.journal.model.JournalArticleResource journalArticleResource);
+	@Indexable(type = IndexableType.DELETE)
+	public JournalArticleResource deleteJournalArticleResource(
+		JournalArticleResource journalArticleResource);
 
 	/**
 	* Deletes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,19 +100,18 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @return the journal article resource that was removed
 	* @throws PortalException if a journal article resource with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalArticleResource deleteJournalArticleResource(
+	@Indexable(type = IndexableType.DELETE)
+	public JournalArticleResource deleteJournalArticleResource(
 		long resourcePrimKey) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -107,8 +119,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -122,8 +133,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -139,10 +149,8 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -150,8 +158,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -160,20 +167,19 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		long groupId, java.lang.String articleId);
+	public JournalArticleResource fetchArticleResource(long groupId,
+		java.lang.String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		java.lang.String uuid, long groupId);
+	public JournalArticleResource fetchArticleResource(java.lang.String uuid,
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleResource fetchJournalArticleResource(
+	public JournalArticleResource fetchJournalArticleResource(
 		long resourcePrimKey);
 
 	/**
@@ -184,14 +190,14 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
+	public JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleResource getArticleResource(
+	public JournalArticleResource getArticleResource(
 		long articleResourcePrimKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -203,11 +209,10 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 		java.lang.String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalArticleResource> getArticleResources(
-		long groupId);
+	public List<JournalArticleResource> getArticleResources(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the journal article resource with the primary key.
@@ -217,7 +222,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @throws PortalException if a journal article resource with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleResource getJournalArticleResource(
+	public JournalArticleResource getJournalArticleResource(
 		long resourcePrimKey) throws PortalException;
 
 	/**
@@ -229,7 +234,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @throws PortalException if a matching journal article resource could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
+	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -244,8 +249,8 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @return the range of journal article resources
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalArticleResource> getJournalArticleResources(
-		int start, int end);
+	public List<JournalArticleResource> getJournalArticleResources(int start,
+		int end);
 
 	/**
 	* Returns all the journal article resources matching the UUID and company.
@@ -255,7 +260,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @return the matching journal article resources, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -269,9 +274,9 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @return the range of matching journal article resources, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+	public List<JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticleResource> orderByComparator);
+		OrderByComparator<JournalArticleResource> orderByComparator);
 
 	/**
 	* Returns the number of journal article resources.
@@ -290,8 +295,8 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -299,7 +304,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	* @param journalArticleResource the journal article resource
 	* @return the journal article resource that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalArticleResource updateJournalArticleResource(
-		com.liferay.journal.model.JournalArticleResource journalArticleResource);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticleResource updateJournalArticleResource(
+		JournalArticleResource journalArticleResource);
 }

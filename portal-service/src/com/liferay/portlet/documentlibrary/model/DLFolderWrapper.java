@@ -18,8 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
 
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -313,7 +317,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _dlFolder.getExpandoBridge();
 	}
 
@@ -446,7 +450,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _dlFolder.getPrimaryKeyObj();
 	}
 
@@ -843,14 +847,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_dlFolder.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_dlFolder.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -970,7 +972,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_dlFolder.setPrimaryKeyObj(primaryKeyObj);
 	}
 

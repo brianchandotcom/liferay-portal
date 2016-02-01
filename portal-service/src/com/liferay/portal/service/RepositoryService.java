@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Repository;
 
 /**
  * Provides the remote service interface for Repository. Methods of this
@@ -46,10 +48,10 @@ public interface RepositoryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RepositoryServiceUtil} to access the repository remote service. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Repository addRepository(long groupId,
-		long classNameId, long parentFolderId, java.lang.String name,
+	public Repository addRepository(long groupId, long classNameId,
+		long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String portletId,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -65,7 +67,7 @@ public interface RepositoryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Repository getRepository(long repositoryId)
+	public Repository getRepository(long repositoryId)
 		throws PortalException;
 
 	/**
@@ -92,8 +94,8 @@ public interface RepositoryService extends BaseService {
 		java.lang.String configuration);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
-		long repositoryId) throws PortalException;
+	public UnicodeProperties getTypeSettingsProperties(long repositoryId)
+		throws PortalException;
 
 	public void updateRepository(long repositoryId, java.lang.String name,
 		java.lang.String description) throws PortalException;

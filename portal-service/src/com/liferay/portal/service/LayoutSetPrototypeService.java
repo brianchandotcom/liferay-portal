@@ -23,6 +23,12 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.LayoutSetPrototype;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for LayoutSetPrototype. Methods of this
@@ -52,17 +58,16 @@ public interface LayoutSetPrototypeService extends BaseService {
 	Map, boolean, boolean, ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
+	public LayoutSetPrototype addLayoutSetPrototype(
+		Map<Locale, java.lang.String> nameMap, java.lang.String description,
+		boolean active, boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
+	public LayoutSetPrototype addLayoutSetPrototype(
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -70,12 +75,12 @@ public interface LayoutSetPrototypeService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSetPrototype fetchLayoutSetPrototype(
-		long layoutSetPrototypeId) throws PortalException;
+	public LayoutSetPrototype fetchLayoutSetPrototype(long layoutSetPrototypeId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototype(
-		long layoutSetPrototypeId) throws PortalException;
+	public LayoutSetPrototype getLayoutSetPrototype(long layoutSetPrototypeId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -85,9 +90,8 @@ public interface LayoutSetPrototypeService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> search(
-		long companyId, java.lang.Boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> obc)
+	public List<LayoutSetPrototype> search(long companyId,
+		java.lang.Boolean active, OrderByComparator<LayoutSetPrototype> obc)
 		throws PortalException;
 
 	/**
@@ -96,23 +100,21 @@ public interface LayoutSetPrototypeService extends BaseService {
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+	public LayoutSetPrototype updateLayoutSetPrototype(
+		long layoutSetPrototypeId, Map<Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
+	public LayoutSetPrototype updateLayoutSetPrototype(
+		long layoutSetPrototypeId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
+	public LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId, java.lang.String settings)
 		throws PortalException;
 }

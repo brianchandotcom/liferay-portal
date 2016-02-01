@@ -18,8 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
 
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -277,7 +281,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _pollsQuestion.getExpandoBridge();
 	}
 
@@ -342,7 +346,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _pollsQuestion.getPrimaryKeyObj();
 	}
 
@@ -510,8 +514,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public boolean isExpired(
-		com.liferay.portal.service.ServiceContext serviceContext,
+	public boolean isExpired(ServiceContext serviceContext,
 		Date defaultCreateDate) {
 		return _pollsQuestion.isExpired(serviceContext, defaultCreateDate);
 	}
@@ -635,14 +638,12 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_pollsQuestion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_pollsQuestion.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -712,7 +713,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_pollsQuestion.setPrimaryKeyObj(primaryKeyObj);
 	}
 

@@ -17,6 +17,11 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -382,7 +387,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _contact.getExpandoBridge();
 	}
 
@@ -532,7 +537,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _contact.getPrimaryKeyObj();
 	}
 
@@ -762,14 +767,12 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_contact.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_contact.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -919,7 +922,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_contact.setPrimaryKeyObj(primaryKeyObj);
 	}
 

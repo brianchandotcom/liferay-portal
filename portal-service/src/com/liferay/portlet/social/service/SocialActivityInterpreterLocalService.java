@@ -22,6 +22,15 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityFeedEntry;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.portlet.social.model.SocialActivitySet;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for SocialActivityInterpreter. Methods of this
@@ -51,7 +60,7 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	* @param activityInterpreter the activity interpreter
 	*/
 	public void addActivityInterpreter(
-		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
+		SocialActivityInterpreter activityInterpreter);
 
 	/**
 	* Removes the activity interpreter from the list of available interpreters.
@@ -59,13 +68,13 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	* @param activityInterpreter the activity interpreter
 	*/
 	public void deleteActivityInterpreter(
-		com.liferay.portlet.social.model.SocialActivityInterpreter activityInterpreter);
+		SocialActivityInterpreter activityInterpreter);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.String, java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter>> getActivityInterpreters();
+	public Map<java.lang.String, List<SocialActivityInterpreter>> getActivityInterpreters();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getActivityInterpreters(
+	public List<SocialActivityInterpreter> getActivityInterpreters(
 		java.lang.String selector);
 
 	/**
@@ -92,15 +101,11 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	record or <code>null</code> if a compatible interpreter is not
 	found
 	*/
-	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
-		java.lang.String selector,
-		com.liferay.portlet.social.model.SocialActivity activity,
-		com.liferay.portal.service.ServiceContext serviceContext);
+	public SocialActivityFeedEntry interpret(java.lang.String selector,
+		SocialActivity activity, ServiceContext serviceContext);
 
-	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
-		java.lang.String selector,
-		com.liferay.portlet.social.model.SocialActivitySet activitySet,
-		com.liferay.portal.service.ServiceContext serviceContext);
+	public SocialActivityFeedEntry interpret(java.lang.String selector,
+		SocialActivitySet activitySet, ServiceContext serviceContext);
 
 	public void updateActivitySet(long activityId) throws PortalException;
 }

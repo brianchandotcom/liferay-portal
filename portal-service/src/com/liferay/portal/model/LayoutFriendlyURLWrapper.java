@@ -17,8 +17,12 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.ServiceContext;
 
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -191,7 +195,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _layoutFriendlyURL.getExpandoBridge();
 	}
 
@@ -286,7 +290,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _layoutFriendlyURL.getPrimaryKeyObj();
 	}
 
@@ -406,14 +410,12 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_layoutFriendlyURL.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_layoutFriendlyURL.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -513,7 +515,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_layoutFriendlyURL.setPrimaryKeyObj(primaryKeyObj);
 	}
 

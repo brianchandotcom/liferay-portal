@@ -16,6 +16,8 @@ package com.liferay.mobile.device.rules.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,7 +26,11 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for MDRRuleGroupInstance. Methods of this
@@ -50,17 +56,13 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupInstanceServiceUtil} to access the m d r rule group instance remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId, int priority,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
+		java.lang.String className, long classPK, long ruleGroupId,
+		int priority, ServiceContext serviceContext) throws PortalException;
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
+		java.lang.String className, long classPK, long ruleGroupId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws PortalException;
@@ -73,14 +75,14 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> getRuleGroupInstances(
+	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 		java.lang.String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> orderByComparator);
+		OrderByComparator<MDRRuleGroupInstance> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupInstancesCount(java.lang.String className,
 		long classPK);
 
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance updateRuleGroupInstance(
+	public MDRRuleGroupInstance updateRuleGroupInstance(
 		long ruleGroupInstanceId, int priority) throws PortalException;
 }

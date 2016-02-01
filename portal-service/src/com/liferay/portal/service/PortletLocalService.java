@@ -16,12 +16,35 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.model.PortletCategory;
+
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
 
 /**
  * Provides the local service interface for Portlet. Methods of this
@@ -52,36 +75,33 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param portlet the portlet
 	* @return the portlet that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Portlet addPortlet(
-		com.liferay.portal.model.Portlet portlet);
+	@Indexable(type = IndexableType.REINDEX)
+	public Portlet addPortlet(Portlet portlet);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	public void addPortletCategory(long companyId, java.lang.String categoryName);
 
-	public void checkPortlet(com.liferay.portal.model.Portlet portlet)
-		throws PortalException;
+	public void checkPortlet(Portlet portlet) throws PortalException;
 
 	public void checkPortlets(long companyId) throws PortalException;
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	public void clearCache();
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
 	*/
-	@com.liferay.portal.kernel.cluster.Clusterable
+	@Clusterable
 	@java.lang.Deprecated
 	@Transactional(enabled = false)
 	public void clearCompanyPortletsPool();
 
-	@com.liferay.portal.kernel.cluster.Clusterable
+	@Clusterable
 	@Transactional(enabled = false)
 	public void clearPortletsMap();
 
-	@com.liferay.portal.kernel.spring.aop.Skip
-	public com.liferay.portal.model.Portlet clonePortlet(
-		java.lang.String portletId);
+	@Skip
+	public Portlet clonePortlet(java.lang.String portletId);
 
 	/**
 	* Creates a new portlet with the primary key. Does not add the portlet to the database.
@@ -89,14 +109,13 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param id the primary key for the new portlet
 	* @return the new portlet
 	*/
-	public com.liferay.portal.model.Portlet createPortlet(long id);
+	public Portlet createPortlet(long id);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	public void deletePortlet(long companyId, java.lang.String portletId,
@@ -109,9 +128,8 @@ public interface PortletLocalService extends BaseLocalService,
 	* @return the portlet that was removed
 	* @throws PortalException if a portlet with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Portlet deletePortlet(long id)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public Portlet deletePortlet(long id) throws PortalException;
 
 	/**
 	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
@@ -119,33 +137,29 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param portlet the portlet
 	* @return the portlet that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Portlet deletePortlet(
-		com.liferay.portal.model.Portlet portlet);
+	@Indexable(type = IndexableType.DELETE)
+	public Portlet deletePortlet(Portlet portlet);
 
 	public void deletePortlets(long companyId, java.lang.String[] portletIds,
 		long plid) throws PortalException;
 
-	public com.liferay.portal.model.Portlet deployRemotePortlet(
-		com.liferay.portal.model.Portlet portlet, java.lang.String categoryName)
-		throws PortalException;
+	public Portlet deployRemotePortlet(Portlet portlet,
+		java.lang.String categoryName) throws PortalException;
 
-	public com.liferay.portal.model.Portlet deployRemotePortlet(
-		com.liferay.portal.model.Portlet portlet,
+	public Portlet deployRemotePortlet(Portlet portlet,
 		java.lang.String[] categoryNames) throws PortalException;
 
-	public com.liferay.portal.model.Portlet deployRemotePortlet(
-		com.liferay.portal.model.Portlet portlet,
+	public Portlet deployRemotePortlet(Portlet portlet,
 		java.lang.String[] categoryNames, boolean eagerDestroy)
 		throws PortalException;
 
-	@com.liferay.portal.kernel.spring.aop.Skip
-	public void destroyPortlet(com.liferay.portal.model.Portlet portlet);
+	@Skip
+	public void destroyPortlet(Portlet portlet);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
-	public void destroyRemotePortlet(com.liferay.portal.model.Portlet portlet);
+	@Skip
+	public void destroyRemotePortlet(Portlet portlet);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -153,8 +167,7 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -168,8 +181,7 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -185,10 +197,8 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -196,8 +206,7 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -206,35 +215,33 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Portlet fetchPortlet(long id);
+	public Portlet fetchPortlet(long id);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplays();
+	public List<CustomAttributesDisplay> getCustomAttributesDisplays();
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortletCategory getEARDisplay(
-		java.lang.String xml);
+	public PortletCategory getEARDisplay(java.lang.String xml);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Portlet> getFriendlyURLMapperPortlets();
+	public List<Portlet> getFriendlyURLMapperPortlets();
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.portlet.FriendlyURLMapper> getFriendlyURLMappers();
+	public List<FriendlyURLMapper> getFriendlyURLMappers();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -245,8 +252,8 @@ public interface PortletLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the portlet with the primary key.
@@ -256,42 +263,37 @@ public interface PortletLocalService extends BaseLocalService,
 	* @throws PortalException if a portlet with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Portlet getPortlet(long id)
-		throws PortalException;
+	public Portlet getPortlet(long id) throws PortalException;
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortletApp getPortletApp(
-		java.lang.String servletContextName);
+	public PortletApp getPortletApp(java.lang.String servletContextName);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Portlet getPortletById(long companyId,
-		java.lang.String portletId);
+	public Portlet getPortletById(long companyId, java.lang.String portletId);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Portlet getPortletById(
-		java.lang.String portletId);
+	public Portlet getPortletById(java.lang.String portletId);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Portlet getPortletByStrutsPath(
-		long companyId, java.lang.String strutsPath);
+	public Portlet getPortletByStrutsPath(long companyId,
+		java.lang.String strutsPath);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Portlet> getPortlets();
+	public List<Portlet> getPortlets();
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
-		long companyId);
+	public List<Portlet> getPortlets(long companyId);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
-		long companyId, boolean showSystem, boolean showPortal);
+	public List<Portlet> getPortlets(long companyId, boolean showSystem,
+		boolean showPortal);
 
 	/**
 	* Returns a range of all the portlets.
@@ -305,8 +307,7 @@ public interface PortletLocalService extends BaseLocalService,
 	* @return the range of portlets
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
-		int start, int end);
+	public List<Portlet> getPortlets(int start, int end);
 
 	/**
 	* Returns the number of portlets.
@@ -316,48 +317,44 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPortletsCount();
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Portlet> getScopablePortlets();
+	public List<Portlet> getScopablePortlets();
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortletCategory getWARDisplay(
-		java.lang.String servletContextName, java.lang.String xml);
+	public PortletCategory getWARDisplay(java.lang.String servletContextName,
+		java.lang.String xml);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPortlet(long companyId, java.lang.String portletId);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
-	public void initEAR(javax.servlet.ServletContext servletContext,
-		java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
+	@Skip
+	public void initEAR(ServletContext servletContext, java.lang.String[] xmls,
+		PluginPackage pluginPackage);
 
-	@com.liferay.portal.kernel.spring.aop.Skip
-	public java.util.List<com.liferay.portal.model.Portlet> initWAR(
-		java.lang.String servletContextName,
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
+	@Skip
+	public List<Portlet> initWAR(java.lang.String servletContextName,
+		ServletContext servletContext, java.lang.String[] xmls,
+		PluginPackage pluginPackage);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadGetPortletsMap(
-		long companyId);
+	public Map<java.lang.String, Portlet> loadGetPortletsMap(long companyId);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #loadGetPortletsMap(long))}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadGetPortletsPool(
-		long companyId);
+	public Map<java.lang.String, Portlet> loadGetPortletsPool(long companyId);
 
-	@com.liferay.portal.kernel.cluster.Clusterable
+	@Clusterable
 	@Transactional(enabled = false)
 	public void removeCompanyPortletsPool(long companyId);
 
-	public com.liferay.portal.model.Portlet updatePortlet(long companyId,
-		java.lang.String portletId, java.lang.String roles, boolean active);
+	public Portlet updatePortlet(long companyId, java.lang.String portletId,
+		java.lang.String roles, boolean active);
 
 	/**
 	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -365,7 +362,6 @@ public interface PortletLocalService extends BaseLocalService,
 	* @param portlet the portlet
 	* @return the portlet that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Portlet updatePortlet(
-		com.liferay.portal.model.Portlet portlet);
+	@Indexable(type = IndexableType.REINDEX)
+	public Portlet updatePortlet(Portlet portlet);
 }

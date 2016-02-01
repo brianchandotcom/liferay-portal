@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+
 /**
  * Provides the remote service interface for ExportImportConfiguration. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -56,9 +58,9 @@ public interface ExportImportConfigurationService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portlet.exportimport.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
+	public ExportImportConfiguration moveExportImportConfigurationToTrash(
 		long exportImportConfigurationId) throws PortalException;
 
-	public com.liferay.portlet.exportimport.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 		long exportImportConfigurationId) throws PortalException;
 }

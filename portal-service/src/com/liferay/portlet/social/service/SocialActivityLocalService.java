@@ -16,14 +16,30 @@ package com.liferay.portlet.social.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.messaging.async.Async;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.social.model.SocialActivity;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the local service interface for SocialActivity. Methods of this
@@ -47,11 +63,9 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SocialActivityLocalServiceUtil} to access the social activity local service. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@com.liferay.portal.kernel.messaging.async.Async
-	public void addActivity(
-		com.liferay.portlet.social.model.SocialActivity activity,
-		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
-		throws PortalException;
+	@Async
+	public void addActivity(SocialActivity activity,
+		SocialActivity mirrorActivity) throws PortalException;
 
 	/**
 	* Records an activity in the database, using a time based on the current
@@ -107,9 +121,9 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
 	*/
-	public void addActivity(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addActivity(long userId, long groupId, Date createDate,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws PortalException;
 
 	/**
@@ -118,9 +132,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param socialActivity the social activity
 	* @return the social activity that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivity addSocialActivity(
-		com.liferay.portlet.social.model.SocialActivity socialActivity);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivity addSocialActivity(SocialActivity socialActivity);
 
 	/**
 	* Records an activity with the current time in the database, but only if
@@ -162,9 +175,9 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
 	*/
-	public void addUniqueActivity(long userId, long groupId,
-		java.util.Date createDate, java.lang.String className, long classPK,
-		int type, java.lang.String extraData, long receiverUserId)
+	public void addUniqueActivity(long userId, long groupId, Date createDate,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraData, long receiverUserId)
 		throws PortalException;
 
 	/**
@@ -173,16 +186,14 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param activityId the primary key for the new social activity
 	* @return the new social activity
 	*/
-	public com.liferay.portlet.social.model.SocialActivity createSocialActivity(
-		long activityId);
+	public SocialActivity createSocialActivity(long activityId);
 
 	/**
 	* Removes stored activities for the asset.
 	*
 	* @param assetEntry the asset from which to remove stored activities
 	*/
-	public void deleteActivities(
-		com.liferay.portlet.asset.model.AssetEntry assetEntry)
+	public void deleteActivities(AssetEntry assetEntry)
 		throws PortalException;
 
 	/**
@@ -202,8 +213,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*
 	* @param activity the activity to be removed
 	*/
-	public void deleteActivity(
-		com.liferay.portlet.social.model.SocialActivity activity)
+	public void deleteActivity(SocialActivity activity)
 		throws PortalException;
 
 	/**
@@ -217,8 +227,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -228,9 +237,9 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the social activity that was removed
 	* @throws PortalException if a social activity with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
-		long activityId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivity deleteSocialActivity(long activityId)
+		throws PortalException;
 
 	/**
 	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
@@ -238,9 +247,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param socialActivity the social activity
 	* @return the social activity that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
-		com.liferay.portlet.social.model.SocialActivity socialActivity);
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivity deleteSocialActivity(SocialActivity socialActivity);
 
 	/**
 	* Removes the user's stored activities from the database.
@@ -254,7 +262,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	public void deleteUserActivities(long userId) throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -262,8 +270,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -277,8 +284,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -294,10 +300,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -305,8 +309,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -315,20 +318,18 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivity fetchFirstActivity(
-		java.lang.String className, long classPK, int type);
+	public SocialActivity fetchFirstActivity(java.lang.String className,
+		long classPK, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivity fetchSocialActivity(
-		long activityId);
+	public SocialActivity fetchSocialActivity(long activityId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
@@ -349,8 +350,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		java.lang.String className, int start, int end);
+	public List<SocialActivity> getActivities(java.lang.String className,
+		int start, int end);
 
 	/**
 	* Returns a range of all the activities done on assets identified by the
@@ -371,8 +372,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long classNameId, int start, int end);
+	public List<SocialActivity> getActivities(long classNameId, int start,
+		int end);
 
 	/**
 	* Returns a range of all the activities done on the asset identified by the
@@ -396,9 +397,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long mirrorActivityId, java.lang.String className, long classPK,
-		int start, int end);
+	public List<SocialActivity> getActivities(long mirrorActivityId,
+		java.lang.String className, long classPK, int start, int end);
 
 	/**
 	* Returns a range of all the activities done on the asset identified by the
@@ -422,9 +422,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
-		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end);
+	public List<SocialActivity> getActivities(long mirrorActivityId,
+		long classNameId, long classPK, int start, int end);
 
 	/**
 	* Returns the number of activities done on assets identified by class name.
@@ -480,12 +479,12 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return Returns the activity
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivity getActivity(
-		long activityId) throws PortalException;
+	public SocialActivity getActivity(long activityId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivitySetActivities(
-		long activitySetId, int start, int end);
+	public List<SocialActivity> getActivitySetActivities(long activitySetId,
+		int start, int end);
 
 	/**
 	* Returns a range of all the activities done in the group.
@@ -509,8 +508,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupActivities(
-		long groupId, int start, int end);
+	public List<SocialActivity> getGroupActivities(long groupId, int start,
+		int end);
 
 	/**
 	* Returns the number of activities done in the group.
@@ -548,8 +547,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupUsersActivities(
-		long groupId, int start, int end);
+	public List<SocialActivity> getGroupUsersActivities(long groupId,
+		int start, int end);
 
 	/**
 	* Returns the number of activities done by users that are members of the
@@ -566,7 +565,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public int getGroupUsersActivitiesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the activity that has the mirror activity.
@@ -575,8 +574,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return Returns the mirror activity
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(
-		long mirrorActivityId) throws PortalException;
+	public SocialActivity getMirrorActivity(long mirrorActivityId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -604,8 +603,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationActivities(
-		long organizationId, int start, int end);
+	public List<SocialActivity> getOrganizationActivities(long organizationId,
+		int start, int end);
 
 	/**
 	* Returns the number of activities done in the organization. This method
@@ -636,7 +635,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationUsersActivities(
+	public List<SocialActivity> getOrganizationUsersActivities(
 		long organizationId, int start, int end);
 
 	/**
@@ -651,8 +650,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the activities done by users in a relationship
@@ -673,8 +672,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
-		long userId, int start, int end);
+	public List<SocialActivity> getRelationActivities(long userId, int start,
+		int end);
 
 	/**
 	* Returns a range of all the activities done by users in a relationship of
@@ -697,8 +696,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
-		long userId, int type, int start, int end);
+	public List<SocialActivity> getRelationActivities(long userId, int type,
+		int start, int end);
 
 	/**
 	* Returns the number of activities done by users in a relationship with the
@@ -734,8 +733,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of social activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getSocialActivities(
-		int start, int end);
+	public List<SocialActivity> getSocialActivities(int start, int end);
 
 	/**
 	* Returns the number of social activities.
@@ -753,8 +751,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @throws PortalException if a social activity with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivity getSocialActivity(
-		long activityId) throws PortalException;
+	public SocialActivity getSocialActivity(long activityId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the activities done by the user.
@@ -774,8 +772,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserActivities(
-		long userId, int start, int end);
+	public List<SocialActivity> getUserActivities(long userId, int start,
+		int end);
 
 	/**
 	* Returns the number of activities done by the user.
@@ -805,8 +803,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsActivities(
-		long userId, int start, int end);
+	public List<SocialActivity> getUserGroupsActivities(long userId, int start,
+		int end);
 
 	/**
 	* Returns the number of activities done in user's groups. This method only
@@ -837,7 +835,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsAndOrganizationsActivities(
+	public List<SocialActivity> getUserGroupsAndOrganizationsActivities(
 		long userId, int start, int end);
 
 	/**
@@ -869,8 +867,8 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @return the range of matching activities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserOrganizationsActivities(
-		long userId, int start, int end);
+	public List<SocialActivity> getUserOrganizationsActivities(long userId,
+		int start, int end);
 
 	/**
 	* Returns the number of activities done in the user's organizations. This
@@ -888,7 +886,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param socialActivity the social activity
 	* @return the social activity that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivity updateSocialActivity(
-		com.liferay.portlet.social.model.SocialActivity socialActivity);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivity updateSocialActivity(SocialActivity socialActivity);
 }

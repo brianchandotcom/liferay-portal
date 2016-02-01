@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Provides the remote service interface for ResourceBlock. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -81,19 +84,19 @@ public interface ResourceBlockService extends BaseService {
 		java.lang.String actionId) throws PortalException;
 
 	public void setCompanyScopePermissions(long scopeGroupId, long companyId,
-		java.lang.String name, long roleId,
-		java.util.List<java.lang.String> actionIds) throws PortalException;
+		java.lang.String name, long roleId, List<java.lang.String> actionIds)
+		throws PortalException;
 
 	public void setGroupScopePermissions(long scopeGroupId, long companyId,
 		long groupId, java.lang.String name, long roleId,
-		java.util.List<java.lang.String> actionIds) throws PortalException;
+		List<java.lang.String> actionIds) throws PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
-		java.util.List<java.lang.String> actionIds) throws PortalException;
+		List<java.lang.String> actionIds) throws PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws PortalException;
 }

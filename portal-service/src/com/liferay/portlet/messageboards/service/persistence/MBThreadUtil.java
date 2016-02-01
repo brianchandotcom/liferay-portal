@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.messageboards.model.MBThread;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -1868,8 +1869,7 @@ public class MBThreadUtil {
 	* @param priority the priority
 	* @return the matching message boards threads
 	*/
-	public static List<MBThread> findByL_P(java.util.Date lastPostDate,
-		double priority) {
+	public static List<MBThread> findByL_P(Date lastPostDate, double priority) {
 		return getPersistence().findByL_P(lastPostDate, priority);
 	}
 
@@ -1886,8 +1886,8 @@ public class MBThreadUtil {
 	* @param end the upper bound of the range of message boards threads (not inclusive)
 	* @return the range of matching message boards threads
 	*/
-	public static List<MBThread> findByL_P(java.util.Date lastPostDate,
-		double priority, int start, int end) {
+	public static List<MBThread> findByL_P(Date lastPostDate, double priority,
+		int start, int end) {
 		return getPersistence().findByL_P(lastPostDate, priority, start, end);
 	}
 
@@ -1905,9 +1905,8 @@ public class MBThreadUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards threads
 	*/
-	public static List<MBThread> findByL_P(java.util.Date lastPostDate,
-		double priority, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
+	public static List<MBThread> findByL_P(Date lastPostDate, double priority,
+		int start, int end, OrderByComparator<MBThread> orderByComparator) {
 		return getPersistence()
 				   .findByL_P(lastPostDate, priority, start, end,
 			orderByComparator);
@@ -1928,9 +1927,9 @@ public class MBThreadUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching message boards threads
 	*/
-	public static List<MBThread> findByL_P(java.util.Date lastPostDate,
-		double priority, int start, int end,
-		OrderByComparator<MBThread> orderByComparator, boolean retrieveFromCache) {
+	public static List<MBThread> findByL_P(Date lastPostDate, double priority,
+		int start, int end, OrderByComparator<MBThread> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByL_P(lastPostDate, priority, start, end,
 			orderByComparator, retrieveFromCache);
@@ -1945,8 +1944,8 @@ public class MBThreadUtil {
 	* @return the first matching message boards thread
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
-	public static MBThread findByL_P_First(java.util.Date lastPostDate,
-		double priority, OrderByComparator<MBThread> orderByComparator)
+	public static MBThread findByL_P_First(Date lastPostDate, double priority,
+		OrderByComparator<MBThread> orderByComparator)
 		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByL_P_First(lastPostDate, priority, orderByComparator);
@@ -1960,8 +1959,8 @@ public class MBThreadUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public static MBThread fetchByL_P_First(java.util.Date lastPostDate,
-		double priority, OrderByComparator<MBThread> orderByComparator) {
+	public static MBThread fetchByL_P_First(Date lastPostDate, double priority,
+		OrderByComparator<MBThread> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_First(lastPostDate, priority, orderByComparator);
 	}
@@ -1975,8 +1974,8 @@ public class MBThreadUtil {
 	* @return the last matching message boards thread
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
-	public static MBThread findByL_P_Last(java.util.Date lastPostDate,
-		double priority, OrderByComparator<MBThread> orderByComparator)
+	public static MBThread findByL_P_Last(Date lastPostDate, double priority,
+		OrderByComparator<MBThread> orderByComparator)
 		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByL_P_Last(lastPostDate, priority, orderByComparator);
@@ -1990,8 +1989,8 @@ public class MBThreadUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
-	public static MBThread fetchByL_P_Last(java.util.Date lastPostDate,
-		double priority, OrderByComparator<MBThread> orderByComparator) {
+	public static MBThread fetchByL_P_Last(Date lastPostDate, double priority,
+		OrderByComparator<MBThread> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_Last(lastPostDate, priority, orderByComparator);
 	}
@@ -2007,7 +2006,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a message boards thread with the primary key could not be found
 	*/
 	public static MBThread[] findByL_P_PrevAndNext(long threadId,
-		java.util.Date lastPostDate, double priority,
+		Date lastPostDate, double priority,
 		OrderByComparator<MBThread> orderByComparator)
 		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
@@ -2021,7 +2020,7 @@ public class MBThreadUtil {
 	* @param lastPostDate the last post date
 	* @param priority the priority
 	*/
-	public static void removeByL_P(java.util.Date lastPostDate, double priority) {
+	public static void removeByL_P(Date lastPostDate, double priority) {
 		getPersistence().removeByL_P(lastPostDate, priority);
 	}
 
@@ -2032,7 +2031,7 @@ public class MBThreadUtil {
 	* @param priority the priority
 	* @return the number of matching message boards threads
 	*/
-	public static int countByL_P(java.util.Date lastPostDate, double priority) {
+	public static int countByL_P(Date lastPostDate, double priority) {
 		return getPersistence().countByL_P(lastPostDate, priority);
 	}
 
@@ -2045,7 +2044,7 @@ public class MBThreadUtil {
 	* @return the matching message boards threads
 	*/
 	public static List<MBThread> findByG_C_L(long groupId, long categoryId,
-		java.util.Date lastPostDate) {
+		Date lastPostDate) {
 		return getPersistence().findByG_C_L(groupId, categoryId, lastPostDate);
 	}
 
@@ -2064,7 +2063,7 @@ public class MBThreadUtil {
 	* @return the range of matching message boards threads
 	*/
 	public static List<MBThread> findByG_C_L(long groupId, long categoryId,
-		java.util.Date lastPostDate, int start, int end) {
+		Date lastPostDate, int start, int end) {
 		return getPersistence()
 				   .findByG_C_L(groupId, categoryId, lastPostDate, start, end);
 	}
@@ -2085,7 +2084,7 @@ public class MBThreadUtil {
 	* @return the ordered range of matching message boards threads
 	*/
 	public static List<MBThread> findByG_C_L(long groupId, long categoryId,
-		java.util.Date lastPostDate, int start, int end,
+		Date lastPostDate, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
 		return getPersistence()
 				   .findByG_C_L(groupId, categoryId, lastPostDate, start, end,
@@ -2109,7 +2108,7 @@ public class MBThreadUtil {
 	* @return the ordered range of matching message boards threads
 	*/
 	public static List<MBThread> findByG_C_L(long groupId, long categoryId,
-		java.util.Date lastPostDate, int start, int end,
+		Date lastPostDate, int start, int end,
 		OrderByComparator<MBThread> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByG_C_L(groupId, categoryId, lastPostDate, start, end,
@@ -2127,8 +2126,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
 	public static MBThread findByG_C_L_First(long groupId, long categoryId,
-		java.util.Date lastPostDate,
-		OrderByComparator<MBThread> orderByComparator)
+		Date lastPostDate, OrderByComparator<MBThread> orderByComparator)
 		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_L_First(groupId, categoryId, lastPostDate,
@@ -2145,8 +2143,7 @@ public class MBThreadUtil {
 	* @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
 	public static MBThread fetchByG_C_L_First(long groupId, long categoryId,
-		java.util.Date lastPostDate,
-		OrderByComparator<MBThread> orderByComparator) {
+		Date lastPostDate, OrderByComparator<MBThread> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_L_First(groupId, categoryId, lastPostDate,
 			orderByComparator);
@@ -2163,8 +2160,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a matching message boards thread could not be found
 	*/
 	public static MBThread findByG_C_L_Last(long groupId, long categoryId,
-		java.util.Date lastPostDate,
-		OrderByComparator<MBThread> orderByComparator)
+		Date lastPostDate, OrderByComparator<MBThread> orderByComparator)
 		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
 				   .findByG_C_L_Last(groupId, categoryId, lastPostDate,
@@ -2181,8 +2177,7 @@ public class MBThreadUtil {
 	* @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	*/
 	public static MBThread fetchByG_C_L_Last(long groupId, long categoryId,
-		java.util.Date lastPostDate,
-		OrderByComparator<MBThread> orderByComparator) {
+		Date lastPostDate, OrderByComparator<MBThread> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_L_Last(groupId, categoryId, lastPostDate,
 			orderByComparator);
@@ -2200,7 +2195,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a message boards thread with the primary key could not be found
 	*/
 	public static MBThread[] findByG_C_L_PrevAndNext(long threadId,
-		long groupId, long categoryId, java.util.Date lastPostDate,
+		long groupId, long categoryId, Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator)
 		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
@@ -2217,7 +2212,7 @@ public class MBThreadUtil {
 	* @return the matching message boards threads that the user has permission to view
 	*/
 	public static List<MBThread> filterFindByG_C_L(long groupId,
-		long categoryId, java.util.Date lastPostDate) {
+		long categoryId, Date lastPostDate) {
 		return getPersistence()
 				   .filterFindByG_C_L(groupId, categoryId, lastPostDate);
 	}
@@ -2237,7 +2232,7 @@ public class MBThreadUtil {
 	* @return the range of matching message boards threads that the user has permission to view
 	*/
 	public static List<MBThread> filterFindByG_C_L(long groupId,
-		long categoryId, java.util.Date lastPostDate, int start, int end) {
+		long categoryId, Date lastPostDate, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_L(groupId, categoryId, lastPostDate, start,
 			end);
@@ -2259,7 +2254,7 @@ public class MBThreadUtil {
 	* @return the ordered range of matching message boards threads that the user has permission to view
 	*/
 	public static List<MBThread> filterFindByG_C_L(long groupId,
-		long categoryId, java.util.Date lastPostDate, int start, int end,
+		long categoryId, Date lastPostDate, int start, int end,
 		OrderByComparator<MBThread> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_L(groupId, categoryId, lastPostDate, start,
@@ -2278,7 +2273,7 @@ public class MBThreadUtil {
 	* @throws NoSuchThreadException if a message boards thread with the primary key could not be found
 	*/
 	public static MBThread[] filterFindByG_C_L_PrevAndNext(long threadId,
-		long groupId, long categoryId, java.util.Date lastPostDate,
+		long groupId, long categoryId, Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator)
 		throws com.liferay.portlet.messageboards.exception.NoSuchThreadException {
 		return getPersistence()
@@ -2294,7 +2289,7 @@ public class MBThreadUtil {
 	* @param lastPostDate the last post date
 	*/
 	public static void removeByG_C_L(long groupId, long categoryId,
-		java.util.Date lastPostDate) {
+		Date lastPostDate) {
 		getPersistence().removeByG_C_L(groupId, categoryId, lastPostDate);
 	}
 
@@ -2307,7 +2302,7 @@ public class MBThreadUtil {
 	* @return the number of matching message boards threads
 	*/
 	public static int countByG_C_L(long groupId, long categoryId,
-		java.util.Date lastPostDate) {
+		Date lastPostDate) {
 		return getPersistence().countByG_C_L(groupId, categoryId, lastPostDate);
 	}
 
@@ -2320,7 +2315,7 @@ public class MBThreadUtil {
 	* @return the number of matching message boards threads that the user has permission to view
 	*/
 	public static int filterCountByG_C_L(long groupId, long categoryId,
-		java.util.Date lastPostDate) {
+		Date lastPostDate) {
 		return getPersistence()
 				   .filterCountByG_C_L(groupId, categoryId, lastPostDate);
 	}

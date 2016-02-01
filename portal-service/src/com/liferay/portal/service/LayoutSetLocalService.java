@@ -16,12 +16,26 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.PersistedModel;
+
+import java.io.File;
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for LayoutSet. Methods of this
@@ -45,8 +59,8 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetLocalServiceUtil} to access the layout set local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.LayoutSet addLayoutSet(long groupId,
-		boolean privateLayout) throws PortalException;
+	public LayoutSet addLayoutSet(long groupId, boolean privateLayout)
+		throws PortalException;
 
 	/**
 	* Adds the layout set to the database. Also notifies the appropriate model listeners.
@@ -54,9 +68,8 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param layoutSet the layout set
 	* @return the layout set that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.LayoutSet addLayoutSet(
-		com.liferay.portal.model.LayoutSet layoutSet);
+	@Indexable(type = IndexableType.REINDEX)
+	public LayoutSet addLayoutSet(LayoutSet layoutSet);
 
 	/**
 	* Creates a new layout set with the primary key. Does not add the layout set to the database.
@@ -64,7 +77,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param layoutSetId the primary key for the new layout set
 	* @return the new layout set
 	*/
-	public com.liferay.portal.model.LayoutSet createLayoutSet(long layoutSetId);
+	public LayoutSet createLayoutSet(long layoutSetId);
 
 	public void deleteLayoutSet(long groupId, boolean privateLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -76,9 +89,8 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param layoutSet the layout set
 	* @return the layout set that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.LayoutSet deleteLayoutSet(
-		com.liferay.portal.model.LayoutSet layoutSet);
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutSet deleteLayoutSet(LayoutSet layoutSet);
 
 	/**
 	* Deletes the layout set with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,19 +99,18 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @return the layout set that was removed
 	* @throws PortalException if a layout set with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.LayoutSet deleteLayoutSet(long layoutSetId)
+	@Indexable(type = IndexableType.DELETE)
+	public LayoutSet deleteLayoutSet(long layoutSetId)
 		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -107,8 +118,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -122,8 +132,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -139,10 +148,8 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -150,8 +157,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -160,26 +166,24 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSet fetchLayoutSet(long layoutSetId);
+	public LayoutSet fetchLayoutSet(long layoutSetId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSet fetchLayoutSet(
-		java.lang.String virtualHostname);
+	public LayoutSet fetchLayoutSet(java.lang.String virtualHostname);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
-		boolean privateLayout) throws PortalException;
+	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
+		throws PortalException;
 
 	/**
 	* Returns the layout set with the primary key.
@@ -189,12 +193,11 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @throws PortalException if a layout set with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSet getLayoutSet(long layoutSetId)
-		throws PortalException;
+	public LayoutSet getLayoutSet(long layoutSetId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSet getLayoutSet(
-		java.lang.String virtualHostname) throws PortalException;
+	public LayoutSet getLayoutSet(java.lang.String virtualHostname)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the layout sets.
@@ -208,11 +211,10 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @return the range of layout sets
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutSet> getLayoutSets(
-		int start, int end);
+	public List<LayoutSet> getLayoutSets(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutSet> getLayoutSetsByLayoutSetPrototypeUuid(
+	public List<LayoutSet> getLayoutSetsByLayoutSetPrototypeUuid(
 		java.lang.String layoutSetPrototypeUuid);
 
 	/**
@@ -232,8 +234,8 @@ public interface LayoutSetLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the layout set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -241,9 +243,8 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @param layoutSet the layout set
 	* @return the layout set that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.LayoutSet updateLayoutSet(
-		com.liferay.portal.model.LayoutSet layoutSet);
+	@Indexable(type = IndexableType.REINDEX)
+	public LayoutSet updateLayoutSet(LayoutSet layoutSet);
 
 	/**
 	* Updates the state of the layout set prototype link.
@@ -259,39 +260,33 @@ public interface LayoutSetLocalService extends BaseLocalService,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
 		java.lang.String layoutSetPrototypeUuid) throws PortalException;
 
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, byte[] bytes)
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, byte[] bytes) throws PortalException;
+
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, File file) throws PortalException;
+
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, InputStream is) throws PortalException;
+
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, InputStream is, boolean cleanUpStream)
 		throws PortalException;
 
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.File file)
-		throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is)
-		throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
-		boolean privateLayout, boolean logo, java.io.InputStream is,
-		boolean cleanUpStream) throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
-		boolean privateLayout, java.lang.String themeId,
-		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws PortalException;
+	public LayoutSet updateLookAndFeel(long groupId, boolean privateLayout,
+		java.lang.String themeId, java.lang.String colorSchemeId,
+		java.lang.String css, boolean wapTheme) throws PortalException;
 
 	public void updateLookAndFeel(long groupId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
 		throws PortalException;
 
-	public com.liferay.portal.model.LayoutSet updatePageCount(long groupId,
-		boolean privateLayout) throws PortalException;
-
-	public com.liferay.portal.model.LayoutSet updateSettings(long groupId,
-		boolean privateLayout, java.lang.String settings)
+	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
 		throws PortalException;
 
-	public com.liferay.portal.model.LayoutSet updateVirtualHost(long groupId,
-		boolean privateLayout, java.lang.String virtualHostname)
-		throws PortalException;
+	public LayoutSet updateSettings(long groupId, boolean privateLayout,
+		java.lang.String settings) throws PortalException;
+
+	public LayoutSet updateVirtualHost(long groupId, boolean privateLayout,
+		java.lang.String virtualHostname) throws PortalException;
 }

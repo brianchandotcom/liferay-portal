@@ -16,14 +16,28 @@ package com.liferay.portlet.messageboards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.messageboards.model.MBStatsUser;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides the local service interface for MBStatsUser. Methods of this
@@ -54,12 +68,10 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param mbStatsUser the message boards stats user
 	* @return the message boards stats user that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.messageboards.model.MBStatsUser addMBStatsUser(
-		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser);
+	@Indexable(type = IndexableType.REINDEX)
+	public MBStatsUser addMBStatsUser(MBStatsUser mbStatsUser);
 
-	public com.liferay.portlet.messageboards.model.MBStatsUser addStatsUser(
-		long groupId, long userId);
+	public MBStatsUser addStatsUser(long groupId, long userId);
 
 	/**
 	* Creates a new message boards stats user with the primary key. Does not add the message boards stats user to the database.
@@ -67,8 +79,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param statsUserId the primary key for the new message boards stats user
 	* @return the new message boards stats user
 	*/
-	public com.liferay.portlet.messageboards.model.MBStatsUser createMBStatsUser(
-		long statsUserId);
+	public MBStatsUser createMBStatsUser(long statsUserId);
 
 	/**
 	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
@@ -76,9 +87,8 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param mbStatsUser the message boards stats user
 	* @return the message boards stats user that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.messageboards.model.MBStatsUser deleteMBStatsUser(
-		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser);
+	@Indexable(type = IndexableType.DELETE)
+	public MBStatsUser deleteMBStatsUser(MBStatsUser mbStatsUser);
 
 	/**
 	* Deletes the message boards stats user with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,20 +97,18 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @return the message boards stats user that was removed
 	* @throws PortalException if a message boards stats user with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.messageboards.model.MBStatsUser deleteMBStatsUser(
-		long statsUserId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public MBStatsUser deleteMBStatsUser(long statsUserId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteStatsUser(
-		com.liferay.portlet.messageboards.model.MBStatsUser statsUser);
+	public void deleteStatsUser(MBStatsUser statsUser);
 
 	public void deleteStatsUser(long statsUserId) throws PortalException;
 
@@ -108,7 +116,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 
 	public void deleteStatsUsersByUserId(long userId);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -116,8 +124,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -131,8 +138,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -148,10 +154,8 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -159,8 +163,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -169,22 +172,20 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBStatsUser fetchMBStatsUser(
-		long statsUserId);
+	public MBStatsUser fetchMBStatsUser(long statsUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getLastPostDateByUserId(long groupId, long userId);
+	public Date getLastPostDateByUserId(long groupId, long userId);
 
 	/**
 	* Returns the message boards stats user with the primary key.
@@ -194,8 +195,8 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @throws PortalException if a message boards stats user with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBStatsUser getMBStatsUser(
-		long statsUserId) throws PortalException;
+	public MBStatsUser getMBStatsUser(long statsUserId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the message boards stats users.
@@ -209,8 +210,7 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @return the range of message boards stats users
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> getMBStatsUsers(
-		int start, int end);
+	public List<MBStatsUser> getMBStatsUsers(int start, int end);
 
 	/**
 	* Returns the number of message boards stats users.
@@ -235,24 +235,22 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBStatsUser getStatsUser(
-		long groupId, long userId);
+	public MBStatsUser getStatsUser(long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> getStatsUsersByGroupId(
-		long groupId, int start, int end) throws PortalException;
+	public List<MBStatsUser> getStatsUsersByGroupId(long groupId, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStatsUsersByGroupIdCount(long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.messageboards.model.MBStatsUser> getStatsUsersByUserId(
-		long userId);
+	public List<MBStatsUser> getStatsUsersByUserId(long userId);
 
 	/**
 	* Updates the message boards stats user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -260,16 +258,14 @@ public interface MBStatsUserLocalService extends BaseLocalService,
 	* @param mbStatsUser the message boards stats user
 	* @return the message boards stats user that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.messageboards.model.MBStatsUser updateMBStatsUser(
-		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser);
+	@Indexable(type = IndexableType.REINDEX)
+	public MBStatsUser updateMBStatsUser(MBStatsUser mbStatsUser);
 
-	public com.liferay.portlet.messageboards.model.MBStatsUser updateStatsUser(
-		long groupId, long userId);
+	public MBStatsUser updateStatsUser(long groupId, long userId);
 
-	public com.liferay.portlet.messageboards.model.MBStatsUser updateStatsUser(
-		long groupId, long userId, java.util.Date lastPostDate);
+	public MBStatsUser updateStatsUser(long groupId, long userId,
+		Date lastPostDate);
 
-	public com.liferay.portlet.messageboards.model.MBStatsUser updateStatsUser(
-		long groupId, long userId, int messageCount, java.util.Date lastPostDate);
+	public MBStatsUser updateStatsUser(long groupId, long userId,
+		int messageCount, Date lastPostDate);
 }

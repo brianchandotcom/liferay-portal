@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -929,8 +930,7 @@ public class UserUtil {
 	* @param createDate the create date
 	* @return the matching users
 	*/
-	public static List<User> findByC_CD(long companyId,
-		java.util.Date createDate) {
+	public static List<User> findByC_CD(long companyId, Date createDate) {
 		return getPersistence().findByC_CD(companyId, createDate);
 	}
 
@@ -947,8 +947,8 @@ public class UserUtil {
 	* @param end the upper bound of the range of users (not inclusive)
 	* @return the range of matching users
 	*/
-	public static List<User> findByC_CD(long companyId,
-		java.util.Date createDate, int start, int end) {
+	public static List<User> findByC_CD(long companyId, Date createDate,
+		int start, int end) {
 		return getPersistence().findByC_CD(companyId, createDate, start, end);
 	}
 
@@ -966,9 +966,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching users
 	*/
-	public static List<User> findByC_CD(long companyId,
-		java.util.Date createDate, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+	public static List<User> findByC_CD(long companyId, Date createDate,
+		int start, int end, OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .findByC_CD(companyId, createDate, start, end,
 			orderByComparator);
@@ -989,9 +988,9 @@ public class UserUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching users
 	*/
-	public static List<User> findByC_CD(long companyId,
-		java.util.Date createDate, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+	public static List<User> findByC_CD(long companyId, Date createDate,
+		int start, int end, OrderByComparator<User> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByC_CD(companyId, createDate, start, end,
 			orderByComparator, retrieveFromCache);
@@ -1006,8 +1005,8 @@ public class UserUtil {
 	* @return the first matching user
 	* @throws NoSuchUserException if a matching user could not be found
 	*/
-	public static User findByC_CD_First(long companyId,
-		java.util.Date createDate, OrderByComparator<User> orderByComparator)
+	public static User findByC_CD_First(long companyId, Date createDate,
+		OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_CD_First(companyId, createDate, orderByComparator);
@@ -1021,8 +1020,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user, or <code>null</code> if a matching user could not be found
 	*/
-	public static User fetchByC_CD_First(long companyId,
-		java.util.Date createDate, OrderByComparator<User> orderByComparator) {
+	public static User fetchByC_CD_First(long companyId, Date createDate,
+		OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_CD_First(companyId, createDate, orderByComparator);
 	}
@@ -1036,8 +1035,8 @@ public class UserUtil {
 	* @return the last matching user
 	* @throws NoSuchUserException if a matching user could not be found
 	*/
-	public static User findByC_CD_Last(long companyId,
-		java.util.Date createDate, OrderByComparator<User> orderByComparator)
+	public static User findByC_CD_Last(long companyId, Date createDate,
+		OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_CD_Last(companyId, createDate, orderByComparator);
@@ -1051,8 +1050,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user, or <code>null</code> if a matching user could not be found
 	*/
-	public static User fetchByC_CD_Last(long companyId,
-		java.util.Date createDate, OrderByComparator<User> orderByComparator) {
+	public static User fetchByC_CD_Last(long companyId, Date createDate,
+		OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_CD_Last(companyId, createDate, orderByComparator);
 	}
@@ -1068,7 +1067,7 @@ public class UserUtil {
 	* @throws NoSuchUserException if a user with the primary key could not be found
 	*/
 	public static User[] findByC_CD_PrevAndNext(long userId, long companyId,
-		java.util.Date createDate, OrderByComparator<User> orderByComparator)
+		Date createDate, OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_CD_PrevAndNext(userId, companyId, createDate,
@@ -1081,7 +1080,7 @@ public class UserUtil {
 	* @param companyId the company ID
 	* @param createDate the create date
 	*/
-	public static void removeByC_CD(long companyId, java.util.Date createDate) {
+	public static void removeByC_CD(long companyId, Date createDate) {
 		getPersistence().removeByC_CD(companyId, createDate);
 	}
 
@@ -1092,7 +1091,7 @@ public class UserUtil {
 	* @param createDate the create date
 	* @return the number of matching users
 	*/
-	public static int countByC_CD(long companyId, java.util.Date createDate) {
+	public static int countByC_CD(long companyId, Date createDate) {
 		return getPersistence().countByC_CD(companyId, createDate);
 	}
 
@@ -1103,8 +1102,7 @@ public class UserUtil {
 	* @param modifiedDate the modified date
 	* @return the matching users
 	*/
-	public static List<User> findByC_MD(long companyId,
-		java.util.Date modifiedDate) {
+	public static List<User> findByC_MD(long companyId, Date modifiedDate) {
 		return getPersistence().findByC_MD(companyId, modifiedDate);
 	}
 
@@ -1121,8 +1119,8 @@ public class UserUtil {
 	* @param end the upper bound of the range of users (not inclusive)
 	* @return the range of matching users
 	*/
-	public static List<User> findByC_MD(long companyId,
-		java.util.Date modifiedDate, int start, int end) {
+	public static List<User> findByC_MD(long companyId, Date modifiedDate,
+		int start, int end) {
 		return getPersistence().findByC_MD(companyId, modifiedDate, start, end);
 	}
 
@@ -1140,9 +1138,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching users
 	*/
-	public static List<User> findByC_MD(long companyId,
-		java.util.Date modifiedDate, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+	public static List<User> findByC_MD(long companyId, Date modifiedDate,
+		int start, int end, OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .findByC_MD(companyId, modifiedDate, start, end,
 			orderByComparator);
@@ -1163,9 +1160,9 @@ public class UserUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching users
 	*/
-	public static List<User> findByC_MD(long companyId,
-		java.util.Date modifiedDate, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
+	public static List<User> findByC_MD(long companyId, Date modifiedDate,
+		int start, int end, OrderByComparator<User> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByC_MD(companyId, modifiedDate, start, end,
 			orderByComparator, retrieveFromCache);
@@ -1180,8 +1177,8 @@ public class UserUtil {
 	* @return the first matching user
 	* @throws NoSuchUserException if a matching user could not be found
 	*/
-	public static User findByC_MD_First(long companyId,
-		java.util.Date modifiedDate, OrderByComparator<User> orderByComparator)
+	public static User findByC_MD_First(long companyId, Date modifiedDate,
+		OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_MD_First(companyId, modifiedDate, orderByComparator);
@@ -1195,8 +1192,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user, or <code>null</code> if a matching user could not be found
 	*/
-	public static User fetchByC_MD_First(long companyId,
-		java.util.Date modifiedDate, OrderByComparator<User> orderByComparator) {
+	public static User fetchByC_MD_First(long companyId, Date modifiedDate,
+		OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_MD_First(companyId, modifiedDate, orderByComparator);
 	}
@@ -1210,8 +1207,8 @@ public class UserUtil {
 	* @return the last matching user
 	* @throws NoSuchUserException if a matching user could not be found
 	*/
-	public static User findByC_MD_Last(long companyId,
-		java.util.Date modifiedDate, OrderByComparator<User> orderByComparator)
+	public static User findByC_MD_Last(long companyId, Date modifiedDate,
+		OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_MD_Last(companyId, modifiedDate, orderByComparator);
@@ -1225,8 +1222,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user, or <code>null</code> if a matching user could not be found
 	*/
-	public static User fetchByC_MD_Last(long companyId,
-		java.util.Date modifiedDate, OrderByComparator<User> orderByComparator) {
+	public static User fetchByC_MD_Last(long companyId, Date modifiedDate,
+		OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_MD_Last(companyId, modifiedDate, orderByComparator);
 	}
@@ -1242,7 +1239,7 @@ public class UserUtil {
 	* @throws NoSuchUserException if a user with the primary key could not be found
 	*/
 	public static User[] findByC_MD_PrevAndNext(long userId, long companyId,
-		java.util.Date modifiedDate, OrderByComparator<User> orderByComparator)
+		Date modifiedDate, OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_MD_PrevAndNext(userId, companyId, modifiedDate,
@@ -1255,7 +1252,7 @@ public class UserUtil {
 	* @param companyId the company ID
 	* @param modifiedDate the modified date
 	*/
-	public static void removeByC_MD(long companyId, java.util.Date modifiedDate) {
+	public static void removeByC_MD(long companyId, Date modifiedDate) {
 		getPersistence().removeByC_MD(companyId, modifiedDate);
 	}
 
@@ -1266,7 +1263,7 @@ public class UserUtil {
 	* @param modifiedDate the modified date
 	* @return the number of matching users
 	*/
-	public static int countByC_MD(long companyId, java.util.Date modifiedDate) {
+	public static int countByC_MD(long companyId, Date modifiedDate) {
 		return getPersistence().countByC_MD(companyId, modifiedDate);
 	}
 
@@ -1754,8 +1751,8 @@ public class UserUtil {
 	* @param modifiedDate the modified date
 	* @return the matching users
 	*/
-	public static List<User> findByC_CD_MD(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate) {
+	public static List<User> findByC_CD_MD(long companyId, Date createDate,
+		Date modifiedDate) {
 		return getPersistence()
 				   .findByC_CD_MD(companyId, createDate, modifiedDate);
 	}
@@ -1774,9 +1771,8 @@ public class UserUtil {
 	* @param end the upper bound of the range of users (not inclusive)
 	* @return the range of matching users
 	*/
-	public static List<User> findByC_CD_MD(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate, int start,
-		int end) {
+	public static List<User> findByC_CD_MD(long companyId, Date createDate,
+		Date modifiedDate, int start, int end) {
 		return getPersistence()
 				   .findByC_CD_MD(companyId, createDate, modifiedDate, start,
 			end);
@@ -1797,9 +1793,9 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching users
 	*/
-	public static List<User> findByC_CD_MD(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate, int start,
-		int end, OrderByComparator<User> orderByComparator) {
+	public static List<User> findByC_CD_MD(long companyId, Date createDate,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .findByC_CD_MD(companyId, createDate, modifiedDate, start,
 			end, orderByComparator);
@@ -1821,10 +1817,9 @@ public class UserUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching users
 	*/
-	public static List<User> findByC_CD_MD(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate, int start,
-		int end, OrderByComparator<User> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<User> findByC_CD_MD(long companyId, Date createDate,
+		Date modifiedDate, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByC_CD_MD(companyId, createDate, modifiedDate, start,
 			end, orderByComparator, retrieveFromCache);
@@ -1840,9 +1835,8 @@ public class UserUtil {
 	* @return the first matching user
 	* @throws NoSuchUserException if a matching user could not be found
 	*/
-	public static User findByC_CD_MD_First(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate,
-		OrderByComparator<User> orderByComparator)
+	public static User findByC_CD_MD_First(long companyId, Date createDate,
+		Date modifiedDate, OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_CD_MD_First(companyId, createDate, modifiedDate,
@@ -1858,9 +1852,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user, or <code>null</code> if a matching user could not be found
 	*/
-	public static User fetchByC_CD_MD_First(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate,
-		OrderByComparator<User> orderByComparator) {
+	public static User fetchByC_CD_MD_First(long companyId, Date createDate,
+		Date modifiedDate, OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_CD_MD_First(companyId, createDate, modifiedDate,
 			orderByComparator);
@@ -1876,9 +1869,8 @@ public class UserUtil {
 	* @return the last matching user
 	* @throws NoSuchUserException if a matching user could not be found
 	*/
-	public static User findByC_CD_MD_Last(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate,
-		OrderByComparator<User> orderByComparator)
+	public static User findByC_CD_MD_Last(long companyId, Date createDate,
+		Date modifiedDate, OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
 				   .findByC_CD_MD_Last(companyId, createDate, modifiedDate,
@@ -1894,9 +1886,8 @@ public class UserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user, or <code>null</code> if a matching user could not be found
 	*/
-	public static User fetchByC_CD_MD_Last(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate,
-		OrderByComparator<User> orderByComparator) {
+	public static User fetchByC_CD_MD_Last(long companyId, Date createDate,
+		Date modifiedDate, OrderByComparator<User> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_CD_MD_Last(companyId, createDate, modifiedDate,
 			orderByComparator);
@@ -1914,7 +1905,7 @@ public class UserUtil {
 	* @throws NoSuchUserException if a user with the primary key could not be found
 	*/
 	public static User[] findByC_CD_MD_PrevAndNext(long userId, long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate,
+		Date createDate, Date modifiedDate,
 		OrderByComparator<User> orderByComparator)
 		throws com.liferay.portal.exception.NoSuchUserException {
 		return getPersistence()
@@ -1929,8 +1920,8 @@ public class UserUtil {
 	* @param createDate the create date
 	* @param modifiedDate the modified date
 	*/
-	public static void removeByC_CD_MD(long companyId,
-		java.util.Date createDate, java.util.Date modifiedDate) {
+	public static void removeByC_CD_MD(long companyId, Date createDate,
+		Date modifiedDate) {
 		getPersistence().removeByC_CD_MD(companyId, createDate, modifiedDate);
 	}
 
@@ -1942,8 +1933,8 @@ public class UserUtil {
 	* @param modifiedDate the modified date
 	* @return the number of matching users
 	*/
-	public static int countByC_CD_MD(long companyId, java.util.Date createDate,
-		java.util.Date modifiedDate) {
+	public static int countByC_CD_MD(long companyId, Date createDate,
+		Date modifiedDate) {
 		return getPersistence()
 				   .countByC_CD_MD(companyId, createDate, modifiedDate);
 	}

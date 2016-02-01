@@ -18,6 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -151,7 +154,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _expandoRow.getPrimaryKeyObj();
 	}
 
@@ -237,8 +240,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_expandoRow.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -268,7 +270,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_expandoRow.setPrimaryKeyObj(primaryKeyObj);
 	}
 

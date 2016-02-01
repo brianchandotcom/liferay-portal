@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 /**
  * Provides the remote service interface for DLFileShortcut. Methods of this
@@ -47,17 +50,16 @@ public interface DLFileShortcutService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLFileShortcutServiceUtil} to access the document library file shortcut remote service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
-		long groupId, long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DLFileShortcut addFileShortcut(long groupId, long repositoryId,
+		long folderId, long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteFileShortcut(long fileShortcutId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
-		long fileShortcutId) throws PortalException;
+	public DLFileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -66,11 +68,9 @@ public interface DLFileShortcutService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateFileShortcut(
-		long fileShortcutId, long repositoryId, long folderId,
-		long toFileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DLFileShortcut updateFileShortcut(long fileShortcutId,
+		long repositoryId, long folderId, long toFileEntryId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
 		throws PortalException;

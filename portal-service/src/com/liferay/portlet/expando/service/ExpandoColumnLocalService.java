@@ -16,14 +16,28 @@ package com.liferay.portlet.expando.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.expando.model.ExpandoColumn;
+
+import java.io.Serializable;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Provides the local service interface for ExpandoColumn. Methods of this
@@ -47,13 +61,11 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExpandoColumnLocalServiceUtil} to access the expando column local service. Add custom service methods to {@link com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type)
+	public ExpandoColumn addColumn(long tableId, java.lang.String name, int type)
 		throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoColumn addColumn(
-		long tableId, java.lang.String name, int type,
-		java.lang.Object defaultData) throws PortalException;
+	public ExpandoColumn addColumn(long tableId, java.lang.String name,
+		int type, java.lang.Object defaultData) throws PortalException;
 
 	/**
 	* Adds the expando column to the database. Also notifies the appropriate model listeners.
@@ -61,9 +73,8 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param expandoColumn the expando column
 	* @return the expando column that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.expando.model.ExpandoColumn addExpandoColumn(
-		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn);
+	@Indexable(type = IndexableType.REINDEX)
+	public ExpandoColumn addExpandoColumn(ExpandoColumn expandoColumn);
 
 	/**
 	* Creates a new expando column with the primary key. Does not add the expando column to the database.
@@ -71,11 +82,9 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param columnId the primary key for the new expando column
 	* @return the new expando column
 	*/
-	public com.liferay.portlet.expando.model.ExpandoColumn createExpandoColumn(
-		long columnId);
+	public ExpandoColumn createExpandoColumn(long columnId);
 
-	public void deleteColumn(
-		com.liferay.portlet.expando.model.ExpandoColumn column);
+	public void deleteColumn(ExpandoColumn column);
 
 	public void deleteColumn(long columnId) throws PortalException;
 
@@ -104,9 +113,9 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @return the expando column that was removed
 	* @throws PortalException if a expando column with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.expando.model.ExpandoColumn deleteExpandoColumn(
-		long columnId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ExpandoColumn deleteExpandoColumn(long columnId)
+		throws PortalException;
 
 	/**
 	* Deletes the expando column from the database. Also notifies the appropriate model listeners.
@@ -114,19 +123,17 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param expandoColumn the expando column
 	* @return the expando column that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.expando.model.ExpandoColumn deleteExpandoColumn(
-		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn);
+	@Indexable(type = IndexableType.DELETE)
+	public ExpandoColumn deleteExpandoColumn(ExpandoColumn expandoColumn);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -134,8 +141,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -149,8 +155,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -166,10 +171,8 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -177,8 +180,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -187,60 +189,52 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn fetchExpandoColumn(
-		long columnId);
+	public ExpandoColumn fetchExpandoColumn(long columnId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
-		long columnId) throws PortalException;
+	public ExpandoColumn getColumn(long columnId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String name);
+	public ExpandoColumn getColumn(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.lang.String name);
+	public ExpandoColumn getColumn(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(
-		long tableId, java.lang.String name);
+	public ExpandoColumn getColumn(long tableId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
-		long companyId, java.lang.String className, java.lang.String tableName);
+	public List<ExpandoColumn> getColumns(long companyId,
+		java.lang.String className, java.lang.String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.util.Collection<java.lang.String> columnNames);
+	public List<ExpandoColumn> getColumns(long companyId,
+		java.lang.String className, java.lang.String tableName,
+		Collection<java.lang.String> columnNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
-		long companyId, long classNameId, java.lang.String tableName);
+	public List<ExpandoColumn> getColumns(long companyId, long classNameId,
+		java.lang.String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
-		long companyId, long classNameId, java.lang.String tableName,
-		java.util.Collection<java.lang.String> names);
+	public List<ExpandoColumn> getColumns(long companyId, long classNameId,
+		java.lang.String tableName, Collection<java.lang.String> names);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
-		long tableId);
+	public List<ExpandoColumn> getColumns(long tableId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getColumns(
-		long tableId, java.util.Collection<java.lang.String> names);
+	public List<ExpandoColumn> getColumns(long tableId,
+		Collection<java.lang.String> names);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnsCount(long companyId, java.lang.String className,
@@ -254,20 +248,20 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public int getColumnsCount(long tableId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn getDefaultTableColumn(
-		long companyId, java.lang.String className, java.lang.String name);
+	public ExpandoColumn getDefaultTableColumn(long companyId,
+		java.lang.String className, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn getDefaultTableColumn(
-		long companyId, long classNameId, java.lang.String name);
+	public ExpandoColumn getDefaultTableColumn(long companyId,
+		long classNameId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getDefaultTableColumns(
-		long companyId, java.lang.String className);
+	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
+		java.lang.String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getDefaultTableColumns(
-		long companyId, long classNameId);
+	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
+		long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefaultTableColumnsCount(long companyId,
@@ -284,8 +278,8 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @throws PortalException if a expando column with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.expando.model.ExpandoColumn getExpandoColumn(
-		long columnId) throws PortalException;
+	public ExpandoColumn getExpandoColumn(long columnId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the expando columns.
@@ -299,8 +293,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @return the range of expando columns
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.ExpandoColumn> getExpandoColumns(
-		int start, int end);
+	public List<ExpandoColumn> getExpandoColumns(int start, int end);
 
 	/**
 	* Returns the number of expando columns.
@@ -311,7 +304,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public int getExpandoColumnsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -322,16 +315,14 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
-
-	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public com.liferay.portlet.expando.model.ExpandoColumn updateColumn(
-		long columnId, java.lang.String name, int type,
-		java.lang.Object defaultData) throws PortalException;
+	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
+		int type) throws PortalException;
+
+	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
+		int type, java.lang.Object defaultData) throws PortalException;
 
 	/**
 	* Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -339,10 +330,9 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	* @param expandoColumn the expando column
 	* @return the expando column that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.expando.model.ExpandoColumn updateExpandoColumn(
-		com.liferay.portlet.expando.model.ExpandoColumn expandoColumn);
+	@Indexable(type = IndexableType.REINDEX)
+	public ExpandoColumn updateExpandoColumn(ExpandoColumn expandoColumn);
 
-	public com.liferay.portlet.expando.model.ExpandoColumn updateTypeSettings(
-		long columnId, java.lang.String typeSettings) throws PortalException;
+	public ExpandoColumn updateTypeSettings(long columnId,
+		java.lang.String typeSettings) throws PortalException;
 }

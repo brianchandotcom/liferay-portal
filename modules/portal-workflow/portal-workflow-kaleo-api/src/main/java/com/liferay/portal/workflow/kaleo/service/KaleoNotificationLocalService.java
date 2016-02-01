@@ -16,14 +16,28 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.definition.Notification;
+import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for KaleoNotification. Methods of this
@@ -47,11 +61,10 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNotificationLocalServiceUtil} to access the kaleo notification local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoNotificationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification addKaleoNotification(
+	public KaleoNotification addKaleoNotification(
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		long kaleoDefinitionId, java.lang.String kaleoNodeName,
-		com.liferay.portal.workflow.kaleo.definition.Notification notification,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		Notification notification, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -60,9 +73,9 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param kaleoNotification the kaleo notification
 	* @return the kaleo notification that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification addKaleoNotification(
-		com.liferay.portal.workflow.kaleo.model.KaleoNotification kaleoNotification);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoNotification addKaleoNotification(
+		KaleoNotification kaleoNotification);
 
 	/**
 	* Creates a new kaleo notification with the primary key. Does not add the kaleo notification to the database.
@@ -70,8 +83,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param kaleoNotificationId the primary key for the new kaleo notification
 	* @return the new kaleo notification
 	*/
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification createKaleoNotification(
-		long kaleoNotificationId);
+	public KaleoNotification createKaleoNotification(long kaleoNotificationId);
 
 	public void deleteCompanyKaleoNotifications(long companyId);
 
@@ -83,9 +95,9 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param kaleoNotification the kaleo notification
 	* @return the kaleo notification that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification deleteKaleoNotification(
-		com.liferay.portal.workflow.kaleo.model.KaleoNotification kaleoNotification);
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoNotification deleteKaleoNotification(
+		KaleoNotification kaleoNotification);
 
 	/**
 	* Deletes the kaleo notification with the primary key from the database. Also notifies the appropriate model listeners.
@@ -94,19 +106,18 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @return the kaleo notification that was removed
 	* @throws PortalException if a kaleo notification with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification deleteKaleoNotification(
-		long kaleoNotificationId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public KaleoNotification deleteKaleoNotification(long kaleoNotificationId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -114,8 +125,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -129,8 +139,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -146,10 +155,8 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -157,8 +164,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -167,19 +173,17 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification fetchKaleoNotification(
-		long kaleoNotificationId);
+	public KaleoNotification fetchKaleoNotification(long kaleoNotificationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the kaleo notification with the primary key.
@@ -189,15 +193,15 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @throws PortalException if a kaleo notification with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification getKaleoNotification(
-		long kaleoNotificationId) throws PortalException;
+	public KaleoNotification getKaleoNotification(long kaleoNotificationId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNotification> getKaleoNotifications(
+	public List<KaleoNotification> getKaleoNotifications(
 		java.lang.String kaleoClassName, long kaleoClassPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNotification> getKaleoNotifications(
+	public List<KaleoNotification> getKaleoNotifications(
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		java.lang.String executionType);
 
@@ -213,8 +217,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @return the range of kaleo notifications
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNotification> getKaleoNotifications(
-		int start, int end);
+	public List<KaleoNotification> getKaleoNotifications(int start, int end);
 
 	/**
 	* Returns the number of kaleo notifications.
@@ -233,8 +236,8 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the kaleo notification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -242,7 +245,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @param kaleoNotification the kaleo notification
 	* @return the kaleo notification that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification updateKaleoNotification(
-		com.liferay.portal.workflow.kaleo.model.KaleoNotification kaleoNotification);
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoNotification updateKaleoNotification(
+		KaleoNotification kaleoNotification);
 }

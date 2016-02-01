@@ -16,12 +16,37 @@ package com.liferay.portal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
+
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for User. Methods of this
@@ -58,11 +83,10 @@ public interface UserLocalService extends BaseLocalService,
 	* @param lastName the user's last name
 	* @return the new default admin user
 	*/
-	public com.liferay.portal.model.User addDefaultAdminUser(long companyId,
+	public User addDefaultAdminUser(long companyId,
 		java.lang.String screenName, java.lang.String emailAddress,
-		java.util.Locale locale, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName)
-		throws PortalException;
+		Locale locale, java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName) throws PortalException;
 
 	/**
 	* Adds the user to the default groups, unless the user is already in these
@@ -94,15 +118,14 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public void addDefaultUserGroups(long userId) throws PortalException;
 
-	public void addGroupUser(long groupId, com.liferay.portal.model.User user);
+	public void addGroupUser(long groupId, User user);
 
 	public void addGroupUser(long groupId, long userId);
 
 	/**
 	* @throws PortalException
 	*/
-	public void addGroupUsers(long groupId,
-		java.util.List<com.liferay.portal.model.User> Users)
+	public void addGroupUsers(long groupId, List<User> Users)
 		throws PortalException;
 
 	/**
@@ -111,16 +134,14 @@ public interface UserLocalService extends BaseLocalService,
 	public void addGroupUsers(long groupId, long[] userIds)
 		throws PortalException;
 
-	public void addOrganizationUser(long organizationId,
-		com.liferay.portal.model.User user);
+	public void addOrganizationUser(long organizationId, User user);
 
 	public void addOrganizationUser(long organizationId, long userId);
 
 	/**
 	* @throws PortalException
 	*/
-	public void addOrganizationUsers(long organizationId,
-		java.util.List<com.liferay.portal.model.User> Users)
+	public void addOrganizationUsers(long organizationId, List<User> Users)
 		throws PortalException;
 
 	/**
@@ -138,15 +159,14 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds);
 
-	public void addRoleUser(long roleId, com.liferay.portal.model.User user);
+	public void addRoleUser(long roleId, User user);
 
 	public void addRoleUser(long roleId, long userId);
 
 	/**
 	* @throws PortalException
 	*/
-	public void addRoleUsers(long roleId,
-		java.util.List<com.liferay.portal.model.User> Users)
+	public void addRoleUsers(long roleId, List<User> Users)
 		throws PortalException;
 
 	/**
@@ -155,15 +175,14 @@ public interface UserLocalService extends BaseLocalService,
 	public void addRoleUsers(long roleId, long[] userIds)
 		throws PortalException;
 
-	public void addTeamUser(long teamId, com.liferay.portal.model.User user);
+	public void addTeamUser(long teamId, User user);
 
 	public void addTeamUser(long teamId, long userId);
 
 	/**
 	* @throws PortalException
 	*/
-	public void addTeamUsers(long teamId,
-		java.util.List<com.liferay.portal.model.User> Users)
+	public void addTeamUsers(long teamId, List<User> Users)
 		throws PortalException;
 
 	/**
@@ -218,11 +237,11 @@ public interface UserLocalService extends BaseLocalService,
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public com.liferay.portal.model.User addUser(long creatorUserId,
-		long companyId, boolean autoPassword, java.lang.String password1,
+	public User addUser(long creatorUserId, long companyId,
+		boolean autoPassword, java.lang.String password1,
 		java.lang.String password2, boolean autoScreenName,
 		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
+		long facebookId, java.lang.String openId, Locale locale,
 		java.lang.String firstName, java.lang.String middleName,
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
@@ -237,20 +256,17 @@ public interface UserLocalService extends BaseLocalService,
 	* @param user the user
 	* @return the user that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.User addUser(
-		com.liferay.portal.model.User user);
+	@Indexable(type = IndexableType.REINDEX)
+	public User addUser(User user);
 
-	public void addUserGroupUser(long userGroupId,
-		com.liferay.portal.model.User user);
+	public void addUserGroupUser(long userGroupId, User user);
 
 	public void addUserGroupUser(long userGroupId, long userId);
 
 	/**
 	* @throws PortalException
 	*/
-	public void addUserGroupUsers(long userGroupId,
-		java.util.List<com.liferay.portal.model.User> Users)
+	public void addUserGroupUsers(long userGroupId, List<User> Users)
 		throws PortalException;
 
 	/**
@@ -305,12 +321,11 @@ public interface UserLocalService extends BaseLocalService,
 	bridge attributes for the user.
 	* @return the new user
 	*/
-	public com.liferay.portal.model.User addUserWithWorkflow(
-		long creatorUserId, long companyId, boolean autoPassword,
-		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.util.Locale locale,
+	public User addUserWithWorkflow(long creatorUserId, long companyId,
+		boolean autoPassword, java.lang.String password1,
+		java.lang.String password2, boolean autoScreenName,
+		java.lang.String screenName, java.lang.String emailAddress,
+		long facebookId, java.lang.String openId, Locale locale,
 		java.lang.String firstName, java.lang.String middleName,
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
@@ -340,9 +355,9 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public int authenticateByEmailAddress(long companyId,
 		java.lang.String emailAddress, java.lang.String password,
-		java.util.Map<java.lang.String, java.lang.String[]> headerMap,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Map<java.lang.String, java.lang.Object> resultsMap)
+		Map<java.lang.String, java.lang.String[]> headerMap,
+		Map<java.lang.String, java.lang.String[]> parameterMap,
+		Map<java.lang.String, java.lang.Object> resultsMap)
 		throws PortalException;
 
 	/**
@@ -366,9 +381,9 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public int authenticateByScreenName(long companyId,
 		java.lang.String screenName, java.lang.String password,
-		java.util.Map<java.lang.String, java.lang.String[]> headerMap,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Map<java.lang.String, java.lang.Object> resultsMap)
+		Map<java.lang.String, java.lang.String[]> headerMap,
+		Map<java.lang.String, java.lang.String[]> parameterMap,
+		Map<java.lang.String, java.lang.Object> resultsMap)
 		throws PortalException;
 
 	/**
@@ -392,9 +407,9 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public int authenticateByUserId(long companyId, long userId,
 		java.lang.String password,
-		java.util.Map<java.lang.String, java.lang.String[]> headerMap,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Map<java.lang.String, java.lang.Object> resultsMap)
+		Map<java.lang.String, java.lang.String[]> headerMap,
+		Map<java.lang.String, java.lang.String[]> parameterMap,
+		Map<java.lang.String, java.lang.Object> resultsMap)
 		throws PortalException;
 
 	/**
@@ -475,8 +490,7 @@ public interface UserLocalService extends BaseLocalService,
 	*
 	* @param user the user
 	*/
-	public void checkLockout(com.liferay.portal.model.User user)
-		throws PortalException;
+	public void checkLockout(User user) throws PortalException;
 
 	/**
 	* Adds a failed login attempt to the user and updates the user's last
@@ -484,7 +498,7 @@ public interface UserLocalService extends BaseLocalService,
 	*
 	* @param user the user
 	*/
-	public void checkLoginFailure(com.liferay.portal.model.User user);
+	public void checkLoginFailure(User user);
 
 	/**
 	* Adds a failed login attempt to the user with the email address and
@@ -521,8 +535,7 @@ public interface UserLocalService extends BaseLocalService,
 	*
 	* @param user the user
 	*/
-	public void checkPasswordExpired(com.liferay.portal.model.User user)
-		throws PortalException;
+	public void checkPasswordExpired(User user) throws PortalException;
 
 	public void clearGroupUsers(long groupId);
 
@@ -547,7 +560,7 @@ public interface UserLocalService extends BaseLocalService,
 	confirmation email to the user by setting attribute
 	<code>sendEmail</code> to <code>true</code>.
 	*/
-	public void completeUserRegistration(com.liferay.portal.model.User user,
+	public void completeUserRegistration(User user,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -557,7 +570,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param userId the primary key for the new user
 	* @return the new user
 	*/
-	public com.liferay.portal.model.User createUser(long userId);
+	public User createUser(long userId);
 
 	/**
 	* Decrypts the user's primary key and password from their encrypted forms.
@@ -569,26 +582,22 @@ public interface UserLocalService extends BaseLocalService,
 	* @param password the encrypted password of the user
 	* @return the user's primary key and password
 	*/
-	public com.liferay.portal.kernel.util.KeyValuePair decryptUserId(
-		long companyId, java.lang.String name, java.lang.String password)
-		throws PortalException;
+	public KeyValuePair decryptUserId(long companyId, java.lang.String name,
+		java.lang.String password) throws PortalException;
 
-	public void deleteGroupUser(long groupId, com.liferay.portal.model.User user);
+	public void deleteGroupUser(long groupId, User user);
 
 	public void deleteGroupUser(long groupId, long userId);
 
-	public void deleteGroupUsers(long groupId,
-		java.util.List<com.liferay.portal.model.User> Users);
+	public void deleteGroupUsers(long groupId, List<User> Users);
 
 	public void deleteGroupUsers(long groupId, long[] userIds);
 
-	public void deleteOrganizationUser(long organizationId,
-		com.liferay.portal.model.User user);
+	public void deleteOrganizationUser(long organizationId, User user);
 
 	public void deleteOrganizationUser(long organizationId, long userId);
 
-	public void deleteOrganizationUsers(long organizationId,
-		java.util.List<com.liferay.portal.model.User> Users);
+	public void deleteOrganizationUsers(long organizationId, List<User> Users);
 
 	public void deleteOrganizationUsers(long organizationId, long[] userIds);
 
@@ -596,8 +605,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -610,7 +618,7 @@ public interface UserLocalService extends BaseLocalService,
 	/**
 	* @throws PortalException
 	*/
-	public void deleteRoleUser(long roleId, com.liferay.portal.model.User user)
+	public void deleteRoleUser(long roleId, User user)
 		throws PortalException;
 
 	/**
@@ -619,17 +627,15 @@ public interface UserLocalService extends BaseLocalService,
 	public void deleteRoleUser(long roleId, long userId)
 		throws PortalException;
 
-	public void deleteRoleUsers(long roleId,
-		java.util.List<com.liferay.portal.model.User> Users);
+	public void deleteRoleUsers(long roleId, List<User> Users);
 
 	public void deleteRoleUsers(long roleId, long[] userIds);
 
-	public void deleteTeamUser(long teamId, com.liferay.portal.model.User user);
+	public void deleteTeamUser(long teamId, User user);
 
 	public void deleteTeamUser(long teamId, long userId);
 
-	public void deleteTeamUsers(long teamId,
-		java.util.List<com.liferay.portal.model.User> Users);
+	public void deleteTeamUsers(long teamId, List<User> Users);
 
 	public void deleteTeamUsers(long teamId, long[] userIds);
 
@@ -640,9 +646,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.User deleteUser(
-		com.liferay.portal.model.User user) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public User deleteUser(User user) throws PortalException;
 
 	/**
 	* Deletes the user with the primary key from the database. Also notifies the appropriate model listeners.
@@ -651,15 +656,14 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user that was removed
 	* @throws PortalException if a user with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.User deleteUser(long userId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public User deleteUser(long userId) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
-	public void deleteUserGroupUser(long userGroupId,
-		com.liferay.portal.model.User user) throws PortalException;
+	public void deleteUserGroupUser(long userGroupId, User user)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -667,12 +671,11 @@ public interface UserLocalService extends BaseLocalService,
 	public void deleteUserGroupUser(long userGroupId, long userId)
 		throws PortalException;
 
-	public void deleteUserGroupUsers(long userGroupId,
-		java.util.List<com.liferay.portal.model.User> Users);
+	public void deleteUserGroupUsers(long userGroupId, List<User> Users);
 
 	public void deleteUserGroupUsers(long userGroupId, long[] userIds);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -680,8 +683,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -695,8 +697,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -712,10 +713,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -723,8 +722,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -733,9 +731,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	/**
 	* Encrypts the primary key of the user. Used when encrypting the user's
@@ -749,7 +746,7 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUser(long userId);
+	public User fetchUser(long userId);
 
 	/**
 	* Returns the user with the contact ID.
@@ -759,7 +756,7 @@ public interface UserLocalService extends BaseLocalService,
 	the contact ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByContactId(long contactId);
+	public User fetchUserByContactId(long contactId);
 
 	/**
 	* Returns the user with the email address.
@@ -770,8 +767,8 @@ public interface UserLocalService extends BaseLocalService,
 	with the email address could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByEmailAddress(
-		long companyId, java.lang.String emailAddress);
+	public User fetchUserByEmailAddress(long companyId,
+		java.lang.String emailAddress);
 
 	/**
 	* Returns the user with the Facebook ID.
@@ -782,8 +779,7 @@ public interface UserLocalService extends BaseLocalService,
 	with the Facebook ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByFacebookId(long companyId,
-		long facebookId);
+	public User fetchUserByFacebookId(long companyId, long facebookId);
 
 	/**
 	* Returns the user with the primary key.
@@ -793,7 +789,7 @@ public interface UserLocalService extends BaseLocalService,
 	with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserById(long userId);
+	public User fetchUserById(long userId);
 
 	/**
 	* Returns the user with the OpenID.
@@ -804,8 +800,7 @@ public interface UserLocalService extends BaseLocalService,
 	OpenID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByOpenId(long companyId,
-		java.lang.String openId);
+	public User fetchUserByOpenId(long companyId, java.lang.String openId);
 
 	/**
 	* Returns the user with the portrait ID.
@@ -815,7 +810,7 @@ public interface UserLocalService extends BaseLocalService,
 	with the portrait ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByPortraitId(long portraitId);
+	public User fetchUserByPortraitId(long portraitId);
 
 	/**
 	* Returns the user with the screen name.
@@ -826,7 +821,7 @@ public interface UserLocalService extends BaseLocalService,
 	with the screen name could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByScreenName(long companyId,
+	public User fetchUserByScreenName(long companyId,
 		java.lang.String screenName);
 
 	/**
@@ -837,11 +832,11 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the matching user, or <code>null</code> if a matching user could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public User fetchUserByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the users belonging to the company.
@@ -861,8 +856,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the range of users belonging to the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
-		long companyId, int start, int end);
+	public List<User> getCompanyUsers(long companyId, int start, int end);
 
 	/**
 	* Returns the number of users belonging to the company.
@@ -879,10 +873,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the default user for the company
 	*/
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getDefaultUser(long companyId)
-		throws PortalException;
+	public User getDefaultUser(long companyId) throws PortalException;
 
 	/**
 	* Returns the primary key of the default user for the company.
@@ -890,13 +883,13 @@ public interface UserLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the primary key of the default user for the company
 	*/
-	@com.liferay.portal.kernel.spring.aop.Skip
+	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultUserId(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	/**
 	* Returns the groupIds of the groups associated with the user.
@@ -917,17 +910,14 @@ public interface UserLocalService extends BaseLocalService,
 	public long[] getGroupUserIds(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getGroupUsers(
-		long groupId);
+	public List<User> getGroupUsers(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getGroupUsers(
-		long groupId, int start, int end);
+	public List<User> getGroupUsers(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getGroupUsers(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+	public List<User> getGroupUsers(long groupId, int start, int end,
+		OrderByComparator<User> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupUsersCount(long groupId);
@@ -944,13 +934,11 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getInheritedRoleUsers(
-		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)
-		throws PortalException;
+	public List<User> getInheritedRoleUsers(long roleId, int start, int end,
+		OrderByComparator<User> obc) throws PortalException;
 
 	/**
 	* Returns all the users who have not had any announcements of the type
@@ -960,8 +948,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the users who have not had any annoucements of the type delivered
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getNoAnnouncementsDeliveries(
-		java.lang.String type);
+	public List<User> getNoAnnouncementsDeliveries(java.lang.String type);
 
 	/**
 	* Returns all the users who do not have any contacts.
@@ -969,7 +956,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the users who do not have any contacts
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getNoContacts();
+	public List<User> getNoContacts();
 
 	/**
 	* Returns all the users who do not belong to any groups, excluding the
@@ -978,7 +965,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the users who do not belong to any groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getNoGroups();
+	public List<User> getNoGroups();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -1006,17 +993,15 @@ public interface UserLocalService extends BaseLocalService,
 	public long[] getOrganizationUserIds(long organizationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getOrganizationUsers(
-		long organizationId);
+	public List<User> getOrganizationUsers(long organizationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getOrganizationUsers(
-		long organizationId, int start, int end);
+	public List<User> getOrganizationUsers(long organizationId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getOrganizationUsers(
-		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+	public List<User> getOrganizationUsers(long organizationId, int start,
+		int end, OrderByComparator<User> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationUsersCount(long organizationId);
@@ -1035,8 +1020,8 @@ public interface UserLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the roleIds of the roles associated with the user.
@@ -1057,17 +1042,14 @@ public interface UserLocalService extends BaseLocalService,
 	public long[] getRoleUserIds(long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getRoleUsers(
-		long roleId);
+	public List<User> getRoleUsers(long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getRoleUsers(
-		long roleId, int start, int end);
+	public List<User> getRoleUsers(long roleId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getRoleUsers(
-		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+	public List<User> getRoleUsers(long roleId, int start, int end,
+		OrderByComparator<User> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRoleUsersCount(long roleId);
@@ -1084,11 +1066,9 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
-		long userId, int socialRelationType,
+	public List<User> getSocialUsers(long userId, int socialRelationType,
 		java.lang.String socialRelationTypeComparator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)
-		throws PortalException;
+		OrderByComparator<User> obc) throws PortalException;
 
 	/**
 	* Returns an ordered range of all the users with a social relation of the
@@ -1117,9 +1097,8 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
-		long userId, int socialRelationType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)
+	public List<User> getSocialUsers(long userId, int socialRelationType,
+		int start, int end, OrderByComparator<User> obc)
 		throws PortalException;
 
 	/**
@@ -1147,10 +1126,8 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)
-		throws PortalException;
+	public List<User> getSocialUsers(long userId, int start, int end,
+		OrderByComparator<User> obc) throws PortalException;
 
 	/**
 	* Returns an ordered range of all the users with a mutual social relation
@@ -1177,9 +1154,8 @@ public interface UserLocalService extends BaseLocalService,
 	type with the user
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
-		long userId1, long userId2, int socialRelationType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)
+	public List<User> getSocialUsers(long userId1, long userId2,
+		int socialRelationType, int start, int end, OrderByComparator<User> obc)
 		throws PortalException;
 
 	/**
@@ -1205,10 +1181,8 @@ public interface UserLocalService extends BaseLocalService,
 	user
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getSocialUsers(
-		long userId1, long userId2, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)
-		throws PortalException;
+	public List<User> getSocialUsers(long userId1, long userId2, int start,
+		int end, OrderByComparator<User> obc) throws PortalException;
 
 	/**
 	* Returns the number of users with a social relation with the user.
@@ -1289,17 +1263,14 @@ public interface UserLocalService extends BaseLocalService,
 	public long[] getTeamPrimaryKeys(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getTeamUsers(
-		long teamId);
+	public List<User> getTeamUsers(long teamId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getTeamUsers(
-		long teamId, int start, int end);
+	public List<User> getTeamUsers(long teamId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getTeamUsers(
-		long teamId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+	public List<User> getTeamUsers(long teamId, int start, int end,
+		OrderByComparator<User> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTeamUsersCount(long teamId);
@@ -1312,8 +1283,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException if a user with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUser(long userId)
-		throws PortalException;
+	public User getUser(long userId) throws PortalException;
 
 	/**
 	* Returns the user with the contact ID.
@@ -1322,8 +1292,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the contact ID
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByContactId(long contactId)
-		throws PortalException;
+	public User getUserByContactId(long contactId) throws PortalException;
 
 	/**
 	* Returns the user with the email address.
@@ -1333,7 +1302,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the email address
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByEmailAddress(long companyId,
+	public User getUserByEmailAddress(long companyId,
 		java.lang.String emailAddress) throws PortalException;
 
 	/**
@@ -1344,8 +1313,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the Facebook ID
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByFacebookId(long companyId,
-		long facebookId) throws PortalException;
+	public User getUserByFacebookId(long companyId, long facebookId)
+		throws PortalException;
 
 	/**
 	* Returns the user with the primary key from the company.
@@ -1355,7 +1324,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserById(long companyId, long userId)
+	public User getUserById(long companyId, long userId)
 		throws PortalException;
 
 	/**
@@ -1365,8 +1334,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the primary key
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserById(long userId)
-		throws PortalException;
+	public User getUserById(long userId) throws PortalException;
 
 	/**
 	* Returns the user with the OpenID.
@@ -1376,8 +1344,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the OpenID
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByOpenId(long companyId,
-		java.lang.String openId) throws PortalException;
+	public User getUserByOpenId(long companyId, java.lang.String openId)
+		throws PortalException;
 
 	/**
 	* Returns the user with the portrait ID.
@@ -1386,8 +1354,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the portrait ID
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByPortraitId(long portraitId)
-		throws PortalException;
+	public User getUserByPortraitId(long portraitId) throws PortalException;
 
 	/**
 	* Returns the user with the screen name.
@@ -1397,8 +1364,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the screen name
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByScreenName(long companyId,
-		java.lang.String screenName) throws PortalException;
+	public User getUserByScreenName(long companyId, java.lang.String screenName)
+		throws PortalException;
 
 	/**
 	* Returns the user with the matching UUID and company.
@@ -1409,8 +1376,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws PortalException if a matching user could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
+	public User getUserByUuidAndCompanyId(java.lang.String uuid, long companyId)
+		throws PortalException;
 
 	/**
 	* Returns the userGroupIds of the user groups associated with the user.
@@ -1422,17 +1389,14 @@ public interface UserLocalService extends BaseLocalService,
 	public long[] getUserGroupPrimaryKeys(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
-		long userGroupId);
+	public List<User> getUserGroupUsers(long userGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
-		long userGroupId, int start, int end);
+	public List<User> getUserGroupUsers(long userGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
-		long userGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+	public List<User> getUserGroupUsers(long userGroupId, int start, int end,
+		OrderByComparator<User> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupUsersCount(long userGroupId);
@@ -1482,8 +1446,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the range of users
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> getUsers(int start,
-		int end);
+	public List<User> getUsers(int start, int end);
 
 	/**
 	* Returns the number of users.
@@ -1560,8 +1523,7 @@ public interface UserLocalService extends BaseLocalService,
 	<code>false</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isPasswordExpired(com.liferay.portal.model.User user)
-		throws PortalException;
+	public boolean isPasswordExpired(User user) throws PortalException;
 
 	/**
 	* Returns <code>true</code> if the password policy is configured to warn
@@ -1573,8 +1535,7 @@ public interface UserLocalService extends BaseLocalService,
 	<code>false</code> otherwise
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isPasswordExpiringSoon(com.liferay.portal.model.User user)
-		throws PortalException;
+	public boolean isPasswordExpiringSoon(User user) throws PortalException;
 
 	/**
 	* Returns the default user for the company.
@@ -1583,8 +1544,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the default user for the company
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User loadGetDefaultUser(long companyId)
-		throws PortalException;
+	public User loadGetDefaultUser(long companyId) throws PortalException;
 
 	/**
 	* Returns an ordered range of all the users with the status, and whose
@@ -1625,13 +1585,11 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portal.service.persistence.UserFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> search(
-		long companyId, java.lang.String firstName,
+	public List<User> search(long companyId, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,
 		java.lang.String screenName, java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc);
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, OrderByComparator<User> obc);
 
 	/**
 	* Returns an ordered range of all the users with the status, and whose
@@ -1671,22 +1629,18 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portlet.usersadmin.util.UserIndexer
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort);
+	public Hits search(long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort sort);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts);
+	public Hits search(long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort[] sorts);
 
 	/**
 	* Returns an ordered range of all the users who match the keywords and
@@ -1719,11 +1673,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portal.service.persistence.UserFinder
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> search(
-		long companyId, java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc);
+	public List<User> search(long companyId, java.lang.String keywords,
+		int status, LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, OrderByComparator<User> obc);
 
 	/**
 	* Returns an ordered range of all the users who match the keywords and
@@ -1755,16 +1707,14 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portlet.usersadmin.util.UserIndexer
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort);
+	public Hits search(long companyId, java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort sort);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts);
+	public Hits search(long companyId, java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort[] sorts);
 
 	/**
 	* Returns the number of users with the status, and whose first name, middle
@@ -1791,7 +1741,7 @@ public interface UserLocalService extends BaseLocalService,
 	public int searchCount(long companyId, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName,
 		java.lang.String screenName, java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch);
 
 	/**
@@ -1809,61 +1759,55 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
-		int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+		int status, LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Map<java.lang.Long, java.lang.Integer> searchCounts(
-		long companyId, int status, long[] groupIds);
+	public Map<java.lang.Long, java.lang.Integer> searchCounts(long companyId,
+		int status, long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> searchSocial(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end);
+	public List<User> searchSocial(long companyId, long[] groupIds,
+		java.lang.String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> searchSocial(
-		long[] groupIds, long userId, int[] socialRelationTypes,
+	public List<User> searchSocial(long[] groupIds, long userId,
+		int[] socialRelationTypes, java.lang.String keywords, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> searchSocial(long userId, int[] socialRelationTypes,
 		java.lang.String keywords, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.User> searchSocial(
-		long userId, int[] socialRelationTypes, java.lang.String keywords,
-		int start, int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
-		long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
-		long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts)
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String screenName,
+		java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
-		long companyId, java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String screenName,
+		java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort[] sorts)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
-		long companyId, java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts)
-		throws PortalException;
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort[] sorts) throws PortalException;
 
 	/**
 	* Sends an email address verification to the user.
@@ -1874,8 +1818,8 @@ public interface UserLocalService extends BaseLocalService,
 	portal URL, main path, primary key of the layout, remote address,
 	remote host, and agent for the user.
 	*/
-	public void sendEmailAddressVerification(
-		com.liferay.portal.model.User user, java.lang.String emailAddress,
+	public void sendEmailAddressVerification(User user,
+		java.lang.String emailAddress,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -2037,8 +1981,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param roleId the primary key of the role
 	* @param users the users
 	*/
-	public void unsetRoleUsers(long roleId,
-		java.util.List<com.liferay.portal.model.User> users)
+	public void unsetRoleUsers(long roleId, List<User> users)
 		throws PortalException;
 
 	/**
@@ -2067,8 +2010,8 @@ public interface UserLocalService extends BaseLocalService,
 	use
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateAgreedToTermsOfUse(long userId,
-		boolean agreedToTermsOfUse) throws PortalException;
+	public User updateAgreedToTermsOfUse(long userId, boolean agreedToTermsOfUse)
+		throws PortalException;
 
 	/**
 	* Updates the user's asset with the new asset categories and tag names,
@@ -2079,9 +2022,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param assetCategoryIds the primary key's of the new asset categories
 	* @param assetTagNames the new asset tag names
 	*/
-	public void updateAsset(long userId, com.liferay.portal.model.User user,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
-		throws PortalException;
+	public void updateAsset(long userId, User user, long[] assetCategoryIds,
+		java.lang.String[] assetTagNames) throws PortalException;
 
 	/**
 	* Updates the user's creation date.
@@ -2090,8 +2032,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param createDate the new creation date
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateCreateDate(long userId,
-		java.util.Date createDate) throws PortalException;
+	public User updateCreateDate(long userId, Date createDate)
+		throws PortalException;
 
 	/**
 	* Updates the user's email address.
@@ -2102,9 +2044,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param emailAddress2 the user's new email address confirmation
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateEmailAddress(long userId,
-		java.lang.String password, java.lang.String emailAddress1,
-		java.lang.String emailAddress2) throws PortalException;
+	public User updateEmailAddress(long userId, java.lang.String password,
+		java.lang.String emailAddress1, java.lang.String emailAddress2)
+		throws PortalException;
 
 	/**
 	* Updates the user's email address or sends verification email.
@@ -2118,9 +2060,8 @@ public interface UserLocalService extends BaseLocalService,
 	remote host, and agent for the user.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateEmailAddress(long userId,
-		java.lang.String password, java.lang.String emailAddress1,
-		java.lang.String emailAddress2,
+	public User updateEmailAddress(long userId, java.lang.String password,
+		java.lang.String emailAddress1, java.lang.String emailAddress2,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -2131,8 +2072,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param emailAddressVerified whether the user has verified email address
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateEmailAddressVerified(
-		long userId, boolean emailAddressVerified) throws PortalException;
+	public User updateEmailAddressVerified(long userId,
+		boolean emailAddressVerified) throws PortalException;
 
 	/**
 	* Updates the user's Facebook ID.
@@ -2141,8 +2082,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param facebookId the user's new Facebook ID
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateFacebookId(long userId,
-		long facebookId) throws PortalException;
+	public User updateFacebookId(long userId, long facebookId)
+		throws PortalException;
 
 	/**
 	* Sets the groups the user is in, removing and adding groups as necessary.
@@ -2193,12 +2134,11 @@ public interface UserLocalService extends BaseLocalService,
 	user.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateIncompleteUser(
-		long creatorUserId, long companyId, boolean autoPassword,
-		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.util.Locale locale,
+	public User updateIncompleteUser(long creatorUserId, long companyId,
+		boolean autoPassword, java.lang.String password1,
+		java.lang.String password2, boolean autoScreenName,
+		java.lang.String screenName, java.lang.String emailAddress,
+		long facebookId, java.lang.String openId, Locale locale,
 		java.lang.String firstName, java.lang.String middleName,
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
@@ -2214,8 +2154,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param jobTitle the user's job title
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateJobTitle(long userId,
-		java.lang.String jobTitle) throws PortalException;
+	public User updateJobTitle(long userId, java.lang.String jobTitle)
+		throws PortalException;
 
 	/**
 	* Updates the user's last login with the current time and the IP address.
@@ -2224,8 +2164,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param loginIP the IP address the user logged in from
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateLastLogin(long userId,
-		java.lang.String loginIP) throws PortalException;
+	public User updateLastLogin(long userId, java.lang.String loginIP)
+		throws PortalException;
 
 	/**
 	* Updates whether the user is locked out from logging in.
@@ -2234,8 +2174,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param lockout whether the user is locked out
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateLockout(
-		com.liferay.portal.model.User user, boolean lockout)
+	public User updateLockout(User user, boolean lockout)
 		throws PortalException;
 
 	/**
@@ -2246,8 +2185,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param lockout whether the user is locked out
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateLockoutByEmailAddress(
-		long companyId, java.lang.String emailAddress, boolean lockout)
+	public User updateLockoutByEmailAddress(long companyId,
+		java.lang.String emailAddress, boolean lockout)
 		throws PortalException;
 
 	/**
@@ -2257,8 +2196,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param lockout whether the user is locked out
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateLockoutById(long userId,
-		boolean lockout) throws PortalException;
+	public User updateLockoutById(long userId, boolean lockout)
+		throws PortalException;
 
 	/**
 	* Updates whether the user is locked out from logging in.
@@ -2268,9 +2207,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param lockout whether the user is locked out
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateLockoutByScreenName(
-		long companyId, java.lang.String screenName, boolean lockout)
-		throws PortalException;
+	public User updateLockoutByScreenName(long companyId,
+		java.lang.String screenName, boolean lockout) throws PortalException;
 
 	/**
 	* Updates the user's modified date.
@@ -2279,8 +2217,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param modifiedDate the new modified date
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateModifiedDate(long userId,
-		java.util.Date modifiedDate) throws PortalException;
+	public User updateModifiedDate(long userId, Date modifiedDate)
+		throws PortalException;
 
 	/**
 	* Updates the user's OpenID.
@@ -2289,8 +2227,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param openId the new OpenID
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateOpenId(long userId,
-		java.lang.String openId) throws PortalException;
+	public User updateOpenId(long userId, java.lang.String openId)
+		throws PortalException;
 
 	/**
 	* Sets the organizations that the user is in, removing and adding
@@ -2315,9 +2253,9 @@ public interface UserLocalService extends BaseLocalService,
 	password the next time they log in
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updatePassword(long userId,
-		java.lang.String password1, java.lang.String password2,
-		boolean passwordReset) throws PortalException;
+	public User updatePassword(long userId, java.lang.String password1,
+		java.lang.String password2, boolean passwordReset)
+		throws PortalException;
 
 	/**
 	* Updates the user's password, optionally with tracking and validation of
@@ -2332,9 +2270,9 @@ public interface UserLocalService extends BaseLocalService,
 	tracked, or validated. Primarily used for password imports.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updatePassword(long userId,
-		java.lang.String password1, java.lang.String password2,
-		boolean passwordReset, boolean silentUpdate) throws PortalException;
+	public User updatePassword(long userId, java.lang.String password1,
+		java.lang.String password2, boolean passwordReset, boolean silentUpdate)
+		throws PortalException;
 
 	/**
 	* Updates the user's password with manually input information. This method
@@ -2348,10 +2286,9 @@ public interface UserLocalService extends BaseLocalService,
 	* @param passwordModifiedDate the new password modified date
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updatePasswordManually(long userId,
-		java.lang.String password, boolean passwordEncrypted,
-		boolean passwordReset, java.util.Date passwordModifiedDate)
-		throws PortalException;
+	public User updatePasswordManually(long userId, java.lang.String password,
+		boolean passwordEncrypted, boolean passwordReset,
+		Date passwordModifiedDate) throws PortalException;
 
 	/**
 	* Updates whether the user should be asked to reset their password the next
@@ -2362,8 +2299,8 @@ public interface UserLocalService extends BaseLocalService,
 	password the next time they login
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updatePasswordReset(long userId,
-		boolean passwordReset) throws PortalException;
+	public User updatePasswordReset(long userId, boolean passwordReset)
+		throws PortalException;
 
 	/**
 	* Updates the user's portrait image.
@@ -2372,8 +2309,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param bytes the new portrait image data
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updatePortrait(long userId,
-		byte[] bytes) throws PortalException;
+	public User updatePortrait(long userId, byte[] bytes)
+		throws PortalException;
 
 	/**
 	* Updates the user's password reset question and answer.
@@ -2383,9 +2320,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param answer the user's new password reset answer
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateReminderQuery(long userId,
-		java.lang.String question, java.lang.String answer)
-		throws PortalException;
+	public User updateReminderQuery(long userId, java.lang.String question,
+		java.lang.String answer) throws PortalException;
 
 	/**
 	* Updates the user's screen name.
@@ -2394,8 +2330,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param screenName the user's new screen name
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateScreenName(long userId,
-		java.lang.String screenName) throws PortalException;
+	public User updateScreenName(long userId, java.lang.String screenName)
+		throws PortalException;
 
 	/**
 	* Updates the user's workflow status.
@@ -2407,8 +2343,7 @@ public interface UserLocalService extends BaseLocalService,
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.User updateStatus(long userId, int status)
-		throws PortalException;
+	public User updateStatus(long userId, int status) throws PortalException;
 
 	/**
 	* Updates the user's workflow status.
@@ -2420,7 +2355,7 @@ public interface UserLocalService extends BaseLocalService,
 	user via attribute <code>passwordUnencrypted</code>.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateStatus(long userId, int status,
+	public User updateStatus(long userId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -2430,9 +2365,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @param user the user
 	* @return the user that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.User updateUser(
-		com.liferay.portal.model.User user);
+	@Indexable(type = IndexableType.REINDEX)
+	public User updateUser(User user);
 
 	/**
 	* Updates the user.
@@ -2489,10 +2423,9 @@ public interface UserLocalService extends BaseLocalService,
 	long[], long[], long[], List, long[], ServiceContext)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.model.User updateUser(long userId,
-		java.lang.String oldPassword, java.lang.String newPassword1,
-		java.lang.String newPassword2, boolean passwordReset,
-		java.lang.String reminderQueryQuestion,
+	public User updateUser(long userId, java.lang.String oldPassword,
+		java.lang.String newPassword1, java.lang.String newPassword2,
+		boolean passwordReset, java.lang.String reminderQueryQuestion,
 		java.lang.String reminderQueryAnswer, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
 		java.lang.String openId, java.lang.String languageId,
@@ -2504,8 +2437,7 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String jabberSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
+		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -2559,10 +2491,9 @@ public interface UserLocalService extends BaseLocalService,
 	bridge attributes for the user.
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateUser(long userId,
-		java.lang.String oldPassword, java.lang.String newPassword1,
-		java.lang.String newPassword2, boolean passwordReset,
-		java.lang.String reminderQueryQuestion,
+	public User updateUser(long userId, java.lang.String oldPassword,
+		java.lang.String newPassword1, java.lang.String newPassword2,
+		boolean passwordReset, java.lang.String reminderQueryQuestion,
 		java.lang.String reminderQueryAnswer, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
 		java.lang.String openId, boolean portrait, byte[] portraitBytes,
@@ -2575,8 +2506,7 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String jabberSn, java.lang.String skypeSn,
 		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
+		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

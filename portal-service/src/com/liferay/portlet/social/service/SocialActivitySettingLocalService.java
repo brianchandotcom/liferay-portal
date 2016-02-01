@@ -16,14 +16,29 @@ package com.liferay.portlet.social.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
+import com.liferay.portlet.social.model.SocialActivityDefinition;
+import com.liferay.portlet.social.model.SocialActivitySetting;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for SocialActivitySetting. Methods of this
@@ -54,9 +69,9 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param socialActivitySetting the social activity setting
 	* @return the social activity setting that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivitySetting addSocialActivitySetting(
-		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivitySetting addSocialActivitySetting(
+		SocialActivitySetting socialActivitySetting);
 
 	/**
 	* Creates a new social activity setting with the primary key. Does not add the social activity setting to the database.
@@ -64,7 +79,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param activitySettingId the primary key for the new social activity setting
 	* @return the new social activity setting
 	*/
-	public com.liferay.portlet.social.model.SocialActivitySetting createSocialActivitySetting(
+	public SocialActivitySetting createSocialActivitySetting(
 		long activitySettingId);
 
 	public void deleteActivitySetting(long groupId, java.lang.String className,
@@ -76,8 +91,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
 	/**
@@ -87,8 +101,8 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @return the social activity setting that was removed
 	* @throws PortalException if a social activity setting with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivitySetting deleteSocialActivitySetting(
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivitySetting deleteSocialActivitySetting(
 		long activitySettingId) throws PortalException;
 
 	/**
@@ -97,11 +111,11 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param socialActivitySetting the social activity setting
 	* @return the social activity setting that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.social.model.SocialActivitySetting deleteSocialActivitySetting(
-		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting);
+	@Indexable(type = IndexableType.DELETE)
+	public SocialActivitySetting deleteSocialActivitySetting(
+		SocialActivitySetting socialActivitySetting);
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -109,8 +123,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -124,8 +137,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -141,10 +153,8 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -152,8 +162,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -162,31 +171,29 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivitySetting fetchSocialActivitySetting(
+	public SocialActivitySetting fetchSocialActivitySetting(
 		long activitySettingId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
-		long groupId, java.lang.String className, int activityType);
+	public SocialActivityDefinition getActivityDefinition(long groupId,
+		java.lang.String className, int activityType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivityDefinition> getActivityDefinitions(
-		long groupId, java.lang.String className);
+	public List<SocialActivityDefinition> getActivityDefinitions(long groupId,
+		java.lang.String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> getActivitySettings(
-		long groupId);
+	public List<SocialActivitySetting> getActivitySettings(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -197,8 +204,8 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Returns the social activity setting with the primary key.
@@ -208,7 +215,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @throws PortalException if a social activity setting with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.social.model.SocialActivitySetting getSocialActivitySetting(
+	public SocialActivitySetting getSocialActivitySetting(
 		long activitySettingId) throws PortalException;
 
 	/**
@@ -223,8 +230,8 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @return the range of social activity settings
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> getSocialActivitySettings(
-		int start, int end);
+	public List<SocialActivitySetting> getSocialActivitySettings(int start,
+		int end);
 
 	/**
 	* Returns the number of social activity settings.
@@ -242,7 +249,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 
 	public void updateActivitySetting(long groupId, java.lang.String className,
 		int activityType,
-		com.liferay.portlet.social.model.SocialActivityCounterDefinition activityCounterDefinition)
+		SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException;
 
 	public void updateActivitySetting(long groupId, java.lang.String className,
@@ -253,7 +260,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 
 	public void updateActivitySettings(long groupId,
 		java.lang.String className, int activityType,
-		java.util.List<com.liferay.portlet.social.model.SocialActivityCounterDefinition> activityCounterDefinitions)
+		List<SocialActivityCounterDefinition> activityCounterDefinitions)
 		throws PortalException;
 
 	/**
@@ -262,7 +269,7 @@ public interface SocialActivitySettingLocalService extends BaseLocalService,
 	* @param socialActivitySetting the social activity setting
 	* @return the social activity setting that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.social.model.SocialActivitySetting updateSocialActivitySetting(
-		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialActivitySetting updateSocialActivitySetting(
+		SocialActivitySetting socialActivitySetting);
 }

@@ -18,9 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * Provides the local service interface for DLTrash. Methods of this
@@ -51,14 +53,12 @@ public interface DLTrashLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
-		long userId, long repositoryId, long fileEntryId, long newFolderId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public FileEntry moveFileEntryFromTrash(long userId, long repositoryId,
+		long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long userId, long repositoryId, long fileEntryId)
-		throws PortalException;
+	public FileEntry moveFileEntryToTrash(long userId, long repositoryId,
+		long fileEntryId) throws PortalException;
 
 	public void restoreFileEntryFromTrash(long userId, long repositoryId,
 		long fileEntryId) throws PortalException;

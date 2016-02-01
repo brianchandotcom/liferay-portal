@@ -16,15 +16,37 @@ package com.liferay.portlet.documentlibrary.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the local service interface for DLFileEntryType. Methods of this
@@ -49,7 +71,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link DLFileEntryTypeLocalServiceUtil} to access the document library file entry type local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addDDMStructureLinks(long fileEntryTypeId,
-		java.util.Set<java.lang.Long> ddmStructureIds);
+		Set<java.lang.Long> ddmStructureIds);
 
 	/**
 	* Adds the document library file entry type to the database. Also notifies the appropriate model listeners.
@@ -57,37 +79,32 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param dlFileEntryType the document library file entry type
 	* @return the document library file entry type that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntryType addDLFileEntryType(DLFileEntryType dlFileEntryType);
 
 	public void addDLFolderDLFileEntryType(long folderId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
+		DLFileEntryType dlFileEntryType);
 
 	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId);
 
 	public void addDLFolderDLFileEntryTypes(long folderId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes);
+		List<DLFileEntryType> DLFileEntryTypes);
 
 	public void addDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds);
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
-		long userId, long groupId, java.lang.String fileEntryTypeKey,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public DLFileEntryType addFileEntryType(long userId, long groupId,
+		java.lang.String fileEntryTypeKey,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
+		ServiceContext serviceContext) throws PortalException;
+
+	public DLFileEntryType addFileEntryType(long userId, long groupId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
-		long userId, long groupId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public void cascadeFileEntryTypes(long userId,
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
 		throws PortalException;
 
 	public void clearDLFolderDLFileEntryTypes(long folderId);
@@ -98,8 +115,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param fileEntryTypeId the primary key for the new document library file entry type
 	* @return the new document library file entry type
 	*/
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType createDLFileEntryType(
-		long fileEntryTypeId);
+	public DLFileEntryType createDLFileEntryType(long fileEntryTypeId);
 
 	/**
 	* Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
@@ -107,9 +123,9 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param dlFileEntryType the document library file entry type
 	* @return the document library file entry type that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntryType deleteDLFileEntryType(
+		DLFileEntryType dlFileEntryType);
 
 	/**
 	* Deletes the document library file entry type with the primary key from the database. Also notifies the appropriate model listeners.
@@ -118,25 +134,24 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @return the document library file entry type that was removed
 	* @throws PortalException if a document library file entry type with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
-		long fileEntryTypeId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntryType deleteDLFileEntryType(long fileEntryTypeId)
+		throws PortalException;
 
 	public void deleteDLFolderDLFileEntryType(long folderId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
+		DLFileEntryType dlFileEntryType);
 
 	public void deleteDLFolderDLFileEntryType(long folderId,
 		long fileEntryTypeId);
 
 	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes);
+		List<DLFileEntryType> DLFileEntryTypes);
 
 	public void deleteDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds);
 
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException;
 
 	public void deleteFileEntryType(long fileEntryTypeId)
@@ -148,11 +163,10 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -160,8 +174,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -175,8 +188,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -192,10 +204,8 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -203,8 +213,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -213,13 +222,11 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchDLFileEntryType(
-		long fileEntryTypeId);
+	public DLFileEntryType fetchDLFileEntryType(long fileEntryTypeId);
 
 	/**
 	* Returns the document library file entry type matching the UUID and group.
@@ -229,19 +236,18 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
+	public DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchFileEntryType(
-		long fileEntryTypeId);
+	public DLFileEntryType fetchFileEntryType(long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchFileEntryType(
-		long groupId, java.lang.String fileEntryTypeKey);
+	public DLFileEntryType fetchFileEntryType(long groupId,
+		java.lang.String fileEntryTypeKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the document library file entry type with the primary key.
@@ -251,8 +257,8 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @throws PortalException if a document library file entry type with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryType(
-		long fileEntryTypeId) throws PortalException;
+	public DLFileEntryType getDLFileEntryType(long fileEntryTypeId)
+		throws PortalException;
 
 	/**
 	* Returns the document library file entry type matching the UUID and group.
@@ -263,7 +269,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @throws PortalException if a matching document library file entry type could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
+	public DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -278,8 +284,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @return the range of document library file entry types
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
-		int start, int end);
+	public List<DLFileEntryType> getDLFileEntryTypes(int start, int end);
 
 	/**
 	* Returns all the document library file entry types matching the UUID and company.
@@ -289,7 +294,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @return the matching document library file entry types, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
+	public List<DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -303,9 +308,9 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @return the range of matching document library file entry types, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
+	public List<DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
+		OrderByComparator<DLFileEntryType> orderByComparator);
 
 	/**
 	* Returns the number of document library file entry types.
@@ -316,17 +321,15 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public int getDLFileEntryTypesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
-		long folderId);
+	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
-		long folderId, int start, int end);
+	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
-		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
+	public List<DLFileEntryType> getDLFolderDLFileEntryTypes(long folderId,
+		int start, int end, OrderByComparator<DLFileEntryType> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLFolderDLFileEntryTypesCount(long folderId);
@@ -345,33 +348,30 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
-		long fileEntryTypeId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
-		long groupId, java.lang.String fileEntryTypeKey)
+	public DLFileEntryType getFileEntryType(long fileEntryTypeId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long ddmStructureId) throws PortalException;
+	public DLFileEntryType getFileEntryType(long groupId,
+		java.lang.String fileEntryTypeKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFileEntryTypes(
-		long[] groupIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getFolderFileEntryTypes(
-		long[] groupIds, long folderId, boolean inherited)
+	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntryType> getFolderFileEntryTypes(long[] groupIds,
+		long folderId, boolean inherited) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -382,8 +382,8 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFolderDLFileEntryType(long folderId,
@@ -393,10 +393,9 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public boolean hasDLFolderDLFileEntryTypes(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
-		long companyId, long[] groupIds, java.lang.String keywords,
-		boolean includeBasicFileEntryType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator);
+	public List<DLFileEntryType> search(long companyId, long[] groupIds,
+		java.lang.String keywords, boolean includeBasicFileEntryType,
+		int start, int end, OrderByComparator<DLFileEntryType> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
@@ -408,8 +407,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public void unsetFolderFileEntryTypes(long folderId);
 
 	public void updateDDMStructureLinks(long fileEntryTypeId,
-		java.util.Set<java.lang.Long> ddmStructureIds)
-		throws PortalException;
+		Set<java.lang.Long> ddmStructureIds) throws PortalException;
 
 	/**
 	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -417,31 +415,24 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param dlFileEntryType the document library file entry type
 	* @return the document library file entry type that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.documentlibrary.model.DLFileEntryType updateDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFileEntryType updateDLFileEntryType(
+		DLFileEntryType dlFileEntryType);
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntryFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+	public DLFileEntry updateFileEntryFileEntryType(DLFileEntry dlFileEntry,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
 		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		long[] ddmStructureIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] ddmStructureIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
+		ServiceContext serviceContext) throws PortalException;
 
-	public void updateFolderFileEntryTypes(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		java.util.List<java.lang.Long> fileEntryTypeIds,
-		long defaultFileEntryTypeId,
-		com.liferay.portal.service.ServiceContext serviceContext);
+	public void updateFolderFileEntryTypes(DLFolder dlFolder,
+		List<java.lang.Long> fileEntryTypeIds, long defaultFileEntryTypeId,
+		ServiceContext serviceContext);
 }

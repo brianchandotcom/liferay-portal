@@ -16,14 +16,27 @@ package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.journal.model.JournalArticleImage;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service interface for JournalArticleImage. Methods of this
@@ -58,9 +71,9 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param journalArticleImage the journal article image
 	* @return the journal article image that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalArticleImage addJournalArticleImage(
-		com.liferay.journal.model.JournalArticleImage journalArticleImage);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticleImage addJournalArticleImage(
+		JournalArticleImage journalArticleImage);
 
 	/**
 	* Creates a new journal article image with the primary key. Does not add the journal article image to the database.
@@ -68,11 +81,9 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param articleImageId the primary key for the new journal article image
 	* @return the new journal article image
 	*/
-	public com.liferay.journal.model.JournalArticleImage createJournalArticleImage(
-		long articleImageId);
+	public JournalArticleImage createJournalArticleImage(long articleImageId);
 
-	public void deleteArticleImage(
-		com.liferay.journal.model.JournalArticleImage articleImage);
+	public void deleteArticleImage(JournalArticleImage articleImage);
 
 	public void deleteArticleImage(long articleImageId);
 
@@ -90,9 +101,9 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @return the journal article image that was removed
 	* @throws PortalException if a journal article image with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalArticleImage deleteJournalArticleImage(
-		long articleImageId) throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public JournalArticleImage deleteJournalArticleImage(long articleImageId)
+		throws PortalException;
 
 	/**
 	* Deletes the journal article image from the database. Also notifies the appropriate model listeners.
@@ -100,19 +111,18 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param journalArticleImage the journal article image
 	* @return the journal article image that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.journal.model.JournalArticleImage deleteJournalArticleImage(
-		com.liferay.journal.model.JournalArticleImage journalArticleImage);
+	@Indexable(type = IndexableType.DELETE)
+	public JournalArticleImage deleteJournalArticleImage(
+		JournalArticleImage journalArticleImage);
 
 	/**
 	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -120,8 +130,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -135,8 +144,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end);
 
 	/**
@@ -152,10 +160,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -163,8 +169,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -173,20 +178,18 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleImage fetchJournalArticleImage(
-		long articleImageId);
+	public JournalArticleImage fetchJournalArticleImage(long articleImageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleImage getArticleImage(
-		long articleImageId) throws PortalException;
+	public JournalArticleImage getArticleImage(long articleImageId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getArticleImageId(long groupId, java.lang.String articleId,
@@ -199,18 +202,17 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 		java.lang.String languageId, boolean tempImage);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalArticleImage> getArticleImages(
-		long groupId);
+	public List<JournalArticleImage> getArticleImages(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalArticleImage> getArticleImages(
-		long groupId, java.lang.String articleId, double version);
+	public List<JournalArticleImage> getArticleImages(long groupId,
+		java.lang.String articleId, double version);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArticleImagesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Returns the journal article image with the primary key.
@@ -220,8 +222,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @throws PortalException if a journal article image with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalArticleImage getJournalArticleImage(
-		long articleImageId) throws PortalException;
+	public JournalArticleImage getJournalArticleImage(long articleImageId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the journal article images.
@@ -235,8 +237,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @return the range of journal article images
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.journal.model.JournalArticleImage> getJournalArticleImages(
-		int start, int end);
+	public List<JournalArticleImage> getJournalArticleImages(int start, int end);
 
 	/**
 	* Returns the number of journal article images.
@@ -255,8 +256,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Updates the journal article image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -264,7 +265,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	* @param journalArticleImage the journal article image
 	* @return the journal article image that was updated
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.journal.model.JournalArticleImage updateJournalArticleImage(
-		com.liferay.journal.model.JournalArticleImage journalArticleImage);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticleImage updateJournalArticleImage(
+		JournalArticleImage journalArticleImage);
 }

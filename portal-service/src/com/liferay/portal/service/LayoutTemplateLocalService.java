@@ -18,9 +18,17 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.LayoutTemplate;
+
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.ServletContext;
 
 /**
  * Provides the local service interface for LayoutTemplate. Methods of this
@@ -48,16 +56,14 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 		boolean standard, java.lang.String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutTemplate getLayoutTemplate(
-		java.lang.String layoutTemplateId, boolean standard,
-		java.lang.String themeId);
+	public LayoutTemplate getLayoutTemplate(java.lang.String layoutTemplateId,
+		boolean standard, java.lang.String themeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutTemplate> getLayoutTemplates();
+	public List<LayoutTemplate> getLayoutTemplates();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutTemplate> getLayoutTemplates(
-		java.lang.String themeId);
+	public List<LayoutTemplate> getLayoutTemplates(java.lang.String themeId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -70,21 +76,17 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	public java.lang.String getWapContent(java.lang.String layoutTemplateId,
 		boolean standard, java.lang.String themeId);
 
-	public java.util.List<com.liferay.portal.model.LayoutTemplate> init(
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
+	public List<LayoutTemplate> init(ServletContext servletContext,
+		java.lang.String[] xmls, PluginPackage pluginPackage);
 
-	public java.util.List<com.liferay.portal.model.LayoutTemplate> init(
-		java.lang.String servletContextName,
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
+	public List<LayoutTemplate> init(java.lang.String servletContextName,
+		ServletContext servletContext, java.lang.String[] xmls,
+		PluginPackage pluginPackage);
 
 	public void readLayoutTemplate(java.lang.String servletContextName,
-		javax.servlet.ServletContext servletContext,
-		java.util.Set<com.liferay.portal.model.LayoutTemplate> layoutTemplates,
-		com.liferay.portal.kernel.xml.Element element, boolean standard,
-		java.lang.String themeId,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
+		ServletContext servletContext, Set<LayoutTemplate> layoutTemplates,
+		Element element, boolean standard, java.lang.String themeId,
+		PluginPackage pluginPackage);
 
 	public void uninstallLayoutTemplate(java.lang.String layoutTemplateId,
 		boolean standard);

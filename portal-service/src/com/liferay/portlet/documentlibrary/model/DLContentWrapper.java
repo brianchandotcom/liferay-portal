@@ -18,6 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import com.liferay.portlet.expando.model.ExpandoBridge;
+
+import java.io.Serializable;
 
 import java.sql.Blob;
 
@@ -158,7 +163,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _dlContent.getExpandoBridge();
 	}
 
@@ -193,7 +198,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
+	public Serializable getPrimaryKeyObj() {
 		return _dlContent.getPrimaryKeyObj();
 	}
 
@@ -294,14 +299,12 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_dlContent.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_dlContent.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -341,7 +344,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_dlContent.setPrimaryKeyObj(primaryKeyObj);
 	}
 

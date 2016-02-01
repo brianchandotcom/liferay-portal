@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -440,8 +441,7 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @return the matching locks
 	*/
-	public static List<Lock> findByLtExpirationDate(
-		java.util.Date expirationDate) {
+	public static List<Lock> findByLtExpirationDate(Date expirationDate) {
 		return getPersistence().findByLtExpirationDate(expirationDate);
 	}
 
@@ -457,8 +457,8 @@ public class LockUtil {
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of matching locks
 	*/
-	public static List<Lock> findByLtExpirationDate(
-		java.util.Date expirationDate, int start, int end) {
+	public static List<Lock> findByLtExpirationDate(Date expirationDate,
+		int start, int end) {
 		return getPersistence()
 				   .findByLtExpirationDate(expirationDate, start, end);
 	}
@@ -476,9 +476,8 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching locks
 	*/
-	public static List<Lock> findByLtExpirationDate(
-		java.util.Date expirationDate, int start, int end,
-		OrderByComparator<Lock> orderByComparator) {
+	public static List<Lock> findByLtExpirationDate(Date expirationDate,
+		int start, int end, OrderByComparator<Lock> orderByComparator) {
 		return getPersistence()
 				   .findByLtExpirationDate(expirationDate, start, end,
 			orderByComparator);
@@ -498,9 +497,9 @@ public class LockUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching locks
 	*/
-	public static List<Lock> findByLtExpirationDate(
-		java.util.Date expirationDate, int start, int end,
-		OrderByComparator<Lock> orderByComparator, boolean retrieveFromCache) {
+	public static List<Lock> findByLtExpirationDate(Date expirationDate,
+		int start, int end, OrderByComparator<Lock> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByLtExpirationDate(expirationDate, start, end,
 			orderByComparator, retrieveFromCache);
@@ -514,8 +513,8 @@ public class LockUtil {
 	* @return the first matching lock
 	* @throws NoSuchLockException if a matching lock could not be found
 	*/
-	public static Lock findByLtExpirationDate_First(
-		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
+	public static Lock findByLtExpirationDate_First(Date expirationDate,
+		OrderByComparator<Lock> orderByComparator)
 		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_First(expirationDate,
@@ -529,8 +528,8 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public static Lock fetchByLtExpirationDate_First(
-		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator) {
+	public static Lock fetchByLtExpirationDate_First(Date expirationDate,
+		OrderByComparator<Lock> orderByComparator) {
 		return getPersistence()
 				   .fetchByLtExpirationDate_First(expirationDate,
 			orderByComparator);
@@ -544,8 +543,8 @@ public class LockUtil {
 	* @return the last matching lock
 	* @throws NoSuchLockException if a matching lock could not be found
 	*/
-	public static Lock findByLtExpirationDate_Last(
-		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
+	public static Lock findByLtExpirationDate_Last(Date expirationDate,
+		OrderByComparator<Lock> orderByComparator)
 		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_Last(expirationDate,
@@ -559,8 +558,8 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
 	*/
-	public static Lock fetchByLtExpirationDate_Last(
-		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator) {
+	public static Lock fetchByLtExpirationDate_Last(Date expirationDate,
+		OrderByComparator<Lock> orderByComparator) {
 		return getPersistence()
 				   .fetchByLtExpirationDate_Last(expirationDate,
 			orderByComparator);
@@ -576,7 +575,7 @@ public class LockUtil {
 	* @throws NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock[] findByLtExpirationDate_PrevAndNext(long lockId,
-		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
+		Date expirationDate, OrderByComparator<Lock> orderByComparator)
 		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_PrevAndNext(lockId, expirationDate,
@@ -588,7 +587,7 @@ public class LockUtil {
 	*
 	* @param expirationDate the expiration date
 	*/
-	public static void removeByLtExpirationDate(java.util.Date expirationDate) {
+	public static void removeByLtExpirationDate(Date expirationDate) {
 		getPersistence().removeByLtExpirationDate(expirationDate);
 	}
 
@@ -598,7 +597,7 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @return the number of matching locks
 	*/
-	public static int countByLtExpirationDate(java.util.Date expirationDate) {
+	public static int countByLtExpirationDate(Date expirationDate) {
 		return getPersistence().countByLtExpirationDate(expirationDate);
 	}
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.PasswordPolicy;
 
 /**
  * Provides the remote service interface for PasswordPolicy. Methods of this
@@ -46,14 +47,14 @@ public interface PasswordPolicyService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PasswordPolicyServiceUtil} to access the password policy remote service. Add custom service methods to {@link com.liferay.portal.service.impl.PasswordPolicyServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
-		java.lang.String name, java.lang.String description,
-		boolean changeable, boolean changeRequired, long minAge,
-		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
-		int minLength, int minLowerCase, int minNumbers, int minSymbols,
-		int minUpperCase, java.lang.String regex, boolean history,
-		int historyCount, boolean expireable, long maxAge, long warningTime,
-		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
+	public PasswordPolicy addPasswordPolicy(java.lang.String name,
+		java.lang.String description, boolean changeable,
+		boolean changeRequired, long minAge, boolean checkSyntax,
+		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
+		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
+		java.lang.String regex, boolean history, int historyCount,
+		boolean expireable, long maxAge, long warningTime, int graceLimit,
+		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -62,8 +63,8 @@ public interface PasswordPolicyService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
-		long passwordPolicyId) throws PortalException;
+	public PasswordPolicy fetchPasswordPolicy(long passwordPolicyId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -72,15 +73,14 @@ public interface PasswordPolicyService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
-		long passwordPolicyId, java.lang.String name,
-		java.lang.String description, boolean changeable,
-		boolean changeRequired, long minAge, boolean checkSyntax,
-		boolean allowDictionaryWords, int minAlphanumeric, int minLength,
-		int minLowerCase, int minNumbers, int minSymbols, int minUpperCase,
-		java.lang.String regex, boolean history, int historyCount,
-		boolean expireable, long maxAge, long warningTime, int graceLimit,
-		boolean lockout, int maxFailure, long lockoutDuration,
+	public PasswordPolicy updatePasswordPolicy(long passwordPolicyId,
+		java.lang.String name, java.lang.String description,
+		boolean changeable, boolean changeRequired, long minAge,
+		boolean checkSyntax, boolean allowDictionaryWords, int minAlphanumeric,
+		int minLength, int minLowerCase, int minNumbers, int minSymbols,
+		int minUpperCase, java.lang.String regex, boolean history,
+		int historyCount, boolean expireable, long maxAge, long warningTime,
+		int graceLimit, boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;

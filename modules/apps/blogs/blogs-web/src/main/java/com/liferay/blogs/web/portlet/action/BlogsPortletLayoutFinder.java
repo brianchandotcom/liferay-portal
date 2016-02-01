@@ -15,8 +15,8 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.portal.struts.BasePortletLayoutFinder;
-import com.liferay.portal.struts.PortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 
 import org.osgi.service.component.annotations.Component;
 

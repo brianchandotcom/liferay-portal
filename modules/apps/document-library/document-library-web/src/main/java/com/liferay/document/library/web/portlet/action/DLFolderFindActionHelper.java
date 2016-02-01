@@ -15,10 +15,10 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portal.struts.PortletLayoutFinder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.PortletURL;

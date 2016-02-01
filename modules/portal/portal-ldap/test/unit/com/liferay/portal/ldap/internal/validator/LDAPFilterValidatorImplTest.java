@@ -56,15 +56,15 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=group)" +
-				"(groupType:1.2.840.113556.1.4.803:=2147483648))"));
+					"(groupType:1.2.840.113556.1.4.803:=2147483648))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(memberof:1.2.840.113556.1.4.1941:=cn=Group1,OU=groupsOU," +
-				"DC=x)"));
+					"DC=x)"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=contact)(|(sn=Smith)" +
-				"(sn=Johnson)))"));
+					"(sn=Johnson)))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(userAccountControl:1.2.840.113556.1.4.804:=65568)"));
@@ -85,27 +85,29 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(userAccountControl:1.2.840.113556.1.4.803:=2))"));
+					"(userAccountControl:1.2.840.113556.1.4.803:=2))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(!(userAccountControl:1.2.840.113556.1.4.803:=2)))"));
+					"(!(userAccountControl:1.2.840.113556.1.4.803:=2)))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(userAccountControl:1.2.840.113556.1.4.803:=32))"));
+					"(userAccountControl:1.2.840.113556.1.4.803:=32))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(userAccountControl:1.2.840.113556.1.4.803:=4194304))"));
+					"(userAccountControl:1.2.840.113556.1.4.803:=4194304))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(|(accountExpires=0)(accountExpires=9223372036854775807)))"));
+					"(|(accountExpires=0)" +
+						"(accountExpires=9223372036854775807)))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(accountExpires>=1)(accountExpires<=9223372036854775806))"));
+					"(accountExpires>=1)" +
+						"(accountExpires<=9223372036854775806))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(userAccountControl:1.2.840.113556.1.4.803:=524288)"));
@@ -115,7 +117,7 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=group)" +
-				"(!(groupType:1.2.840.113556.1.4.803:=2147483648)))"));
+					"(!(groupType:1.2.840.113556.1.4.803:=2147483648)))"));
 		Assert.assertTrue(
 			isValidFilter("(groupType:1.2.840.113556.1.4.803:=2147483648)"));
 		Assert.assertTrue(
@@ -133,7 +135,7 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(msNPAllowDialin=TRUE))"));
+					"(msNPAllowDialin=TRUE))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=group)(whenCreated>=20110301000000.0Z))"));
@@ -143,11 +145,11 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(pwdLastSet>=129473172000000000))"));
+					"(pwdLastSet>=129473172000000000))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(!(primaryGroupID=513)))"));
+					"(!(primaryGroupID=513)))"));
 		Assert.assertTrue(
 			isValidFilter("(&(objectCategory=computer)(primaryGroupID=515))"));
 		Assert.assertTrue(
@@ -158,7 +160,8 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(objectSID=" +
-				"0105000000000005150000006BD662041316100943170A3257040000)"));
+					"0105000000000005150000006BD662041316100943170A325704" +
+						"0000)"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=computer)" +
@@ -166,7 +169,7 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=computer)" +
-				"(userAccountControl:1.2.840.113556.1.4.803:=8192))"));
+					"(userAccountControl:1.2.840.113556.1.4.803:=8192))"));
 		Assert.assertTrue(isValidFilter("(primaryGroupID=516)"));
 		Assert.assertTrue(
 			isValidFilter(
@@ -176,30 +179,30 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(!(memberOf=cn=Test,ou=East,dc=Domain,dc=com)))"));
+					"(!(memberOf=cn=Test,ou=East,dc=Domain,dc=com)))"));
 		Assert.assertTrue(
 			isValidFilter("(member=cn=Jim Smith,ou=West,dc=Domain,dc=com)"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(memberOf:1.2.840.113556.1.4.1941:=cn=Test,ou=East," +
-				"dc=Domain,dc=com)"));
+					"dc=Domain,dc=com)"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(member:1.2.840.113556.1.4.1941:=cn=Jim Smith,ou=West," +
-				"dc=Domain,dc=com)"));
+					"dc=Domain,dc=com)"));
 		Assert.assertTrue(isValidFilter("(anr=Jim Smith)"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=attributeSchema)" +
-				"(isMemberOfPartialAttributeSet=TRUE))"));
+					"(isMemberOfPartialAttributeSet=TRUE))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=attributeSchema)" +
-				"(systemFlags:1.2.840.113556.1.4.803:=4))"));
+					"(systemFlags:1.2.840.113556.1.4.803:=4))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=attributeSchema)" +
-				"(systemFlags:1.2.840.113556.1.4.803:=1))"));
+					"(systemFlags:1.2.840.113556.1.4.803:=1))"));
 		Assert.assertTrue(
 			isValidFilter("(systemFlags:1.2.840.113556.1.4.803:=2147483648)"));
 		Assert.assertTrue(
@@ -218,7 +221,7 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=nTDSDSA)" +
-				"(options:1.2.840.113556.1.4.803:=1))"));
+					"(options:1.2.840.113556.1.4.803:=1))"));
 		Assert.assertTrue(
 			isValidFilter("(objectCategory=msExchExchangeServer)"));
 		Assert.assertTrue(isValidFilter("(adminCount=1)"));
@@ -233,7 +236,7 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(objectCategory=cn=person,cn=Schema,cn=Configuration," +
-				"dc=MyDomain,dc=com)"));
+					"dc=MyDomain,dc=com)"));
 	}
 
 	@Test
@@ -305,16 +308,16 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)(givenName=*)" +
-				"(sn=*))"));
+					"(sn=*))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)(directReports=*)" +
-				"(!(manager=*)))"));
+					"(!(manager=*)))"));
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(|(proxyAddresses=*:jsmith@company.com)" +
-				"(mail=jsmith@company.com)))"));
+					"(|(proxyAddresses=*:jsmith@company.com)" +
+						"(mail=jsmith@company.com)))"));
 		Assert.assertTrue(isValidFilter("(description=East\\u005CWest Sales)"));
 		Assert.assertTrue(isValidFilter("(cn=Jim \\u002A Smith)"));
 		Assert.assertTrue(
@@ -323,7 +326,7 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(
 			isValidFilter(
 				"(&(objectCategory=person)(objectClass=user)" +
-				"(!(msNPAllowDialin=*)))"));
+					"(!(msNPAllowDialin=*)))"));
 		Assert.assertTrue(isValidFilter("(objectGUID=90395F191AB51B4A*)"));
 		Assert.assertTrue(
 			isValidFilter(

@@ -196,22 +196,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		// Send redirect
 
-		String login = null;
-
-		String authType = company.getAuthType();
-
-		if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			login = String.valueOf(user.getUserId());
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			login = user.getScreenName();
-		}
-		else {
-			login = user.getEmailAddress();
-		}
-
 		sendRedirect(
-			actionRequest, actionResponse, themeDisplay, login,
+			actionRequest, actionResponse, themeDisplay, user,
 			user.getPasswordUnencrypted());
 	}
 
@@ -349,8 +335,24 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			ThemeDisplay themeDisplay, String login, String password)
+			ThemeDisplay themeDisplay, User user, String password)
 		throws Exception {
+
+		String login = null;
+
+		Company company = themeDisplay.getCompany();
+
+		String authType = company.getAuthType();
+
+		if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			login = String.valueOf(user.getUserId());
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			login = user.getScreenName();
+		}
+		else {
+			login = user.getEmailAddress();
+		}
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
@@ -459,36 +461,10 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			updateUserInformation, sendEmail, serviceContext);
 
 		if (facebookId > 0) {
-			_userLocalService.updateLastLogin(
-				user.getUserId(), user.getLoginIP());
-
-			_userLocalService.updatePasswordReset(user.getUserId(), false);
-
-			_userLocalService.updateEmailAddressVerified(
-				user.getUserId(), true);
-
 			session.removeAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID);
 
-			Company company = themeDisplay.getCompany();
-
-			// Send redirect
-
-			String login = null;
-
-			String authType = company.getAuthType();
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				login = String.valueOf(user.getUserId());
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				login = user.getScreenName();
-			}
-			else {
-				login = user.getEmailAddress();
-			}
-
-			sendRedirect(
-				actionRequest, actionResponse, themeDisplay, login, password1);
+			updateUserAndRedirect(
+				actionRequest, actionResponse, themeDisplay, user, password1);
 
 			return;
 		}
@@ -496,36 +472,10 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		if (Validator.isNotNull(googleId)) {
 			_userLocalService.updateGoogleId(user.getUserId(), googleId);
 
-			_userLocalService.updateLastLogin(
-				user.getUserId(), user.getLoginIP());
-
-			_userLocalService.updatePasswordReset(user.getUserId(), false);
-
-			_userLocalService.updateEmailAddressVerified(
-				user.getUserId(), true);
-
 			session.removeAttribute(WebKeys.GOOGLE_INCOMPLETE_USER_ID);
 
-			Company company = themeDisplay.getCompany();
-
-			// Send redirect
-
-			String login = null;
-
-			String authType = company.getAuthType();
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				login = String.valueOf(user.getUserId());
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				login = user.getScreenName();
-			}
-			else {
-				login = user.getEmailAddress();
-			}
-
-			sendRedirect(
-				actionRequest, actionResponse, themeDisplay, login, password1);
+			updateUserAndRedirect(
+				actionRequest, actionResponse, themeDisplay, user, password1);
 
 			return;
 		}
@@ -543,25 +493,28 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		// Send redirect
 
-		String login = null;
+		sendRedirect(
+			actionRequest, actionResponse, themeDisplay, user,
+			user.getPasswordUnencrypted());
+	}
 
-		Company company = themeDisplay.getCompany();
+	protected void updateUserAndRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ThemeDisplay themeDisplay, User user, String password1)
+		throws Exception {
 
-		String authType = company.getAuthType();
+		_userLocalService.updateLastLogin(
+			user.getUserId(), user.getLoginIP());
 
-		if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			login = String.valueOf(user.getUserId());
-		}
-		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-			login = user.getScreenName();
-		}
-		else {
-			login = user.getEmailAddress();
-		}
+		_userLocalService.updatePasswordReset(user.getUserId(), false);
+
+		_userLocalService.updateEmailAddressVerified(
+			user.getUserId(), true);
+
+		// Send redirect
 
 		sendRedirect(
-			actionRequest, actionResponse, themeDisplay, login,
-			user.getPasswordUnencrypted());
+			actionRequest, actionResponse, themeDisplay, user, password1);
 	}
 
 	private static final boolean _AUTO_SCREEN_NAME = false;

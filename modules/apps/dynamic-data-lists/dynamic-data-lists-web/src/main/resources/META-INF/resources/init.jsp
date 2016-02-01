@@ -87,6 +87,7 @@ page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
@@ -115,6 +116,8 @@ page import="com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryExc
 page import="com.liferay.portlet.documentlibrary.exception.FileSizeException" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
+
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@

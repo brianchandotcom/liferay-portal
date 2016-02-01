@@ -16,6 +16,7 @@ package com.liferay.calendar.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.calendar.exception.NoSuchResourceException;
 import com.liferay.calendar.model.CalendarResource;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -110,7 +111,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByResourceBlockId_First(long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where resourceBlockId = &#63;.
@@ -132,7 +133,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByResourceBlockId_Last(long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where resourceBlockId = &#63;.
@@ -156,7 +157,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByResourceBlockId_PrevAndNext(
 		long calendarResourceId, long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Removes all the calendar resources where resourceBlockId = &#63; from the database.
@@ -242,7 +243,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where uuid = &#63;.
@@ -264,7 +265,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where uuid = &#63;.
@@ -288,7 +289,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByUuid_PrevAndNext(long calendarResourceId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Removes all the calendar resources where uuid = &#63; from the database.
@@ -314,7 +315,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	* @throws NoSuchResourceException if a matching calendar resource could not be found
 	*/
 	public CalendarResource findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the calendar resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -344,7 +345,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	* @return the calendar resource that was removed
 	*/
 	public CalendarResource removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the number of calendar resources where uuid = &#63; and groupId = &#63;.
@@ -431,7 +432,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -457,7 +458,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -484,7 +485,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByUuid_C_PrevAndNext(
 		long calendarResourceId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Removes all the calendar resources where uuid = &#63; and companyId = &#63; from the database.
@@ -572,7 +573,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where groupId = &#63;.
@@ -594,7 +595,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where groupId = &#63;.
@@ -618,7 +619,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByGroupId_PrevAndNext(
 		long calendarResourceId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns all the calendar resources that the user has permission to view where groupId = &#63;.
@@ -672,7 +673,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] filterFindByGroupId_PrevAndNext(
 		long calendarResourceId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Removes all the calendar resources where groupId = &#63; from the database.
@@ -766,7 +767,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByActive_First(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where active = &#63;.
@@ -788,7 +789,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByActive_Last(boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where active = &#63;.
@@ -812,7 +813,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByActive_PrevAndNext(
 		long calendarResourceId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Removes all the calendar resources where active = &#63; from the database.
@@ -905,7 +906,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource findByG_C_First(long groupId,
 		java.lang.String code,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where groupId = &#63; and code = &#63;.
@@ -930,7 +931,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByG_C_Last(long groupId, java.lang.String code,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where groupId = &#63; and code = &#63;.
@@ -957,7 +958,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByG_C_PrevAndNext(long calendarResourceId,
 		long groupId, java.lang.String code,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns all the calendar resources that the user has permission to view where groupId = &#63; and code = &#63;.
@@ -1016,7 +1017,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] filterFindByG_C_PrevAndNext(
 		long calendarResourceId, long groupId, java.lang.String code,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns all the calendar resources that the user has permission to view where groupId = any &#63; and code = &#63;.
@@ -1249,7 +1250,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByG_A_First(long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where groupId = &#63; and active = &#63;.
@@ -1273,7 +1274,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	*/
 	public CalendarResource findByG_A_Last(long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where groupId = &#63; and active = &#63;.
@@ -1299,7 +1300,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByG_A_PrevAndNext(long calendarResourceId,
 		long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns all the calendar resources that the user has permission to view where groupId = &#63; and active = &#63;.
@@ -1358,7 +1359,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] filterFindByG_A_PrevAndNext(
 		long calendarResourceId, long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Removes all the calendar resources where groupId = &#63; and active = &#63; from the database.
@@ -1395,7 +1396,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	* @throws NoSuchResourceException if a matching calendar resource could not be found
 	*/
 	public CalendarResource findByC_C(long classNameId, long classPK)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the calendar resource where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1425,7 +1426,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	* @return the calendar resource that was removed
 	*/
 	public CalendarResource removeByC_C(long classNameId, long classPK)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the number of calendar resources where classNameId = &#63; and classPK = &#63;.
@@ -1517,7 +1518,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource findByC_C_A_First(long companyId,
 		java.lang.String code, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the first calendar resource in the ordered set where companyId = &#63; and code LIKE &#63; and active = &#63;.
@@ -1545,7 +1546,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource findByC_C_A_Last(long companyId,
 		java.lang.String code, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the last calendar resource in the ordered set where companyId = &#63; and code LIKE &#63; and active = &#63;.
@@ -1574,7 +1575,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	public CalendarResource[] findByC_C_A_PrevAndNext(long calendarResourceId,
 		long companyId, java.lang.String code, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarResource> orderByComparator)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Removes all the calendar resources where companyId = &#63; and code LIKE &#63; and active = &#63; from the database.
@@ -1627,7 +1628,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	* @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	*/
 	public CalendarResource remove(long calendarResourceId)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	public CalendarResource updateImpl(CalendarResource calendarResource);
 
@@ -1639,7 +1640,7 @@ public interface CalendarResourcePersistence extends BasePersistence<CalendarRes
 	* @throws NoSuchResourceException if a calendar resource with the primary key could not be found
 	*/
 	public CalendarResource findByPrimaryKey(long calendarResourceId)
-		throws com.liferay.calendar.exception.NoSuchResourceException;
+		throws NoSuchResourceException;
 
 	/**
 	* Returns the calendar resource with the primary key or returns <code>null</code> if it could not be found.

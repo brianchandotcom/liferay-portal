@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchWebsiteException;
 import com.liferay.portal.model.Website;
 
 /**
@@ -107,7 +108,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the first website in the ordered set where uuid = &#63;.
@@ -129,7 +130,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the last website in the ordered set where uuid = &#63;.
@@ -153,7 +154,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website[] findByUuid_PrevAndNext(long websiteId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Removes all the websites where uuid = &#63; from the database.
@@ -245,7 +246,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the first website in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -269,7 +270,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the last website in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -295,7 +296,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website[] findByUuid_C_PrevAndNext(long websiteId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Removes all the websites where uuid = &#63; and companyId = &#63; from the database.
@@ -383,7 +384,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63;.
@@ -405,7 +406,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63;.
@@ -429,7 +430,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website[] findByCompanyId_PrevAndNext(long websiteId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Removes all the websites where companyId = &#63; from the database.
@@ -514,7 +515,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the first website in the ordered set where userId = &#63;.
@@ -536,7 +537,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the last website in the ordered set where userId = &#63;.
@@ -559,7 +560,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website[] findByUserId_PrevAndNext(long websiteId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Removes all the websites where userId = &#63; from the database.
@@ -650,7 +651,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByC_C_First(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -674,7 +675,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public Website findByC_C_Last(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -700,7 +701,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website[] findByC_C_PrevAndNext(long websiteId, long companyId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Removes all the websites where companyId = &#63; and classNameId = &#63; from the database.
@@ -800,7 +801,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website findByC_C_C_First(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -828,7 +829,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website findByC_C_C_Last(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -857,7 +858,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website[] findByC_C_C_PrevAndNext(long websiteId, long companyId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Removes all the websites where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -964,7 +965,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website findByC_C_C_P_First(long companyId, long classNameId,
 		long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -994,7 +995,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website findByC_C_C_P_Last(long companyId, long classNameId,
 		long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1025,7 +1026,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website[] findByC_C_C_P_PrevAndNext(long websiteId, long companyId,
 		long classNameId, long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Removes all the websites where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63; from the database.
@@ -1079,8 +1080,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @return the website that was removed
 	* @throws NoSuchWebsiteException if a website with the primary key could not be found
 	*/
-	public Website remove(long websiteId)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+	public Website remove(long websiteId) throws NoSuchWebsiteException;
 
 	public Website updateImpl(Website website);
 
@@ -1092,7 +1092,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @throws NoSuchWebsiteException if a website with the primary key could not be found
 	*/
 	public Website findByPrimaryKey(long websiteId)
-		throws com.liferay.portal.exception.NoSuchWebsiteException;
+		throws NoSuchWebsiteException;
 
 	/**
 	* Returns the website with the primary key or returns <code>null</code> if it could not be found.

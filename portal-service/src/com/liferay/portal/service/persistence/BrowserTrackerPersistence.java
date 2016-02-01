@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchBrowserTrackerException;
 import com.liferay.portal.model.BrowserTracker;
 
 /**
@@ -46,7 +47,7 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @throws NoSuchBrowserTrackerException if a matching browser tracker could not be found
 	*/
 	public BrowserTracker findByUserId(long userId)
-		throws com.liferay.portal.exception.NoSuchBrowserTrackerException;
+		throws NoSuchBrowserTrackerException;
 
 	/**
 	* Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -72,7 +73,7 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @return the browser tracker that was removed
 	*/
 	public BrowserTracker removeByUserId(long userId)
-		throws com.liferay.portal.exception.NoSuchBrowserTrackerException;
+		throws NoSuchBrowserTrackerException;
 
 	/**
 	* Returns the number of browser trackers where userId = &#63;.
@@ -112,7 +113,7 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @throws NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
 	*/
 	public BrowserTracker remove(long browserTrackerId)
-		throws com.liferay.portal.exception.NoSuchBrowserTrackerException;
+		throws NoSuchBrowserTrackerException;
 
 	public BrowserTracker updateImpl(BrowserTracker browserTracker);
 
@@ -124,7 +125,7 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @throws NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
 	*/
 	public BrowserTracker findByPrimaryKey(long browserTrackerId)
-		throws com.liferay.portal.exception.NoSuchBrowserTrackerException;
+		throws NoSuchBrowserTrackerException;
 
 	/**
 	* Returns the browser tracker with the primary key or returns <code>null</code> if it could not be found.

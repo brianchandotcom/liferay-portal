@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchReleaseException;
 import com.liferay.portal.model.Release;
 
 /**
@@ -46,7 +47,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @throws NoSuchReleaseException if a matching release could not be found
 	*/
 	public Release findByServletContextName(java.lang.String servletContextName)
-		throws com.liferay.portal.exception.NoSuchReleaseException;
+		throws NoSuchReleaseException;
 
 	/**
 	* Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -74,8 +75,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @return the release that was removed
 	*/
 	public Release removeByServletContextName(
-		java.lang.String servletContextName)
-		throws com.liferay.portal.exception.NoSuchReleaseException;
+		java.lang.String servletContextName) throws NoSuchReleaseException;
 
 	/**
 	* Returns the number of releases where servletContextName = &#63;.
@@ -114,8 +114,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @return the release that was removed
 	* @throws NoSuchReleaseException if a release with the primary key could not be found
 	*/
-	public Release remove(long releaseId)
-		throws com.liferay.portal.exception.NoSuchReleaseException;
+	public Release remove(long releaseId) throws NoSuchReleaseException;
 
 	public Release updateImpl(Release release);
 
@@ -127,7 +126,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	* @throws NoSuchReleaseException if a release with the primary key could not be found
 	*/
 	public Release findByPrimaryKey(long releaseId)
-		throws com.liferay.portal.exception.NoSuchReleaseException;
+		throws NoSuchReleaseException;
 
 	/**
 	* Returns the release with the primary key or returns <code>null</code> if it could not be found.

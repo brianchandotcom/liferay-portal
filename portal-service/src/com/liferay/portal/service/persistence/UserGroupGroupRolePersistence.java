@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.model.UserGroupGroupRole;
 
 /**
@@ -108,7 +109,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByUserGroupId_First(long userGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the first user group group role in the ordered set where userGroupId = &#63;.
@@ -130,7 +131,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByUserGroupId_Last(long userGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the last user group group role in the ordered set where userGroupId = &#63;.
@@ -155,7 +156,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK,
 		long userGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Removes all the user group group roles where userGroupId = &#63; from the database.
@@ -241,7 +242,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the first user group group role in the ordered set where groupId = &#63;.
@@ -263,7 +264,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the last user group group role in the ordered set where groupId = &#63;.
@@ -288,7 +289,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Removes all the user group group roles where groupId = &#63; from the database.
@@ -374,7 +375,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByRoleId_First(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the first user group group role in the ordered set where roleId = &#63;.
@@ -396,7 +397,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByRoleId_Last(long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the last user group group role in the ordered set where roleId = &#63;.
@@ -421,7 +422,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK,
 		long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Removes all the user group group roles where roleId = &#63; from the database.
@@ -513,7 +514,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByU_G_First(long userGroupId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the first user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
@@ -537,7 +538,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByU_G_Last(long userGroupId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the last user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
@@ -564,7 +565,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK,
 		long userGroupId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Removes all the user group group roles where userGroupId = &#63; and groupId = &#63; from the database.
@@ -658,7 +659,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByG_R_First(long groupId, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the first user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
@@ -682,7 +683,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByG_R_Last(long groupId, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the last user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
@@ -709,7 +710,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK,
 		long groupId, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Removes all the user group group roles where groupId = &#63; and roleId = &#63; from the database.
@@ -761,7 +762,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole remove(
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	public UserGroupGroupRole updateImpl(UserGroupGroupRole userGroupGroupRole);
 
@@ -774,7 +775,7 @@ public interface UserGroupGroupRolePersistence extends BasePersistence<UserGroup
 	*/
 	public UserGroupGroupRole findByPrimaryKey(
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.exception.NoSuchUserGroupGroupRoleException;
+		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	* Returns the user group group role with the primary key or returns <code>null</code> if it could not be found.

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.shopping.exception.NoSuchCartException;
 import com.liferay.shopping.model.ShoppingCart;
 
 /**
@@ -109,7 +110,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public ShoppingCart findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Returns the first shopping cart in the ordered set where groupId = &#63;.
@@ -131,7 +132,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public ShoppingCart findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Returns the last shopping cart in the ordered set where groupId = &#63;.
@@ -154,7 +155,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public ShoppingCart[] findByGroupId_PrevAndNext(long cartId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Removes all the shopping carts where groupId = &#63; from the database.
@@ -240,7 +241,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public ShoppingCart findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Returns the first shopping cart in the ordered set where userId = &#63;.
@@ -262,7 +263,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public ShoppingCart findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Returns the last shopping cart in the ordered set where userId = &#63;.
@@ -285,7 +286,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	*/
 	public ShoppingCart[] findByUserId_PrevAndNext(long cartId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCart> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Removes all the shopping carts where userId = &#63; from the database.
@@ -311,7 +312,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @throws NoSuchCartException if a matching shopping cart could not be found
 	*/
 	public ShoppingCart findByG_U(long groupId, long userId)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Returns the shopping cart where groupId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -341,7 +342,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @return the shopping cart that was removed
 	*/
 	public ShoppingCart removeByG_U(long groupId, long userId)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Returns the number of shopping carts where groupId = &#63; and userId = &#63;.
@@ -381,8 +382,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @return the shopping cart that was removed
 	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
-	public ShoppingCart remove(long cartId)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+	public ShoppingCart remove(long cartId) throws NoSuchCartException;
 
 	public ShoppingCart updateImpl(ShoppingCart shoppingCart);
 
@@ -394,7 +394,7 @@ public interface ShoppingCartPersistence extends BasePersistence<ShoppingCart> {
 	* @throws NoSuchCartException if a shopping cart with the primary key could not be found
 	*/
 	public ShoppingCart findByPrimaryKey(long cartId)
-		throws com.liferay.shopping.exception.NoSuchCartException;
+		throws NoSuchCartException;
 
 	/**
 	* Returns the shopping cart with the primary key or returns <code>null</code> if it could not be found.

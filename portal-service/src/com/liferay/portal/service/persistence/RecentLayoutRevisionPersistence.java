@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
 import com.liferay.portal.model.RecentLayoutRevision;
 
 /**
@@ -107,7 +108,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	*/
 	public RecentLayoutRevision findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the first recent layout revision in the ordered set where groupId = &#63;.
@@ -129,7 +130,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	*/
 	public RecentLayoutRevision findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the last recent layout revision in the ordered set where groupId = &#63;.
@@ -153,7 +154,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	public RecentLayoutRevision[] findByGroupId_PrevAndNext(
 		long recentLayoutRevisionId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Removes all the recent layout revisions where groupId = &#63; from the database.
@@ -239,7 +240,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	*/
 	public RecentLayoutRevision findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the first recent layout revision in the ordered set where userId = &#63;.
@@ -261,7 +262,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	*/
 	public RecentLayoutRevision findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the last recent layout revision in the ordered set where userId = &#63;.
@@ -285,7 +286,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	public RecentLayoutRevision[] findByUserId_PrevAndNext(
 		long recentLayoutRevisionId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Removes all the recent layout revisions where userId = &#63; from the database.
@@ -373,7 +374,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	public RecentLayoutRevision findByLayoutRevisionId_First(
 		long layoutRevisionId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the first recent layout revision in the ordered set where layoutRevisionId = &#63;.
@@ -397,7 +398,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	public RecentLayoutRevision findByLayoutRevisionId_Last(
 		long layoutRevisionId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the last recent layout revision in the ordered set where layoutRevisionId = &#63;.
@@ -422,7 +423,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	public RecentLayoutRevision[] findByLayoutRevisionId_PrevAndNext(
 		long recentLayoutRevisionId, long layoutRevisionId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Removes all the recent layout revisions where layoutRevisionId = &#63; from the database.
@@ -450,7 +451,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	*/
 	public RecentLayoutRevision findByU_L_P(long userId,
 		long layoutSetBranchId, long plid)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -485,7 +486,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	*/
 	public RecentLayoutRevision removeByU_L_P(long userId,
 		long layoutSetBranchId, long plid)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the number of recent layout revisions where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63;.
@@ -528,7 +529,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	* @throws NoSuchRecentLayoutRevisionException if a recent layout revision with the primary key could not be found
 	*/
 	public RecentLayoutRevision remove(long recentLayoutRevisionId)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	public RecentLayoutRevision updateImpl(
 		RecentLayoutRevision recentLayoutRevision);
@@ -541,7 +542,7 @@ public interface RecentLayoutRevisionPersistence extends BasePersistence<RecentL
 	* @throws NoSuchRecentLayoutRevisionException if a recent layout revision with the primary key could not be found
 	*/
 	public RecentLayoutRevision findByPrimaryKey(long recentLayoutRevisionId)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutRevisionException;
+		throws NoSuchRecentLayoutRevisionException;
 
 	/**
 	* Returns the recent layout revision with the primary key or returns <code>null</code> if it could not be found.

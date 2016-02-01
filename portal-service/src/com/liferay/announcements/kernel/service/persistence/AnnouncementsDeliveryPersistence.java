@@ -16,6 +16,7 @@ package com.liferay.announcements.kernel.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public AnnouncementsDelivery findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
+		throws NoSuchDeliveryException;
 
 	/**
 	* Returns the first announcements delivery in the ordered set where userId = &#63;.
@@ -131,7 +132,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	*/
 	public AnnouncementsDelivery findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
+		throws NoSuchDeliveryException;
 
 	/**
 	* Returns the last announcements delivery in the ordered set where userId = &#63;.
@@ -155,7 +156,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	public AnnouncementsDelivery[] findByUserId_PrevAndNext(long deliveryId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsDelivery> orderByComparator)
-		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
+		throws NoSuchDeliveryException;
 
 	/**
 	* Removes all the announcements deliveries where userId = &#63; from the database.
@@ -173,7 +174,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	public int countByUserId(long userId);
 
 	/**
-	* Returns the announcements delivery where userId = &#63; and type = &#63; or throws a {@link com.liferay.portlet.announcements.exception.NoSuchDeliveryException} if it could not be found.
+	* Returns the announcements delivery where userId = &#63; and type = &#63; or throws a {@link NoSuchDeliveryException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param type the type
@@ -181,7 +182,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	*/
 	public AnnouncementsDelivery findByU_T(long userId, java.lang.String type)
-		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
+		throws NoSuchDeliveryException;
 
 	/**
 	* Returns the announcements delivery where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @return the announcements delivery that was removed
 	*/
 	public AnnouncementsDelivery removeByU_T(long userId, java.lang.String type)
-		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
+		throws NoSuchDeliveryException;
 
 	/**
 	* Returns the number of announcements deliveries where userId = &#63; and type = &#63;.
@@ -253,7 +254,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	*/
 	public AnnouncementsDelivery remove(long deliveryId)
-		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
+		throws NoSuchDeliveryException;
 
 	public AnnouncementsDelivery updateImpl(
 		AnnouncementsDelivery announcementsDelivery);
@@ -266,7 +267,7 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	*/
 	public AnnouncementsDelivery findByPrimaryKey(long deliveryId)
-		throws com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
+		throws NoSuchDeliveryException;
 
 	/**
 	* Returns the announcements delivery with the primary key or returns <code>null</code> if it could not be found.

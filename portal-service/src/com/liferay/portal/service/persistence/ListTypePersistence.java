@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchListTypeException;
 import com.liferay.portal.model.ListType;
 
 /**
@@ -107,7 +108,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public ListType findByType_First(java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchListTypeException;
+		throws NoSuchListTypeException;
 
 	/**
 	* Returns the first list type in the ordered set where type = &#63;.
@@ -129,7 +130,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public ListType findByType_Last(java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchListTypeException;
+		throws NoSuchListTypeException;
 
 	/**
 	* Returns the last list type in the ordered set where type = &#63;.
@@ -153,7 +154,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	public ListType[] findByType_PrevAndNext(long listTypeId,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchListTypeException;
+		throws NoSuchListTypeException;
 
 	/**
 	* Removes all the list types where type = &#63; from the database.
@@ -179,7 +180,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @throws NoSuchListTypeException if a matching list type could not be found
 	*/
 	public ListType findByN_T(java.lang.String name, java.lang.String type)
-		throws com.liferay.portal.exception.NoSuchListTypeException;
+		throws NoSuchListTypeException;
 
 	/**
 	* Returns the list type where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -209,7 +210,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @return the list type that was removed
 	*/
 	public ListType removeByN_T(java.lang.String name, java.lang.String type)
-		throws com.liferay.portal.exception.NoSuchListTypeException;
+		throws NoSuchListTypeException;
 
 	/**
 	* Returns the number of list types where name = &#63; and type = &#63;.
@@ -249,8 +250,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @return the list type that was removed
 	* @throws NoSuchListTypeException if a list type with the primary key could not be found
 	*/
-	public ListType remove(long listTypeId)
-		throws com.liferay.portal.exception.NoSuchListTypeException;
+	public ListType remove(long listTypeId) throws NoSuchListTypeException;
 
 	public ListType updateImpl(ListType listType);
 
@@ -262,7 +262,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @throws NoSuchListTypeException if a list type with the primary key could not be found
 	*/
 	public ListType findByPrimaryKey(long listTypeId)
-		throws com.liferay.portal.exception.NoSuchListTypeException;
+		throws NoSuchListTypeException;
 
 	/**
 	* Returns the list type with the primary key or returns <code>null</code> if it could not be found.

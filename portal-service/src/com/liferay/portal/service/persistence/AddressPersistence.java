@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchAddressException;
 import com.liferay.portal.model.Address;
 
 /**
@@ -107,7 +108,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where uuid = &#63;.
@@ -129,7 +130,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where uuid = &#63;.
@@ -153,7 +154,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address[] findByUuid_PrevAndNext(long addressId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where uuid = &#63; from the database.
@@ -245,7 +246,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -269,7 +270,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -295,7 +296,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address[] findByUuid_C_PrevAndNext(long addressId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where uuid = &#63; and companyId = &#63; from the database.
@@ -383,7 +384,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where companyId = &#63;.
@@ -405,7 +406,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where companyId = &#63;.
@@ -429,7 +430,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address[] findByCompanyId_PrevAndNext(long addressId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where companyId = &#63; from the database.
@@ -514,7 +515,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where userId = &#63;.
@@ -536,7 +537,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where userId = &#63;.
@@ -559,7 +560,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address[] findByUserId_PrevAndNext(long addressId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where userId = &#63; from the database.
@@ -650,7 +651,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByC_C_First(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -674,7 +675,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	*/
 	public Address findByC_C_Last(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -700,7 +701,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address[] findByC_C_PrevAndNext(long addressId, long companyId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where companyId = &#63; and classNameId = &#63; from the database.
@@ -800,7 +801,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address findByC_C_C_First(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -828,7 +829,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address findByC_C_C_Last(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -857,7 +858,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address[] findByC_C_C_PrevAndNext(long addressId, long companyId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -964,7 +965,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address findByC_C_C_M_First(long companyId, long classNameId,
 		long classPK, boolean mailing,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -994,7 +995,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address findByC_C_C_M_Last(long companyId, long classNameId,
 		long classPK, boolean mailing,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -1025,7 +1026,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address[] findByC_C_C_M_PrevAndNext(long addressId, long companyId,
 		long classNameId, long classPK, boolean mailing,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63; from the database.
@@ -1136,7 +1137,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address findByC_C_C_P_First(long companyId, long classNameId,
 		long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1166,7 +1167,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address findByC_C_C_P_Last(long companyId, long classNameId,
 		long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1197,7 +1198,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	public Address[] findByC_C_C_P_PrevAndNext(long addressId, long companyId,
 		long classNameId, long classPK, boolean primary,
 		com.liferay.portal.kernel.util.OrderByComparator<Address> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Removes all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63; from the database.
@@ -1251,8 +1252,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	* @return the address that was removed
 	* @throws NoSuchAddressException if a address with the primary key could not be found
 	*/
-	public Address remove(long addressId)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+	public Address remove(long addressId) throws NoSuchAddressException;
 
 	public Address updateImpl(Address address);
 
@@ -1264,7 +1264,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	* @throws NoSuchAddressException if a address with the primary key could not be found
 	*/
 	public Address findByPrimaryKey(long addressId)
-		throws com.liferay.portal.exception.NoSuchAddressException;
+		throws NoSuchAddressException;
 
 	/**
 	* Returns the address with the primary key or returns <code>null</code> if it could not be found.

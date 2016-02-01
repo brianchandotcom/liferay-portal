@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	*/
 	public MDRRuleGroup findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the first m d r rule group in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	*/
 	public MDRRuleGroup findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the last m d r rule group in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	public MDRRuleGroup[] findByUuid_PrevAndNext(long ruleGroupId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Removes all the m d r rule groups where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
 	public MDRRuleGroup findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the m d r rule group where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the m d r rule group that was removed
 	*/
 	public MDRRuleGroup removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the number of m d r rule groups where uuid = &#63; and groupId = &#63;.
@@ -298,7 +299,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	public MDRRuleGroup findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the first m d r rule group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +325,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	public MDRRuleGroup findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the last m d r rule group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +352,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	public MDRRuleGroup[] findByUuid_C_PrevAndNext(long ruleGroupId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Removes all the m d r rule groups where uuid = &#63; and companyId = &#63; from the database.
@@ -439,7 +440,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	*/
 	public MDRRuleGroup findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the first m d r rule group in the ordered set where groupId = &#63;.
@@ -461,7 +462,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	*/
 	public MDRRuleGroup findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the last m d r rule group in the ordered set where groupId = &#63;.
@@ -485,7 +486,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	public MDRRuleGroup[] findByGroupId_PrevAndNext(long ruleGroupId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns all the m d r rule groups that the user has permission to view where groupId = &#63;.
@@ -539,7 +540,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	public MDRRuleGroup[] filterFindByGroupId_PrevAndNext(long ruleGroupId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRRuleGroup> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns all the m d r rule groups that the user has permission to view where groupId = any &#63;.
@@ -713,7 +714,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
 	public MDRRuleGroup remove(long ruleGroupId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	public MDRRuleGroup updateImpl(MDRRuleGroup mdrRuleGroup);
 
@@ -725,7 +726,7 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
 	public MDRRuleGroup findByPrimaryKey(long ruleGroupId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+		throws NoSuchRuleGroupException;
 
 	/**
 	* Returns the m d r rule group with the primary key or returns <code>null</code> if it could not be found.

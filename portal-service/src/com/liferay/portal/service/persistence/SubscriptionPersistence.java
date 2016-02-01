@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchSubscriptionException;
 import com.liferay.portal.model.Subscription;
 
 /**
@@ -107,7 +108,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	*/
 	public Subscription findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the first subscription in the ordered set where userId = &#63;.
@@ -129,7 +130,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	*/
 	public Subscription findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the last subscription in the ordered set where userId = &#63;.
@@ -153,7 +154,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public Subscription[] findByUserId_PrevAndNext(long subscriptionId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Removes all the subscriptions where userId = &#63; from the database.
@@ -244,7 +245,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	*/
 	public Subscription findByG_U_First(long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the first subscription in the ordered set where groupId = &#63; and userId = &#63;.
@@ -268,7 +269,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	*/
 	public Subscription findByG_U_Last(long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the last subscription in the ordered set where groupId = &#63; and userId = &#63;.
@@ -294,7 +295,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public Subscription[] findByG_U_PrevAndNext(long subscriptionId,
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Removes all the subscriptions where groupId = &#63; and userId = &#63; from the database.
@@ -387,7 +388,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	*/
 	public Subscription findByU_C_First(long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the first subscription in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -411,7 +412,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	*/
 	public Subscription findByU_C_Last(long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the last subscription in the ordered set where userId = &#63; and classNameId = &#63;.
@@ -437,7 +438,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public Subscription[] findByU_C_PrevAndNext(long subscriptionId,
 		long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Removes all the subscriptions where userId = &#63; and classNameId = &#63; from the database.
@@ -537,7 +538,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public Subscription findByC_C_C_First(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the first subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -565,7 +566,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public Subscription findByC_C_C_Last(long companyId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the last subscription in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -594,7 +595,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public Subscription[] findByC_C_C_PrevAndNext(long subscriptionId,
 		long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Subscription> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Removes all the subscriptions where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -702,8 +703,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	* @throws NoSuchSubscriptionException if a matching subscription could not be found
 	*/
 	public Subscription findByC_U_C_C(long companyId, long userId,
-		long classNameId, long classPK)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		long classNameId, long classPK) throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the subscription where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -740,8 +740,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	* @return the subscription that was removed
 	*/
 	public Subscription removeByC_U_C_C(long companyId, long userId,
-		long classNameId, long classPK)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		long classNameId, long classPK) throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the number of subscriptions where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -797,7 +796,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	* @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
 	*/
 	public Subscription remove(long subscriptionId)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	public Subscription updateImpl(Subscription subscription);
 
@@ -809,7 +808,7 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	* @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
 	*/
 	public Subscription findByPrimaryKey(long subscriptionId)
-		throws com.liferay.portal.exception.NoSuchSubscriptionException;
+		throws NoSuchSubscriptionException;
 
 	/**
 	* Returns the subscription with the primary key or returns <code>null</code> if it could not be found.

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 
 /**
@@ -109,7 +110,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByUuid_PrevAndNext(long fileVersionId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
 	public DLFileVersion findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the document library file version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	* @return the document library file version that was removed
 	*/
 	public DLFileVersion removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the number of document library file versions where uuid = &#63; and groupId = &#63;.
@@ -298,7 +299,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +325,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +352,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByUuid_C_PrevAndNext(long fileVersionId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where uuid = &#63; and companyId = &#63; from the database.
@@ -439,7 +440,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where companyId = &#63;.
@@ -461,7 +462,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where companyId = &#63;.
@@ -485,7 +486,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByCompanyId_PrevAndNext(long fileVersionId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where companyId = &#63; from the database.
@@ -571,7 +572,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByFileEntryId_First(long fileEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where fileEntryId = &#63;.
@@ -593,7 +594,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByFileEntryId_Last(long fileEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where fileEntryId = &#63;.
@@ -617,7 +618,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByFileEntryId_PrevAndNext(long fileVersionId,
 		long fileEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where fileEntryId = &#63; from the database.
@@ -704,7 +705,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByMimeType_First(java.lang.String mimeType,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where mimeType = &#63;.
@@ -726,7 +727,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByMimeType_Last(java.lang.String mimeType,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where mimeType = &#63;.
@@ -750,7 +751,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByMimeType_PrevAndNext(long fileVersionId,
 		java.lang.String mimeType,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where mimeType = &#63; from the database.
@@ -841,7 +842,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByC_NotS_First(long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -865,7 +866,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByC_NotS_Last(long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -891,7 +892,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByC_NotS_PrevAndNext(long fileVersionId,
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where companyId = &#63; and status &ne; &#63; from the database.
@@ -919,7 +920,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	* @throws NoSuchFileVersionException if a matching document library file version could not be found
 	*/
 	public DLFileVersion findByF_V(long fileEntryId, java.lang.String version)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the document library file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -949,7 +950,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	* @return the document library file version that was removed
 	*/
 	public DLFileVersion removeByF_V(long fileEntryId, java.lang.String version)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the number of document library file versions where fileEntryId = &#63; and version = &#63;.
@@ -1034,7 +1035,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByF_S_First(long fileEntryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
@@ -1058,7 +1059,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	*/
 	public DLFileVersion findByF_S_Last(long fileEntryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where fileEntryId = &#63; and status = &#63;.
@@ -1084,7 +1085,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByF_S_PrevAndNext(long fileVersionId,
 		long fileEntryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where fileEntryId = &#63; and status = &#63; from the database.
@@ -1184,7 +1185,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion findByG_F_S_First(long groupId, long folderId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -1212,7 +1213,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion findByG_F_S_Last(long groupId, long folderId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and status = &#63;.
@@ -1241,7 +1242,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion[] findByG_F_S_PrevAndNext(long fileVersionId,
 		long groupId, long folderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where groupId = &#63; and folderId = &#63; and status = &#63; from the database.
@@ -1351,7 +1352,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion findByG_F_T_V_First(long groupId, long folderId,
 		java.lang.String title, java.lang.String version,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
@@ -1381,7 +1382,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	public DLFileVersion findByG_F_T_V_Last(long groupId, long folderId,
 		java.lang.String title, java.lang.String version,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
@@ -1413,7 +1414,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 		long groupId, long folderId, java.lang.String title,
 		java.lang.String version,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFileVersion> orderByComparator)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Removes all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63; from the database.
@@ -1468,7 +1469,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
 	public DLFileVersion remove(long fileVersionId)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	public DLFileVersion updateImpl(DLFileVersion dlFileVersion);
 
@@ -1480,7 +1481,7 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 	* @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
 	*/
 	public DLFileVersion findByPrimaryKey(long fileVersionId)
-		throws com.liferay.portlet.documentlibrary.exception.NoSuchFileVersionException;
+		throws NoSuchFileVersionException;
 
 	/**
 	* Returns the document library file version with the primary key or returns <code>null</code> if it could not be found.

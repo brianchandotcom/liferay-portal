@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchContactException;
 import com.liferay.portal.model.Contact;
 
 /**
@@ -107,7 +108,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public Contact findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Returns the first contact in the ordered set where companyId = &#63;.
@@ -129,7 +130,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public Contact findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Returns the last contact in the ordered set where companyId = &#63;.
@@ -153,7 +154,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public Contact[] findByCompanyId_PrevAndNext(long contactId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Removes all the contacts where companyId = &#63; from the database.
@@ -239,7 +240,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public Contact findByAccountId_First(long accountId,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Returns the first contact in the ordered set where accountId = &#63;.
@@ -261,7 +262,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public Contact findByAccountId_Last(long accountId,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Returns the last contact in the ordered set where accountId = &#63;.
@@ -285,7 +286,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public Contact[] findByAccountId_PrevAndNext(long contactId,
 		long accountId,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Removes all the contacts where accountId = &#63; from the database.
@@ -376,7 +377,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public Contact findByC_C_First(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -400,7 +401,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public Contact findByC_C_Last(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -426,7 +427,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public Contact[] findByC_C_PrevAndNext(long contactId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<Contact> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Removes all the contacts where classNameId = &#63; and classPK = &#63; from the database.
@@ -474,8 +475,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	* @return the contact that was removed
 	* @throws NoSuchContactException if a contact with the primary key could not be found
 	*/
-	public Contact remove(long contactId)
-		throws com.liferay.portal.exception.NoSuchContactException;
+	public Contact remove(long contactId) throws NoSuchContactException;
 
 	public Contact updateImpl(Contact contact);
 
@@ -487,7 +487,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	* @throws NoSuchContactException if a contact with the primary key could not be found
 	*/
 	public Contact findByPrimaryKey(long contactId)
-		throws com.liferay.portal.exception.NoSuchContactException;
+		throws NoSuchContactException;
 
 	/**
 	* Returns the contact with the primary key or returns <code>null</code> if it could not be found.

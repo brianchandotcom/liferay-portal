@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 
 /**
@@ -108,7 +109,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public WorkflowDefinitionLink findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the first workflow definition link in the ordered set where companyId = &#63;.
@@ -130,7 +131,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public WorkflowDefinitionLink findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the last workflow definition link in the ordered set where companyId = &#63;.
@@ -154,7 +155,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public WorkflowDefinitionLink[] findByCompanyId_PrevAndNext(
 		long workflowDefinitionLinkId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Removes all the workflow definition links where companyId = &#63; from the database.
@@ -252,7 +253,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public WorkflowDefinitionLink findByG_C_C_First(long groupId,
 		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -280,7 +281,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public WorkflowDefinitionLink findByG_C_C_Last(long groupId,
 		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -310,7 +311,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 		long workflowDefinitionLinkId, long groupId, long companyId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Removes all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; from the database.
@@ -415,7 +416,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public WorkflowDefinitionLink findByC_W_W_First(long companyId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the first workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -443,7 +444,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public WorkflowDefinitionLink findByC_W_W_Last(long companyId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -473,7 +474,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 		long workflowDefinitionLinkId, long companyId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
 		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Removes all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63; from the database.
@@ -509,7 +510,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public WorkflowDefinitionLink findByG_C_C_C_T(long groupId, long companyId,
 		long classNameId, long classPK, long typePK)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -551,7 +552,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public WorkflowDefinitionLink removeByG_C_C_C_T(long groupId,
 		long companyId, long classNameId, long classPK, long typePK)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the number of workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
@@ -597,7 +598,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	* @throws NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
 	*/
 	public WorkflowDefinitionLink remove(long workflowDefinitionLinkId)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	public WorkflowDefinitionLink updateImpl(
 		WorkflowDefinitionLink workflowDefinitionLink);
@@ -611,7 +612,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public WorkflowDefinitionLink findByPrimaryKey(
 		long workflowDefinitionLinkId)
-		throws com.liferay.portal.exception.NoSuchWorkflowDefinitionLinkException;
+		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
 	* Returns the workflow definition link with the primary key or returns <code>null</code> if it could not be found.

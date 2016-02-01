@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchPluginSettingException;
 import com.liferay.portal.model.PluginSetting;
 
 /**
@@ -107,7 +108,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public PluginSetting findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PluginSetting> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPluginSettingException;
+		throws NoSuchPluginSettingException;
 
 	/**
 	* Returns the first plugin setting in the ordered set where companyId = &#63;.
@@ -129,7 +130,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public PluginSetting findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PluginSetting> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPluginSettingException;
+		throws NoSuchPluginSettingException;
 
 	/**
 	* Returns the last plugin setting in the ordered set where companyId = &#63;.
@@ -153,7 +154,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	public PluginSetting[] findByCompanyId_PrevAndNext(long pluginSettingId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PluginSetting> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPluginSettingException;
+		throws NoSuchPluginSettingException;
 
 	/**
 	* Removes all the plugin settings where companyId = &#63; from the database.
@@ -180,8 +181,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @throws NoSuchPluginSettingException if a matching plugin setting could not be found
 	*/
 	public PluginSetting findByC_I_T(long companyId, java.lang.String pluginId,
-		java.lang.String pluginType)
-		throws com.liferay.portal.exception.NoSuchPluginSettingException;
+		java.lang.String pluginType) throws NoSuchPluginSettingException;
 
 	/**
 	* Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -217,7 +217,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public PluginSetting removeByC_I_T(long companyId,
 		java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.exception.NoSuchPluginSettingException;
+		throws NoSuchPluginSettingException;
 
 	/**
 	* Returns the number of plugin settings where companyId = &#63; and pluginId = &#63; and pluginType = &#63;.
@@ -260,7 +260,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @throws NoSuchPluginSettingException if a plugin setting with the primary key could not be found
 	*/
 	public PluginSetting remove(long pluginSettingId)
-		throws com.liferay.portal.exception.NoSuchPluginSettingException;
+		throws NoSuchPluginSettingException;
 
 	public PluginSetting updateImpl(PluginSetting pluginSetting);
 
@@ -272,7 +272,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	* @throws NoSuchPluginSettingException if a plugin setting with the primary key could not be found
 	*/
 	public PluginSetting findByPrimaryKey(long pluginSettingId)
-		throws com.liferay.portal.exception.NoSuchPluginSettingException;
+		throws NoSuchPluginSettingException;
 
 	/**
 	* Returns the plugin setting with the primary key or returns <code>null</code> if it could not be found.

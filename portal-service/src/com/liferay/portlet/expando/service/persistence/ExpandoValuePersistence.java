@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.expando.exception.NoSuchValueException;
 import com.liferay.portlet.expando.model.ExpandoValue;
 
 /**
@@ -109,7 +110,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByTableId_First(long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63;.
@@ -131,7 +132,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByTableId_Last(long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where tableId = &#63;.
@@ -154,7 +155,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue[] findByTableId_PrevAndNext(long valueId, long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where tableId = &#63; from the database.
@@ -240,7 +241,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByColumnId_First(long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where columnId = &#63;.
@@ -262,7 +263,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByColumnId_Last(long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where columnId = &#63;.
@@ -286,7 +287,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue[] findByColumnId_PrevAndNext(long valueId,
 		long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where columnId = &#63; from the database.
@@ -372,7 +373,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByRowId_First(long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where rowId = &#63;.
@@ -394,7 +395,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByRowId_Last(long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where rowId = &#63;.
@@ -417,7 +418,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue[] findByRowId_PrevAndNext(long valueId, long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where rowId = &#63; from the database.
@@ -508,7 +509,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByT_C_First(long tableId, long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63;.
@@ -532,7 +533,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByT_C_Last(long tableId, long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63;.
@@ -558,7 +559,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue[] findByT_C_PrevAndNext(long valueId, long tableId,
 		long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where tableId = &#63; and columnId = &#63; from the database.
@@ -651,7 +652,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByT_R_First(long tableId, long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and rowId = &#63;.
@@ -675,7 +676,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByT_R_Last(long tableId, long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where tableId = &#63; and rowId = &#63;.
@@ -701,7 +702,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue[] findByT_R_PrevAndNext(long valueId, long tableId,
 		long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where tableId = &#63; and rowId = &#63; from the database.
@@ -794,7 +795,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByT_CPK_First(long tableId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and classPK = &#63;.
@@ -818,7 +819,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByT_CPK_Last(long tableId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where tableId = &#63; and classPK = &#63;.
@@ -844,7 +845,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue[] findByT_CPK_PrevAndNext(long valueId, long tableId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where tableId = &#63; and classPK = &#63; from the database.
@@ -872,7 +873,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @throws NoSuchValueException if a matching expando value could not be found
 	*/
 	public ExpandoValue findByC_R(long columnId, long rowId)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the expando value where columnId = &#63; and rowId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -902,7 +903,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the expando value that was removed
 	*/
 	public ExpandoValue removeByC_R(long columnId, long rowId)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the number of expando values where columnId = &#63; and rowId = &#63;.
@@ -987,7 +988,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByC_C_First(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1011,7 +1012,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	*/
 	public ExpandoValue findByC_C_Last(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1037,7 +1038,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue[] findByC_C_PrevAndNext(long valueId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where classNameId = &#63; and classPK = &#63; from the database.
@@ -1066,7 +1067,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @throws NoSuchValueException if a matching expando value could not be found
 	*/
 	public ExpandoValue findByT_C_C(long tableId, long columnId, long classPK)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1099,7 +1100,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the expando value that was removed
 	*/
 	public ExpandoValue removeByT_C_C(long tableId, long columnId, long classPK)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the number of expando values where tableId = &#63; and columnId = &#63; and classPK = &#63;.
@@ -1192,7 +1193,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue findByT_C_D_First(long tableId, long columnId,
 		java.lang.String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the first expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
@@ -1220,7 +1221,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue findByT_C_D_Last(long tableId, long columnId,
 		java.lang.String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the last expando value in the ordered set where tableId = &#63; and columnId = &#63; and data = &#63;.
@@ -1249,7 +1250,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	public ExpandoValue[] findByT_C_D_PrevAndNext(long valueId, long tableId,
 		long columnId, java.lang.String data,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoValue> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Removes all the expando values where tableId = &#63; and columnId = &#63; and data = &#63; from the database.
@@ -1299,8 +1300,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @return the expando value that was removed
 	* @throws NoSuchValueException if a expando value with the primary key could not be found
 	*/
-	public ExpandoValue remove(long valueId)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+	public ExpandoValue remove(long valueId) throws NoSuchValueException;
 
 	public ExpandoValue updateImpl(ExpandoValue expandoValue);
 
@@ -1312,7 +1312,7 @@ public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
 	* @throws NoSuchValueException if a expando value with the primary key could not be found
 	*/
 	public ExpandoValue findByPrimaryKey(long valueId)
-		throws com.liferay.portlet.expando.exception.NoSuchValueException;
+		throws NoSuchValueException;
 
 	/**
 	* Returns the expando value with the primary key or returns <code>null</code> if it could not be found.

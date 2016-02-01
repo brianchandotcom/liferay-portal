@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 
 /**
@@ -108,7 +109,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	*/
 	public KaleoAction findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the first kaleo action in the ordered set where companyId = &#63;.
@@ -130,7 +131,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	*/
 	public KaleoAction findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the last kaleo action in the ordered set where companyId = &#63;.
@@ -154,7 +155,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	public KaleoAction[] findByCompanyId_PrevAndNext(long kaleoActionId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Removes all the kaleo actions where companyId = &#63; from the database.
@@ -241,7 +242,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	*/
 	public KaleoAction findByKaleoDefinitionId_First(long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the first kaleo action in the ordered set where kaleoDefinitionId = &#63;.
@@ -263,7 +264,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	*/
 	public KaleoAction findByKaleoDefinitionId_Last(long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the last kaleo action in the ordered set where kaleoDefinitionId = &#63;.
@@ -287,7 +288,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	public KaleoAction[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoActionId, long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Removes all the kaleo actions where kaleoDefinitionId = &#63; from the database.
@@ -380,7 +381,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	public KaleoAction findByKCN_KCPK_First(java.lang.String kaleoClassName,
 		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the first kaleo action in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -406,7 +407,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	public KaleoAction findByKCN_KCPK_Last(java.lang.String kaleoClassName,
 		long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the last kaleo action in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
@@ -433,7 +434,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	public KaleoAction[] findByKCN_KCPK_PrevAndNext(long kaleoActionId,
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Removes all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
@@ -540,7 +541,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		java.lang.String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the first kaleo action in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -569,7 +570,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	public KaleoAction findByKCN_KCPK_ET_Last(java.lang.String kaleoClassName,
 		long kaleoClassPK, java.lang.String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the last kaleo action in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
@@ -600,7 +601,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		java.lang.String executionType,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Removes all the kaleo actions where kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63; from the database.
@@ -652,8 +653,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @return the kaleo action that was removed
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
-	public KaleoAction remove(long kaleoActionId)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+	public KaleoAction remove(long kaleoActionId) throws NoSuchActionException;
 
 	public KaleoAction updateImpl(KaleoAction kaleoAction);
 
@@ -665,7 +665,7 @@ public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public KaleoAction findByPrimaryKey(long kaleoActionId)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the kaleo action with the primary key or returns <code>null</code> if it could not be found.

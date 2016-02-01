@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
 /**
@@ -109,7 +110,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63;.
@@ -131,7 +132,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63;.
@@ -155,7 +156,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	public ExportImportConfiguration[] findByGroupId_PrevAndNext(
 		long exportImportConfigurationId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Removes all the export import configurations where groupId = &#63; from the database.
@@ -242,7 +243,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the first export import configuration in the ordered set where companyId = &#63;.
@@ -264,7 +265,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the last export import configuration in the ordered set where companyId = &#63;.
@@ -288,7 +289,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	public ExportImportConfiguration[] findByCompanyId_PrevAndNext(
 		long exportImportConfigurationId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Removes all the export import configurations where companyId = &#63; from the database.
@@ -380,7 +381,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByG_T_First(long groupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63; and type = &#63;.
@@ -404,7 +405,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByG_T_Last(long groupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63;.
@@ -430,7 +431,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	public ExportImportConfiguration[] findByG_T_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Removes all the export import configurations where groupId = &#63; and type = &#63; from the database.
@@ -524,7 +525,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByG_S_First(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63; and status = &#63;.
@@ -548,7 +549,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	*/
 	public ExportImportConfiguration findByG_S_Last(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63; and status = &#63;.
@@ -574,7 +575,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	public ExportImportConfiguration[] findByG_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Removes all the export import configurations where groupId = &#63; and status = &#63; from the database.
@@ -674,7 +675,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	public ExportImportConfiguration findByG_T_S_First(long groupId, int type,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the first export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -702,7 +703,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	public ExportImportConfiguration findByG_T_S_Last(long groupId, int type,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Returns the last export import configuration in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -731,7 +732,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	public ExportImportConfiguration[] findByG_T_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<ExportImportConfiguration> orderByComparator)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	/**
 	* Removes all the export import configurations where groupId = &#63; and type = &#63; and status = &#63; from the database.
@@ -783,7 +784,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
 	public ExportImportConfiguration remove(long exportImportConfigurationId)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		throws NoSuchConfigurationException;
 
 	public ExportImportConfiguration updateImpl(
 		ExportImportConfiguration exportImportConfiguration);
@@ -796,8 +797,7 @@ public interface ExportImportConfigurationPersistence extends BasePersistence<Ex
 	* @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
 	*/
 	public ExportImportConfiguration findByPrimaryKey(
-		long exportImportConfigurationId)
-		throws com.liferay.portlet.exportimport.exception.NoSuchConfigurationException;
+		long exportImportConfigurationId) throws NoSuchConfigurationException;
 
 	/**
 	* Returns the export import configuration with the primary key or returns <code>null</code> if it could not be found.

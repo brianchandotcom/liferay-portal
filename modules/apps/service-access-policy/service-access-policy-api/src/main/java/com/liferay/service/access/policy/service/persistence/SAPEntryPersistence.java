@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.service.access.policy.model.SAPEntry;
 
 /**
@@ -109,7 +110,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the first s a p entry in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the last s a p entry in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] findByUuid_PrevAndNext(long sapEntryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns all the s a p entries that the user has permission to view where uuid = &#63;.
@@ -209,7 +210,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] filterFindByUuid_PrevAndNext(long sapEntryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Removes all the s a p entries where uuid = &#63; from the database.
@@ -309,7 +310,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the first s a p entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -333,7 +334,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the last s a p entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -359,7 +360,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] findByUuid_C_PrevAndNext(long sapEntryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns all the s a p entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -418,7 +419,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] filterFindByUuid_C_PrevAndNext(long sapEntryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Removes all the s a p entries where uuid = &#63; and companyId = &#63; from the database.
@@ -515,7 +516,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the first s a p entry in the ordered set where companyId = &#63;.
@@ -537,7 +538,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the last s a p entry in the ordered set where companyId = &#63;.
@@ -561,7 +562,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] findByCompanyId_PrevAndNext(long sapEntryId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns all the s a p entries that the user has permission to view where companyId = &#63;.
@@ -615,7 +616,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] filterFindByCompanyId_PrevAndNext(long sapEntryId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Removes all the s a p entries where companyId = &#63; from the database.
@@ -715,7 +716,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByC_D_First(long companyId, boolean defaultSAPEntry,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the first s a p entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -739,7 +740,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	*/
 	public SAPEntry findByC_D_Last(long companyId, boolean defaultSAPEntry,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the last s a p entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -765,7 +766,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] findByC_D_PrevAndNext(long sapEntryId, long companyId,
 		boolean defaultSAPEntry,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns all the s a p entries that the user has permission to view where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -824,7 +825,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry[] filterFindByC_D_PrevAndNext(long sapEntryId,
 		long companyId, boolean defaultSAPEntry,
 		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry> orderByComparator)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Removes all the s a p entries where companyId = &#63; and defaultSAPEntry = &#63; from the database.
@@ -861,7 +862,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	* @throws NoSuchEntryException if a matching s a p entry could not be found
 	*/
 	public SAPEntry findByC_N(long companyId, java.lang.String name)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the s a p entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -891,7 +892,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	* @return the s a p entry that was removed
 	*/
 	public SAPEntry removeByC_N(long companyId, java.lang.String name)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the number of s a p entries where companyId = &#63; and name = &#63;.
@@ -931,8 +932,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	* @return the s a p entry that was removed
 	* @throws NoSuchEntryException if a s a p entry with the primary key could not be found
 	*/
-	public SAPEntry remove(long sapEntryId)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+	public SAPEntry remove(long sapEntryId) throws NoSuchEntryException;
 
 	public SAPEntry updateImpl(SAPEntry sapEntry);
 
@@ -944,7 +944,7 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	* @throws NoSuchEntryException if a s a p entry with the primary key could not be found
 	*/
 	public SAPEntry findByPrimaryKey(long sapEntryId)
-		throws com.liferay.service.access.policy.exception.NoSuchEntryException;
+		throws NoSuchEntryException;
 
 	/**
 	* Returns the s a p entry with the primary key or returns <code>null</code> if it could not be found.

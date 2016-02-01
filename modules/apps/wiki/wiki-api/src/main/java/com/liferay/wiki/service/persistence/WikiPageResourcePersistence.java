@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
 
 /**
@@ -109,7 +110,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public WikiPageResource findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the first wiki page resource in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	*/
 	public WikiPageResource findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the last wiki page resource in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	public WikiPageResource[] findByUuid_PrevAndNext(long resourcePrimKey,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Removes all the wiki page resources where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public WikiPageResource findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @return the wiki page resource that was removed
 	*/
 	public WikiPageResource removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the number of wiki page resources where uuid = &#63; and groupId = &#63;.
@@ -298,7 +299,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	public WikiPageResource findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the first wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +325,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	public WikiPageResource findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the last wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +352,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	public WikiPageResource[] findByUuid_C_PrevAndNext(long resourcePrimKey,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource> orderByComparator)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Removes all the wiki page resources where uuid = &#63; and companyId = &#63; from the database.
@@ -379,7 +380,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public WikiPageResource findByN_T(long nodeId, java.lang.String title)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -409,7 +410,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @return the wiki page resource that was removed
 	*/
 	public WikiPageResource removeByN_T(long nodeId, java.lang.String title)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the number of wiki page resources where nodeId = &#63; and title = &#63;.
@@ -450,7 +451,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public WikiPageResource remove(long resourcePrimKey)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	public WikiPageResource updateImpl(WikiPageResource wikiPageResource);
 
@@ -462,7 +463,7 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public WikiPageResource findByPrimaryKey(long resourcePrimKey)
-		throws com.liferay.wiki.exception.NoSuchPageResourceException;
+		throws NoSuchPageResourceException;
 
 	/**
 	* Returns the wiki page resource with the primary key or returns <code>null</code> if it could not be found.

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.social.networking.exception.NoSuchWallEntryException;
 import com.liferay.social.networking.model.WallEntry;
 
 /**
@@ -109,7 +110,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*/
 	public WallEntry findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Returns the first wall entry in the ordered set where groupId = &#63;.
@@ -131,7 +132,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*/
 	public WallEntry findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Returns the last wall entry in the ordered set where groupId = &#63;.
@@ -155,7 +156,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	public WallEntry[] findByGroupId_PrevAndNext(long wallEntryId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Removes all the wall entries where groupId = &#63; from the database.
@@ -241,7 +242,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*/
 	public WallEntry findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Returns the first wall entry in the ordered set where userId = &#63;.
@@ -263,7 +264,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*/
 	public WallEntry findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Returns the last wall entry in the ordered set where userId = &#63;.
@@ -286,7 +287,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*/
 	public WallEntry[] findByUserId_PrevAndNext(long wallEntryId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Removes all the wall entries where userId = &#63; from the database.
@@ -377,7 +378,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*/
 	public WallEntry findByG_U_First(long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Returns the first wall entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -401,7 +402,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	*/
 	public WallEntry findByG_U_Last(long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Returns the last wall entry in the ordered set where groupId = &#63; and userId = &#63;.
@@ -427,7 +428,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	public WallEntry[] findByG_U_PrevAndNext(long wallEntryId, long groupId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<WallEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Removes all the wall entries where groupId = &#63; and userId = &#63; from the database.
@@ -475,8 +476,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @return the wall entry that was removed
 	* @throws NoSuchWallEntryException if a wall entry with the primary key could not be found
 	*/
-	public WallEntry remove(long wallEntryId)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+	public WallEntry remove(long wallEntryId) throws NoSuchWallEntryException;
 
 	public WallEntry updateImpl(WallEntry wallEntry);
 
@@ -488,7 +488,7 @@ public interface WallEntryPersistence extends BasePersistence<WallEntry> {
 	* @throws NoSuchWallEntryException if a wall entry with the primary key could not be found
 	*/
 	public WallEntry findByPrimaryKey(long wallEntryId)
-		throws com.liferay.social.networking.exception.NoSuchWallEntryException;
+		throws NoSuchWallEntryException;
 
 	/**
 	* Returns the wall entry with the primary key or returns <code>null</code> if it could not be found.

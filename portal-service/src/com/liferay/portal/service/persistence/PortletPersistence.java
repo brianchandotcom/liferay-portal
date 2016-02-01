@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchPortletException;
 import com.liferay.portal.model.Portlet;
 
 /**
@@ -107,7 +108,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public Portlet findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletException;
+		throws NoSuchPortletException;
 
 	/**
 	* Returns the first portlet in the ordered set where companyId = &#63;.
@@ -129,7 +130,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public Portlet findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletException;
+		throws NoSuchPortletException;
 
 	/**
 	* Returns the last portlet in the ordered set where companyId = &#63;.
@@ -152,7 +153,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public Portlet[] findByCompanyId_PrevAndNext(long id, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Portlet> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletException;
+		throws NoSuchPortletException;
 
 	/**
 	* Removes all the portlets where companyId = &#63; from the database.
@@ -178,7 +179,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @throws NoSuchPortletException if a matching portlet could not be found
 	*/
 	public Portlet findByC_P(long companyId, java.lang.String portletId)
-		throws com.liferay.portal.exception.NoSuchPortletException;
+		throws NoSuchPortletException;
 
 	/**
 	* Returns the portlet where companyId = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -208,7 +209,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @return the portlet that was removed
 	*/
 	public Portlet removeByC_P(long companyId, java.lang.String portletId)
-		throws com.liferay.portal.exception.NoSuchPortletException;
+		throws NoSuchPortletException;
 
 	/**
 	* Returns the number of portlets where companyId = &#63; and portletId = &#63;.
@@ -248,8 +249,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @return the portlet that was removed
 	* @throws NoSuchPortletException if a portlet with the primary key could not be found
 	*/
-	public Portlet remove(long id)
-		throws com.liferay.portal.exception.NoSuchPortletException;
+	public Portlet remove(long id) throws NoSuchPortletException;
 
 	public Portlet updateImpl(Portlet portlet);
 
@@ -260,8 +260,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	* @return the portlet
 	* @throws NoSuchPortletException if a portlet with the primary key could not be found
 	*/
-	public Portlet findByPrimaryKey(long id)
-		throws com.liferay.portal.exception.NoSuchPortletException;
+	public Portlet findByPrimaryKey(long id) throws NoSuchPortletException;
 
 	/**
 	* Returns the portlet with the primary key or returns <code>null</code> if it could not be found.

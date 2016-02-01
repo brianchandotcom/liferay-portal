@@ -16,6 +16,7 @@ package com.liferay.portal.background.task.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.service.persistence.BasePersistence;
 
@@ -108,7 +109,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where groupId = &#63;.
@@ -130,7 +131,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where groupId = &#63;.
@@ -154,7 +155,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask[] findByGroupId_PrevAndNext(long backgroundTaskId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Removes all the background tasks where groupId = &#63; from the database.
@@ -240,7 +241,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where companyId = &#63;.
@@ -262,7 +263,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where companyId = &#63;.
@@ -286,7 +287,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask[] findByCompanyId_PrevAndNext(long backgroundTaskId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Removes all the background tasks where companyId = &#63; from the database.
@@ -372,7 +373,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByStatus_First(int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where status = &#63;.
@@ -394,7 +395,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByStatus_Last(int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where status = &#63;.
@@ -418,7 +419,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask[] findByStatus_PrevAndNext(long backgroundTaskId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Removes all the background tasks where status = &#63; from the database.
@@ -511,7 +512,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_T_First(long groupId,
 		java.lang.String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -537,7 +538,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_T_Last(long groupId,
 		java.lang.String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63;.
@@ -564,7 +565,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask[] findByG_T_PrevAndNext(long backgroundTaskId,
 		long groupId, java.lang.String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63;.
@@ -735,7 +736,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByG_S_First(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where groupId = &#63; and status = &#63;.
@@ -759,7 +760,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	*/
 	public BackgroundTask findByG_S_Last(long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where groupId = &#63; and status = &#63;.
@@ -785,7 +786,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask[] findByG_S_PrevAndNext(long backgroundTaskId,
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Removes all the background tasks where groupId = &#63; and status = &#63; from the database.
@@ -880,7 +881,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByT_S_First(
 		java.lang.String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where taskExecutorClassName = &#63; and status = &#63;.
@@ -906,7 +907,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByT_S_Last(
 		java.lang.String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where taskExecutorClassName = &#63; and status = &#63;.
@@ -933,7 +934,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask[] findByT_S_PrevAndNext(long backgroundTaskId,
 		java.lang.String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns all the background tasks where taskExecutorClassName = any &#63; and status = &#63;.
@@ -1116,7 +1117,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_N_T_First(long groupId,
 		java.lang.String name, java.lang.String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1144,7 +1145,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_N_T_Last(long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1174,7 +1175,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 		long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63;.
@@ -1367,7 +1368,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_T_C_First(long groupId,
 		java.lang.String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1395,7 +1396,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_T_C_Last(long groupId,
 		java.lang.String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1425,7 +1426,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 		long groupId, java.lang.String taskExecutorClassName,
 		boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and completed = &#63;.
@@ -1615,7 +1616,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_T_S_First(long groupId,
 		java.lang.String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1643,7 +1644,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask findByG_T_S_Last(long groupId,
 		java.lang.String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where groupId = &#63; and taskExecutorClassName = &#63; and status = &#63;.
@@ -1672,7 +1673,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	public BackgroundTask[] findByG_T_S_PrevAndNext(long backgroundTaskId,
 		long groupId, java.lang.String taskExecutorClassName, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns all the background tasks where groupId = &#63; and taskExecutorClassName = any &#63; and status = &#63;.
@@ -1872,7 +1873,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 		java.lang.String name, java.lang.String taskExecutorClassName,
 		boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the first background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1904,7 +1905,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 		java.lang.String name, java.lang.String taskExecutorClassName,
 		boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the last background task in the ordered set where groupId = &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -1937,7 +1938,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 		long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName, boolean completed,
 		com.liferay.portal.kernel.util.OrderByComparator<BackgroundTask> orderByComparator)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63; and completed = &#63;.
@@ -2084,7 +2085,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask remove(long backgroundTaskId)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	public BackgroundTask updateImpl(BackgroundTask backgroundTask);
 
@@ -2096,7 +2097,7 @@ public interface BackgroundTaskPersistence extends BasePersistence<BackgroundTas
 	* @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
 	*/
 	public BackgroundTask findByPrimaryKey(long backgroundTaskId)
-		throws com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
+		throws NoSuchBackgroundTaskException;
 
 	/**
 	* Returns the background task with the primary key or returns <code>null</code> if it could not be found.

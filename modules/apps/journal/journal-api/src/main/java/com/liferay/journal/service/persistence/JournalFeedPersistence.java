@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.model.JournalFeed;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the first journal feed in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the last journal feed in the ordered set where uuid = &#63;.
@@ -154,7 +155,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed[] findByUuid_PrevAndNext(long id, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Removes all the journal feeds where uuid = &#63; from the database.
@@ -180,7 +181,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public JournalFeed findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the journal feed where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -210,7 +211,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	* @return the journal feed that was removed
 	*/
 	public JournalFeed removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the number of journal feeds where uuid = &#63; and groupId = &#63;.
@@ -297,7 +298,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	public JournalFeed findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the first journal feed in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -322,7 +323,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the last journal feed in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -349,7 +350,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	public JournalFeed[] findByUuid_C_PrevAndNext(long id,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Removes all the journal feeds where uuid = &#63; and companyId = &#63; from the database.
@@ -437,7 +438,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the first journal feed in the ordered set where groupId = &#63;.
@@ -459,7 +460,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the last journal feed in the ordered set where groupId = &#63;.
@@ -482,7 +483,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed[] findByGroupId_PrevAndNext(long id, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns all the journal feeds that the user has permission to view where groupId = &#63;.
@@ -535,7 +536,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	*/
 	public JournalFeed[] filterFindByGroupId_PrevAndNext(long id, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed> orderByComparator)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Removes all the journal feeds where groupId = &#63; from the database.
@@ -569,7 +570,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	* @throws NoSuchFeedException if a matching journal feed could not be found
 	*/
 	public JournalFeed findByG_F(long groupId, java.lang.String feedId)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the journal feed where groupId = &#63; and feedId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -599,7 +600,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	* @return the journal feed that was removed
 	*/
 	public JournalFeed removeByG_F(long groupId, java.lang.String feedId)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+		throws NoSuchFeedException;
 
 	/**
 	* Returns the number of journal feeds where groupId = &#63; and feedId = &#63;.
@@ -639,8 +640,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	* @return the journal feed that was removed
 	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public JournalFeed remove(long id)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+	public JournalFeed remove(long id) throws NoSuchFeedException;
 
 	public JournalFeed updateImpl(JournalFeed journalFeed);
 
@@ -651,8 +651,7 @@ public interface JournalFeedPersistence extends BasePersistence<JournalFeed> {
 	* @return the journal feed
 	* @throws NoSuchFeedException if a journal feed with the primary key could not be found
 	*/
-	public JournalFeed findByPrimaryKey(long id)
-		throws com.liferay.journal.exception.NoSuchFeedException;
+	public JournalFeed findByPrimaryKey(long id) throws NoSuchFeedException;
 
 	/**
 	* Returns the journal feed with the primary key or returns <code>null</code> if it could not be found.

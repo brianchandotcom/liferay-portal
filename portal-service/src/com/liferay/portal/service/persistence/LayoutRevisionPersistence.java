@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchLayoutRevisionException;
 import com.liferay.portal.model.LayoutRevision;
 
 /**
@@ -109,7 +110,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision findByLayoutSetBranchId_First(
 		long layoutSetBranchId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where layoutSetBranchId = &#63;.
@@ -132,7 +133,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByLayoutSetBranchId_Last(long layoutSetBranchId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where layoutSetBranchId = &#63;.
@@ -157,7 +158,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByLayoutSetBranchId_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where layoutSetBranchId = &#63; from the database.
@@ -243,7 +244,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByPlid_First(long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where plid = &#63;.
@@ -265,7 +266,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByPlid_Last(long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where plid = &#63;.
@@ -289,7 +290,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByPlid_PrevAndNext(long layoutRevisionId,
 		long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where plid = &#63; from the database.
@@ -381,7 +382,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByL_H_First(long layoutSetBranchId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63;.
@@ -406,7 +407,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByL_H_Last(long layoutSetBranchId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and head = &#63;.
@@ -432,7 +433,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByL_H_PrevAndNext(long layoutRevisionId,
 		long layoutSetBranchId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where layoutSetBranchId = &#63; and head = &#63; from the database.
@@ -526,7 +527,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByL_P_First(long layoutSetBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
@@ -550,7 +551,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByL_P_Last(long layoutSetBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63;.
@@ -576,7 +577,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByL_P_PrevAndNext(long layoutRevisionId,
 		long layoutSetBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; from the database.
@@ -670,7 +671,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByL_S_First(long layoutSetBranchId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and status = &#63;.
@@ -694,7 +695,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByL_S_Last(long layoutSetBranchId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and status = &#63;.
@@ -720,7 +721,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByL_S_PrevAndNext(long layoutRevisionId,
 		long layoutSetBranchId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where layoutSetBranchId = &#63; and status = &#63; from the database.
@@ -813,7 +814,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByH_P_First(boolean head, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where head = &#63; and plid = &#63;.
@@ -837,7 +838,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByH_P_Last(boolean head, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where head = &#63; and plid = &#63;.
@@ -863,7 +864,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByH_P_PrevAndNext(long layoutRevisionId,
 		boolean head, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where head = &#63; and plid = &#63; from the database.
@@ -956,7 +957,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByP_NotS_First(long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where plid = &#63; and status &ne; &#63;.
@@ -980,7 +981,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	*/
 	public LayoutRevision findByP_NotS_Last(long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where plid = &#63; and status &ne; &#63;.
@@ -1006,7 +1007,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByP_NotS_PrevAndNext(long layoutRevisionId,
 		long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where plid = &#63; and status &ne; &#63; from the database.
@@ -1106,7 +1107,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision findByL_L_P_First(long layoutSetBranchId,
 		long layoutBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
@@ -1134,7 +1135,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision findByL_L_P_Last(long layoutSetBranchId,
 		long layoutBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
@@ -1163,7 +1164,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByL_L_P_PrevAndNext(long layoutRevisionId,
 		long layoutSetBranchId, long layoutBranchId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63; from the database.
@@ -1267,7 +1268,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision findByL_P_P_First(long layoutSetBranchId,
 		long parentLayoutRevisionId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
@@ -1295,7 +1296,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision findByL_P_P_Last(long layoutSetBranchId,
 		long parentLayoutRevisionId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
@@ -1324,7 +1325,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByL_P_P_PrevAndNext(long layoutRevisionId,
 		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63; from the database.
@@ -1357,8 +1358,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
 	public LayoutRevision findByL_H_P(long layoutSetBranchId, boolean head,
-		long plid)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		long plid) throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1392,8 +1392,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @return the layout revision that was removed
 	*/
 	public LayoutRevision removeByL_H_P(long layoutSetBranchId, boolean head,
-		long plid)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		long plid) throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the number of layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
@@ -1486,7 +1485,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision findByL_P_S_First(long layoutSetBranchId, long plid,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the first layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
@@ -1514,7 +1513,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision findByL_P_S_Last(long layoutSetBranchId, long plid,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the last layout revision in the ordered set where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
@@ -1543,7 +1542,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	public LayoutRevision[] findByL_P_S_PrevAndNext(long layoutRevisionId,
 		long layoutSetBranchId, long plid, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutRevision> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Removes all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63; from the database.
@@ -1594,7 +1593,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
 	public LayoutRevision remove(long layoutRevisionId)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	public LayoutRevision updateImpl(LayoutRevision layoutRevision);
 
@@ -1606,7 +1605,7 @@ public interface LayoutRevisionPersistence extends BasePersistence<LayoutRevisio
 	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
 	public LayoutRevision findByPrimaryKey(long layoutRevisionId)
-		throws com.liferay.portal.exception.NoSuchLayoutRevisionException;
+		throws NoSuchLayoutRevisionException;
 
 	/**
 	* Returns the layout revision with the primary key or returns <code>null</code> if it could not be found.

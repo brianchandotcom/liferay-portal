@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchTicketException;
 import com.liferay.portal.model.Ticket;
 
 /**
@@ -45,8 +46,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @return the matching ticket
 	* @throws NoSuchTicketException if a matching ticket could not be found
 	*/
-	public Ticket findByKey(java.lang.String key)
-		throws com.liferay.portal.exception.NoSuchTicketException;
+	public Ticket findByKey(java.lang.String key) throws NoSuchTicketException;
 
 	/**
 	* Returns the ticket where key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -72,7 +72,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @return the ticket that was removed
 	*/
 	public Ticket removeByKey(java.lang.String key)
-		throws com.liferay.portal.exception.NoSuchTicketException;
+		throws NoSuchTicketException;
 
 	/**
 	* Returns the number of tickets where key = &#63;.
@@ -162,7 +162,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	*/
 	public Ticket findByC_C_T_First(long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Ticket> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTicketException;
+		throws NoSuchTicketException;
 
 	/**
 	* Returns the first ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -188,7 +188,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	*/
 	public Ticket findByC_C_T_Last(long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Ticket> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTicketException;
+		throws NoSuchTicketException;
 
 	/**
 	* Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -216,7 +216,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public Ticket[] findByC_C_T_PrevAndNext(long ticketId, long classNameId,
 		long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Ticket> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTicketException;
+		throws NoSuchTicketException;
 
 	/**
 	* Removes all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
@@ -266,8 +266,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @return the ticket that was removed
 	* @throws NoSuchTicketException if a ticket with the primary key could not be found
 	*/
-	public Ticket remove(long ticketId)
-		throws com.liferay.portal.exception.NoSuchTicketException;
+	public Ticket remove(long ticketId) throws NoSuchTicketException;
 
 	public Ticket updateImpl(Ticket ticket);
 
@@ -278,8 +277,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* @return the ticket
 	* @throws NoSuchTicketException if a ticket with the primary key could not be found
 	*/
-	public Ticket findByPrimaryKey(long ticketId)
-		throws com.liferay.portal.exception.NoSuchTicketException;
+	public Ticket findByPrimaryKey(long ticketId) throws NoSuchTicketException;
 
 	/**
 	* Returns the ticket with the primary key or returns <code>null</code> if it could not be found.

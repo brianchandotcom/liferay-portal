@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.mobile.device.rules.exception.NoSuchActionException;
 import com.liferay.mobile.device.rules.model.MDRAction;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -109,7 +110,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public MDRAction findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the first m d r action in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public MDRAction findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the last m d r action in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	public MDRAction[] findByUuid_PrevAndNext(long actionId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Removes all the m d r actions where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	* @throws NoSuchActionException if a matching m d r action could not be found
 	*/
 	public MDRAction findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the m d r action where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	* @return the m d r action that was removed
 	*/
 	public MDRAction removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the number of m d r actions where uuid = &#63; and groupId = &#63;.
@@ -297,7 +298,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public MDRAction findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the first m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -321,7 +322,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public MDRAction findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the last m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -347,7 +348,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	public MDRAction[] findByUuid_C_PrevAndNext(long actionId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Removes all the m d r actions where uuid = &#63; and companyId = &#63; from the database.
@@ -436,7 +437,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public MDRAction findByRuleGroupInstanceId_First(long ruleGroupInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the first m d r action in the ordered set where ruleGroupInstanceId = &#63;.
@@ -459,7 +460,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	*/
 	public MDRAction findByRuleGroupInstanceId_Last(long ruleGroupInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the last m d r action in the ordered set where ruleGroupInstanceId = &#63;.
@@ -483,7 +484,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	public MDRAction[] findByRuleGroupInstanceId_PrevAndNext(long actionId,
 		long ruleGroupInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator<MDRAction> orderByComparator)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Removes all the m d r actions where ruleGroupInstanceId = &#63; from the database.
@@ -529,8 +530,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	* @return the m d r action that was removed
 	* @throws NoSuchActionException if a m d r action with the primary key could not be found
 	*/
-	public MDRAction remove(long actionId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+	public MDRAction remove(long actionId) throws NoSuchActionException;
 
 	public MDRAction updateImpl(MDRAction mdrAction);
 
@@ -542,7 +542,7 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	* @throws NoSuchActionException if a m d r action with the primary key could not be found
 	*/
 	public MDRAction findByPrimaryKey(long actionId)
-		throws com.liferay.mobile.device.rules.exception.NoSuchActionException;
+		throws NoSuchActionException;
 
 	/**
 	* Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.

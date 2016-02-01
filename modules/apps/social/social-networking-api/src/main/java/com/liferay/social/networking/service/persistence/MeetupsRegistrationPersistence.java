@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 import com.liferay.social.networking.model.MeetupsRegistration;
 
 /**
@@ -110,7 +111,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	*/
 	public MeetupsRegistration findByMeetupsEntryId_First(long meetupsEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the first meetups registration in the ordered set where meetupsEntryId = &#63;.
@@ -133,7 +134,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	*/
 	public MeetupsRegistration findByMeetupsEntryId_Last(long meetupsEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the last meetups registration in the ordered set where meetupsEntryId = &#63;.
@@ -157,7 +158,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	public MeetupsRegistration[] findByMeetupsEntryId_PrevAndNext(
 		long meetupsRegistrationId, long meetupsEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Removes all the meetups registrations where meetupsEntryId = &#63; from the database.
@@ -183,7 +184,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @throws NoSuchMeetupsRegistrationException if a matching meetups registration could not be found
 	*/
 	public MeetupsRegistration findByU_ME(long userId, long meetupsEntryId)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the meetups registration where userId = &#63; and meetupsEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -213,7 +214,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @return the meetups registration that was removed
 	*/
 	public MeetupsRegistration removeByU_ME(long userId, long meetupsEntryId)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the number of meetups registrations where userId = &#63; and meetupsEntryId = &#63;.
@@ -300,7 +301,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	public MeetupsRegistration findByME_S_First(long meetupsEntryId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the first meetups registration in the ordered set where meetupsEntryId = &#63; and status = &#63;.
@@ -325,7 +326,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	*/
 	public MeetupsRegistration findByME_S_Last(long meetupsEntryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the last meetups registration in the ordered set where meetupsEntryId = &#63; and status = &#63;.
@@ -352,7 +353,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	public MeetupsRegistration[] findByME_S_PrevAndNext(
 		long meetupsRegistrationId, long meetupsEntryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsRegistration> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Removes all the meetups registrations where meetupsEntryId = &#63; and status = &#63; from the database.
@@ -402,7 +403,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @throws NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	*/
 	public MeetupsRegistration remove(long meetupsRegistrationId)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	public MeetupsRegistration updateImpl(
 		MeetupsRegistration meetupsRegistration);
@@ -415,7 +416,7 @@ public interface MeetupsRegistrationPersistence extends BasePersistence<MeetupsR
 	* @throws NoSuchMeetupsRegistrationException if a meetups registration with the primary key could not be found
 	*/
 	public MeetupsRegistration findByPrimaryKey(long meetupsRegistrationId)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
+		throws NoSuchMeetupsRegistrationException;
 
 	/**
 	* Returns the meetups registration with the primary key or returns <code>null</code> if it could not be found.

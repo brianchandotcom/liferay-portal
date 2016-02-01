@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchTeamException;
 import com.liferay.portal.model.Team;
 
 /**
@@ -107,7 +108,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the first team in the ordered set where uuid = &#63;.
@@ -129,7 +130,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the last team in the ordered set where uuid = &#63;.
@@ -152,7 +153,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team[] findByUuid_PrevAndNext(long teamId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Removes all the teams where uuid = &#63; from the database.
@@ -178,7 +179,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @throws NoSuchTeamException if a matching team could not be found
 	*/
 	public Team findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the team where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -208,7 +209,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @return the team that was removed
 	*/
 	public Team removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the number of teams where uuid = &#63; and groupId = &#63;.
@@ -294,7 +295,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the first team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -318,7 +319,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the last team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -344,7 +345,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public Team[] findByUuid_C_PrevAndNext(long teamId, java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Removes all the teams where uuid = &#63; and companyId = &#63; from the database.
@@ -429,7 +430,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the first team in the ordered set where groupId = &#63;.
@@ -451,7 +452,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the last team in the ordered set where groupId = &#63;.
@@ -474,7 +475,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team[] findByGroupId_PrevAndNext(long teamId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns all the teams that the user has permission to view where groupId = &#63;.
@@ -527,7 +528,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public Team[] filterFindByGroupId_PrevAndNext(long teamId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<Team> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Removes all the teams where groupId = &#63; from the database.
@@ -561,7 +562,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @throws NoSuchTeamException if a matching team could not be found
 	*/
 	public Team findByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the team where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -591,7 +592,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @return the team that was removed
 	*/
 	public Team removeByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+		throws NoSuchTeamException;
 
 	/**
 	* Returns the number of teams where groupId = &#63; and name = &#63;.
@@ -631,8 +632,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @return the team that was removed
 	* @throws NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team remove(long teamId)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+	public Team remove(long teamId) throws NoSuchTeamException;
 
 	public Team updateImpl(Team team);
 
@@ -643,8 +643,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @return the team
 	* @throws NoSuchTeamException if a team with the primary key could not be found
 	*/
-	public Team findByPrimaryKey(long teamId)
-		throws com.liferay.portal.exception.NoSuchTeamException;
+	public Team findByPrimaryKey(long teamId) throws NoSuchTeamException;
 
 	/**
 	* Returns the team with the primary key or returns <code>null</code> if it could not be found.

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
 import com.liferay.social.networking.model.MeetupsEntry;
 
 /**
@@ -109,7 +110,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	*/
 	public MeetupsEntry findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	/**
 	* Returns the first meetups entry in the ordered set where companyId = &#63;.
@@ -131,7 +132,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	*/
 	public MeetupsEntry findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	/**
 	* Returns the last meetups entry in the ordered set where companyId = &#63;.
@@ -155,7 +156,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	public MeetupsEntry[] findByCompanyId_PrevAndNext(long meetupsEntryId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	/**
 	* Removes all the meetups entries where companyId = &#63; from the database.
@@ -241,7 +242,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	*/
 	public MeetupsEntry findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	/**
 	* Returns the first meetups entry in the ordered set where userId = &#63;.
@@ -263,7 +264,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	*/
 	public MeetupsEntry findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	/**
 	* Returns the last meetups entry in the ordered set where userId = &#63;.
@@ -287,7 +288,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	public MeetupsEntry[] findByUserId_PrevAndNext(long meetupsEntryId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MeetupsEntry> orderByComparator)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	/**
 	* Removes all the meetups entries where userId = &#63; from the database.
@@ -334,7 +335,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	* @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	*/
 	public MeetupsEntry remove(long meetupsEntryId)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	public MeetupsEntry updateImpl(MeetupsEntry meetupsEntry);
 
@@ -346,7 +347,7 @@ public interface MeetupsEntryPersistence extends BasePersistence<MeetupsEntry> {
 	* @throws NoSuchMeetupsEntryException if a meetups entry with the primary key could not be found
 	*/
 	public MeetupsEntry findByPrimaryKey(long meetupsEntryId)
-		throws com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
+		throws NoSuchMeetupsEntryException;
 
 	/**
 	* Returns the meetups entry with the primary key or returns <code>null</code> if it could not be found.

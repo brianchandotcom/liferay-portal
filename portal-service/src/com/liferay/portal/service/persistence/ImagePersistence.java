@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchImageException;
 import com.liferay.portal.model.Image;
 
 /**
@@ -104,7 +105,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public Image findByLtSize_First(int size,
 		com.liferay.portal.kernel.util.OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchImageException;
+		throws NoSuchImageException;
 
 	/**
 	* Returns the first image in the ordered set where size &lt; &#63;.
@@ -126,7 +127,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public Image findByLtSize_Last(int size,
 		com.liferay.portal.kernel.util.OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchImageException;
+		throws NoSuchImageException;
 
 	/**
 	* Returns the last image in the ordered set where size &lt; &#63;.
@@ -149,7 +150,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public Image[] findByLtSize_PrevAndNext(long imageId, int size,
 		com.liferay.portal.kernel.util.OrderByComparator<Image> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchImageException;
+		throws NoSuchImageException;
 
 	/**
 	* Removes all the images where size &lt; &#63; from the database.
@@ -195,8 +196,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @return the image that was removed
 	* @throws NoSuchImageException if a image with the primary key could not be found
 	*/
-	public Image remove(long imageId)
-		throws com.liferay.portal.exception.NoSuchImageException;
+	public Image remove(long imageId) throws NoSuchImageException;
 
 	public Image updateImpl(Image image);
 
@@ -207,8 +207,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @return the image
 	* @throws NoSuchImageException if a image with the primary key could not be found
 	*/
-	public Image findByPrimaryKey(long imageId)
-		throws com.liferay.portal.exception.NoSuchImageException;
+	public Image findByPrimaryKey(long imageId) throws NoSuchImageException;
 
 	/**
 	* Returns the image with the primary key or returns <code>null</code> if it could not be found.

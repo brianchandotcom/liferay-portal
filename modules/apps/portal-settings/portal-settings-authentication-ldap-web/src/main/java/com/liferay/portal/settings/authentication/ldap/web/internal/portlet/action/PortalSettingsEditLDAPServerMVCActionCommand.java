@@ -15,10 +15,6 @@
 package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.action;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException;
-import com.liferay.portal.kernel.ldap.LDAPFilterException;
-import com.liferay.portal.kernel.ldap.LDAPServerNameException;
-import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -36,9 +32,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.ldap.DuplicateLDAPServerNameException;
+import com.liferay.portal.ldap.LDAPServerNameException;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.constants.LDAPConstants;
+import com.liferay.portal.ldap.util.LDAPUtil;
+import com.liferay.portal.ldap.validator.LDAPFilterException;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 
 import java.util.Dictionary;

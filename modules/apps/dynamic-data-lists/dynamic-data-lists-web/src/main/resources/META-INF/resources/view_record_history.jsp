@@ -17,102 +17,40 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
-DDLRecordSet recordSet = record.getRecordSet();
-
-DDMStructure ddmStructure = recordSet.getDDMStructure();
+DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
-PortletURL redirectURL = renderResponse.createRenderURL();
+List<DDLRecordVersion> recordVersions = DDLRecordVersionServiceUtil.getRecordVersions(record.getRecordId());
 
-redirectURL.setParameter("mvcPath", "/edit_record.jsp");
-redirectURL.setParameter("redirect", redirect);
-redirectURL.setParameter("recordId", String.valueOf(record.getRecordId()));
-redirectURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_record_history.jsp");
-portletURL.setParameter("redirect", redirectURL.toString());
-portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
-
-if (ddlDisplayContext.isAdminPortlet()) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirectURL.toString());
-
-	renderResponse.setTitle(LanguageUtil.format(request, "x-history", ddmStructure.getName(locale), false));
-}
+for (DDLRecordVersion recordVersion: recordVersions) {
+	dateSearchEntry.setDate(recordVersion.getCreateDate());
+	request.setAttribute("recordVersion", recordVersion);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+<div>
+	<ul class="list-inline list-unstyled sidebar-header-actions">
+		<li>
+			<liferay-util:include page="/record_version_action.jsp" servletContext="<%= application %>" />
+		</li>
+	</ul>
 
-	<%
-	SearchContainer searchContainer = new SearchContainer(renderRequest, portletURL, new ArrayList(), null);
+	<h4><liferay-ui:message arguments="<%= recordVersion.getVersion() %>" key="version-x" /></h4>
 
-	List headerNames = searchContainer.getHeaderNames();
+	<p>
+		<small class="text-muted">
+			<liferay-ui:message key="author" />: <%= recordVersion.getUserName() %>
+		</small>
+	</p>
 
-	headerNames.add("id");
-	headerNames.add("version");
-	headerNames.add("status");
-	headerNames.add("author");
-	headerNames.add(StringPool.BLANK);
+	<p>
+		<small class="text-muted">
+			<liferay-ui:message key="create-date" />: <%= dateSearchEntry.getName(request) %>
+		</small>
+	</p>
 
-	int total = DDLRecordVersionServiceUtil.getRecordVersionsCount(record.getRecordId());
+</div>
 
-	searchContainer.setTotal(total);
-
-	List<DDLRecordVersion> results = DDLRecordVersionServiceUtil.getRecordVersions(record.getRecordId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-	searchContainer.setResults(results);
-
-	List resultRows = searchContainer.getResultRows();
-
-	for (int i = 0; i < results.size(); i++) {
-		DDLRecordVersion recordVersion = results.get(i);
-
-		recordVersion = recordVersion.toEscapedModel();
-
-		ResultRow row = new ResultRow(recordVersion, recordVersion.getRecordVersionId(), i);
-
-		row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
-
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("mvcPath", "/view_record.jsp");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("recordId", String.valueOf(recordVersion.getRecordId()));
-		rowURL.setParameter("version", recordVersion.getVersion());
-		rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
-
-		// Record version id
-
-		row.addText(String.valueOf(recordVersion.getRecordVersionId()), rowURL);
-
-		// Version
-
-		row.addText(recordVersion.getVersion(), rowURL);
-
-		// Status
-
-		row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
-
-		// Author
-
-		row.addText(PortalUtil.getUserName(recordVersion), rowURL);
-
-		// Action
-
-		row.addJSP("/record_version_action.jsp", "entry-action", application, request, response);
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
-</aui:form>
+<%} %>

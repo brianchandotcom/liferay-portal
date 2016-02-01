@@ -17,11 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
-DDLRecordVersion recordVersion = (DDLRecordVersion)row.getObject();
-
-long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTemplateId"));
+DDLRecordVersion recordVersion = (DDLRecordVersion)request.getAttribute("recordVersion");
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

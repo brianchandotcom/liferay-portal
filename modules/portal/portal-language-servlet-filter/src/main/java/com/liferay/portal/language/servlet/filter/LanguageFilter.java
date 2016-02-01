@@ -44,15 +44,15 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class LanguageFilter extends BasePortalFilter {
 
-	public LanguageFilter(ServletContextHelper servletContextHelper) {
-		_servletContextHelper = servletContextHelper;
+	public LanguageFilter(Bundle bundle) {
+		_bundle = bundle;
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
@@ -79,7 +79,7 @@ public class LanguageFilter extends BasePortalFilter {
 						name = "content/Language_" + languageId + ".properties";
 					}
 
-					URL url = _servletContextHelper.getResource(name);
+					URL url = _bundle.getResource(name);
 
 					if (url == null) {
 						return null;
@@ -159,8 +159,8 @@ public class LanguageFilter extends BasePortalFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);
 
+	private final Bundle _bundle;
 	private final Map<String, ResourceBundle> _resourceBundles =
 		new ConcurrentHashMap<>();
-	private final ServletContextHelper _servletContextHelper;
 
 }

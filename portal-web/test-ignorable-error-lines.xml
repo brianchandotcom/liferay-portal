@@ -10,6 +10,10 @@
 			<contains>TypeError: d.config.doc.defaultView is null</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="">
+			<contains>mutating the [[Prototype]] of an object will cause your code to run very slowly</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-42469">
 			<contains>Permission denied to access property 'type'</contains>
 			<matches></matches>

@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_MY_PROFILE</td>
-	<td>//a[contains(@title,'Profile')]//span/*[name()='svg'][contains(@class,'icon-cog')]</td>
+	<td>//a[contains(.,'My Profile') and contains(@data-qa-id,'goToPublicPages')]</td>
 	<td></td>
 </tr>
 <tr>

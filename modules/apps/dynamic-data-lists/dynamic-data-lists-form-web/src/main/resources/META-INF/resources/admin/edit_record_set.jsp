@@ -30,7 +30,7 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-form") : recordSet.getName(locale));
+renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-form") : LanguageUtil.get(request, "edit-form"));
 %>
 
 <portlet:actionURL name="addRecordSet" var="addRecordSetURL">

@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 %>
 
 <div class="container-fluid-1280">

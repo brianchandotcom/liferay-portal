@@ -325,7 +325,8 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		if (checkStagingPermission) {
 			Boolean hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, groupId, rootPortletId, groupId, rootPortletId, actionId);
+				permissionChecker, groupId, rootPortletId, groupId,
+				rootPortletId, actionId);
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();

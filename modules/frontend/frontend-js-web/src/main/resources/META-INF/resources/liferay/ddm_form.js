@@ -522,7 +522,12 @@ AUI.add(
 							if (Lang.isObject(tipsMap)) {
 								var tip = tipsMap[instance.get('displayLocale')] || tipsMap[defaultLocale];
 
-								tipNode.one('.tooltip-text').html(A.Escape.html(tip));
+								var tooltipTextNode = tipNode.one('.tooltip-text');
+
+								if (tooltipTextNode) {
+									tooltipTextNode.html(A.Escape.html(tip));
+								}
+
 							}
 
 							labelNode.append(tipNode);

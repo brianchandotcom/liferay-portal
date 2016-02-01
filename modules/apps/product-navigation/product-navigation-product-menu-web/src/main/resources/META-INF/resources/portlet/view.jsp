@@ -28,7 +28,7 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 				<span class="company-name"><%= company.getName() %></span>
 			</span>
 
-			<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" image="remove" url="javascript:;" />
+			<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" image="times" markupView="lexicon" url="javascript:;" />
 		</a>
 	</h4>
 

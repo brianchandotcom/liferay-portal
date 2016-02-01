@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.struts;
+package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;

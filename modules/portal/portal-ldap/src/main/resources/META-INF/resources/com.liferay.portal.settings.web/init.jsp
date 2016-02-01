@@ -26,14 +26,14 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException" %><%@
-page import="com.liferay.portal.kernel.ldap.LDAPFilterException" %><%@
-page import="com.liferay.portal.kernel.ldap.LDAPServerNameException" %><%@
-page import="com.liferay.portal.kernel.ldap.LDAPUtil" %><%@
+page import="com.liferay.portal.ldap.DuplicateLDAPServerNameException" %><%@
+page import="com.liferay.portal.ldap.validator.LDAPFilterException" %><%@
+page import="com.liferay.portal.ldap.LDAPServerNameException" %><%@
+page import="com.liferay.portal.ldap.util.LDAPUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory" %><%@
-page import="com.liferay.portal.kernel.security.ldap.PortalLDAPUtil" %><%@
+page import="com.liferay.portal.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@

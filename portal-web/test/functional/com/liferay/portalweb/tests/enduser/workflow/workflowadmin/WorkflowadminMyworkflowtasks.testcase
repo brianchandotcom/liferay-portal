@@ -78,8 +78,6 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#gotoAssignedToMe" />
-
 		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 		</execute>
@@ -91,8 +89,6 @@
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
-
-		<execute macro="Workflow#gotoAssignedToMe" />
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />

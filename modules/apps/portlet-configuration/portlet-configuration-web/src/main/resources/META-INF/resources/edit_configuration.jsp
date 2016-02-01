@@ -27,21 +27,20 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 	</liferay-util:include>
 </c:if>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layout.getGroupId(), ActionKeys.MANAGE_ARCHIVED_SETUPS) && !windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
-	<portlet:renderURL var="archivedSetupsURL">
-		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
-		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
-		<portlet:param name="portletResource" value="<%= portletResource %>" />
-	</portlet:renderURL>
-
-	<div class="archived-setups">
-		<aui:a href="<%= archivedSetupsURL.toString() %>" label="archive-restore-setup" />
-	</div>
-</c:if>
-
 <div class="container-fluid-1280">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layout.getGroupId(), ActionKeys.MANAGE_ARCHIVED_SETUPS) && !windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
+		<portlet:renderURL var="archivedSetupsURL">
+			<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+			<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="portletResource" value="<%= portletResource %>" />
+		</portlet:renderURL>
+
+		<div class="archived-setups">
+			<aui:a href="<%= archivedSetupsURL.toString() %>" label="archive-restore-setup" />
+		</div>
+	</c:if>
 
 	<%
 	ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);

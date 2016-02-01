@@ -283,7 +283,7 @@ if (portletTitleBasedNavigation) {
 								}
 						%>
 
-								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
+								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" markupView="lexicon" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
 
 									<liferay-ddm:html
 										classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
@@ -339,7 +339,7 @@ if (portletTitleBasedNavigation) {
 								String name = "metadata." + ddmStructure.getName(locale, true);
 					%>
 
-								<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" persistState="<%= true %>" title="<%= name %>">
+								<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" markupView="lexicon" persistState="<%= true %>" title="<%= name %>">
 
 									<liferay-ddm:html
 										classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
@@ -511,7 +511,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
+				<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="comments">
 					<liferay-ui:discussion
 						className="<%= DLFileEntryConstants.getClassName() %>"
 						classPK="<%= fileEntryId %>"

@@ -49,26 +49,24 @@ if (!roles.isEmpty()) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:panel-container extended="<%= true %>" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="displaySettingsPanel" persistState="<%= true %>" title="display-settings">
-			<aui:fieldset>
-				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset collapsible="<%= true %>" id="displaySettingsPanel"  label="display-settings">
+			<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
-					<%
-					for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
-					%>
+				<%
+				for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
+				%>
 
-						<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
+					<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</aui:select>
-			</aui:fieldset>
-		</liferay-ui:panel>
+			</aui:select>
+		</aui:fieldset>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="announcementsDisplayedPanel" persistState="<%= true %>" title="announcements-displayed">
+		<aui:fieldset collapsible="<%= true %>" id="announcementsDisplayedPanel" label="announcements-displayed">
 			<aui:input cssClass="customize-announcements-displayed" id="customizeAnnouncementsDisplayed" name="preferences--customizeAnnouncementsDisplayed--" title="customize-announcements-displayed" type="checkbox" value="<%= customizeAnnouncementsDisplayed %>" />
 
 			<div class="<%= customizeAnnouncementsDisplayed ? "" : "hide" %>" id="<portlet:namespace />announcementsDisplayed">
@@ -80,179 +78,170 @@ if (!roles.isEmpty()) {
 					names="<%= tabs1Names %>"
 					param="tabs1"
 					refresh="<%= false %>"
+					type="tabs nav-tabs-default"
 				>
 					<c:if test="<%= !groups.isEmpty() %>">
 						<liferay-ui:section>
-							<aui:fieldset cssClass="scope-section-holder">
 
-								<%
-								List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+							<%
+							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
-								for (Group curGroup : groups) {
-									if (selectedScopeGroupIds.contains(String.valueOf(curGroup.getGroupId()))) {
-										leftList.add(new KeyValuePair(String.valueOf(curGroup.getGroupId()), curGroup.getDescriptiveName(locale)));
-									}
+							for (Group curGroup : groups) {
+								if (selectedScopeGroupIds.contains(String.valueOf(curGroup.getGroupId()))) {
+									leftList.add(new KeyValuePair(String.valueOf(curGroup.getGroupId()), curGroup.getDescriptiveName(locale)));
 								}
+							}
 
-								List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
-								for (Group curGroup : groups) {
-									KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(curGroup.getGroupId()), curGroup.getDescriptiveName(locale));
+							for (Group curGroup : groups) {
+								KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(curGroup.getGroupId()), curGroup.getDescriptiveName(locale));
 
-									if (!leftList.contains(tempKeyValuePair)) {
-										rightList.add(tempKeyValuePair);
-									}
+								if (!leftList.contains(tempKeyValuePair)) {
+									rightList.add(tempKeyValuePair);
 								}
-								%>
+							}
+							%>
 
-								<aui:input name="preferences--selectedScopeGroupIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeGroupIds--" type="hidden" />
 
-								<div id="<portlet:namespace />scopeGroupIdsBoxes">
-									<liferay-ui:input-move-boxes
-										leftBoxName="currentScopeGroupIds"
-										leftList="<%= leftList %>"
-										leftReorder="true"
-										leftTitle="displaying"
-										rightBoxName="availableScopeGroupIds"
-										rightList="<%= rightList %>"
-										rightTitle="available"
-									/>
-								</div>
-							</aui:fieldset>
+							<div id="<portlet:namespace />scopeGroupIdsBoxes">
+								<liferay-ui:input-move-boxes
+									leftBoxName="currentScopeGroupIds"
+									leftList="<%= leftList %>"
+									leftReorder="true"
+									leftTitle="displaying"
+									rightBoxName="availableScopeGroupIds"
+									rightList="<%= rightList %>"
+									rightTitle="available"
+								/>
+							</div>
 						</liferay-ui:section>
 					</c:if>
 
 					<c:if test="<%= !organizations.isEmpty() %>">
 						<liferay-ui:section>
-							<aui:fieldset cssClass="scope-section-holder">
 
-								<%
-								List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+							<%
+							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
-								for (Organization organization : organizations) {
-									if (selectedScopeOrganizationIds.contains(String.valueOf(organization.getOrganizationId()))) {
-										leftList.add(new KeyValuePair(String.valueOf(organization.getOrganizationId()), organization.getName()));
-									}
+							for (Organization organization : organizations) {
+								if (selectedScopeOrganizationIds.contains(String.valueOf(organization.getOrganizationId()))) {
+									leftList.add(new KeyValuePair(String.valueOf(organization.getOrganizationId()), organization.getName()));
 								}
+							}
 
-								List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
-								for (Organization organization : organizations) {
-									KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(organization.getOrganizationId()), organization.getName());
+							for (Organization organization : organizations) {
+								KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(organization.getOrganizationId()), organization.getName());
 
-									if (!leftList.contains(tempKeyValuePair)) {
-										rightList.add(tempKeyValuePair);
-									}
+								if (!leftList.contains(tempKeyValuePair)) {
+									rightList.add(tempKeyValuePair);
 								}
-								%>
+							}
+							%>
 
-								<aui:input name="preferences--selectedScopeOrganizationIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeOrganizationIds--" type="hidden" />
 
-								<div id="<portlet:namespace />scopeOrganizationIdsBoxes">
-									<liferay-ui:input-move-boxes
-										leftBoxName="currentScopeOrganizationIds"
-										leftList="<%= leftList %>"
-										leftReorder="true"
-										leftTitle="displaying"
-										rightBoxName="availableScopeOrganizationIds"
-										rightList="<%= rightList %>"
-										rightTitle="available"
-									/>
-								</div>
-							</aui:fieldset>
+							<div id="<portlet:namespace />scopeOrganizationIdsBoxes">
+								<liferay-ui:input-move-boxes
+									leftBoxName="currentScopeOrganizationIds"
+									leftList="<%= leftList %>"
+									leftReorder="true"
+									leftTitle="displaying"
+									rightBoxName="availableScopeOrganizationIds"
+									rightList="<%= rightList %>"
+									rightTitle="available"
+								/>
+							</div>
 						</liferay-ui:section>
 					</c:if>
 
 					<c:if test="<%= !userGroups.isEmpty() %>">
 						<liferay-ui:section>
-							<aui:fieldset cssClass="scope-section-holder">
 
-								<%
-								List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+							<%
+							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
-								for (UserGroup userGroup : userGroups) {
-									if (selectedScopeUserGroupIds.contains(String.valueOf(userGroup.getUserGroupId()))) {
-										leftList.add(new KeyValuePair(String.valueOf(userGroup.getUserGroupId()), userGroup.getName()));
-									}
+							for (UserGroup userGroup : userGroups) {
+								if (selectedScopeUserGroupIds.contains(String.valueOf(userGroup.getUserGroupId()))) {
+									leftList.add(new KeyValuePair(String.valueOf(userGroup.getUserGroupId()), userGroup.getName()));
 								}
+							}
 
-								List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
-								for (UserGroup userGroup : userGroups) {
-									KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(userGroup.getUserGroupId()), userGroup.getName());
+							for (UserGroup userGroup : userGroups) {
+								KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(userGroup.getUserGroupId()), userGroup.getName());
 
-									if (!leftList.contains(tempKeyValuePair)) {
-										rightList.add(tempKeyValuePair);
-									}
+								if (!leftList.contains(tempKeyValuePair)) {
+									rightList.add(tempKeyValuePair);
 								}
-								%>
+							}
+							%>
 
-								<aui:input name="preferences--selectedScopeUserGroupIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeUserGroupIds--" type="hidden" />
 
-								<div id="<portlet:namespace />scopeUserGroupIdsBoxes">
-									<liferay-ui:input-move-boxes
-										leftBoxName="currentScopeUserGroupIds"
-										leftList="<%= leftList %>"
-										leftReorder="true"
-										leftTitle="displaying"
-										rightBoxName="availableScopeUserGroupIds"
-										rightList="<%= rightList %>"
-										rightTitle="available"
-									/>
-								</div>
-							</aui:fieldset>
+							<div id="<portlet:namespace />scopeUserGroupIdsBoxes">
+								<liferay-ui:input-move-boxes
+									leftBoxName="currentScopeUserGroupIds"
+									leftList="<%= leftList %>"
+									leftReorder="true"
+									leftTitle="displaying"
+									rightBoxName="availableScopeUserGroupIds"
+									rightList="<%= rightList %>"
+									rightTitle="available"
+								/>
+							</div>
 						</liferay-ui:section>
 					</c:if>
 
 					<c:if test="<%= !roles.isEmpty() %>">
 						<liferay-ui:section>
-							<aui:fieldset cssClass="scope-section-holder">
 
-								<%
-								List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+							<%
+							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
-								for (Role role : roles) {
-									if (selectedScopeRoleIds.contains(String.valueOf(role.getRoleId()))) {
-										leftList.add(new KeyValuePair(String.valueOf(role.getRoleId()), role.getTitle(locale)));
-									}
+							for (Role role : roles) {
+								if (selectedScopeRoleIds.contains(String.valueOf(role.getRoleId()))) {
+									leftList.add(new KeyValuePair(String.valueOf(role.getRoleId()), role.getTitle(locale)));
 								}
+							}
 
-								List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
-								for (Role role : roles) {
-									KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(role.getRoleId()), role.getTitle(locale));
+							for (Role role : roles) {
+								KeyValuePair tempKeyValuePair = new KeyValuePair(String.valueOf(role.getRoleId()), role.getTitle(locale));
 
-									if (!leftList.contains(tempKeyValuePair)) {
-										rightList.add(tempKeyValuePair);
-									}
+								if (!leftList.contains(tempKeyValuePair)) {
+									rightList.add(tempKeyValuePair);
 								}
-								%>
+							}
+							%>
 
-								<aui:input name="preferences--selectedScopeRoleIds--" type="hidden" />
+							<aui:input name="preferences--selectedScopeRoleIds--" type="hidden" />
 
-								<div id="<portlet:namespace />scopeRoleIdsBoxes">
-									<liferay-ui:input-move-boxes
-										leftBoxName="currentScopeRoleIds"
-										leftList="<%= leftList %>"
-										leftReorder="true"
-										leftTitle="displaying"
-										rightBoxName="availableScopeRoleIds"
-										rightList="<%= rightList %>"
-										rightTitle="available"
-									/>
-								</div>
-							</aui:fieldset>
+							<div id="<portlet:namespace />scopeRoleIdsBoxes">
+								<liferay-ui:input-move-boxes
+									leftBoxName="currentScopeRoleIds"
+									leftList="<%= leftList %>"
+									leftReorder="true"
+									leftTitle="displaying"
+									rightBoxName="availableScopeRoleIds"
+									rightList="<%= rightList %>"
+									rightTitle="available"
+								/>
+							</div>
 						</liferay-ui:section>
 					</c:if>
 				</liferay-ui:tabs>
 			</div>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
-
-		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

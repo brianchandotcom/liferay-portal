@@ -8,6 +8,12 @@
 		</if>
 	</command>
 
+	<command name="_viewBody">
+		<var name="key_entryComment" value="${workflowComment}" />
+
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />
+	</command>
+
 	<command name="addCP">
 		<execute macro="WorkflowComment#_openComments" />
 
@@ -19,9 +25,9 @@
 
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
-		<var name="key_entryComment" value="${workflowComment}" />
-
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />
+		<execute macro="WorkflowComment#_viewBody">
+			<var name="commentBody" value="${commentBody}" />
+		</execute>
 	</command>
 
 	<command name="viewCP">

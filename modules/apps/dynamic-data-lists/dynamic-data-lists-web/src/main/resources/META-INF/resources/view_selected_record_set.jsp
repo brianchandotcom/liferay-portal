@@ -73,8 +73,9 @@ if (recordSet != null) {
 
 				<liferay-ui:icon
 					cssClass="lfr-icon-action"
-					iconCssClass="icon-plus"
+					icon="plus"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="add-form-template"
 					url="<%= taglibAddFormTemplateURL %>"
 				/>
@@ -99,8 +100,9 @@ if (recordSet != null) {
 
 				<liferay-ui:icon
 					cssClass="lfr-icon-action"
-					iconCssClass="icon-plus"
+					icon="plus"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="add-display-template"
 					url="<%= taglibAddDisplayTemplateURL %>"
 				/>
@@ -126,8 +128,9 @@ if (recordSet != null) {
 
 				<liferay-ui:icon
 					cssClass="lfr-icon-action"
-					iconCssClass="icon-edit"
+					icon="pencil"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="edit-display-template"
 					url="<%= taglibEditDisplayDDMTemplateURL %>"
 				/>
@@ -157,8 +160,9 @@ if (recordSet != null) {
 
 				<liferay-ui:icon
 					cssClass="lfr-icon-action"
-					iconCssClass="icon-edit"
+					icon="pencil"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="edit-form-template"
 					url="<%= taglibEditFormDDMTemplateURL %>"
 				/>
@@ -167,8 +171,9 @@ if (recordSet != null) {
 			<c:if test="<%= ddlDisplayContext.isShowConfigurationIcon() %>">
 				<liferay-ui:icon
 					cssClass="lfr-icon-action lfr-icon-action-configuration"
-					iconCssClass="icon-cog"
+					icon="cog"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="select-list"
 					method="get"
 					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
@@ -189,8 +194,9 @@ if (recordSet != null) {
 
 				<liferay-ui:icon
 					cssClass="lfr-icon-action"
-					iconCssClass="icon-plus"
+					icon="plus"
 					label="<%= true %>"
+					markupView="lexicon"
 					message="add-list"
 					url="<%= taglibAddRecordSetURL %>"
 				/>

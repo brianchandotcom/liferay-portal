@@ -18,15 +18,18 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
+ * @author Roberto Díaz
  */
 @Component(
 	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
@@ -52,6 +55,19 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getStructureType() {
 		return DLFileEntryMetadata.class.getName();
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "metadata-sets");
+	}
+
+	@Override
+	public boolean isShowBackURLInTitleBar() {
+		return true;
 	}
 
 }

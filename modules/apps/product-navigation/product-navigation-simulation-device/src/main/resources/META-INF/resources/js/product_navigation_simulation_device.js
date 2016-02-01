@@ -38,7 +38,7 @@ AUI.add(
 
 		var STR_DEVICES = 'devices';
 
-		var STR_ICON_ROTATE_90 = 'icon-rotate-90';
+		var STR_HIDE = 'hide';
 
 		var STR_INPUT = 'input';
 
@@ -244,7 +244,13 @@ AUI.add(
 								var icon = deviceItem.one('.icon');
 
 								if (icon) {
-									icon.toggleClass(STR_ICON_ROTATE_90);
+									icon.toggleClass(STR_HIDE);
+								}
+
+								var iconRotate = deviceItem.one('.icon-rotate');
+
+								if (iconRotate) {
+									iconRotate.toggleClass(STR_HIDE);
 								}
 							}
 

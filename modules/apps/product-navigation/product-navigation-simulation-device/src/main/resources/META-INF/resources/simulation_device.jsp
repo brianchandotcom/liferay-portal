@@ -23,7 +23,9 @@
 		<div class="devices">
 			<div class="container-fluid default-devices">
 				<div class="col-xs-3 lfr-device-item selected text-center" data-device="smartphone">
-					<span class="icon icon-lg icon-mobile icon-monospaced"></span>
+					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
+
+					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
 
 					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "mobile") %></h5>
 
@@ -31,7 +33,9 @@
 				</div>
 
 				<div class="col-xs-3 lfr-device-item text-center" data-device="tablet">
-					<span class="icon icon-lg icon-monospaced icon-tablet"></span>
+					<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
+
+					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
 
 					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "tablet") %></h5>
 
@@ -39,7 +43,7 @@
 				</div>
 
 				<div class="col-xs-3 lfr-device-item text-center" data-device="desktop">
-					<span class="icon icon-desktop icon-lg icon-monospaced"></span>
+					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
 					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "desktop") %></h5>
 
@@ -47,7 +51,7 @@
 				</div>
 
 				<div class="col-xs-3 lfr-device-item text-center" data-device="autosize">
-					<span class="icon icon-lg icon-monospaced icon-resize-full"></span>
+					<aui:icon cssClass="icon icon-monospaced" image="full-size" markupView="lexicon" />
 
 					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "autosize") %></h5>
 
@@ -61,7 +65,7 @@
 				<aui:input inlineField="<%= true %>" inlineLabel="left" name="height" size="4" value="400" wrapperCssClass="col-xs-5" />
 
 				<span class="col-xs-2 lfr-device-item" data-device="custom">
-					<i class="icon icon-cog icon-lg icon-monospaced"></i>
+					<aui:icon cssClass="icon icon-monospaced" image="cog" markupView="lexicon" />
 				</span>
 			</div>
 		</div>

@@ -22,6 +22,8 @@ public class SiteAdministrationWebKeys {
 
 	public static final String GROUP_PROVIDER = "GROUP_PROVIDER";
 
+	public static final String GROUP_URL_PROVIDER = "GROUP_URL_PROVIDER";
+
 	public static final String RECENT_GROUP_MANAGER = "RECENT_GROUP_MANAGER";
 
 }

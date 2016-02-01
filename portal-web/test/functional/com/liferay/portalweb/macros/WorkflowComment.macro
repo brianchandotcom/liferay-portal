@@ -34,8 +34,9 @@
 
 		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
 
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${workflowComment}" />
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+		<execute macro="PageComment#reply">
+			<var name="commentBody" value="${commentBody}" />
+		</execute>
 
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />

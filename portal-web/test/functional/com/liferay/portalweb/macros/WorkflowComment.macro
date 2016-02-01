@@ -14,7 +14,7 @@
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />
 	</command>
 
-	<command name="addCP">
+	<command name="add">
 		<execute macro="WorkflowComment#_openComments" />
 
 		<execute macro="PageComment#reply">
@@ -30,7 +30,7 @@
 		</execute>
 	</command>
 
-	<command name="viewCP">
+	<command name="view">
 		<execute macro="WorkflowComment#_openComments" />
 
 		<execute macro="WorkflowComment#_viewBody">

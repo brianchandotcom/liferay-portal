@@ -84,7 +84,7 @@
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="WorkflowComment#addCP">
+		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 
@@ -98,7 +98,7 @@
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCP">
+		<execute macro="WorkflowComment#view">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>
@@ -130,7 +130,7 @@
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="WorkflowComment#addCP">
+		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 
@@ -144,7 +144,7 @@
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCP">
+		<execute macro="WorkflowComment#view">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>
@@ -190,13 +190,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="WorkflowComment#addCP">
+		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 
@@ -204,13 +204,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCP">
+		<execute macro="WorkflowComment#view">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>

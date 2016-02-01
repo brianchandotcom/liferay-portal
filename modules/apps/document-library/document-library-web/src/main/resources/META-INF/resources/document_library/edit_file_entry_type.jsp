@@ -44,6 +44,13 @@ if (fileEntryType != null) {
 }
 
 String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields", "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+String headerTitle = (fileEntryType == null) ? LanguageUtil.get(request, "new-document-type") : fileEntryType.getName(locale);
+
+renderResponse.setTitle(headerTitle);
 %>
 
 <div class="container-fluid-1280">
@@ -72,12 +79,6 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="definition" type="hidden" />
 
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			localizeTitle="<%= (fileEntryType == null) %>"
-			title='<%= (fileEntryType == null) ? "new-document-type" : fileEntryType.getName(locale) %>'
-		/>
-
 		<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />
 		<liferay-ui:error exception="<%= NoSuchMetadataSetException.class %>" message="please-enter-a-valid-metadata-set-or-enter-a-metadata-field" />
 		<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
@@ -89,7 +90,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 
 		<aui:fieldset-group cssClass="edit-file-entry-type" markupView="lexicon">
 			<aui:fieldset collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">
-				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+				<aui:input name="name" />
 
 				<aui:input name="description" />
 			</aui:fieldset>
@@ -142,7 +143,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 			</aui:fieldset>
 
 			<c:if test="<%= fileEntryType == null %>">
-				<aui:fieldset label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions" markupView="lexicon">
 					<liferay-ui:input-permissions
 						modelName="<%= DLFileEntryType.class.getName() %>"
 					/>

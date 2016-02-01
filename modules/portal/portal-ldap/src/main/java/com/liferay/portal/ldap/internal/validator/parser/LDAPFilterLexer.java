@@ -1,4 +1,6 @@
-/*
+// $ANTLR 3.0.1 LDAPFilter.g 2016-02-01 08:06:23
+
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -11,8 +13,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-// $ANTLR 3.0.1 LDAPFilter.g 2015-01-28 13:02:45
 
 package com.liferay.portal.ldap.internal.validator.parser;
 
@@ -300,7 +300,7 @@ public class LDAPFilterLexer extends Lexer {
     // $ANTLR start ASCII_LETTER
     public final void mASCII_LETTER() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:146:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+	    // LDAPFilter.g:152:2: ( 'a' .. 'z' | 'A' .. 'Z' )
 	    // LDAPFilter.g:
 	    {
 	    if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -325,8 +325,8 @@ public class LDAPFilterLexer extends Lexer {
     // $ANTLR start DIGIT
     public final void mDIGIT() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:149:15: ( '0' .. '9' )
-	    // LDAPFilter.g:149:18: '0' .. '9'
+	    // LDAPFilter.g:155:15: ( '0' .. '9' )
+	    // LDAPFilter.g:155:18: '0' .. '9'
 	    {
 	    matchRange('0','9'); 
 
@@ -341,8 +341,8 @@ public class LDAPFilterLexer extends Lexer {
     // $ANTLR start DASH
     public final void mDASH() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:150:14: ( '-' )
-	    // LDAPFilter.g:150:16: '-'
+	    // LDAPFilter.g:156:14: ( '-' )
+	    // LDAPFilter.g:156:16: '-'
 	    {
 	    match('-'); 
 
@@ -358,8 +358,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mDOT() throws RecognitionException {
 	try {
 	    int _type = DOT;
-	    // LDAPFilter.g:152:4: ( '.' )
-	    // LDAPFilter.g:152:6: '.'
+	    // LDAPFilter.g:158:4: ( '.' )
+	    // LDAPFilter.g:158:6: '.'
 	    {
 	    match('.'); 
 
@@ -376,8 +376,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mCOLON() throws RecognitionException {
 	try {
 	    int _type = COLON;
-	    // LDAPFilter.g:153:6: ( ':' )
-	    // LDAPFilter.g:153:8: ':'
+	    // LDAPFilter.g:159:6: ( ':' )
+	    // LDAPFilter.g:159:8: ':'
 	    {
 	    match(':'); 
 
@@ -394,8 +394,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mUTF() throws RecognitionException {
 	try {
 	    int _type = UTF;
-	    // LDAPFilter.g:154:4: ( '\\u0080' .. '\\ufffe' )
-	    // LDAPFilter.g:154:6: '\\u0080' .. '\\ufffe'
+	    // LDAPFilter.g:160:4: ( '\\u0080' .. '\\ufffe' )
+	    // LDAPFilter.g:160:6: '\\u0080' .. '\\ufffe'
 	    {
 	    matchRange('\u0080','\uFFFE'); 
 
@@ -412,8 +412,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mASCII_LATIN1() throws RecognitionException {
 	try {
 	    int _type = ASCII_LATIN1;
-	    // LDAPFilter.g:155:13: ( '\\u0000' .. '\\u007f' )
-	    // LDAPFilter.g:155:15: '\\u0000' .. '\\u007f'
+	    // LDAPFilter.g:161:13: ( '\\u0000' .. '\\u007f' )
+	    // LDAPFilter.g:161:15: '\\u0000' .. '\\u007f'
 	    {
 	    matchRange('\u0000','\u007F'); 
 

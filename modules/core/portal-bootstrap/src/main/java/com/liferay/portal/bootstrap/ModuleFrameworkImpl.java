@@ -41,7 +41,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.collections.ServiceTrackerMapFactory;
 import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 import com.liferay.registry.internal.RegistryImpl;
 import com.liferay.registry.internal.ServiceTrackerMapFactoryImpl;
@@ -448,6 +450,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return;
 		}
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		if (registry instanceof RegistryImpl) {
+			RegistryImpl registryImpl = (RegistryImpl)registry;
+
+			registryImpl.closeTrackers();
+		}
+
+		ServiceTrackerMapFactory serviceTrackerMapFactory =
+			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
+
+		if (serviceTrackerMapFactory instanceof ServiceTrackerMapFactoryImpl) {
+			ServiceTrackerMapFactoryImpl serviceTrackerMapFactoryImpl =
+				(ServiceTrackerMapFactoryImpl)serviceTrackerMapFactory;
+
+			serviceTrackerMapFactoryImpl.closeServiceTrackerMaps();
+		}
+
 		_framework.stop();
 
 		FrameworkEvent frameworkEvent = _framework.waitForStop(timeout);
@@ -462,6 +482,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		RegistryUtil.setRegistry(null);
+
+		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(null);
 	}
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.ldap;
+package com.liferay.portal.ldap.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.security.ldap.LDAPFilterValidator;
+import com.liferay.portal.ldap.validator.LDAPFilterValidator;
 
 import java.text.DateFormat;
 

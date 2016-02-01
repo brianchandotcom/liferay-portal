@@ -14,7 +14,7 @@
 
 package com.liferay.portal.ldap.internal;
 
-import com.liferay.portal.kernel.ldap.DummyDirContext;
+import com.liferay.portal.ldap.dummy.DummyDirContext;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.naming.Name;

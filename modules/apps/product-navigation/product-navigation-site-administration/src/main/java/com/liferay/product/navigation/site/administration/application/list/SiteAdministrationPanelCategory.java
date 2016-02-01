@@ -15,6 +15,7 @@
 package com.liferay.product.navigation.site.administration.application.list;
 
 import com.liferay.application.list.BaseJSPPanelCategory;
+import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
@@ -28,6 +29,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.product.navigation.site.administration.constants.SiteAdministrationWebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -79,9 +81,17 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		request.setAttribute(
+			SiteAdministrationWebKeys.GROUP_PROVIDER, _groupProvider);
+
 		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
 
 		return super.includeHeader(request, response);
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupProvider(GroupProvider groupProvider) {
+		_groupProvider = groupProvider;
 	}
 
 	@Override
@@ -92,5 +102,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	private GroupProvider _groupProvider;
 
 }

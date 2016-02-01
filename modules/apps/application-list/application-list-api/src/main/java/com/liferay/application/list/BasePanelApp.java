@@ -30,7 +30,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.site.util.LatentGroupManagerUtil;
 
 import java.io.IOException;
 
@@ -118,6 +117,10 @@ public abstract class BasePanelApp implements PanelApp {
 		}
 	}
 
+	public void setGroupProvider(GroupProvider groupProvider) {
+		this.groupProvider = groupProvider;
+	}
+
 	@Override
 	public void setPortlet(Portlet portlet) {
 		_portlet = portlet;
@@ -155,11 +158,11 @@ public abstract class BasePanelApp implements PanelApp {
 			return null;
 		}
 
-		HttpServletRequest originalRequest =
-			PortalUtil.getOriginalServletRequest(request);
+		if (groupProvider == null) {
+			return null;
+		}
 
-		return LatentGroupManagerUtil.getLatentGroup(
-			originalRequest.getSession());
+		return groupProvider.getGroup(request);
 	}
 
 	protected void setUserNotificationEventLocalService(
@@ -167,6 +170,8 @@ public abstract class BasePanelApp implements PanelApp {
 
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
+
+	protected GroupProvider groupProvider;
 
 	private Portlet _portlet;
 	private UserNotificationEventLocalService

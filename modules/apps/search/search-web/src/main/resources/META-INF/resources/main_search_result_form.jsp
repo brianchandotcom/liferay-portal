@@ -59,11 +59,8 @@ else if (assetRenderer != null) {
 	<%
 	viewURL = searchDisplayContext.checkViewURL(viewURL, currentURL);
 
-	boolean highlightEnabled = (Boolean)request.getAttribute("search.jsp-highlightEnabled");
-	String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
-
-	summary.setHighlight(highlightEnabled);
-	summary.setQueryTerms(queryTerms);
+	summary.setHighlight(searchDisplayContext.isHighlightEnabled());
+	summary.setQueryTerms(searchDisplayContext.getQueryTerms());
 	%>
 
 	<span class="asset-entry">
@@ -105,23 +102,18 @@ else if (assetRenderer != null) {
 				</c:if>
 
 				<c:if test="<%= assetEntry != null %>">
-
-					<%
-					PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
-					%>
-
 					<liferay-ui:asset-tags-summary
 						className="<%= className %>"
 						classPK="<%= classPK %>"
 						paramName="<%= Field.ASSET_TAG_NAMES %>"
-						portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+						portletURL="<%= searchDisplayContext.getPortletURL() %>"
 					/>
 
 					<liferay-ui:asset-categories-summary
 						className="<%= className %>"
 						classPK="<%= classPK %>"
 						paramName="<%= Field.ASSET_CATEGORY_IDS %>"
-						portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+						portletURL="<%= searchDisplayContext.getPortletURL() %>"
 					/>
 				</c:if>
 			</div>

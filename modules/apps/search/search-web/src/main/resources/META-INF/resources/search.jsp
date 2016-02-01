@@ -25,14 +25,7 @@ if (Validator.isNotNull(redirect)) {
 
 long groupId = ParamUtil.getLong(request, "groupId");
 
-String keywords = ParamUtil.getString(request, "keywords");
-
 String format = ParamUtil.getString(request, "format");
-
-PortletURL portletURL = PortletURLUtil.getCurrent(renderRequest, renderResponse);
-
-request.setAttribute("search.jsp-portletURL", portletURL);
-request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack());
 %>
 
 <liferay-ui:header
@@ -50,7 +43,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 	<aui:input name="format" type="hidden" value="<%= format %>" />
 
 	<aui:fieldset id="searchContainer">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" value="<%= HtmlUtil.escape(keywords) %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" value="<%= HtmlUtil.escape(searchDisplayContext.getKeywords()) %>" />
 
 		<aui:field-wrapper inlineField="<%= true %>">
 			<aui:button icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
@@ -179,8 +172,8 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 String pageSubtitle = LanguageUtil.get(request, "search-results");
 String pageKeywords = LanguageUtil.get(request, "search");
 
-if (Validator.isNotNull(keywords)) {
-	pageKeywords = keywords;
+if (Validator.isNotNull(searchDisplayContext.getKeywords())) {
+	pageKeywords = searchDisplayContext.getKeywords();
 
 	if (StringUtil.startsWith(pageKeywords, Field.ASSET_TAG_NAMES + StringPool.COLON)) {
 		pageKeywords = StringUtil.replace(pageKeywords, Field.ASSET_TAG_NAMES + StringPool.COLON, StringPool.BLANK);

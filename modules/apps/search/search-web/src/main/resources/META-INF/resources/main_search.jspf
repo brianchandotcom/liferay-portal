@@ -15,58 +15,7 @@
 --%>
 
 <%
-SearchContainer mainSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-mainSearchSearchContainer.setEmptyResultsMessage(LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchContext.getKeywords()) + "</strong>", false));
-
-searchContext.setAttribute("paginationType", "more");
-searchContext.setEnd(mainSearchSearchContainer.getEnd());
-
-QueryConfig queryConfig = searchContext.getQueryConfig();
-
-queryConfig.setCollatedSpellCheckResultEnabled(searchDisplayContext.isCollatedSpellCheckResultEnabled());
-queryConfig.setCollatedSpellCheckResultScoresThreshold(searchDisplayContext.getCollatedSpellCheckResultDisplayThreshold());
-queryConfig.setQueryIndexingEnabled(searchDisplayContext.isQueryIndexingEnabled());
-queryConfig.setQueryIndexingThreshold(searchDisplayContext.getQueryIndexingThreshold());
-queryConfig.setQuerySuggestionEnabled(searchDisplayContext.isQuerySuggestionsEnabled());
-queryConfig.setQuerySuggestionScoresThreshold(searchDisplayContext.getQuerySuggestionsDisplayThreshold());
-queryConfig.setQuerySuggestionsMax(searchDisplayContext.getQuerySuggestionsMax());
-
-searchContext.setQueryConfig(queryConfig);
-
-searchContext.setStart(mainSearchSearchContainer.getStart());
-
-Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
-
-assetEntriesFacet.setStatic(true);
-
-searchContext.addFacet(assetEntriesFacet);
-
-Facet scopeFacet = new ScopeFacet(searchContext);
-
-scopeFacet.setStatic(true);
-
-searchContext.addFacet(scopeFacet);
-
-List<SearchFacet> searchFacets = searchDisplayContext.getEnabledSearchFacets();
-
-for (SearchFacet searchFacet : searchFacets) {
-	searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration(), searchContext);
-
-	Facet facet = searchFacet.getFacet();
-
-	if (facet == null) {
-		continue;
-	}
-
-	searchContext.addFacet(facet);
-}
-
-Indexer<?> indexer = FacetedSearcher.getInstance();
-
-Hits hits = indexer.search(searchContext);
+Hits hits = searchDisplayContext.getHits();
 %>
 
 <aui:row cssClass='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'>
@@ -74,9 +23,7 @@ Hits hits = indexer.search(searchContext);
 		<aui:col id="facetNavigation" span="<%= 2 %>">
 
 			<%
-			searchFacets = ListUtil.sort(searchFacets, SearchFacetComparator.INSTANCE);
-
-			for (SearchFacet searchFacet : searchFacets) {
+			for (SearchFacet searchFacet : ListUtil.sort(searchDisplayContext.getEnabledSearchFacets(), SearchFacetComparator.INSTANCE)) {
 				if (searchFacet.isStatic()) {
 					continue;
 				}
@@ -124,24 +71,11 @@ Hits hits = indexer.search(searchContext);
 	</c:if>
 
 	<aui:col cssClass="result" first="<%= !searchDisplayContext.isShowMenu() %>" span="<%= 10 %>">
-
-		<%
-		String[] queryTerms = hits.getQueryTerms();
-
-		request.setAttribute("search.jsp-highlightEnabled", queryConfig.isHighlightEnabled());
-		request.setAttribute("search.jsp-queryTerms", queryTerms);
-		%>
-
 		<%@ include file="/main_search_suggest.jspf" %>
 
 		<liferay-ui:search-container
-			searchContainer="<%= mainSearchSearchContainer %>"
-			total="<%= hits.getLength() %>"
+			searchContainer="<%= searchDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= hits.toList() %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.search.Document"
 				escapedModel="<%= false %>"
@@ -160,7 +94,7 @@ Hits hits = indexer.search(searchContext);
 						<td valign="top">
 							<div class="container">
 								<code>
-									<%= HtmlUtil.escape(IndexSearcherHelperUtil.getQueryString(searchContext, hits.getQuery())) %>
+									<%= HtmlUtil.escape(IndexSearcherHelperUtil.getQueryString(searchDisplayContext.getSearchContext(), hits.getQuery())) %>
 								</code>
 							</div>
 						</td>

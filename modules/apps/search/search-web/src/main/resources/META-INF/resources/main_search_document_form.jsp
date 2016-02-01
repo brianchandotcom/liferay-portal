@@ -65,23 +65,18 @@ if (assetRendererFactory != null) {
 
 	<c:if test="<%= (assetEntry != null) && (ArrayUtil.isNotEmpty(assetEntry.getCategoryIds()) || ArrayUtil.isNotEmpty(assetEntry.getTagNames())) %>">
 		<div class="asset-entry-content">
-
-			<%
-			PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
-			%>
-
 			<liferay-ui:asset-tags-summary
 				className="<%= entryClassName %>"
 				classPK="<%= entryClassPK %>"
 				paramName="<%= Field.ASSET_TAG_NAMES %>"
-				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				portletURL="<%= searchDisplayContext.getPortletURL() %>"
 			/>
 
 			<liferay-ui:asset-categories-summary
 				className="<%= entryClassName %>"
 				classPK="<%= entryClassPK %>"
 				paramName="<%= Field.ASSET_CATEGORY_IDS %>"
-				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				portletURL="<%= searchDisplayContext.getPortletURL() %>"
 			/>
 		</div>
 	</c:if>

@@ -15,7 +15,7 @@
 --%>
 
 <div class="search-suggested-spelling">
-	<c:if test="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !Validator.equals(hits.getCollatedSpellCheckResult(), searchContext.getKeywords()) %>">
+	<c:if test="<%= searchDisplayContext.isCollatedSpellCheckResultEnabled() && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !Validator.equals(hits.getCollatedSpellCheckResult(), searchDisplayContext.getKeywords()) %>">
 		<ul class="list-inline suggested-keywords">
 			<li class="label label-default">
 				<liferay-ui:message key="did-you-mean" />:
@@ -29,7 +29,7 @@
 				<aui:a href="javascript:;" onclick="<%= taglibSearchCollatedKeywords %>">
 
 					<%
-					KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(hits.getCollatedSpellCheckResult(), searchContext.getKeywords());
+					KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(hits.getCollatedSpellCheckResult(), searchDisplayContext.getKeywords());
 
 					for (String suggestedKeyword : keywordsSuggestionHolder.getSuggestedKeywords()) {
 					%>
@@ -47,7 +47,7 @@
 		</ul>
 	</c:if>
 
-	<c:if test="<%= searchDisplayContext.isQuerySuggestionsEnabled() && Validator.isNotNull(hits.getQuerySuggestions()) %>">
+	<c:if test="<%= searchDisplayContext.isQuerySuggestionsEnabled() && ArrayUtil.isNotEmpty(hits.getQuerySuggestions()) %>">
 		<ul class="list-inline related-queries">
 			<li class="label label-default">
 				<liferay-ui:message key="related-queries" />:
@@ -57,7 +57,7 @@
 			for (String querySuggestion : hits.getQuerySuggestions()) {
 			%>
 
-				<c:if test="<%= Validator.isNotNull(querySuggestion) && !querySuggestion.equals(searchContext.getKeywords()) %>">
+				<c:if test="<%= Validator.isNotNull(querySuggestion) && !querySuggestion.equals(searchDisplayContext.getKeywords()) %>">
 					<li>
 
 						<%
@@ -67,7 +67,7 @@
 						<aui:a href="javascript:;" onClick="<%= taglibOnClick %>">
 
 							<%
-							KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(querySuggestion, searchContext.getKeywords());
+							KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(querySuggestion, searchDisplayContext.getKeywords());
 
 							for (String suggestedKeyword : keywordsSuggestionHolder.getSuggestedKeywords()) {
 							%>

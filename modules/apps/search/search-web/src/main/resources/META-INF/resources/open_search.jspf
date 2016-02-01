@@ -60,9 +60,9 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 		delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM + i, SearchContainer.DEFAULT_DELTA);
 	}
 
-	SearchContainer openSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, delta, portletURL, null, LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
+	SearchContainer openSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, delta, searchDisplayContext.getPortletURL(), null, LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchDisplayContext.getKeywords()) + "</strong>", false));
 
-	String xml = openSearch.search(request, groupId, themeDisplay.getUserId(), keywords, openSearchSearchContainer.getCur(), openSearchSearchContainer.getDelta(), format);
+	String xml = openSearch.search(request, groupId, themeDisplay.getUserId(), searchDisplayContext.getKeywords(), openSearchSearchContainer.getCur(), openSearchSearchContainer.getDelta(), format);
 
 	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
@@ -147,7 +147,7 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 						className="<%= entryClassName %>"
 						classPK="<%= entryClassPK %>"
 						paramName="<%= Field.ASSET_TAG_NAMES %>"
-						portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+						portletURL="<%= searchDisplayContext.getPortletURL() %>"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
@@ -166,7 +166,7 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 							<portlet:param name="struts_action" value="/search/search" />
 							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<portlet:param name="primarySearch" value="<%= openSearch.getClassName() %>" />
-							<portlet:param name="keywords" value="<%= HtmlUtil.escape(keywords) %>" />
+							<portlet:param name="keywords" value="<%= HtmlUtil.escape(searchDisplayContext.getKeywords()) %>" />
 							<portlet:param name="format" value="<%= format %>" />
 						</portlet:renderURL>
 
@@ -185,7 +185,7 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 
 <c:if test="<%= totalResults == 0 %>">
 	<div class="no-results">
-		<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(keywords) + "</strong>" %>' key="no-results-were-found-that-matched-the-keywords-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(searchDisplayContext.getKeywords()) + "</strong>" %>' key="no-results-were-found-that-matched-the-keywords-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 

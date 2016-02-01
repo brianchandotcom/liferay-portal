@@ -9,28 +9,6 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="Pause" locator1="1000" />
-
-		<if>
-			<equals arg1="${workflowTaskCompleted}" arg2="true" />
-			<then>
-				<execute macro="Workflow#_gotoCompletedFilter" />
-
-				<execute macro="Workflow#gotoAssetViaTableTitle">
-					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Workflow#gotoAssignedToMyRoles" />
-
-				<execute macro="Workflow#gotoAssetViaTableTitle">
-					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
-				</execute>
-			</else>
-		</if>
-
-		<execute function="Pause" locator1="1000" />
-
 		<execute macro="WorkflowComment#_openComments" />
 
 		<execute macro="PageComment#reply">

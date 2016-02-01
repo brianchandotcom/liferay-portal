@@ -16,6 +16,7 @@ package com.liferay.image.gallery.display.kernel.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
 import java.util.List;
@@ -39,6 +40,11 @@ public class BaseIGViewFileVersionDisplayContext
 		super(uuid, parentIGDisplayContext, request, response);
 
 		this.fileVersion = fileVersion;
+	}
+
+	@Override
+	public Menu getMenu() throws PortalException {
+		return parentDisplayContext.getMenu();
 	}
 
 	@Override

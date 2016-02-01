@@ -38,6 +38,7 @@ if (discussionCommentIterator != null) {
 			break;
 		}
 
+		request.setAttribute("liferay-ui:discussion:depth", 0);
 		request.setAttribute("liferay-ui:discussion:discussion", discussion);
 		request.setAttribute("liferay-ui:discussion:discussionComment", discussionCommentIterator.next());
 %>

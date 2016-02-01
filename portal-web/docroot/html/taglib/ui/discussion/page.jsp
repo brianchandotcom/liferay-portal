@@ -105,25 +105,26 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 							<c:choose>
 								<c:when test="<%= commentSectionDisplayContext.isReplyButtonVisible() %>">
-									<aui:row fluid="<%= true %>">
-										<div class="lfr-discussion-details">
-											<liferay-ui:user-display
-												displayStyle="2"
-												showUserName="<%= false %>"
-												userId="<%= discussionTaglibHelper.getUserId() %>"
-											/>
+									<div class="card panel">
+										<div class="panel-body">
+											<div class="lfr-discussion-details">
+												<liferay-ui:user-portrait
+													cssClass="user-icon-lg"
+													userId="<%= discussionTaglibHelper.getUserId() %>"
+												/>
+											</div>
+
+											<div class="lfr-discussion-body">
+												<liferay-ui:input-editor configKey="commentEditor" contents="" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0ReplyOnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" skipEditorLoading="<%= skipEditorLoading %>" />
+
+												<aui:input name="postReplyBody0" type="hidden" />
+
+												<aui:button-row>
+													<aui:button cssClass="bt-lg btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
+												</aui:button-row>
+											</div>
 										</div>
-
-										<div class="lfr-discussion-body">
-											<liferay-ui:input-editor configKey="commentEditor" contents="" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0ReplyOnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" skipEditorLoading="<%= skipEditorLoading %>" />
-
-											<aui:input name="postReplyBody0" type="hidden" />
-
-											<aui:button-row>
-												<aui:button cssClass="bt-lg btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
-											</aui:button-row>
-										</div>
-									</aui:row>
+									</div>
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:icon
@@ -141,7 +142,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				<c:if test="<%= commentSectionDisplayContext.isMessageThreadVisible() %>">
 					<a name="<%= randomNamespace %>messages_top"></a>
 
-					<aui:row>
+					<div>
 
 						<%
 						int index = 0;
@@ -161,6 +162,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								break;
 							}
 
+							request.setAttribute("liferay-ui:discussion:depth", 0);
 							request.setAttribute("liferay-ui:discussion:discussion", discussion);
 							request.setAttribute("liferay-ui:discussion:discussionComment", discussionCommentIterator.next());
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
@@ -180,7 +182,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
 							<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
 						</c:if>
-					</aui:row>
+					</div>
 				</c:if>
 			</aui:form>
 		</div>

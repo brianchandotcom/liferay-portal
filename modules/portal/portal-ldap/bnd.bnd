@@ -7,6 +7,10 @@ Export-Package:\
 	com.liferay.portal.ldap.configuration,\
 	com.liferay.portal.ldap.constants,\
 	com.liferay.portal.ldap.exportimport.configuration
+Include-Resource:\
+	@../../../lib/portal/antlr2.jar,\
+	@../../../lib/portal/antlr3.jar,\
+	@../../../lib/portal/antlr3-runtime.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LDAP
 -include: ../../../marketplace/platform/bnd.bnd

@@ -163,6 +163,9 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 		request.setAttribute(
 			"liferay-frontend:management-bar-sort:orderByCol", _orderByCol);
 		request.setAttribute(
+			"liferay-frontend:management-bar-sort:orderByColLabel",
+			_orderColumns.get(_orderByCol));
+		request.setAttribute(
 			"liferay-frontend:management-bar-sort:orderByType", _orderByType);
 		request.setAttribute(
 			"liferay-frontend:management-bar-sort:portletURL", _portletURL);

@@ -96,6 +96,129 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			</c:if>
 		</div>
 	</c:when>
+	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(entries) && (entries.size() == 1) %>">
+		<%
+		String articleId = entries.get(0);
+
+		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(scopeGroupId, articleId);
+
+		long classPK = JournalArticleAssetRenderer.getClassPK(article);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), classPK);
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
+		%>
+
+		<div class="sidebar-header">
+			<h4><%= assetEntry.getTitle(locale) %></h4>
+
+			<div>
+				<liferay-ui:message key="entry" />
+			</div>
+		</div>
+
+		<aui:nav-bar>
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="details" selected="<%= true %>" />
+			</aui:nav>
+		</aui:nav-bar>
+
+		<div class="sidebar-body">
+			<h5><liferay-ui:message key="id" /></h5>
+
+			<p>
+				<%= article.getArticleId() %>
+			</p>
+
+			<h5><liferay-ui:message key="version" /></h5>
+
+			<p>
+				<%= article.getVersion() %>
+			</p>
+
+			<h5><liferay-ui:message key="status" /></h5>
+
+			<p>
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+			</p>
+
+			<h5><liferay-ui:message key="title" /></h5>
+
+			<p>
+				<%= article.getTitle(locale) %>
+			</p>
+
+			<c:if test="<%= ddmStructure != null %>">
+				<h5><liferay-ui:message key="structure" /></h5>
+
+				<p>
+					<%= ddmStructure.getName(locale) %>
+				</p>
+			</c:if>
+
+			<c:if test="<%= ddmTemplate != null %>">
+				<h5><liferay-ui:message key="template" /></h5>
+
+				<p>
+					<%= ddmTemplate.getName(locale) %>
+				</p>
+			</c:if>
+
+			<div class="lfr-asset-tags">
+				<liferay-ui:asset-tags-summary
+				className="<%= JournalArticle.class.getName() %>"
+				classPK="<%= classPK %>"
+				message="tags"
+				/>
+			</div>
+
+			<h5><liferay-ui:message key="priority" /></h5>
+
+			<p>
+				<%= assetEntry.getPriority() %>
+			</p>
+
+			<%
+				Date expirationDate = article.getExpirationDate();
+
+				Date reviewDate = article.getReviewDate();
+			%>
+
+			<h5><liferay-ui:message key="display-date" /></h5>
+
+			<p>
+				<%= dateFormatDateTime.format(article.getDisplayDate()) %>
+			</p>
+
+			<h5><liferay-ui:message key="expiration-date" /></h5>
+
+			<p>
+				<c:choose>
+					<c:when test="<%= expirationDate != null %>">
+						<%= dateFormatDateTime.format(expirationDate) %>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="never-expire" />
+					</c:otherwise>
+				</c:choose>
+			</p>
+
+			<h5><liferay-ui:message key="review-date" /></h5>
+
+			<p>
+				<c:choose>
+					<c:when test="<%= reviewDate != null %>">
+						<%= dateFormatDateTime.format(reviewDate) %>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="never-review" />
+					</c:otherwise>
+				</c:choose>
+			</p>
+		</div>
+	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-are-selected" /></h4>

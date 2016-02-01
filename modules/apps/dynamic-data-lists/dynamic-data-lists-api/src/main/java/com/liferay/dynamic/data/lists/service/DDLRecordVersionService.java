@@ -72,6 +72,10 @@ public interface DDLRecordVersionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecordVersion> getRecordVersions(long recordId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordVersion> getRecordVersions(long recordId, int start,
 		int end, OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws PortalException;

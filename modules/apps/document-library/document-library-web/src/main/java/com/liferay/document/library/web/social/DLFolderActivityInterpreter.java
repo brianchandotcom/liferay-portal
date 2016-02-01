@@ -15,7 +15,9 @@
 package com.liferay.document.library.web.social;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.util.DLResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -47,6 +49,11 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		return "/document_library/find_folder?folderId=" +
 			activity.getClassPK();
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return DLResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

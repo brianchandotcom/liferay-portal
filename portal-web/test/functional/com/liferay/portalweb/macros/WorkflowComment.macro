@@ -18,7 +18,7 @@
 		<execute macro="WorkflowComment#_openComments" />
 
 		<execute macro="PageComment#reply">
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentBody" value="${workflowComment}" />
 		</execute>
 
 		<execute macro="WorkflowComment#_openComments" />
@@ -26,7 +26,7 @@
 		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 
 		<execute macro="WorkflowComment#_viewBody">
-			<var name="commentBody" value="${commentBody}" />
+			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>
 
@@ -34,7 +34,7 @@
 		<execute macro="WorkflowComment#_openComments" />
 
 		<execute macro="WorkflowComment#_viewBody">
-			<var name="commentBody" value="${commentBody}" />
+			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>
 </definition>

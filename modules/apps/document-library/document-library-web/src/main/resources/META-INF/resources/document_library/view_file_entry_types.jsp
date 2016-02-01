@@ -17,15 +17,32 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 %>
 
 <div class="container-fluid-1280">
-	<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="includeBasicFileEntryType" value="<%= Boolean.FALSE.toString() %>" />
-	</liferay-util:include>
+	<aui:nav-bar markupView="lexicon">
+		<aui:nav-bar-search>
+			<div class="form-search">
+				<liferay-portlet:renderURL varImpl="searchURL">
+					<portlet:param name="mvcPath" value="/document_library/view_file_entry_types.jsp" />
+				</liferay-portlet:renderURL>
+
+				<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</div>
+		</aui:nav-bar-search>
+	</aui:nav-bar>
 
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />
 
@@ -72,4 +89,15 @@ portletURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp"
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
+
+	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
+		<portlet:renderURL var="addFileEntryTypeURL">
+			<portlet:param name="mvcPath" value="/document_library/edit_file_entry_type.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu>
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addFileEntryTypeURL %>" />
+		</liferay-frontend:add-menu>
+	</c:if>
 </div>

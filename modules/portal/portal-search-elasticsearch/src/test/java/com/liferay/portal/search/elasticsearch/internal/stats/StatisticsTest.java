@@ -32,9 +32,11 @@ public class StatisticsTest extends BaseStatisticsTestCase {
 	}
 
 	@Override
-	protected IndexingFixture createIndexingFixture() throws Exception {
+	protected IndexingFixture createIndexingFixture(String indexName)
+		throws Exception {
+
 		return new ElasticsearchIndexingFixture(
-			StatisticsTest.class.getSimpleName());
+			StatisticsTest.class.getSimpleName(), indexName);
 	}
 
 }

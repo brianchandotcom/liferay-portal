@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch.internal.index;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.internal.cluster.TestCluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
@@ -57,13 +58,6 @@ public class CompanyIndexFactoryTest {
 	}
 
 	@Test
-	public void testActivate() throws Exception {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		_companyIndexFactory.activate(properties);
-	}
-
-	@Test
 	public void testAdditionalIndexConfigurations() throws Exception {
 		_companyIndexFactory.setAdditionalIndexConfigurations(
 			"index.number_of_replicas: 1\nindex.number_of_shards: 2");
@@ -88,6 +82,25 @@ public class CompanyIndexFactoryTest {
 		String field = indexOneDocument();
 
 		assertAnalyzer(field, "kuromoji_liferay_custom");
+	}
+
+	@Test
+	public void testCreateIndicesWithBlankStrings() throws Exception {
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("additionalIndexConfigurations", StringPool.BLANK);
+		properties.put("additionalTypeMappings", StringPool.SPACE);
+
+		_companyIndexFactory.activate(properties);
+
+		createIndices();
+	}
+
+	@Test
+	public void testCreateIndicesWithEmptyConfiguration() throws Exception {
+		_companyIndexFactory.activate(new HashMap<String, Object>());
+
+		createIndices();
 	}
 
 	@Test

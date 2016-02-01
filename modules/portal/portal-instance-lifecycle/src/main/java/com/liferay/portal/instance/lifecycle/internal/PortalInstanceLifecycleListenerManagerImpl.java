@@ -38,6 +38,15 @@ public class PortalInstanceLifecycleListenerManagerImpl
 	implements PortalInstanceLifecycleManager {
 
 	@Override
+	public void preregisterCompany(long companyId) {
+		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
+				_portalInstanceLifecycleListeners) {
+
+			preregisterCompany(portalInstanceLifecycleListener, companyId);
+		}
+	}
+
+	@Override
 	public void registerCompany(Company company) {
 		_companies.add(company);
 
@@ -77,6 +86,13 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		for (Company company : _companies) {
 			registerCompany(portalInstanceLifecycleListener, company);
 		}
+	}
+
+	protected void preregisterCompany(
+		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
+		long companyId) {
+
+		portalInstanceLifecycleListener.portalInstancePreregistered(companyId);
 	}
 
 	protected void registerCompany(

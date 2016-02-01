@@ -36,8 +36,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 	<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
 			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 				<portlet:param name="major" value="true" />
@@ -56,8 +55,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 
 		<c:if test="<%= !layoutRevision.isHead() && !layoutRevision.isPending() %>">
 			<portlet:actionURL name="deleteLayoutRevision" var="deleteURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 				<portlet:param name="updateRecentLayoutRevisionId" value="<%= String.valueOf(updateRecentLayoutRevisionId) %>" />
 			</portlet:actionURL>

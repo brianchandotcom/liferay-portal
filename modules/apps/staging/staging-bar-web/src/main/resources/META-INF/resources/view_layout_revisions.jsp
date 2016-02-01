@@ -35,6 +35,10 @@ else {
 List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutSetBranchId, LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionIdComparator(true));
 %>
 
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="navigationName" value="history" />
+</liferay-util:include>
+
 <div class="container-fluid-1280">
 	<c:if test="<%= !rootLayoutRevisions.isEmpty() %>">
 		<c:if test="<%= rootLayoutRevisions.size() > 1 %>">

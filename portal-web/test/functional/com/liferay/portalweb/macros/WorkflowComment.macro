@@ -31,36 +31,10 @@
 	</command>
 
 	<command name="viewCP">
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-		<var name="key_workflowComment" value="${workflowComment}" />
+		<execute macro="WorkflowComment#_openComments" />
 
-		<if>
-			<equals arg1="${workflowTaskCompleted}" arg2="true" />
-			<then>
-				<execute macro="Workflow#_gotoCompletedFilter" />
-
-				<execute macro="Workflow#gotoAssetViaTableTitle">
-					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Workflow#gotoAssignedToMyRoles" />
-
-				<execute macro="Workflow#gotoAssetViaTableTitle">
-					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
-				</execute>
-			</else>
-		</if>
-
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="MyWorkflowTasksTask#COMMENTS" value1="Comments" />
-			</then>
-		</if>
-
-		<var name="key_entryComment" value="${workflowComment}" />
-
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />
+		<execute macro="WorkflowComment#_viewBody">
+			<var name="commentBody" value="${commentBody}" />
+		</execute>
 	</command>
 </definition>

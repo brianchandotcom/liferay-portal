@@ -92,7 +92,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		long companyId) {
 
-		portalInstanceLifecycleListener.preregisterPortalInstance(companyId);
+		portalInstanceLifecycleListener.portalInstancePreregistered(companyId);
 	}
 
 	protected void registerCompany(

@@ -30,6 +30,11 @@ public class SearchIndexPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
+	public void portalInstancePreregistered(long companyId) {
+		_searchEngineHelper.initialize(companyId);
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_searchEngineHelper.initialize(company.getCompanyId());
 	}
@@ -39,11 +44,6 @@ public class SearchIndexPortalInstanceLifecycleListener
 		_searchEngineHelper.removeCompany(company.getCompanyId());
 	}
 
-	@Override
-	public void preregisterPortalInstance(long companyId) {
-		_searchEngineHelper.initialize(companyId);
-	}
-	
 	@Reference(unbind = "-")
 	protected void setSearchEngineHelper(
 		SearchEngineHelper searchEngineHelper) {

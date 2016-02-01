@@ -23,15 +23,15 @@ public abstract class BasePortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
 
 	@Override
+	public void portalInstancePreregistered(long companyId) {
+	}
+
+	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-	}
-
-	@Override
-	public void preregisterPortalInstance(long companyId) {
 	}
 
 	protected ClassLoader getClassLoader() {

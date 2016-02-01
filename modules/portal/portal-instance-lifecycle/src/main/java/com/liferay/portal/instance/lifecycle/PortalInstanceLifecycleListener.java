@@ -21,10 +21,10 @@ import com.liferay.portal.model.Company;
  */
 public interface PortalInstanceLifecycleListener {
 
+	public void portalInstancePreregistered(long companyId);
+
 	public void portalInstanceRegistered(Company company) throws Exception;
 
 	public void portalInstanceUnregistered(Company company) throws Exception;
 
-	public void preregisterPortalInstance(long companyId);
-	
 }

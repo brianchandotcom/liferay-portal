@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.ratings.exception.NoSuchStatsException;
 import com.liferay.portlet.ratings.model.RatingsStats;
 
 /**
@@ -49,7 +50,7 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	* @throws NoSuchStatsException if a matching ratings stats could not be found
 	*/
 	public RatingsStats findByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.ratings.exception.NoSuchStatsException;
+		throws NoSuchStatsException;
 
 	/**
 	* Returns the ratings stats where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -79,7 +80,7 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	* @return the ratings stats that was removed
 	*/
 	public RatingsStats removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.ratings.exception.NoSuchStatsException;
+		throws NoSuchStatsException;
 
 	/**
 	* Returns the number of ratings statses where classNameId = &#63; and classPK = &#63;.
@@ -119,8 +120,7 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	* @return the ratings stats that was removed
 	* @throws NoSuchStatsException if a ratings stats with the primary key could not be found
 	*/
-	public RatingsStats remove(long statsId)
-		throws com.liferay.portlet.ratings.exception.NoSuchStatsException;
+	public RatingsStats remove(long statsId) throws NoSuchStatsException;
 
 	public RatingsStats updateImpl(RatingsStats ratingsStats);
 
@@ -132,7 +132,7 @@ public interface RatingsStatsPersistence extends BasePersistence<RatingsStats> {
 	* @throws NoSuchStatsException if a ratings stats with the primary key could not be found
 	*/
 	public RatingsStats findByPrimaryKey(long statsId)
-		throws com.liferay.portlet.ratings.exception.NoSuchStatsException;
+		throws NoSuchStatsException;
 
 	/**
 	* Returns the ratings stats with the primary key or returns <code>null</code> if it could not be found.

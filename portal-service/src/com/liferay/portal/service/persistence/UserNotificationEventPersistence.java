@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchUserNotificationEventException;
 import com.liferay.portal.model.UserNotificationEvent;
 
 /**
@@ -108,7 +109,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where uuid = &#63;.
@@ -130,7 +131,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where uuid = &#63;.
@@ -154,7 +155,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent[] findByUuid_PrevAndNext(
 		long userNotificationEventId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where uuid = &#63; from the database.
@@ -247,7 +248,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -273,7 +274,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -300,7 +301,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent[] findByUuid_C_PrevAndNext(
 		long userNotificationEventId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where uuid = &#63; and companyId = &#63; from the database.
@@ -388,7 +389,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63;.
@@ -410,7 +411,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63;.
@@ -434,7 +435,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent[] findByUserId_PrevAndNext(
 		long userNotificationEventId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; from the database.
@@ -521,7 +522,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByType_First(java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where type = &#63;.
@@ -543,7 +544,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByType_Last(java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where type = &#63;.
@@ -567,7 +568,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent[] findByType_PrevAndNext(
 		long userNotificationEventId, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where type = &#63; from the database.
@@ -660,7 +661,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_First(long userId,
 		int deliveryType,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63;.
@@ -685,7 +686,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByU_DT_Last(long userId, int deliveryType,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63;.
@@ -712,7 +713,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent[] findByU_DT_PrevAndNext(
 		long userNotificationEventId, long userId, int deliveryType,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and deliveryType = &#63; from the database.
@@ -807,7 +808,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_D_First(long userId,
 		boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and delivered = &#63;.
@@ -832,7 +833,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByU_D_Last(long userId, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and delivered = &#63;.
@@ -859,7 +860,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent[] findByU_D_PrevAndNext(
 		long userNotificationEventId, long userId, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and delivered = &#63; from the database.
@@ -953,7 +954,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByU_A_First(long userId, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and archived = &#63;.
@@ -978,7 +979,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	*/
 	public UserNotificationEvent findByU_A_Last(long userId, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and archived = &#63;.
@@ -1004,7 +1005,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent[] findByU_A_PrevAndNext(
 		long userNotificationEventId, long userId, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and archived = &#63; from the database.
@@ -1104,7 +1105,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_D_First(long userId,
 		int deliveryType, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1132,7 +1133,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_D_Last(long userId,
 		int deliveryType, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1162,7 +1163,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 		long userNotificationEventId, long userId, int deliveryType,
 		boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; from the database.
@@ -1264,7 +1265,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_A_First(long userId,
 		int deliveryType, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and archived = &#63;.
@@ -1292,7 +1293,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_A_Last(long userId,
 		int deliveryType, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and archived = &#63;.
@@ -1322,7 +1323,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 		long userNotificationEventId, long userId, int deliveryType,
 		boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63; from the database.
@@ -1424,7 +1425,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_D_A_First(long userId,
 		boolean delivered, boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1452,7 +1453,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_D_A_Last(long userId,
 		boolean delivered, boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1482,7 +1483,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 		long userNotificationEventId, long userId, boolean delivered,
 		boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; from the database.
@@ -1586,7 +1587,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_A_A_First(long userId,
 		boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -1614,7 +1615,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_A_A_Last(long userId,
 		boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -1644,7 +1645,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 		long userNotificationEventId, long userId, boolean actionRequired,
 		boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63; from the database.
@@ -1756,7 +1757,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_T_DT_D_First(long userId,
 		java.lang.String type, int deliveryType, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1786,7 +1787,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_T_DT_D_Last(long userId,
 		java.lang.String type, int deliveryType, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1818,7 +1819,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 		long userNotificationEventId, long userId, java.lang.String type,
 		int deliveryType, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; from the database.
@@ -1932,7 +1933,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_D_A_First(long userId,
 		int deliveryType, boolean delivered, boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1962,7 +1963,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_D_A_Last(long userId,
 		int deliveryType, boolean delivered, boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1994,7 +1995,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 		long userNotificationEventId, long userId, int deliveryType,
 		boolean delivered, boolean actionRequired,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; from the database.
@@ -2108,7 +2109,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_A_A_First(long userId,
 		int deliveryType, boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2138,7 +2139,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	public UserNotificationEvent findByU_DT_A_A_Last(long userId,
 		int deliveryType, boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2170,7 +2171,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 		long userNotificationEventId, long userId, int deliveryType,
 		boolean actionRequired, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Removes all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63; from the database.
@@ -2226,7 +2227,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	* @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	*/
 	public UserNotificationEvent remove(long userNotificationEventId)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	public UserNotificationEvent updateImpl(
 		UserNotificationEvent userNotificationEvent);
@@ -2239,7 +2240,7 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	* @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	*/
 	public UserNotificationEvent findByPrimaryKey(long userNotificationEventId)
-		throws com.liferay.portal.exception.NoSuchUserNotificationEventException;
+		throws NoSuchUserNotificationEventException;
 
 	/**
 	* Returns the user notification event with the primary key or returns <code>null</code> if it could not be found.

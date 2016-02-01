@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchResourceBlockException;
 import com.liferay.portal.model.ResourceBlock;
 
 /**
@@ -113,7 +114,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public ResourceBlock findByC_N_First(long companyId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
@@ -138,7 +139,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public ResourceBlock findByC_N_Last(long companyId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
@@ -164,7 +165,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	public ResourceBlock[] findByC_N_PrevAndNext(long resourceBlockId,
 		long companyId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Removes all the resource blocks where companyId = &#63; and name = &#63; from the database.
@@ -264,7 +265,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	public ResourceBlock findByC_G_N_First(long companyId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
@@ -292,7 +293,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	public ResourceBlock findByC_G_N_Last(long companyId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
@@ -321,7 +322,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	public ResourceBlock[] findByC_G_N_PrevAndNext(long resourceBlockId,
 		long companyId, long groupId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<ResourceBlock> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Removes all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; from the database.
@@ -355,7 +356,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public ResourceBlock findByC_G_N_P(long companyId, long groupId,
 		java.lang.String name, java.lang.String permissionsHash)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -394,7 +395,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public ResourceBlock removeByC_G_N_P(long companyId, long groupId,
 		java.lang.String name, java.lang.String permissionsHash)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Returns the number of resource blocks where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63;.
@@ -438,7 +439,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
 	public ResourceBlock remove(long resourceBlockId)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	public ResourceBlock updateImpl(ResourceBlock resourceBlock);
 
@@ -450,7 +451,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
 	public ResourceBlock findByPrimaryKey(long resourceBlockId)
-		throws com.liferay.portal.exception.NoSuchResourceBlockException;
+		throws NoSuchResourceBlockException;
 
 	/**
 	* Returns the resource block with the primary key or returns <code>null</code> if it could not be found.

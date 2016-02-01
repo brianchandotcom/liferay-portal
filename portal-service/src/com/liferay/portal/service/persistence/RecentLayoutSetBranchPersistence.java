@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
 import com.liferay.portal.model.RecentLayoutSetBranch;
 
 /**
@@ -107,7 +108,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	*/
 	public RecentLayoutSetBranch findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the first recent layout set branch in the ordered set where groupId = &#63;.
@@ -129,7 +130,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	*/
 	public RecentLayoutSetBranch findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the last recent layout set branch in the ordered set where groupId = &#63;.
@@ -153,7 +154,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	public RecentLayoutSetBranch[] findByGroupId_PrevAndNext(
 		long recentLayoutSetBranchId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Removes all the recent layout set branchs where groupId = &#63; from the database.
@@ -239,7 +240,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	*/
 	public RecentLayoutSetBranch findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the first recent layout set branch in the ordered set where userId = &#63;.
@@ -261,7 +262,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	*/
 	public RecentLayoutSetBranch findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the last recent layout set branch in the ordered set where userId = &#63;.
@@ -285,7 +286,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	public RecentLayoutSetBranch[] findByUserId_PrevAndNext(
 		long recentLayoutSetBranchId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Removes all the recent layout set branchs where userId = &#63; from the database.
@@ -373,7 +374,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	public RecentLayoutSetBranch findByLayoutSetBranchId_First(
 		long layoutSetBranchId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the first recent layout set branch in the ordered set where layoutSetBranchId = &#63;.
@@ -397,7 +398,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	public RecentLayoutSetBranch findByLayoutSetBranchId_Last(
 		long layoutSetBranchId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the last recent layout set branch in the ordered set where layoutSetBranchId = &#63;.
@@ -422,7 +423,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	public RecentLayoutSetBranch[] findByLayoutSetBranchId_PrevAndNext(
 		long recentLayoutSetBranchId, long layoutSetBranchId,
 		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Removes all the recent layout set branchs where layoutSetBranchId = &#63; from the database.
@@ -448,7 +449,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	* @throws NoSuchRecentLayoutSetBranchException if a matching recent layout set branch could not be found
 	*/
 	public RecentLayoutSetBranch findByU_L(long userId, long layoutSetId)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -478,7 +479,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	* @return the recent layout set branch that was removed
 	*/
 	public RecentLayoutSetBranch removeByU_L(long userId, long layoutSetId)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the number of recent layout set branchs where userId = &#63; and layoutSetId = &#63;.
@@ -520,7 +521,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	* @throws NoSuchRecentLayoutSetBranchException if a recent layout set branch with the primary key could not be found
 	*/
 	public RecentLayoutSetBranch remove(long recentLayoutSetBranchId)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	public RecentLayoutSetBranch updateImpl(
 		RecentLayoutSetBranch recentLayoutSetBranch);
@@ -533,7 +534,7 @@ public interface RecentLayoutSetBranchPersistence extends BasePersistence<Recent
 	* @throws NoSuchRecentLayoutSetBranchException if a recent layout set branch with the primary key could not be found
 	*/
 	public RecentLayoutSetBranch findByPrimaryKey(long recentLayoutSetBranchId)
-		throws com.liferay.portal.exception.NoSuchRecentLayoutSetBranchException;
+		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
 	* Returns the recent layout set branch with the primary key or returns <code>null</code> if it could not be found.

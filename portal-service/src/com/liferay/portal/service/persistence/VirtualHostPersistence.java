@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchVirtualHostException;
 import com.liferay.portal.model.VirtualHost;
 
 /**
@@ -46,7 +47,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @throws NoSuchVirtualHostException if a matching virtual host could not be found
 	*/
 	public VirtualHost findByHostname(java.lang.String hostname)
-		throws com.liferay.portal.exception.NoSuchVirtualHostException;
+		throws NoSuchVirtualHostException;
 
 	/**
 	* Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -73,7 +74,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @return the virtual host that was removed
 	*/
 	public VirtualHost removeByHostname(java.lang.String hostname)
-		throws com.liferay.portal.exception.NoSuchVirtualHostException;
+		throws NoSuchVirtualHostException;
 
 	/**
 	* Returns the number of virtual hosts where hostname = &#63;.
@@ -92,7 +93,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @throws NoSuchVirtualHostException if a matching virtual host could not be found
 	*/
 	public VirtualHost findByC_L(long companyId, long layoutSetId)
-		throws com.liferay.portal.exception.NoSuchVirtualHostException;
+		throws NoSuchVirtualHostException;
 
 	/**
 	* Returns the virtual host where companyId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -122,7 +123,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @return the virtual host that was removed
 	*/
 	public VirtualHost removeByC_L(long companyId, long layoutSetId)
-		throws com.liferay.portal.exception.NoSuchVirtualHostException;
+		throws NoSuchVirtualHostException;
 
 	/**
 	* Returns the number of virtual hosts where companyId = &#63; and layoutSetId = &#63;.
@@ -163,7 +164,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @throws NoSuchVirtualHostException if a virtual host with the primary key could not be found
 	*/
 	public VirtualHost remove(long virtualHostId)
-		throws com.liferay.portal.exception.NoSuchVirtualHostException;
+		throws NoSuchVirtualHostException;
 
 	public VirtualHost updateImpl(VirtualHost virtualHost);
 
@@ -175,7 +176,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @throws NoSuchVirtualHostException if a virtual host with the primary key could not be found
 	*/
 	public VirtualHost findByPrimaryKey(long virtualHostId)
-		throws com.liferay.portal.exception.NoSuchVirtualHostException;
+		throws NoSuchVirtualHostException;
 
 	/**
 	* Returns the virtual host with the primary key or returns <code>null</code> if it could not be found.

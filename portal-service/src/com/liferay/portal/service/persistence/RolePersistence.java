@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchRoleException;
 import com.liferay.portal.model.Role;
 
 /**
@@ -107,7 +108,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where uuid = &#63;.
@@ -129,7 +130,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where uuid = &#63;.
@@ -152,7 +153,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role[] findByUuid_PrevAndNext(long roleId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where uuid = &#63;.
@@ -206,7 +207,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] filterFindByUuid_PrevAndNext(long roleId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Removes all the roles where uuid = &#63; from the database.
@@ -306,7 +307,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -330,7 +331,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -356,7 +357,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] findByUuid_C_PrevAndNext(long roleId, java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -415,7 +416,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] filterFindByUuid_C_PrevAndNext(long roleId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Removes all the roles where uuid = &#63; and companyId = &#63; from the database.
@@ -512,7 +513,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where companyId = &#63;.
@@ -534,7 +535,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where companyId = &#63;.
@@ -557,7 +558,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role[] findByCompanyId_PrevAndNext(long roleId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where companyId = &#63;.
@@ -611,7 +612,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] filterFindByCompanyId_PrevAndNext(long roleId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Removes all the roles where companyId = &#63; from the database.
@@ -705,7 +706,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByName_First(java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where name = &#63;.
@@ -727,7 +728,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByName_Last(java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where name = &#63;.
@@ -750,7 +751,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role[] findByName_PrevAndNext(long roleId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where name = &#63;.
@@ -804,7 +805,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] filterFindByName_PrevAndNext(long roleId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Removes all the roles where name = &#63; from the database.
@@ -895,7 +896,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByType_First(int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where type = &#63;.
@@ -917,7 +918,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByType_Last(int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where type = &#63;.
@@ -940,7 +941,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role[] findByType_PrevAndNext(long roleId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where type = &#63;.
@@ -991,7 +992,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role[] filterFindByType_PrevAndNext(long roleId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Removes all the roles where type = &#63; from the database.
@@ -1085,7 +1086,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findBySubtype_First(java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where subtype = &#63;.
@@ -1107,7 +1108,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findBySubtype_Last(java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where subtype = &#63;.
@@ -1131,7 +1132,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] findBySubtype_PrevAndNext(long roleId,
 		java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where subtype = &#63;.
@@ -1185,7 +1186,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] filterFindBySubtype_PrevAndNext(long roleId,
 		java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Removes all the roles where subtype = &#63; from the database.
@@ -1219,7 +1220,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @throws NoSuchRoleException if a matching role could not be found
 	*/
 	public Role findByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the role where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1249,7 +1250,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @return the role that was removed
 	*/
 	public Role removeByC_N(long companyId, java.lang.String name)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the number of roles where companyId = &#63; and name = &#63;.
@@ -1334,7 +1335,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByC_T_First(long companyId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where companyId = &#63; and type = &#63;.
@@ -1358,7 +1359,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByC_T_Last(long companyId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where companyId = &#63; and type = &#63;.
@@ -1383,7 +1384,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role[] findByC_T_PrevAndNext(long roleId, long companyId, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where companyId = &#63; and type = &#63;.
@@ -1441,7 +1442,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] filterFindByC_T_PrevAndNext(long roleId, long companyId,
 		int type,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where companyId = &#63; and type = any &#63;.
@@ -1671,7 +1672,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByT_S_First(int type, java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the first role in the ordered set where type = &#63; and subtype = &#63;.
@@ -1695,7 +1696,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public Role findByT_S_Last(int type, java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
@@ -1721,7 +1722,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] findByT_S_PrevAndNext(long roleId, int type,
 		java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns all the roles that the user has permission to view where type = &#63; and subtype = &#63;.
@@ -1780,7 +1781,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	public Role[] filterFindByT_S_PrevAndNext(long roleId, int type,
 		java.lang.String subtype,
 		com.liferay.portal.kernel.util.OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Removes all the roles where type = &#63; and subtype = &#63; from the database.
@@ -1818,7 +1819,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @throws NoSuchRoleException if a matching role could not be found
 	*/
 	public Role findByC_C_C(long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the role where companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1851,7 +1852,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @return the role that was removed
 	*/
 	public Role removeByC_C_C(long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+		throws NoSuchRoleException;
 
 	/**
 	* Returns the number of roles where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1892,8 +1893,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @return the role that was removed
 	* @throws NoSuchRoleException if a role with the primary key could not be found
 	*/
-	public Role remove(long roleId)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+	public Role remove(long roleId) throws NoSuchRoleException;
 
 	public Role updateImpl(Role role);
 
@@ -1904,8 +1904,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @return the role
 	* @throws NoSuchRoleException if a role with the primary key could not be found
 	*/
-	public Role findByPrimaryKey(long roleId)
-		throws com.liferay.portal.exception.NoSuchRoleException;
+	public Role findByPrimaryKey(long roleId) throws NoSuchRoleException;
 
 	/**
 	* Returns the role with the primary key or returns <code>null</code> if it could not be found.

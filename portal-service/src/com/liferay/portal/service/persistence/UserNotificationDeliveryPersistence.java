@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.model.UserNotificationDelivery;
 
 /**
@@ -107,7 +108,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public UserNotificationDelivery findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
+		throws NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the first user notification delivery in the ordered set where userId = &#63;.
@@ -129,7 +130,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public UserNotificationDelivery findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
+		throws NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the last user notification delivery in the ordered set where userId = &#63;.
@@ -153,7 +154,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	public UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserNotificationDelivery> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
+		throws NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Removes all the user notification deliveries where userId = &#63; from the database.
@@ -183,8 +184,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public UserNotificationDelivery findByU_P_C_N_D(long userId,
 		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType)
-		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
+		int deliveryType) throws NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -227,8 +227,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public UserNotificationDelivery removeByU_P_C_N_D(long userId,
 		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType)
-		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
+		int deliveryType) throws NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the number of user notification deliveries where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63;.
@@ -274,7 +273,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @throws NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
 	*/
 	public UserNotificationDelivery remove(long userNotificationDeliveryId)
-		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
+		throws NoSuchUserNotificationDeliveryException;
 
 	public UserNotificationDelivery updateImpl(
 		UserNotificationDelivery userNotificationDelivery);
@@ -288,7 +287,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public UserNotificationDelivery findByPrimaryKey(
 		long userNotificationDeliveryId)
-		throws com.liferay.portal.exception.NoSuchUserNotificationDeliveryException;
+		throws NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the user notification delivery with the primary key or returns <code>null</code> if it could not be found.

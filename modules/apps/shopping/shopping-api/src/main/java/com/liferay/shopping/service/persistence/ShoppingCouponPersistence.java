@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.shopping.exception.NoSuchCouponException;
 import com.liferay.shopping.model.ShoppingCoupon;
 
 /**
@@ -109,7 +110,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public ShoppingCoupon findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCouponException;
+		throws NoSuchCouponException;
 
 	/**
 	* Returns the first shopping coupon in the ordered set where groupId = &#63;.
@@ -131,7 +132,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*/
 	public ShoppingCoupon findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCouponException;
+		throws NoSuchCouponException;
 
 	/**
 	* Returns the last shopping coupon in the ordered set where groupId = &#63;.
@@ -155,7 +156,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	public ShoppingCoupon[] findByGroupId_PrevAndNext(long couponId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchCouponException;
+		throws NoSuchCouponException;
 
 	/**
 	* Removes all the shopping coupons where groupId = &#63; from the database.
@@ -180,7 +181,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
 	public ShoppingCoupon findByCode(java.lang.String code)
-		throws com.liferay.shopping.exception.NoSuchCouponException;
+		throws NoSuchCouponException;
 
 	/**
 	* Returns the shopping coupon where code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -207,7 +208,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @return the shopping coupon that was removed
 	*/
 	public ShoppingCoupon removeByCode(java.lang.String code)
-		throws com.liferay.shopping.exception.NoSuchCouponException;
+		throws NoSuchCouponException;
 
 	/**
 	* Returns the number of shopping coupons where code = &#63;.
@@ -246,8 +247,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @return the shopping coupon that was removed
 	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
-	public ShoppingCoupon remove(long couponId)
-		throws com.liferay.shopping.exception.NoSuchCouponException;
+	public ShoppingCoupon remove(long couponId) throws NoSuchCouponException;
 
 	public ShoppingCoupon updateImpl(ShoppingCoupon shoppingCoupon);
 
@@ -259,7 +259,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
 	public ShoppingCoupon findByPrimaryKey(long couponId)
-		throws com.liferay.shopping.exception.NoSuchCouponException;
+		throws NoSuchCouponException;
 
 	/**
 	* Returns the shopping coupon with the primary key or returns <code>null</code> if it could not be found.

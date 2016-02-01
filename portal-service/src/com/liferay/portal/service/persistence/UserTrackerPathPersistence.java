@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchUserTrackerPathException;
 import com.liferay.portal.model.UserTrackerPath;
 
 /**
@@ -108,7 +109,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public UserTrackerPath findByUserTrackerId_First(long userTrackerId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserTrackerPathException;
+		throws NoSuchUserTrackerPathException;
 
 	/**
 	* Returns the first user tracker path in the ordered set where userTrackerId = &#63;.
@@ -130,7 +131,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public UserTrackerPath findByUserTrackerId_Last(long userTrackerId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserTrackerPathException;
+		throws NoSuchUserTrackerPathException;
 
 	/**
 	* Returns the last user tracker path in the ordered set where userTrackerId = &#63;.
@@ -154,7 +155,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	public UserTrackerPath[] findByUserTrackerId_PrevAndNext(
 		long userTrackerPathId, long userTrackerId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserTrackerPath> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchUserTrackerPathException;
+		throws NoSuchUserTrackerPathException;
 
 	/**
 	* Removes all the user tracker paths where userTrackerId = &#63; from the database.
@@ -201,7 +202,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	* @throws NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
 	*/
 	public UserTrackerPath remove(long userTrackerPathId)
-		throws com.liferay.portal.exception.NoSuchUserTrackerPathException;
+		throws NoSuchUserTrackerPathException;
 
 	public UserTrackerPath updateImpl(UserTrackerPath userTrackerPath);
 
@@ -213,7 +214,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	* @throws NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
 	*/
 	public UserTrackerPath findByPrimaryKey(long userTrackerPathId)
-		throws com.liferay.portal.exception.NoSuchUserTrackerPathException;
+		throws NoSuchUserTrackerPathException;
 
 	/**
 	* Returns the user tracker path with the primary key or returns <code>null</code> if it could not be found.

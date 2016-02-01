@@ -421,7 +421,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 *
 	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName} that was removed
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
 	public ${entity.name} remove(${entity.PKClassName} ${entity.PKVarName}) throws ${noSuchEntity}Exception {
@@ -433,7 +433,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 *
 	 * @param primaryKey the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName} that was removed
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
 	public ${entity.name} remove(Serializable primaryKey) throws ${noSuchEntity}Exception {
@@ -816,7 +816,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 *
 	 * @param primaryKey the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName}
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
 	public ${entity.name} findByPrimaryKey(Serializable primaryKey) throws ${noSuchEntity}Exception {
@@ -834,11 +834,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	/**
-	 * Returns the ${entity.humanName} with the primary key or throws a {@link ${apiPackagePath}.exception.${noSuchEntity}Exception} if it could not be found.
+	 * Returns the ${entity.humanName} with the primary key or throws a {@link ${noSuchEntity}Exception} if it could not be found.
 	 *
 	 * @param ${entity.PKVarName} the primary key of the ${entity.humanName}
 	 * @return the ${entity.humanName}
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 	 */
 	@Override
 	public ${entity.name} findByPrimaryKey(${entity.PKClassName} ${entity.PKVarName}) throws ${noSuchEntity}Exception {

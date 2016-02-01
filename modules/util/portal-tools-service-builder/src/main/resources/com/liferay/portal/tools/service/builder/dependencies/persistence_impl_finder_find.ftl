@@ -309,7 +309,7 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ${entity.humanName}
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
+	 * @throws ${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
 	 */
 	@Override
 	public ${entity.name} findBy${finder.name}_First(
@@ -387,7 +387,7 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ${entity.humanName}
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
+	 * @throws ${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
 	 */
 	@Override
 	public ${entity.name} findBy${finder.name}_Last(
@@ -483,7 +483,7 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#list>
 		 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 		 * @return the previous, current, and next ${entity.humanName}
-		 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+		 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 		 */
 		@Override
 		public ${entity.name}[] findBy${finder.name}_PrevAndNext(${entity.PKClassName} ${entity.PKVarName},
@@ -778,7 +778,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#list>
 			 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 			 * @return the previous, current, and next ${entity.humanName}
-			 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+			 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
 			 */
 			@Override
 			public ${entity.name}[] filterFindBy${finder.name}_PrevAndNext(${entity.PKClassName} ${entity.PKVarName},
@@ -1675,13 +1675,13 @@ that may or may not be enforced with a unique index at the database level. Case
 
 <#if !finder.isCollection() || finder.isUnique()>
 	/**
-	 * Returns the ${entity.humanName} where ${finder.getHumanConditions(false)} or throws a {@link ${packagePath}.exception.${noSuchEntity}Exception} if it could not be found.
+	 * Returns the ${entity.humanName} where ${finder.getHumanConditions(false)} or throws a {@link ${noSuchEntity}Exception} if it could not be found.
 	 *
 	<#list finderColsList as finderCol>
 	 * @param ${finderCol.name} the ${finderCol.humanName}
 	</#list>
 	 * @return the matching ${entity.humanName}
-	 * @throws ${apiPackagePath}.exception.${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
+	 * @throws ${noSuchEntity}Exception if a matching ${entity.humanName} could not be found
 	 */
 	@Override
 	public ${entity.name} findBy${finder.name}(

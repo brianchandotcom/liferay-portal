@@ -5,7 +5,7 @@ configurations {
 	alloyUI
 	jQuery
 	lexicon
-	lfrAMDLoader
+	liferayAMDLoader
 	lodash
 	svg4everybody
 }
@@ -14,7 +14,7 @@ task buildAlloyUI(type: Copy)
 task buildJQuery(type: Copy)
 task buildJQueryPluginsForm
 task buildLexicon(type: Copy)
-task buildLfrAMDLoader(type: Copy)
+task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 
@@ -22,7 +22,7 @@ String alloyUIVersion = "3.0.3-deprecated.10"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
 String lexiconVersion = "0.2.1"
-String lfrAMDLoaderVersion = "1.3.5"
+String liferayAMDLoaderVersion = "1.4.1"
 String lodashVersion = "3.10.1"
 String svg4everybodyVersion = "2.0.0"
 
@@ -114,14 +114,14 @@ buildLexicon {
 	into lexiconDestinationDir
 }
 
-buildLfrAMDLoader {
+buildLiferayAMDLoader {
 	eachFile new StripPathSegmentsAction(6)
 
 	from {
-		zipTree(configurations.lfrAMDLoader.singleFile)
+		zipTree(configurations.liferayAMDLoader.singleFile)
 	}
 
-	include "META-INF/resources/webjars/lfr-amd-loader/${lfrAMDLoaderVersion}/dist/loader.js"
+	include "META-INF/resources/webjars/liferay-amd-loader/${liferayAMDLoaderVersion}/dist/loader.js"
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")
 }
@@ -161,7 +161,7 @@ classes {
 	dependsOn buildJQuery
 	dependsOn buildJQueryPluginsForm
 	dependsOn buildLexicon
-	dependsOn buildLfrAMDLoader
+	dependsOn buildLiferayAMDLoader
 	dependsOn buildLodash
 	dependsOn buildSvg4everybody
 }
@@ -173,7 +173,7 @@ dependencies {
 
 	lexicon group: "org.webjars.bower", name: "lexicon", transitive: false, version: lexiconVersion
 
-	lfrAMDLoader group: "org.webjars.npm", name: "lfr-amd-loader", transitive: false, version: lfrAMDLoaderVersion
+	liferayAMDLoader group: "org.webjars.npm", name: "liferay-amd-loader", transitive: false, version: liferayAMDLoaderVersion
 
 	lodash group: "org.webjars.bower", name: "lodash", transitive: false, version: lodashVersion
 

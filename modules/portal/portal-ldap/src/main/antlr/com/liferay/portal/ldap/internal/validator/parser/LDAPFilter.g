@@ -19,7 +19,13 @@ options {
  * details.
  */
 
-package com.liferay.portal.ldap.validator.parser;
+package com.liferay.portal.ldap.internal.validator.parser;
+
+/**
+* This is a generated file from LDAPFilter.g. DO NOT MODIFY THIS FILE MANUALLY!!
+* If needed, modify the grammar and rerun the gradle generation task
+* (../../../gradlew generateGrammarSource)
+*/
 }
 
 @lexer::header {
@@ -37,7 +43,7 @@ package com.liferay.portal.ldap.validator.parser;
  * details.
  */
 
-package com.liferay.portal.ldap.validator.parser;
+package com.liferay.portal.ldap.internal.validator.parser;
 }
 @lexer::members {
 	@Override

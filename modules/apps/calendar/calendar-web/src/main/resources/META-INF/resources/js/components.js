@@ -934,8 +934,7 @@
 					endDatePicker.selectDates([endDate]);
 					endTimePicker.selectDates([endDate]);
 
-					intervalSelector.startDurationPreservation()
-
+					intervalSelector.startDurationPreservation();
 				},
 
 				linkToSchedulerEvent: function(datePickerContainer, schedulerEvent, dateAttr) {
@@ -1437,7 +1436,6 @@
 								);
 							},
 
-
 							stopDurationPreservation: function() {
 								var instance = this;
 
@@ -1611,7 +1609,7 @@
 
 								var startTimePicker = instance.get('startTimePicker');
 
-								startTimePIcker.selectDates([instance._startDate]);
+								startTimePicker.selectDates([instance._startDate]);
 							},
 
 							_validate: function() {

@@ -25,9 +25,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.item.selector.web.constants.SitesItemSelectorWebKeys;
-import com.liferay.site.item.selector.web.display.context.RecentSitesItemSelectorViewDisplayContext;
+import com.liferay.site.item.selector.web.display.context.AllSitesItemSelectorViewDisplayContext;
+import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
-import com.liferay.site.util.RecentGroupManager;
 
 import java.io.IOException;
 
@@ -52,9 +52,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	property = {"service.ranking:Integer=100"}, service = ItemSelectorView.class
+	property = {"service.ranking:Integer=300"}, service = ItemSelectorView.class
 )
-public class RecentSitesItemSelectorView
+public class AllSitesItemSelectorView
 	implements ItemSelectorView<SiteItemSelectorCriterion> {
 
 	@Override
@@ -75,7 +75,7 @@ public class RecentSitesItemSelectorView
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = PortalUtil.getResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(resourceBundle, "recent");
+		return ResourceBundleUtil.getString(resourceBundle, "all");
 	}
 
 	@Override
@@ -95,17 +95,19 @@ public class RecentSitesItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
+		request.setAttribute(
+			SiteWebKeys.GROUP_SEARCH_PROVIDER, _groupSearchProvider);
 		request.setAttribute(SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
-		RecentSitesItemSelectorViewDisplayContext
-			siteItemSelectorViewDisplayContext =
-				new RecentSitesItemSelectorViewDisplayContext(
+		AllSitesItemSelectorViewDisplayContext
+			allSitesItemSelectorViewDisplayContext =
+				new AllSitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)request, siteItemSelectorCriterion,
-					itemSelectedEventName, portletURL, _recentGroupManager);
+					itemSelectedEventName, portletURL, _groupSearchProvider);
 
 		request.setAttribute(
 			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			siteItemSelectorViewDisplayContext);
+			allSitesItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 
@@ -116,13 +118,15 @@ public class RecentSitesItemSelectorView
 	}
 
 	@Reference(unbind = "-")
-	public void setGroupURLProvider(GroupURLProvider groupURLProvider) {
-		_groupURLProvider = groupURLProvider;
+	public void setGroupSearchProvider(
+		GroupSearchProvider groupSearchProvider) {
+
+		_groupSearchProvider = groupSearchProvider;
 	}
 
 	@Reference(unbind = "-")
-	public void setRecentGroupManager(RecentGroupManager recentGroupManager) {
-		_recentGroupManager = recentGroupManager;
+	public void setGroupURLProvider(GroupURLProvider groupURLProvider) {
+		_groupURLProvider = groupURLProvider;
 	}
 
 	@Reference(
@@ -141,8 +145,8 @@ public class RecentSitesItemSelectorView
 					new UUIDItemSelectorReturnType()
 				}));
 
+	private GroupSearchProvider _groupSearchProvider;
 	private GroupURLProvider _groupURLProvider;
-	private RecentGroupManager _recentGroupManager;
 	private ServletContext _servletContext;
 
 }

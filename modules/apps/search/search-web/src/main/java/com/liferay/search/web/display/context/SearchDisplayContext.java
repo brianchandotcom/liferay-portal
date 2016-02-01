@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.RenderRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -39,14 +39,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchDisplayContext {
 
 	public SearchDisplayContext(
-		HttpServletRequest request, PortletPreferences portletPreferences) {
+		RenderRequest renderRequest, PortletPreferences portletPreferences) {
 
-		_request = request;
+		_renderRequest = renderRequest;
 		_portletPreferences = portletPreferences;
 	}
 
 	public String checkViewURL(String viewURL, String currentURL) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNotNull(viewURL) &&
@@ -222,7 +222,7 @@ public class SearchDisplayContext {
 			return _displayResultsInDocumentForm;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_displayResultsInDocumentForm = GetterUtil.getBoolean(
@@ -317,7 +317,7 @@ public class SearchDisplayContext {
 	private Integer _querySuggestionsDisplayThreshold;
 	private Boolean _querySuggestionsEnabled;
 	private Integer _querySuggestionsMax;
-	private final HttpServletRequest _request;
+	private final RenderRequest _renderRequest;
 	private String _searchConfiguration;
 	private String _searchScope;
 	private Boolean _viewInContext;

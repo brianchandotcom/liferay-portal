@@ -12,30 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet.configuration.icon;
+package com.liferay.search.facet.util.comparator;
+
+import com.liferay.search.facet.SearchFacet;
 
 import java.util.Comparator;
 
 /**
  * @author Shuyang Zhou
  */
-public class PortletConfigurationIconFactoryComparator
-	implements Comparator<PortletConfigurationIconFactory> {
+public class SearchFacetComparator implements Comparator<SearchFacet> {
 
-	public static final Comparator<PortletConfigurationIconFactory> INSTANCE =
-		new PortletConfigurationIconFactoryComparator();
+	public static final Comparator<SearchFacet> INSTANCE =
+		new SearchFacetComparator();
 
 	@Override
-	public int compare(
-		PortletConfigurationIconFactory portletConfigurationIconFactory1,
-		PortletConfigurationIconFactory portletConfigurationIconFactory2) {
-
+	public int compare(SearchFacet searchFacet1, SearchFacet searchFacet2) {
 		return Double.compare(
-			portletConfigurationIconFactory2.getWeight(),
-			portletConfigurationIconFactory1.getWeight());
+			searchFacet2.getWeight(), searchFacet1.getWeight());
 	}
 
-	private PortletConfigurationIconFactoryComparator() {
+	private SearchFacetComparator() {
 	}
 
 }

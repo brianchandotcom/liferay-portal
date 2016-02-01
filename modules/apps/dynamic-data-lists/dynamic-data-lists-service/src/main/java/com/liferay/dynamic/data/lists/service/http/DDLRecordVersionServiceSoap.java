@@ -95,6 +95,21 @@ public class DDLRecordVersionServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap[] getRecordVersions(
+		long recordId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> returnValue =
+				DDLRecordVersionServiceUtil.getRecordVersions(recordId);
+
+			return com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap[] getRecordVersions(
 		long recordId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
 		throws RemoteException {

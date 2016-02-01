@@ -24,7 +24,7 @@ options {
  * details.
  */
 
-package com.liferay.portal.ldap.validator.parser;
+package com.liferay.portal.ldap.internal.validator.parser;
 }
 
 T11 : '(' ;
@@ -41,23 +41,23 @@ T21 : ':=' ;
 T22 : '*' ;
 T23 : ';' ;
 
-// $ANTLR src "LDAPFilter.g" 145
+// $ANTLR src "LDAPFilter.g" 151
 fragment ASCII_LETTER
 	: 'a'..'z'
 	|'A'..'Z'
 	;
-// $ANTLR src "LDAPFilter.g" 149
+// $ANTLR src "LDAPFilter.g" 155
 fragment DIGIT:  '0'..'9';
-// $ANTLR src "LDAPFilter.g" 150
+// $ANTLR src "LDAPFilter.g" 156
 fragment DASH: '-';
 
-// $ANTLR src "LDAPFilter.g" 152
+// $ANTLR src "LDAPFilter.g" 158
 DOT: '.';
-// $ANTLR src "LDAPFilter.g" 153
+// $ANTLR src "LDAPFilter.g" 159
 COLON: ':';
-// $ANTLR src "LDAPFilter.g" 154
+// $ANTLR src "LDAPFilter.g" 160
 UTF: '\u0080'..'\ufffe';
-// $ANTLR src "LDAPFilter.g" 155
+// $ANTLR src "LDAPFilter.g" 161
 ASCII_LATIN1: '\u0000'..'\u007f';
 
 

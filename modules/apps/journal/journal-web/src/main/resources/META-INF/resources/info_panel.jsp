@@ -22,6 +22,11 @@ JournalFolder folder = journalDisplayContext.getFolder();
 
 <div class="sidebar-header">
 	<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
+
+		<%
+		request.setAttribute("info_panel.jsp-folder", folder);
+		%>
+
 		<ul class="list-inline list-unstyled sidebar-header-actions">
 			<li>
 				<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />

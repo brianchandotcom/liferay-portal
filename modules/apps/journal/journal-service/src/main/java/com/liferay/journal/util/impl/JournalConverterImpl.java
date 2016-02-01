@@ -878,7 +878,7 @@ public class JournalConverterImpl implements JournalConverter {
 			try {
 				jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
 			}
-			catch (JSONException e ) {
+			catch (JSONException jsone ) {
 				return;
 			}
 

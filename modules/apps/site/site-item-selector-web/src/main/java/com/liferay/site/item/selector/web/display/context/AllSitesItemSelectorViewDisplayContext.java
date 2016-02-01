@@ -14,52 +14,47 @@
 
 package com.liferay.site.item.selector.web.display.context;
 
-import com.liferay.portal.model.Group;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
-import com.liferay.site.util.RecentGroupManager;
+import com.liferay.site.util.GroupSearchProvider;
 
-import java.util.List;
-
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
  */
-public class RecentSitesItemSelectorViewDisplayContext
-	extends BaseSitesItemSelectorViewDisplayContext
-	implements SitesItemSelectorViewDisplayContext {
+public class AllSitesItemSelectorViewDisplayContext
+	extends BaseSitesItemSelectorViewDisplayContext {
 
-	public RecentSitesItemSelectorViewDisplayContext(
+	public AllSitesItemSelectorViewDisplayContext(
 		HttpServletRequest request,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL,
-		RecentGroupManager recentGroupManager) {
+		GroupSearchProvider groupSearchProvider) {
 
 		super(
 			request, siteItemSelectorCriterion, itemSelectedEventName,
 			portletURL);
 
-		_recentGroupManager = recentGroupManager;
+		_groupSearchProvider = groupSearchProvider;
+		_portletRequest = getPortletRequest();
 	}
 
 	@Override
-	public GroupSearch getGroupSearch() throws Exception {
-		GroupSearch groupSearch = new GroupSearch(
-			getPortletRequest(), getPortletURL());
-
-		groupSearch.setEmptyResultsMessage(
-			"you-have-not-visited-any-site-recently");
-
-		List<Group> results = _recentGroupManager.getRecentGroups(request);
-
-		groupSearch.setTotal(results.size());
-		groupSearch.setResults(results);
-
-		return groupSearch;
+	public GroupSearch getGroupSearch() throws PortalException {
+		return _groupSearchProvider.getGroupSearch(_portletRequest, portletURL);
 	}
 
-	private final RecentGroupManager _recentGroupManager;
+	@Override
+	public boolean isShowChildSitesLink() {
+		return true;
+	}
+
+	private final GroupSearchProvider _groupSearchProvider;
+	private final PortletRequest _portletRequest;
 
 }

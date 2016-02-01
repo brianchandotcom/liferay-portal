@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/document_library/view_file_entry_type.jsp");
+portletURL.setParameter("mvcPath", "/document_library/view_file_entry_types.jsp");
 %>
 
 <div class="container-fluid-1280">

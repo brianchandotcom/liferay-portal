@@ -46,7 +46,7 @@ public class DocumentTypesPortletConfigurationIcon
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"mvcPath", "/document_library/view_file_entry_type.jsp");
+			"mvcPath", "/document_library/view_file_entry_types.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return portletURL.toString();

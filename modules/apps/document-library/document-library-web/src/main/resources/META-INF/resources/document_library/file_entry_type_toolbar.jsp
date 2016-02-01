@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String mvcPath = ParamUtil.getString(request, "mvcPath", "/document_library/view_file_entry_type.jsp");
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/document_library/view_file_entry_types.jsp");
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 

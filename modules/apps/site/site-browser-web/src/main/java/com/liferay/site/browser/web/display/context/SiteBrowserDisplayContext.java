@@ -26,6 +26,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -203,15 +204,14 @@ public class SiteBrowserDisplayContext {
 		}
 		else if (groupSearchTerms.isAdvancedSearch()) {
 			total = GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), null, groupSearchTerms.getName(),
-				groupSearchTerms.getDescription(), getGroupParams(),
-				groupSearchTerms.isAndOperator());
+				themeDisplay.getCompanyId(), _classNameIds,
+				groupSearchTerms.getName(), groupSearchTerms.getDescription(),
+				getGroupParams(), groupSearchTerms.isAndOperator());
 		}
 		else {
 			total = GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), null,
-				groupSearchTerms.getKeywords(), getGroupParams(),
-				groupSearchTerms.isAndOperator());
+				themeDisplay.getCompanyId(), _classNameIds,
+				groupSearchTerms.getKeywords(), getGroupParams());
 		}
 
 		total += additionalSites;
@@ -254,15 +254,15 @@ public class SiteBrowserDisplayContext {
 		}
 		else if (groupSearchTerms.isAdvancedSearch()) {
 			groups = GroupLocalServiceUtil.search(
-				company.getCompanyId(), null, groupSearchTerms.getName(),
-				groupSearchTerms.getDescription(), getGroupParams(),
-				groupSearchTerms.isAndOperator(), start, end,
+				company.getCompanyId(), _classNameIds,
+				groupSearchTerms.getName(), groupSearchTerms.getDescription(),
+				getGroupParams(), groupSearchTerms.isAndOperator(), start, end,
 				groupSearch.getOrderByComparator());
 		}
 		else {
 			groups = GroupLocalServiceUtil.search(
-				company.getCompanyId(), null, groupSearchTerms.getKeywords(),
-				getGroupParams(), start, end,
+				company.getCompanyId(), _classNameIds,
+				groupSearchTerms.getKeywords(), getGroupParams(), start, end,
 				groupSearch.getOrderByComparator());
 		}
 
@@ -408,6 +408,12 @@ public class SiteBrowserDisplayContext {
 
 		return filteredGroups;
 	}
+
+	private static final long[] _classNameIds = new long[] {
+		PortalUtil.getClassNameId(Company.class),
+		PortalUtil.getClassNameId(Group.class),
+		PortalUtil.getClassNameId(Organization.class)
+	};
 
 	private String _displayStyle;
 	private String _filter;

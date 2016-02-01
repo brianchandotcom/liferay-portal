@@ -14,6 +14,7 @@
 
 package com.liferay.product.navigation.site.administration.display.context;
 
+import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
@@ -41,7 +42,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.product.navigation.product.menu.web.display.context.ProductMenuDisplayContext;
 import com.liferay.product.navigation.site.administration.application.list.SiteAdministrationPanelCategory;
-import com.liferay.site.util.LatentGroupManagerUtil;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -70,6 +70,8 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			_group = group;
 		}
 
+		_groupProvider = (GroupProvider)portletRequest.getAttribute(
+			SiteAdministrationWebKeys.GROUP_PROVIDER);
 		_panelCategory = (PanelCategory)_portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY);
 		_panelCategoryHelper =
@@ -92,9 +94,8 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return _group;
 		}
 
-		HttpSession session = getSession();
-
-		_group = LatentGroupManagerUtil.getLatentGroup(session);
+		_group = _groupProvider.getGroup(
+			PortalUtil.getHttpServletRequest(_portletRequest));
 
 		return _group;
 	}
@@ -521,18 +522,20 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return;
 		}
 
-		HttpSession session = getSession();
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_portletRequest);
 
-		Group latentGroup = LatentGroupManagerUtil.getLatentGroup(session);
+		Group latentGroup = _groupProvider.getGroup(request);
 
 		if ((latentGroup == null) || (groupId != latentGroup.getGroupId())) {
-			LatentGroupManagerUtil.setLatentGroup(session, _group);
+			_groupProvider.setGroup(request, _group);
 		}
 	}
 
 	private Boolean _collapsedPanel;
 	private Group _group;
 	private String _groupName;
+	private final GroupProvider _groupProvider;
 	private String _groupURL;
 	private String _liveGroupURL;
 	private String _logoURL;

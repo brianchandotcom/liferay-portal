@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.constants;
+package com.liferay.product.navigation.site.administration.constants;
 
 /**
+ *
  * @author Julio Camarero
  */
-public class LayoutAdminWebKeys {
-
-	public static final String CONTROL_MENU_ENTRY = "CONTROL_MENU_ENTRY";
+public class SiteAdministrationWebKeys {
 
 	public static final String GROUP_PROVIDER = "GROUP_PROVIDER";
 

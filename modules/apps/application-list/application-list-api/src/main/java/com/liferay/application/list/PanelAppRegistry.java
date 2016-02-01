@@ -132,12 +132,18 @@ public class PanelAppRegistry {
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupProvider(GroupProvider groupProvider) {
+		this.groupProvider = groupProvider;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
 		this.portletLocalService = portletLocalService;
 	}
 
+	protected GroupProvider groupProvider;
 	protected PortletLocalService portletLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -182,6 +188,8 @@ public class PanelAppRegistry {
 			else if (_log.isDebugEnabled()) {
 				_log.debug("Unable to get portlet " + panelApp.getPortletId());
 			}
+
+			panelApp.setGroupProvider(groupProvider);
 		}
 
 		@Override

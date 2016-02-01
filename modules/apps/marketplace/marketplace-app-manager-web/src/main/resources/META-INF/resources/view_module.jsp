@@ -77,21 +77,20 @@ else {
 	MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, bundle, request, renderResponse);
 }
 
-PortletURL backPortletURL = renderResponse.createRenderURL();
-
-if (Validator.isNumber(app)) {
-	backPortletURL.setParameter("mvcPath", "/view_module_groups.jsp");
-}
-
-else {
-	backPortletURL.setParameter("mvcPath", "/view_modules.jsp");
-}
-
-backPortletURL.setParameter("app", app);
-backPortletURL.setParameter("moduleGroup", moduleGroup);
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backPortletURL.toString());
+
+PortletURL backURL = renderResponse.createRenderURL();
+
+if (Validator.isNull(app)) {
+	backURL.setParameter("mvcPath", "/view.jsp");
+}
+else {
+	backURL.setParameter("mvcPath", "/view_modules.jsp");
+	backURL.setParameter("app", app);
+	backURL.setParameter("moduleGroup", moduleGroup);
+}
+
+portletDisplay.setURLBack(backURL.toString());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

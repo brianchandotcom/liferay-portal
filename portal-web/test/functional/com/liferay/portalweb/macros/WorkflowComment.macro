@@ -1,8 +1,14 @@
 <definition>
-	<command name="addCP">
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-		<var name="key_workflowComment" value="${workflowComment}" />
+	<command name="_openComments">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="MyWorkflowTasksTask#COMMENTS" value1="Comments" />
+			</then>
+		</if>
+	</command>
 
+	<command name="addCP">
 		<execute function="Pause" locator1="1000" />
 
 		<if>
@@ -25,25 +31,13 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="MyWorkflowTasksTask#COMMENTS" value1="Comments" />
-			</then>
-		</if>
-
-		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
+		<execute macro="WorkflowComment#_openComments" />
 
 		<execute macro="PageComment#reply">
 			<var name="commentBody" value="${commentBody}" />
 		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Comments#COMMENT_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="MyWorkflowTasksTask#COMMENTS" value1="Comments" />
-			</then>
-		</if>
+		<execute macro="WorkflowComment#_openComments" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 

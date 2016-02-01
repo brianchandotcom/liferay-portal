@@ -17,7 +17,6 @@ package com.liferay.portal.ldap.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.validator.LDAPFilterValidator;
@@ -31,6 +30,9 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Toma Bedolla
  * @author Michael Young
@@ -38,6 +40,7 @@ import javax.naming.directory.Attributes;
  * @author James Lefeu
  * @author Vilmos Papp
  */
+@Component(immediate = true)
 public class LDAPUtil {
 
 	public static Object getAttributeObject(
@@ -230,7 +233,13 @@ public class LDAPUtil {
 		_ldapFilterValidator.validate(filter, filterPropertyName);
 	}
 
-	private static final LDAPFilterValidator _ldapFilterValidator =
-		ProxyFactory.newServiceTrackedInstance(LDAPFilterValidator.class);
+	@Reference(unbind = "-")
+	protected void setLDAPFilterValidator(
+		LDAPFilterValidator ldapFilterValidator) {
+
+		_ldapFilterValidator = ldapFilterValidator;
+	}
+
+	private static LDAPFilterValidator _ldapFilterValidator;
 
 }

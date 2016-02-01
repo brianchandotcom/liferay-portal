@@ -26,14 +26,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.ldap.DuplicateLDAPServerNameException" %><%@
-page import="com.liferay.portal.ldap.validator.LDAPFilterException" %><%@
-page import="com.liferay.portal.ldap.LDAPServerNameException" %><%@
-page import="com.liferay.portal.ldap.util.LDAPUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory" %><%@
-page import="com.liferay.portal.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
@@ -45,6 +40,9 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.ldap.DuplicateLDAPServerNameException" %><%@
+page import="com.liferay.portal.ldap.LDAPServerNameException" %><%@
+page import="com.liferay.portal.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration" %><%@
 page import="com.liferay.portal.ldap.configuration.ConfigurationProvider" %><%@
 page import="com.liferay.portal.ldap.configuration.LDAPServerConfiguration" %><%@
@@ -52,6 +50,8 @@ page import="com.liferay.portal.ldap.constants.LDAPConstants" %><%@
 page import="com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration" %><%@
 page import="com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.util.ConfigurationProviderUtil" %><%@
+page import="com.liferay.portal.ldap.util.LDAPUtil" %><%@
+page import="com.liferay.portal.ldap.validator.LDAPFilterException" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@

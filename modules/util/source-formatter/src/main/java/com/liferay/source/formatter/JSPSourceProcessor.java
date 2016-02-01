@@ -671,7 +671,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
-					line = formatWhitespace(line, trimmedLine, javaSource);
+					line = formatWhitespace(line, javaSource);
 
 					if (line.endsWith(">")) {
 						if (line.endsWith("/>")) {

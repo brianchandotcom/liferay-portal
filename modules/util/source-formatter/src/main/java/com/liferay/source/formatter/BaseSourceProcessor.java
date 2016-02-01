@@ -908,7 +908,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected String formatWhitespace(String line, String linePart) {
+	protected String formatWhitespace(
+		String line, String linePart, boolean javaSource) {
+
 		String originalLinePart = linePart;
 
 		linePart = formatIncorrectSyntax(linePart, "catch(", "catch (", true);
@@ -919,9 +921,36 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		linePart = formatIncorrectSyntax(linePart, "List <", "List<", false);
 		linePart = formatIncorrectSyntax(linePart, "){", ") {", false);
 		linePart = formatIncorrectSyntax(linePart, "]{", "] {", false);
-		linePart = formatIncorrectSyntax(linePart, " [", "[", false);
-		linePart = formatIncorrectSyntax(linePart, "{ ", "{", false);
-		linePart = formatIncorrectSyntax(linePart, " }", "}", false);
+
+		if (javaSource) {
+			linePart = formatIncorrectSyntax(linePart, " [", "[", false);
+			linePart = formatIncorrectSyntax(linePart, "{ ", "{", false);
+			linePart = formatIncorrectSyntax(linePart, " }", "}", false);
+		}
+
+		if (!linePart.startsWith("##")) {
+			for (int x = 0;;) {
+				x = linePart.indexOf(StringPool.DOUBLE_SPACE, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (ToolsUtil.isInsideQuotes(linePart, x)) {
+					continue;
+				}
+
+				linePart = StringUtil.replaceFirst(
+					linePart, StringPool.DOUBLE_SPACE, StringPool.SPACE, x);
+			}
+		}
+
+		if (!javaSource) {
+			line = StringUtil.replace(line, originalLinePart, linePart);
+
+			return formatIncorrectSyntax(
+				line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
+		}
 
 		for (int x = 0;;) {
 			x = linePart.indexOf(CharPool.EQUAL, x + 1);
@@ -960,21 +989,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				linePart = StringUtil.replaceLast(
 					linePart, StringPool.TAB, StringPool.SPACE);
 			}
-		}
-
-		for (int x = 0;;) {
-			x = linePart.indexOf(StringPool.DOUBLE_SPACE, x + 1);
-
-			if (x == -1) {
-				break;
-			}
-
-			if (ToolsUtil.isInsideQuotes(linePart, x)) {
-				continue;
-			}
-
-			linePart = StringUtil.replaceFirst(
-				linePart, StringPool.DOUBLE_SPACE, StringPool.SPACE, x);
 		}
 
 		if (line.contains(StringPool.DOUBLE_SLASH)) {
@@ -1060,11 +1074,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
 	}
 
-	protected String formatWhitespace(
-		String line, String trimmedLine, boolean javaSource) {
+	protected String formatWhitespace(String line, boolean javaSource) {
+		String trimmedLine = StringUtil.trimLeading(line);
+
+		line = formatWhitespace(line, trimmedLine, javaSource);
 
 		if (javaSource) {
-			return formatWhitespace(line, trimmedLine);
+			return line;
 		}
 
 		Matcher matcher = javaSourceInsideJSPTagPattern.matcher(line);
@@ -1082,7 +1098,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					line, matcher.group(), "<%=" + linePart + " %>");
 			}
 
-			line = formatWhitespace(line, linePart);
+			line = formatWhitespace(line, linePart, true);
 		}
 
 		return line;

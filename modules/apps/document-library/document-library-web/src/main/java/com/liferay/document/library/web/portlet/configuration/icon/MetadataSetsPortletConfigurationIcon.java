@@ -14,24 +14,28 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portlet.PortletURLFactoryUtil;
 
 import javax.portlet.PortletRequest;
-
-import javax.servlet.ServletContext;
+import javax.portlet.PortletURL;
 
 /**
  * @author Sergio González
  */
 public class MetadataSetsPortletConfigurationIcon
-	extends BaseJSPPortletConfigurationIcon {
+	extends BasePortletConfigurationIcon {
 
-	public MetadataSetsPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
-		PortletRequest portletRequest) {
-
-		super(servletContext, jspPath, portletRequest);
+	public MetadataSetsPortletConfigurationIcon(PortletRequest portletRequest) {
+		super(portletRequest);
 	}
 
 	@Override
@@ -41,7 +45,27 @@ public class MetadataSetsPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		return "javascript:;";
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDisplay.getId());
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest,
+			PortletProviderUtil.getPortletId(
+				DDMStructure.class.getName(), PortletProvider.Action.VIEW),
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		portletURL.setParameter(
+			"refererPortletName", DLPortletKeys.DOCUMENT_LIBRARY);
+		portletURL.setParameter(
+			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
+		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+		portletURL.setParameter("showManageTemplates", Boolean.FALSE.toString());
+
+		return portletURL.toString();
 	}
 
 	@Override

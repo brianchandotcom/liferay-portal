@@ -14,24 +14,24 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
+import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
-
-import javax.servlet.ServletContext;
+import javax.portlet.PortletURL;
 
 /**
  * @author Sergio González
  */
 public class DocumentTypesPortletConfigurationIcon
-	extends BaseJSPPortletConfigurationIcon {
+	extends BasePortletConfigurationIcon {
 
 	public DocumentTypesPortletConfigurationIcon(
-		ServletContext servletContext, String jspPath,
 		PortletRequest portletRequest) {
 
-		super(servletContext, jspPath, portletRequest);
+		super(portletRequest);
 	}
 
 	@Override
@@ -41,7 +41,15 @@ public class DocumentTypesPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		return "javascript:;";
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcPath", "/document_library/view_file_entry_type.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		return portletURL.toString();
 	}
 
 	@Override

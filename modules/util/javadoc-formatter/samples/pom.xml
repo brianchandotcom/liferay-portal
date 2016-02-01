@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.javadoc.formatter</artifactId>
-				<version>1.0.10</version>
+				<version>1.0.11</version>
 				<configuration>
 					<inputDirName>src/main</inputDirName>
 				</configuration>

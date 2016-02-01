@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.portal.tools.wsdd.builder</artifactId>
-				<version>1.0.1</version>
+				<version>1.0.5</version>
 				<configuration>
 					<inputFileName>docroot/WEB-INF/service.xml</inputFileName>
 					<outputDirName>docroot/WEB-INF/src</outputDirName>

@@ -93,6 +93,8 @@ public abstract class BaseLayoutTypeControllerImpl
 			response, unsyncStringWriter);
 
 		String contentType = servletResponse.getContentType();
+		String includeServletPath = (String)request.getAttribute(
+			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
 			addAttributes(request);
@@ -101,6 +103,9 @@ public abstract class BaseLayoutTypeControllerImpl
 		}
 		finally {
 			removeAttributes(request);
+
+			request.setAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH, includeServletPath);
 		}
 
 		if (contentType != null) {

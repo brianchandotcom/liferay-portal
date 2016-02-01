@@ -136,7 +136,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public String getStructureName(Locale locale) {
-		return LanguageUtil.get(locale, "structure");
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "structure");
 	}
 
 	@Override

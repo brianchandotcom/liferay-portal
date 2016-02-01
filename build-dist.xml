@@ -2609,7 +2609,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		>
 			<mapper
 				type="glob"
-				from="wildfly-${app.server.wildfly.version}.CR5/*"
+				from="wildfly-${app.server.wildfly.version}.Final/*"
 				to="wildfly-${app.server.wildfly.version}/*"
 			/>
 		</unzip>

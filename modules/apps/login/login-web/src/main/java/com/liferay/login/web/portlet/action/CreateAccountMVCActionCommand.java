@@ -421,18 +421,16 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		long facebookId = GetterUtil.getLong(
 			session.getAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID));
 
-		if (facebookId > 0) {
+		String googleId = GetterUtil.getString(
+			session.getAttribute(WebKeys.GOOGLE_INCOMPLETE_USER_ID));
+
+		if ((facebookId > 0) || Validator.isNotNull(googleId)) {
 			password1 = PwdGenerator.getPassword();
 			password2 = password1;
 		}
 
-		String googleId = GetterUtil.getString(
-			session.getAttribute(WebKeys.GOOGLE_INCOMPLETE_USER_ID));
-
 		if (Validator.isNotNull(googleId)) {
 			autoPassword = false;
-			password1 = PwdGenerator.getPassword();
-			password2 = password1;
 			sendEmail = false;
 		}
 

@@ -4227,10 +4227,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the user's OpenID.
+	 * Updates the user's GoogleId.
 	 *
 	 * @param  userId the primary key of the user
-	 * @param  openId the new OpenID
+	 * @param  googleId the new GoogleId
 	 * @return the user
 	 */
 	@Override
@@ -4240,6 +4240,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		googleId = googleId.trim();
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		validateGoogleId(user.getCompanyId(), userId, googleId);
 
 		user.setGoogleId(googleId);
 
@@ -6502,7 +6504,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User user = userPersistence.fetchByC_GID(companyId, googleId);
 
 		if ((user != null) && (user.getUserId() != userId)) {
-			throw new DuplicateGoogleIdException("{userId=" + userId + "}");
+			throw new DuplicateGoogleIdException(
+				"existing userId = =" + user.getUserId() + ", googleId" +
+					googleId + ", userId=" + userId);
 		}
 	}
 

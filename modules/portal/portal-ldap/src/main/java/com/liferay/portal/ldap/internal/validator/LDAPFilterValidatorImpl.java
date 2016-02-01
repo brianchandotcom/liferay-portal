@@ -14,13 +14,13 @@
 
 package com.liferay.portal.ldap.internal.validator;
 
-import com.liferay.portal.kernel.ldap.LDAPFilterException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.internal.validator.parser.LDAPFilterLexer;
 import com.liferay.portal.ldap.internal.validator.parser.LDAPFilterParser;
-import com.liferay.portal.kernel.security.ldap.LDAPFilterValidator;
+import com.liferay.portal.ldap.validator.LDAPFilterException;
+import com.liferay.portal.ldap.validator.LDAPFilterValidator;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
@@ -52,7 +52,7 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 		try {
 			ldapFilterParser.parse();
 		}
-		catch (RecognitionException | RuntimeException re) {
+		catch (RecognitionException | RuntimeException e) {
 			if (_log.isErrorEnabled()) {
 				_log.error("Unable to parse filter " + filter);
 			}

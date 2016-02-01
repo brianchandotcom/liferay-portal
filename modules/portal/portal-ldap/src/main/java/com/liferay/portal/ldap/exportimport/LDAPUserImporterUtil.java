@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.ldap;
+package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.exportimport.UserImporter;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import javax.naming.directory.Attributes;
 import javax.naming.ldap.LdapContext;
@@ -23,11 +23,22 @@ import javax.naming.ldap.LdapContext;
 /**
  * @author Michael C. Han
  */
-public interface LDAPUserImporter extends UserImporter {
+public class LDAPUserImporterUtil {
 
-	public User importUser(
+	public static User importUser(
 			long ldapServerId, long companyId, LdapContext ldapContext,
 			Attributes attributes, String password)
-		throws Exception;
+		throws Exception {
+
+		return _getInstance().importUser(
+			ldapServerId, companyId, ldapContext, attributes, password);
+	}
+
+	private static LDAPUserImporter _getInstance() {
+		return _instance;
+	}
+
+	private static final LDAPUserImporter _instance =
+		ProxyFactory.newServiceTrackedInstance(LDAPUserImporter.class);
 
 }

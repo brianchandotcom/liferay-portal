@@ -12,26 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.ldap;
-
-import java.util.Properties;
-
-import javax.naming.directory.Attributes;
+package com.liferay.portal.ldap.validator;
 
 /**
- * @author Edward Han
- * @author Brian Wing Shun Chan
+ * @author Vilmos Papp
  */
-public interface LDAPToPortalConverter {
+public interface LDAPFilterValidator {
 
-	public LDAPGroup importLDAPGroup(
-			long companyId, Attributes attributes, Properties groupMappings)
-		throws Exception;
+	public boolean isValid(String filter);
 
-	public LDAPUser importLDAPUser(
-			long companyId, Attributes attributes, Properties userMappings,
-			Properties userExpandoMappings, Properties contactMappings,
-			Properties contactExpandoMappings, String password)
-		throws Exception;
+	public void validate(String filter) throws LDAPFilterException;
+
+	public void validate(String filter, String filterPropertyName)
+		throws LDAPFilterException;
 
 }

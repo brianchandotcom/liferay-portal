@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.ldap;
+package com.liferay.portal.ldap.dummy;
 
 import java.util.Hashtable;
 

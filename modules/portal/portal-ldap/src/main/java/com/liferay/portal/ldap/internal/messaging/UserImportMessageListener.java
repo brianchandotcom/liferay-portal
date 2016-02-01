@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.kernel.security.ldap.LDAPUserImporter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
 
 import java.util.List;

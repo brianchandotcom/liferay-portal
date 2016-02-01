@@ -14,7 +14,6 @@
 
 package com.liferay.portal.ldap.internal.exportimport;
 
-import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
@@ -23,17 +22,18 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.exportimport.UserExporter;
 import com.liferay.portal.kernel.security.exportimport.UserOperation;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
-import com.liferay.portal.kernel.security.ldap.Modifications;
-import com.liferay.portal.kernel.security.ldap.PortalLDAP;
-import com.liferay.portal.kernel.security.ldap.PortalToLDAPConverter;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.ldap.GroupConverterKeys;
+import com.liferay.portal.ldap.PortalLDAP;
 import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.ldap.exportimport.Modifications;
+import com.liferay.portal.ldap.exportimport.PortalToLDAPConverter;
 import com.liferay.portal.ldap.internal.PortalLDAPContext;
+import com.liferay.portal.ldap.util.LDAPUtil;
 
 import java.io.Serializable;
 

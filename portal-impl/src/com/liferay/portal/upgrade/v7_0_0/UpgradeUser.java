@@ -12,32 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_2_0;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
 public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(User.class);
-
-		runSQL("update Contact_ set classNameId = " + classNameId);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("update Contact_ set classPK = (select User_.userId from ");
-		sb.append("User_ where User_.contactId = Contact_.contactId), ");
-		sb.append("emailAddress = (select User_.emailAddress from User_ ");
-		sb.append("where User_.contactId = Contact_.contactId)");
-
-		runSQL(sb.toString());
+		runSQL("alter table User_ add googleId VARCHAR(24) null");
 	}
 
 }

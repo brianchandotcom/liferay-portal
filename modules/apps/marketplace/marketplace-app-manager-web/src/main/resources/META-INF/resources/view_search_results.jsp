@@ -17,55 +17,33 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String app = ParamUtil.getString(request, "app");
+String keywords = ParamUtil.getString(request, "keywords");
 
-AppDisplay appDisplay = null;
-
-List<Bundle> allBundles = BundleManagerUtil.getBundles();
-
-if (Validator.isNumber(app)) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, Long.parseLong(app));
-}
-
-if (appDisplay == null) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, app);
-}
-
-String moduleGroup = ParamUtil.getString(request, "moduleGroup");
-
-ModuleGroupDisplay moduleGroupDisplay = null;
-
-if (Validator.isNotNull(moduleGroup)) {
-	moduleGroupDisplay = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplay(appDisplay, moduleGroup);
-}
-
+String category = ParamUtil.getString(request, "category", "all-categories");
 String state = ParamUtil.getString(request, "state", "all-statuses");
 
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+List<App> apps = AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view_modules.jsp");
-portletURL.setParameter("app", app);
-portletURL.setParameter("moduleGroup", moduleGroup);
+portletURL.setParameter("mvcPath", "/view_search_results.jsp");
+portletURL.setParameter("category", category);
 portletURL.setParameter("state", state);
 portletURL.setParameter("orderByType", orderByType);
 
-renderResponse.setTitle((moduleGroupDisplay != null) ? moduleGroupDisplay.getTitle() : appDisplay.getTitle());
-
-MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), String.valueOf(renderResponse.createRenderURL()));
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-results"), null);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewURL">
-			<portlet:param name="mvcPath" value="/view_modules.jsp" />
-			<portlet:param name="app" value="<%= app %>" />
-		</portlet:renderURL>
+		<portlet:renderURL var="viewURL" />
 
 		<aui:nav-item
 			href="<%= viewURL %>"
-			label="modules"
+			label="search"
 			selected="<%= true %>"
 		/>
 	</aui:nav>
@@ -95,12 +73,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
-			navigationParam="state"
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
 		<liferay-frontend:management-bar-sort
 			orderByCol="title"
 			orderByType="<%= orderByType %>"
@@ -119,46 +91,67 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-modules-were-found"
-		id="bundles"
+		emptyResultsMessage="no-results-were-found"
+		id="appDisplays"
 		iteratorURL="<%= portletURL %>"
 	>
 		<liferay-ui:search-container-results>
 
 			<%
-			List<Bundle> bundles = null;
+			List<Bundle> bundles = BundleManagerUtil.getBundles();
 
-			if (moduleGroupDisplay != null) {
-				bundles = moduleGroupDisplay.getBundles();
-			}
-			else {
-				bundles = appDisplay.getBundles();
-			}
+			results = MarketplaceAppManagerSearchUtil.getResults(bundles, keywords);
 
-			BundleUtil.filterBundles(bundles, BundleStateConstants.getState(state));
-
-			bundles = ListUtil.sort(bundles, new BundleComparator(orderByType));
+			results = ListUtil.sort(results, new MarketplaceAppManagerComparator(orderByType));
 
 			int end = searchContainer.getEnd();
 
-			if (end > bundles.size()) {
-				end = bundles.size();
+			if (end > results.size()) {
+				end = results.size();
 			}
 
-			searchContainer.setResults(bundles.subList(searchContainer.getStart(), end));
+			searchContainer.setResults(results.subList(searchContainer.getStart(), end));
 
-			searchContainer.setTotal(bundles.size());
+			searchContainer.setTotal(results.size());
 			%>
 
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="org.osgi.framework.Bundle"
-			modelVar="bundle"
+			className="Object"
+			modelVar="result"
 		>
-			<%@ include file="/bundle_columns.jspf" %>
+			<c:choose>
+				<c:when test="<%= result instanceof AppDisplay %>">
+
+					<%
+					AppDisplay appDisplay = (AppDisplay)result;
+					%>
+
+					<%@ include file="/app_display_columns.jspf" %>
+				</c:when>
+				<c:when test="<%= result instanceof ModuleGroupDisplay %>">
+
+					<%
+					ModuleGroupDisplay moduleGroupDisplay = (ModuleGroupDisplay)result;
+					%>
+
+					<%@ include file="/module_group_display_columns.jspf" %>
+				</c:when>
+				<c:when test="<%= result instanceof Bundle %>">
+
+					<%
+					Bundle bundle = (Bundle)result;
+
+					String app = StringPool.BLANK;
+					String moduleGroup = StringPool.BLANK;
+					%>
+
+					<%@ include file="/bundle_columns.jspf" %>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= new MarketplaceAppManagerResultRowSplitter() %>" />
 	</liferay-ui:search-container>
 </div>

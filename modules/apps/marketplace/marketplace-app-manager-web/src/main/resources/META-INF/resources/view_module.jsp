@@ -64,10 +64,21 @@ String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME
 
 renderResponse.setTitle(bundleName);
 
-MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, bundle, request, renderResponse);
+if (Validator.isNull(app)) {
+	PortletURL viewURL = renderResponse.createRenderURL();
+
+	viewURL.setParameter("mvcPath", "/view.jsp");
+
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), viewURL.toString());
+
+	PortalUtil.addPortletBreadcrumbEntry(request, bundleName, null);
+}
+else {
+	MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, bundle, request, renderResponse);
+}
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewModuleComponentsURL">
 			<portlet:param name="mvcPath" value="/view_module.jsp" />
@@ -101,10 +112,22 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 			selected='<%= pluginType.equals("portlets") %>'
 		/>
 	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcPath" value="/view_search_results.jsp" />
+		</liferay-portlet:renderURL>
+
+		<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	searchContainerId="appDisplays"
+	searchContainerId="components"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons

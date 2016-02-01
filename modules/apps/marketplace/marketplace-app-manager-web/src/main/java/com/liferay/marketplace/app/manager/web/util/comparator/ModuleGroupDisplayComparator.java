@@ -12,16 +12,19 @@
  * details.
  */
 
-package com.liferay.marketplace.app.manager.web.util;
+package com.liferay.marketplace.app.manager.web.util.comparator;
+
+import com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay;
 
 import java.util.Comparator;
 
 /**
  * @author Ryan Park
  */
-public class AppDisplayComparator implements Comparator<AppDisplay> {
+public class ModuleGroupDisplayComparator
+	implements Comparator<ModuleGroupDisplay> {
 
-	public AppDisplayComparator(String orderByType) {
+	public ModuleGroupDisplayComparator(String orderByType) {
 		if (!orderByType.equals("asc")) {
 			_ascending = false;
 		}
@@ -31,17 +34,11 @@ public class AppDisplayComparator implements Comparator<AppDisplay> {
 	}
 
 	@Override
-	public int compare(AppDisplay appDisplay1, AppDisplay appDisplay2) {
-		if (appDisplay1.hasModuleGroups() && !appDisplay2.hasModuleGroups()) {
-			return -1;
-		}
-		else if (!appDisplay1.hasModuleGroups() &&
-				 appDisplay2.hasModuleGroups()) {
+	public int compare(
+		ModuleGroupDisplay moduleGroupDisplay1,
+		ModuleGroupDisplay moduleGroupDisplay2) {
 
-			return 1;
-		}
-
-		int value = appDisplay1.compareTo(appDisplay2);
+		int value = moduleGroupDisplay1.compareTo(moduleGroupDisplay2);
 
 		if (_ascending) {
 			return value;

@@ -27,6 +27,10 @@ public class BundleStateConstants {
 
 	public static final String ACTIVE_LABEL = "active";
 
+	public static final int ANY = 0;
+
+	public static final String ANY_LABEL = StringPool.BLANK;
+
 	public static final int INSTALLED = Bundle.INSTALLED;
 
 	public static final String INSTALLED_LABEL = "installed";
@@ -65,7 +69,7 @@ public class BundleStateConstants {
 			return UNINSTALLED_LABEL;
 		}
 		else {
-			return StringPool.BLANK;
+			return ANY_LABEL;
 		}
 	}
 
@@ -83,7 +87,7 @@ public class BundleStateConstants {
 			return UNINSTALLED;
 		}
 		else {
-			return 0;
+			return ANY;
 		}
 	}
 

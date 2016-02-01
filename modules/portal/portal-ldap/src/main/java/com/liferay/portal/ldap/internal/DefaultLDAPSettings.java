@@ -14,7 +14,6 @@
 
 package com.liferay.portal.ldap.internal;
 
-import com.liferay.portal.ldap.util.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
@@ -29,6 +28,7 @@ import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.configuration.SystemLDAPConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration;
+import com.liferay.portal.ldap.util.LDAPUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalService;
 

@@ -29,7 +29,7 @@
 		searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration());
 	}
 
-	searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("weight", false, false));
+	searchFacets = ListUtil.sort(searchFacets, SearchFacetComparator.INSTANCE);
 
 	for (SearchFacet searchFacet : searchFacets) {
 	%>

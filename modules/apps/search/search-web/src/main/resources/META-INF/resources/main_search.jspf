@@ -74,7 +74,7 @@ Hits hits = indexer.search(searchContext);
 		<aui:col id="facetNavigation" span="<%= 2 %>">
 
 			<%
-			searchFacets = ListUtil.sort(searchFacets, new PropertyComparator("weight", false, false));
+			searchFacets = ListUtil.sort(searchFacets, SearchFacetComparator.INSTANCE);
 
 			for (SearchFacet searchFacet : searchFacets) {
 				if (searchFacet.isStatic()) {

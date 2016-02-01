@@ -56,12 +56,17 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 		buildPluginDescriptorTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME);
 
+		final SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
 		buildPluginDescriptorTask.setClassesDir(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return getClassesDir(project);
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return sourceSetOutput.getClassesDir();
 				}
 
 			});
@@ -75,7 +80,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getResourcesDir(project);
+					File resourcesDir = getSrcDir(sourceSet.getResources());
 
 					return new File(resourcesDir, "META-INF/maven");
 				}
@@ -117,35 +122,12 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getJavaDir(project);
+					return getSrcDir(sourceSet.getJava());
 				}
 
 			});
 
 		return buildPluginDescriptorTask;
-	}
-
-	protected File getClassesDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		return sourceSetOutput.getClassesDir();
-	}
-
-	protected File getJavaDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		return getSrcDir(sourceSet.getJava());
-	}
-
-	protected File getResourcesDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		return getSrcDir(sourceSet.getResources());
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {

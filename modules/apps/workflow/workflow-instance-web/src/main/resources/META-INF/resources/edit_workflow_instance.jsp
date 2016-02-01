@@ -60,7 +60,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 					</aui:field-wrapper>
 				</aui:col>
 			</aui:fieldset>
-			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
+			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>" id="preview">
 
 				<%
 				AssetRenderer<?> assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
@@ -69,7 +69,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				%>
 
 				<c:if test="<%= assetRenderer != null %>">
-					<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>">
+					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="<%= workflowInstanceEditDisplayContext.getPanelTitle() %>">
 						<div class="task-content-actions">
 							<liferay-ui:icon-list>
 								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">

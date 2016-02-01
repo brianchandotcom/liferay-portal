@@ -114,9 +114,9 @@ renderResponse.setTitle(headerTitle);
 				</c:if>
 			</aui:fieldset>
 
-			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
+			<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= false %>">
 				<c:if test="<%= assetRenderer != null %>">
-					<liferay-ui:panel extended="<%= false %>" markupView="lexicon" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">
+					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">
 						<div class="task-content-actions">
 							<liferay-ui:icon-list>
 								<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">

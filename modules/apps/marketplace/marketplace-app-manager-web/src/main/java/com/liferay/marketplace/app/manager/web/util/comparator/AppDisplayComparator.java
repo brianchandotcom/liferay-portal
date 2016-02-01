@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.marketplace.app.manager.web.util;
+package com.liferay.marketplace.app.manager.web.util.comparator;
 
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.marketplace.app.manager.web.util.AppDisplay;
 
-import org.osgi.framework.ServiceReference;
+import java.util.Comparator;
 
 /**
- * @author Douglas Wong
+ * @author Ryan Park
  */
-public class ModuleServiceReferenceComparator<T>
-	extends PropertyServiceReferenceComparator<T> {
+public class AppDisplayComparator implements Comparator<AppDisplay> {
 
-	public ModuleServiceReferenceComparator(
-		String propertyKey, String orderByType) {
-
-		super(propertyKey);
-
+	public AppDisplayComparator(String orderByType) {
 		if (!orderByType.equals("asc")) {
 			_ascending = false;
 		}
@@ -38,17 +33,23 @@ public class ModuleServiceReferenceComparator<T>
 	}
 
 	@Override
-	public int compare(
-		ServiceReference<T> serviceReference1,
-		ServiceReference<T> serviceReference2) {
+	public int compare(AppDisplay appDisplay1, AppDisplay appDisplay2) {
+		if (appDisplay1.hasModuleGroups() && !appDisplay2.hasModuleGroups()) {
+			return -1;
+		}
+		else if (!appDisplay1.hasModuleGroups() &&
+				 appDisplay2.hasModuleGroups()) {
 
-		int value = super.compare(serviceReference1, serviceReference2);
+			return 1;
+		}
+
+		int value = appDisplay1.compareTo(appDisplay2);
 
 		if (_ascending) {
-			return -value;
+			return value;
 		}
 		else {
-			return value;
+			return -value;
 		}
 	}
 

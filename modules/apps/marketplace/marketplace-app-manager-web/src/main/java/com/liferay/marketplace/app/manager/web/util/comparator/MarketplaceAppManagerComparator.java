@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.marketplace.app.manager.web.util;
+package com.liferay.marketplace.app.manager.web.util.comparator;
 
 import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
+import com.liferay.marketplace.app.manager.web.util.AppDisplay;
+import com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 

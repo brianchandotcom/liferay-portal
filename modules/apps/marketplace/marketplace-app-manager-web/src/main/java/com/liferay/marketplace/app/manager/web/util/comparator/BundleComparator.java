@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.marketplace.app.manager.web.util;
+package com.liferay.marketplace.app.manager.web.util.comparator;
+
+import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Comparator;
+import java.util.Dictionary;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Ryan Park
  */
-public class ModuleGroupDisplayComparator
-	implements Comparator<ModuleGroupDisplay> {
+public class BundleComparator implements Comparator<Bundle> {
 
-	public ModuleGroupDisplayComparator(String orderByType) {
+	public BundleComparator(String orderByType) {
 		if (!orderByType.equals("asc")) {
 			_ascending = false;
 		}
@@ -32,11 +37,11 @@ public class ModuleGroupDisplayComparator
 	}
 
 	@Override
-	public int compare(
-		ModuleGroupDisplay moduleGroupDisplay1,
-		ModuleGroupDisplay moduleGroupDisplay2) {
+	public int compare(Bundle bundle1, Bundle bundle2) {
+		String bundle1Name = getBundleName(bundle1);
+		String bundle2Name = getBundleName(bundle2);
 
-		int value = moduleGroupDisplay1.compareTo(moduleGroupDisplay2);
+		int value = bundle1Name.compareTo(bundle2Name);
 
 		if (_ascending) {
 			return value;
@@ -44,6 +49,12 @@ public class ModuleGroupDisplayComparator
 		else {
 			return -value;
 		}
+	}
+
+	protected String getBundleName(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		return GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
 	}
 
 	private final boolean _ascending;

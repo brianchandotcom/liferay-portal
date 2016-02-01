@@ -24,7 +24,7 @@ if (accordion) {
 		collapsed = true;
 	}
 }
-else if ((extended != null) && extended) {
+else if ((extended != null) && !extended) {
 	collapsed = true;
 }
 %>

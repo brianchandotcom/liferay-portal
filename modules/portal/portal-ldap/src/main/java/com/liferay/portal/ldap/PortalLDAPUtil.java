@@ -14,8 +14,6 @@
 
 package com.liferay.portal.ldap;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
-
 import java.util.List;
 
 import javax.naming.Binding;
@@ -24,9 +22,13 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Edward C. Han
  */
+@Component(immediate = true)
 public class PortalLDAPUtil {
 
 	public static LdapContext getContext(long ldapServerId, long companyId)
@@ -257,11 +259,15 @@ public class PortalLDAPUtil {
 			attributeIds, searchResults);
 	}
 
-	private static PortalLDAP getInstance() {
-		return _instance;
+	protected static PortalLDAP getInstance() {
+		return _portalLDAP;
 	}
 
-	private static final PortalLDAP _instance =
-		ProxyFactory.newServiceTrackedInstance(PortalLDAP.class);
+	@Reference(unbind = "-")
+	protected void setPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = portalLDAP;
+	}
+
+	private static PortalLDAP _portalLDAP;
 
 }

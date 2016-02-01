@@ -14,12 +14,12 @@
 
 package com.liferay.portal.ldap.internal.validator;
 
-import com.liferay.portal.ldap.validator.LDAPFilterException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.internal.validator.parser.LDAPFilterLexer;
 import com.liferay.portal.ldap.internal.validator.parser.LDAPFilterParser;
+import com.liferay.portal.ldap.validator.LDAPFilterException;
 import com.liferay.portal.ldap.validator.LDAPFilterValidator;
 
 import org.antlr.runtime.ANTLRStringStream;

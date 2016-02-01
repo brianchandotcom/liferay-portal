@@ -33,7 +33,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRuleGroupInstancesURL %>" cssClass="container-fluid-1280"  method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroupInstancesPriorities()" %>'>
+<aui:form action="<%= editRuleGroupInstancesURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroupInstancesPriorities()" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="ruleGroupsInstancesJSON" type="hidden" />

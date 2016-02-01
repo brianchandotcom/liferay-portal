@@ -127,7 +127,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 
 			var mergeTagNamesArray = mergeTagNames.split(',');
 
-			if(mergeTagNamesArray.length < 2) {
+			if (mergeTagNamesArray.length < 2) {
 				alert('<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />');
 
 				return;

@@ -126,7 +126,7 @@ else {
 			data.put("name", categoryName);
 			%>
 
-			<aui:button cssClass="selector-button"  data="<%= data %>" value="choose-this-category" />
+			<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-category" />
 		</aui:button-row>
 
 		<liferay-ui:search-iterator />

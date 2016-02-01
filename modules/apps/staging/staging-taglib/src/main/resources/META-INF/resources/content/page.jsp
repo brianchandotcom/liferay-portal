@@ -40,7 +40,7 @@
 										<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_ALL) %>" disabled="<%= disableInputs %>" id="rangeAll" label="all" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_ALL %>" />
 
 										<c:if test="<%= !type.equals(Constants.EXPORT) %>">
-											<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE) %>" disabled="<%= disableInputs %>"  id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE %>" />
+											<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE) %>" disabled="<%= disableInputs %>" id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE %>" />
 										</c:if>
 
 										<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_DATE_RANGE) %>" disabled="<%= disableInputs %>" helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_DATE_RANGE %>" />

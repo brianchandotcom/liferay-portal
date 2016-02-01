@@ -255,7 +255,7 @@ if (portletTitleBasedNavigation) {
 									}
 									%>
 
-									<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= webDavURL %>" />
+									<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL" type="resource" value="<%= webDavURL %>" />
 								</div>
 							</c:if>
 						</c:if>

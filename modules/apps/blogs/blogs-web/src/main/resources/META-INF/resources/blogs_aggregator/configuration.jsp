@@ -45,7 +45,7 @@ if (organizationId > 0) {
 			</aui:select>
 
 			<div class="form-group <%= selectionMethod.equals("users") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />usersSelectionOptions">
-				<aui:input label="organization" name="organizationName" type="resource"  value="<%= organizationName %>" />
+				<aui:input label="organization" name="organizationName" type="resource" value="<%= organizationName %>" />
 
 				<aui:button name="selectOrganizationButton" value="select" />
 

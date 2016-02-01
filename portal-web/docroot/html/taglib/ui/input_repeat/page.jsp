@@ -132,7 +132,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, recurrence);
 				<aui:select cssClass="input-container" inlineField="<%= true %>" label="" name="monthlyDay1" title="first-day-of-week" value="<%= monthlyDay1 %>">
 					<aui:option label="<%= days[0] %>" value="<%= Calendar.SUNDAY %>" />
 					<aui:option label="<%= days[1] %>" value="<%= Calendar.MONDAY %>" />
-					<aui:option label="<%= days[2] %>"  value="<%= Calendar.TUESDAY %>" />
+					<aui:option label="<%= days[2] %>" value="<%= Calendar.TUESDAY %>" />
 					<aui:option label="<%= days[3] %>" value="<%= Calendar.WEDNESDAY %>" />
 					<aui:option label="<%= days[4] %>" value="<%= Calendar.THURSDAY %>" />
 					<aui:option label="<%= days[5] %>" value="<%= Calendar.FRIDAY %>" />

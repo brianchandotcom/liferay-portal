@@ -28,7 +28,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(resource);
 %>
 
-<portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL"  />
+<portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL" />
 
 <div class="container-fluid-1280 workflow-definition-link-container" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= updateWorkflowDefinitionLinkURL %>" method="post">

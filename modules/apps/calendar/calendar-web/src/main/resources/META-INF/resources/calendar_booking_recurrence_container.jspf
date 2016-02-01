@@ -192,7 +192,7 @@ if (recurrence != null) {
 
 						<label><liferay-ui:message key="after" /></label>
 
-						<aui:input disabled="<%= !afterChecked %>" label="<%= StringPool.BLANK %>"  name="count" size="5" type="text" value="<%= afterChecked ? count : StringPool.BLANK %>" />
+						<aui:input disabled="<%= !afterChecked %>" label="<%= StringPool.BLANK %>" name="count" size="5" type="text" value="<%= afterChecked ? count : StringPool.BLANK %>" />
 
 						<label><liferay-ui:message key="occurrences" /></label>
 					</aui:field-wrapper>

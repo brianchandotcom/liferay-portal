@@ -74,7 +74,7 @@ catch (Exception e) {
 		</aui:field-wrapper>
 	</aui:fieldset>
 
-	<aui:button type="submit"  value="generate" />
+	<aui:button type="submit" value="generate" />
 </aui:form>
 
 <aui:script use="aui-io-request,aui-parse-content">

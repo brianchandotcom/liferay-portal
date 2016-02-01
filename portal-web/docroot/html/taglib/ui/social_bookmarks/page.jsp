@@ -56,7 +56,7 @@
 					%>
 
 						<li class="taglib-social-bookmark <%= styleClass %>">
-							<liferay-ui:social-bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>"  target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
+							<liferay-ui:social-bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
 						</li>
 
 					<%

@@ -6,11 +6,19 @@ Export-Package:\
 	com.liferay.portal.ldap.authenticator.configuration,\
 	com.liferay.portal.ldap.configuration,\
 	com.liferay.portal.ldap.constants,\
-	com.liferay.portal.ldap.exportimport.configuration
+	com.liferay.portal.ldap.dummy,\
+	com.liferay.portal.ldap.exportimport,\
+	com.liferay.portal.ldap.exportimport.configuration,\
+	com.liferay.portal.ldap.exportimport.util,\
+	com.liferay.portal.ldap.exportimport.validator
+Import-Package:\
+	!junit.*,\
+	!org.junit.*,\
+	*
 Include-Resource:\
 	@../../../lib/portal/antlr2.jar,\
 	@../../../lib/portal/antlr3.jar,\
-	@../../../lib/portal/antlr3-runtime.jar
+	@../../../lib/portal/stringtemplate.jar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LDAP
 -include: ../../../marketplace/platform/bnd.bnd

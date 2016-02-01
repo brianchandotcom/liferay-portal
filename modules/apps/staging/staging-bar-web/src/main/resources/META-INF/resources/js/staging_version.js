@@ -30,44 +30,6 @@ AUI.add(
 					}
 				},
 
-				_getGraphDialog: function() {
-					var instance = this;
-
-					var graphDialog = instance._graphDialog;
-
-					if (!graphDialog) {
-						graphDialog = Liferay.Util.Window.getWindow(
-							{
-								dialog: {
-									destroyOnHide: true
-								},
-								title: Liferay.Language.get('history')
-							}
-						);
-
-						graphDialog.plug(
-							A.Plugin.IO,
-							{
-								autoLoad: false,
-								data: {},
-								uri: StagingBar.viewHistoryURL
-							}
-						);
-
-						graphDialog.bodyNode.delegate(
-							'click',
-							function(event) {
-								instance._selectRevision(event.target);
-							},
-							'a.layout-revision.selection-handle'
-						);
-
-						instance._graphDialog = graphDialog;
-					}
-
-					return graphDialog;
-				},
-
 				_getNotification: function() {
 					var instance = this;
 
@@ -191,30 +153,14 @@ AUI.add(
 				},
 
 				_onViewHistory: function(event) {
-					var instance = this;
-
-					var graphDialog = instance._getGraphDialog();
-
-					var graphDialogIO = graphDialog.io;
-
-					var data = graphDialogIO.get('data');
-
-					data.layoutRevisionId = event.layoutRevisionId;
-					data.layoutSetBranchId = event.layoutSetBranchId;
-
-					graphDialogIO.set('data', data);
-					graphDialogIO.start();
-
-					graphDialog.show();
-				},
-
-				_selectRevision: function(node) {
-					var instance = this;
-
-					instance._updateRevision(
-						'select_layout_revision',
-						node.attr('data-layoutRevisionId'),
-						node.attr('data-layoutSetBranchId')
+					Liferay.Util.openWindow(
+						{
+							dialog: {
+								destroyOnHide: true
+							},
+							title: Liferay.Language.get('history'),
+							uri: StagingBar.viewHistoryURL
+						}
 					);
 				},
 

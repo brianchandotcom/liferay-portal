@@ -350,6 +350,12 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="gotoAssetViaTableTitle">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+	</command>
+
 	<command name="gotoAssignedToMyRoles">
 		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
 

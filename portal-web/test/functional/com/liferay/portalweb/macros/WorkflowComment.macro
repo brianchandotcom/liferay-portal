@@ -10,12 +10,16 @@
 			<then>
 				<execute macro="Workflow#_gotoCompletedFilter" />
 
-				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute macro="Workflow#gotoAssetViaTableTitle">
+					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+				</execute>
 			</then>
 			<else>
 				<execute macro="Workflow#gotoAssignedToMyRoles" />
 
-				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute macro="Workflow#gotoAssetViaTableTitle">
+					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+				</execute>
 			</else>
 		</if>
 
@@ -56,12 +60,16 @@
 			<then>
 				<execute macro="Workflow#_gotoCompletedFilter" />
 
-				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute macro="Workflow#gotoAssetViaTableTitle">
+					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+				</execute>
 			</then>
 			<else>
 				<execute macro="Workflow#gotoAssignedToMyRoles" />
 
-				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+				<execute macro="Workflow#gotoAssetViaTableTitle">
+					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+				</execute>
 			</else>
 		</if>
 

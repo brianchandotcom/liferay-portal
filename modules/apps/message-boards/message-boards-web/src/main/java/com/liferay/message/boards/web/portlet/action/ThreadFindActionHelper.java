@@ -14,24 +14,33 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.struts.PortletLayoutFinder;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portlet.messageboards.model.MBThread",
+	service = FindActionHelper.class
+)
 public class ThreadFindActionHelper extends BaseFindActionHelper {
 
 	@Override
 	public long getGroupId(long primaryKey) throws Exception {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(primaryKey);
+		MBThread thread = _mbThreadLocalService.getThread(primaryKey);
 
 		return thread.getGroupId();
 	}
@@ -42,13 +51,6 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 	}
 
 	@Override
-	public String[] initPortletIds() {
-		return new String[] {
-			MBPortletKeys.MESSAGE_BOARDS, MBPortletKeys.MESSAGE_BOARDS_ADMIN
-		};
-	}
-
-	@Override
 	public PortletURL processPortletURL(
 			HttpServletRequest request, PortletURL portletURL)
 		throws Exception {
@@ -56,7 +58,7 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 		long threadId = ParamUtil.getLong(
 			request, getPrimaryKeyParameterName());
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
+		MBThread thread = _mbThreadLocalService.getThread(threadId);
 
 		portletURL.setParameter(
 			"messageId", String.valueOf(thread.getRootMessageId()));
@@ -76,5 +78,30 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_message");
 	}
+
+	@Override
+	protected PortletLayoutFinder getPortletLayoutFinder() {
+		return _portletPageFinder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBThread)",
+		unbind = "-"
+	)
+	protected void setPortletLayoutFinder(
+		PortletLayoutFinder portletPageFinder) {
+
+		_portletPageFinder = portletPageFinder;
+	}
+
+	private MBThreadLocalService _mbThreadLocalService;
+	private PortletLayoutFinder _portletPageFinder;
 
 }

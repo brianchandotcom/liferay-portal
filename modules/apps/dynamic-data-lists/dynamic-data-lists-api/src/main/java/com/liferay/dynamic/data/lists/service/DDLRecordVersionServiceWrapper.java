@@ -59,6 +59,13 @@ public class DDLRecordVersionServiceWrapper implements DDLRecordVersionService,
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
+		long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersionService.getRecordVersions(recordId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {

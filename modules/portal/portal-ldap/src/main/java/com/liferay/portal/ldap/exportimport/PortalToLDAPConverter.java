@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.ldap;
+package com.liferay.portal.ldap.exportimport;
 
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;

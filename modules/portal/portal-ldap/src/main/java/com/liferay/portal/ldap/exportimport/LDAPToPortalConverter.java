@@ -12,20 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.ldap;
+package com.liferay.portal.ldap.exportimport;
 
-import com.liferay.portal.kernel.ldap.LDAPFilterException;
+import java.util.Properties;
+
+import javax.naming.directory.Attributes;
 
 /**
- * @author Vilmos Papp
+ * @author Edward Han
+ * @author Brian Wing Shun Chan
  */
-public interface LDAPFilterValidator {
+public interface LDAPToPortalConverter {
 
-	public boolean isValid(String filter);
+	public LDAPGroup importLDAPGroup(
+			long companyId, Attributes attributes, Properties groupMappings)
+		throws Exception;
 
-	public void validate(String filter) throws LDAPFilterException;
-
-	public void validate(String filter, String filterPropertyName)
-		throws LDAPFilterException;
+	public LDAPUser importLDAPUser(
+			long companyId, Attributes attributes, Properties userMappings,
+			Properties userExpandoMappings, Properties contactMappings,
+			Properties contactExpandoMappings, String password)
+		throws Exception;
 
 }

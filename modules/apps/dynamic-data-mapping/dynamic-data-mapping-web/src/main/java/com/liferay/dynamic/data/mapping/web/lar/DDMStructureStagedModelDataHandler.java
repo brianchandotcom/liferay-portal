@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -313,7 +312,7 @@ public class DDMStructureStagedModelDataHandler
 					structure.getClassNameId(), structure.getStructureKey());
 
 				if (existingStructure != null) {
-					structure.setStructureKey(StringPool.BLANK);
+					structure.setStructureKey(null);
 				}
 
 				importedStructure = _ddmStructureLocalService.addStructure(

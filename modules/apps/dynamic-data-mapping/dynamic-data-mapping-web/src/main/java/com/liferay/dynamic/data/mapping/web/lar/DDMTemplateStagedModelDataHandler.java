@@ -384,7 +384,7 @@ public class DDMTemplateStagedModelDataHandler
 						template.getClassNameId(), template.getTemplateKey());
 
 					if (existingTemplate != null) {
-						template.setTemplateKey(StringPool.BLANK);
+						template.setTemplateKey(null);
 					}
 
 					importedTemplate = _ddmTemplateLocalService.addTemplate(

@@ -224,8 +224,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (company == null) {
 			long companyId = counterLocalService.increment();
 
-			preregisterCompany(companyId);
-
 			company = companyPersistence.create(companyId);
 
 			try {
@@ -239,7 +237,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company.setMx(mx);
 			company.setActive(true);
 
-			companyPersistence.update(company);
+			company = companyPersistence.update(company);
 
 			// Account
 
@@ -299,6 +297,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				}
 			}
 		}
+
+		preregisterCompany(company.getCompanyId());
 
 		CompanyProvider currentCompanyProvider =
 			_companyProviderWrapper.getCompanyProvider();

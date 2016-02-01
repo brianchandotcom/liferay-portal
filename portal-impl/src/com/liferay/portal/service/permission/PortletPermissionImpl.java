@@ -282,14 +282,14 @@ public class PortletPermissionImpl implements PortletPermission {
 		throws PortalException {
 
 		String name = null;
-		String primKey = null;
+		String resourcePermissionPrimKey = null;
 
 		if (layout == null) {
 			name = portletId;
-			primKey = portletId;
+			resourcePermissionPrimKey = portletId;
 
 			return permissionChecker.hasPermission(
-				groupId, name, primKey, actionId);
+				groupId, name, resourcePermissionPrimKey, actionId);
 		}
 
 		if ((layout instanceof VirtualLayout) && layout.isTypeControlPanel()) {
@@ -321,11 +321,11 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		groupId = layout.getGroupId();
 
-		name = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 		if (checkStagingPermission) {
 			Boolean hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, groupId, name, groupId, name, actionId);
+				permissionChecker, groupId, rootPortletId, groupId, rootPortletId, actionId);
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
@@ -336,18 +336,18 @@ public class PortletPermissionImpl implements PortletPermission {
 			return true;
 		}
 
-		primKey = getPrimaryKey(layout.getPlid(), portletId);
+		resourcePermissionPrimKey = getPrimaryKey(layout.getPlid(), portletId);
 
 		if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				permissionChecker.getCompanyId(), name,
-				ResourceConstants.SCOPE_INDIVIDUAL, primKey) == 0) {
+				permissionChecker.getCompanyId(), rootPortletId,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourcePermissionPrimKey) == 0) {
 
-			primKey = name;
+			resourcePermissionPrimKey = rootPortletId;
 		}
 
 		if (strict) {
 			return permissionChecker.hasPermission(
-				groupId, name, primKey, actionId);
+				groupId, rootPortletId, resourcePermissionPrimKey, actionId);
 		}
 
 		if (hasConfigurePermission(
@@ -359,7 +359,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		return permissionChecker.hasPermission(
-			groupId, name, primKey, actionId);
+			groupId, rootPortletId, resourcePermissionPrimKey, actionId);
 	}
 
 	public boolean contains(

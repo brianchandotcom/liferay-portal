@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.constants;
+package com.liferay.application.list;
+
+import com.liferay.portal.model.Group;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
  */
-public class LayoutAdminWebKeys {
+public interface GroupProvider {
 
-	public static final String CONTROL_MENU_ENTRY = "CONTROL_MENU_ENTRY";
+	public Group getGroup(HttpServletRequest request);
 
-	public static final String GROUP_PROVIDER = "GROUP_PROVIDER";
+	public void setGroup(HttpServletRequest request, Group group);
 
 }

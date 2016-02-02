@@ -876,8 +876,12 @@ public class DLFileEntryLocalServiceImpl
 						dlFileEntry.getFileEntryId(), true);
 
 				if (dlLatestFileVersion != null) {
+					long fileEntryTypeId = getValidFileEntryTypeId(
+						dlLatestFileVersion.getFileEntryTypeId(), dlFileEntry);
+
 					dlLatestFileVersion.setModifiedDate(new Date());
 					dlLatestFileVersion.setStatusDate(new Date());
+					dlLatestFileVersion.setFileEntryTypeId(fileEntryTypeId);
 
 					dlFileVersionPersistence.update(dlLatestFileVersion);
 
@@ -891,8 +895,7 @@ public class DLFileEntryLocalServiceImpl
 						dlLatestFileVersion.getDescription());
 					dlFileEntry.setExtraSettings(
 						dlLatestFileVersion.getExtraSettings());
-					dlFileEntry.setFileEntryTypeId(
-						dlLatestFileVersion.getFileEntryTypeId());
+					dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 					dlFileEntry.setVersion(dlLatestFileVersion.getVersion());
 					dlFileEntry.setSize(dlLatestFileVersion.getSize());
 
@@ -1668,7 +1671,6 @@ public class DLFileEntryLocalServiceImpl
 			serviceContext.getLocale(), "reverted-to-x", version, false);
 		boolean majorVersion = true;
 		String extraSettings = dlFileVersion.getExtraSettings();
-		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
 		Map<String, DDMFormValues> ddmFormValuesMap = null;
 		InputStream is = getFileAsStream(fileEntryId, version, false);
 		long size = dlFileVersion.getSize();
@@ -1678,17 +1680,8 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 			fileEntryId);
 
-		try {
-			validateFileEntryTypeId(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					dlFileEntry.getGroupId()),
-				dlFileEntry.getFolderId(), fileEntryTypeId);
-		}
-		catch (InvalidFileEntryTypeException ifete) {
-			fileEntryTypeId =
-				dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(
-					dlFileEntry.getFolderId());
-		}
+		long fileEntryTypeId = getValidFileEntryTypeId(
+			dlFileVersion.getFileEntryTypeId(), dlFileEntry);
 
 		updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
@@ -2346,6 +2339,24 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected long getValidFileEntryTypeId(
+			long fileEntryTypeId, DLFileEntry dlFileEntry)
+		throws PortalException {
+
+		try {
+			validateFileEntryTypeId(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					dlFileEntry.getGroupId()),
+				dlFileEntry.getFolderId(), fileEntryTypeId);
+
+			return fileEntryTypeId;
+		}
+		catch (InvalidFileEntryTypeException ifete) {
+			return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(
+				dlFileEntry.getFolderId());
+		}
 	}
 
 	/**

@@ -26,6 +26,9 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
@@ -43,18 +46,65 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 	public static final String BUILD_PLUGIN_DESCRIPTOR_TASK_NAME =
 		"buildPluginDescriptor";
 
+	public static final String MAVEN_EMBEDDER_CONFIGURATION_NAME =
+		"mavenEmbedder";
+
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
+		Configuration mavenEmbedderConfiguration =
+			addConfigurationMavenEmbedder(project);
+
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
-			addTaskBuildPluginDescriptor(project);
+			addTaskBuildPluginDescriptor(project, mavenEmbedderConfiguration);
 
 		configureTasksUpload(project, buildPluginDescriptorTask);
 	}
 
-	protected BuildPluginDescriptorTask addTaskBuildPluginDescriptor(
+	protected Configuration addConfigurationMavenEmbedder(
 		final Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, MAVEN_EMBEDDER_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesMavenEmbedder(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures Maven Embedder for this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	protected void addDependenciesMavenEmbedder(Project project) {
+		GradleUtil.addDependency(
+			project, MAVEN_EMBEDDER_CONFIGURATION_NAME, "org.apache.maven",
+			"maven-embedder", "3.3.9");
+		GradleUtil.addDependency(
+			project, MAVEN_EMBEDDER_CONFIGURATION_NAME,
+			"org.apache.maven.wagon", "wagon-http", "2.10");
+		GradleUtil.addDependency(
+			project, MAVEN_EMBEDDER_CONFIGURATION_NAME, "org.eclipse.aether",
+			"aether-connector-basic", "1.0.2.v20150114");
+		GradleUtil.addDependency(
+			project, MAVEN_EMBEDDER_CONFIGURATION_NAME, "org.eclipse.aether",
+			"aether-transport-wagon", "1.0.2.v20150114");
+		GradleUtil.addDependency(
+			project, MAVEN_EMBEDDER_CONFIGURATION_NAME, "org.slf4j",
+			"slf4j-simple", "1.7.5");
+	}
+
+	protected BuildPluginDescriptorTask addTaskBuildPluginDescriptor(
+		final Project project, FileCollection mavenEmbedderClasspath) {
 
 		BuildPluginDescriptorTask buildPluginDescriptorTask =
 			GradleUtil.addTask(
@@ -81,6 +131,8 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		buildPluginDescriptorTask.setDescription(
 			"Generates the Maven plugin descriptor for the project.");
 		buildPluginDescriptorTask.setGroup(BasePlugin.BUILD_GROUP);
+		buildPluginDescriptorTask.setMavenEmbedderClasspath(
+			mavenEmbedderClasspath);
 
 		buildPluginDescriptorTask.setOutputDir(
 			new Callable<File>() {

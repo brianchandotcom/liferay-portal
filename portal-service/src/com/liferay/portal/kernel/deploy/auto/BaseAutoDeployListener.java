@@ -30,6 +30,10 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	protected abstract boolean isDeployable(File file)
 		throws AutoDeployException;
 
+	protected AutoDeployer wrapAutodeployer(AutoDeployer autoDeployer) {
+		return autoDeployer;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAutoDeployListener.class);
 

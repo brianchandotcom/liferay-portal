@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Gradle Plugins TLD Doc Builder
+Bundle-SymbolicName: com.liferay.gradle.plugins.tld.doc.builder
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.gradle.plugins.tld.doc.builder

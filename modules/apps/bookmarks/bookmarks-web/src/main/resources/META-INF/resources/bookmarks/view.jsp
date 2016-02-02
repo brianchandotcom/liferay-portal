@@ -148,13 +148,7 @@ else {
 	bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
 }
 
-request.setAttribute("view.jsp-folder", folder);
-
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
-
-request.setAttribute("view.jsp-keywords", keywords);
-
-request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 

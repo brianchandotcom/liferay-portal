@@ -95,37 +95,35 @@ SearchContainer bookmarksSearchContainer = new SearchContainer(liferayPortletReq
 List results = null;
 int total = 0;
 
-if (navigation.equals("mine") || navigation.equals("recent")) {
+if (Validator.isNotNull(keywords)) {
+	Indexer<?> indexer = BookmarksSearcher.getInstance();
+
+	SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+	searchContext.setAttribute("paginationType", "more");
+	searchContext.setEnd(bookmarksSearchContainer.getEnd());
+	searchContext.setFolderIds(new long[] {folderId});
+	searchContext.setKeywords(keywords);
+	searchContext.setStart(bookmarksSearchContainer.getStart());
+
+	Hits hits = indexer.search(searchContext);
+
+	total = hits.getLength();
+
+	bookmarksSearchContainer.setTotal(total);
+	bookmarksSearchContainer.setResults(BookmarksUtil.getEntries(hits));
+}
+else if (navigation.equals("mine") || navigation.equals("recent")) {
 	long groupEntriesUserId = 0;
 
 	if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
 		groupEntriesUserId = user.getUserId();
 	}
 
-	if (Validator.isNull(keywords)) {
-		total = BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId);
+	total = BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId);
 
-		bookmarksSearchContainer.setTotal(total);
-		bookmarksSearchContainer.setResults(BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
-	}
-	else {
-		Indexer<?> indexer = BookmarksSearcher.getInstance();
-
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setAttribute("paginationType", "more");
-		searchContext.setEnd(bookmarksSearchContainer.getEnd());
-		searchContext.setFolderIds(new long[] {folderId});
-		searchContext.setKeywords(keywords);
-		searchContext.setStart(bookmarksSearchContainer.getStart());
-
-		Hits hits = indexer.search(searchContext);
-
-		total = hits.getLength();
-
-		bookmarksSearchContainer.setTotal(total);
-		bookmarksSearchContainer.setResults(BookmarksUtil.getEntries(hits));
-	}
+	bookmarksSearchContainer.setTotal(total);
+	bookmarksSearchContainer.setResults(BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
 }
 else {
 	if (useAssetEntryQuery) {
@@ -143,30 +141,10 @@ else {
 		bookmarksSearchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
 	}
 	else {
-		if (Validator.isNull(keywords)) {
-			total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
+		total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
 
-			bookmarksSearchContainer.setTotal(total);
-			bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
-		}
-		else {
-			Indexer<?> indexer = BookmarksSearcher.getInstance();
-
-			SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-			searchContext.setAttribute("paginationType", "more");
-			searchContext.setEnd(bookmarksSearchContainer.getEnd());
-			searchContext.setFolderIds(new long[] {folderId});
-			searchContext.setKeywords(keywords);
-			searchContext.setStart(bookmarksSearchContainer.getStart());
-
-			Hits hits = indexer.search(searchContext);
-
-			total = hits.getLength();
-
-			bookmarksSearchContainer.setTotal(total);
-			bookmarksSearchContainer.setResults(BookmarksUtil.getEntries(hits));
-		}
+		bookmarksSearchContainer.setTotal(total);
+		bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
 	}
 }
 

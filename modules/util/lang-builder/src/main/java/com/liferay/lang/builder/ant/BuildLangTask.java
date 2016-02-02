@@ -24,7 +24,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class LangBuilderTask extends Task {
+public class BuildLangTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

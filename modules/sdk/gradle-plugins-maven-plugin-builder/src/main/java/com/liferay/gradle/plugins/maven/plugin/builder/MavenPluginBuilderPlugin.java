@@ -24,6 +24,7 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
@@ -126,6 +127,11 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		Task processResourcesTask = GradleUtil.getTask(
+			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		processResourcesTask.mustRunAfter(buildPluginDescriptorTask);
 
 		return buildPluginDescriptorTask;
 	}

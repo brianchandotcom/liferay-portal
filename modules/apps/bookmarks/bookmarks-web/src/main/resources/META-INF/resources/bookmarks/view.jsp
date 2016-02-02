@@ -92,7 +92,6 @@ portletURL.setParameter("navigation", navigation);
 
 SearchContainer bookmarksSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-bookmarks-in-this-folder");
 
-List results = null;
 int total = 0;
 
 if (Validator.isNotNull(keywords)) {

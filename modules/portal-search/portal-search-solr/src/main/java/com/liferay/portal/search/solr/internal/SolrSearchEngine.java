@@ -23,12 +23,8 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
 
-import org.apache.lucene.util.Version;
-
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,16 +78,5 @@ public class SolrSearchEngine extends BaseSearchEngine {
 
 		setVendor(vendor);
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-
-		_serviceRegistration = null;
-	}
-
-	private volatile ServiceRegistration<Version> _serviceRegistration;
 
 }

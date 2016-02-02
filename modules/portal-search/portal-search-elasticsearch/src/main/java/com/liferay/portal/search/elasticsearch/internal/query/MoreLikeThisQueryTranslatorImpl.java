@@ -59,12 +59,13 @@ public class MoreLikeThisQueryTranslatorImpl
 						String.valueOf(moreLikeThisQuery.getCompanyId()), type,
 						documentUID);
 
-				moreLikeThisQueryBuilder.docs(moreLikeThisQueryBuilderItem);
+				moreLikeThisQueryBuilder.like(moreLikeThisQueryBuilderItem);
 			}
 		}
 
 		if (Validator.isNotNull(moreLikeThisQuery.getLikeText())) {
-			moreLikeThisQueryBuilder.likeText(moreLikeThisQuery.getLikeText());
+			moreLikeThisQueryBuilder.addLikeText(
+				moreLikeThisQuery.getLikeText());
 		}
 
 		if (moreLikeThisQuery.getMaxDocFrequency() != null) {

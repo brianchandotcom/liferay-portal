@@ -3467,13 +3467,19 @@ else.
 
 - `com.liferay.portal.security.xml` &rarr; `com.liferay.portal.kernel.security.xml`
 
+- `com.liferay.portal.verify.model` &rarr; `com.liferay.portal.kernel.verify.model`
+
 - `com.liferay.portal.webserver` &rarr; `com.liferay.portal.kernel.webserver`
+
+- `com.liferay.portlet.announcements` &rarr; `com.liferay.announcements.kernel`
 
 - `com.liferay.portlet.backgroundtask` &rarr; `com.liferay.background.task.kernel`
 
 - `com.liferay.portlet.dynamicdatamapping` &rarr; `com.liferay.dynamic.data.mapping.kernel`
 
 - `com.liferay.portlet.imagegallerydisplay.display.context` &rarr; `com.liferay.image.gallery.display.kernel.display.context`
+
+- `com.liferay.portlet.journal.util` &rarr; `com.liferay.journal.kernel.util`
 
 - `com.liferay.portlet.layoutsadmin.util` &rarr; `com.liferay.layouts.admin.kernel.util`
 

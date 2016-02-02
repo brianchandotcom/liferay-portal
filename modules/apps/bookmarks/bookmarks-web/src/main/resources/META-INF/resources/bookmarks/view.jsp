@@ -137,6 +137,9 @@ else if (useAssetEntryQuery) {
 		assetEntryQuery.setKeywords(keywords);
 	}
 
+	total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+
+	bookmarksSearchContainer.setTotal(total);
 	bookmarksSearchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
 }
 else {

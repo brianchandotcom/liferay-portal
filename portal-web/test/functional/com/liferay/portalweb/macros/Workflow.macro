@@ -15,6 +15,15 @@
 		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
 	</command>
 
+	<command name="_openPreview">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" />
+			<then>
+				<execute function="Click" locator1="MyWorkflowTasksTask#PREVIEW" />
+			</then>
+		</if>
+	</command>
+
 	<command name="_tearDownWorkflow">
 		<var name="key_rowEntry" value="Knowledge Base Article" />
 		<var name="noWorkflow" value="No Workflow" />
@@ -357,12 +366,16 @@
 	</command>
 
 	<command name="gotoPreviewEdit">
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 	</command>
 
 	<command name="gotoPreviewView">
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" />
 	</command>
 
@@ -809,6 +822,8 @@
 	</command>
 
 	<command name="viewMySubmissionsTaskPreview">
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW" value1="Preview of ${workflowAssetType}" />
 		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
@@ -829,6 +844,8 @@
 	</command>
 
 	<command name="viewPreviewCategories">
+		<execute macro="Workflow#_openPreview" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" />
 			<then>
@@ -906,6 +923,9 @@
 		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
+
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
 	</command>
@@ -935,6 +955,9 @@
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
+
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 

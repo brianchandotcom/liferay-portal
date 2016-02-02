@@ -45,6 +45,7 @@ page import="com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil"
 page import="com.liferay.dynamic.data.lists.service.permission.DDLPermission" %><%@
 page import="com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission" %><%@
 page import="com.liferay.dynamic.data.lists.util.DDLUtil" %><%@
+page import="com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration" %><%@
 page import="com.liferay.dynamic.data.lists.web.display.context.DDLDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.web.display.context.DDLViewRecordsDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.web.portlet.DDLPortletUtil" %><%@
@@ -133,6 +134,8 @@ page import="javax.portlet.WindowState" %>
 
 <%
 DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(request);
+
+DDLWebConfiguration ddlWebConfiguration = (DDLWebConfiguration)request.getAttribute(DDLWebConfiguration.class.getName());
 %>
 
 <%@ include file="/init-ext.jsp" %>

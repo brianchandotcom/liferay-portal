@@ -81,10 +81,18 @@ if (ddmTemplate == null) {
 	}
 }
 
-String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+
+boolean changeableDefaultLanguage = journalWebConfiguration.changeableDefaultLanguage();
 
 if (article != null) {
-	defaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
+	String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
+
+	if (!Validator.equals(defaultLanguageId, articleDefaultLanguageId)) {
+		changeableDefaultLanguage = true;
+	}
+
+	defaultLanguageId = articleDefaultLanguageId;
 }
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
@@ -203,6 +211,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 	<aui:translation-manager
 		availableLocales="<%= availableLocales %>"
+		changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
 		defaultLanguageId="<%= defaultLanguageId %>"
 		id="translationManager"
 	/>

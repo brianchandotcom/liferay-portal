@@ -104,6 +104,11 @@ AUI.add(
 						valueFn: '_valueAvailableTranslationsNode'
 					},
 
+					changeableDefaultLanguage: {
+						validator: Lang.isBoolean,
+						value: true
+					},
+
 					changeDefaultLocaleNode: {
 						valueFn: '_valueChangeDefaultLocaleNode'
 					},
@@ -174,7 +179,7 @@ AUI.add(
 
 						var availableTranslationsLinksNode = instance.get('availableTranslationsLinksNode');
 						var availableTranslationsNode = instance.get('availableTranslationsNode');
-						var changeDefaultLocaleNode = instance.get('changeDefaultLocaleNode');
+						var changeableDefaultLanguage = instance.get('changeableDefaultLanguage');
 						var defaultLocaleLabelNode = instance.get('defaultLocaleLabelNode');
 						var defaultLocaleNode = instance.get('defaultLocaleNode');
 						var defaultLocaleTextNode = instance.get('defaultLocaleTextNode');
@@ -184,22 +189,34 @@ AUI.add(
 
 						availableTranslationsNode.append(availableTranslationsLinksNode);
 
-						var nodeList = new A.NodeList(
+						var nodes = [
+							defaultLocaleLabelNode,
+							defaultLocaleTextNode,
+							defaultLocaleNode
+						];
+
+						if (changeableDefaultLanguage) {
+							var changeDefaultLocaleNode = instance.get('changeDefaultLocaleNode');
+
+							instance._changeDefaultLocaleNode = changeDefaultLocaleNode;
+
+							nodes.push(changeDefaultLocaleNode);
+						}
+
+						nodes = nodes.concat(
 							[
-								defaultLocaleLabelNode,
-								defaultLocaleTextNode,
-								defaultLocaleNode,
-								changeDefaultLocaleNode,
 								iconMenuNode,
 								availableTranslationsNode
 							]
 						);
 
+						var nodeList = new A.NodeList(nodes);
+
 						contentBox.append(nodeList);
 
 						instance._availableTranslationsNode = availableTranslationsNode;
 						instance._availableTranslationsLinksNode = availableTranslationsLinksNode;
-						instance._changeDefaultLocaleNode = changeDefaultLocaleNode;
+						instance._changeableDefaultLanguage = changeableDefaultLanguage;
 						instance._defaultLocaleNode = defaultLocaleNode;
 						instance._defaultLocaleTextNode = defaultLocaleTextNode;
 						instance._iconMenuNode = iconMenuNode;
@@ -213,7 +230,10 @@ AUI.add(
 						instance.on('defaultLocaleChange', instance._onDefaultLocaleChange, instance);
 						instance.after('defaultLocaleChange', instance._afterDefaultLocaleChange, instance);
 
-						instance._changeDefaultLocaleNode.on('click', instance.toggleDefaultLocales, instance);
+						if (instance._changeableDefaultLanguage) {
+							instance._changeDefaultLocaleNode.on('click', instance.toggleDefaultLocales, instance);
+						}
+
 						instance._defaultLocaleNode.on('change', instance._onDefaultLocaleNodeChange, instance);
 						instance._defaultLocaleTextNode.on('click', instance._onClickDefaultLocaleTextNode, instance);
 

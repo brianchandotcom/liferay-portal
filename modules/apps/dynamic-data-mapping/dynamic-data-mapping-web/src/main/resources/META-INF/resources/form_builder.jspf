@@ -19,11 +19,19 @@ String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
 Locale[] availableLocales = new Locale[] {LocaleUtil.getSiteDefault()};
 
+boolean changeableDefaultLanguage = ddmWebConfiguration.changeableDefaultLanguage();
+
 if (Validator.isNotNull(script)) {
 	try {
 		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(script);
 
-		defaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+		String ddmFormDefaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+
+		if (!Validator.equals(defaultLanguageId, ddmFormDefaultLanguageId)) {
+			changeableDefaultLanguage = true;
+		}
+
+		defaultLanguageId = ddmFormDefaultLanguageId;
 
 		Set<Locale> ddmFormAvailableLocales = ddmForm.getAvailableLocales();
 
@@ -47,6 +55,7 @@ if (Validator.isNotNull(script)) {
 
 			<aui:translation-manager
 				availableLocales="<%= availableLocales %>"
+				changeableDefaultLanguage="<%= changeableDefaultLanguage %>"
 				defaultLanguageId="<%= defaultLanguageId %>"
 				id="translationManager"
 				initialize="<%= false %>"
@@ -207,6 +216,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 				</c:if>
 
 				boundingBox: '#<portlet:namespace />translationManager',
+				changeableDefaultLanguage: <%= changeableDefaultLanguage %>,
 				defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 				localesMap: <%= localesMapJSONObject.toString() %>,
 				srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'

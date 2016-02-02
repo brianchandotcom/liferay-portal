@@ -171,6 +171,28 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkDefineObjectsVariable(
+		String line, String fileName, int lineCount, String objectType,
+		String variableName, String value, String tag) {
+
+		if (line.contains(objectType + " " + variableName + " = " + value)) {
+			processErrorMessage(
+				fileName,
+				"Use '" + tag + ":defineObjects' or rename var: " + fileName +
+					" " + lineCount);
+		}
+	}
+
+	protected void checkDefineObjectsVariables(
+		String line, String fileName, int lineCount) {
+
+		for (String[] defineObject : _LIFERAY_FRONTEND_DEFINE_OBJECTS) {
+			checkDefineObjectsVariable(
+				line, fileName, lineCount, defineObject[0], defineObject[1],
+				defineObject[2], "liferay-frontend");
+		}
+	}
+
 	protected boolean checkTaglibVulnerability(
 		String jspContent, String vulnerability) {
 
@@ -710,6 +732,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				// LPS-58529
 
 				checkResourceUtil(line, fileName, lineCount);
+
+				checkDefineObjectsVariables(line, fileName, lineCount);
 
 				if (!fileName.endsWith("test.jsp") &&
 					line.contains("System.out.print")) {
@@ -1759,6 +1783,25 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {
 		"**/*.jsp", "**/*.jspf", "**/*.vm"
+	};
+
+	private static final String[][] _LIFERAY_FRONTEND_DEFINE_OBJECTS =
+		new String[][] {
+			new String[] {"String", "currentURL", "currentURLObj.toString()"},
+			new String[] {
+				"PortletURL", "currentURLObj",
+				"PortletURLUtil.getCurrent(liferayPortletRequest, " +
+					"liferayPortletResponse)"
+			},
+			new String[] {
+				"ResourceBundle", "resourceBundle",
+				"ResourceBundleUtil.getBundle(\"content.Language\", locale, " +
+					"getClass()"
+			},
+			new String[] {
+				"WindowState", "windowState",
+				"liferayPortletRequest.getWindowState()"
+			}
 	};
 
 	private Set<String> _checkedForIncludesFileNames = new HashSet<>();

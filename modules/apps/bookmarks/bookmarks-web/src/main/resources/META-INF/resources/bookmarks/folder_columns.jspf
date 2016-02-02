@@ -46,7 +46,6 @@ for (int j = 0; j < entryColumns.length; j++) {
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
 			<liferay-ui:search-container-column-date
-				href="<%= rowURL.toString() %>"
 				name="<%= curEntryColumn %>"
 				value="<%= curFolder.getModifiedDate() %>"
 			/>

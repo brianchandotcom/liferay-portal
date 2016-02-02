@@ -38,11 +38,14 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isHookPlugin(file)) {
+		if (!pluginAutoDeployListenerHelper.isHookPlugin()) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 

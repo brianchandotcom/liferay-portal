@@ -39,11 +39,14 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isThemePlugin(file)) {
+		if (!pluginAutoDeployListenerHelper.isThemePlugin()) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 

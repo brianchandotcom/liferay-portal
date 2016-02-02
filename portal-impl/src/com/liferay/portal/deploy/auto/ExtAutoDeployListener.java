@@ -42,7 +42,10 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isExtPlugin(file)) {
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
+		if (!pluginAutoDeployListenerHelper.isExtPlugin()) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 

@@ -39,11 +39,14 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isLiferayPackage(file)) {
+		if (!pluginAutoDeployListenerHelper.isLiferayPackage()) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 

@@ -58,8 +58,8 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
-				"Themes for " + file.getPath() + " copied successfully. " +
-					"Deployment will start in a few seconds.");
+				getSuccessMessage(file) +
+					". Deployment will start in a few seconds.");
 		}
 
 		return code;
@@ -68,6 +68,11 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 	@Override
 	protected String getPluginPathInfoMessage(File file) {
 		return "Copying themes for " + file.getPath();
+	}
+
+	@Override
+	protected String getSuccessMessage(File file) {
+		return "Themes for " + file.getPath() + " copied successfully";
 	}
 
 	@Override

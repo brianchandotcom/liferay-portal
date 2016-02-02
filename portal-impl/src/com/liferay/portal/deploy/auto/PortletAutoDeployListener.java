@@ -61,8 +61,8 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
-				"Portlets for " + file.getPath() + " copied successfully. " +
-					"Deployment will start in a few seconds.");
+				getSuccessMessage(file) +
+					". Deployment will start in a few seconds.");
 		}
 
 		return code;
@@ -87,6 +87,11 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 	@Override
 	protected String getPluginPathInfoMessage(File file) {
 		return "Copying portlets for " + file.getPath();
+	}
+
+	@Override
+	protected String getSuccessMessage(File file) {
+		return "Portlets for " + file.getPath() + " copied successfully";
 	}
 
 	protected AutoDeployer getWaiDeployer() throws AutoDeployException {

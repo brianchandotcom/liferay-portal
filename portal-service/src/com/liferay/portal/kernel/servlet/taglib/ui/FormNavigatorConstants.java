@@ -30,6 +30,11 @@ public class FormNavigatorConstants {
 
 	public static final String CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL = "social";
 
+	public static final String CATEGORY_KEY_LAYOUT_SET_ADVANCED = "advanced";
+
+	public static final String CATEGORY_KEY_LAYOUT_SET_LOOK_AND_FEEL =
+		"look-and-feel";
+
 	public static final String CATEGORY_KEY_ORGANIZATION_IDENTIFICATION =
 		"identification";
 

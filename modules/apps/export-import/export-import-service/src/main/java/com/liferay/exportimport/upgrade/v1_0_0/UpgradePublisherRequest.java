@@ -62,9 +62,26 @@ public class UpgradePublisherRequest extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (Group group : getStagingGroups()) {
+		for (Group group : getGroups()) {
 			updateScheduledPublications(group);
 		}
+	}
+
+	protected List<Group> getGroups() {
+		List<Group> groups = _groupLocalService.getGroups(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		List<Group> filteredGroups = new ArrayList<>(groups.size());
+
+		for (Group group : groups) {
+			if (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup()) {
+				continue;
+			}
+
+			filteredGroups.add(group);
+		}
+
+		return filteredGroups;
 	}
 
 	protected String getSchedulerGroupName(long groupId, boolean localStaging)
@@ -77,23 +94,6 @@ public class UpgradePublisherRequest extends UpgradeProcess {
 		}
 
 		return StagingUtil.getSchedulerGroupName(destinationName, groupId);
-	}
-
-	protected List<Group> getStagingGroups() {
-		List<Group> groups = _groupLocalService.getGroups(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		List<Group> stagedGroups = new ArrayList<>(groups.size());
-
-		for (Group group : groups) {
-			if (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup()) {
-				continue;
-			}
-
-			stagedGroups.add(group);
-		}
-
-		return stagedGroups;
 	}
 
 	protected void updateScheduledLocalPublication(

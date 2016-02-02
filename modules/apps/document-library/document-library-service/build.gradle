@@ -8,7 +8,7 @@ dependencies {
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":portal:portal-instance-lifecycle")
-	compile project(":portal:portal-search")
+	compile project(":portal-search:portal-search")
 }
 
 liferay {

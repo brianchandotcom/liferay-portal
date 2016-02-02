@@ -16,63 +16,58 @@
 
 <%@ include file="/facets/init.jsp" %>
 
-<%
-if (termCollectors.isEmpty()) {
-	return;
-}
+<c:if test="<%= !termCollectors.isEmpty() %>">
 
-int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-int maxTerms = dataJSONObject.getInt("maxTerms", 10);
-boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
-%>
+	<%
+	int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
+	int maxTerms = dataJSONObject.getInt("maxTerms", 10);
+	boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
+	%>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<liferay-ui:message key="users" />
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+				<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="nav nav-pills nav-stacked users">
-		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="user" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
-		</li>
+				<ul class="list-unstyled users">
+					<li class="default facet-value">
+						<a class="<%= Validator.isNull(fieldParam) ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+					</li>
 
-		<%
-		String userName = GetterUtil.getString(fieldParam);
+					<%
+					String userName = GetterUtil.getString(fieldParam);
 
-		for (int i = 0; i < termCollectors.size(); i++) {
-			TermCollector termCollector = termCollectors.get(i);
+					for (int i = 0; i < termCollectors.size(); i++) {
+						TermCollector termCollector = termCollectors.get(i);
 
-			String curUserName = GetterUtil.getString(termCollector.getTerm());
-		%>
+						String curUserName = GetterUtil.getString(termCollector.getTerm());
 
-			<c:if test="<%= userName.equals(curUserName) %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							text: '<%= HtmlUtil.escapeJS(curUserName) %>'
+						if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
+							break;
 						}
-					);
-				</aui:script>
-			</c:if>
+					%>
 
-			<%
-			if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
-				break;
-			}
-			%>
+						<li class="facet-value">
+							<a class="<%= userName.equals(curUserName) ? "text-primary" : "text-default" %>" data-value="<%= curUserName %>" href="javascript:;">
+								<%= HtmlUtil.escape(curUserName) %>
 
-			<li class="facet-value <%= userName.equals(curUserName) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curUserName %>" href="javascript:;">
-					<%= HtmlUtil.escape(curUserName) %>
+								<c:if test="<%= showAssetCount %>">
+									<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+								</c:if>
+							</a>
+						</li>
 
-					<c:if test="<%= showAssetCount %>">
-						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
-					</c:if>
-				</a>
-			</li>
+					<%
+					}
+					%>
 
-		<%
-		}
-		%>
-
-	</ul>
-</div>
+				</ul>
+			</div>
+		</div>
+	</div>
+</c:if>

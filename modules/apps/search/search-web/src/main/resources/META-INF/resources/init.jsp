@@ -34,7 +34,6 @@ page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
-page import="com.liferay.portal.kernel.search.FacetedSearcher" %><%@
 page import="com.liferay.portal.kernel.search.Field" %><%@
 page import="com.liferay.portal.kernel.search.FolderSearcher" %><%@
 page import="com.liferay.portal.kernel.search.Hits" %><%@
@@ -43,13 +42,10 @@ page import="com.liferay.portal.kernel.search.IndexSearcherHelperUtil" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.search.OpenSearch" %><%@
-page import="com.liferay.portal.kernel.search.QueryConfig" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.search.Summary" %><%@
-page import="com.liferay.portal.kernel.search.facet.AssetEntriesFacet" %><%@
 page import="com.liferay.portal.kernel.search.facet.Facet" %><%@
-page import="com.liferay.portal.kernel.search.facet.ScopeFacet" %><%@
 page import="com.liferay.portal.kernel.search.facet.collector.FacetCollector" %><%@
 page import="com.liferay.portal.kernel.search.facet.collector.TermCollector" %><%@
 page import="com.liferay.portal.kernel.search.facet.config.FacetConfiguration" %><%@
@@ -74,14 +70,12 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Tuple" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
@@ -97,7 +91,6 @@ page import="com.liferay.search.web.constants.SearchPortletKeys" %><%@
 page import="com.liferay.search.web.display.context.SearchDisplayContext" %><%@
 page import="com.liferay.search.web.facet.AssetEntriesSearchFacet" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%@ page import="java.util.ArrayList" %><%@
@@ -125,7 +118,7 @@ page import="javax.portlet.WindowState" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-SearchDisplayContext searchDisplayContext = new SearchDisplayContext(request, portletPreferences);
+SearchDisplayContext searchDisplayContext = new SearchDisplayContext(renderRequest, renderResponse, portletPreferences);
 %>
 
 <%@ include file="/init-ext.jsp" %>

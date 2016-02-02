@@ -30,71 +30,67 @@ Indexer<?> indexer = FolderSearcher.getInstance();
 SearchContext searchContext = SearchContextFactory.getInstance(request);
 %>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="panel-title">
+			<liferay-ui:message key="folders" />
+		</div>
+	</div>
 
-	<ul class="folders nav nav-pills nav-stacked">
-		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="folder-open" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
-		</li>
+	<div class="panel-body">
+		<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+			<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
-		<%
-		long folderId = GetterUtil.getLong(fieldParam);
+			<ul class="folders list-unstyled">
+				<li class="default facet-value">
+					<a class="<%= Validator.isNull(fieldParam) ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+				</li>
 
-		for (int i = 0; i < termCollectors.size(); i++) {
-			TermCollector termCollector = termCollectors.get(i);
+				<%
+				long folderId = GetterUtil.getLong(fieldParam);
 
-			long curFolderId = GetterUtil.getLong(termCollector.getTerm());
+				for (int i = 0; i < termCollectors.size(); i++) {
+					TermCollector termCollector = termCollectors.get(i);
 
-			if (curFolderId == 0) {
-				continue;
-			}
+					long curFolderId = GetterUtil.getLong(termCollector.getTerm());
 
-			searchContext.setFolderIds(new long[] {curFolderId});
-			searchContext.setKeywords(StringPool.BLANK);
+					if (curFolderId == 0) {
+						continue;
+					}
 
-			Hits results = indexer.search(searchContext);
+					searchContext.setFolderIds(new long[] {curFolderId});
+					searchContext.setKeywords(StringPool.BLANK);
 
-			if (results.getLength() == 0) {
-				continue;
-			}
+					Hits results = indexer.search(searchContext);
 
-			Document document = results.doc(0);
+					if (results.getLength() == 0) {
+						continue;
+					}
 
-			Field title = document.getField(Field.TITLE);
-		%>
+					Document document = results.doc(0);
 
-			<c:if test="<%= folderId == curFolderId %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							fieldValues: '<%= curFolderId %>',
-							text: '<%= HtmlUtil.escapeJS(title.getValue()) %>'
-						}
-					);
-				</aui:script>
-			</c:if>
+					Field title = document.getField(Field.TITLE);
 
-			<%
-			if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
-				break;
-			}
-			%>
+					if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
+						break;
+					}
+				%>
 
-			<li class="facet-value <%= (folderId == curFolderId) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curFolderId %>" href="javascript:;">
-					<%= HtmlUtil.escape(title.getValue()) %>
+					<li class="facet-value">
+						<a class="<%= (folderId == curFolderId) ? "text-primary" : "text-default" %>" data-value="<%= curFolderId %>" href="javascript:;">
+							<%= HtmlUtil.escape(title.getValue()) %>
 
-					<c:if test="<%= showAssetCount %>">
-						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
-					</c:if>
-				</a>
-			</li>
+							<c:if test="<%= showAssetCount %>">
+								<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+							</c:if>
+						</a>
+					</li>
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
-	</ul>
+			</ul>
+		</div>
+	</div>
 </div>

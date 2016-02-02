@@ -28,6 +28,11 @@ AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 %>
 
 <c:if test="<%= (assetEntry != null) && assetEntry.isVisible() %>">
+	<liferay-ui:header
+		localizeTitle="<%= false %>"
+		title="<%= assetRenderer.getTitle(locale) %>"
+	/>
+
 	<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
 		<div class="asset-actions lfr-meta-actions">
 
@@ -57,11 +62,6 @@ AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 			/>
 		</div>
 	</c:if>
-
-	<liferay-ui:header
-		localizeTitle="<%= false %>"
-		title="<%= assetRenderer.getTitle(locale) %>"
-	/>
 
 	<liferay-ui:asset-display
 		assetEntry="<%= assetEntry %>"

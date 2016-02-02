@@ -16,74 +16,69 @@
 
 <%@ include file="/facets/init.jsp" %>
 
-<%
-if (termCollectors.isEmpty()) {
-%>
-
-	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />
-
-<%
-	return;
-}
-
-int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-int maxTerms = dataJSONObject.getInt("maxTerms");
-boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
-%>
-
-<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
-
-	<ul class="nav nav-pills nav-stacked scopes">
-		<li class="default facet-value <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
-			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
-		</li>
+<c:choose>
+	<c:when test="<%= termCollectors.isEmpty() %>">
+		<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />
+	</c:when>
+	<c:otherwise>
 
 		<%
-		long groupId = GetterUtil.getInteger(fieldParam);
-
-		for (int i = 0; i < termCollectors.size(); i++) {
-			TermCollector termCollector = termCollectors.get(i);
-
-			long curGroupId = GetterUtil.getInteger(termCollector.getTerm());
-
-			Group group = GroupLocalServiceUtil.fetchGroup(curGroupId);
-
-			if (group == null) {
-				continue;
-			}
+		int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
+		int maxTerms = dataJSONObject.getInt("maxTerms");
+		boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 		%>
 
-			<c:if test="<%= groupId == curGroupId %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							fieldValues: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "|0" %>',
-							text: '<%= HtmlUtil.escapeJS(group.getDescriptiveName(locale)) %>'
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<liferay-ui:message key="sites" />
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+					<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+
+					<ul class="list-unstyled scopes">
+						<li class="default facet-value">
+							<a class="<%= fieldParam.equals("0") ? "text-primary" : "text-default" %>" data-value="0" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+						</li>
+
+						<%
+						long groupId = GetterUtil.getInteger(fieldParam);
+
+						for (int i = 0; i < termCollectors.size(); i++) {
+							TermCollector termCollector = termCollectors.get(i);
+
+							long curGroupId = GetterUtil.getInteger(termCollector.getTerm());
+
+							Group group = GroupLocalServiceUtil.fetchGroup(curGroupId);
+
+							if (group == null) {
+								continue;
+							}
+
+							if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
+								break;
+							}
+						%>
+
+							<li class="facet-value">
+								<a class="<%= groupId == curGroupId ? "text-primary" : "text-default" %>" data-value="<%= curGroupId %>" href="javascript:;">
+									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+
+									<c:if test="<%= showAssetCount %>">
+										<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+									</c:if>
+								</a>
+							</li>
+
+						<%
 						}
-					);
-				</aui:script>
-			</c:if>
+						%>
 
-			<%
-			if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
-				break;
-			}
-			%>
-
-			<li class="facet-value <%= groupId == curGroupId ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curGroupId %>" href="javascript:;">
-					<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
-
-					<c:if test="<%= showAssetCount %>">
-						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
-					</c:if>
-				</a>
-			</li>
-
-		<%
-		}
-		%>
-
-	</ul>
-</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</c:otherwise>
+</c:choose>

@@ -180,14 +180,16 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
-			<liferay-ui:discussion
-				className="<%= assetEntry.getClassName() %>"
-				classPK="<%= assetEntry.getClassPK() %>"
-				formName='<%= "fm" + assetEntry.getClassPK() %>'
-				ratingsEnabled="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>"
-				redirect="<%= currentURL %>"
-				userId="<%= assetRenderer.getUserId() %>"
-			/>
+			<div class="col-md-12">
+				<liferay-ui:discussion
+					className="<%= assetEntry.getClassName() %>"
+					classPK="<%= assetEntry.getClassPK() %>"
+					formName='<%= "fm" + assetEntry.getClassPK() %>'
+					ratingsEnabled="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>"
+					redirect="<%= currentURL %>"
+					userId="<%= assetRenderer.getUserId() %>"
+				/>
+			</div>
 		</c:if>
 	</div>
 

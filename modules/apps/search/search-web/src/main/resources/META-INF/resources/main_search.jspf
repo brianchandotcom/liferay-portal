@@ -15,68 +15,15 @@
 --%>
 
 <%
-SearchContainer mainSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-mainSearchSearchContainer.setEmptyResultsMessage(LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchContext.getKeywords()) + "</strong>", false));
-
-searchContext.setAttribute("paginationType", "more");
-searchContext.setEnd(mainSearchSearchContainer.getEnd());
-
-QueryConfig queryConfig = searchContext.getQueryConfig();
-
-queryConfig.setCollatedSpellCheckResultEnabled(searchDisplayContext.isCollatedSpellCheckResultEnabled());
-queryConfig.setCollatedSpellCheckResultScoresThreshold(searchDisplayContext.getCollatedSpellCheckResultDisplayThreshold());
-queryConfig.setQueryIndexingEnabled(searchDisplayContext.isQueryIndexingEnabled());
-queryConfig.setQueryIndexingThreshold(searchDisplayContext.getQueryIndexingThreshold());
-queryConfig.setQuerySuggestionEnabled(searchDisplayContext.isQuerySuggestionsEnabled());
-queryConfig.setQuerySuggestionScoresThreshold(searchDisplayContext.getQuerySuggestionsDisplayThreshold());
-queryConfig.setQuerySuggestionsMax(searchDisplayContext.getQuerySuggestionsMax());
-
-searchContext.setQueryConfig(queryConfig);
-
-searchContext.setStart(mainSearchSearchContainer.getStart());
-
-Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
-
-assetEntriesFacet.setStatic(true);
-
-searchContext.addFacet(assetEntriesFacet);
-
-Facet scopeFacet = new ScopeFacet(searchContext);
-
-scopeFacet.setStatic(true);
-
-searchContext.addFacet(scopeFacet);
-
-List<SearchFacet> searchFacets = searchDisplayContext.getEnabledSearchFacets();
-
-for (SearchFacet searchFacet : searchFacets) {
-	searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration(), searchContext);
-
-	Facet facet = searchFacet.getFacet();
-
-	if (facet == null) {
-		continue;
-	}
-
-	searchContext.addFacet(facet);
-}
-
-Indexer<?> indexer = FacetedSearcher.getInstance();
-
-Hits hits = indexer.search(searchContext);
+Hits hits = searchDisplayContext.getHits();
 %>
 
 <aui:row cssClass='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'>
 	<c:if test="<%= searchDisplayContext.isShowMenu() %>">
-		<aui:col id="facetNavigation" span="<%= 2 %>">
+		<aui:col id="facetNavigation" span="<%= 3 %>">
 
 			<%
-			searchFacets = ListUtil.sort(searchFacets, SearchFacetComparator.INSTANCE);
-
-			for (SearchFacet searchFacet : searchFacets) {
+			for (SearchFacet searchFacet : ListUtil.sort(searchDisplayContext.getEnabledSearchFacets(), SearchFacetComparator.INSTANCE)) {
 				if (searchFacet.isStatic()) {
 					continue;
 				}
@@ -123,25 +70,13 @@ Hits hits = indexer.search(searchContext);
 		</aui:col>
 	</c:if>
 
-	<aui:col cssClass="result" first="<%= !searchDisplayContext.isShowMenu() %>" span="<%= 10 %>">
-
-		<%
-		String[] queryTerms = hits.getQueryTerms();
-
-		request.setAttribute("search.jsp-highlightEnabled", queryConfig.isHighlightEnabled());
-		request.setAttribute("search.jsp-queryTerms", queryTerms);
-		%>
-
+	<aui:col cssClass="result" first="<%= !searchDisplayContext.isShowMenu() %>" span="<%= 9 %>">
 		<%@ include file="/main_search_suggest.jspf" %>
 
 		<liferay-ui:search-container
-			searchContainer="<%= mainSearchSearchContainer %>"
-			total="<%= hits.getLength() %>"
+			id="search"
+			searchContainer="<%= searchDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= hits.toList() %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.search.Document"
 				escapedModel="<%= false %>"
@@ -149,10 +84,47 @@ Hits hits = indexer.search(searchContext);
 				modelVar="document"
 				stringKey="<%= true %>"
 			>
-				<liferay-ui:search-container-column-jsp path='<%= searchDisplayContext.isDisplayResultsInDocumentForm() ? "/main_search_document_form.jsp" : "/main_search_result_form.jsp" %>' />
+
+				<%
+				String className = document.get(Field.ENTRY_CLASS_NAME);
+				long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+				AssetRenderer<?> assetRenderer = null;
+
+				if (assetRendererFactory != null) {
+					long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
+
+					if (resourcePrimKey > 0) {
+						classPK = resourcePrimKey;
+					}
+
+					assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+				}
+
+				String viewURL = com.liferay.search.web.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+
+				Summary summary = null;
+
+				if (indexer != null) {
+					String snippet = document.get(Field.SNIPPET);
+
+					summary = indexer.getSummary(document, snippet, renderRequest, renderResponse);
+				}
+				else if (assetRenderer != null) {
+					summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale));
+				}
+				%>
+
+				<c:if test="<%= summary != null %>">
+					<%@ include file="/main_search_result_form.jspf" %>
+				</c:if>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator type="more" />
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
 
 			<c:if test="<%= searchDisplayContext.isDisplayMainQuery() && (hits.getQuery() != null) %>">
 				<table class="full-query">
@@ -160,7 +132,7 @@ Hits hits = indexer.search(searchContext);
 						<td valign="top">
 							<div class="container">
 								<code>
-									<%= HtmlUtil.escape(IndexSearcherHelperUtil.getQueryString(searchContext, hits.getQuery())) %>
+									<%= HtmlUtil.escape(IndexSearcherHelperUtil.getQueryString(searchDisplayContext.getSearchContext(), hits.getQuery())) %>
 								</code>
 							</div>
 						</td>
@@ -170,3 +142,15 @@ Hits hits = indexer.search(searchContext);
 		</liferay-ui:search-container>
 	</aui:col>
 </aui:row>
+
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />search').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			currentTarget.siblings('.table-details').toggleClass('hide');
+		},
+		'.expand-details'
+	);
+</aui:script>

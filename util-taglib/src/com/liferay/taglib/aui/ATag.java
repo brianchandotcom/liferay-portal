@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseATag;
 import com.liferay.taglib.util.InlineUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
@@ -48,11 +50,18 @@ public class ATag extends BaseATag {
 
 		if (Validator.isNotNull(getHref())) {
 			if (AUIUtil.isOpensNewWindow(getTarget())) {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 				ResourceBundle resourceBundle =
 					TagResourceBundleUtil.getResourceBundle(pageContext);
 
 				jspWriter.write(StringPool.SPACE);
-				jspWriter.write("<span class=\"icon-external-link\"></span>");
+				jspWriter.write("<svg class=\"lexicon-icon ");
+				jspWriter.write("lexicon-icon-shortcut\" role=\"img\">");
+				jspWriter.write("<use xlink:href=\"");
+				jspWriter.write(themeDisplay.getPathThemeImages());
+				jspWriter.write("/lexicon/icons.svg#shortcut\" />");
 				jspWriter.write("<span class=\"sr-only\">");
 				jspWriter.write(
 					LanguageUtil.get(resourceBundle, "opens-new-window"));

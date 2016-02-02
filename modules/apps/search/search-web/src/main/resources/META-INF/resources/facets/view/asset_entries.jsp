@@ -33,71 +33,64 @@ if (dataJSONObject.has("values")) {
 }
 %>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="panel-title">
+			<liferay-ui:message key="asset-entries" />
+		</div>
+	</div>
 
-	<ul class="asset-type nav nav-pills nav-stacked">
-		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="search" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
-		</li>
+	<div class="panel-body">
+		<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+			<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
-		<%
-		List<String> assetTypes = new SortedArrayList<String>(new ModelResourceComparator(locale));
+			<ul class="asset-type list-unstyled">
+				<li class="default facet-value">
+					<a class="<%= Validator.isNull(fieldParam) ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+				</li>
 
-		for (String className : values) {
-			if (assetTypes.contains(className)) {
-				continue;
-			}
+				<%
+				List<String> assetTypes = new SortedArrayList<String>(new ModelResourceComparator(locale));
 
-			if (!ArrayUtil.contains(values, className)) {
-				continue;
-			}
+				for (String className : values) {
+					if (assetTypes.contains(className) || !ArrayUtil.contains(values, className)) {
+						continue;
+					}
 
-			assetTypes.add(className);
-		}
+					assetTypes.add(className);
+				}
 
-		for (String assetType : assetTypes) {
-			TermCollector termCollector = facetCollector.getTermCollector(assetType);
-		%>
+				for (String assetType : assetTypes) {
+					TermCollector termCollector = facetCollector.getTermCollector(assetType);
 
-			<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							text: '<%= HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, assetType)) %>'
-						}
-					);
-				</aui:script>
-			</c:if>
+					int frequency = 0;
 
-		<%
-			int frequency = 0;
+					if (termCollector != null) {
+						frequency = termCollector.getFrequency();
+					}
 
-			if (termCollector != null) {
-				frequency = termCollector.getFrequency();
-			}
+					if (frequencyThreshold > frequency) {
+						continue;
+					}
 
-			if (frequencyThreshold > frequency) {
-				continue;
-			}
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetType);
+				%>
 
-			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetType);
-		%>
+					<li class="facet-value">
+						<a class="<%= fieldParam.equals(termCollector.getTerm()) ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(assetType) %>" href="javascript:;">
+							<%= assetRendererFactory.getTypeName(locale) %>
 
-			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(assetType) %>" href="javascript:;">
-					<%= assetRendererFactory.getTypeName(locale) %>
+							<c:if test="<%= showAssetCount %>">
+								<span class="frequency">(<%= frequency %>)</span>
+							</c:if>
+						</a>
+					</li>
 
-					<c:if test="<%= showAssetCount %>">
-						<span class="badge badge-info frequency"><%= frequency %></span>
-					</c:if>
-				</a>
-			</li>
+				<%
+				}
+				%>
 
-		<%
-		}
-		%>
-
-	</ul>
+			</ul>
+		</div>
+	</div>
 </div>

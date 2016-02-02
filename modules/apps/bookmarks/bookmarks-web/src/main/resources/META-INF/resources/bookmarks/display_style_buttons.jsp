@@ -45,7 +45,7 @@ if (Validator.isNull(keywords)) {
 	}
 }
 else {
-	displayStyleURL.setParameter("mvcPath", "/bookmarks/search.jsp");
+	displayStyleURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
 	displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 }
 

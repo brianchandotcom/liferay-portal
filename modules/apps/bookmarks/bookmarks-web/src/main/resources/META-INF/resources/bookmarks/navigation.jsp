@@ -28,15 +28,12 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 	<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>">
 		<aui:nav-bar-search>
 			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="/bookmarks/search.jsp" />
+				<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 			</liferay-portlet:renderURL>
 
 			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
-				<aui:input name="searchFolderId" type="hidden" value="<%= folderId %>" />
-
 				<liferay-ui:input-search markupView="lexicon" />
 			</aui:form>
 		</aui:nav-bar-search>

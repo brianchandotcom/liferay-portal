@@ -62,41 +62,44 @@ public class StringParserFragment {
 		return matcher.matches();
 	}
 
-	protected StringParserFragment(String chunk) {
-		chunk = chunk.substring(1, chunk.length() - 1);
-
-		if (Validator.isNull(chunk)) {
-			throw new IllegalArgumentException("Fragment is null");
+	protected StringParserFragment(String fragment) {
+		if ((fragment == null) || (fragment.length() < 3)) {
+			throw new IllegalArgumentException(
+				"Fragment is invalid: " + fragment);
 		}
 
-		String[] chunkParts = chunk.split(StringPool.COLON, 2);
+		int index = fragment.indexOf(CharPool.COLON);
 
 		String name = null;
 
-		if (chunkParts.length == 2) {
-			name = chunkParts[0];
-			String pattern = chunkParts[1];
+		if (index < 0) {
+			name = fragment.substring(1, fragment.length() - 1);
+
+			_pattern = _defaultPattern;
+		}
+		else {
+			name = fragment.substring(1, index);
+			String pattern = fragment.substring(
+				index + 1, fragment.length() - 1);
 
 			if (Validator.isNull(pattern)) {
-				throw new IllegalArgumentException("Pattern is null");
+				throw new IllegalArgumentException(
+					"Pattern is null: " + fragment);
 			}
 
 			_pattern = Pattern.compile(pattern);
 		}
-		else {
-			name = chunkParts[0];
-			_pattern = _defaultPattern;
+
+		if (name.isEmpty()) {
+			throw new IllegalArgumentException("Name is null: " + fragment);
 		}
 
-		if (Validator.isNull(name)) {
-			throw new IllegalArgumentException("Name is null");
-		}
-
-		if (name.startsWith(StringPool.PERCENT)) {
+		if (name.charAt(0) == CharPool.PERCENT) {
 			name = name.substring(1);
 
-			if (Validator.isNull(name)) {
-				throw new IllegalArgumentException("Name is null");
+			if (name.isEmpty()) {
+				throw new IllegalArgumentException(
+					"Name is invalid: " + fragment);
 			}
 
 			_raw = true;

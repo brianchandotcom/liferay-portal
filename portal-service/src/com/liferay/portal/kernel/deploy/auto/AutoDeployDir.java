@@ -47,8 +47,8 @@ public class AutoDeployDir {
 			new ArrayList<>();
 
 		for (AutoDeployListener autoDeployListener : autoDeployListeners) {
-			if (autoDeployListener.deploy(autoDeploymentContext) !=
-					AutoDeployer.CODE_NOT_APPLICABLE) {
+			if (autoDeployListener.isDeployable(autoDeploymentContext)) {
+				autoDeployListener.deploy(autoDeploymentContext);
 
 				Class<?> autoDeployListenerClass =
 					autoDeployListener.getClass();

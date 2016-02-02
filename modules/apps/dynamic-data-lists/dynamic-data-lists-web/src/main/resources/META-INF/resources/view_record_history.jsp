@@ -27,6 +27,8 @@ List<DDLRecordVersion> recordVersions = DDLRecordVersionServiceUtil.getRecordVer
 
 for (DDLRecordVersion recordVersion: recordVersions) {
 	dateSearchEntry.setDate(recordVersion.getCreateDate());
+
+	request.setAttribute("currentRecordVersion", record.getVersion());
 	request.setAttribute("recordVersion", recordVersion);
 %>
 

@@ -23,7 +23,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Builds the WSDD files.
+ *
  * @author Andrea Di Giorgi
+ * @goal build-wsdd
  */
 public class BuildWSDDMojo extends AbstractMojo {
 
@@ -37,28 +40,43 @@ public class BuildWSDDMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setClassPath(String classPath) {
 		_wsddBuilderArgs.setClassPath(classPath);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setInputFileName(String inputFileName) {
 		_wsddBuilderArgs.setFileName(inputFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setOutputDirName(String outputDirName) {
 		_wsddBuilderArgs.setOutputPath(outputDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setServerConfigFileName(String serverConfigFileName) {
 		_wsddBuilderArgs.setServerConfigFileName(serverConfigFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setServiceNamespace(String serviceNamespace) {
 		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}
+	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
 	protected File baseDir;

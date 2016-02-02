@@ -10,7 +10,7 @@
 	<taskdef classpathref="xml.formatter.classpath" resource="com/liferay/xml/formatter/ant/taskdefs.properties" />
 
 	<target name="format-xml">
-		<xml-formatter
+		<format-xml
 			fileName="sample.xml"
 		/>
 	</target>

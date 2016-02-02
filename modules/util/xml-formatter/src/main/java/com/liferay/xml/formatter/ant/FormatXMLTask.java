@@ -24,7 +24,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class XMLFormatterTask extends Task {
+public class FormatXMLTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

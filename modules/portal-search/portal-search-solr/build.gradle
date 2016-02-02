@@ -1,10 +1,10 @@
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile group: "commons-lang", name: "commons-lang", version: "2.6"
-	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile project(":portal:portal-metatype")
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "commons-lang", name: "commons-lang", version: "2.6"
+	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":portal:portal-metatype")
 
 	provided group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
 	provided group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"

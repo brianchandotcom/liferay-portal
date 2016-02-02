@@ -22,14 +22,18 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.Upload;
 
 /**
  * @author Andrea Di Giorgi
@@ -43,7 +47,10 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		addTaskBuildPluginDescriptor(project);
+		BuildPluginDescriptorTask buildPluginDescriptorTask =
+			addTaskBuildPluginDescriptor(project);
+
+		configureTasksUpload(project, buildPluginDescriptorTask);
 	}
 
 	protected BuildPluginDescriptorTask addTaskBuildPluginDescriptor(
@@ -56,12 +63,17 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 		buildPluginDescriptorTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME);
 
+		final SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
 		buildPluginDescriptorTask.setClassesDir(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return getClassesDir(project);
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return sourceSetOutput.getClassesDir();
 				}
 
 			});
@@ -75,7 +87,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getResourcesDir(project);
+					File resourcesDir = getSrcDir(sourceSet.getResources());
 
 					return new File(resourcesDir, "META-INF/maven");
 				}
@@ -117,35 +129,41 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getJavaDir(project);
+					return getSrcDir(sourceSet.getJava());
 				}
 
 			});
 
+		Task processResourcesTask = GradleUtil.getTask(
+			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		processResourcesTask.mustRunAfter(buildPluginDescriptorTask);
+
 		return buildPluginDescriptorTask;
 	}
 
-	protected File getClassesDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+	protected void configureTasksUpload(
+		Project project,
+		final BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+		TaskContainer taskContainer = project.getTasks();
 
-		return sourceSetOutput.getClassesDir();
+		taskContainer.withType(
+			Upload.class,
+			new Action<Upload>() {
+
+				@Override
+				public void execute(Upload upload) {
+					configureTaskUpload(upload, buildPluginDescriptorTask);
+				}
+
+			});
 	}
 
-	protected File getJavaDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+	protected void configureTaskUpload(
+		Upload upload, BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
-		return getSrcDir(sourceSet.getJava());
-	}
-
-	protected File getResourcesDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		return getSrcDir(sourceSet.getResources());
+		upload.dependsOn(buildPluginDescriptorTask);
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {

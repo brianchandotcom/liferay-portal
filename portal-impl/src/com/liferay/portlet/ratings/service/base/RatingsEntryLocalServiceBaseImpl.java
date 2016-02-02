@@ -16,6 +16,11 @@ package com.liferay.portlet.ratings.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -46,10 +51,6 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -728,7 +729,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 *
 	 * @return the blogs entry local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsEntryLocalService getBlogsEntryLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsEntryLocalService getBlogsEntryLocalService() {
 		return blogsEntryLocalService;
 	}
 
@@ -738,7 +739,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 * @param blogsEntryLocalService the blogs entry local service
 	 */
 	public void setBlogsEntryLocalService(
-		com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService) {
+		com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService) {
 		this.blogsEntryLocalService = blogsEntryLocalService;
 	}
 
@@ -784,7 +785,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 *
 	 * @return the blogs stats user local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
 		return blogsStatsUserLocalService;
 	}
 
@@ -794,7 +795,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 * @param blogsStatsUserLocalService the blogs stats user local service
 	 */
 	public void setBlogsStatsUserLocalService(
-		com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
+		com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		this.blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
@@ -920,14 +921,14 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	@BeanReference(type = BlogsEntryFinder.class)
 	protected BlogsEntryFinder blogsEntryFinder;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsStatsUserLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsStatsUserLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
 	@BeanReference(type = BlogsStatsUserPersistence.class)
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = BlogsStatsUserFinder.class)

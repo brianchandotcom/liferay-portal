@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;

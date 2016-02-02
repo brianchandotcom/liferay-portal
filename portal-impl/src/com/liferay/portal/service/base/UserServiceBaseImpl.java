@@ -16,6 +16,9 @@ package com.liferay.portal.service.base;
 
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
 
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -62,8 +65,6 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder;
@@ -1344,7 +1345,7 @@ public abstract class UserServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the blogs stats user local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
 		return blogsStatsUserLocalService;
 	}
 
@@ -1354,7 +1355,7 @@ public abstract class UserServiceBaseImpl extends BaseServiceImpl
 	 * @param blogsStatsUserLocalService the blogs stats user local service
 	 */
 	public void setBlogsStatsUserLocalService(
-		com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
+		com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		this.blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
@@ -2405,8 +2406,8 @@ public abstract class UserServiceBaseImpl extends BaseServiceImpl
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsStatsUserLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsStatsUserLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
 	@BeanReference(type = BlogsStatsUserPersistence.class)
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = BlogsStatsUserFinder.class)

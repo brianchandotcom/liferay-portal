@@ -1355,7 +1355,7 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.blogs.model.BlogsEntry">
+	<model name="com.liferay.blogs.kernel.model.BlogsEntry">
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
@@ -1409,7 +1409,7 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portlet.blogs.model.BlogsStatsUser">
+	<model name="com.liferay.blogs.kernel.model.BlogsStatsUser">
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

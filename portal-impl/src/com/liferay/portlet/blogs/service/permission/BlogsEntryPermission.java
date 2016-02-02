@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.service.permission;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -23,15 +25,13 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"}
+	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"}
 )
 public class BlogsEntryPermission implements BaseModelPermissionChecker {
 

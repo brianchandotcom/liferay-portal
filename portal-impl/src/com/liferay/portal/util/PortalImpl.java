@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.RSSFeedException;
 import com.liferay.portal.comment.action.EditDiscussionStrutsAction;
 import com.liferay.portal.comment.action.GetCommentsStrutsAction;
@@ -192,7 +193,6 @@ import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.documentlibrary.exception.ImageSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;

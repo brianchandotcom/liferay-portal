@@ -16,6 +16,9 @@ package com.liferay.portlet.messageboards.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -60,8 +63,6 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
@@ -1067,7 +1068,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the blogs entry local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsEntryLocalService getBlogsEntryLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsEntryLocalService getBlogsEntryLocalService() {
 		return blogsEntryLocalService;
 	}
 
@@ -1077,7 +1078,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param blogsEntryLocalService the blogs entry local service
 	 */
 	public void setBlogsEntryLocalService(
-		com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService) {
+		com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService) {
 		this.blogsEntryLocalService = blogsEntryLocalService;
 	}
 
@@ -1511,8 +1512,8 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected AssetTagPersistence assetTagPersistence;
 	@BeanReference(type = AssetTagFinder.class)
 	protected AssetTagFinder assetTagFinder;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	@BeanReference(type = BlogsEntryFinder.class)

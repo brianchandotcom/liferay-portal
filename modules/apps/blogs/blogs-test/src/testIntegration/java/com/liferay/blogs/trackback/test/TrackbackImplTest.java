@@ -15,6 +15,8 @@
 package com.liferay.blogs.trackback.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -31,8 +33,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.trackback.Trackback;
 import com.liferay.portlet.blogs.trackback.TrackbackImpl;
 

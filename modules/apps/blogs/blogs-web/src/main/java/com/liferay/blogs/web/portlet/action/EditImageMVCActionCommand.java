@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.web.portlet.action;
 
+import com.liferay.blogs.kernel.exception.NoSuchEntryException;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,8 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.blogs.exception.NoSuchEntryException;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.ActionRequest;

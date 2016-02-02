@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.social;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ClassNameLocalService;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;

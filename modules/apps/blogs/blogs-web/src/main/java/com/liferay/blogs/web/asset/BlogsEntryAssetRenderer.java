@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.asset;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,7 +31,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.asset.util.AssetUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
 import java.util.Date;

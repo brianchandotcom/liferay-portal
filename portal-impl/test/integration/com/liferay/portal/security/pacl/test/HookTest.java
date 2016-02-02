@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl.test;
 
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.kernel.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.security.pacl.test.hook.action.FailureStrutsAction;
@@ -21,8 +23,6 @@ import com.liferay.portal.security.pacl.test.hook.action.SuccessStrutsAction;
 import com.liferay.portal.security.pacl.test.hook.indexer.OrganizationIndexerPostProcessor;
 import com.liferay.portal.security.pacl.test.hook.indexer.UserIndexerPostProcessor;
 import com.liferay.portal.test.rule.PACLTestRule;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

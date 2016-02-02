@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.blogs.service.persistence.impl;
 
+import com.liferay.blogs.kernel.model.BlogsStatsUser;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.portlet.blogs.model.BlogsStatsUser;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
 
 /**
  * @author Brian Wing Shun Chan

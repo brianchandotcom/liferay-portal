@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl.test;
 
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -24,8 +26,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.net.URL;
 import java.net.URLClassLoader;

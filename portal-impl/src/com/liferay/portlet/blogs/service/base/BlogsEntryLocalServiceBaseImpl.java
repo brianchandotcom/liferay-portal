@@ -16,6 +16,13 @@ package com.liferay.portlet.blogs.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -60,12 +67,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryFinder;
 import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
@@ -93,7 +94,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl
- * @see com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil
+ * @see com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -103,7 +104,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil} to access the blogs entry local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil} to access the blogs entry local service.
 	 */
 
 	/**
@@ -272,7 +273,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BlogsEntry.class);
 
@@ -285,7 +286,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.getService());
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BlogsEntry.class);
 
@@ -296,7 +297,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BlogsEntry.class);
 
@@ -1178,7 +1179,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 *
 	 * @return the blogs stats user local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
 		return blogsStatsUserLocalService;
 	}
 
@@ -1188,7 +1189,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	 * @param blogsStatsUserLocalService the blogs stats user local service
 	 */
 	public void setBlogsStatsUserLocalService(
-		com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
+		com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		this.blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
@@ -1231,13 +1232,13 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.blogs.model.BlogsEntry",
+		persistedModelLocalServiceRegistry.register("com.liferay.blogs.kernel.model.BlogsEntry",
 			blogsEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.blogs.model.BlogsEntry");
+			"com.liferay.blogs.kernel.model.BlogsEntry");
 	}
 
 	/**
@@ -1282,7 +1283,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryLocalService.class)
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryLocalService.class)
 	protected BlogsEntryLocalService blogsEntryLocalService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;
@@ -1356,8 +1357,8 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsStatsUserLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsStatsUserLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
 	@BeanReference(type = BlogsStatsUserPersistence.class)
 	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
 	@BeanReference(type = BlogsStatsUserFinder.class)

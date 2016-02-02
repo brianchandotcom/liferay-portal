@@ -14,13 +14,13 @@
 
 package com.liferay.blogs.web.portlet.action;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;

@@ -220,13 +220,13 @@
 	<bean id="com.liferay.portlet.asset.service.AssetVocabularyService" class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.blogs.service.BlogsEntryLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" />
-	<bean id="com.liferay.portlet.blogs.service.BlogsEntryService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" />
-	<bean id="com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.blogs.service.BlogsStatsUserLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" />
-	<bean id="com.liferay.portlet.blogs.service.persistence.BlogsStatsUserPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.blogs.kernel.service.BlogsEntryLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" />
+	<bean id="com.liferay.blogs.kernel.service.BlogsEntryService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" />
+	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" />
+	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.calendar.service.CalEventLocalService" class="com.liferay.portlet.calendar.service.impl.CalEventLocalServiceImpl" />
 	<bean id="com.liferay.portlet.calendar.service.persistence.CalEventPersistence" class="com.liferay.portlet.calendar.service.persistence.impl.CalEventPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.calendar.service.persistence.CalEventFinder" class="com.liferay.portlet.calendar.service.persistence.impl.CalEventFinderImpl" parent="basePersistence" />

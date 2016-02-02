@@ -83,8 +83,8 @@
 	<import class="com.liferay.portlet.asset.model.AssetTag" />
 	<import class="com.liferay.portlet.asset.model.AssetTagStats" />
 	<import class="com.liferay.portlet.asset.model.AssetVocabulary" />
-	<import class="com.liferay.portlet.blogs.model.BlogsEntry" />
-	<import class="com.liferay.portlet.blogs.model.BlogsStatsUser" />
+	<import class="com.liferay.blogs.kernel.model.BlogsEntry" />
+	<import class="com.liferay.blogs.kernel.model.BlogsStatsUser" />
 	<import class="com.liferay.portlet.calendar.model.CalEvent" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLApp" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLAppHelper" />

@@ -14,8 +14,8 @@
 
 package com.liferay.blogs.web.custom.attributes;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 

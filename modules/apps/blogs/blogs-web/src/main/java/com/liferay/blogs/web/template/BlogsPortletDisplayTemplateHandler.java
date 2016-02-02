@@ -17,6 +17,9 @@ package com.liferay.blogs.web.template;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.blogs.configuration.BlogsConfiguration;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -25,9 +28,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
-import com.liferay.portlet.blogs.service.BlogsEntryService;
 
 import java.util.List;
 import java.util.Locale;

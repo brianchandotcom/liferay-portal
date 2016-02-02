@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.util;
 
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
@@ -36,7 +37,6 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.io.Serializable;
 

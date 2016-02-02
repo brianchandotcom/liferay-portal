@@ -16,6 +16,8 @@ package com.liferay.portlet.blogs.subscriptions;
 
 import com.dumbster.smtp.MailMessage;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -41,8 +43,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.test.MailServiceTestUtil;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import org.junit.Assert;

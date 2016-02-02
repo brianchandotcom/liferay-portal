@@ -14,14 +14,14 @@
 
 package com.liferay.blogs.web.lar;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.kernel.service.BlogsStatsUserLocalService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
-import com.liferay.portlet.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;

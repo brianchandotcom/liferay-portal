@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.trash;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -25,8 +27,6 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
 import javax.portlet.PortletRequest;

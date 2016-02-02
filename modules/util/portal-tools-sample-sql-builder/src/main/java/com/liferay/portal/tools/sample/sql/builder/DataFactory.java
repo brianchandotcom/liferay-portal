@@ -14,6 +14,9 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.model.BlogsEntryModel;
+import com.liferay.blogs.kernel.model.BlogsStatsUserModel;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.CounterModel;
@@ -143,9 +146,6 @@ import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.model.BlogsEntryModel;
-import com.liferay.portlet.blogs.model.BlogsStatsUserModel;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.portlet.blogs.social.BlogsActivityKeys;

@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.messageboards.service.base;
 
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
+import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -39,8 +42,6 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder;
-import com.liferay.portlet.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageService;
@@ -812,7 +813,7 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the blogs entry local service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsEntryLocalService getBlogsEntryLocalService() {
+	public com.liferay.blogs.kernel.service.BlogsEntryLocalService getBlogsEntryLocalService() {
 		return blogsEntryLocalService;
 	}
 
@@ -822,7 +823,7 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	 * @param blogsEntryLocalService the blogs entry local service
 	 */
 	public void setBlogsEntryLocalService(
-		com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService) {
+		com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService) {
 		this.blogsEntryLocalService = blogsEntryLocalService;
 	}
 
@@ -831,7 +832,7 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the blogs entry remote service
 	 */
-	public com.liferay.portlet.blogs.service.BlogsEntryService getBlogsEntryService() {
+	public com.liferay.blogs.kernel.service.BlogsEntryService getBlogsEntryService() {
 		return blogsEntryService;
 	}
 
@@ -841,7 +842,7 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	 * @param blogsEntryService the blogs entry remote service
 	 */
 	public void setBlogsEntryService(
-		com.liferay.portlet.blogs.service.BlogsEntryService blogsEntryService) {
+		com.liferay.blogs.kernel.service.BlogsEntryService blogsEntryService) {
 		this.blogsEntryService = blogsEntryService;
 	}
 
@@ -1327,10 +1328,10 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	protected AssetTagPersistence assetTagPersistence;
 	@BeanReference(type = AssetTagFinder.class)
 	protected AssetTagFinder assetTagFinder;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryLocalService.class)
-	protected com.liferay.portlet.blogs.service.BlogsEntryLocalService blogsEntryLocalService;
-	@BeanReference(type = com.liferay.portlet.blogs.service.BlogsEntryService.class)
-	protected com.liferay.portlet.blogs.service.BlogsEntryService blogsEntryService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryLocalService.class)
+	protected com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService;
+	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryService.class)
+	protected com.liferay.blogs.kernel.service.BlogsEntryService blogsEntryService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;
 	@BeanReference(type = BlogsEntryFinder.class)

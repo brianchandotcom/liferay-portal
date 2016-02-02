@@ -14,6 +14,11 @@
 
 package com.liferay.portlet.blogs.service;
 
+import com.liferay.blogs.kernel.exception.EntryContentException;
+import com.liferay.blogs.kernel.exception.EntryTitleException;
+import com.liferay.blogs.kernel.exception.NoSuchEntryException;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,10 +54,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
-import com.liferay.portlet.blogs.exception.EntryContentException;
-import com.liferay.portlet.blogs.exception.EntryTitleException;
-import com.liferay.portlet.blogs.exception.NoSuchEntryException;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 

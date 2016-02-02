@@ -15,6 +15,7 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
+import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -28,7 +29,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
-import com.liferay.portlet.blogs.service.BlogsEntryService;
 
 import java.util.Date;
 

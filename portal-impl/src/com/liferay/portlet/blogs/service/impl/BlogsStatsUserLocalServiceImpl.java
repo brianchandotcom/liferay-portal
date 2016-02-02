@@ -14,18 +14,18 @@
 
 package com.liferay.portlet.blogs.service.impl;
 
+import com.liferay.blogs.kernel.exception.NoSuchStatsUserException;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.kernel.model.BlogsStatsUser;
+import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
+import com.liferay.blogs.kernel.util.comparator.StatsUserLastPostDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portlet.blogs.exception.NoSuchStatsUserException;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl;
-import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
-import com.liferay.portlet.blogs.util.comparator.StatsUserLastPostDateComparator;
 
 import java.util.Date;
 import java.util.List;

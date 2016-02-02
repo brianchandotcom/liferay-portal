@@ -16,6 +16,9 @@ package com.liferay.portlet.blogs.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.blogs.kernel.model.BlogsStatsUser;
+import com.liferay.blogs.kernel.model.BlogsStatsUserModel;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -28,8 +31,6 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import com.liferay.portlet.blogs.model.BlogsStatsUser;
-import com.liferay.portlet.blogs.model.BlogsStatsUserModel;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
@@ -599,7 +600,7 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.portlet.blogs.model.BlogsStatsUser");
+		sb.append("com.liferay.blogs.kernel.model.BlogsStatsUser");
 		sb.append("</model-name>");
 
 		sb.append(

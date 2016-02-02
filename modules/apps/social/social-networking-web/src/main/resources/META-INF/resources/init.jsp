@@ -24,7 +24,9 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.ip.geocoder.IPGeocoder" %><%@
+<%@ page import="com.liferay.blogs.kernel.model.BlogsEntry" %><%@
+page import="com.liferay.blogs.kernel.service.BlogsStatsUserLocalServiceUtil" %><%@
+page import="com.liferay.ip.geocoder.IPGeocoder" %><%@
 page import="com.liferay.ip.geocoder.IPInfo" %><%@
 page import="com.liferay.portal.exception.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -57,8 +59,6 @@ page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.UserPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.comparator.UserLoginDateComparator" %><%@
-page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
-page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessage" %><%@
 page import="com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil" %><%@

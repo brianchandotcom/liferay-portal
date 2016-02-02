@@ -323,6 +323,10 @@ public class ExportImportConfigurationSettingsMapFactory {
 			HashMap<String, String[]> serializableParameterMap = new HashMap<>(
 				parameterMap);
 
+			if (layoutIds != null) {
+				serializableParameterMap.remove("layoutIds");
+			}
+
 			settingsMap.put("parameterMap", serializableParameterMap);
 		}
 

@@ -70,7 +70,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		setLayoutIds(actionRequest);
+		setLayoutIdMap(actionRequest);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -142,7 +142,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void setLayoutIds(ActionRequest actionRequest) {
+	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest portletRequest = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
@@ -159,7 +159,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
 				groupId, privateLayout, openNodes);
 
-		actionRequest.setAttribute("layoutIds", selectedLayoutsJSON);
+		actionRequest.setAttribute("layoutIdMap", selectedLayoutsJSON);
 	}
 
 }

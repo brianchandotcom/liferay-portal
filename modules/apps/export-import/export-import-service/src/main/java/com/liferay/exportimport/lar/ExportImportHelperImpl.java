@@ -414,7 +414,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<>();
 
 		String layoutIdsJSON = GetterUtil.getString(
-			portletRequest.getAttribute("layoutIds"));
+			portletRequest.getAttribute("layoutIdMap"));
 
 		if (Validator.isNull(layoutIdsJSON)) {
 			return layoutIdMap;

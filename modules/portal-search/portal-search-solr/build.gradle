@@ -1,7 +1,16 @@
+configurations {
+	compile {
+		transitive = false
+	}
+}
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"
+	provided group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.1"
+	provided group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.3"
+	provided group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.1"
 	provided group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
 	provided group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"
 	provided group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"

@@ -19,87 +19,25 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import java.net.URL;
-
 import java.util.Locale;
-import java.util.Map;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.framework.Bundle;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class LanguageFilter extends BasePortalFilter {
 
-	public LanguageFilter(Bundle bundle) {
-		_bundle = bundle;
-	}
-
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		ResourceBundle resourceBundle = _resourceBundles.get(languageId);
-
-		if (resourceBundle != null) {
-			return resourceBundle;
-		}
-
-		ResourceBundleUtil.loadResourceBundles(
-			_resourceBundles, locale,
-			new ResourceBundleLoader() {
-
-				@Override
-				public ResourceBundle loadResourceBundle(String languageId) {
-					String name = null;
-
-					if (Validator.isNull(languageId)) {
-						name = "content/Language.properties";
-					}
-					else {
-						name = "content/Language_" + languageId + ".properties";
-					}
-
-					URL url = _bundle.getResource(name);
-
-					if (url == null) {
-						return null;
-					}
-
-					try {
-						InputStreamReader inputStreamReader =
-							new InputStreamReader(
-								url.openStream(), StringPool.UTF8);
-
-						return new PropertyResourceBundle(inputStreamReader);
-					}
-					catch (IOException ioe) {
-						return null;
-					}
-				}
-
-			});
-
-		return _resourceBundles.get(languageId);
+	public LanguageFilter(ResourceBundleLoader resourceBundleLoader) {
+		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	@Override
@@ -142,25 +80,16 @@ public class LanguageFilter extends BasePortalFilter {
 	}
 
 	protected String translateResponse(String languageId, String content) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(languageId);
+
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		if (resourceBundle == null) {
-			resourceBundle = LanguageResources.getResourceBundle(locale);
-		}
-		else {
-			resourceBundle = new AggregateResourceBundle(
-				resourceBundle, LanguageResources.getResourceBundle(locale));
-		}
 
 		return LanguageUtil.process(resourceBundle, locale, content);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);
 
-	private final Bundle _bundle;
-	private final Map<String, ResourceBundle> _resourceBundles =
-		new ConcurrentHashMap<>();
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

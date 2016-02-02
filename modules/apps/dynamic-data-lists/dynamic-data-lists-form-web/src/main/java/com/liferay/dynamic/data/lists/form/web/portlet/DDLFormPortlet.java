@@ -14,19 +14,14 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet;
 
-import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
-import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -36,20 +31,20 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
-import com.liferay.portal.exception.PortletPreferencesException;
-import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
-import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -116,9 +111,9 @@ public class DDLFormPortlet extends MVCPortlet {
 		catch (Exception e) {
 			Throwable cause = getRootCause(e);
 
-			if (cause instanceof DDMFormValuesValidationException) {
-				hideDefaultErrorMessage(actionRequest);
+			hideDefaultErrorMessage(actionRequest);
 
+			if (cause instanceof DDMFormValuesValidationException) {
 				if (cause instanceof
 						DDMFormValuesValidationException.MustSetValidValues ||
 					cause instanceof
@@ -132,7 +127,14 @@ public class DDLFormPortlet extends MVCPortlet {
 				}
 			}
 			else {
-				throw e;
+				SessionErrors.add(actionRequest, cause.getClass(), cause);
+			}
+
+			if (isSharedLayout(actionRequest)) {
+				actionRequest.setAttribute(
+					WebKeys.REDIRECT, getPublishedFormURL(actionRequest));
+
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 	}
@@ -207,33 +209,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
 
 		return ddmFormLayoutRow;
-	}
-
-	@Override
-	protected void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		if (SessionErrors.contains(
-				renderRequest, DDMFormRenderingException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, NoSuchRecordSetException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, NoSuchStructureException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest,
-				NoSuchStructureLayoutException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest,
-				PortletPreferencesException.MustBeStrict.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, PrincipalException.getNestedClasses())) {
-
-			include(templatePath + "error.jsp", renderRequest, renderResponse);
-		}
-		else {
-			super.doDispatch(renderRequest, renderResponse);
-		}
 	}
 
 	protected DDMForm getDDMForm(
@@ -313,6 +288,24 @@ public class DDLFormPortlet extends MVCPortlet {
 		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
 	}
 
+	protected String getPublishedFormURL(ActionRequest actionRequest) {
+		String recordSetId = ParamUtil.getString(actionRequest, "recordSetId");
+
+		StringBundler sb = new StringBundler(4);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getSiteGroup();
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(group.getPathFriendlyURL(false, themeDisplay));
+		sb.append("/forms/shared/-/form/");
+		sb.append(recordSetId);
+
+		return sb.toString();
+	}
+
 	protected Throwable getRootCause(Throwable throwable) {
 		while (throwable.getCause() != null) {
 			throwable = throwable.getCause();
@@ -351,20 +344,18 @@ public class DDLFormPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof DDMFormRenderingException ||
-			cause instanceof CaptchaTextException ||
-			cause instanceof CaptchaMaxChallengesException ||
-			cause instanceof NoSuchRecordSetException ||
-			cause instanceof NoSuchStructureException ||
-			cause instanceof NoSuchStructureLayoutException ||
-			cause instanceof PortletPreferencesException ||
-			cause instanceof PrincipalException ||
-			cause instanceof StorageFieldValueException) {
-
-			return true;
-		}
-
 		return false;
+	}
+
+	protected boolean isSharedLayout(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String type = layout.getType();
+
+		return type.equals(LayoutConstants.TYPE_SHARED_PORTLET);
 	}
 
 	@Reference(unbind = "-")

@@ -261,7 +261,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (isRunOutsidePortalExclusion) {
 				sb.append("Possible Java Serialization Remote Code Execution ");
-				sb.append("vulnerablity using ");
+				sb.append("vulnerability using ");
 			}
 			else {
 				sb.append("Use ProtectedObjectInputStream instead of ");
@@ -568,7 +568,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (isRunOutsidePortalExclusion) {
 				sb.append("Possible XXE or Quadratic Blowup security ");
-				sb.append("vulnerablity using ");
+				sb.append("vulnerability using ");
 			}
 			else {
 				sb.append("Use SecureXMLBuilderUtil.newDocumentBuilderFactory");

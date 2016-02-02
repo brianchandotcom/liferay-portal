@@ -23,7 +23,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Builds language property files.
+ *
  * @author Andrea Di Giorgi
+ * @goal build-lang
  */
 public class BuildLangMojo extends AbstractMojo {
 
@@ -37,18 +40,30 @@ public class BuildLangMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setLangDirName(String langDirName) {
 		_langBuilderArgs.setLangDirName(langDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setLangFileName(String langFileName) {
 		_langBuilderArgs.setLangFileName(langFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setPlugin(boolean plugin) {
 		_langBuilderArgs.setPlugin(plugin);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setPortalLanguagePropertiesFileName(
 		String portalLanguagePropertiesFileName) {
 
@@ -56,20 +71,29 @@ public class BuildLangMojo extends AbstractMojo {
 			portalLanguagePropertiesFileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setTranslate(boolean translate) {
 		_langBuilderArgs.setTranslate(translate);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setTranslateClientId(String translateClientId) {
 		_langBuilderArgs.setTranslateClientId(translateClientId);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setTranslateClientSecret(String translateClientSecret) {
 		_langBuilderArgs.setTranslateClientSecret(translateClientSecret);
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}
+	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
 	protected File baseDir;

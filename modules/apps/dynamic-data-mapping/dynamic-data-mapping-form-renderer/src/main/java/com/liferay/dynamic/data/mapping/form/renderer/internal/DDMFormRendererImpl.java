@@ -200,25 +200,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("<label class=\"required-warning\">");
-
-		String requiredMarkHTML = getRequiredMarkHTML(resourceBundle);
-
 		sb.append(
 			LanguageUtil.format(
 				resourceBundle, "all-fields-marked-with-x-are-required",
-				requiredMarkHTML, false));
+				"<i class=\"icon-asterisk text-warning\"></i>", false));
 		sb.append("</label>");
-
-		return sb.toString();
-	}
-
-	protected String getRequiredMarkHTML(ResourceBundle resourceBundle) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<span class=\"icon-asterisk text-warning\">");
-		sb.append("<span class=\"hide-accessible\">");
-		sb.append(LanguageUtil.get(resourceBundle, "required"));
-		sb.append("</span></span>");
 
 		return sb.toString();
 	}
@@ -322,7 +308,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put(
 			"requiredFieldsWarningMessageHTML",
 			getRequiredFieldsWarningMessageHTML(resourceBundle));
-
+		template.put(
+			"showRequiredFieldsWarning",
+			ddmFormRenderingContext.isShowRequiredFieldsWarning());
 		template.put("strings", getLanguageStringsMap(resourceBundle));
 
 		String submitLabel = GetterUtil.getString(

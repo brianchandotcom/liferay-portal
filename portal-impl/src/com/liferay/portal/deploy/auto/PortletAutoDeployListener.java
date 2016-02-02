@@ -29,6 +29,7 @@ import java.io.File;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Miguel Pastor
+ * @author Manuel de la Peña
  */
 public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
@@ -42,43 +43,11 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		AutoDeployer autoDeployer = null;
-
-		if (pluginAutoDeployListenerHelper.isMatchingFile(
-				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
-
-			autoDeployer = _autoDeployer;
-		}
-		else if (pluginAutoDeployListenerHelper.isMatchingFile(
-					"index_mvc.jsp")) {
-
-			autoDeployer = getMvcDeployer();
-		}
-		else if (pluginAutoDeployListenerHelper.isMatchingFile("index.php")) {
-			autoDeployer = getPhpDeployer();
-		}
-		else if (!pluginAutoDeployListenerHelper.isExtPlugin() &&
-				 !pluginAutoDeployListenerHelper.isHookPlugin() &&
-				 !pluginAutoDeployListenerHelper.isMatchingFile(
-					 "WEB-INF/liferay-layout-templates.xml") &&
-				 !pluginAutoDeployListenerHelper.isThemePlugin() &&
-				 !pluginAutoDeployListenerHelper.isWebPlugin() &&
-				 file.getName().endsWith(".war")) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Deploying package as a web application");
-			}
-
-			autoDeployer = getWaiDeployer();
-		}
-		else {
+		if (!isDeployable(file)) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 
@@ -87,14 +56,14 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isDebugEnabled()) {
-			Class<?> clazz = autoDeployer.getClass();
+			Class<?> clazz = _autoDeployer.getClass();
 
 			_log.debug("Using deployer " + clazz.getName());
 		}
 
-		autoDeployer = new ThreadSafeAutoDeployer(autoDeployer);
+		_autoDeployer = new ThreadSafeAutoDeployer(_autoDeployer);
 
-		int code = autoDeployer.autoDeploy(autoDeploymentContext);
+		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
@@ -129,10 +98,53 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		return _waiAutoDeployer;
 	}
 
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
+		if (pluginAutoDeployListenerHelper.isMatchingFile(
+				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
+
+			return true;
+		}
+
+		if (pluginAutoDeployListenerHelper.isMatchingFile("index_mvc.jsp")) {
+			_autoDeployer = getMvcDeployer();
+
+			return true;
+		}
+
+		if (pluginAutoDeployListenerHelper.isMatchingFile("index.php")) {
+			_autoDeployer = getPhpDeployer();
+
+			return true;
+		}
+
+		if (!pluginAutoDeployListenerHelper.isExtPlugin() &&
+			!pluginAutoDeployListenerHelper.isHookPlugin() &&
+			!pluginAutoDeployListenerHelper.isMatchingFile(
+				"WEB-INF/liferay-layout-templates.xml") &&
+			!pluginAutoDeployListenerHelper.isThemePlugin() &&
+			!pluginAutoDeployListenerHelper.isWebPlugin() &&
+			file.getName().endsWith(".war")) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Deploying package as a web application");
+			}
+
+			_autoDeployer = getWaiDeployer();
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletAutoDeployListener.class);
 
-	private final AutoDeployer _autoDeployer;
+	private AutoDeployer _autoDeployer;
 	private MVCPortletAutoDeployer _mvcPortletAutoDeployer;
 	private PHPPortletAutoDeployer _phpPortletAutoDeployer;
 	private WAIAutoDeployer _waiAutoDeployer;

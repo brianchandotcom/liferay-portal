@@ -25,6 +25,7 @@ import java.io.File;
 
 /**
  * @author Ryan Park
+ * @author Manuel de la Peña
  */
 public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 
@@ -39,14 +40,11 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!pluginAutoDeployListenerHelper.isLiferayPackage()) {
+		if (!isDeployable(file)) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 
@@ -63,6 +61,14 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
+		return pluginAutoDeployListenerHelper.isLiferayPackage();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

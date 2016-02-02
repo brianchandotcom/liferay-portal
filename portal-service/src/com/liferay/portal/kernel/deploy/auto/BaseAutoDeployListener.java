@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.deploy.auto;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.File;
+
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
@@ -24,6 +26,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  * @author Manuel de la Peña
  */
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
+
+	protected abstract boolean isDeployable(File file)
+		throws AutoDeployException;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAutoDeployListener.class);

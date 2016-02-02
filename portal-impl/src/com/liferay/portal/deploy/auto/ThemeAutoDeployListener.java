@@ -26,6 +26,7 @@ import java.io.File;
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
 public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
@@ -39,14 +40,11 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!pluginAutoDeployListenerHelper.isThemePlugin()) {
+		if (!isDeployable(file)) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 
@@ -63,6 +61,14 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
+		return pluginAutoDeployListenerHelper.isThemePlugin();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

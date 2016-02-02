@@ -51,7 +51,7 @@ public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 	public ConfigJSModulesTask() {
 		dependsOn(
 			JSModuleConfigGeneratorPlugin.
-				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
+				DOWNLOAD_LIFERAY_MODULE_CONFIG_GENERATOR_TASK_NAME);
 
 		include("**/*.es.js");
 

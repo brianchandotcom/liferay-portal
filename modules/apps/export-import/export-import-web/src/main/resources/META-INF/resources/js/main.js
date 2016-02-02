@@ -7,8 +7,6 @@ AUI.add(
 
 		var FAILURE_TIMEOUT = 10000;
 
-		var REGEX_LAYOUT_ID = /plid_(\d+)/;
-
 		var RENDER_INTERVAL_IDLE = 60000;
 
 		var RENDER_INTERVAL_IN_PROGRESS = 2000;
@@ -728,8 +726,6 @@ AUI.add(
 						var instance = this;
 
 						if (instance._isChecked('deletionsNode')) {
-							var deletionsNode = instance.get('deletionsNode');
-
 							instance.all('.deletions').each(
 									function(item, index, collection) {
 										item.show();
@@ -1111,8 +1107,8 @@ AUI.add(
 
 						var rangeDialog = instance._rangeDialog;
 
-						var endsLater = true;
 						var endsInPast = true;
+						var endsLater = true;
 						var startsInPast = true;
 
 						if (instance._isChecked('rangeDateRangeNode')) {
@@ -1143,7 +1139,14 @@ AUI.add(
 							var localeString = instance.get('locale');
 							var timeZoneString = instance.get('timeZone');
 
-							var today = new Date(new Date().toLocaleString(localeString, {timeZone: timeZoneString}));
+							var today = new Date(
+								new Date().toLocaleString(
+									localeString,
+									{
+										timeZone: timeZoneString
+									}
+								)
+							);
 
 							endsInPast = ADate.isGreaterOrEqual(today, endDate);
 							startsInPast = ADate.isGreaterOrEqual(today, startDate);

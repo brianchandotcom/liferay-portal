@@ -53,7 +53,9 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 			_log.info("Copying layout templates for " + file.getPath());
 		}
 
-		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
+		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+
+		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(

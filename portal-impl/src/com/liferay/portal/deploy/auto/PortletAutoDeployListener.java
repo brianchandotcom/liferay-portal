@@ -55,15 +55,9 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			_log.info("Copying portlets for " + file.getPath());
 		}
 
-		if (_log.isDebugEnabled()) {
-			Class<?> clazz = _autoDeployer.getClass();
+		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
 
-			_log.debug("Using deployer " + clazz.getName());
-		}
-
-		_autoDeployer = new ThreadSafeAutoDeployer(_autoDeployer);
-
-		int code = _autoDeployer.autoDeploy(autoDeploymentContext);
+		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
@@ -139,6 +133,17 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected AutoDeployer wrapAutodeployer(AutoDeployer autoDeployer) {
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = autoDeployer.getClass();
+
+			_log.debug("Using deployer " + clazz.getName());
+		}
+
+		return new ThreadSafeAutoDeployer(autoDeployer);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

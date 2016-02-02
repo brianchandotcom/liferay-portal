@@ -103,7 +103,7 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Preview')]</td>
+	<td>//div[@class='panel-heading' and contains(.,'Preview')]//a</td>
 	<td></td>
 </tr>
 <tr>

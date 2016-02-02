@@ -125,27 +125,25 @@ else if (navigation.equals("mine") || navigation.equals("recent")) {
 	bookmarksSearchContainer.setTotal(total);
 	bookmarksSearchContainer.setResults(BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
 }
+else if (useAssetEntryQuery) {
+	AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
+
+	assetEntryQuery.setEnablePermissions(true);
+	assetEntryQuery.setExcludeZeroViewCount(false);
+	assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
+	assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
+
+	if (Validator.isNotNull(keywords)) {
+		assetEntryQuery.setKeywords(keywords);
+	}
+
+	bookmarksSearchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
+}
 else {
-	if (useAssetEntryQuery) {
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery(BookmarksEntry.class.getName(), bookmarksSearchContainer);
+	total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
 
-		assetEntryQuery.setEnablePermissions(true);
-		assetEntryQuery.setExcludeZeroViewCount(false);
-		assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
-		assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
-
-		if (Validator.isNotNull(keywords)) {
-			assetEntryQuery.setKeywords(keywords);
-		}
-
-		bookmarksSearchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
-	}
-	else {
-		total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
-
-		bookmarksSearchContainer.setTotal(total);
-		bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
-	}
+	bookmarksSearchContainer.setTotal(total);
+	bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
 }
 
 request.setAttribute("view.jsp-folder", folder);

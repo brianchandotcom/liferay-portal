@@ -52,7 +52,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 		</aui:fieldset>
 
 		<liferay-ui:panel-container extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyPasswordPanel" markupView="lexicon" persistState="<%= true %>" title="password-changes">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyPasswordPanel" markupView="lexicon" persistState="<%= true %>" title="password-changes">
 				<aui:fieldset>
 					<aui:input helpMessage="changeable-help" name="changeable" />
 
@@ -92,7 +92,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" markupView="lexicon" persistState="<%= true %>" title="password-syntax-checking">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" markupView="lexicon" persistState="<%= true %>" title="password-syntax-checking">
 				<aui:fieldset>
 					<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" />
 
@@ -120,7 +120,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" markupView="lexicon" persistState="<%= true %>" title="password-history">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" markupView="lexicon" persistState="<%= true %>" title="password-history">
 				<aui:fieldset>
 					<aui:input helpMessage="enable-history-help" label="enable-history" name="history" />
 
@@ -142,7 +142,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" markupView="lexicon" persistState="<%= true %>" title="password-expiration">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" markupView="lexicon" persistState="<%= true %>" title="password-expiration">
 				<aui:fieldset>
 					<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" />
 
@@ -181,7 +181,7 @@ renderResponse.setTitle((passwordPolicy == null) ? LanguageUtil.get(request, "ne
 				</aui:fieldset>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" markupView="lexicon" persistState="<%= true %>" title="lockout">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" markupView="lexicon" persistState="<%= true %>" title="lockout">
 				<aui:fieldset>
 					<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" />
 

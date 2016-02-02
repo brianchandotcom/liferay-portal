@@ -329,11 +329,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		}
 	}
 
-	protected void configureArtifacts(Project project) {
-		ArtifactHandler artifactHandler = project.getArtifacts();
+	protected void configureArtifacts(
+		Project project, Jar jarJavadocTask, Jar jarSourcesTask) {
 
-		Task jarSourcesTask = GradleUtil.getTask(
-			project, JAR_SOURCES_TASK_NAME);
+		ArtifactHandler artifactHandler = project.getArtifacts();
 
 		Spec<File> spec = new Spec<File>() {
 
@@ -374,9 +373,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		};
 
 		if (FileUtil.hasSourceFiles(javadocTask, spec)) {
-			Task jarJavadocTask = GradleUtil.getTask(
-				project, JAR_JAVADOC_TASK_NAME);
-
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarJavadocTask);
 		}
@@ -489,8 +485,10 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 		addDependenciesPortalTest(project);
 		addDependenciesTestCompile(project);
-		addTaskJarJavadoc(project);
-		addTaskJarSources(project, testProject);
+
+		final Jar jarJavadocTask = addTaskJarJavadoc(project);
+		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
+
 		addTaskJarTLDDoc(project);
 		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
@@ -544,7 +542,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				@Override
 				public void execute(Project project) {
-					configureArtifacts(project);
+					configureArtifacts(project, jarJavadocTask, jarSourcesTask);
 					configureProjectBndProperties(project);
 					configureProjectVersion(project);
 

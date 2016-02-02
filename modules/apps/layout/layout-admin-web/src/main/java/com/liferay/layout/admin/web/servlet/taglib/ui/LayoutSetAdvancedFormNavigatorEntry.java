@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.servlet.taglib.ui;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
@@ -31,11 +32,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=170"},
+	property = {"service.ranking:Integer=190"},
 	service = FormNavigatorEntry.class
 )
 public class LayoutSetAdvancedFormNavigatorEntry
 	extends BaseLayoutSetFormNavigatorEntry {
+
+	@Override
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_SET_ADVANCED;
+	}
 
 	@Override
 	public String getKey() {

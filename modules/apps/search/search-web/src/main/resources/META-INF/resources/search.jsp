@@ -47,7 +47,6 @@ String format = ParamUtil.getString(request, "format");
 
 		<aui:field-wrapper inlineField="<%= true %>">
 			<aui:button icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
-			<aui:button icon="icon-remove" onClick='<%= renderResponse.getNamespace() + "clearSearch();" %>' value="clear" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 
@@ -121,14 +120,6 @@ String format = ParamUtil.getString(request, "format");
 		</portlet:resourceURL>
 
 		window.external.AddSearchProvider('<%= openSearchDescriptionXMLURL.toString() %>');
-	}
-
-	function <portlet:namespace />clearSearch() {
-		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="clearSearchURL">
-			<portlet:param name="groupId" value="0" />
-		</portlet:renderURL>
-
-		window.location.href = '<%= clearSearchURL %>';
 	}
 
 	function <portlet:namespace />search() {

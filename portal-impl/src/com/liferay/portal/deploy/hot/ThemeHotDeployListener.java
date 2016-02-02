@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ThemeHelper;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
@@ -112,6 +114,19 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 				_log.info(
 					themes.size() + " themes for " + servletContextName +
 						" are available for use");
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			for (Theme theme : themes) {
+				if (Validator.equals(
+						theme.getTemplateExtension(),
+						ThemeHelper.TEMPLATE_EXTENSION_VM)) {
+
+					_log.warn(
+						"Velocity support is deprecated. Update " +
+							theme.getName() + " theme to FreeMarker");
+				}
 			}
 		}
 	}

@@ -25,7 +25,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * @author Andrea Di Giorgi
  */
-public class UpgradeTableBuilderMojo extends AbstractMojo {
+public class BuildUpgradeTableMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {

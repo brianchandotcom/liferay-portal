@@ -25,7 +25,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * @author Andrea Di Giorgi
  */
-public class WSDDBuilderMojo extends AbstractMojo {
+public class BuildWSDDMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {

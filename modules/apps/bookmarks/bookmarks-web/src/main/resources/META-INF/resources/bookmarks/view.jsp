@@ -23,6 +23,22 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (Validator.isNotNull(keywords) && portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+
+	String redirect = ParamUtil.getString(request, "redirect");
+
+	portletDisplay.setURLBack(redirect);
+
+	String headerTitle = LanguageUtil.get(resourceBundle, "search");
+
+	renderResponse.setTitle(headerTitle);
+}
+
 boolean defaultFolderView = false;
 
 if ((folder == null) && (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
@@ -86,10 +102,30 @@ if (navigation.equals("mine") || navigation.equals("recent")) {
 		groupEntriesUserId = user.getUserId();
 	}
 
-	total = BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId);
+	if (Validator.isNull(keywords)) {
+		total = BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId);
 
-	bookmarksSearchContainer.setTotal(total);
-	bookmarksSearchContainer.setResults(BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
+		bookmarksSearchContainer.setTotal(total);
+		bookmarksSearchContainer.setResults(BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
+	}
+	else {
+		Indexer<?> indexer = BookmarksSearcher.getInstance();
+
+		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		searchContext.setAttribute("paginationType", "more");
+		searchContext.setEnd(bookmarksSearchContainer.getEnd());
+		searchContext.setFolderIds(new long[] {folderId});
+		searchContext.setKeywords(keywords);
+		searchContext.setStart(bookmarksSearchContainer.getStart());
+
+		Hits hits = indexer.search(searchContext);
+
+		total = hits.getLength();
+
+		bookmarksSearchContainer.setTotal(total);
+		bookmarksSearchContainer.setResults(BookmarksUtil.getEntries(hits));
+	}
 }
 else {
 	if (useAssetEntryQuery) {
@@ -100,19 +136,45 @@ else {
 		assetEntryQuery.setEnd(bookmarksSearchContainer.getEnd());
 		assetEntryQuery.setStart(bookmarksSearchContainer.getStart());
 
+		if (Validator.isNotNull(keywords)) {
+			assetEntryQuery.setKeywords(keywords);
+		}
+
 		bookmarksSearchContainer.setResults(AssetEntryServiceUtil.getEntries(assetEntryQuery));
 	}
 	else {
-		total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
+		if (Validator.isNull(keywords)) {
+			total = BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId);
 
-		bookmarksSearchContainer.setTotal(total);
-		bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
+			bookmarksSearchContainer.setTotal(total);
+			bookmarksSearchContainer.setResults(BookmarksFolderServiceUtil.getFoldersAndEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, bookmarksSearchContainer.getStart(), bookmarksSearchContainer.getEnd()));
+		}
+		else {
+			Indexer<?> indexer = BookmarksSearcher.getInstance();
+
+			SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+			searchContext.setAttribute("paginationType", "more");
+			searchContext.setEnd(bookmarksSearchContainer.getEnd());
+			searchContext.setFolderIds(new long[] {folderId});
+			searchContext.setKeywords(keywords);
+			searchContext.setStart(bookmarksSearchContainer.getStart());
+
+			Hits hits = indexer.search(searchContext);
+
+			total = hits.getLength();
+
+			bookmarksSearchContainer.setTotal(total);
+			bookmarksSearchContainer.setResults(BookmarksUtil.getEntries(hits));
+		}
 	}
 }
 
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+
+request.setAttribute("view.jsp-keywords", keywords);
 
 request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 

@@ -1,3 +1,16 @@
+apply plugin: "com.liferay.maven.plugin.builder"
+
+buildPluginDescriptor {
+	ext {
+		autoClean = false
+	}
+
+	finalizedBy formatSource
+	finalizedBy formatXML
+
+	goalPrefix = "liferay"
+}
+
 dependencies {
 	compile group: "com.memetix", name: "microsoft-translator-java-api", version: "0.6.2"
 	compile group: "log4j", name: "log4j", version: "1.2.17"
@@ -8,6 +21,10 @@ dependencies {
 	// @formatter:on
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+}
+
+formatSource {
+	mustRunAfter formatXML
 }
 
 liferay {

@@ -23,7 +23,6 @@ import com.liferay.portal.tools.shard.builder.test.util.DBProviderTestUtil;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import java.util.Calendar;
 import java.util.Properties;
 
 import org.junit.After;
@@ -46,49 +45,14 @@ public abstract class BaseDBProviderTestCase {
 
 		dbProvider = (DBProvider)exporter;
 
-		DBManagerTestUtil.execute(dbProvider.getDataSource(), getCreateTable());
+		DBManagerTestUtil.execute(
+			dbProvider.getDataSource(), getCreateTableStatement());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		DBManagerTestUtil.execute(dbProvider.getDataSource(), "drop table foo");
-	}
-
-	@Test
-	public void testGetDescribeTable() throws Exception {
-		boolean ping = DBManagerTestUtil.ping(
-			dbProvider.getDataSource(), getDescribeTable("foo"));
-
-		Assert.assertTrue(ping);
-	}
-
-	@Test
-	public void testGetTableName() {
-		Assert.assertEquals("table_name", dbProvider.getTableNameFieldName());
-	}
-
-	@Test
-	public void testPingReturnsFalse() throws Exception {
-		boolean ping = DBManagerTestUtil.ping(
-			dbProvider.getDataSource(), "select * from foo");
-
-		Assert.assertFalse(ping);
-	}
-
-	@Test
-	public void testPingReturnsTrue() throws Exception {
-		Calendar calendar = Calendar.getInstance();
-
-		Timestamp expectedTimestamp = new Timestamp(calendar.getTimeInMillis());
-
-		Object[] defaultArgs = getDefaultArgs(0, expectedTimestamp);
-
-		insertIntoFoo(defaultArgs);
-
-		boolean ping = DBManagerTestUtil.ping(
-			dbProvider.getDataSource(), "select * from foo");
-
-		Assert.assertTrue(ping);
+		DBManagerTestUtil.execute(
+			dbProvider.getDataSource(), getDropTableStatement());
 	}
 
 	@Test
@@ -107,7 +71,7 @@ public abstract class BaseDBProviderTestCase {
 		Assert.assertEquals("'1970-01-01 00:01:00'", serializeTableField);
 	}
 
-	protected String getCreateTable() {
+	protected String getCreateTableStatement() {
 		return "create table foo (i INT, f FLOAT, s VARCHAR(75), d DATETIME)";
 	}
 
@@ -123,10 +87,8 @@ public abstract class BaseDBProviderTestCase {
 		};
 	}
 
-	protected String getDescribeTable(String tableName) {
-		return
-			"select * from information_schema.columns where table_name = '" +
-				tableName + "'";
+	protected String getDropTableStatement() {
+		return "drop table foo";
 	}
 
 	protected abstract String getTestPropertiesFileName();

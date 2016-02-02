@@ -16,7 +16,6 @@ package com.liferay.portal.tools.shard.builder.test.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -39,17 +38,6 @@ public class DBManagerTestUtil {
 			}
 
 			return ps.executeUpdate();
-		}
-	}
-
-	public static boolean ping(DataSource dataSource, String sql)
-		throws SQLException {
-
-		try (Connection con = dataSource.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql);
-					ResultSet rs = ps.executeQuery() ) {
-
-			return rs.next();
 		}
 	}
 

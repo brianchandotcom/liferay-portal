@@ -57,9 +57,8 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
-				"Extension environment for " + file.getPath() +
-					" copied successfully. Deployment will start in a few " +
-						"seconds.");
+				getSuccessMessage(file) +
+					". Deployment will start in a few seconds.");
 		}
 
 		return code;
@@ -68,6 +67,13 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 	@Override
 	protected String getPluginPathInfoMessage(File file) {
 		return "Copying extension environment plugin for " + file.getPath();
+	}
+
+	@Override
+	protected String getSuccessMessage(File file) {
+		return
+			"Extension environment for " + file.getPath() +
+				" copied successfully";
 	}
 
 	@Override

@@ -56,8 +56,8 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
-				"Web plugin for " + file.getPath() + " copied successfully. " +
-					"Deployment will start in a few seconds.");
+				getSuccessMessage(file) +
+					". Deployment will start in a few seconds.");
 		}
 
 		return code;
@@ -66,6 +66,11 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 	@Override
 	protected String getPluginPathInfoMessage(File file) {
 		return "Copying web plugin for " + file.getPath();
+	}
+
+	@Override
+	protected String getSuccessMessage(File file) {
+		return "Web plugin for " + file.getPath() + " copied successfully";
 	}
 
 	@Override

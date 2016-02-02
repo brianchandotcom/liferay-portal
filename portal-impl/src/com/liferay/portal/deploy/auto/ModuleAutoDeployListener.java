@@ -71,8 +71,8 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
 		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
 			_log.info(
-				"Module for " + file.getPath() + " copied successfully. " +
-					"Deployment will start in a few seconds.");
+				getSuccessMessage(file) +
+					". Deployment will start in a few seconds.");
 		}
 
 		return code;
@@ -81,6 +81,11 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 	@Override
 	protected String getPluginPathInfoMessage(File file) {
 		return "Copied module for " + file.getPath();
+	}
+
+	@Override
+	protected String getSuccessMessage(File file) {
+		return "Module for " + file.getPath() + " copied successfully";
 	}
 
 	@Override

@@ -158,12 +158,12 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		String namespace = null;
 
-		String portletId = getPortletId(routeParameters);
+		String portletInstanceKey = getPortletId(routeParameters);
 
-		if (Validator.isNotNull(portletId)) {
-			namespace = PortalUtil.getPortletNamespace(portletId);
+		if (Validator.isNotNull(portletInstanceKey)) {
+			namespace = PortalUtil.getPortletNamespace(portletInstanceKey);
 
-			addParameter(namespace, parameterMap, "p_p_id", portletId);
+			addParameter(namespace, parameterMap, "p_p_id", portletInstanceKey);
 		}
 		else if (isAllPublicRenderParameters(routeParameters)) {
 
@@ -269,15 +269,16 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		// Populate virtual parameters for instanceable portlets
 
 		if (isPortletInstanceable()) {
-			String portletId = liferayPortletURL.getPortletId();
+			String portletInstanceKey = liferayPortletURL.getPortletId();
 
-			routeParameters.put("p_p_id", portletId);
+			routeParameters.put("p_p_id", portletInstanceKey);
 
-			if (Validator.isNotNull(portletId) &&
-				PortletConstants.hasInstanceId(portletId)) {
+			if (Validator.isNotNull(portletInstanceKey) &&
+				PortletConstants.hasInstanceId(portletInstanceKey)) {
 
 				routeParameters.put(
-					"instanceId", PortletConstants.getInstanceId(portletId));
+					"instanceId",
+					PortletConstants.getInstanceId(portletInstanceKey));
 			}
 		}
 
@@ -301,10 +302,10 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 			return getPortletId();
 		}
 
-		String portletId = routeParameters.remove("p_p_id");
+		String portletInstanceKey = routeParameters.remove("p_p_id");
 
-		if (Validator.isNotNull(portletId)) {
-			return portletId;
+		if (Validator.isNotNull(portletInstanceKey)) {
+			return portletInstanceKey;
 		}
 
 		String instanceId = routeParameters.remove("instanceId");

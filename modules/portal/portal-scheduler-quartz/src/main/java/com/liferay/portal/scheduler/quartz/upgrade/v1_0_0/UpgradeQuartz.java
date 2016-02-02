@@ -15,9 +15,12 @@
 package com.liferay.portal.scheduler.quartz.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * @author Akos Thurzo
@@ -42,9 +45,16 @@ public class UpgradeQuartz extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
+		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sqle, sqle);
+			}
+		}
 		finally {
 			DataAccess.cleanUp(ps);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeQuartz.class);
 
 }

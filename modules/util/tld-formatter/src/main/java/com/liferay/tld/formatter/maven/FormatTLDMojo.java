@@ -27,7 +27,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Invoke Liferay TLD Formatter to format files.
+ *
  * @author Andrea Di Giorgi
+ * @goal format-tld
  */
 public class FormatTLDMojo extends AbstractMojo {
 
@@ -50,16 +53,22 @@ public class FormatTLDMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setBaseDirName(String baseDirName) {
 		_tldFormatterArgs.setBaseDirName(baseDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setPlugin(boolean plugin) {
 		_tldFormatterArgs.setPlugin(plugin);
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}
+	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
 	protected File baseDir;

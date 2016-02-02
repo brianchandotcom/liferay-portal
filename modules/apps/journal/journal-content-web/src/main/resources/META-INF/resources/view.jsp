@@ -33,12 +33,10 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 			<c:when test="<%= Validator.isNull(journalContentDisplayContext.getArticleId()) %>">
 				<div class="alert alert-info text-center">
 					<div>
-						<liferay-ui:message key="this-application-wont-be-visible-for-the-users-while-you-dont-select-web-content" />
+						<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
 					</div>
 					<div>
-						<liferay-ui:message key="you-can-select-it" />
-
-						<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select" /></aui:a>
+						<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-web-content-to-make-it-visible" /></aui:a>
 					</div>
 				</div>
 			</c:when>

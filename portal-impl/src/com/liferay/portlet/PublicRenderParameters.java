@@ -34,16 +34,12 @@ public class PublicRenderParameters extends HashMap<String, String[]> {
 	public void clear() {
 		super.clear();
 
-		if (_map != null) {
-			_map.clear();
-		}
+		_map.clear();
 	}
 
 	@Override
 	public String[] put(String key, String[] value) {
-		if (_map != null) {
-			_map.put(key, value);
-		}
+		_map.put(key, value);
 
 		return super.put(key, value);
 	}
@@ -52,16 +48,12 @@ public class PublicRenderParameters extends HashMap<String, String[]> {
 	public void putAll(Map<? extends String, ? extends String[]> map) {
 		super.putAll(map);
 
-		if (_map != null) {
-			_map.putAll(map);
-		}
+		_map.putAll(map);
 	}
 
 	@Override
 	public String[] remove(Object key) {
-		if (_map != null) {
-			_map.remove(key);
-		}
+		_map.remove(key);
 
 		return super.remove(key);
 	}

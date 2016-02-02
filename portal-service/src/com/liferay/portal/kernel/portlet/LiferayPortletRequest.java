@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface LiferayPortletRequest extends PortletRequest {
 
+	public Map<String, String[]> clearRenderParameters();
+
 	public void defineObjects(
 		PortletConfig portletConfig, PortletResponse portletResponse);
 
@@ -38,7 +40,5 @@ public interface LiferayPortletRequest extends PortletRequest {
 	public long getPlid();
 
 	public String getPortletName();
-
-	public Map<String, String[]> getRenderParameters();
 
 }

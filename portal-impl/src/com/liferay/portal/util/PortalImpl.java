@@ -794,10 +794,7 @@ public class PortalImpl implements Portal {
 		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
 
 		if (renderRequestImpl.isTriggeredByActionURL()) {
-			Map<String, String[]> renderParameters =
-				renderRequestImpl.getRenderParameters();
-
-			renderParameters.clear();
+			renderRequestImpl.clearRenderParameters();
 		}
 	}
 

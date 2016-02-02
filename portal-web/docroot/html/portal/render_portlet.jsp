@@ -649,17 +649,19 @@ if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 
 	Map<String, String[]> renderParameters = RenderParametersPool.get(request, plid, portletDisplay.getId());
 
-	for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
-		String key = entry.getKey();
+	if (renderParameters != null) {
+		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
+			String key = entry.getKey();
 
-		if (key.startsWith(portletNamespace) || publicRenderParameterNames.contains(key)) {
-			if (key.startsWith(portletNamespace)) {
-				key = key.substring(portletNamespace.length());
+			if (key.startsWith(portletNamespace) || publicRenderParameterNames.contains(key)) {
+				if (key.startsWith(portletNamespace)) {
+					key = key.substring(portletNamespace.length());
+				}
+
+				String[] values = entry.getValue();
+
+				urlMax.setParameter(key, values);
 			}
-
-			String[] values = entry.getValue();
-
-			urlMax.setParameter(key, values);
 		}
 	}
 }

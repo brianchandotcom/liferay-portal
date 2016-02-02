@@ -353,7 +353,7 @@ public class PoshiRunnerGetterUtil {
 				if (methodName.equals(commandName)) {
 					Class<?>[] parameterTypes = method.getParameterTypes();
 
-					if (parameterTypes.length > 1 ) {
+					if (parameterTypes.length > 1) {
 						Object returnObject = method.invoke(
 							null, (Object[])integers);
 

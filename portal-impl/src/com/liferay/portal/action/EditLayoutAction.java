@@ -245,7 +245,7 @@ public class EditLayoutAction extends JSONAction {
 			}
 		}
 
-		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT ) {
+		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT) {
 			return themeDisplay.translate(
 				"the-first-page-cannot-be-of-type-x",
 				"layout.types." + lte.getLayoutType());

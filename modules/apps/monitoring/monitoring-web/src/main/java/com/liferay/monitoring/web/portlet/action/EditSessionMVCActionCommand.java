@@ -63,7 +63,7 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest,
 				PrincipalException.MustBeCompanyAdmin.class.getName());
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp" );
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 
 			return;
 		}

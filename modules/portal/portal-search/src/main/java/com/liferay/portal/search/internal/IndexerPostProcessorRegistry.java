@@ -69,7 +69,7 @@ public class IndexerPostProcessorRegistry {
 		List<String> indexerClassNames = StringPlus.asList(
 			properties.get("indexer.class.name"));
 
-		for (String indexerClassName : indexerClassNames ) {
+		for (String indexerClassName : indexerClassNames) {
 			Indexer<?> indexer = _indexerRegistry.getIndexer(indexerClassName);
 
 			if (indexer == null) {

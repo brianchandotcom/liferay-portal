@@ -984,7 +984,7 @@ public class MobileDriverToSeleniumBridge
 					ioe.printStackTrace();
 				}
 			}
-			else if (elementPositionCenterY <= viewportPositionTop ) {
+			else if (elementPositionCenterY <= viewportPositionTop) {
 				try {
 					sb.append(
 						"adb -s emulator-5554 shell /data/local/swipe_down.sh");

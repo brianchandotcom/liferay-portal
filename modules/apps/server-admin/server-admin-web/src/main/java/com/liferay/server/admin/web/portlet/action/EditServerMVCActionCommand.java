@@ -144,7 +144,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest,
 				PrincipalException.MustBeOmniadmin.class.getName());
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp" );
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 
 			return;
 		}

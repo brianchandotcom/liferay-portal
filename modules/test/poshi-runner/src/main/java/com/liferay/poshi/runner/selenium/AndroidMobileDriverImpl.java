@@ -90,7 +90,7 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 					ioe.printStackTrace();
 				}
 			}
-			else if (elementPositionCenterY <= viewportPositionTop ) {
+			else if (elementPositionCenterY <= viewportPositionTop) {
 				try {
 					Runtime runtime = Runtime.getRuntime();
 

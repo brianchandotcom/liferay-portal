@@ -67,7 +67,7 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 			final Locale locale)
 		throws PortalException {
 
-		if (getGroupId() == groupId ) {
+		if (getGroupId() == groupId) {
 			return getName(locale);
 		}
 

@@ -975,7 +975,7 @@ public class GroupImpl extends GroupBaseImpl {
 				getGroupId(), privateSite,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if ((defaultLayout != null ) &&
+			if ((defaultLayout != null) &&
 				!LayoutPermissionUtil.contains(
 					permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
 

@@ -69,7 +69,7 @@ public class NetlogonIdentityInfo extends NdrObject {
 	}
 
 	protected void encodeUnicodeString(
-		NdrBuffer ndrBuffer, rpc.unicode_string string ) {
+		NdrBuffer ndrBuffer, rpc.unicode_string string) {
 
 		ndrBuffer = ndrBuffer.deferred;
 

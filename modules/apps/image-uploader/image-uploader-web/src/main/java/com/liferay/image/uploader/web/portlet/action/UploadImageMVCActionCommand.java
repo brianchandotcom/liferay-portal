@@ -200,7 +200,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		if (e instanceof PrincipalException) {
 			SessionErrors.add(actionRequest, e.getClass());
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp" );
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
 		else if (e instanceof AntivirusScannerException ||
 				 e instanceof FileExtensionException ||

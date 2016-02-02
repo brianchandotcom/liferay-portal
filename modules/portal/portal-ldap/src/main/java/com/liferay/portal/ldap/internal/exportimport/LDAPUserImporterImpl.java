@@ -1393,7 +1393,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 
 			if (!userMappings.containsKey(mappingPropertyName) ||
-				ldapUserIgnoreAttributes.contains(propertyName) ) {
+				ldapUserIgnoreAttributes.contains(propertyName)) {
 
 				setProperty(ldapUser, user, propertyName);
 			}

@@ -324,7 +324,7 @@ public class MapUtil {
 		if (value instanceof String[]) {
 			String[] array = (String[])value;
 
-			if (array.length == 0 ) {
+			if (array.length == 0) {
 				return defaultValue;
 			}
 

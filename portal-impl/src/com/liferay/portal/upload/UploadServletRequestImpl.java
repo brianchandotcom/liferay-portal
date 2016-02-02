@@ -211,7 +211,7 @@ public class UploadServletRequestImpl
 			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
 				uploadException.setExceededFileSizeLimit(true);
 			}
-			else if (e instanceof FileUploadBase.SizeLimitExceededException ) {
+			else if (e instanceof FileUploadBase.SizeLimitExceededException) {
 				uploadException.setExceededUploadRequestSizeLimit(true);
 			}
 

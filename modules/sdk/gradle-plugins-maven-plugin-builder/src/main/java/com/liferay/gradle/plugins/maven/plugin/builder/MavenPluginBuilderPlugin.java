@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -31,6 +32,8 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.Upload;
 
 /**
  * @author Andrea Di Giorgi
@@ -44,7 +47,10 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		addTaskBuildPluginDescriptor(project);
+		BuildPluginDescriptorTask buildPluginDescriptorTask =
+			addTaskBuildPluginDescriptor(project);
+
+		configureTasksUpload(project, buildPluginDescriptorTask);
 	}
 
 	protected BuildPluginDescriptorTask addTaskBuildPluginDescriptor(
@@ -134,6 +140,30 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		processResourcesTask.mustRunAfter(buildPluginDescriptorTask);
 
 		return buildPluginDescriptorTask;
+	}
+
+	protected void configureTasksUpload(
+		Project project,
+		final BuildPluginDescriptorTask buildPluginDescriptorTask) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			Upload.class,
+			new Action<Upload>() {
+
+				@Override
+				public void execute(Upload upload) {
+					configureTaskUpload(upload, buildPluginDescriptorTask);
+				}
+
+			});
+	}
+
+	protected void configureTaskUpload(
+		Upload upload, BuildPluginDescriptorTask buildPluginDescriptorTask) {
+
+		upload.dependsOn(buildPluginDescriptorTask);
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {

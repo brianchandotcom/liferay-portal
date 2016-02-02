@@ -50,7 +50,7 @@ public class UpgradeClassNames extends UpgradeProcess {
 
 		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
 			"com.liferay.portlet.bookmarks.model.BookmarksFolder",
-			BookmarksFolder.class.getName(), classNameDependencies );
+			BookmarksFolder.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
 	}

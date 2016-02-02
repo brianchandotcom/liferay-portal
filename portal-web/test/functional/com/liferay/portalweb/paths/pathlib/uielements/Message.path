@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]/span[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong | //span[contains(@class,'workflow-status')]/span</td>
 	<td></td>

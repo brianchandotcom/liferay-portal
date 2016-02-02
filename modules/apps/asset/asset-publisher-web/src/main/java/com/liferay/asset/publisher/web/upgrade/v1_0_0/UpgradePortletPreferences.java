@@ -74,7 +74,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		try {
 			ps = connection.prepareStatement(
-				"select definition from DDMStructure where structureId = ?" );
+				"select definition from DDMStructure where structureId = ?");
 
 			ps.setLong(1, structureId);
 
@@ -228,7 +228,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 				ps = connection.prepareStatement(
 					"select structureId from DDMStructureLink where " +
-						"classNameId = ? and classPK = ?" );
+						"classNameId = ? and classPK = ?");
 
 				ps.setLong(1, fileEntryTypeClassNameId);
 				ps.setLong(2, fileEntryTypeId);

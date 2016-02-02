@@ -15,6 +15,8 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

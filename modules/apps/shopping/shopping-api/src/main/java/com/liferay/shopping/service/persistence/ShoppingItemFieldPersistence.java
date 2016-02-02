@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.shopping.exception.NoSuchItemFieldException;
 import com.liferay.shopping.model.ShoppingItemField;
 
 /**
@@ -109,7 +110,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public ShoppingItemField findByItemId_First(long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchItemFieldException;
+		throws NoSuchItemFieldException;
 
 	/**
 	* Returns the first shopping item field in the ordered set where itemId = &#63;.
@@ -131,7 +132,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*/
 	public ShoppingItemField findByItemId_Last(long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchItemFieldException;
+		throws NoSuchItemFieldException;
 
 	/**
 	* Returns the last shopping item field in the ordered set where itemId = &#63;.
@@ -155,7 +156,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	public ShoppingItemField[] findByItemId_PrevAndNext(long itemFieldId,
 		long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchItemFieldException;
+		throws NoSuchItemFieldException;
 
 	/**
 	* Removes all the shopping item fields where itemId = &#63; from the database.
@@ -203,7 +204,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
 	public ShoppingItemField remove(long itemFieldId)
-		throws com.liferay.shopping.exception.NoSuchItemFieldException;
+		throws NoSuchItemFieldException;
 
 	public ShoppingItemField updateImpl(ShoppingItemField shoppingItemField);
 
@@ -215,7 +216,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
 	public ShoppingItemField findByPrimaryKey(long itemFieldId)
-		throws com.liferay.shopping.exception.NoSuchItemFieldException;
+		throws NoSuchItemFieldException;
 
 	/**
 	* Returns the shopping item field with the primary key or returns <code>null</code> if it could not be found.

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.asset.exception.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 
 /**
@@ -109,7 +110,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByUuid_PrevAndNext(long categoryId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	* @throws NoSuchCategoryException if a matching asset category could not be found
 	*/
 	public AssetCategory findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the asset category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	* @return the asset category that was removed
 	*/
 	public AssetCategory removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the number of asset categories where uuid = &#63; and groupId = &#63;.
@@ -298,7 +299,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +325,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +352,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByUuid_C_PrevAndNext(long categoryId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where uuid = &#63; and companyId = &#63; from the database.
@@ -439,7 +440,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63;.
@@ -461,7 +462,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where groupId = &#63;.
@@ -485,7 +486,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByGroupId_PrevAndNext(long categoryId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns all the asset categories that the user has permission to view where groupId = &#63;.
@@ -539,7 +540,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] filterFindByGroupId_PrevAndNext(long categoryId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where groupId = &#63; from the database.
@@ -634,7 +635,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByParentCategoryId_First(long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where parentCategoryId = &#63;.
@@ -656,7 +657,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByParentCategoryId_Last(long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where parentCategoryId = &#63;.
@@ -680,7 +681,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByParentCategoryId_PrevAndNext(long categoryId,
 		long parentCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where parentCategoryId = &#63; from the database.
@@ -766,7 +767,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByVocabularyId_First(long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where vocabularyId = &#63;.
@@ -788,7 +789,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByVocabularyId_Last(long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where vocabularyId = &#63;.
@@ -812,7 +813,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByVocabularyId_PrevAndNext(long categoryId,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where vocabularyId = &#63; from the database.
@@ -904,7 +905,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByG_V_First(long groupId, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
@@ -928,7 +929,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByG_V_Last(long groupId, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
@@ -954,7 +955,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByG_V_PrevAndNext(long categoryId, long groupId,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns all the asset categories that the user has permission to view where groupId = &#63; and vocabularyId = &#63;.
@@ -1013,7 +1014,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] filterFindByG_V_PrevAndNext(long categoryId,
 		long groupId, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns all the asset categories that the user has permission to view where groupId = &#63; and vocabularyId = any &#63;.
@@ -1247,7 +1248,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByP_N_First(long parentCategoryId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
@@ -1273,7 +1274,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByP_N_Last(long parentCategoryId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
@@ -1300,7 +1301,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByP_N_PrevAndNext(long categoryId,
 		long parentCategoryId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where parentCategoryId = &#63; and name = &#63; from the database.
@@ -1395,7 +1396,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByP_V_First(long parentCategoryId,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -1421,7 +1422,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByP_V_Last(long parentCategoryId,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -1448,7 +1449,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByP_V_PrevAndNext(long categoryId,
 		long parentCategoryId, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63; from the database.
@@ -1543,7 +1544,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByN_V_First(java.lang.String name,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
@@ -1569,7 +1570,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByN_V_Last(java.lang.String name,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
@@ -1596,7 +1597,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByN_V_PrevAndNext(long categoryId,
 		java.lang.String name, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where name = &#63; and vocabularyId = &#63; from the database.
@@ -1696,7 +1697,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByG_P_V_First(long groupId, long parentCategoryId,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -1724,7 +1725,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByG_P_V_Last(long groupId, long parentCategoryId,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -1753,7 +1754,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByG_P_V_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -1816,7 +1817,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] filterFindByG_P_V_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63; from the database.
@@ -1931,7 +1932,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByG_LikeN_V_First(long groupId,
 		java.lang.String name, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63; and name LIKE &#63; and vocabularyId = &#63;.
@@ -1959,7 +1960,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByG_LikeN_V_Last(long groupId,
 		java.lang.String name, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where groupId = &#63; and name LIKE &#63; and vocabularyId = &#63;.
@@ -1988,7 +1989,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] findByG_LikeN_V_PrevAndNext(long categoryId,
 		long groupId, java.lang.String name, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns all the asset categories that the user has permission to view where groupId = &#63; and name LIKE &#63; and vocabularyId = &#63;.
@@ -2051,7 +2052,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory[] filterFindByG_LikeN_V_PrevAndNext(long categoryId,
 		long groupId, java.lang.String name, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns all the asset categories that the user has permission to view where groupId = &#63; and name LIKE &#63; and vocabularyId = any &#63;.
@@ -2237,7 +2238,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory findByP_N_V(long parentCategoryId,
 		java.lang.String name, long vocabularyId)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -2272,7 +2273,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	*/
 	public AssetCategory removeByP_N_V(long parentCategoryId,
 		java.lang.String name, long vocabularyId)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the number of asset categories where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63;.
@@ -2374,7 +2375,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByG_P_N_V_First(long groupId,
 		long parentCategoryId, java.lang.String name, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63;.
@@ -2404,7 +2405,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public AssetCategory findByG_P_N_V_Last(long groupId,
 		long parentCategoryId, java.lang.String name, long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63;.
@@ -2436,7 +2437,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63;.
@@ -2506,7 +2507,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 		long groupId, long parentCategoryId, java.lang.String name,
 		long vocabularyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Removes all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; from the database.
@@ -2572,8 +2573,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	* @return the asset category that was removed
 	* @throws NoSuchCategoryException if a asset category with the primary key could not be found
 	*/
-	public AssetCategory remove(long categoryId)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+	public AssetCategory remove(long categoryId) throws NoSuchCategoryException;
 
 	public AssetCategory updateImpl(AssetCategory assetCategory);
 
@@ -2585,7 +2585,7 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	* @throws NoSuchCategoryException if a asset category with the primary key could not be found
 	*/
 	public AssetCategory findByPrimaryKey(long categoryId)
-		throws com.liferay.portlet.asset.exception.NoSuchCategoryException;
+		throws NoSuchCategoryException;
 
 	/**
 	* Returns the asset category with the primary key or returns <code>null</code> if it could not be found.

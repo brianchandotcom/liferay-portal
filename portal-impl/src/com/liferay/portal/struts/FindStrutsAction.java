@@ -14,6 +14,8 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 
 import javax.portlet.PortletURL;

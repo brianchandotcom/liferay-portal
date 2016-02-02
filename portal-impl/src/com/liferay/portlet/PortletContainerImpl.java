@@ -198,7 +198,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		PublicRenderParameters publicRenderParameters =
+		Map<String, String[]> publicRenderParameters =
 			PublicRenderParametersPool.get(
 				request, layout.getPlid(), portletApp.isWARFile());
 
@@ -546,14 +546,15 @@ public class PortletContainerImpl implements PortletContainer {
 			invokerPortlet.processEvent(eventRequestImpl, eventResponseImpl);
 
 			if (eventResponseImpl.isCalledSetRenderParameter()) {
-				Map<String, String[]> renderParameterMap = new HashMap<>();
+				Map<String, String[]> renderParameterMap =
+					eventResponseImpl.getRenderParameterMap();
 
-				renderParameterMap.putAll(
-					eventResponseImpl.getRenderParameterMap());
-
-				RenderParametersPool.put(
-					request, requestLayout.getPlid(), portlet.getPortletId(),
-					renderParameterMap);
+				if (!renderParameterMap.isEmpty()) {
+					RenderParametersPool.put(
+						request, requestLayout.getPlid(),
+						portlet.getPortletId(),
+						new HashMap<>(renderParameterMap));
+				}
 			}
 
 			return eventResponseImpl.getEvents();

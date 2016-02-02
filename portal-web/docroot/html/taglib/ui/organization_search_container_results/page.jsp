@@ -23,6 +23,10 @@ long parentOrganizationId = GetterUtil.getLong(request.getAttribute("liferay-ui:
 OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttribute("liferay-ui:organization-search-container-results:searchTerms");
 boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:organization-search-container-results:useIndexer"));
 
+if (!searchTerms.isAdvancedSearch() && Validator.isNotNull(searchTerms.getKeywords())) {
+	useIndexer = true;
+}
+
 Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 %>
 

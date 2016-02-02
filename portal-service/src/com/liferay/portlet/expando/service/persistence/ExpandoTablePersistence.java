@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.expando.exception.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoTable;
 
 /**
@@ -115,7 +116,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public ExpandoTable findByC_C_First(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchTableException;
+		throws NoSuchTableException;
 
 	/**
 	* Returns the first expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -139,7 +140,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	*/
 	public ExpandoTable findByC_C_Last(long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchTableException;
+		throws NoSuchTableException;
 
 	/**
 	* Returns the last expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -165,7 +166,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	public ExpandoTable[] findByC_C_PrevAndNext(long tableId, long companyId,
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable> orderByComparator)
-		throws com.liferay.portlet.expando.exception.NoSuchTableException;
+		throws NoSuchTableException;
 
 	/**
 	* Removes all the expando tables where companyId = &#63; and classNameId = &#63; from the database.
@@ -194,8 +195,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @throws NoSuchTableException if a matching expando table could not be found
 	*/
 	public ExpandoTable findByC_C_N(long companyId, long classNameId,
-		java.lang.String name)
-		throws com.liferay.portlet.expando.exception.NoSuchTableException;
+		java.lang.String name) throws NoSuchTableException;
 
 	/**
 	* Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -229,8 +229,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @return the expando table that was removed
 	*/
 	public ExpandoTable removeByC_C_N(long companyId, long classNameId,
-		java.lang.String name)
-		throws com.liferay.portlet.expando.exception.NoSuchTableException;
+		java.lang.String name) throws NoSuchTableException;
 
 	/**
 	* Returns the number of expando tables where companyId = &#63; and classNameId = &#63; and name = &#63;.
@@ -272,8 +271,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @return the expando table that was removed
 	* @throws NoSuchTableException if a expando table with the primary key could not be found
 	*/
-	public ExpandoTable remove(long tableId)
-		throws com.liferay.portlet.expando.exception.NoSuchTableException;
+	public ExpandoTable remove(long tableId) throws NoSuchTableException;
 
 	public ExpandoTable updateImpl(ExpandoTable expandoTable);
 
@@ -285,7 +283,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	* @throws NoSuchTableException if a expando table with the primary key could not be found
 	*/
 	public ExpandoTable findByPrimaryKey(long tableId)
-		throws com.liferay.portlet.expando.exception.NoSuchTableException;
+		throws NoSuchTableException;
 
 	/**
 	* Returns the expando table with the primary key or returns <code>null</code> if it could not be found.

@@ -1,7 +1,8 @@
 <definition>
 	<command name="addPG">
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+		<execute macro="PageComment#reply">
+			<var name="commentBody" value="${commentBody}" />
+		</execute>
 
 		<var name="key_commentBody" value="${commentBody}" />
 
@@ -11,8 +12,9 @@
 	</command>
 
 	<command name="addWithWorkflowPG">
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+		<execute macro="PageComment#reply">
+			<var name="commentBody" value="${commentBody}" />
+		</execute>
 
 		<var name="key_commentBody" value="${commentBody}" />
 
@@ -34,6 +36,11 @@
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
+	</command>
+
+	<command name="reply">
+		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
+		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 	</command>
 
 	<command name="tearDownPG">

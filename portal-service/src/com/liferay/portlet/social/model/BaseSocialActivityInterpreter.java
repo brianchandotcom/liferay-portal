@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +48,7 @@ import com.liferay.portlet.social.service.persistence.SocialActivityUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
@@ -384,6 +387,8 @@ public abstract class BaseSocialActivityInterpreter
 		return StringPool.BLANK;
 	}
 
+	protected abstract ResourceBundleLoader getResourceBundleLoader();
+
 	protected String getTitle(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
@@ -586,13 +591,14 @@ public abstract class BaseSocialActivityInterpreter
 	protected String wrapLink(
 		String link, String key, ServiceContext serviceContext) {
 
-		String title = serviceContext.translate(HtmlUtil.escape(key));
+		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
 
-		if (link == null) {
-			return title;
-		}
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			serviceContext.getLanguageId());
 
-		return buildLink(link, title);
+		String title = LanguageUtil.get(resourceBundle, key);
+
+		return wrapLink(link, title);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -16,6 +16,7 @@ package com.liferay.counter.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.counter.exception.NoSuchCounterException;
 import com.liferay.counter.model.Counter;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -69,8 +70,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @return the counter that was removed
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
-	public Counter remove(java.lang.String name)
-		throws com.liferay.counter.exception.NoSuchCounterException;
+	public Counter remove(java.lang.String name) throws NoSuchCounterException;
 
 	public Counter updateImpl(Counter counter);
 
@@ -82,7 +82,7 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @throws NoSuchCounterException if a counter with the primary key could not be found
 	*/
 	public Counter findByPrimaryKey(java.lang.String name)
-		throws com.liferay.counter.exception.NoSuchCounterException;
+		throws NoSuchCounterException;
 
 	/**
 	* Returns the counter with the primary key or returns <code>null</code> if it could not be found.

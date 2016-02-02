@@ -4,6 +4,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:map:map-api")
 	compile project(":apps:users-admin:users-admin-web")
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
 }
 

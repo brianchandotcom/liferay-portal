@@ -869,7 +869,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendNotification(User user) throws Exception {
-		if (currentUserId == user.getUserId() ) {
+		if (currentUserId == user.getUserId()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skip user " + currentUserId);
 			}

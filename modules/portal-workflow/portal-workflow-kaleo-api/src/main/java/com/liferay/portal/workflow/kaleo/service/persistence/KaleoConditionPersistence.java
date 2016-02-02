@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 
 /**
@@ -108,7 +109,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	*/
 	public KaleoCondition findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Returns the first kaleo condition in the ordered set where companyId = &#63;.
@@ -130,7 +131,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	*/
 	public KaleoCondition findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Returns the last kaleo condition in the ordered set where companyId = &#63;.
@@ -154,7 +155,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	public KaleoCondition[] findByCompanyId_PrevAndNext(long kaleoConditionId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Removes all the kaleo conditions where companyId = &#63; from the database.
@@ -242,7 +243,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	public KaleoCondition findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Returns the first kaleo condition in the ordered set where kaleoDefinitionId = &#63;.
@@ -265,7 +266,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	*/
 	public KaleoCondition findByKaleoDefinitionId_Last(long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Returns the last kaleo condition in the ordered set where kaleoDefinitionId = &#63;.
@@ -290,7 +291,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	public KaleoCondition[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoConditionId, long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Removes all the kaleo conditions where kaleoDefinitionId = &#63; from the database.
@@ -315,7 +316,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	* @throws NoSuchConditionException if a matching kaleo condition could not be found
 	*/
 	public KaleoCondition findByKaleoNodeId(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Returns the kaleo condition where kaleoNodeId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -342,7 +343,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	* @return the kaleo condition that was removed
 	*/
 	public KaleoCondition removeByKaleoNodeId(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Returns the number of kaleo conditions where kaleoNodeId = &#63;.
@@ -382,7 +383,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	* @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
 	*/
 	public KaleoCondition remove(long kaleoConditionId)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	public KaleoCondition updateImpl(KaleoCondition kaleoCondition);
 
@@ -394,7 +395,7 @@ public interface KaleoConditionPersistence extends BasePersistence<KaleoConditio
 	* @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
 	*/
 	public KaleoCondition findByPrimaryKey(long kaleoConditionId)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
+		throws NoSuchConditionException;
 
 	/**
 	* Returns the kaleo condition with the primary key or returns <code>null</code> if it could not be found.

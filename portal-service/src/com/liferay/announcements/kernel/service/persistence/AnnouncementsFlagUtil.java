@@ -267,7 +267,7 @@ public class AnnouncementsFlagUtil {
 	}
 
 	/**
-	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link com.liferay.portlet.announcements.exception.NoSuchFlagException} if it could not be found.
+	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link NoSuchFlagException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param entryId the entry ID

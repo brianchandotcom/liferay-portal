@@ -28,21 +28,71 @@ import javax.servlet.http.HttpSession;
  */
 public class RenderParametersPool {
 
-	public static void clear(HttpServletRequest request, long plid) {
-		Map<String, Map<String, String[]>> plidPool = get(request, plid);
+	public static Map<String, Map<String, String[]>> clear(
+		HttpServletRequest request, long plid) {
 
-		plidPool.clear();
+		HttpSession session = request.getSession();
+
+		if (plid <= 0) {
+			return null;
+		}
+
+		Map<Long, Map<String, Map<String, String[]>>> pool =
+			(Map<Long, Map<String, Map<String, String[]>>>)session.getAttribute(
+				WebKeys.PORTLET_RENDER_PARAMETERS);
+
+		if (pool == null) {
+			return null;
+		}
+
+		return pool.remove(plid);
 	}
 
-	public static void clear(
+	public static Map<String, String[]> clear(
 		HttpServletRequest request, long plid, String portletId) {
 
-		Map<String, String[]> params = get(request, plid, portletId);
+		Map<String, Map<String, String[]>> plidPool = clear(request, plid);
 
-		params.clear();
+		if (plidPool == null) {
+			return null;
+		}
+
+		return plidPool.remove(portletId);
 	}
 
 	public static Map<String, Map<String, String[]>> get(
+		HttpServletRequest request, long plid) {
+
+		HttpSession session = request.getSession();
+
+		if (plid <= 0) {
+			return null;
+		}
+
+		Map<Long, Map<String, Map<String, String[]>>> pool =
+			(Map<Long, Map<String, Map<String, String[]>>>)session.getAttribute(
+				WebKeys.PORTLET_RENDER_PARAMETERS);
+
+		if (pool == null) {
+			return null;
+		}
+
+		return pool.get(plid);
+	}
+
+	public static Map<String, String[]> get(
+		HttpServletRequest request, long plid, String portletId) {
+
+		Map<String, Map<String, String[]>> plidPool = get(request, plid);
+
+		if (plidPool == null) {
+			return null;
+		}
+
+		return plidPool.get(portletId);
+	}
+
+	public static Map<String, Map<String, String[]>> getOrCreate(
 		HttpServletRequest request, long plid) {
 
 		HttpSession session = request.getSession();
@@ -52,7 +102,7 @@ public class RenderParametersPool {
 		}
 
 		Map<Long, Map<String, Map<String, String[]>>> pool =
-			_getRenderParametersPool(session);
+			_getOrCreateRenderParametersPool(session);
 
 		Map<String, Map<String, String[]>> plidPool = pool.get(plid);
 
@@ -65,10 +115,11 @@ public class RenderParametersPool {
 		return plidPool;
 	}
 
-	public static Map<String, String[]> get(
+	public static Map<String, String[]> getOrCreate(
 		HttpServletRequest request, long plid, String portletId) {
 
-		Map<String, Map<String, String[]>> plidPool = get(request, plid);
+		Map<String, Map<String, String[]>> plidPool = getOrCreate(
+			request, plid);
 
 		Map<String, String[]> params = plidPool.get(portletId);
 
@@ -85,13 +136,18 @@ public class RenderParametersPool {
 		HttpServletRequest request, long plid, String portletId,
 		Map<String, String[]> params) {
 
-		Map<String, Map<String, String[]>> plidPool = get(request, plid);
+		if (params.isEmpty()) {
+			return;
+		}
+
+		Map<String, Map<String, String[]>> plidPool = getOrCreate(
+			request, plid);
 
 		plidPool.put(portletId, params);
 	}
 
 	private static Map<Long, Map<String, Map<String, String[]>>>
-		_getRenderParametersPool(HttpSession session) {
+		_getOrCreateRenderParametersPool(HttpSession session) {
 
 		Map<Long, Map<String, Map<String, String[]>>> renderParametersPool =
 			(Map<Long, Map<String, Map<String, String[]>>>)session.getAttribute(

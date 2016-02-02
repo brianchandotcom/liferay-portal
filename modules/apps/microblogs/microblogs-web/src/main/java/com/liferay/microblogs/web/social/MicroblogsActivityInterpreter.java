@@ -21,7 +21,9 @@ import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
@@ -60,6 +62,11 @@ public class MicroblogsActivityInterpreter
 		SocialActivity activity, ServiceContext serviceContext) {
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -124,5 +131,8 @@ public class MicroblogsActivityInterpreter
 		{MicroblogsEntry.class.getName()};
 
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private final ResourceBundleLoader _resourceBundleLoader =
+		new ClassResourceBundleLoader(
+			"content.Language", MicroblogsActivityInterpreter.class);
 
 }

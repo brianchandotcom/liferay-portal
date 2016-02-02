@@ -175,7 +175,7 @@ public class SetupWizardUtil {
 				defaultDriverClassName) &&
 			PropsValues.JDBC_DEFAULT_PASSWORD.equals(defaultPassword) &&
 			PropsValues.JDBC_DEFAULT_URL.equals(defaultURL) &&
-			PropsValues.JDBC_DEFAULT_USERNAME.equals(defaultUsername) ) {
+			PropsValues.JDBC_DEFAULT_USERNAME.equals(defaultUsername)) {
 
 			return true;
 		}

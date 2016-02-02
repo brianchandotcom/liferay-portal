@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.asset.exception.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
 
 /**
@@ -109,7 +110,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the first asset tag in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the last asset tag in the ordered set where uuid = &#63;.
@@ -154,7 +155,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag[] findByUuid_PrevAndNext(long tagId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Removes all the asset tags where uuid = &#63; from the database.
@@ -180,7 +181,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @throws NoSuchTagException if a matching asset tag could not be found
 	*/
 	public AssetTag findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the asset tag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -210,7 +211,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @return the asset tag that was removed
 	*/
 	public AssetTag removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the number of asset tags where uuid = &#63; and groupId = &#63;.
@@ -296,7 +297,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByUuid_C_First(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the first asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -320,7 +321,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByUuid_C_Last(java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the last asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -346,7 +347,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	public AssetTag[] findByUuid_C_PrevAndNext(long tagId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Removes all the asset tags where uuid = &#63; and companyId = &#63; from the database.
@@ -434,7 +435,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the first asset tag in the ordered set where groupId = &#63;.
@@ -456,7 +457,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the last asset tag in the ordered set where groupId = &#63;.
@@ -479,7 +480,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag[] findByGroupId_PrevAndNext(long tagId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns all the asset tags that the user has permission to view where groupId = &#63;.
@@ -532,7 +533,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag[] filterFindByGroupId_PrevAndNext(long tagId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns all the asset tags that the user has permission to view where groupId = any &#63;.
@@ -685,7 +686,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @throws NoSuchTagException if a matching asset tag could not be found
 	*/
 	public AssetTag findByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the asset tag where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -715,7 +716,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @return the asset tag that was removed
 	*/
 	public AssetTag removeByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the number of asset tags where groupId = &#63; and name = &#63;.
@@ -801,7 +802,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByG_LikeN_First(long groupId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the first asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -825,7 +826,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*/
 	public AssetTag findByG_LikeN_Last(long groupId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns the last asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -851,7 +852,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	public AssetTag[] findByG_LikeN_PrevAndNext(long tagId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns all the asset tags that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -910,7 +911,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	public AssetTag[] filterFindByG_LikeN_PrevAndNext(long tagId, long groupId,
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetTag> orderByComparator)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+		throws NoSuchTagException;
 
 	/**
 	* Returns all the asset tags that the user has permission to view where groupId = any &#63; and name LIKE &#63;.
@@ -1097,8 +1098,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @return the asset tag that was removed
 	* @throws NoSuchTagException if a asset tag with the primary key could not be found
 	*/
-	public AssetTag remove(long tagId)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+	public AssetTag remove(long tagId) throws NoSuchTagException;
 
 	public AssetTag updateImpl(AssetTag assetTag);
 
@@ -1109,8 +1109,7 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @return the asset tag
 	* @throws NoSuchTagException if a asset tag with the primary key could not be found
 	*/
-	public AssetTag findByPrimaryKey(long tagId)
-		throws com.liferay.portlet.asset.exception.NoSuchTagException;
+	public AssetTag findByPrimaryKey(long tagId) throws NoSuchTagException;
 
 	/**
 	* Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.

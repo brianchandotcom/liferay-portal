@@ -280,7 +280,7 @@ public class AssetPublisherConfigurationAction
 			defaultAssetTypeId = GetterUtil.getLong(classNameIds[0]);
 		}
 
-		if (defaultAssetTypeId <= 0 ) {
+		if (defaultAssetTypeId <= 0) {
 			return null;
 		}
 

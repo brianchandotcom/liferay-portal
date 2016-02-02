@@ -128,7 +128,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			final Locale locale)
 		throws PortalException {
 
-		if (getGroupId() == groupId ) {
+		if (getGroupId() == groupId) {
 			return getTitle(locale);
 		}
 

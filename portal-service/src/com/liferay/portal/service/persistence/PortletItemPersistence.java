@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchPortletItemException;
 import com.liferay.portal.model.PortletItem;
 
 /**
@@ -112,7 +113,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public PortletItem findByG_C_First(long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Returns the first portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -136,7 +137,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public PortletItem findByG_C_Last(long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -162,7 +163,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public PortletItem[] findByG_C_PrevAndNext(long portletItemId,
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Removes all the portlet items where groupId = &#63; and classNameId = &#63; from the database.
@@ -262,7 +263,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public PortletItem findByG_P_C_First(long groupId,
 		java.lang.String portletId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Returns the first portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -290,7 +291,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public PortletItem findByG_P_C_Last(long groupId,
 		java.lang.String portletId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -319,7 +320,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public PortletItem[] findByG_P_C_PrevAndNext(long portletItemId,
 		long groupId, java.lang.String portletId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<PortletItem> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Removes all the portlet items where groupId = &#63; and portletId = &#63; and classNameId = &#63; from the database.
@@ -354,7 +355,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public PortletItem findByG_N_P_C(long groupId, java.lang.String name,
 		java.lang.String portletId, long classNameId)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -392,7 +393,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public PortletItem removeByG_N_P_C(long groupId, java.lang.String name,
 		java.lang.String portletId, long classNameId)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Returns the number of portlet items where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -436,7 +437,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
 	*/
 	public PortletItem remove(long portletItemId)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	public PortletItem updateImpl(PortletItem portletItem);
 
@@ -448,7 +449,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
 	*/
 	public PortletItem findByPrimaryKey(long portletItemId)
-		throws com.liferay.portal.exception.NoSuchPortletItemException;
+		throws NoSuchPortletItemException;
 
 	/**
 	* Returns the portlet item with the primary key or returns <code>null</code> if it could not be found.

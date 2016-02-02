@@ -1,6 +1,7 @@
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:map:map-api")
+	compile project(":frontend:frontend-taglib")
 }
 
 liferay {

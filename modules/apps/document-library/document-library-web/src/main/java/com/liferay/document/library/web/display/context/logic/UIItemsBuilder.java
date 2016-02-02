@@ -757,7 +757,7 @@ public class UIItemsBuilder {
 
 	private <T extends JavaScriptUIItem> T _addJavaScriptUIItem(
 		T javascriptUIItem, List<? super T> javascriptUIItems, String key,
-		String label, String onClick ) {
+		String label, String onClick) {
 
 		javascriptUIItem.setKey(key);
 		javascriptUIItem.setLabel(label);
@@ -770,7 +770,7 @@ public class UIItemsBuilder {
 
 	private <T extends URLUIItem> T _addURLUIItem(
 		T urlUIItem, List<? super T> urlUIItems, String key, String label,
-		String url ) {
+		String url) {
 
 		urlUIItem.setKey(key);
 		urlUIItem.setLabel(label);

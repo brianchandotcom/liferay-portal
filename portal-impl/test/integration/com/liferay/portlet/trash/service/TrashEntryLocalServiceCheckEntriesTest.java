@@ -94,7 +94,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	public void testCompanies() throws Exception {
 		Long companyId = CompanyThreadLocal.getCompanyId();
 
-		for (int i = 0; i < _COMPANIES_COUNT; i++ ) {
+		for (int i = 0; i < _COMPANIES_COUNT; i++) {
 			long newCompanyId = createCompany();
 
 			CompanyThreadLocal.setCompanyId(newCompanyId);

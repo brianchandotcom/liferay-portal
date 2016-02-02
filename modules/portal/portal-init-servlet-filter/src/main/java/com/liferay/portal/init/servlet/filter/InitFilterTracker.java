@@ -24,6 +24,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Matthew Tambara
@@ -42,10 +43,17 @@ public class InitFilterTracker {
 		properties.put("servlet-filter-name", "Init Filter");
 		properties.put("url-pattern", "/c/*");
 
-		ServiceRegistration<Filter> serviceRegistration =
-			bundleContext.registerService(Filter.class, initFilter, properties);
+		_serviceRegistration = bundleContext.registerService(
+			Filter.class, initFilter, properties);
 
-		initFilter.setServiceRegistration(serviceRegistration);
+		initFilter.setServiceRegistration(_serviceRegistration);
 	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
+	private ServiceRegistration<Filter> _serviceRegistration;
 
 }

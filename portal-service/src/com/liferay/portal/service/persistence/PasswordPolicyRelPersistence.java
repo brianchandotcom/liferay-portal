@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.model.PasswordPolicyRel;
 
 /**
@@ -109,7 +110,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	public PasswordPolicyRel findByPasswordPolicyId_First(
 		long passwordPolicyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicyRel> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+		throws NoSuchPasswordPolicyRelException;
 
 	/**
 	* Returns the first password policy rel in the ordered set where passwordPolicyId = &#63;.
@@ -133,7 +134,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	public PasswordPolicyRel findByPasswordPolicyId_Last(
 		long passwordPolicyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicyRel> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+		throws NoSuchPasswordPolicyRelException;
 
 	/**
 	* Returns the last password policy rel in the ordered set where passwordPolicyId = &#63;.
@@ -158,7 +159,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	public PasswordPolicyRel[] findByPasswordPolicyId_PrevAndNext(
 		long passwordPolicyRelId, long passwordPolicyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PasswordPolicyRel> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+		throws NoSuchPasswordPolicyRelException;
 
 	/**
 	* Removes all the password policy rels where passwordPolicyId = &#63; from the database.
@@ -184,7 +185,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* @throws NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
 	*/
 	public PasswordPolicyRel findByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+		throws NoSuchPasswordPolicyRelException;
 
 	/**
 	* Returns the password policy rel where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -214,7 +215,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* @return the password policy rel that was removed
 	*/
 	public PasswordPolicyRel removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+		throws NoSuchPasswordPolicyRelException;
 
 	/**
 	* Returns the number of password policy rels where classNameId = &#63; and classPK = &#63;.
@@ -256,7 +257,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* @throws NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
 	*/
 	public PasswordPolicyRel remove(long passwordPolicyRelId)
-		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+		throws NoSuchPasswordPolicyRelException;
 
 	public PasswordPolicyRel updateImpl(PasswordPolicyRel passwordPolicyRel);
 
@@ -268,7 +269,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* @throws NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
 	*/
 	public PasswordPolicyRel findByPrimaryKey(long passwordPolicyRelId)
-		throws com.liferay.portal.exception.NoSuchPasswordPolicyRelException;
+		throws NoSuchPasswordPolicyRelException;
 
 	/**
 	* Returns the password policy rel with the primary key or returns <code>null</code> if it could not be found.

@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchCompanyException;
 import com.liferay.portal.model.Company;
 
 /**
@@ -46,7 +47,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
 	public Company findByWebId(java.lang.String webId)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+		throws NoSuchCompanyException;
 
 	/**
 	* Returns the company where webId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -73,7 +74,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the company that was removed
 	*/
 	public Company removeByWebId(java.lang.String webId)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+		throws NoSuchCompanyException;
 
 	/**
 	* Returns the number of companies where webId = &#63;.
@@ -90,8 +91,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the matching company
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public Company findByMx(java.lang.String mx)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+	public Company findByMx(java.lang.String mx) throws NoSuchCompanyException;
 
 	/**
 	* Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -117,7 +117,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the company that was removed
 	*/
 	public Company removeByMx(java.lang.String mx)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+		throws NoSuchCompanyException;
 
 	/**
 	* Returns the number of companies where mx = &#63;.
@@ -134,8 +134,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the matching company
 	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public Company findByLogoId(long logoId)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+	public Company findByLogoId(long logoId) throws NoSuchCompanyException;
 
 	/**
 	* Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -160,8 +159,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @param logoId the logo ID
 	* @return the company that was removed
 	*/
-	public Company removeByLogoId(long logoId)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+	public Company removeByLogoId(long logoId) throws NoSuchCompanyException;
 
 	/**
 	* Returns the number of companies where logoId = &#63;.
@@ -240,7 +238,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public Company findBySystem_First(boolean system,
 		com.liferay.portal.kernel.util.OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+		throws NoSuchCompanyException;
 
 	/**
 	* Returns the first company in the ordered set where system = &#63;.
@@ -262,7 +260,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public Company findBySystem_Last(boolean system,
 		com.liferay.portal.kernel.util.OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+		throws NoSuchCompanyException;
 
 	/**
 	* Returns the last company in the ordered set where system = &#63;.
@@ -285,7 +283,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public Company[] findBySystem_PrevAndNext(long companyId, boolean system,
 		com.liferay.portal.kernel.util.OrderByComparator<Company> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+		throws NoSuchCompanyException;
 
 	/**
 	* Removes all the companies where system = &#63; from the database.
@@ -331,8 +329,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the company that was removed
 	* @throws NoSuchCompanyException if a company with the primary key could not be found
 	*/
-	public Company remove(long companyId)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+	public Company remove(long companyId) throws NoSuchCompanyException;
 
 	public Company updateImpl(Company company);
 
@@ -344,7 +341,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @throws NoSuchCompanyException if a company with the primary key could not be found
 	*/
 	public Company findByPrimaryKey(long companyId)
-		throws com.liferay.portal.exception.NoSuchCompanyException;
+		throws NoSuchCompanyException;
 
 	/**
 	* Returns the company with the primary key or returns <code>null</code> if it could not be found.

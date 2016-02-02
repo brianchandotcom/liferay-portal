@@ -44,9 +44,11 @@ public class GroupByTest extends BaseGroupByTestCase {
 	}
 
 	@Override
-	protected IndexingFixture createIndexingFixture() throws Exception {
+	protected IndexingFixture createIndexingFixture(String indexName)
+		throws Exception {
+
 		return new ElasticsearchIndexingFixture(
-			GroupByTest.class.getSimpleName());
+			GroupByTest.class.getSimpleName(), indexName);
 	}
 
 }

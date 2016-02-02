@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.shopping.exception.NoSuchItemPriceException;
 import com.liferay.shopping.model.ShoppingItemPrice;
 
 /**
@@ -109,7 +110,7 @@ public interface ShoppingItemPricePersistence extends BasePersistence<ShoppingIt
 	*/
 	public ShoppingItemPrice findByItemId_First(long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemPrice> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchItemPriceException;
+		throws NoSuchItemPriceException;
 
 	/**
 	* Returns the first shopping item price in the ordered set where itemId = &#63;.
@@ -131,7 +132,7 @@ public interface ShoppingItemPricePersistence extends BasePersistence<ShoppingIt
 	*/
 	public ShoppingItemPrice findByItemId_Last(long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemPrice> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchItemPriceException;
+		throws NoSuchItemPriceException;
 
 	/**
 	* Returns the last shopping item price in the ordered set where itemId = &#63;.
@@ -155,7 +156,7 @@ public interface ShoppingItemPricePersistence extends BasePersistence<ShoppingIt
 	public ShoppingItemPrice[] findByItemId_PrevAndNext(long itemPriceId,
 		long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemPrice> orderByComparator)
-		throws com.liferay.shopping.exception.NoSuchItemPriceException;
+		throws NoSuchItemPriceException;
 
 	/**
 	* Removes all the shopping item prices where itemId = &#63; from the database.
@@ -203,7 +204,7 @@ public interface ShoppingItemPricePersistence extends BasePersistence<ShoppingIt
 	* @throws NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	*/
 	public ShoppingItemPrice remove(long itemPriceId)
-		throws com.liferay.shopping.exception.NoSuchItemPriceException;
+		throws NoSuchItemPriceException;
 
 	public ShoppingItemPrice updateImpl(ShoppingItemPrice shoppingItemPrice);
 
@@ -215,7 +216,7 @@ public interface ShoppingItemPricePersistence extends BasePersistence<ShoppingIt
 	* @throws NoSuchItemPriceException if a shopping item price with the primary key could not be found
 	*/
 	public ShoppingItemPrice findByPrimaryKey(long itemPriceId)
-		throws com.liferay.shopping.exception.NoSuchItemPriceException;
+		throws NoSuchItemPriceException;
 
 	/**
 	* Returns the shopping item price with the primary key or returns <code>null</code> if it could not be found.

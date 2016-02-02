@@ -17,7 +17,9 @@ package com.liferay.bookmarks.social;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
+import com.liferay.bookmarks.util.BookmarksResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
@@ -47,6 +49,11 @@ public class BookmarksFolderActivityInterpreter
 		SocialActivity activity, ServiceContext serviceContext) {
 
 		return "/bookmarks/find_folder?folderId=" + activity.getClassPK();
+	}
+
+	@Override
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		return BookmarksResourceBundleLoader.INSTANCE;
 	}
 
 	@Override

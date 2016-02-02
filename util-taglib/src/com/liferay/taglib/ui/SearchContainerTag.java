@@ -103,7 +103,9 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 				_searchContainer.setHeaderNames(_headerNames);
 			}
 
-			_searchContainer.setId(_id);
+			if (Validator.isNotNull(_id)) {
+				_searchContainer.setId(_id);
+			}
 
 			if (Validator.isNotNull(_orderByColParam)) {
 				_searchContainer.setOrderByColParam(_orderByColParam);

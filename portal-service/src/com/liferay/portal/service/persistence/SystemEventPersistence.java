@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchSystemEventException;
 import com.liferay.portal.model.SystemEvent;
 
 /**
@@ -107,7 +108,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*/
 	public SystemEvent findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the first system event in the ordered set where groupId = &#63;.
@@ -129,7 +130,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*/
 	public SystemEvent findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the last system event in the ordered set where groupId = &#63;.
@@ -153,7 +154,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent[] findByGroupId_PrevAndNext(long systemEventId,
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Removes all the system events where groupId = &#63; from the database.
@@ -245,7 +246,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*/
 	public SystemEvent findByG_S_First(long groupId, long systemEventSetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the first system event in the ordered set where groupId = &#63; and systemEventSetKey = &#63;.
@@ -269,7 +270,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*/
 	public SystemEvent findByG_S_Last(long groupId, long systemEventSetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the last system event in the ordered set where groupId = &#63; and systemEventSetKey = &#63;.
@@ -295,7 +296,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent[] findByG_S_PrevAndNext(long systemEventId,
 		long groupId, long systemEventSetKey,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Removes all the system events where groupId = &#63; and systemEventSetKey = &#63; from the database.
@@ -395,7 +396,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent findByG_C_C_First(long groupId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the first system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -423,7 +424,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent findByG_C_C_Last(long groupId, long classNameId,
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -452,7 +453,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent[] findByG_C_C_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Removes all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -559,7 +560,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent findByG_C_C_T_First(long groupId, long classNameId,
 		long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the first system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -589,7 +590,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent findByG_C_C_T_Last(long groupId, long classNameId,
 		long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the last system event in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -620,7 +621,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	public SystemEvent[] findByG_C_C_T_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK, int type,
 		com.liferay.portal.kernel.util.OrderByComparator<SystemEvent> orderByComparator)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Removes all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
@@ -675,7 +676,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	* @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	*/
 	public SystemEvent remove(long systemEventId)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	public SystemEvent updateImpl(SystemEvent systemEvent);
 
@@ -687,7 +688,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	* @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	*/
 	public SystemEvent findByPrimaryKey(long systemEventId)
-		throws com.liferay.portal.exception.NoSuchSystemEventException;
+		throws NoSuchSystemEventException;
 
 	/**
 	* Returns the system event with the primary key or returns <code>null</code> if it could not be found.

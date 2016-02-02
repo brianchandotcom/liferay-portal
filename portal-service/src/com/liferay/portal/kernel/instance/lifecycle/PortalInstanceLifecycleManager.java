@@ -21,6 +21,8 @@ import com.liferay.portal.model.Company;
  */
 public interface PortalInstanceLifecycleManager {
 
+	public void preregisterCompany(long companyId);
+
 	public void registerCompany(Company company);
 
 	public void unregisterCompany(Company company);

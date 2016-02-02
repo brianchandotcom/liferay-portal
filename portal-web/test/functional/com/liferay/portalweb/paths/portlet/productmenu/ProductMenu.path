@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIVATE_PAGE_LINK</td>
+	<td>//div[contains(@id,'layoutsTreeOutput')]//a[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRIVATE_PAGES</td>
 	<td>//*[@data-qa-id='goToPrivatePages']</td>
 	<td></td>

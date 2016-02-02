@@ -1890,7 +1890,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					extraDataJSONObject.put("title", message.getSubject());
 
-					if (!message.isDiscussion() ) {
+					if (!message.isDiscussion()) {
 						if (!message.isAnonymous() && !user.isDefaultUser()) {
 							long receiverUserId = 0;
 

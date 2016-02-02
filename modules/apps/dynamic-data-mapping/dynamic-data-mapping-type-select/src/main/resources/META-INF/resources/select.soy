@@ -12,7 +12,7 @@
  * @param readOnly
  * @param required
  * @param showLabel
- * @param tip 
+ * @param tip
  * @param strings
  * @param visible
  */
@@ -33,7 +33,7 @@
 				{/if}
 			{/if}
 
-			<select class="form-control" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" {$multiple}>
+			<select class="form-control" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" {$multiple} {if $multiple == 'multiple'}size="{length($options)}"{/if}>
 				{if not $readOnly}
 					<option dir="{$dir}" disabled selected value="">
 						{$strings.chooseAnOption}

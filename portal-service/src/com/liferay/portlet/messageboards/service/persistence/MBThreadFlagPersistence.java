@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
+import com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 
 /**
@@ -109,7 +110,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public MBThreadFlag findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63;.
@@ -131,7 +132,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public MBThreadFlag findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63;.
@@ -155,7 +156,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	public MBThreadFlag[] findByUuid_PrevAndNext(long threadFlagId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Removes all the message boards thread flags where uuid = &#63; from the database.
@@ -181,7 +182,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
 	public MBThreadFlag findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the message boards thread flag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -211,7 +212,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the message boards thread flag that was removed
 	*/
 	public MBThreadFlag removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the number of message boards thread flags where uuid = &#63; and groupId = &#63;.
@@ -298,7 +299,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	public MBThreadFlag findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,7 +325,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	public MBThreadFlag findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,7 +352,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	public MBThreadFlag[] findByUuid_C_PrevAndNext(long threadFlagId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Removes all the message boards thread flags where uuid = &#63; and companyId = &#63; from the database.
@@ -439,7 +440,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public MBThreadFlag findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where userId = &#63;.
@@ -461,7 +462,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public MBThreadFlag findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where userId = &#63;.
@@ -485,7 +486,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	public MBThreadFlag[] findByUserId_PrevAndNext(long threadFlagId,
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Removes all the message boards thread flags where userId = &#63; from the database.
@@ -571,7 +572,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public MBThreadFlag findByThreadId_First(long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the first message boards thread flag in the ordered set where threadId = &#63;.
@@ -593,7 +594,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	*/
 	public MBThreadFlag findByThreadId_Last(long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the last message boards thread flag in the ordered set where threadId = &#63;.
@@ -617,7 +618,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	public MBThreadFlag[] findByThreadId_PrevAndNext(long threadFlagId,
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag> orderByComparator)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Removes all the message boards thread flags where threadId = &#63; from the database.
@@ -643,7 +644,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	*/
 	public MBThreadFlag findByU_T(long userId, long threadId)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the message boards thread flag where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -673,7 +674,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the message boards thread flag that was removed
 	*/
 	public MBThreadFlag removeByU_T(long userId, long threadId)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the number of message boards thread flags where userId = &#63; and threadId = &#63;.
@@ -714,7 +715,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
 	public MBThreadFlag remove(long threadFlagId)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	public MBThreadFlag updateImpl(MBThreadFlag mbThreadFlag);
 
@@ -726,7 +727,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
 	*/
 	public MBThreadFlag findByPrimaryKey(long threadFlagId)
-		throws com.liferay.portlet.messageboards.exception.NoSuchThreadFlagException;
+		throws NoSuchThreadFlagException;
 
 	/**
 	* Returns the message boards thread flag with the primary key or returns <code>null</code> if it could not be found.

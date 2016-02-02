@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portal.struts.PortletLayoutFinder;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 

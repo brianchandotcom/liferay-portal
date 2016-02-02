@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Type Validation
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.validation
 Bundle-Version: 1.0.0
-Include-Resource: META-INF/resources/content=src/main/resources/content
 Liferay-JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

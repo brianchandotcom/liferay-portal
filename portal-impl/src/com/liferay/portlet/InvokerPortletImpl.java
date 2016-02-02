@@ -438,10 +438,7 @@ public class InvokerPortletImpl
 			((RenderResponseImpl)renderResponse).getProperties();
 
 		if (properties.containsKey("clear-request-parameters")) {
-			Map<String, String[]> renderParameters =
-				((RenderRequestImpl)renderRequest).getRenderParameters();
-
-			renderParameters.clear();
+			((RenderRequestImpl)renderRequest).clearRenderParameters();
 		}
 
 		if (_log.isDebugEnabled()) {

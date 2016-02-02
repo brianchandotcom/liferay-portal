@@ -83,7 +83,6 @@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.exception.DuplicateQueryRuleException" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
@@ -119,15 +118,13 @@ page import="java.util.Set" %>
 page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(request, portletPreferences);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);

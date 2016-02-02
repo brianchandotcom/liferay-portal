@@ -15,10 +15,10 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portal.struts.PortletLayoutFinder;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 

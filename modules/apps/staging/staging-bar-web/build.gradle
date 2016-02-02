@@ -16,6 +16,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:control-menu:control-menu-api")
 	compile project(":apps:staging:staging-lang")
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
 }
 

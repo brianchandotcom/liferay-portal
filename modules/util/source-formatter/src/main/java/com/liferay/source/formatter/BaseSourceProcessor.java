@@ -908,7 +908,39 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected String formatWhitespace(String line, String linePart) {
+	protected String formatWhitespace(String line, boolean javaSource) {
+		String trimmedLine = StringUtil.trimLeading(line);
+
+		line = formatWhitespace(line, trimmedLine, javaSource);
+
+		if (javaSource) {
+			return line;
+		}
+
+		Matcher matcher = javaSourceInsideJSPTagPattern.matcher(line);
+
+		while (matcher.find()) {
+			String linePart = matcher.group(1);
+
+			if (!linePart.startsWith(StringPool.SPACE)) {
+				return StringUtil.replace(
+					line, matcher.group(), "<%= " + linePart + "%>");
+			}
+
+			if (!linePart.endsWith(StringPool.SPACE)) {
+				return StringUtil.replace(
+					line, matcher.group(), "<%=" + linePart + " %>");
+			}
+
+			line = formatWhitespace(line, linePart, true);
+		}
+
+		return line;
+	}
+
+	protected String formatWhitespace(
+		String line, String linePart, boolean javaSource) {
+
 		String originalLinePart = linePart;
 
 		linePart = formatIncorrectSyntax(linePart, "catch(", "catch (", true);
@@ -919,9 +951,38 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		linePart = formatIncorrectSyntax(linePart, "List <", "List<", false);
 		linePart = formatIncorrectSyntax(linePart, "){", ") {", false);
 		linePart = formatIncorrectSyntax(linePart, "]{", "] {", false);
-		linePart = formatIncorrectSyntax(linePart, " [", "[", false);
-		linePart = formatIncorrectSyntax(linePart, "{ ", "{", false);
-		linePart = formatIncorrectSyntax(linePart, " }", "}", false);
+
+		if (javaSource) {
+			linePart = formatIncorrectSyntax(linePart, " [", "[", false);
+			linePart = formatIncorrectSyntax(linePart, "{ ", "{", false);
+			linePart = formatIncorrectSyntax(linePart, " }", "}", false);
+			linePart = formatIncorrectSyntax(linePart, " )", ")", false);
+			linePart = formatIncorrectSyntax(linePart, "( ", "(", false);
+		}
+
+		if (!linePart.startsWith("##")) {
+			for (int x = 0;;) {
+				x = linePart.indexOf(StringPool.DOUBLE_SPACE, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (ToolsUtil.isInsideQuotes(linePart, x)) {
+					continue;
+				}
+
+				linePart = StringUtil.replaceFirst(
+					linePart, StringPool.DOUBLE_SPACE, StringPool.SPACE, x);
+			}
+		}
+
+		if (!javaSource) {
+			line = StringUtil.replace(line, originalLinePart, linePart);
+
+			return formatIncorrectSyntax(
+				line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
+		}
 
 		for (int x = 0;;) {
 			x = linePart.indexOf(CharPool.EQUAL, x + 1);
@@ -960,21 +1021,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				linePart = StringUtil.replaceLast(
 					linePart, StringPool.TAB, StringPool.SPACE);
 			}
-		}
-
-		for (int x = 0;;) {
-			x = linePart.indexOf(StringPool.DOUBLE_SPACE, x + 1);
-
-			if (x == -1) {
-				break;
-			}
-
-			if (ToolsUtil.isInsideQuotes(linePart, x)) {
-				continue;
-			}
-
-			linePart = StringUtil.replaceFirst(
-				linePart, StringPool.DOUBLE_SPACE, StringPool.SPACE, x);
 		}
 
 		if (line.contains(StringPool.DOUBLE_SLASH)) {
@@ -1058,34 +1104,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return formatIncorrectSyntax(
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
-	}
-
-	protected String formatWhitespace(
-		String line, String trimmedLine, boolean javaSource) {
-
-		if (javaSource) {
-			return formatWhitespace(line, trimmedLine);
-		}
-
-		Matcher matcher = javaSourceInsideJSPTagPattern.matcher(line);
-
-		while (matcher.find()) {
-			String linePart = matcher.group(1);
-
-			if (!linePart.startsWith(StringPool.SPACE)) {
-				return StringUtil.replace(
-					line, matcher.group(), "<%= " + linePart + "%>");
-			}
-
-			if (!linePart.endsWith(StringPool.SPACE)) {
-				return StringUtil.replace(
-					line, matcher.group(), "<%=" + linePart + " %>");
-			}
-
-			line = formatWhitespace(line, linePart);
-		}
-
-		return line;
 	}
 
 	protected String getAbsolutePath(File file) throws Exception {

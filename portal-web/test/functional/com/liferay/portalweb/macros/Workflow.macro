@@ -1,18 +1,19 @@
 <definition>
-	<command name="_gotoCompletedFilter">
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Completed" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
-	</command>
-
 	<command name="_gotoPendingFilter">
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
 		<var name="key_filterValue" value="Pending" />
 
 		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
+	</command>
+
+	<command name="_openPreview">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" />
+			<then>
+				<execute function="Click" locator1="MyWorkflowTasksTask#PREVIEW" />
+			</then>
+		</if>
 	</command>
 
 	<command name="_tearDownWorkflow">
@@ -108,7 +109,7 @@
 		<if>
 			<isset var="workflowActivityComment" />
 			<then>
-				<execute macro="Workflow#_gotoCompletedFilter" />
+				<execute macro="Workflow#gotoCompletedFilter" />
 
 				<execute macro="Workflow#_viewActivities">
 					<var name="workflowActivityComment" value="${workflowActivityComment}" />
@@ -350,19 +351,37 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="gotoAssetViaTableTitle">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+	</command>
+
 	<command name="gotoAssignedToMyRoles">
 		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
 
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_ACTIVE" />
 	</command>
 
+	<command name="gotoCompletedFilter">
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Completed" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
+	</command>
+
 	<command name="gotoPreviewEdit">
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 	</command>
 
 	<command name="gotoPreviewView">
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" />
 	</command>
 
@@ -381,7 +400,7 @@
 	</command>
 
 	<command name="gotoViewCompletedAssetViaMySubmissions">
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -677,7 +696,7 @@
 	</command>
 
 	<command name="viewCannotWithdrawTaskByActions">
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -692,7 +711,7 @@
 	</command>
 
 	<command name="viewCompletedSubmission">
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -705,7 +724,7 @@
 	</command>
 
 	<command name="viewCompletedTask">
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
@@ -718,7 +737,7 @@
 	</command>
 
 	<command name="viewCompletedTasksTaskNotPresentCP">
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -738,7 +757,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publications requested by me." />
 
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publications requested by me." />
 	</command>
@@ -750,7 +769,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to you." />
 
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
 
@@ -762,7 +781,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to your roles." />
 
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
 	</command>
@@ -772,7 +791,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publication requests." />
 
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publication requests." />
 	</command>
@@ -809,6 +828,8 @@
 	</command>
 
 	<command name="viewMySubmissionsTaskPreview">
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW" value1="Preview of ${workflowAssetType}" />
 		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
@@ -829,6 +850,8 @@
 	</command>
 
 	<command name="viewPreviewCategories">
+		<execute macro="Workflow#_openPreview" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" />
 			<then>
@@ -906,6 +929,9 @@
 		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
+
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
 	</command>
@@ -935,6 +961,9 @@
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
+
+		<execute macro="Workflow#_openPreview" />
+
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 
@@ -997,7 +1026,7 @@
 	</command>
 
 	<command name="withdrawTaskCompletedNoByDetails">
-		<execute macro="Workflow#_gotoCompletedFilter" />
+		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 

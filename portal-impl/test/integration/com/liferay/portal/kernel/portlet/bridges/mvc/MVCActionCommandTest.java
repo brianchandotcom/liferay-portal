@@ -177,6 +177,11 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public Map<String, String[]> clearRenderParameters() {
+			return null;
+		}
+
+		@Override
 		public void defineObjects(
 			PortletConfig portletConfig, PortletResponse portletResponse) {
 		}
@@ -193,11 +198,6 @@ public class MVCActionCommandTest {
 
 		@Override
 		public String getPortletName() {
-			return null;
-		}
-
-		@Override
-		public Map<String, String[]> getRenderParameters() {
 			return null;
 		}
 

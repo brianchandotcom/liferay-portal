@@ -18,7 +18,6 @@ import com.liferay.calendar.exception.CalendarResourceCodeException;
 import com.liferay.calendar.exception.CalendarResourceNameException;
 import com.liferay.calendar.exception.DuplicateCalendarResourceException;
 import com.liferay.calendar.model.Calendar;
-import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarResourceLocalServiceBaseImpl;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
@@ -161,23 +160,9 @@ public class CalendarResourceLocalServiceImpl
 			calendarResource.getCalendarResourceId());
 
 		for (Calendar calendar : calendars) {
-			calendarPersistence.remove(calendar);
+			calendar.setDefaultCalendar(false);
 
-			resourceLocalService.deleteResource(
-				calendar, ResourceConstants.SCOPE_INDIVIDUAL);
-
-			calendarNotificationTemplateLocalService.
-				deleteCalendarNotificationTemplates(calendar.getCalendarId());
-		}
-
-		// Calendar bookings
-
-		List<CalendarBooking> calendarBookings =
-			calendarBookingPersistence.findByCalendarResourceId(
-				calendarResource.getCalendarResourceId());
-
-		for (CalendarBooking calendarBooking : calendarBookings) {
-			calendarBookingLocalService.deleteCalendarBooking(calendarBooking);
+			calendarLocalService.deleteCalendar(calendar);
 		}
 
 		return calendarResource;

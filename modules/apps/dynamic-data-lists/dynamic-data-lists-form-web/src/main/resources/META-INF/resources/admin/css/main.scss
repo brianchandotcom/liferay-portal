@@ -279,7 +279,7 @@ $horizontal-spacing: 35px;
 	}
 
 	.modal-title {
-		 text-transform: capitalize;
+		text-transform: capitalize;
 	}
 
 	@include lg {
@@ -547,6 +547,16 @@ $horizontal-spacing: 35px;
 	}
 }
 
+.portal-popup {
+	.portlet-layout {
+		margin: 0 0 75px;
+	}
+
+	.portlet-column {
+		padding: 0;
+	}
+}
+
 .portlet-forms {
 	.aspect-ratio img {
 		top: 0;
@@ -740,6 +750,7 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-page-header {
+		padding-right: 34px;
 		position: relative;
 	}
 
@@ -810,6 +821,10 @@ $horizontal-spacing: 35px;
 		> li {
 			cursor: pointer;
 		}
+	}
+
+	select.form-control[multiple] {
+		height: auto;
 	}
 
 	.toggle-switch {

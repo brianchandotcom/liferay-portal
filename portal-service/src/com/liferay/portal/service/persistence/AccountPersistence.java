@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.exception.NoSuchAccountException;
 import com.liferay.portal.model.Account;
 
 /**
@@ -67,8 +68,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @return the account that was removed
 	* @throws NoSuchAccountException if a account with the primary key could not be found
 	*/
-	public Account remove(long accountId)
-		throws com.liferay.portal.exception.NoSuchAccountException;
+	public Account remove(long accountId) throws NoSuchAccountException;
 
 	public Account updateImpl(Account account);
 
@@ -80,7 +80,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @throws NoSuchAccountException if a account with the primary key could not be found
 	*/
 	public Account findByPrimaryKey(long accountId)
-		throws com.liferay.portal.exception.NoSuchAccountException;
+		throws NoSuchAccountException;
 
 	/**
 	* Returns the account with the primary key or returns <code>null</code> if it could not be found.

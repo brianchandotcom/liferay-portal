@@ -258,6 +258,22 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			}
 		</#if>
 
+		<#if entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date") && (column.name == "modifiedDate")>
+			@Override
+			public boolean hasSetModifiedDate() {
+				try {
+					Class<?> clazz = _${entity.varName}RemoteModel.getClass();
+
+					Method method = clazz.getMethod("hasSetModifiedDate");
+
+					return (boolean)method.invoke(null);
+				}
+				catch (Exception e) {
+					throw new UnsupportedOperationException(e);
+				}
+			}
+		</#if>
+
 		@Override
 		public void set${column.methodName}(${column.genericizedType} ${column.name}) {
 			_${column.name} = ${column.name};

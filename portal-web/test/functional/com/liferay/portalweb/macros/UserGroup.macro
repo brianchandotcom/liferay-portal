@@ -91,7 +91,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="Click" locator1="Button#ADD_PAGE" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#PAGE_NAME_FIELD" value1="${sitePageName}" />
 

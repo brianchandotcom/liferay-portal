@@ -18,6 +18,7 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.journal.model.JournalArticleDisplay" %>
@@ -25,9 +26,8 @@
 <%@ page import="com.liferay.portal.kernel.util.Constants" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import="com.liferay.portlet.PortletURLUtil" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<liferay-frontend:defineObjects />
 
 <portlet:defineObjects />
 
@@ -41,10 +41,6 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 
 	<%
 	String[] availableLocales = articleDisplay.getAvailableLocales();
-
-	PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-	String currentURL = currentURLObj.toString();
 	%>
 
 	<c:if test="<%= availableLocales.length > 1 %>">

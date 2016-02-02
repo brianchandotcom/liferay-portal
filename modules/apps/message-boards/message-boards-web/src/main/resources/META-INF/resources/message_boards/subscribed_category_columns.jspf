@@ -19,7 +19,7 @@
 <%
 StringBundler sb = new StringBundler();
 
-_buildCategoryBreadcrumb(request, curCategory, sb);
+_buildCategoryBreadcrumb(request, themeDisplay, curCategory, sb);
 %>
 
 <%= sb.toString() %>
@@ -47,9 +47,7 @@ _buildCategoryBreadcrumb(request, curCategory, sb);
 <%@ include file="/message_boards/subscribed_category_columns_action.jspf" %>
 
 <%!
-private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory category, StringBundler sb) throws Exception {
-	ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-
+private void _buildCategoryBreadcrumb(HttpServletRequest request, ThemeDisplay themeDisplay, MBCategory category, StringBundler sb) throws Exception {
 	List<MBCategory> ancestorCategories = category.getAncestors();
 
 	Collections.reverse(ancestorCategories);

@@ -1,0 +1,23 @@
+configurations {
+	compile {
+		transitive = false
+	}
+}
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.google.guava", name: "guava", version: "12.0.1"
+	provided group: "com.google.template", name: "soy", version: "2012-12-21"
+	// @formatter:off
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	// @formatter:on
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":portal:portal-metatype")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

@@ -939,7 +939,7 @@ public class SitesImpl implements Sites {
 		Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		if ((firstLayout != null) && (firstLayout.getLayoutId() == layoutId )) {
+		if ((firstLayout != null) && (firstLayout.getLayoutId() == layoutId)) {
 			return true;
 		}
 

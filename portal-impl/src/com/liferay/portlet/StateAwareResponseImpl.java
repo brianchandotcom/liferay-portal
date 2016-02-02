@@ -346,7 +346,7 @@ public abstract class StateAwareResponseImpl
 	private PortletMode _portletMode;
 	private String _portletName;
 	private PortletRequestImpl _portletRequestImpl;
-	private PublicRenderParameters _publicRenderParameters;
+	private Map<String, String[]> _publicRenderParameters;
 	private String _redirectLocation;
 	private User _user;
 	private WindowState _windowState;

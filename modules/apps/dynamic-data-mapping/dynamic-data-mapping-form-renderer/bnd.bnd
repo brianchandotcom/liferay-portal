@@ -2,7 +2,6 @@ Bundle-Name: Liferay Dynamic Data Mapping Form Renderer
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.renderer
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.dynamic.data.mapping.form.renderer
-Include-Resource: META-INF/resources/content=src/main/resources/content
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

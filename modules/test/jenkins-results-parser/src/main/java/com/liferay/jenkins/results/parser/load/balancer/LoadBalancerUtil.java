@@ -61,6 +61,12 @@ public class LoadBalancerUtil {
 	public static String getMostAvailableMasterURL(Properties properties)
 		throws Exception {
 
+		long start = System.currentTimeMillis();
+
+		System.out.println("Get most available master URL for properties:");
+
+		properties.list(System.out);
+
 		boolean readOnly = false;
 		int retryCount = 0;
 
@@ -208,40 +214,64 @@ public class LoadBalancerUtil {
 					File semaphoreFile = new File(
 						baseDir, hostNamePrefix + ".semaphore");
 
-					if (recentJobPeriod > 0) {
-						StringBuilder sb = new StringBuilder();
+					long age =
+						System.currentTimeMillis() -
+							semaphoreFile.lastModified();
 
-						File recentJobFile = new File(
-							baseDir, "recentJob/" + hostNames.get(x));
+					System.out.println(
+						"Semaphore " + semaphoreFile + " was last modified " +
+							(age / 1000F) + " seconds ago.");
 
-						if (recentJobFile.exists()) {
-							sb.append(
-								JenkinsResultsParserUtil.read(recentJobFile));
+					String content = JenkinsResultsParserUtil.read(
+						semaphoreFile);
 
-							if (sb.length() > 0) {
-								sb.append("|");
+					if (content.equals(_MY_HOST_NAME)) {
+						if (recentJobPeriod > 0) {
+							StringBuilder sb = new StringBuilder();
+
+							File recentJobFile = new File(
+								baseDir, "recentJob/" + hostNames.get(x));
+
+							if (recentJobFile.exists()) {
+								sb.append(
+									JenkinsResultsParserUtil.read(
+										recentJobFile));
+
+								if (sb.length() > 0) {
+									sb.append("|");
+								}
 							}
+
+							String invokedJobBatchSize = properties.getProperty(
+								"invoked.job.batch.size");
+
+							if ((invokedJobBatchSize == null) ||
+								(invokedJobBatchSize.length() == 0)) {
+
+								invokedJobBatchSize = "1";
+							}
+
+							sb.append(invokedJobBatchSize);
+							sb.append("-");
+							sb.append(System.currentTimeMillis());
+
+							JenkinsResultsParserUtil.write(
+								recentJobFile, sb.toString());
 						}
 
-						String invokedJobBatchSize = properties.getProperty(
-							"invoked.job.batch.size");
-
-						if ((invokedJobBatchSize == null) ||
-							(invokedJobBatchSize.length() == 0)) {
-
-							invokedJobBatchSize = "1";
-						}
-
-						sb.append(invokedJobBatchSize);
-						sb.append("-");
-						sb.append(System.currentTimeMillis());
-
-						JenkinsResultsParserUtil.write(
-							recentJobFile, sb.toString());
+						JenkinsResultsParserUtil.write(semaphoreFile, "");
 					}
-
-					JenkinsResultsParserUtil.write(semaphoreFile, "");
+					else {
+						System.out.println(
+							"Sempahore " + semaphoreFile +
+								" was overwritten with: " + content);
+					}
 				}
+
+				System.out.println(
+					"Got most available master URL in " +
+						((System.currentTimeMillis() - start) / 1000F) +
+							" seconds.");
 			}
 		}
 	}
@@ -290,6 +320,8 @@ public class LoadBalancerUtil {
 	protected static List<String> getBlacklist(Properties properties) {
 		String blacklistString = properties.getProperty(
 			"jenkins.load.balancer.blacklist", "");
+
+		System.out.println("Blacklist: " + blacklistString);
 
 		if (blacklistString.isEmpty()) {
 			return Collections.emptyList();
@@ -341,6 +373,9 @@ public class LoadBalancerUtil {
 				i++;
 				continue;
 			}
+
+			System.out.println("Host name prefix: " + hostNamePrefix);
+			System.out.println("Host names: " + hostNames);
 
 			return hostNames;
 		}
@@ -447,22 +482,39 @@ public class LoadBalancerUtil {
 	protected static void waitForTurn(File file, int hostNameCount)
 		throws Exception {
 
-		while (true) {
-			if (!file.exists()) {
-				JenkinsResultsParserUtil.write(file, "");
+		long start = System.currentTimeMillis();
+
+		try {
+			while (true) {
+				if (!file.exists()) {
+					JenkinsResultsParserUtil.write(file, "");
+
+					return;
+				}
+
+				long age = System.currentTimeMillis() - file.lastModified();
+				String content = JenkinsResultsParserUtil.read(file);
+
+				if (content.length() > 0) {
+					if (age < _MAX_AGE) {
+						Thread.sleep(1000);
+
+						continue;
+					}
+					else {
+						System.out.println(
+							"Sempahore file " + file + " timed out: " +
+								content);
+					}
+				}
+
 				return;
 			}
-
-			long age = System.currentTimeMillis() - file.lastModified();
-			String content = JenkinsResultsParserUtil.read(file);
-
-			if ((age < _MAX_AGE) && (content.length() > 0)) {
-				Thread.sleep(1000);
-
-				continue;
-			}
-
-			return;
+		}
+		finally {
+			System.out.println(
+				"Waited " + ((System.currentTimeMillis() - start) / 1000F) +
+					" seconds.");
 		}
 	}
 
@@ -496,6 +548,8 @@ public class LoadBalancerUtil {
 
 		@Override
 		public Integer call() throws Exception {
+			long start = System.currentTimeMillis();
+
 			JSONObject computerJSONObject = null;
 			JSONObject queueJSONObject = null;
 
@@ -568,6 +622,9 @@ public class LoadBalancerUtil {
 
 			sb.append("{available=");
 			sb.append(availableSlaveCount);
+			sb.append(", duration=");
+			sb.append(System.currentTimeMillis() - start);
+			sb.append("ms");
 			sb.append(", idle=");
 			sb.append(idleCount);
 			sb.append(", queue=");

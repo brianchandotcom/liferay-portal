@@ -95,7 +95,7 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
 	@Override
 	protected void initializeConnectionPool() {
-		if (getPoolName() == null ) {
+		if (getPoolName() == null) {
 			_initializationFailed = true;
 
 			return;

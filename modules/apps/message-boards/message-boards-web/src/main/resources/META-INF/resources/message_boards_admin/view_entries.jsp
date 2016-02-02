@@ -125,12 +125,12 @@ if (groupThreadsUserId > 0) {
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 							<h4>
 								<aui:a href="<%= rowURL.toString() %>">
-									<%= HtmlUtil.escape(curCategory.getName()) %>
+									<%= curCategory.getName() %>
 								</aui:a>
 							</h4>
 
 							<h5 class="text-default">
-								<%= HtmlUtil.escape(curCategory.getDescription()) %>
+								<%= curCategory.getDescription() %>
 							</h5>
 
 							<%

@@ -909,7 +909,7 @@ public class PoshiRunnerExecutor {
 						varValue = liferaySelenium.getElementValue(locator);
 					}
 					else {
-						varValue = liferaySelenium.getElementText(locator);
+						varValue = liferaySelenium.getText(locator);
 					}
 				}
 				catch (Exception e) {

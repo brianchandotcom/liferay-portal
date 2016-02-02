@@ -42,12 +42,20 @@ portletURL.setParameter("app", app);
 portletURL.setParameter("state", state);
 portletURL.setParameter("orderByType", orderByType);
 
+portletDisplay.setShowBackIcon(true);
+
+PortletURL backURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/view.jsp");
+
+portletDisplay.setURLBack(backURL.toString());
+
 renderResponse.setTitle(appDisplay.getTitle());
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderResponse);
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewURL">
 			<portlet:param name="mvcPath" value="/view_module_groups.jsp" />
@@ -59,6 +67,18 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 			selected="<%= true %>"
 		/>
 	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcPath" value="/view_search_results.jsp" />
+		</liferay-portlet:renderURL>
+
+		<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
@@ -125,45 +145,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 			className="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay"
 			modelVar="moduleGroupDisplay"
 		>
-			<liferay-ui:search-container-column-text>
-				<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#module-groups" %>' />
-				</liferay-util:include>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-				<h5>
-					<a href="<%= HtmlUtil.escapeHREF(moduleGroupDisplay.getDisplayURL(renderResponse)) %>">
-						<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getTitle()) %>
-					</a>
-				</h5>
-
-				<h6 class="text-default">
-					<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getDescription()) %>
-				</h6>
-
-				<div class="additional-info text-default">
-					<div class="additional-info-item">
-						<strong>
-							<liferay-ui:message key="version" />:
-						</strong>
-
-						<%= moduleGroupDisplay.getVersion() %>
-					</div>
-
-					<div class="additional-info-item">
-						<strong>
-							<liferay-ui:message key="status" />:
-						</strong>
-
-						<liferay-ui:message key="<%= BundleStateConstants.getLabel(moduleGroupDisplay.getState()) %>" />
-					</div>
-				</div>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-jsp
-				path="/module_group_display_action.jsp"
-			/>
+			<%@ include file="/module_group_display_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />

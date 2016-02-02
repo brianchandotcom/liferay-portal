@@ -11,6 +11,7 @@
  * @param showAsSwitcher
  * @param showLabel
  * @param status
+ * @param tip
  * @param visible
  */
 {template .checkbox}
@@ -31,6 +32,10 @@
 						{/if}
 					</span>
 				</label>
+
+				{if $tip}
+					<p class="liferay-ddm-form-field-tip">{$tip}</p>
+				{/if}
 			</div>
 		{else}
 			<div class="checkbox checkbox-default">
@@ -45,6 +50,10 @@
 							<b>*</b>
 						{/if}
 					</label>
+
+					{if $tip}
+						<p class="liferay-ddm-form-field-tip">{$tip}</p>
+					{/if}
 				{/if}
 			</div>
 		{/if}

@@ -17,7 +17,6 @@
 <liferay-ui:organization-search-container-results
 	organizationParams="<%= organizationParams %>"
 	parentOrganizationId="<%= OrganizationConstants.ANY_PARENT_ORGANIZATION_ID %>"
-	useIndexer="<%= false %>"
 />
 
 <liferay-ui:search-container-row

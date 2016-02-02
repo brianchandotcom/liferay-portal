@@ -77,7 +77,7 @@ public class WorkflowInstanceViewDisplayContext
 		setSearchContainerEmptyResultsMessage(_searchContainer);
 	}
 
-	public String getAssetIconCssClass( WorkflowInstance workflowInstance)
+	public String getAssetIconCssClass(WorkflowInstance workflowInstance)
 		throws PortalException {
 
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler(

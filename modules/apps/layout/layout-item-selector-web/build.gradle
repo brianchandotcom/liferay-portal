@@ -3,6 +3,7 @@ dependencies {
 	compile project(":apps:item-selector:item-selector-criteria-api")
 	compile project(":apps:layout:layout-item-selector-api")
 	compile project(":apps:layout:layout-taglib")
+	compile project(":frontend:frontend-taglib")
 }
 
 liferay {

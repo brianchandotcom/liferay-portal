@@ -13,10 +13,9 @@
 
 		<var name="key_page" value="${sitePageName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
+		<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#ADD_PAGE_ICON" />
 
 		<execute function="Pause" locator1="3000" />
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${siteChildPageName}" />
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />

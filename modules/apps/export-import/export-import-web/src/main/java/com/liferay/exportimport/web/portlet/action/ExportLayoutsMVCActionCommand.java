@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -101,23 +100,25 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "privateLayout");
 			long[] layoutIds = getLayoutIds(actionRequest);
 
-			String taskName = StringPool.BLANK;
-
-			if (privateLayout) {
-				taskName = LanguageUtil.get(
-					actionRequest.getLocale(), "private-pages");
-			}
-			else {
-				taskName = LanguageUtil.get(
-					actionRequest.getLocale(), "public-pages");
-			}
-
 			Map<String, Serializable> exportLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
 						themeDisplay.getUserId(), groupId, privateLayout,
 						layoutIds, actionRequest.getParameterMap(),
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+			String taskName = ParamUtil.getString(actionRequest, "name");
+
+			if (Validator.isNull(taskName)) {
+				if (privateLayout) {
+					taskName = LanguageUtil.get(
+						actionRequest.getLocale(), "private-pages");
+				}
+				else {
+					taskName = LanguageUtil.get(
+						actionRequest.getLocale(), "public-pages");
+				}
+			}
 
 			ExportImportConfiguration exportImportConfiguration =
 				_exportImportConfigurationLocalService.

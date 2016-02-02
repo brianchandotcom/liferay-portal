@@ -26,6 +26,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -70,7 +71,7 @@ public class TrackbackImpl implements Trackback {
 		_linkbackConsumer = linkbackConsumer;
 	}
 
-	protected String buildBody(
+	protected String buildBBCodeBody(
 		ThemeDisplay themeDisplay, String excerpt, String url) {
 
 		url = StringUtil.replace(
@@ -91,6 +92,16 @@ public class TrackbackImpl implements Trackback {
 		return sb.toString();
 	}
 
+	protected String buildBody(
+		ThemeDisplay themeDisplay, String excerpt, String url) {
+
+		if (PropsValues.DISCUSSION_COMMENTS_FORMAT.equals("bbcode")) {
+			return buildBBCodeBody(themeDisplay, excerpt, url);
+		}
+
+		return buildHTMLBody(themeDisplay, excerpt, url);
+	}
+
 	protected String buildEntryURL(BlogsEntry entry, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -100,6 +111,22 @@ public class TrackbackImpl implements Trackback {
 		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
 		sb.append("blogs/");
 		sb.append(entry.getUrlTitle());
+
+		return sb.toString();
+	}
+
+	protected String buildHTMLBody(
+		ThemeDisplay themeDisplay, String excerpt, String url) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("[...] ");
+		sb.append(excerpt);
+		sb.append(" [...] <a href='");
+		sb.append(url);
+		sb.append("'>");
+		sb.append(themeDisplay.translate("read-more"));
+		sb.append("</a>");
 
 		return sb.toString();
 	}

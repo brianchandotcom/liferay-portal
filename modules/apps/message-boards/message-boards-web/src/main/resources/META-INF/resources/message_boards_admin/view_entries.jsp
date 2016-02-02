@@ -235,6 +235,10 @@ if (groupThreadsUserId > 0) {
 									<liferay-ui:message key="locked" />
 								</span>
 							</c:if>
+
+							<h5 class="text-default">
+								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+							</h5>
 						</liferay-ui:search-container-column-text>
 
 						<%

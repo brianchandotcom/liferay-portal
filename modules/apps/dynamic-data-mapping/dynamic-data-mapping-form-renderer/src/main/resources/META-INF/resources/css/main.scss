@@ -9,7 +9,7 @@
 		font-size: inherit;
 	}
 
-	.required-warning{
+	.required-warning {
 		margin-bottom: 25px;
 
 		.icon-asterisk {
@@ -110,5 +110,9 @@
 	.lfr-ddm-form-page-title {
 		padding-left: $side-spacing;
 		padding-right: $side-spacing;
+	}
+
+	.required-warning {
+		margin: 0 0 25px 35px;
 	}
 }

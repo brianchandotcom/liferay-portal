@@ -309,6 +309,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	private void _updateCache(
 		String templateId, TemplateResource templateResource) {
 
+		if (!(templateResource instanceof CacheTemplateResource)) {
+			return;
+		}
+
 		if (templateResource == null) {
 			_singleVMPortalCache.put(
 				templateId, new NullHolderTemplateResource());

@@ -25,14 +25,12 @@ import com.liferay.portal.search.solr.http.HttpClientFactory;
 
 import java.io.IOException;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.solr.client.solrj.SolrClient;
 
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -56,7 +54,7 @@ public class SolrClientManager {
 
 	@Activate
 	@Modified
-	protected synchronized void activate(ComponentContext componentContext)
+	protected synchronized void activate(Map<String, Object> properties)
 		throws Exception {
 
 		if (_solrClient != null) {
@@ -69,9 +67,6 @@ public class SolrClientManager {
 				}
 			}
 		}
-
-		Dictionary<String, Object> properties =
-			componentContext.getProperties();
 
 		_solrConfiguration = Configurable.createConfigurable(
 			SolrConfiguration.class, properties);

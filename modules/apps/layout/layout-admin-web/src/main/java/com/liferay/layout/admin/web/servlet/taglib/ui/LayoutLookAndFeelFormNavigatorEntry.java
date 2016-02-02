@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
@@ -25,11 +26,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = {"service.ranking:Integer=70"},
+	property = {"service.ranking:Integer=100"},
 	service = FormNavigatorEntry.class
 )
 public class LayoutLookAndFeelFormNavigatorEntry
 	extends BaseLayoutFormNavigatorEntry {
+
+	@Override
+	public String getCategoryKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_LOOK_AND_FEEL;
+	}
 
 	@Override
 	public String getKey() {

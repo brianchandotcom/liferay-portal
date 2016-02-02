@@ -592,12 +592,6 @@ $horizontal-spacing: 35px;
 		font-size: 14px;
 	}
 
-	.form-builder-field-list-empty .form-builder-field-move-target {
-		margin-top: 0;
-		padding: 37px 0 36px 0;
-		position: static;
-	}
-
 	.form-group {
 		margin: 0;
 
@@ -679,6 +673,15 @@ $horizontal-spacing: 35px;
 		width: 100%;
 	}
 
+	.form-builder-field-list-add-button-icon {
+		position: relative;
+
+		.lexicon-icon {
+			height: 10px;
+			width: 10px;
+		}
+	}
+
 	.form-builder-field-list-add-button-label {
 		color: #4A90E2;
 	}
@@ -689,9 +692,33 @@ $horizontal-spacing: 35px;
 		margin-top: -7px;
 	}
 
-	.form-builder-field-list-empty .form-builder-field-list-add-container,
-	.form-builder-field-list-empty .form-builder-field-move-target {
-		margin-top: 0;
+	.form-builder-field-list-empty {
+		.form-builder-field-list-add-button-icon {
+			margin-top: 5px;
+
+			.lexicon-icon {
+				height: 16px;
+				width: 16px;
+			}
+		}
+
+		.form-builder-field-list-add-button-label {
+			padding-top: 0;
+		}
+
+		.form-builder-field-list-add-container {
+			margin-top: 0;
+		}
+
+		.form-builder-field-list-container {
+			padding: 23px 0;
+		}
+
+		.form-builder-field-move-target {
+			margin-top: 0;
+			padding: 37px 0 36px 0;
+			position: static;
+		}
 	}
 
 	.form-builder-header {
@@ -705,10 +732,6 @@ $horizontal-spacing: 35px;
 	.form-builder-layout {
 		margin: 0 auto;
 		width: auto;
-
-		.form-builder-field-list-empty .form-builder-field-list-container {
-			padding: 23px 0;
-		}
 
 		.layout-builder-add-row-area {
 			margin: 0;

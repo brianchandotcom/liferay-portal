@@ -39,6 +39,7 @@ import java.util.jar.Manifest;
 
 /**
  * @author Miguel Pastor
+ * @author Manuel de la Peña
  */
 public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
@@ -56,7 +57,7 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isModule(file)) {
+		if (!isDeployable(file)) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 
@@ -73,6 +74,11 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		return isModule(file);
 	}
 
 	protected boolean isModule(File file) throws AutoDeployException {

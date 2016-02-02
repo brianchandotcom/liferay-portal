@@ -25,6 +25,7 @@ import java.io.File;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
 public class HookAutoDeployListener extends BaseAutoDeployListener {
 
@@ -38,14 +39,11 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!pluginAutoDeployListenerHelper.isHookPlugin()) {
+		if (!isDeployable(file)) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 
@@ -62,6 +60,14 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
+		return pluginAutoDeployListenerHelper.isHookPlugin();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

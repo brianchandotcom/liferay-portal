@@ -25,6 +25,7 @@ import java.io.File;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
 public class ExtAutoDeployListener extends BaseAutoDeployListener {
 
@@ -42,10 +43,7 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
-			new PluginAutoDeployListenerHelper(file);
-
-		if (!pluginAutoDeployListenerHelper.isExtPlugin()) {
+		if (!isDeployable(file)) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 
@@ -64,6 +62,14 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected boolean isDeployable(File file) throws AutoDeployException {
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
+		return pluginAutoDeployListenerHelper.isExtPlugin();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

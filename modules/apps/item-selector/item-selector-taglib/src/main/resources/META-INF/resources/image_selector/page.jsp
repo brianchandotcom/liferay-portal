@@ -48,7 +48,7 @@ if (fileEntryId != 0) {
 	</div>
 
 	<liferay-util:buffer var="selectFileLink">
-		<a class="browse-image btn btn-primary" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="select-file" /></a>
+		<a class="browse-image btn btn-default" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="select-file" /></a>
 	</liferay-util:buffer>
 
 	<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">

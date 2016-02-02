@@ -1,7 +1,7 @@
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
-	compile project(":portal:portal-metatype")
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided project(":portal:portal-metatype")
 
 	provided group: "com.carrotsearch", name: "hppc", transitive: false, version: "0.7.1"
 	provided group: "com.fasterxml.jackson.core", name: "jackson-core", transitive: false, version: "2.5.3"

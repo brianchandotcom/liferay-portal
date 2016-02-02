@@ -78,9 +78,9 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" placeholder="name" />
 
-			<aui:input name="description" />
+			<aui:input name="description" placeholder="description" />
 
 			<aui:input name="active" type="toggle-switch" value="<%= layoutSetPrototype.isActive() %>" />
 

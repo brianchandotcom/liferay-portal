@@ -417,6 +417,7 @@ if (hints != null) {
 								languageId="<%= languageId %>"
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
+								placeholder="<%= placeholder %>"
 								style='<%= (upperCase ? "text-transform: uppercase;" : "") %>'
 								type="editor"
 								xml="<%= xml %>"
@@ -429,6 +430,7 @@ if (hints != null) {
 								cssClass="<%= cssClass %>"
 								editorName="ckeditor"
 								name="<%= fieldParam %>"
+								placeholder="<%= placeholder %>"
 								toolbarSet="simple"
 							/>
 						</c:otherwise>
@@ -460,6 +462,7 @@ if (hints != null) {
 								languageId="<%= languageId %>"
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
+								placeholder="<%= placeholder %>"
 								style='<%= (upperCase ? "text-transform: uppercase;" : "") %>'
 								xml="<%= xml %>"
 							/>
@@ -486,6 +489,7 @@ if (hints != null) {
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
 								onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : StringPool.BLANK) + "Liferay.Util.disableEsc();" %>'
+								placeholder="<%= placeholder %>"
 								style='<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>'
 								type="textarea"
 								wrap="soft"

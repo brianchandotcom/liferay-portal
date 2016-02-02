@@ -956,6 +956,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			linePart = formatIncorrectSyntax(linePart, " [", "[", false);
 			linePart = formatIncorrectSyntax(linePart, "{ ", "{", false);
 			linePart = formatIncorrectSyntax(linePart, " }", "}", false);
+			linePart = formatIncorrectSyntax(linePart, " )", ")", false);
+			linePart = formatIncorrectSyntax(linePart, "( ", "(", false);
 		}
 
 		if (!linePart.startsWith("##")) {

@@ -68,7 +68,7 @@ public class AmazonRankingsPreferencesValidator
 				badIsbns.add(isbn);
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Invalid ISBN " + isbn);
+					_log.info("Invalid ISBN: " + isbn);
 				}
 
 				continue;
@@ -82,7 +82,7 @@ public class AmazonRankingsPreferencesValidator
 				badIsbns.add(isbn);
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Invalid ISBN " + isbn);
+					_log.info("Invalid ISBN: " + isbn);
 				}
 			}
 		}

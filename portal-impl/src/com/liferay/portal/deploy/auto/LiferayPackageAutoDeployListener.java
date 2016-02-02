@@ -29,11 +29,6 @@ import java.io.File;
  */
 public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 
-	public LiferayPackageAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(
-			new LiferayPackageAutoDeployer());
-	}
-
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -52,7 +47,7 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -63,6 +58,11 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		return new ThreadSafeAutoDeployer(new LiferayPackageAutoDeployer());
 	}
 
 	@Override
@@ -86,7 +86,5 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayPackageAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

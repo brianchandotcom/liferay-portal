@@ -55,7 +55,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -66,6 +66,17 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = _autoDeployer.getClass();
+
+			_log.debug("Using deployer " + clazz.getName());
+		}
+
+		return new ThreadSafeAutoDeployer(_autoDeployer);
 	}
 
 	protected AutoDeployer getMvcDeployer() {
@@ -143,17 +154,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return false;
-	}
-
-	@Override
-	protected AutoDeployer wrapAutodeployer(AutoDeployer autoDeployer) {
-		if (_log.isDebugEnabled()) {
-			Class<?> clazz = autoDeployer.getClass();
-
-			_log.debug("Using deployer " + clazz.getName());
-		}
-
-		return new ThreadSafeAutoDeployer(autoDeployer);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

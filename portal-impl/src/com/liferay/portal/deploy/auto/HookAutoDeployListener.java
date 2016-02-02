@@ -29,10 +29,6 @@ import java.io.File;
  */
 public class HookAutoDeployListener extends BaseAutoDeployListener {
 
-	public HookAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new HookAutoDeployer());
-	}
-
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -51,7 +47,7 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -62,6 +58,11 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		return new ThreadSafeAutoDeployer(new HookAutoDeployer());
 	}
 
 	@Override
@@ -84,7 +85,5 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HookAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

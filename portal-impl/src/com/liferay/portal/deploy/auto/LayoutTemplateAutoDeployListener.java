@@ -30,11 +30,6 @@ import java.io.File;
  */
 public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 
-	public LayoutTemplateAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(
-			new LayoutTemplateAutoDeployer());
-	}
-
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -53,7 +48,7 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -64,6 +59,11 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		return new ThreadSafeAutoDeployer(new LayoutTemplateAutoDeployer());
 	}
 
 	@Override
@@ -87,7 +87,5 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutTemplateAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

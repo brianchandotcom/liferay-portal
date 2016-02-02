@@ -1014,12 +1014,14 @@ AUI.add(
 
 							var treeView = instance._layoutsExportTreeOutput.getData('tree-view');
 
-							var rootNode = treeView.item(0);
+							if (treeView) {
+								var rootNode = treeView.item(0);
 
-							if (rootNode.isChecked()) {
-								layoutIdsInput.val(STR_EMPTY);
+								if (rootNode.isChecked()) {
+									layoutIdsInput.val(STR_EMPTY);
 
-								selectedPages.push(Liferay.Language.get('all-pages'));
+									selectedPages.push(Liferay.Language.get('all-pages'));
+								}
 							}
 							else {
 								selectedPages.push(Liferay.Language.get('selected-pages'));

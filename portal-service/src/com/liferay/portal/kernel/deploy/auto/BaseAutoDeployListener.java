@@ -38,10 +38,6 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isDeployable(file)) {
-			return AutoDeployer.CODE_NOT_APPLICABLE;
-		}
-
 		if (_log.isInfoEnabled()) {
 			_log.info(getPluginPathInfoMessage(file));
 		}
@@ -57,6 +53,13 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	public boolean isDeployable(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		return isDeployable(autoDeploymentContext.getFile());
 	}
 
 	protected abstract AutoDeployer buildAutoDeployer();

@@ -111,28 +111,6 @@ String format = ParamUtil.getString(request, "format");
 			}
 		}
 	);
-
-	$('.portlet-search .result .lfr-search-container').on(
-		'click',
-		'.table-cell .asset-entry .toggle-details',
-		function(event) {
-			var handle = $(event.currentTarget);
-			var rowTD = handle.parentsUntil('.table-data', '.table-cell');
-
-			var documentFields = rowTD.find('.asset-entry .asset-entry-fields');
-
-			if (handle.text() == '[+]') {
-				documentFields.removeClass('hide');
-
-				handle.text('[-]');
-			}
-			else if (handle.text() == '[-]') {
-				documentFields.addClass('hide');
-
-				handle.text('[+]');
-			}
-		}
-	);
 </aui:script>
 
 <aui:script>

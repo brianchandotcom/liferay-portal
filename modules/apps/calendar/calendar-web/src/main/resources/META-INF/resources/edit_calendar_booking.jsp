@@ -463,21 +463,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	</c:if>
 </aui:script>
 
-<aui:script use="liferay-calendar-interval-selector">
-	new Liferay.IntervalSelector(
-		{
-			containerId: 'meetingEventDate',
-			endDatePickerName: 'endTime',
-			endTimePickerName: 'endTimeTime',
-			namespace: '<portlet:namespace/>',
-			startDatePickerName: 'startTime',
-			startTimePickerName: 'startTimeTime',
-			submitButtonId: 'submit'
-		}
-	);
-</aui:script>
-
-<aui:script use="json,liferay-calendar-date-picker-util,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu">
+<aui:script use="json,liferay-calendar-date-picker-util,liferay-calendar-interval-selector,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu">
 	var defaultCalendarId = <%= calendarId %>;
 
 	var scheduler = window.<portlet:namespace />scheduler;
@@ -628,16 +614,23 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	syncCalendarsMap();
 
-	var formNode = A.one(document.<portlet:namespace />fm);
+	var intervalSelector = new Liferay.IntervalSelector(
+		{
+			endDatePicker: Liferay.component('<portlet:namespace />endTimeDatePicker'),
+			endTimePicker: Liferay.component('<portlet:namespace />endTimeTimeTimePicker'),
+			startDatePicker: Liferay.component('<portlet:namespace />startTimeDatePicker'),
+			startTimePicker: Liferay.component('<portlet:namespace />startTimeTimeTimePicker')
+		}
+	);
 
 	window.<portlet:namespace />placeholderSchedulerEvent = new Liferay.SchedulerEvent(
 		{
 			after: {
 				endDateChange: function(event) {
-					Liferay.DatePickerUtil.syncUI(formNode, 'endTime', event.newVal);
+					Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
 				},
 				startDateChange: function(event) {
-					Liferay.DatePickerUtil.syncUI(formNode, 'startTime', event.newVal);
+					Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
 				}
 			},
 			borderColor: '#000',

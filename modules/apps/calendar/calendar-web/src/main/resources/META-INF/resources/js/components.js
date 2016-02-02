@@ -909,38 +909,32 @@
 			var toInt = Lang.toInt;
 
 			Liferay.DatePickerUtil = {
-				syncUI: function(form, fieldName, date) {
+				syncUI: function(schedulerEvent, intervalSelector) {
 					var instance = this;
 
-					var amPmNode = form.one('select[name$=' + fieldName + 'AmPm]');
-					var hourNode = form.one('select[name$=' + fieldName + 'Hour]');
-					var minuteNode = form.one('select[name$=' + fieldName + 'Minute]');
+					intervalSelector.stopDurationPreservation();
 
-					var datePicker = Liferay.component(Liferay.CalendarUtil.PORTLET_NAMESPACE + fieldName + 'datePicker');
+					var startDate = schedulerEvent.get('startDate');
 
-					if (datePicker) {
-						datePicker.calendar.deselectDates();
-						datePicker.calendar.selectDates(date);
+					var startDatePicker = intervalSelector.get('startDatePicker');
 
-						datePicker.syncUI();
-					}
+					var startTimePicker = intervalSelector.get('startTimePicker');
 
-					var hours = date.getHours();
-					var minutes = date.getMinutes();
+					startDatePicker.deselectDates();
+					startDatePicker.selectDates([startDate]);
+					startTimePicker.selectDates([startDate]);
 
-					var amPm = hours < 12 ? 0 : 1;
+					var endDate = schedulerEvent.get('endDate');
 
-					if (amPm === 1) {
-						hours -= 12;
+					var endDatePicker = intervalSelector.get('endDatePicker');
 
-						if (hours === 12) {
-							hours = 0;
-						}
-					}
+					var endTimePicker = intervalSelector.get('endTimePicker');
 
-					amPmNode.val(amPm);
-					hourNode.val(hours);
-					minuteNode.val(minutes);
+					endDatePicker.deselectDates();
+					endDatePicker.selectDates([endDate]);
+					endTimePicker.selectDates([endDate]);
+
+					intervalSelector.startDurationPreservation();
 				},
 
 				linkToSchedulerEvent: function(datePickerContainer, schedulerEvent, dateAttr) {
@@ -1365,6 +1359,24 @@
 
 				var IntervalSelector = A.Component.create(
 					{
+						ATTRS: {
+							endDatePicker: {
+								value: null
+							},
+
+							endTimePicker: {
+								value: null
+							},
+
+							startDatePicker: {
+								value: null
+							},
+
+							startTimePicker: {
+								value: null
+							}
+						},
+
 						AUGMENTS: [Liferay.PortletBase],
 
 						EXTENDS: A.Base,
@@ -1385,15 +1397,10 @@
 								instance._startDate = new Date();
 								instance._validDate = true;
 
-								instance._endDatePicker = instance._getComponent(config.endDatePickerName + 'DatePicker');
-								instance._endTimePicker = instance._getComponent(config.endTimePickerName + 'TimePicker');
-								instance._startDatePicker = instance._getComponent(config.startDatePickerName + 'DatePicker');
-								instance._startTimePicker = instance._getComponent(config.startTimePickerName + 'TimePicker');
-
-								instance._initPicker(instance._endDatePicker);
-								instance._initPicker(instance._endTimePicker);
-								instance._initPicker(instance._startDatePicker);
-								instance._initPicker(instance._startTimePicker);
+								instance._initPicker(instance.get('endDatePicker'));
+								instance._initPicker(instance.get('endTimePicker'));
+								instance._initPicker(instance.get('startDatePicker'));
+								instance._initPicker(instance.get('startTimePicker'));
 
 								instance._setEndDate();
 								instance._setEndTime();
@@ -1407,26 +1414,32 @@
 							bindUI: function() {
 								var instance = this;
 
-								instance.eventHandlers.push(
-									instance._endDatePicker.on(EVENT_SELECTION_CHANGE, instance._onEndDatePickerSelectionChange, instance),
-									instance._endTimePicker.on(EVENT_SELECTION_CHANGE, instance._onEndTimePickerSelectionChange, instance),
-									instance._startDatePicker.on(EVENT_SELECTION_CHANGE, instance._onStartDatePickerSelectionChange, instance),
-									instance._startTimePicker.on(EVENT_SELECTION_CHANGE, instance._onStartTimePickerSelectionChange, instance)
-								);
+								instance.startDurationPreservation();
 							},
 
 							destructor: function() {
 								var instance = this;
 
-								AArray.invoke(instance.eventHandlers, 'detach');
+								instance.stopDurationPreservation();
 
 								instance.eventHandlers = null;
 							},
 
-							_getComponent: function(name) {
+							startDurationPreservation: function() {
 								var instance = this;
 
-								return Liferay.component(instance.NS + name);
+								instance.eventHandlers.push(
+									instance.get('endDatePicker').on(EVENT_SELECTION_CHANGE, instance._onEndDatePickerSelectionChange, instance),
+									instance.get('endTimePicker').on(EVENT_SELECTION_CHANGE, instance._onEndTimePickerSelectionChange, instance),
+									instance.get('startDatePicker').on(EVENT_SELECTION_CHANGE, instance._onStartDatePickerSelectionChange, instance),
+									instance.get('startTimePicker').on(EVENT_SELECTION_CHANGE, instance._onStartTimePickerSelectionChange, instance)
+								);
+							},
+
+							stopDurationPreservation: function() {
+								var instance = this;
+
+								AArray.invoke(instance.eventHandlers, 'detach');
 							},
 
 							_initPicker: function(picker) {
@@ -1514,7 +1527,9 @@
 							_setEndDate: function() {
 								var instance = this;
 
-								var endDateObj = instance._endDatePicker.getDate();
+								var endDatePicker = instance.get('endDatePicker');
+
+								var endDateObj = endDatePicker.getDate();
 
 								var endDate = instance._endDate;
 
@@ -1526,15 +1541,19 @@
 							_setEndDatePickerDate: function() {
 								var instance = this;
 
-								instance._endDatePicker.clearSelection(true);
+								var endDatePicker = instance.get('endDatePicker');
 
-								instance._endDatePicker.selectDates([instance._endDate]);
+								endDatePicker.clearSelection(true);
+
+								endDatePicker.selectDates([instance._endDate]);
 							},
 
 							_setEndTime: function() {
 								var instance = this;
 
-								var endTime = instance._endTimePicker.getTime();
+								var endTimePicker = instance.get('endTimePicker');
+
+								var endTime = endTimePicker.getTime();
 
 								instance._endDate.setHours(endTime.getHours());
 								instance._endDate.setMinutes(endTime.getMinutes());
@@ -1543,13 +1562,17 @@
 							_setEndTimePickerTime: function() {
 								var instance = this;
 
-								instance._endTimePicker.selectDates([instance._endDate]);
+								var endTimePicker = instance.get('endTimePicker');
+
+								endTimePicker.selectDates([instance._endDate]);
 							},
 
 							_setStartDate: function() {
 								var instance = this;
 
-								var startDateObj = instance._startDatePicker.getDate();
+								var startDatePicker = instance.get('startDatePicker');
+
+								var startDateObj = startDatePicker.getDate();
 
 								var startDate = instance._startDate;
 
@@ -1561,7 +1584,7 @@
 							_setStartDatePickerDate: function() {
 								var instance = this;
 
-								var startDatePicker = instance._startDatePicker;
+								var startDatePicker = instance.get('startDatePicker');
 
 								startDatePicker.clearSelection(true);
 
@@ -1571,7 +1594,9 @@
 							_setStartTime: function() {
 								var instance = this;
 
-								var startTime = instance._startTimePicker.getTime();
+								var startTimePicker = instance.get('startTimePicker');
+
+								var startTime = startTimePicker.getTime();
 
 								var startDate = instance._startDate;
 
@@ -1582,7 +1607,9 @@
 							_setStartTimePickerTime: function() {
 								var instance = this;
 
-								instance._startTimePicker.selectDates([instance._startDate]);
+								var startTimePicker = instance.get('startTimePicker');
+
+								startTimePicker.selectDates([instance._startDate]);
 							},
 
 							_validate: function() {

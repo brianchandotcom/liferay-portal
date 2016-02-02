@@ -3447,7 +3447,7 @@ else.
 
 - `com.liferay.portal.layoutconfiguration.util.xml` &rarr; `com.liferay.portal.kernel.layoutconfiguration.util.xml`
 
-- `com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil` &rarr; `com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil`
+- `com.liferay.portal.portletfilerepository` &rarr; `com.liferay.portal.kernel.portletfilerepository`
 
 - `com.liferay.portal.repository.proxy` &rarr; `com.liferay.portal.kernel.repository.proxy`
 

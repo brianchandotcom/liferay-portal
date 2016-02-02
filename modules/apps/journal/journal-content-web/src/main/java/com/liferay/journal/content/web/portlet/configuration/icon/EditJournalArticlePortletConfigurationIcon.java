@@ -19,6 +19,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -26,13 +27,18 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -91,21 +97,38 @@ public class EditJournalArticlePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDisplay.getId());
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest,
-			PortletProviderUtil.getPortletId(
-				JournalArticle.class.getName(), PortletProvider.Action.EDIT),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		String articleId = portletRequest.getPreferences().getValue(
-			"articleId", null);
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		redirectURL.setParameter(
+			"mvcPath", "/update_journal_article_redirect.jsp");
+		redirectURL.setParameter(
+			"referringPortletResource", portletDisplay.getId());
+
+		PortletURL portletURL = null;
+		JournalArticle article = null;
+
+		try {
+			article = getArticle();
+
+			AssetRenderer<JournalArticle> latestArticleAssetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					article.getResourcePrimKey());
+
+			portletURL = latestArticleAssetRenderer.getURLEdit(
+				(LiferayPortletRequest)portletRequest, null,
+				LiferayWindowState.POP_UP, redirectURL);
+		}
+		catch (Exception e) {
+			_log.error("Unable to generate URL to edit article", e);
+
+			return StringPool.BLANK;
+		}
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -115,11 +138,6 @@ public class EditJournalArticlePortletConfigurationIcon
 			_log.error("Unable to set window state", e);
 		}
 
-		redirectURL.setParameter(
-			"mvcPath", "/update_journal_article_redirect.jsp");
-		redirectURL.setParameter(
-			"referringPortletResource", portletDisplay.getId());
-
 		portletURL.setParameter(
 			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
 		portletURL.setParameter("showBackURL", Boolean.FALSE.toString());
@@ -128,10 +146,14 @@ public class EditJournalArticlePortletConfigurationIcon
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirectURL.toString());
 		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		portletURL.setParameter("articleId", articleId);
+			"groupId", String.valueOf(article.getGroupId()));
+		portletURL.setParameter("articleId", article.getArticleId());
 		portletURL.setParameter(
 			"refererPortletName", JournalContentPortletKeys.JOURNAL_CONTENT);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDisplay.getId());
+
 		portletURL.setParameter(
 			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
 

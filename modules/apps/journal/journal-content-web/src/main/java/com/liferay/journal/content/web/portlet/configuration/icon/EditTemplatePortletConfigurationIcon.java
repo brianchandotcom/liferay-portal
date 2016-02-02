@@ -34,6 +34,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -165,27 +166,29 @@ public class EditTemplatePortletConfigurationIcon
 	}
 
 	protected DDMTemplate getDDMTemplate() throws Exception {
-		long groupId = ParamUtil.getLong(
-			portletRequest, "groupId", themeDisplay.getScopeGroupId());
-		String articleId = portletRequest.getPreferences().getValue(
-			"articleId", null);
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
+		String articleId = portletPreferences.getValue("articleId", null);
+
+		if (Validator.isNull(articleId)) {
+			return null;
+		}
+
 		int status = ParamUtil.getInteger(
 			portletRequest, "status", WorkflowConstants.STATUS_ANY);
 
-		JournalArticle article = null;
-		DDMTemplate ddmTemplate = null;
+		long groupId = ParamUtil.getLong(
+			portletRequest, "groupId", themeDisplay.getScopeGroupId());
 
-		if (Validator.isNotNull(articleId)) {
-			article = JournalArticleServiceUtil.getLatestArticle(
-				groupId, articleId, status);
+		JournalArticle article = JournalArticleServiceUtil.getLatestArticle(
+			groupId, articleId, status);
 
-			ddmTemplate = article.getDDMTemplate();
+		DDMTemplate ddmTemplate = article.getDDMTemplate();
 
-			if (Validator.isNull(ddmTemplate)) {
-				ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-					groupId, PortalUtil.getClassNameId(DDMStructure.class),
-					article.getDDMTemplateKey(), true);
-			}
+		if (ddmTemplate == null) {
+			ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
+				groupId, PortalUtil.getClassNameId(DDMStructure.class),
+				article.getDDMTemplateKey(), true);
 		}
 
 		return ddmTemplate;

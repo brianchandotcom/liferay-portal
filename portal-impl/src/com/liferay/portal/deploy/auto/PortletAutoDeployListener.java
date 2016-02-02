@@ -52,7 +52,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copying portlets for " + file.getPath());
+			_log.info(getPluginPathInfoMessage(file));
 		}
 
 		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
@@ -82,6 +82,11 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return _phpPortletAutoDeployer;
+	}
+
+	@Override
+	protected String getPluginPathInfoMessage(File file) {
+		return "Copying portlets for " + file.getPath();
 	}
 
 	protected AutoDeployer getWaiDeployer() throws AutoDeployException {

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -268,17 +269,17 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		// Populate virtual parameters for instanceable portlets
 
-		if (isPortletInstanceable()) {
-			String portletInstanceKey = liferayPortletURL.getPortletId();
+		String portletInstanceKey = liferayPortletURL.getPortletId();
 
+		if (Validator.isNotNull(portletInstanceKey)) {
 			routeParameters.put("p_p_id", portletInstanceKey);
 
-			if (Validator.isNotNull(portletInstanceKey) &&
-				PortletConstants.hasInstanceId(portletInstanceKey)) {
+			PortletInstance portletInstance =
+				PortletInstance.fromPortletInstanceKey(portletInstanceKey);
 
+			if (portletInstance.hasInstanceId()) {
 				routeParameters.put(
-					"instanceId",
-					PortletConstants.getInstanceId(portletInstanceKey));
+					"instanceId", portletInstance.getInstanceId());
 			}
 		}
 

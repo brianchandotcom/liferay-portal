@@ -2165,6 +2165,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedView" />
+
 		<execute macro="ProductMenu#gotoSitesPublishingTools">
 			<var name="portlet" value="Staging" />
 		</execute>

@@ -272,22 +272,22 @@
 <!--PUBLISH_TEMPLATES_TABLE-->
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_NAME</td>
-	<td>//div[contains(@id,'_savedConfigurations')]//tr[contains(.,'${key_publishTemplateName}')]/td[2]/a</td>
+	<td>//div[contains(@id,'Configurations')]//tr[contains(.,'${key_publishTemplateName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_DESCRIPTION</td>
-	<td>//div[contains(@id,'_savedConfigurations')]//tr[contains(.,'${key_publishTemplateName}')]/td[3]</td>
+	<td>//div[contains(@id,'Configurations')]//tr[contains(.,'${key_publishTemplateName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_PUBLISH_TO_LIVE_ARROW_BUTTON</td>
-	<td>//div[contains(@id,'_savedConfigurations')]//tr[contains(.,'${key_publishTemplateName}')]/td/span/a[contains(.,'Publish to Live')]</td>
+	<td>//div[contains(@id,'Configurations')]//tr[contains(.,'${key_publishTemplateName}')]/td/span/a[contains(.,'Publish to Live')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
-	<td>//div[contains(@id,'_savedConfigurations')]//tr[contains(.,'${key_publishTemplateName}')]//a/span[contains(.,'Recycle Bin')]</td>
+	<td>//div[contains(@id,'Configurations')]//tr[contains(.,'${key_publishTemplateName}')]//a/span[contains(.,'Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

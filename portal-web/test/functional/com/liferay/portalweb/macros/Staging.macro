@@ -253,7 +253,12 @@
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
+				<if>
+					<condition function="IsElementPresent" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" />
+					<then>
+						<execute function="AssertClick" locator1="StagingPublishToLive#PAGES_CHANGE_LINK" value1="Change" />
+					</then>
+				</if>
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
@@ -654,12 +659,7 @@
 	</command>
 
 	<command name="redoStagingPageVersioningPG">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="Staging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-			</then>
-		</if>
+		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 
 		<execute function="ClickNoError" locator1="Staging#STAGING_MENU_REDO_BUTTON" />
 		<execute function="Confirm" value1="Are you sure you want to redo your last changes?" />

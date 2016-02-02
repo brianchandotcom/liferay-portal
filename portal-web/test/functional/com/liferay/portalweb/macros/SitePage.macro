@@ -146,7 +146,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="ProductMenu#EDIT_PAGE" />
 			<then>
-				<execute function="Click" locator1="ProductMenu#EDIT_PAGE" />
+				<execute function="Click#makeVisibleClickAt" locator1="ProductMenu#EDIT_PAGE" />
 				<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />

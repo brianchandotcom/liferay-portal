@@ -238,7 +238,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_REVISION_DETAILS_MESSAGE</td>
-	<td>//li[contains(@id,'layoutRevisionDetails')]/ul/li/p</td>
+	<td>//span[contains(@id,'layoutRevisionDetails')]/li/p</td>
 	<td></td>
 </tr>
 <tr>

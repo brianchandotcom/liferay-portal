@@ -15,10 +15,6 @@
 package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
 
 import com.liferay.counter.service.CounterLocalService;
-import com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException;
-import com.liferay.portal.kernel.ldap.LDAPFilterException;
-import com.liferay.portal.kernel.ldap.LDAPServerNameException;
-import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -32,9 +28,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.ldap.DuplicateLDAPServerNameException;
+import com.liferay.portal.ldap.LDAPServerNameException;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.constants.LDAPConstants;
+import com.liferay.portal.ldap.util.LDAPUtil;
+import com.liferay.portal.ldap.validator.LDAPFilterException;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.theme.ThemeDisplay;

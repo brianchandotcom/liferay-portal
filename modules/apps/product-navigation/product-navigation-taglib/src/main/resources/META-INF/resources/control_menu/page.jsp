@@ -83,5 +83,33 @@ ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)re
 
 	<aui:script use="liferay-control-menu">
 		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
+
+		var panelEntryBodies = $('#<portlet:namespace/>ControlMenu [data-toggle="sidenav"]').toArray().map(
+			function(item) {
+				return $(item.getAttribute('data-target').split(',')[0]);
+			}
+		);
+
+		panelEntryBodies.forEach(
+			function(item) {
+				item.on(
+					'open.lexicon.sidenav',
+					function(event) {
+						var itemId = event.target.getAttribute('id');
+
+						panelEntryBodies.forEach(
+							function(item) {
+								var panelId = item.attr('id');
+
+								if (panelId !== itemId) {
+									$('#<portlet:namespace/>ControlMenu [data-toggle="sidenav"][data-target*="' + panelId + '"]').sideNavigation('hide');
+								}
+							}
+						);
+					}
+				);
+			}
+		);
+
 	</aui:script>
 </c:if>

@@ -46,9 +46,6 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 
 	var sidenavSlider = $('#sidenavSliderId');
 
-	sidenavSlider.off('closed.lexicon.sidenav');
-	sidenavSlider.off('open.lexicon.sidenav');
-
 	sidenavSlider.on(
 		'closed.lexicon.sidenav',
 		function(event) {

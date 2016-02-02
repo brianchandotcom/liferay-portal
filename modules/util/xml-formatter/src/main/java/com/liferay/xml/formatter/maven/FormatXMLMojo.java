@@ -25,7 +25,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * @author Andrea Di Giorgi
  */
-public class XMLFormatterMojo extends AbstractMojo {
+public class FormatXMLMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {

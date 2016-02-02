@@ -52,7 +52,9 @@ if (ddlDisplayContext.isAdminPortlet()) {
 	<c:if test="<%= recordVersion != null %>">
 		<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
 
-		<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
+		<div class="panel text-center">
+			<aui:workflow-status markupView="lexicon" model="<%= DDLRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
+		</div>
 	</c:if>
 
 	<aui:fieldset>

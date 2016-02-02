@@ -50,11 +50,10 @@ public class BaseLayoutDisplayContext {
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
 
-		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
 			LayoutAdminWebKeys.GROUP_PROVIDER);
+		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public PortletURL getAddLayoutURL(long selPlid, Boolean privateLayout) {

@@ -29,10 +29,6 @@ import java.io.File;
  */
 public class ExtAutoDeployListener extends BaseAutoDeployListener {
 
-	public ExtAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new ExtAutoDeployer());
-	}
-
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -51,7 +47,7 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -62,6 +58,11 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		return new ThreadSafeAutoDeployer(new ExtAutoDeployer());
 	}
 
 	@Override
@@ -86,7 +87,5 @@ public class ExtAutoDeployListener extends BaseAutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExtAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

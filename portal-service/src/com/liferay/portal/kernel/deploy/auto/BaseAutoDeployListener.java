@@ -27,16 +27,14 @@ import java.io.File;
  */
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
+	protected abstract AutoDeployer buildAutoDeployer();
+
 	protected abstract String getPluginPathInfoMessage(File file);
 
 	protected abstract String getSuccessMessage(File file);
 
 	protected abstract boolean isDeployable(File file)
 		throws AutoDeployException;
-
-	protected AutoDeployer wrapAutodeployer(AutoDeployer autoDeployer) {
-		return autoDeployer;
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAutoDeployListener.class);

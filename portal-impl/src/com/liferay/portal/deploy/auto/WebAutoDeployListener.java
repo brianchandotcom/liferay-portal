@@ -28,10 +28,6 @@ import java.io.File;
  */
 public class WebAutoDeployListener extends BaseAutoDeployListener {
 
-	public WebAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new WebAutoDeployer());
-	}
-
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -50,7 +46,7 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -61,6 +57,11 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		return new ThreadSafeAutoDeployer(new WebAutoDeployer());
 	}
 
 	@Override
@@ -83,7 +84,5 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WebAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

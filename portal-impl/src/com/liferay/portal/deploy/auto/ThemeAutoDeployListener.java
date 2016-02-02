@@ -30,10 +30,6 @@ import java.io.File;
  */
 public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
-	public ThemeAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new ThemeAutoDeployer());
-	}
-
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -52,7 +48,7 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -63,6 +59,11 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		return new ThreadSafeAutoDeployer(new ThemeAutoDeployer());
 	}
 
 	@Override
@@ -85,7 +86,5 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

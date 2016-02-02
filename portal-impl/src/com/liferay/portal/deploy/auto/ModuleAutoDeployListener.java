@@ -43,10 +43,6 @@ import java.util.jar.Manifest;
  */
 public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
-	public ModuleAutoDeployListener() {
-		_autoDeployer = new ThreadSafeAutoDeployer(new ModuleAutoDeployer());
-	}
-
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -65,7 +61,7 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
+		AutoDeployer autoDeployer = buildAutoDeployer();
 
 		int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
@@ -76,6 +72,11 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected AutoDeployer buildAutoDeployer() {
+		return new ThreadSafeAutoDeployer(new ModuleAutoDeployer());
 	}
 
 	@Override
@@ -145,7 +146,5 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleAutoDeployListener.class);
-
-	private final AutoDeployer _autoDeployer;
 
 }

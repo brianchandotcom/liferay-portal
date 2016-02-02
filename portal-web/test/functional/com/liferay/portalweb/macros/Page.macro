@@ -88,6 +88,8 @@
 						<var name="category" value="Pages" />
 					</execute>
 
+					<execute macro="ProductMenuHelper#expandPagePagination" />
+
 					<var name="key_page" value="${pageName}" />
 
 					<execute function="Click" locator1="ProductMenu#PAGES" />

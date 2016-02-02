@@ -12,6 +12,17 @@
 		</if>
 	</command>
 
+	<command name="expandPagePagination">
+		<while>
+			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" />
+			<then>
+				<execute function="AssertClick" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+			</then>
+		</while>
+
+		<execute function="AssertTextNotPresent" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+	</command>
+
 	<command name="expandPageTree">
 		<if>
 			<condition function="IsElementPresent" locator1="ProductMenu#PAGE_PLUS_ICON_COLLAPSED" />

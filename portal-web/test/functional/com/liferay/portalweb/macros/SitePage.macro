@@ -477,6 +477,8 @@
 	</command>
 
 	<command name="viewLoadMoreResultsPages">
+		<execute macro="ProductMenuHelper#expandPageTree" />
+
 		<if>
 			<equals arg1="${siteChildPages}" arg2="false" />
 			<then>
@@ -487,7 +489,6 @@
 			<elseif>
 				<equals arg1="${siteChildPages}" arg2="true" />
 				<then>
-					<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_ARROW_1" />
 					<execute function="AssertClick" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
 					<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_5" value1="Child Page4 Name" />
 					<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_6" value1="Child Page5 Name" />

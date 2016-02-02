@@ -57,7 +57,6 @@ page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.UserPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.comparator.UserLoginDateComparator" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil" %><%@

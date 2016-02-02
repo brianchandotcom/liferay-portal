@@ -83,7 +83,6 @@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.exception.DuplicateQueryRuleException" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategory" %><%@

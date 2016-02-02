@@ -54,7 +54,6 @@ page import="com.liferay.portal.service.ThemeLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portal.util.comparator.RoleRoleIdComparator" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

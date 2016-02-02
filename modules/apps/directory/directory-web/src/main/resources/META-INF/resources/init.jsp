@@ -75,7 +75,6 @@ page import="com.liferay.portal.service.WebsiteServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@

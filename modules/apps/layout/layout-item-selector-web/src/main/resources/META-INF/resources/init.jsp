@@ -41,8 +41,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.model.LayoutConstants" %><%@
-page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %>
+page import="com.liferay.portal.service.GroupLocalServiceUtil" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

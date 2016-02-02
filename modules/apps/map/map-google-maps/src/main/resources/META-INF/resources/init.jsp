@@ -28,11 +28,8 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
-page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
-
-<%@ page import="java.util.ResourceBundle" %>
 
 <liferay-frontend:defineObjects />
 

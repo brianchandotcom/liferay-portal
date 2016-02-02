@@ -28,15 +28,13 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.ResourceBundle" %>
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 

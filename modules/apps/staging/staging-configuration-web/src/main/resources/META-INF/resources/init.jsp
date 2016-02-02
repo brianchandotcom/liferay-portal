@@ -64,7 +64,6 @@ page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.portlet.exportimport.exception.RemoteExportException" %><%@
 page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %><%@
@@ -76,8 +75,6 @@ page import="com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContex
 <%@ page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Set" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

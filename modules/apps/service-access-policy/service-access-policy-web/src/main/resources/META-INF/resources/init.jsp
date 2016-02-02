@@ -38,7 +38,6 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.service.access.policy.constants.SAPActionKeys" %><%@
 page import="com.liferay.service.access.policy.constants.SAPConstants" %><%@
 page import="com.liferay.service.access.policy.exception.DuplicateSAPEntryNameException" %><%@

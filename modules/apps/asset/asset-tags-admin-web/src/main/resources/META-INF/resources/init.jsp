@@ -35,7 +35,6 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.exception.AssetTagException" %><%@
 page import="com.liferay.portlet.asset.exception.DuplicateTagException" %><%@
 page import="com.liferay.portlet.asset.exception.NoSuchTagException" %><%@

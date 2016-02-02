@@ -41,12 +41,8 @@ page import="com.liferay.portlet.PortletURLUtil" %>
 
 <%@ page import="org.osgi.service.metatype.AttributeDefinition" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>

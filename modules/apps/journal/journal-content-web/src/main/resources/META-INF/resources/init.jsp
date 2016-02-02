@@ -65,15 +65,13 @@ page import="java.util.Map" %>
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 JournalContentPortletInstanceConfiguration journalContentPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(JournalContentPortletInstanceConfiguration.class);
 
 JournalContentDisplayContext journalContentDisplayContext = new JournalContentDisplayContext(liferayPortletRequest, liferayPortletResponse, journalContentPortletInstanceConfiguration);

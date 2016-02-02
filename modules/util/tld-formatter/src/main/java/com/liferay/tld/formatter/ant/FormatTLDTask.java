@@ -27,7 +27,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class TLDFormatterTask extends Task {
+public class FormatTLDTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

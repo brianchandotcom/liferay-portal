@@ -279,7 +279,7 @@ $horizontal-spacing: 35px;
 	}
 
 	.modal-title {
-		 text-transform: capitalize;
+		text-transform: capitalize;
 	}
 
 	@include lg {
@@ -810,6 +810,10 @@ $horizontal-spacing: 35px;
 		> li {
 			cursor: pointer;
 		}
+	}
+
+	select.form-control[multiple] {
+		height: auto;
 	}
 
 	.toggle-switch {

@@ -4,6 +4,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:asset:asset-categories-service")
 	compile project(":apps:export-import:export-import-service")
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
 }
 

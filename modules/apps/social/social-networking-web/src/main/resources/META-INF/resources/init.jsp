@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -56,7 +57,6 @@ page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.UserPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.comparator.UserLoginDateComparator" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil" %><%@
@@ -96,17 +96,13 @@ page import="javax.portlet.PortletPreferences" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-WindowState windowState = renderRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 Organization organization = null;

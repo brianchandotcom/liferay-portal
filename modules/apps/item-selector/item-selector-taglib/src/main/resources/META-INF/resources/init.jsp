@@ -45,7 +45,6 @@ page import="com.liferay.portal.kernel.util.ClassUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -65,15 +64,12 @@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.ResourceBundle" %>
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
-%>

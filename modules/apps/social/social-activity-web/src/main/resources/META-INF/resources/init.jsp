@@ -17,6 +17,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -26,7 +27,6 @@ page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" 
 page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
 page import="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
@@ -37,16 +37,10 @@ page import="com.liferay.social.activity.web.constants.SocialActivityWebKeys" %>
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>
 
 <%@ include file="/init-ext.jsp" %>

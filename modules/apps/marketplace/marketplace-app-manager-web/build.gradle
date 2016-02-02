@@ -5,6 +5,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:marketplace:marketplace-service")
 	compile project(":apps:marketplace:marketplace-store-web")
+	compile project(":frontend:frontend-taglib")
 }
 
 liferay {

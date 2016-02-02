@@ -10,6 +10,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:portal-settings:portal-settings-web")
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-instance-lifecycle")
 	compile project(":portal:portal-language-resource-bundle")
 	compile project(":portal:portal-metatype")

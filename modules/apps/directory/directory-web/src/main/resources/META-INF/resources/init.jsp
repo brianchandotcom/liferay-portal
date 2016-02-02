@@ -75,7 +75,6 @@ page import="com.liferay.portal.service.WebsiteServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
@@ -99,15 +98,13 @@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);

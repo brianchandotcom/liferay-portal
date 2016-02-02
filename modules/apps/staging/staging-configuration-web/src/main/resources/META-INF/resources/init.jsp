@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
@@ -63,7 +64,6 @@ page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.portlet.exportimport.exception.RemoteExportException" %><%@
 page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %><%@
@@ -76,16 +76,10 @@ page import="com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContex
 page import="java.util.List" %><%@
 page import="java.util.Set" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<liferay-frontend:defineObjects />
 
 <liferay-staging:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>

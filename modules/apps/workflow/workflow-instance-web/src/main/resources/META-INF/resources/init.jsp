@@ -31,7 +31,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
@@ -47,15 +46,13 @@ page import="com.liferay.workflow.instance.web.display.context.WorkflowInstanceV
 
 <%@ page import="javax.portlet.PortletURL" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
 
 if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {

@@ -69,7 +69,6 @@ page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.ratings.RatingsType" %><%@
 page import="com.liferay.portlet.ratings.display.context.CompanyPortletRatingsDefinitionDisplayContext" %><%@
 page import="com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil" %><%@
@@ -87,14 +86,10 @@ page import="java.util.Set" %>
 <%@ page import="javax.portlet.PortletPreferences" %><%@
 page import="javax.portlet.PortletURL" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>
 
 <%@ include file="/init-ext.jsp" %>

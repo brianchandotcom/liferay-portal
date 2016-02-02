@@ -3,6 +3,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-metatype")
 
 	provided group: "com.liferay.portal", name: "util-bridges", version: liferay.portalVersion

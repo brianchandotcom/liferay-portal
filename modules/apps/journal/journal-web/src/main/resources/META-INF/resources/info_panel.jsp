@@ -17,21 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<Long> folders = ListUtil.toList(ParamUtil.getLongValues(request, "rowIdsJournalFolder"));
-List<String> entries = ListUtil.toList(ParamUtil.getStringValues(request, "rowIdsJournalArticle"));
+List<JournalFolder> folders = (List<JournalFolder>)request.getAttribute(JournalWebKeys.JOURNAL_FOLDERS);
+List<JournalArticle> articles = (List<JournalArticle>)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLES);
 
-if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
+if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 	long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"), ParamUtil.getLong(request, "folderId"));
 
-	folders = new ArrayList<Long>();
+	folders = new ArrayList<JournalFolder>();
 
 	JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
 
 	if (folder != null) {
-		folders.add(folder.getFolderId());
+		folders.add(folder);
 	}
 	else if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-		folders.add(folderId);
+		folders.add(JournalFolderLocalServiceUtil.fetchFolder(folderId));
 	}
 	else {
 		folders.add(null);
@@ -40,16 +40,10 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 %>
 
 <c:choose>
-	<c:when test="<%= (ListUtil.isEmpty(entries) && ListUtil.isNotEmpty(folders) && (folders.size() == 1)) %>">
+	<c:when test="<%= (ListUtil.isEmpty(articles) && ListUtil.isNotEmpty(folders) && (folders.size() == 1)) %>">
 
 		<%
-		Long folderId = folders.get(0);
-
-		if (folderId == null) {
-			folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-		}
-
-		JournalFolder folder = JournalFolderServiceUtil.fetchFolder(folderId);
+		JournalFolder folder = folders.get(0);
 
 		request.setAttribute("info_panel.jsp-folder", folder);
 		%>
@@ -69,12 +63,12 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 			<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
 
-			<div>
+			<h6 class="text-default">
 				<liferay-ui:message key="folder" />
-			</div>
+			</h6>
 		</div>
 
-		<aui:nav-bar>
+		<aui:nav-bar markupView="lexicon">
 			<aui:nav cssClass="navbar-nav">
 				<aui:nav-item label="details" selected="<%= true %>" />
 			</aui:nav>
@@ -82,6 +76,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-items" /></h5>
+
+			<%
+			long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (folder != null) {
+				folderId = folder.getFolderId();
+			}
+			%>
 
 			<p>
 				<%= JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, journalDisplayContext.getStatus()) %>
@@ -96,11 +98,10 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			</c:if>
 		</div>
 	</c:when>
-	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(entries) && (entries.size() == 1) %>">
-		<%
-		String articleId = entries.get(0);
+	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isNotEmpty(articles) && (articles.size() == 1) %>">
 
-		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(scopeGroupId, articleId);
+		<%
+		JournalArticle article = articles.get(0);
 
 		long classPK = JournalArticleAssetRenderer.getClassPK(article);
 
@@ -109,17 +110,27 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		DDMStructure ddmStructure = article.getDDMStructure();
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), article.getDDMTemplateKey(), true);
+
+		request.setAttribute("info_panel.jsp-entry", article);
 		%>
 
 		<div class="sidebar-header">
+			<ul class="list-inline list-unstyled sidebar-header-actions">
+				<li>
+					<liferay-util:include page="/article_action.jsp" servletContext="<%= application %>" />
+				</li>
+			</ul>
+
 			<h4><%= assetEntry.getTitle(locale) %></h4>
 
-			<div>
-				<liferay-ui:message key="entry" />
-			</div>
+			<c:if test="<%= ddmStructure != null %>">
+				<h6 class="text-default">
+					<%= ddmStructure.getName(locale) %>
+				</h6>
+			</c:if>
 		</div>
 
-		<aui:nav-bar>
+		<aui:nav-bar markupView="lexicon">
 			<aui:nav cssClass="navbar-nav">
 				<aui:nav-item label="details" selected="<%= true %>" />
 			</aui:nav>
@@ -150,14 +161,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				<%= article.getTitle(locale) %>
 			</p>
 
-			<c:if test="<%= ddmStructure != null %>">
-				<h5><liferay-ui:message key="structure" /></h5>
-
-				<p>
-					<%= ddmStructure.getName(locale) %>
-				</p>
-			</c:if>
-
 			<c:if test="<%= ddmTemplate != null %>">
 				<h5><liferay-ui:message key="template" /></h5>
 
@@ -168,9 +171,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 
 			<div class="lfr-asset-tags">
 				<liferay-ui:asset-tags-summary
-				className="<%= JournalArticle.class.getName() %>"
-				classPK="<%= classPK %>"
-				message="tags"
+					className="<%= JournalArticle.class.getName() %>"
+					classPK="<%= classPK %>"
+					message="tags"
 				/>
 			</div>
 
@@ -181,9 +184,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			</p>
 
 			<%
-				Date expirationDate = article.getExpirationDate();
+			Date expirationDate = article.getExpirationDate();
 
-				Date reviewDate = article.getReviewDate();
+			Date reviewDate = article.getReviewDate();
 			%>
 
 			<h5><liferay-ui:message key="display-date" /></h5>
@@ -221,7 +224,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<aui:nav-bar>
@@ -231,7 +234,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= folders.size() + entries.size() %>" key="x-items-are-selected" /></h5>
+			<h5><liferay-ui:message arguments="<%= folders.size() + articles.size() %>" key="x-items-are-selected" /></h5>
 		</div>
 	</c:otherwise>
 </c:choose>

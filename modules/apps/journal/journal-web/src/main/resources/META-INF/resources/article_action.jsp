@@ -29,7 +29,7 @@ if (row != null) {
 	article = (JournalArticle)row.getObject();
 }
 else {
-	article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
+	article = (JournalArticle)request.getAttribute("info_panel.jsp-entry");
 }
 %>
 

@@ -177,6 +177,8 @@ public class PanelAppRegistry {
 			String panelCategoryKey, PanelApp panelApp,
 			List<PanelApp> panelApps) {
 
+			panelApp.setGroupProvider(groupProvider);
+
 			Portlet portlet = portletLocalService.getPortletById(
 				panelApp.getPortletId());
 
@@ -188,8 +190,6 @@ public class PanelAppRegistry {
 			else if (_log.isDebugEnabled()) {
 				_log.debug("Unable to get portlet " + panelApp.getPortletId());
 			}
-
-			panelApp.setGroupProvider(groupProvider);
 		}
 
 		@Override

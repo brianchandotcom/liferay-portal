@@ -24,7 +24,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class WSDDBuilderTask extends Task {
+public class BuildWSDDTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

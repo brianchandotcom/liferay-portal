@@ -43,7 +43,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 	<c:choose>
 		<c:when test="<%= includeFormTag %>">
-			<aui:form>
+			<aui:form name="fm">
 				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= category.getCategoryId() %>" />
 				<aui:input name="breadcrumbsMessageId" type="hidden" value="<%= message.getMessageId() %>" />
 				<aui:input name="threadId" type="hidden" value="<%= message.getThreadId() %>" />

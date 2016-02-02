@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.LayoutSet;
 
 import java.util.Locale;
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=160"},
+	property = {"service.ranking:Integer=180"},
 	service = FormNavigatorEntry.class
 )
 public class LayoutSetMobileDeviceRulesFormNavigatorEntry
@@ -40,7 +39,7 @@ public class LayoutSetMobileDeviceRulesFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return StringPool.BLANK;
+		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_SET_ADVANCED;
 	}
 
 	@Override

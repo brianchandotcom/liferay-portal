@@ -1302,6 +1302,30 @@ public class ServiceBuilder {
 		return StringPool.BLANK;
 	}
 
+	public String getPrimitiveType(String type) {
+		if (type.equals("Boolean")) {
+			return "boolean";
+		}
+		else if (type.equals("Double")) {
+			return "double";
+		}
+		else if (type.equals("Float")) {
+			return "float";
+		}
+		else if (type.equals("Integer")) {
+			return "int";
+		}
+		else if (type.equals("Long")) {
+			return "long";
+		}
+		else if (type.equals("Short")) {
+			return "short";
+		}
+		else {
+			return type;
+		}
+	}
+
 	public String getReturnType(JavaMethod method) {
 		Type returnType = method.getReturnType();
 

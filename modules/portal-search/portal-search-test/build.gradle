@@ -4,5 +4,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	testIntegrationCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	// @formatter:on
-	testIntegrationCompile project(":portal:portal-search")
+	testIntegrationCompile project(":portal-search:portal-search")
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -26,6 +27,37 @@ import java.io.File;
  * @author Manuel de la Peña
  */
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
+
+	@Override
+	public int deploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		File file = autoDeploymentContext.getFile();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Invoking deploy for " + file.getPath());
+		}
+
+		if (!isDeployable(file)) {
+			return AutoDeployer.CODE_NOT_APPLICABLE;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(getPluginPathInfoMessage(file));
+		}
+
+		AutoDeployer autoDeployer = buildAutoDeployer();
+
+		int code = autoDeployer.autoDeploy(autoDeploymentContext);
+
+		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
+			_log.info(
+				getSuccessMessage(file) +
+					". Deployment will start in a few seconds.");
+		}
+
+		return code;
+	}
 
 	protected abstract AutoDeployer buildAutoDeployer();
 

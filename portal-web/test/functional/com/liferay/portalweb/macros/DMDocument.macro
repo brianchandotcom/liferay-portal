@@ -1898,6 +1898,7 @@
 	</command>
 
 	<command name="viewDocumentToolbarCmdPG">
+		<execute function="AssertVisible" locator1="Button#DOWNLOAD" value1="Download" />
 		<execute function="AssertTextEquals" locator1="Button#DOWNLOAD" value1="Download" />
 		<execute function="AssertTextEquals" locator1="Button#EDIT" value1="Edit" />
 		<execute function="AssertTextEquals" locator1="Button#MOVE" value1="Move" />

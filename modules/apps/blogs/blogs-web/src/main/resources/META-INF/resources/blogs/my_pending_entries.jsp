@@ -25,7 +25,7 @@ int myPendingEntriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scope
 <c:if test="<%= myPendingEntriesCount > 0 %>">
 
 	<%
-	boolean extended = ParamUtil.getBoolean(request, "extended", true);
+	boolean extended = ParamUtil.getBoolean(request, "extended", false);
 
 	PortletURL iteratorURL = renderResponse.createRenderURL();
 

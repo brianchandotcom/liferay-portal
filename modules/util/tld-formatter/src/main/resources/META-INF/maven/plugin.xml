@@ -19,7 +19,7 @@
 			<aggregator>false</aggregator>
 			<requiresOnline>false</requiresOnline>
 			<inheritedByDefault>true</inheritedByDefault>
-			<implementation>com.liferay.tld.formatter.maven.TLDFormatterMojo</implementation>
+			<implementation>com.liferay.tld.formatter.maven.FormatTLDMojo</implementation>
 			<language>java</language>
 			<instantiationStrategy>per-lookup</instantiationStrategy>
 			<executionStrategy>once-per-session</executionStrategy>

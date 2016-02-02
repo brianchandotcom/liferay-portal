@@ -29,7 +29,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * @author Andrea Di Giorgi
  */
-public class TLDFormatterMojo extends AbstractMojo {
+public class FormatTLDMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {

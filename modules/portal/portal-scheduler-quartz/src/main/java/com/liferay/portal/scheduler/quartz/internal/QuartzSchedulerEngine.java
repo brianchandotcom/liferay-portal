@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.scheduler.quartz.QuartzTrigger;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
@@ -844,6 +845,13 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		QuartzTriggerFactory quartzTriggerFactory) {
 
 		_quartzTriggerFactory = quartzTriggerFactory;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portal.scheduler.quartz)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference(

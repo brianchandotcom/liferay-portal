@@ -17,7 +17,6 @@ package com.liferay.calendar.web.messaging;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -67,13 +66,6 @@ public class CheckBookingsMessageListener
 		CalendarBookingLocalService calendarBookingLocalService) {
 
 		_calendarBookingLocalService = calendarBookingLocalService;
-	}
-
-	@Reference(
-		target = "(destination.name=" + DestinationNames.SCHEDULER_DISPATCH + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

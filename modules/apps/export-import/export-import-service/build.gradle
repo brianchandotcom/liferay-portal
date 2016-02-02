@@ -18,6 +18,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compile project(":apps:export-import:export-import-api")
 	compile project(":portal:portal-background-task-api")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }

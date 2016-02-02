@@ -1,5 +1,6 @@
 dependencies {
 	compile project(":portal:portal-scheduler")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "org.quartz-scheduler", name: "quartz", transitive: false, version: "2.1.7"
 }

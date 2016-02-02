@@ -23,6 +23,8 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
+import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
+import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -120,6 +122,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
 
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
+
+	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
 
@@ -273,6 +277,23 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 			});
+
+		return jar;
+	}
+
+	protected Jar addTaskJarTLDDoc(Project project) {
+		Jar jar = GradleUtil.addTask(project, JAR_TLDDOC_TASK_NAME, Jar.class);
+
+		jar.setClassifier("taglibdoc");
+		jar.setDescription(
+			"Assembles a jar archive containing the Tag Library " +
+				"Documentation files for this project.");
+		jar.setGroup(BasePlugin.BUILD_GROUP);
+
+		TLDDocTask tlddocTask = (TLDDocTask)GradleUtil.getTask(
+			project, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);
+
+		jar.from(tlddocTask);
 
 		return jar;
 	}
@@ -470,6 +491,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		addDependenciesTestCompile(project);
 		addTaskJarJavadoc(project);
 		addTaskJarSources(project, testProject);
+		addTaskJarTLDDoc(project);
 		configureBasePlugin(project, portalRootDir);
 		configureConfigurations(project);
 		configureEclipse(project, portalTestConfiguration);

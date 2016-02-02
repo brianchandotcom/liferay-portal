@@ -25,7 +25,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Formats Liferay sources.
+ *
  * @author Raymond Augé
+ * @goal format-source
  */
 public class FormatSourceMojo extends AbstractMojo {
 
@@ -52,42 +55,72 @@ public class FormatSourceMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setAutoFix(boolean autoFix) {
 		_sourceFormatterArgs.setAutoFix(autoFix);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setBaseDir(String baseDir) {
 		_sourceFormatterArgs.setBaseDirName(baseDir);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setCopyright(String copyright) {
 		_sourceFormatterArgs.setCopyrightFileName(copyright);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setFileNames(String[] fileNames) {
 		_sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setFormatCurrentBranch(boolean formatCurrentBranch) {
 		_sourceFormatterArgs.setFormatCurrentBranch(formatCurrentBranch);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setFormatLatestAuthor(boolean formatLatestAuthor) {
 		_sourceFormatterArgs.setFormatLatestAuthor(formatLatestAuthor);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setFormatLocalChanges(boolean formatLocalChanges) {
 		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setPrintErrors(boolean printErrors) {
 		_sourceFormatterArgs.setPrintErrors(printErrors);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setUseProperties(boolean useProperties) {
 		_sourceFormatterArgs.setUseProperties(useProperties);
 	}

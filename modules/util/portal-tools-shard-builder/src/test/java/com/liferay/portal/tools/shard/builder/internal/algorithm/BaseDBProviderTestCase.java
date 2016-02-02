@@ -17,13 +17,17 @@ package com.liferay.portal.tools.shard.builder.internal.algorithm;
 import com.liferay.portal.tools.shard.builder.exporter.ShardExporter;
 import com.liferay.portal.tools.shard.builder.exporter.ShardExporterFactory;
 import com.liferay.portal.tools.shard.builder.internal.DBProvider;
-import com.liferay.portal.tools.shard.builder.test.util.DBManagerTestUtil;
 import com.liferay.portal.tools.shard.builder.test.util.DBProviderTestUtil;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -35,6 +39,16 @@ import org.junit.Test;
  */
 public abstract class BaseDBProviderTestCase {
 
+	public int executeUpdate(DataSource dataSource, String sql)
+		throws SQLException {
+
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql) ) {
+
+			return ps.executeUpdate();
+		}
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		dbProperties = DBProviderTestUtil.readProperties(
@@ -45,14 +59,12 @@ public abstract class BaseDBProviderTestCase {
 
 		dbProvider = (DBProvider)exporter;
 
-		DBManagerTestUtil.execute(
-			dbProvider.getDataSource(), getCreateTableStatement());
+		executeUpdate(dbProvider.getDataSource(), getCreateTableStatement());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		DBManagerTestUtil.execute(
-			dbProvider.getDataSource(), getDropTableStatement());
+		executeUpdate(dbProvider.getDataSource(), getDropTableStatement());
 	}
 
 	@Test
@@ -92,12 +104,6 @@ public abstract class BaseDBProviderTestCase {
 	}
 
 	protected abstract String getTestPropertiesFileName();
-
-	protected void insertIntoFoo(Object[] args) throws Exception {
-		DBManagerTestUtil.execute(
-			dbProvider.getDataSource(), "insert into foo values(?, ?, ?, ?)",
-			args);
-	}
 
 	protected static Properties dbProperties;
 	protected static DBProvider dbProvider;

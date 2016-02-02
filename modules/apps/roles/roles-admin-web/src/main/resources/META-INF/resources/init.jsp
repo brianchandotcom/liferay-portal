@@ -207,7 +207,7 @@ private boolean _isShowScope(HttpServletRequest request, Role role, String curMo
 
 		PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 
-		if ((curPortlet != null) && panelCategoryHelper.containsPortlet(curPortlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
+		if ((curPortlet != null) && !panelCategoryHelper.containsPortlet(curPortlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
 			showScope = false;
 		}
 	}

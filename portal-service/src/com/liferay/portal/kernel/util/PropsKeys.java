@@ -1831,14 +1831,6 @@ public interface PropsKeys {
 
 	public static final String RTL_CSS_EXCLUDED_PATHS_REGEXP = "rtl.css.excluded.paths.regexp";
 
-	public static final String SANDBOX_DEPLOY_DIR = "sandbox.deploy.dir";
-
-	public static final String SANDBOX_DEPLOY_ENABLED = "sandbox.deploy.enabled";
-
-	public static final String SANDBOX_DEPLOY_INTERVAL = "sandbox.deploy.interval";
-
-	public static final String SANDBOX_DEPLOY_LISTENERS = "sandbox.deploy.listeners";
-
 	public static final String SANITIZER_IMPL = "sanitizer.impl";
 
 	public static final String SCHEDULER_DESCRIPTION_MAX_LENGTH = "scheduler.description.max.length";

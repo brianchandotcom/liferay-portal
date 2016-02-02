@@ -24,7 +24,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class UpgradeTableBuilderTask extends Task {
+public class BuildUpgradeTableTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

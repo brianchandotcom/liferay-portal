@@ -186,6 +186,17 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<a class="layout-tree-edit" data-plid="{plid}" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit" onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="edit" unicode="<%= true %>" />')"><aui:icon image="cog" markupView="lexicon" /><span class="hide-accessible"><liferay-ui:message arguments="{label}" key="edit-x" /></span></a>
 </liferay-util:buffer>
 
+<c:if test="<%= layoutsTreeDisplayContext.isShowStagingProcessMessage() %>">
+	<div class="alert alert-default alert-dismissible" data-dismiss="alert" role="alert">
+		<button class="close" type="button">
+			<aui:icon image="times" markupView="lexicon" />
+			<span class="sr-only"><liferay-ui:message key="close" /></span>
+		</button>
+
+		<liferay-ui:message key="publication-process-in-progress-help" />
+	</div>
+</c:if>
+
 <liferay-layout:layouts-tree
 	expandFirstNode="<%= true %>"
 	groupId="<%= layoutsTreeDisplayContext.getSelGroupId() %>"

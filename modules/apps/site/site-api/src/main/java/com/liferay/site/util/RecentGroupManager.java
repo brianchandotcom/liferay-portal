@@ -60,11 +60,6 @@ public class RecentGroupManager {
 		return getRecentGroups(value);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	protected List<Group> getRecentGroups(String value) {
 		long[] groupIds = StringUtil.split(value, 0L);
 
@@ -87,9 +82,9 @@ public class RecentGroupManager {
 		return groups;
 	}
 
-	private String getRecentGroupsValue(HttpServletRequest request) {
-		return SessionClicks.get(
-			request, "com.liferay.site.admin.web.util_recentGroups", null);
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	private void _setRecentGroupsValue(
@@ -97,6 +92,11 @@ public class RecentGroupManager {
 
 		SessionClicks.put(
 			request, "com.liferay.site.admin.web.util_recentGroups", value);
+	}
+
+	private String getRecentGroupsValue(HttpServletRequest request) {
+		return SessionClicks.get(
+			request, "com.liferay.site.admin.web.util_recentGroups", null);
 	}
 
 	private GroupLocalService _groupLocalService;

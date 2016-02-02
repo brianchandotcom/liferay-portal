@@ -4,10 +4,10 @@
 
     <packaging>jar</packaging>
     <groupId>org.webjars.npm</groupId>
-    <artifactId>lfr-amd-loader</artifactId>
-    <version>1.3.5</version>
-    <name>lfr-amd-loader</name>
-    <description>WebJar for lfr-amd-loader</description>
+    <artifactId>liferay-amd-loader</artifactId>
+    <version>1.4.1</version>
+    <name>liferay-amd-loader</name>
+    <description>WebJar for liferay-amd-loader</description>
     <url>http://webjars.org</url>
 
     <properties>
@@ -15,10 +15,10 @@
     </properties>
 
     <scm>
-        <url>git://github.com/liferay/liferay-amd-loader.git</url>
-        <connection>git+https://github.com/ipeychev/lfr-amd-loader.git</connection>
-        <developerConnection>git+https://github.com/ipeychev/lfr-amd-loader.git</developerConnection>
-        <tag>v1.3.5</tag>
+        <url>git+https://github.com/liferay/liferay-amd-loader</url>
+        <connection>git+https://github.com/liferay/liferay-amd-loader.git</connection>
+        <developerConnection>git+https://github.com/liferay/liferay-amd-loader.git</developerConnection>
+        <tag>v1.4.1</tag>
     </scm>
 
     <developers>

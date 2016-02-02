@@ -16,6 +16,8 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction");
+String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
 boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll"));
 %>
 
@@ -24,3 +26,23 @@ boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-men
 		</div>
 	</c:if>
 </div>
+
+<aui:script require="metal-dropdown/src/Dropdown">
+	var Dropdown = metalDropdownSrcDropdown.default;
+
+	var iconMenuDropdown = new Dropdown(
+		{
+			alignElementSelector: '#<%= id %> .dropdown-toggle',
+			element: '#<%= id %>',
+			events: {
+				click: {
+					fn: function(event) {
+						iconMenuDropdown.expanded = false;
+					},
+					selector: 'li'
+				}
+			},
+			position: '<%= direction %>'
+		}
+	).render();
+</aui:script>

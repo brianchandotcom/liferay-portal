@@ -155,9 +155,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			es6ModulesSB.writeTo(writer);
 
 			writer.write("},\nfunction(error) {\nconsole.error(error);\n});");
-			writer.write("\n// ]]>\n</script>");
 		}
-		else if (!auiModulesSet.isEmpty()) {
+
+		if (!auiModulesSet.isEmpty()) {
 			writer.write("AUI().use(");
 
 			for (String use : auiModulesSet) {
@@ -171,8 +171,10 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 			auiModulesSB.writeTo(writer);
 
-			writer.write("});\n// ]]>\n</script>");
+			writer.write("});");
 		}
+
+		writer.write("\n// ]]>\n</script>");
 	}
 
 	public static enum ModulesType {

@@ -150,7 +150,7 @@ public class TaskCacheApplicator {
 								task);
 					}
 				}
-				else if ( _logger.isWarnEnabled()) {
+				else if (_logger.isWarnEnabled()) {
 					_logger.warn(
 						"Unable to remove skipped task dependency " +
 							taskDependency.getPath());

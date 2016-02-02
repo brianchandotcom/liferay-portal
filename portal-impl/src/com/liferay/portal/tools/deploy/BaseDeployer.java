@@ -689,7 +689,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		String excludes = StringPool.BLANK;
 
 		if (appServerType.equals(ServerDetector.JBOSS_ID) ||
-			appServerType.equals(ServerDetector.WILDFLY_ID )) {
+			appServerType.equals(ServerDetector.WILDFLY_ID)) {
 
 			excludes += "**/WEB-INF/lib/log4j.jar,";
 		}

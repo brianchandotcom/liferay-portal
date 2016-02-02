@@ -448,7 +448,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		try {
 			ps = connection.prepareStatement(
 				"select parentStructureId, definition, storageType from " +
-					"DDMStructure where structureId = ?" );
+					"DDMStructure where structureId = ?");
 
 			ps.setLong(1, structureId);
 

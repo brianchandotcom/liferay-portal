@@ -257,7 +257,7 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		StringBundler sb = new StringBundler(users.size());
 
-		for (int i = 0; i < users.size(); i++ ) {
+		for (int i = 0; i < users.size(); i++) {
 			User user = users.get(i);
 
 			sb.append(getUserCSV(user));

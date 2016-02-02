@@ -89,7 +89,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		return ddmStructure.getFullHierarchyDDMForm();
 	}
 
-	protected DDMForm getDDMFormTemplate(long formDDMTemplateId )
+	protected DDMForm getDDMFormTemplate(long formDDMTemplateId)
 		throws PortalException {
 
 		DDMTemplate ddmTemplate = ddmTemplateService.getTemplate(

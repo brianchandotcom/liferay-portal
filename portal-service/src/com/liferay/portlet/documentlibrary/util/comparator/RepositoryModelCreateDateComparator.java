@@ -59,7 +59,7 @@ public class RepositoryModelCreateDateComparator<T>
 	}
 
 	@Override
-	public int compare(T t1, T t2 ) {
+	public int compare(T t1, T t2) {
 		int value = 0;
 
 		Date createDate1 = getCreateDate(t1);

@@ -218,7 +218,7 @@ public class JournalFolderLocalServiceImpl
 			}
 		}
 
-		for (DDMStructureLink ddmStructureLink : ddmStructureLinks ) {
+		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
 			ddmStructureLinkLocalService.deleteStructureLink(
 				ddmStructureLink.getStructureLinkId());
 

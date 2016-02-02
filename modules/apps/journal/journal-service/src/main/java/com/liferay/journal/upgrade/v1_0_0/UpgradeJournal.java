@@ -274,8 +274,8 @@ public class UpgradeJournal extends UpgradeProcess {
 	protected void transformDateFieldValues(
 		List<Element> dynamicElementElements) {
 
-		if ( (dynamicElementElements == null) ||
-			dynamicElementElements.isEmpty() ) {
+		if ((dynamicElementElements == null) ||
+			dynamicElementElements.isEmpty()) {
 
 			return;
 		}

@@ -162,7 +162,7 @@ public class JSONFactoryTest {
 
 		Assert.assertNotNull(map);
 		Assert.assertEquals(3, map.size());
-		Assert.assertEquals( JSONFactoryUtil.class.getName(), map.get("class"));
+		Assert.assertEquals(JSONFactoryUtil.class.getName(), map.get("class"));
 		Assert.assertEquals("boo", map.get("foo"));
 
 		map = (Map<?, ?>)map.get("jsonFactory");

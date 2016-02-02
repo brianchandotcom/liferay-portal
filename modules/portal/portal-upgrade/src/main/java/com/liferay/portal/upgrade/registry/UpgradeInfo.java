@@ -51,7 +51,7 @@ public class UpgradeInfo {
 				upgradeInfo._fromSchemaVersionString) &&
 			Validator.equals(
 				_toSchemaVersionString, upgradeInfo._toSchemaVersionString) &&
-			Validator.equals( _upgradeStep, upgradeInfo._upgradeStep)) {
+			Validator.equals(_upgradeStep, upgradeInfo._upgradeStep)) {
 
 			return true;
 		}

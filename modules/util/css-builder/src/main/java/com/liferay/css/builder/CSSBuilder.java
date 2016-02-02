@@ -65,7 +65,7 @@ public class CSSBuilder {
 			dirNames.add(dirName);
 		}
 		else {
-			for (int i = 0;; i++ ) {
+			for (int i = 0;; i++) {
 				dirName = arguments.get("sass.dir." + i);
 
 				if (Validator.isNotNull(dirName)) {

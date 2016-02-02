@@ -88,7 +88,7 @@ public class MBSubscriptionSender
 	protected void sendNotification(User user) throws Exception {
 		sendEmailNotification(user);
 
-		if (currentUserId == user.getUserId() ) {
+		if (currentUserId == user.getUserId()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skip notification for user " + currentUserId);
 			}

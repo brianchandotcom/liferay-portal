@@ -140,7 +140,7 @@ public abstract class BaseDBProvider
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement preparedStatement = buildPreparedStatement(
 					connection, sql, companyId);
-				ResultSet resultSet = preparedStatement.executeQuery() ) {
+				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 

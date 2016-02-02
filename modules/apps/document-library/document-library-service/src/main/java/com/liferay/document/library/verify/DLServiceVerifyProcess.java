@@ -146,7 +146,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 
 		for (DLFileEntryMetadata dlFileEntryMetadata :
-				noStructuresDLFileEntryMetadatas ) {
+				noStructuresDLFileEntryMetadatas) {
 
 			deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
 		}

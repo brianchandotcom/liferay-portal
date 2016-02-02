@@ -30,7 +30,7 @@
 
 		<aui:input label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= MapUtil.getString(exportImportConfigurationSettingsMap, "remotePathContext", liveGroupTypeSettings.getProperty("remotePathContext")) %>' />
 
-		<aui:input label='<%= LanguageUtil.get(request, "remote-site-id" ) %>' name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(exportImportConfigurationSettingsMap, "remoteGroupId", liveGroupTypeSettings.getProperty("remoteGroupId")) %>' />
+		<aui:input label='<%= LanguageUtil.get(request, "remote-site-id") %>' name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(exportImportConfigurationSettingsMap, "remoteGroupId", liveGroupTypeSettings.getProperty("remoteGroupId")) %>' />
 
 		<aui:input name="remotePrivateLayout" type="hidden" value='<%= MapUtil.getBoolean(exportImportConfigurationSettingsMap, "remotePrivateLayout", privateLayout) %>' />
 	</aui:fieldset>

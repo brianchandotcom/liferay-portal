@@ -365,7 +365,7 @@ public class ServletResponseUtil {
 					inputStream, outputStream, range.getStart(),
 					range.getLength());
 			}
-			else if (ranges.size() > 1 ) {
+			else if (ranges.size() > 1) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Attempting to write multiple ranges");
 				}

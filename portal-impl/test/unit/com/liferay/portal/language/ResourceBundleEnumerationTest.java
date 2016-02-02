@@ -69,7 +69,7 @@ public class ResourceBundleEnumerationTest {
 
 		Assert.assertTrue(resourceBundleEnumeration.hasMoreElements());
 		Assert.assertEquals("key1", resourceBundleEnumeration.nextElement());
-		Assert.assertEquals( "key2", resourceBundleEnumeration.nextElement());
+		Assert.assertEquals("key2", resourceBundleEnumeration.nextElement());
 
 		try {
 			resourceBundleEnumeration.nextElement();

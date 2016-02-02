@@ -64,7 +64,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 		sb.append(TestPropsValues.getCompanyId());
 		sb.append(", ");
 		sb.append(TestPropsValues.getGroupId());
-		sb.append( ", '");
+		sb.append(", '");
 		sb.append(_OLD_CLASS_NAME);
 		sb.append("_POSTFIX', 'HASH', 1)");
 

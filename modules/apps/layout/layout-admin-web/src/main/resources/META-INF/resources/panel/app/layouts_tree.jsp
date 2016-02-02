@@ -21,7 +21,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 %>
 
 <liferay-ui:icon
-	cssClass="expand-pages-link"
+	cssClass="expand-pages-link icon-monospaced"
 	icon="expand"
 	id="expandPagesLink"
 	label="<%= false %>"

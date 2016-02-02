@@ -41,24 +41,11 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			TermCollector termCollector = termCollectors.get(i);
 
 			String curUserName = GetterUtil.getString(termCollector.getTerm());
-		%>
 
-			<c:if test="<%= userName.equals(curUserName) %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							text: '<%= HtmlUtil.escapeJS(curUserName) %>'
-						}
-					);
-				</aui:script>
-			</c:if>
-
-			<%
 			if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
 				break;
 			}
-			%>
+		%>
 
 			<li class="facet-value <%= userName.equals(curUserName) ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= curUserName %>" href="javascript:;">

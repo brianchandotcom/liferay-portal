@@ -77,20 +77,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 
 			TermCollector termCollector = termCollectors.get(i);
-		%>
 
-				<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
-					<aui:script use="liferay-token-list">
-						Liferay.Search.tokenList.add(
-							{
-								clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-								text: '<%= HtmlUtil.escapeJS(termCollector.getTerm()) %>'
-							}
-						);
-					</aui:script>
-				</c:if>
-
-		<%
 			int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
 
 			if (frequencyThreshold > termCollector.getFrequency()) {

@@ -58,20 +58,7 @@ if (dataJSONObject.has("values")) {
 
 		for (String assetType : assetTypes) {
 			TermCollector termCollector = facetCollector.getTermCollector(assetType);
-		%>
 
-			<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							text: '<%= HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, assetType)) %>'
-						}
-					);
-				</aui:script>
-			</c:if>
-
-		<%
 			int frequency = 0;
 
 			if (termCollector != null) {

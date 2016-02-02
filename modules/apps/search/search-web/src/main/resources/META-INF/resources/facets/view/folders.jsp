@@ -62,25 +62,11 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 			Document document = results.doc(0);
 
 			Field title = document.getField(Field.TITLE);
-		%>
 
-			<c:if test="<%= folderId == curFolderId %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							fieldValues: '<%= curFolderId %>',
-							text: '<%= HtmlUtil.escapeJS(title.getValue()) %>'
-						}
-					);
-				</aui:script>
-			</c:if>
-
-			<%
 			if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
 				break;
 			}
-			%>
+		%>
 
 			<li class="facet-value <%= (folderId == curFolderId) ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= curFolderId %>" href="javascript:;">

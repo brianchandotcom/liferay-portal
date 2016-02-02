@@ -87,20 +87,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			AssetCategory curAssetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
 
 			if (AssetCategoryPermission.contains(permissionChecker, curAssetCategory, ActionKeys.VIEW)) {
-		%>
 
-				<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
-					<aui:script use="liferay-token-list">
-						Liferay.Search.tokenList.add(
-							{
-								clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-								text: '<%= HtmlUtil.escapeJS(curAssetCategory.getTitle(locale)) %>'
-							}
-						);
-					</aui:script>
-				</c:if>
-
-				<%
 				int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
 
 				if (frequencyThreshold > termCollector.getFrequency()) {
@@ -108,7 +95,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 					continue;
 				}
-				%>
+		%>
 
 				<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
 					<a data-value="<%= HtmlUtil.escapeAttribute(String.valueOf(assetCategoryId)) %>" href="javascript:;">

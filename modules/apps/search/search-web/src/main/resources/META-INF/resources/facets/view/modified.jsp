@@ -179,35 +179,6 @@ if (fieldParamSelection.equals("0")) {
 	</aui:field-wrapper>
 </div>
 
-<c:if test='<%= !fieldParamSelection.equals("0") %>'>
-
-	<%
-	String fieldName = renderResponse.getNamespace() + facet.getFieldId();
-	%>
-
-	<aui:script use="liferay-token-list">
-
-		<%
-		String tokenLabel = modifiedLabel;
-
-		if (fieldParamSelection.equals(String.valueOf(index + 1))) {
-			String fromDateLabel = HtmlUtil.escape(fieldParamFrom);
-			String toDateLabel = HtmlUtil.escape(fieldParamTo);
-
-			tokenLabel = UnicodeLanguageUtil.format(request, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"}, false);
-		}
-		%>
-
-		Liferay.Search.tokenList.add(
-			{
-				clearFields: '<%= HtmlUtil.escape(HtmlUtil.escapeAttribute(fieldName)) %>',
-				fieldValues: '<%= HtmlUtil.escape(HtmlUtil.escapeAttribute(fieldName)) + "selection|0" %>',
-				html: '<%= tokenLabel %>'
-			}
-		);
-	</aui:script>
-</c:if>
-
 <aui:script>
 	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>clearFacet(selection) {
 		var form = AUI.$(document.<portlet:namespace />fm);

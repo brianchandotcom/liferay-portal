@@ -52,24 +52,11 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			if (group == null) {
 				continue;
 			}
-		%>
 
-			<c:if test="<%= groupId == curGroupId %>">
-				<aui:script use="liferay-token-list">
-					Liferay.Search.tokenList.add(
-						{
-							fieldValues: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "|0" %>',
-							text: '<%= HtmlUtil.escapeJS(group.getDescriptiveName(locale)) %>'
-						}
-					);
-				</aui:script>
-			</c:if>
-
-			<%
 			if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
 				break;
 			}
-			%>
+		%>
 
 			<li class="facet-value <%= groupId == curGroupId ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= curGroupId %>" href="javascript:;">

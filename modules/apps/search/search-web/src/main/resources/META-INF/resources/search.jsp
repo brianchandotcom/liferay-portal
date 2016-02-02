@@ -50,48 +50,6 @@ String format = ParamUtil.getString(request, "format");
 		</aui:field-wrapper>
 	</aui:fieldset>
 
-	<div class="lfr-token-list" id="<portlet:namespace />searchTokens">
-		<div class="lfr-token-list-content" id="<portlet:namespace />searchTokensContent"></div>
-	</div>
-
-	<aui:script use="liferay-token-list">
-		Liferay.namespace('Search').tokenList = new Liferay.TokenList(
-			{
-				after: {
-					close: function(event) {
-						var item = event.item;
-
-						var fieldValues = item.attr('data-fieldValues').split();
-
-						var form = A.one('#<portlet:namespace />fm');
-
-						fieldValues.forEach(
-							function(item, index) {
-								var values = item.split('|');
-
-								var field = form.one('#' + values[0]);
-
-								if (field) {
-									field.val(values[1]);
-								}
-							}
-						);
-
-						var clearFields = A.all('#' + event.item.attr('data-clearFields').split().join(',#'));
-
-						clearFields.remove();
-
-						if (fieldValues.length || clearFields.size()) {
-							submitForm(document.<portlet:namespace />fm);
-						}
-					}
-				},
-				boundingBox: '#<portlet:namespace />searchTokens',
-				contentBox: '#<portlet:namespace />searchTokensContent'
-			}
-		).render();
-	</aui:script>
-
 	<%@ include file="/main_search.jspf" %>
 
 	<c:if test="<%= searchDisplayContext.isDisplayOpenSearchResults() %>">

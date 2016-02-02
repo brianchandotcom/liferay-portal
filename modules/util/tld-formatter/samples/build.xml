@@ -10,6 +10,6 @@
 	<taskdef classpathref="tld.formatter.classpath" resource="com/liferay/tld/formatter/ant/taskdefs.properties" />
 
 	<target name="format-tld">
-		<tld-formatter />
+		<format-tld />
 	</target>
 </project>

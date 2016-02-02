@@ -23,9 +23,12 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Invoke Liferay XML Formatter to format files.
+ *
  * @author Andrea Di Giorgi
+ * @goal format-xml
  */
-public class XMLFormatterMojo extends AbstractMojo {
+public class FormatXMLMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
@@ -37,16 +40,22 @@ public class XMLFormatterMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setFileName(String fileName) {
 		_xmlFormatterArgs.setFileName(fileName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setStripComments(boolean stripComments) {
 		_xmlFormatterArgs.setStripComments(stripComments);
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}
+	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
 	protected File baseDir;

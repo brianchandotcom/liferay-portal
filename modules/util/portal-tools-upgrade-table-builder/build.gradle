@@ -1,3 +1,16 @@
+apply plugin: "com.liferay.maven.plugin.builder"
+
+buildPluginDescriptor {
+	ext {
+		autoClean = false
+	}
+
+	finalizedBy formatSource
+	finalizedBy formatXML
+
+	goalPrefix = "liferay"
+}
+
 dependencies {
 	// @formatter:off
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
@@ -5,6 +18,10 @@ dependencies {
 	// @formatter:on
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+}
+
+formatSource {
+	mustRunAfter formatXML
 }
 
 liferay {

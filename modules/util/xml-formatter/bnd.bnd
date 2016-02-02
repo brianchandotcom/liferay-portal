@@ -1,6 +1,6 @@
 Bundle-Name: Liferay XML Formatter
 Bundle-SymbolicName: com.liferay.xml.formatter
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
@@ -20,6 +20,8 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
@@ -29,7 +31,5 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProvider.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class
 Main-Class: com.liferay.xml.formatter.XMLFormatter

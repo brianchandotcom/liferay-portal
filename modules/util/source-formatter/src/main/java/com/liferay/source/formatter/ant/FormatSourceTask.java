@@ -35,7 +35,7 @@ import org.apache.tools.ant.types.FileSet;
 /**
  * @author Raymond Augé
  */
-public class SourceFormatterTask extends Task {
+public class FormatSourceTask extends Task {
 
 	public void addFileset(FileSet fileSet) {
 		_fileSets.add(fileSet);

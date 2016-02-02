@@ -12,28 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.tools.wsdd.builder.maven;
+package com.liferay.portal.tools.wsdd.builder.ant;
 
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderInvoker;
 
-import java.io.File;
-
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class WSDDBuilderMojo extends AbstractMojo {
+public class BuildWSDDTask extends Task {
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute() throws BuildException {
 		try {
-			WSDDBuilderInvoker.invoke(baseDir, _wsddBuilderArgs);
+			Project project = getProject();
+
+			WSDDBuilderInvoker.invoke(project.getBaseDir(), _wsddBuilderArgs);
 		}
 		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			throw new BuildException(e);
 		}
 	}
 
@@ -56,12 +57,6 @@ public class WSDDBuilderMojo extends AbstractMojo {
 	public void setServiceNamespace(String serviceNamespace) {
 		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
 	}
-
-	/**
-	 * @parameter default-value="${project.basedir}
-	 * @readonly
-	 */
-	protected File baseDir;
 
 	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();
 

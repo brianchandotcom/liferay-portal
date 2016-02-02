@@ -4,6 +4,11 @@ buildPluginDescriptor {
 	ext {
 		autoClean = false
 	}
+
+	finalizedBy formatSource
+	finalizedBy formatXML
+
+	goalPrefix = "liferay"
 }
 
 dependencies {
@@ -16,4 +21,8 @@ dependencies {
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 	provided group: "org.slf4j", name: "slf4j-simple", version: "1.6.6"
 	provided group: "org.zeroturnaround", name: "zt-zip", version: "1.8"
+}
+
+formatSource {
+	mustRunAfter formatXML
 }

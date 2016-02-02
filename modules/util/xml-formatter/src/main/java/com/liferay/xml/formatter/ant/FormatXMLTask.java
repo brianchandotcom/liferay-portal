@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.upgrade.table.builder.ant;
+package com.liferay.xml.formatter.ant;
 
-import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderArgs;
-import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderInvoker;
+import com.liferay.xml.formatter.XMLFormatterArgs;
+import com.liferay.xml.formatter.XMLFormatterInvoker;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -24,34 +24,28 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class UpgradeTableBuilderTask extends Task {
+public class FormatXMLTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {
 		try {
 			Project project = getProject();
 
-			UpgradeTableBuilderInvoker.invoke(
-				project.getBaseDir(), _upgradeTableBuilderArgs);
+			XMLFormatterInvoker.invoke(project.getBaseDir(), _xmlFormatterArgs);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);
 		}
 	}
 
-	public void setBaseDirName(String baseDirName) {
-		_upgradeTableBuilderArgs.setBaseDirName(baseDirName);
+	public void setFileName(String fileName) {
+		_xmlFormatterArgs.setFileName(fileName);
 	}
 
-	public void setOsgiModule(boolean osgiModule) {
-		_upgradeTableBuilderArgs.setOsgiModule(osgiModule);
+	public void setStripComments(boolean stripComments) {
+		_xmlFormatterArgs.setStripComments(stripComments);
 	}
 
-	public void setUpgradeTableDirName(String upgradeTableDirName) {
-		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
-	}
-
-	private final UpgradeTableBuilderArgs _upgradeTableBuilderArgs =
-		new UpgradeTableBuilderArgs();
+	private final XMLFormatterArgs _xmlFormatterArgs = new XMLFormatterArgs();
 
 }

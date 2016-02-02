@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.deployment.helper</artifactId>
-				<version>1.0.0</version>
+				<version>1.0.3</version>
 				<configuration>
 					<deploymentFileNames>license.xml</deploymentFileNames>
 					<deploymentPath>deploy</deploymentPath>

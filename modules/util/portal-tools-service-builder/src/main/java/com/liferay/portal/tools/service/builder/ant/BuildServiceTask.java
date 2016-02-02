@@ -12,47 +12,40 @@
  * details.
  */
 
-package com.liferay.portal.tools.service.builder.maven;
+package com.liferay.portal.tools.service.builder.ant;
 
 import com.liferay.portal.tools.service.builder.ServiceBuilder;
 import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 import com.liferay.portal.tools.service.builder.ServiceBuilderInvoker;
 
-import java.io.File;
-
-import java.util.Map;
 import java.util.Set;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
 
 /**
  * @author Raymond Augé
  */
-public class ServicebuilderMojo extends AbstractMojo {
-
-	public ServicebuilderMojo() {
-		_serviceBuilderArgs = new ServiceBuilderArgs();
-	}
+public class BuildServiceTask extends Task {
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute() throws BuildException {
 		try {
-			@SuppressWarnings("rawtypes")
-			Map pluginContext = getPluginContext();
+			Project project = getProject();
 
 			ServiceBuilder serviceBuilder = ServiceBuilderInvoker.invoke(
-				baseDir, _serviceBuilderArgs);
+				project.getBaseDir(), _serviceBuilderArgs);
 
 			Set<String> modifiedFileNames =
 				serviceBuilder.getModifiedFileNames();
 
-			pluginContext.put(
+			project.addIdReference(
 				ServiceBuilderArgs.OUTPUT_KEY_MODIFIED_FILES,
 				modifiedFileNames);
 		}
 		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			throw new BuildException(e);
 		}
 	}
 
@@ -174,12 +167,7 @@ public class ServicebuilderMojo extends AbstractMojo {
 		_serviceBuilderArgs.setTestDirName(testDirName);
 	}
 
-	/**
-	 * @parameter default-value="${project.basedir}
-	 * @readonly
-	 */
-	protected File baseDir;
-
-	private final ServiceBuilderArgs _serviceBuilderArgs;
+	private final ServiceBuilderArgs _serviceBuilderArgs =
+		new ServiceBuilderArgs();
 
 }

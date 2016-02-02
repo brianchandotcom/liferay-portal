@@ -34,6 +34,8 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/KeyValuePair.class,\
@@ -46,8 +48,6 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProvider.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/ant/AntUtil*,\
 	@../../../util-java/util-java.jar!/com/liferay/util/ant/DeleteTask.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/ant/Java2WsddTask.class,\

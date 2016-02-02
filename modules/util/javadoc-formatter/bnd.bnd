@@ -30,6 +30,8 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CharPool.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
@@ -43,8 +45,6 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Tuple.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProvider.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jDocUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class,\

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.wsdd.builder.ant;
+package com.liferay.portal.tools.upgrade.table.builder.ant;
 
-import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
-import com.liferay.portal.tools.wsdd.builder.WSDDBuilderInvoker;
+import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderArgs;
+import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderInvoker;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -24,40 +24,34 @@ import org.apache.tools.ant.Task;
 /**
  * @author Andrea Di Giorgi
  */
-public class WSDDBuilderTask extends Task {
+public class BuildUpgradeTableTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {
 		try {
 			Project project = getProject();
 
-			WSDDBuilderInvoker.invoke(project.getBaseDir(), _wsddBuilderArgs);
+			UpgradeTableBuilderInvoker.invoke(
+				project.getBaseDir(), _upgradeTableBuilderArgs);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);
 		}
 	}
 
-	public void setClassPath(String classPath) {
-		_wsddBuilderArgs.setClassPath(classPath);
+	public void setBaseDirName(String baseDirName) {
+		_upgradeTableBuilderArgs.setBaseDirName(baseDirName);
 	}
 
-	public void setInputFileName(String inputFileName) {
-		_wsddBuilderArgs.setFileName(inputFileName);
+	public void setOsgiModule(boolean osgiModule) {
+		_upgradeTableBuilderArgs.setOsgiModule(osgiModule);
 	}
 
-	public void setOutputDirName(String outputDirName) {
-		_wsddBuilderArgs.setOutputPath(outputDirName);
+	public void setUpgradeTableDirName(String upgradeTableDirName) {
+		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
 	}
 
-	public void setServerConfigFileName(String serverConfigFileName) {
-		_wsddBuilderArgs.setServerConfigFileName(serverConfigFileName);
-	}
-
-	public void setServiceNamespace(String serviceNamespace) {
-		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
-	}
-
-	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();
+	private final UpgradeTableBuilderArgs _upgradeTableBuilderArgs =
+		new UpgradeTableBuilderArgs();
 
 }

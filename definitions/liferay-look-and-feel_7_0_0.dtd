@@ -210,13 +210,13 @@ The default value is "" which means this is not used.
 <!--
 The templates-extension value sets the file extension of the files located in
 the templates directory. If you specify the value "jsp", then the portal will
-look for files such as portal_nav.jsp in the templates directory. If you specify
-the value "vm", then the portal will look for files such as portal_nav.vm in the
-templates directory. Specifying "vm" means you can use Velocity to create your
-theme. New extensions will be supported in the future to allow for even more
-flexibility in the creation of themes.
+look for files such as portal_normal.jsp in the templates directory. If you
+specify the value "ftl", then the portal will look for files such as
+portal_normal.ftl in the templates directory. Specifying "ftl" means you can use
+Freemarker to create your theme. New extensions will be supported in the future
+to allow for even more flexibility in the creation of themes.
 
-The default value is "vm".
+The default value is "ftl".
 -->
 <!ELEMENT template-extension (#PCDATA)>
 

@@ -17,9 +17,6 @@ package com.liferay.portal.deploy.auto;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 
@@ -27,37 +24,6 @@ import java.io.File;
  * @author Jorge Ferrer
  */
 public class WebAutoDeployListener extends BaseAutoDeployListener {
-
-	@Override
-	public int deploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
-
-		File file = autoDeploymentContext.getFile();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking deploy for " + file.getPath());
-		}
-
-		if (!isDeployable(file)) {
-			return AutoDeployer.CODE_NOT_APPLICABLE;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(getPluginPathInfoMessage(file));
-		}
-
-		AutoDeployer autoDeployer = buildAutoDeployer();
-
-		int code = autoDeployer.autoDeploy(autoDeploymentContext);
-
-		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
-			_log.info(
-				getSuccessMessage(file) +
-					". Deployment will start in a few seconds.");
-		}
-
-		return code;
-	}
 
 	@Override
 	protected AutoDeployer buildAutoDeployer() {
@@ -81,8 +47,5 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 
 		return pluginAutoDeployListenerHelper.isWebPlugin();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WebAutoDeployListener.class);
 
 }

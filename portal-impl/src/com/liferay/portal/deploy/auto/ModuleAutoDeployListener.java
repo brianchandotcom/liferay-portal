@@ -21,9 +21,6 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,37 +39,6 @@ import java.util.jar.Manifest;
  * @author Manuel de la Peña
  */
 public class ModuleAutoDeployListener extends BaseAutoDeployListener {
-
-	@Override
-	public int deploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
-
-		File file = autoDeploymentContext.getFile();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking deploy for " + file.getPath());
-		}
-
-		if (!isDeployable(file)) {
-			return AutoDeployer.CODE_NOT_APPLICABLE;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(getPluginPathInfoMessage(file));
-		}
-
-		AutoDeployer autoDeployer = buildAutoDeployer();
-
-		int code = autoDeployer.autoDeploy(autoDeploymentContext);
-
-		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
-			_log.info(
-				getSuccessMessage(file) +
-					". Deployment will start in a few seconds.");
-		}
-
-		return code;
-	}
 
 	@Override
 	protected AutoDeployer buildAutoDeployer() {
@@ -143,8 +109,5 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
 		return Validator.isNotNull(bundleSymbolicName);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ModuleAutoDeployListener.class);
 
 }

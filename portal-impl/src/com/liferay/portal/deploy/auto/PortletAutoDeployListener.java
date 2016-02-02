@@ -17,7 +17,6 @@ package com.liferay.portal.deploy.auto;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,37 +34,6 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 	public PortletAutoDeployListener() {
 		_autoDeployer = new PortletAutoDeployer();
-	}
-
-	@Override
-	public int deploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
-
-		File file = autoDeploymentContext.getFile();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking deploy for " + file.getPath());
-		}
-
-		if (!isDeployable(file)) {
-			return AutoDeployer.CODE_NOT_APPLICABLE;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(getPluginPathInfoMessage(file));
-		}
-
-		AutoDeployer autoDeployer = buildAutoDeployer();
-
-		int code = autoDeployer.autoDeploy(autoDeploymentContext);
-
-		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
-			_log.info(
-				getSuccessMessage(file) +
-					". Deployment will start in a few seconds.");
-		}
-
-		return code;
 	}
 
 	@Override

@@ -214,7 +214,9 @@ look for files such as portal_normal.jsp in the templates directory. If you
 specify the value "ftl", then the portal will look for files such as
 portal_normal.ftl in the templates directory. Specifying "ftl" means you can use
 Freemarker to create your theme. New extensions will be supported in the future
-to allow for even more flexibility in the creation of themes.
+to allow for even more flexibility in the creation of themes. Support for
+Velocity has been deprecated and won't be available in future releases of the
+portal.
 
 The default value is "ftl".
 -->

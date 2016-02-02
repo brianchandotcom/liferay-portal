@@ -64,6 +64,6 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		return JSModuleConfigGeneratorPlugin.class;
 	}
 
-	private static final String _VERSION = "1.1.7";
+	private static final String _VERSION = "1.1.10";
 
 }

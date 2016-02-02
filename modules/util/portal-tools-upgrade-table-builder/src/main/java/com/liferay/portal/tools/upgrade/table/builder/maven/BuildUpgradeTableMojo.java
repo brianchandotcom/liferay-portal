@@ -23,7 +23,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
+ * Builds upgrade table files.
+ *
  * @author Andrea Di Giorgi
+ * @goal build-upgrade-table
  */
 public class BuildUpgradeTableMojo extends AbstractMojo {
 
@@ -38,20 +41,29 @@ public class BuildUpgradeTableMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setBaseDirName(String baseDirName) {
 		_upgradeTableBuilderArgs.setBaseDirName(baseDirName);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setOsgiModule(boolean osgiModule) {
 		_upgradeTableBuilderArgs.setOsgiModule(osgiModule);
 	}
 
+	/**
+	 * @parameter
+	 */
 	public void setUpgradeTableDirName(String upgradeTableDirName) {
 		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}
+	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
 	protected File baseDir;

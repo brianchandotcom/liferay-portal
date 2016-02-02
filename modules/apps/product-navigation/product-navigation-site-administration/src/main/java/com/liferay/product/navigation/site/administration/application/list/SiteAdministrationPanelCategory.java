@@ -83,6 +83,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
 		request.setAttribute(
 			SiteAdministrationWebKeys.GROUP_PROVIDER, _groupProvider);
 		request.setAttribute(
@@ -90,7 +91,6 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		request.setAttribute(
 			SiteAdministrationWebKeys.RECENT_GROUP_MANAGER,
 			_recentGroupManager);
-		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
 
 		return super.includeHeader(request, response);
 	}

@@ -124,7 +124,7 @@ for details on developing and submitting your contributions.
 For transparency and insight into Liferay's release cycle, and for striving to
 maintain backward compatibility, we make a strong effort to uphold the
 versioning for our software as described in [Understanding Liferay's
-Releases](https://dev.liferay.com/discover/deployment/-/knowledge_base/6-2/understanding-liferays-releases).
+Releases](https://dev.liferay.com/discover/deployment/-/knowledge_base/7-0/liferay-installation-overview#understanding-liferays-releases).
 
 ## Bug Reporting and Feature Requests
 

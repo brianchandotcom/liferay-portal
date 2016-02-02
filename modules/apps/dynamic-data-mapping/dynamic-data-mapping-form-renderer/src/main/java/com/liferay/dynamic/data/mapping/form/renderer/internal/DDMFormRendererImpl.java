@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -150,33 +151,14 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return html.concat(javaScript);
 	}
 
-	protected Map<String, String> getLanguageStringsMap(Locale locale) {
+	protected Map<String, String> getLanguageStringsMap(
+		ResourceBundle resourceBundle) {
+
 		Map<String, String> stringsMap = new HashMap<>();
-
-		List<ResourceBundle> resourceBundles = new ArrayList<>();
-
-		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
-
-		resourceBundles.add(portalResourceBundle);
-
-		collectResourceBundles(getClass(), resourceBundles, locale);
-
-		ResourceBundle[] resourceBundlesArray = resourceBundles.toArray(
-			new ResourceBundle[resourceBundles.size()]);
-
-		ResourceBundle resourceBundle = new AggregateResourceBundle(
-			resourceBundlesArray);
 
 		stringsMap.put("next", LanguageUtil.get(resourceBundle, "next"));
 		stringsMap.put(
 			"previous", LanguageUtil.get(resourceBundle, "previous"));
-		stringsMap.put(
-			"required", LanguageUtil.get(resourceBundle, "required"));
-		stringsMap.put(
-			"requiredFieldsWarningMessage",
-			LanguageUtil.get(
-				resourceBundle, "all-the-required-fields-are-marked-with"));
 
 		return stringsMap;
 	}
@@ -210,6 +192,51 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		ddmFormRendererHelper.setDDMFormEvaluator(_ddmFormEvaluator);
 
 		return ddmFormRendererHelper.getRenderedDDMFormFieldsMap();
+	}
+
+	protected String getRequiredFieldsWarningMessageHTML(
+		ResourceBundle resourceBundle) {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<label class=\"required-warning\">");
+
+		String requiredMarkHTML = getRequiredMarkHTML(resourceBundle);
+
+		sb.append(
+			LanguageUtil.format(
+				resourceBundle, "all-fields-marked-with-x-are-required",
+				requiredMarkHTML, false));
+		sb.append("</label>");
+
+		return sb.toString();
+	}
+
+	protected String getRequiredMarkHTML(ResourceBundle resourceBundle) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<span class=\"icon-asterisk text-warning\">");
+		sb.append("<span class=\"hide-accessible\">");
+		sb.append(LanguageUtil.get(resourceBundle, "required"));
+		sb.append("</span></span>");
+
+		return sb.toString();
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		List<ResourceBundle> resourceBundles = new ArrayList<>();
+
+		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
+
+		resourceBundles.add(portalResourceBundle);
+
+		collectResourceBundles(getClass(), resourceBundles, locale);
+
+		ResourceBundle[] resourceBundlesArray = resourceBundles.toArray(
+			new ResourceBundle[resourceBundles.size()]);
+
+		return new AggregateResourceBundle(resourceBundlesArray);
 	}
 
 	protected String getTemplateNamespace(DDMFormLayout ddmFormLayout) {
@@ -289,7 +316,14 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		template.put("readOnly", ddmFormRenderingContext.isReadOnly());
-		template.put("strings", getLanguageStringsMap(locale));
+
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		template.put(
+			"requiredFieldsWarningMessageHTML",
+			getRequiredFieldsWarningMessageHTML(resourceBundle));
+
+		template.put("strings", getLanguageStringsMap(resourceBundle));
 
 		String submitLabel = GetterUtil.getString(
 			ddmFormRenderingContext.getSubmitLabel(),

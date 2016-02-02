@@ -118,17 +118,11 @@
  * Prints the form fields required message warning.
  *
  * @param showRequiredFieldsWarning
- * @param strings
+ * @param requiredFieldsWarningMessageHTML
  */
 {template .required_warning_message}
 	{if $showRequiredFieldsWarning}
-		<label class="required-warning">
-			{$strings.requiredFieldsWarningMessage}
-
-			<span class="icon-asterisk text-warning">
-				<span class="hide-accessible">{$strings.required}</span>
-			</span>
-		</label>
+		{$requiredFieldsWarningMessageHTML|noAutoescape}
 	{/if}
 {/template}
 
@@ -138,6 +132,7 @@
  * @param containerId
  * @param pages
  * @param readOnly
+ * @param requiredFieldsWarningMessageHTML
  * @param submitLabel
  * @param strings
  */
@@ -173,7 +168,7 @@
 
 						{call ddm.required_warning_message data="all"}
 							{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
-							{param strings: $strings /}
+							{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
 						{/call}
 
 						{call ddm.form_rows data="all"}
@@ -205,7 +200,7 @@
  *
  * @param containerId
  * @param pages
- * @param strings
+ * @param requiredFieldsWarningMessageHTML
  */
 {template .simple_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
@@ -215,7 +210,7 @@
 			{foreach $page in $pages}
 				{call ddm.required_warning_message data="all"}
 					{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
-					{param strings: $strings /}
+					{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
 				{/call}
 
 				{call ddm.form_rows data="all"}
@@ -231,7 +226,7 @@
  *
  * @param containerId
  * @param pages
- * @param strings
+ * @param requiredFieldsWarningMessageHTML
  */
 {template .tabbed_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
@@ -248,7 +243,7 @@
 				{foreach $page in $pages}
 					{call ddm.required_warning_message data="all"}
 						{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
-						{param strings: $strings /}
+						{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
 					{/call}
 
 					<div class="tab-pane {if isFirst($page)}active{/if}">

@@ -527,7 +527,6 @@ AUI.add(
 								if (tooltipTextNode) {
 									tooltipTextNode.html(A.Escape.html(tip));
 								}
-
 							}
 
 							labelNode.append(tipNode);

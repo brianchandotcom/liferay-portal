@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
-import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployDir;
-import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
@@ -124,10 +122,6 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Hot deploy
 
 		HotDeployUtil.unregisterListeners();
-
-		// Sandbox deploy
-
-		SandboxDeployUtil.unregisterDir(SandboxDeployDir.DEFAULT_NAME);
 	}
 
 	protected void shutdownLevel3() {

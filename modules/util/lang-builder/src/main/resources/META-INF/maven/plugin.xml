@@ -19,7 +19,7 @@
 			<aggregator>false</aggregator>
 			<requiresOnline>false</requiresOnline>
 			<inheritedByDefault>true</inheritedByDefault>
-			<implementation>com.liferay.lang.builder.maven.LangBuilderMojo</implementation>
+			<implementation>com.liferay.lang.builder.maven.BuildLangMojo</implementation>
 			<language>java</language>
 			<instantiationStrategy>per-lookup</instantiationStrategy>
 			<executionStrategy>once-per-session</executionStrategy>

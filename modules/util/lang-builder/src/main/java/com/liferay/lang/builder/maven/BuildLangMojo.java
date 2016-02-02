@@ -25,7 +25,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * @author Andrea Di Giorgi
  */
-public class LangBuilderMojo extends AbstractMojo {
+public class BuildLangMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {

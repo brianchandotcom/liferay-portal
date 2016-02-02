@@ -62,7 +62,7 @@ public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 				public File call() throws Exception {
 					return new File(
 						getNodeDir(),
-						"node_modules/lfr-module-config-generator/bin/" +
+						"node_modules/liferay-module-config-generator/bin/" +
 							"index.js");
 				}
 

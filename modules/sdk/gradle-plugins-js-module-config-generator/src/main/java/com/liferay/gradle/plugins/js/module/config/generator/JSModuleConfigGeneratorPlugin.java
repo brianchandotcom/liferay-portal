@@ -122,7 +122,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 				DownloadNodeModuleTask.class);
 
 		downloadLfrModuleConfigGeneratorTask.setModuleName(
-			"lfr-module-config-generator");
+			"liferay-module-config-generator");
 
 		downloadLfrModuleConfigGeneratorTask.setModuleVersion(
 			new Callable<String>() {

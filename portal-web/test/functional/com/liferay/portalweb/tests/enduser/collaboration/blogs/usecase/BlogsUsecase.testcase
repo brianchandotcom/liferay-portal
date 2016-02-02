@@ -1645,6 +1645,8 @@
 
 		<execute macro="BlogsEntry#publish" />
 
+		<execute function="AssertClick" locator1="Blogs#MY_PENDING_ENTRIES_PANEL_COLLAPSED" value1="My Pending Entries" />
+
 		<execute macro="BlogsEntry#gotoScheduledEditPG">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>

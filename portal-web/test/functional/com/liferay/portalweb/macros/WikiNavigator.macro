@@ -1,4 +1,10 @@
 <definition>
+	<command name="gotoAddPageViaPG">
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_PAGE" value1="Add Page" />
+	</command>
+
 	<command name="gotoAllPagesCP">
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
@@ -14,7 +20,7 @@
 	</command>
 
 	<command name="gotoAllPagesPGViaWD">
-		<execute function="AssertClick" locator1="PGWikidisplay#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 	</command>
 
 	<command name="gotoBodyLinkPG">
@@ -147,7 +153,7 @@
 	</command>
 
 	<command name="gotoPGViaWD">
-		<execute function="AssertClick" locator1="PGWikidisplay#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 

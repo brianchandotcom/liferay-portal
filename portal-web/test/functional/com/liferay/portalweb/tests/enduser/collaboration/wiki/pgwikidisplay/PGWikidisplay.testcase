@@ -152,7 +152,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWikidisplay#ADD_CHILD_PAGE" value1="Add Child Page" />
+		<execute function="AssertClick" locator1="Wiki#LINK_ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="This page does not exist yet. Use the form below to create it." />
 
@@ -406,7 +406,7 @@
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageName" value="${wikiPageTitle}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="ViewConfigurationSetupPageFrontPage" priority="4">

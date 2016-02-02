@@ -24,13 +24,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CHECKBOX</td>
+	<td>//ul[contains(@id,'blogEntriesSearchContainer') and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_ENTRIES_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'panel') and contains(@role,'tab')]//a[contains(@data-toggle,'collapse') and contains(.,'My Pending Entries')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS</td>
 	<td>//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CHECKBOX</td>
-	<td>//ul[contains(@id,'blogEntriesSearchContainer') and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
+	<td>PERMISSIONS_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class, 'alert-danger') and contains(.,'You do not have the required permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,11 +51,6 @@
 <tr>
 	<td>UNSUBSCRIBE_LINK</td>
 	<td>//div[contains(@class,'subscribe')]/span/a/span[contains(.,'Unsubscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class, 'alert-danger') and contains(.,'You do not have the required permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,6 +186,27 @@
 <tr>
 	<td>RECENT_BLOGGER_DATE</td>
 	<td>//div[@class='blogger-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULED_ENTRY-->
+<tr>
+	<td>SCHEDULED_ENTRY_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]/strong[contains(.,'Scheduled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULED_ENTRY_TITLE</td>
+	<td>//tr[contains(@data-qa-id,'row')]//a[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULED_ENTRY_VERTICAL_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/.//td/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

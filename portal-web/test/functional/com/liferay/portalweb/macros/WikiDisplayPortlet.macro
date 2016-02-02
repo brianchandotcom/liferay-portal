@@ -1,34 +1,4 @@
 <definition>
-	<command name="configureScopePG">
-		<if>
-			<condition function="IsElementPresent#isVisible" locator1="Message#INFO_1" />
-			<then>
-				<execute function="AssertClick" locator1="Message#INFO_1" value1="Please configure this portlet to make it visible to all users." />
-			</then>
-			<elseif>
-				<condition function="IsElementNotPresent" locator1="Message#INFO_1" />
-				<then>
-					<execute function="Click" locator1="PGWikidisplay#OPTIONS_ICON"  />
-					<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Scope" />
-		</execute>
-
-		<execute function="Select" locator1="Select#SCOPE" value1="${siteName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGWikidisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-
-		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="configureSetupPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Wiki Display" />

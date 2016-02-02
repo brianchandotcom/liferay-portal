@@ -149,63 +149,6 @@
 		</execute>
 	</command>
 
-	<command name="AddPageWithCustomContentHeading" priority="4">
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="Creole" />
-		</execute>
-
-		<execute macro="CKEditor#selectHeading">
-			<var name="format" value="Heading 1" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Page Content Body Header" />
-		</execute>
-
-		<execute macro="CKEditor#typeEnterKey" />
-
-		<execute macro="CKEditor#selectHeading">
-			<var name="format" value="Normal" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Page Content Body" />
-		</execute>
-
-		<execute macro="WikiEntry#publish" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiTable#viewEntry">
-			<var name="draftStatus" value="Approved" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoEntryViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiPage#viewPageContentBodyHeader">
-			<var name="wikiPageContent" value="Page Content Body Header" />
-		</execute>
-
-		<execute macro="WikiPage#viewPageContentBody">
-			<var name="wikiPageContent" value="Page Content Body" />
-		</execute>
-	</command>
-
 	<command name="ConfigurePortletDisplaySettings" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />

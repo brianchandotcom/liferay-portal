@@ -374,7 +374,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaEditDocument#UNIQUE_DOCUMENT_ERROR_MESSAGE" value1="Please enter a unique document name." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaEditDocument#UNIQUE_DOCUMENT_ERROR_MESSAGE" value1="Please enter a unique document name." />
 			</then>
 			<elseif>
 				<equals arg1="${dmDocument}" arg2="Invalid" />

@@ -321,32 +321,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SCHEDULED_ENTRY-->
-<tr>
-	<td>SCHEDULED_ENTRY_STATUS</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'scheduled')]/div/h3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULED_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'scheduled')]/div/div[@class='entry-title' and contains(.,'${key_entryTitle}')]/h2/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULED_ENTRY_CONTENT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'scheduled') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULED_ENTRY_EDIT</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'scheduled') and contains(.,'${key_entryTitle}')]//ul[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -199,7 +199,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewScheduledPG">
+		<execute function="AssertClick" locator1="Blogs#MY_PENDING_ENTRIES_PANEL_COLLAPSED" value1="My Pending Entries" />
+
+		<execute macro="BlogsEntry#viewScheduledPost">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>

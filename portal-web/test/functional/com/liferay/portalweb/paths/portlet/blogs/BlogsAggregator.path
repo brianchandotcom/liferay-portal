@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
+	<td>//h2[contains(@class,'portlet-title')]</td>
 	<td></td>
 </tr>
 <tr>

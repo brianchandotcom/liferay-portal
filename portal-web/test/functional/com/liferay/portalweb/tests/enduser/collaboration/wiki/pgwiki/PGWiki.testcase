@@ -628,7 +628,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
 		<execute macro="WikiEntry#selectPageFormat">
 			<var name="pageFormat" value="MediaWiki" />
@@ -710,9 +710,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
-
-		<execute function="Click" locator1="Wiki#ADD_PAGE" />
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -736,7 +734,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -836,7 +834,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -956,7 +954,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -1101,78 +1099,6 @@
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="Wiki Page2 Content" />
 			<var name="wikiPageTitle" value="Wiki Page2 Title" />
-		</execute>
-	</command>
-
-	<command name="PreviewEditedPage" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-
-		<execute macro="WikiEntry#publish" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited Wiki Page Content" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#PREVIEW" value1="Preview" />
-
-		<execute macro="WikiEntry#previewPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#previewPageContent">
-			<var name="wikiPageContent" value="Edited Wiki Page Content" />
-		</execute>
-	</command>
-
-	<command name="PreviewPage" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesPG" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
-
-		<execute macro="WikiEntry#addPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#PREVIEW" value1="Preview" />
-
-		<execute macro="WikiEntry#previewPageTitle">
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="WikiEntry#previewPageContent">
-			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 	</command>
 
@@ -1464,7 +1390,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -1503,12 +1429,14 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
 		<execute macro="WikiNavigator#gotoEntryViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
 		<execute macro="WikiEntry#viewPageContentBody">
-			<var name="wikiPageContent" value="Edited Wiki Page Content" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
 		</execute>
 	</command>
 </definition>

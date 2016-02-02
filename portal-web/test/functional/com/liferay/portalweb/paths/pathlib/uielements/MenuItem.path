@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PAGE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_POLL</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Poll')]</td>
 	<td></td>

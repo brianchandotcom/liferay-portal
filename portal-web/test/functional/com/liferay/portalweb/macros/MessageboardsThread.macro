@@ -377,7 +377,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 		<execute function="Click" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -404,7 +404,9 @@
 	</command>
 
 	<command name="gotoPG">
+		<var name="key_postsNumber" value="${postCount}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
+		<var name="key_userName" value="${startedByUserName}" />
 
 		<if>
 			<isset var="messageBoardsThreadURL" />
@@ -418,8 +420,8 @@
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
-				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" value1="${startedByUserName}" />
-				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="${postCount}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_STARTED_BY" value1="${startedByUserName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_POSTS" value1="${postCount} Post" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_LAST_POST" value1="${lastPostUserName}" />
 				<execute function="Click" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 			</else>
@@ -1130,13 +1132,14 @@
 	</command>
 
 	<command name="viewReplyPG">
+		<var name="key_postsNumber" value="${postCount}" />
 		<var name="key_threadBody" value="${threadBody}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 		<var name="key_userName" value="${userName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="${postCount}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_STARTED_BY" value1="${userName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_POSTS" value1="${postCount} Post" />
 
 		<if>
 			<equals arg1="${guestReply}" arg2="true" />
@@ -1357,10 +1360,10 @@
 
 		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_MY_POSTS" value1="My Posts" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_STATUS" value1="Pending" />
 
-		<execute function="AssertClick" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#THREAD_USERNAME" value1="${userName}" />

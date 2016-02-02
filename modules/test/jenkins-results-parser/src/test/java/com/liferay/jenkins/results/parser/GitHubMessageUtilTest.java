@@ -153,9 +153,13 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		String localURLString = JenkinsResultsParserUtil.getLocalURL(urlString);
+		while (urlString.endsWith("/")) {
+			urlString = urlString.substring(0, urlString.length() - 1);
+		}
 
-		File sampleDir = new File(localURLString.substring("file:".length()));
+		File sampleDir = new File(
+			dependenciesDir,
+			urlString.substring(urlString.lastIndexOf("/") + 1));
 
 		Project project = getProject(
 			new File(sampleDir, "sample.properties"), "", sampleDir.getPath());

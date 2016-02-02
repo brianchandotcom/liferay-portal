@@ -230,8 +230,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getLocalURL(String remoteURL) {
-		remoteURL = remoteURL.replace(
-			"${user.dir}", System.getProperty("user.dir"));
+		if (remoteURL.contains("${dependencies.url}")) {
+			remoteURL = fixFileName(remoteURL);
+
+			remoteURL = remoteURL.replace(
+				"${dependencies.url}", DEPENDENCIES_ROOT_URL);
+		}
 
 		if (remoteURL.startsWith("file")) {
 			remoteURL = fixFileName(remoteURL);
@@ -378,6 +382,10 @@ public class JenkinsResultsParserUtil {
 
 		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
+
+	protected static final String DEPENDENCIES_ROOT_URL =
+		"http://mirrors/github.com/liferay/" +
+			"liferay-jenkins-results-parser-samples-ee/";
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");

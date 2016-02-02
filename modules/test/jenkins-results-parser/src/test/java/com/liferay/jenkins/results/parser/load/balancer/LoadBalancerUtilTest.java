@@ -152,6 +152,8 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	protected Properties getTestProperties(String baseInvocationHostName) {
+		Class<?> clazz = getClass();
+
 		Properties properties = getDownloadProperties(baseInvocationHostName);
 
 		for (Object key : properties.keySet()) {
@@ -164,7 +166,7 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 			if (value.contains("http://")) {
 				value = value.replace(
 					"http://",
-					"file:" + dependenciesDir.getAbsolutePath() + "/" +
+					"${dependencies.url}" + clazz.getSimpleName() + "/" +
 						baseInvocationHostName + "/");
 
 				properties.put(key, value);

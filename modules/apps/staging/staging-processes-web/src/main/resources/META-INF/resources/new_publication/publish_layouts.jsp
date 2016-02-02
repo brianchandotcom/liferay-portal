@@ -293,7 +293,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 			<aui:button cssClass="btn-lg" id="publishButton" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
 
-			<aui:button cssClass="btn-lg" href="<%= basePortletURL %>" type="reset" value="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= basePortletURL %>" type="cancel" />
 		</aui:button-row>
 	</div>
 </aui:form>

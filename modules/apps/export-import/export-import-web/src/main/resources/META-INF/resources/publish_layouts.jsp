@@ -328,7 +328,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 								%>
 
 								<aui:fieldset>
-									<aui:input name="name" />
+									<aui:input name="name" placeholder="process-name-placeholder" />
 								</aui:fieldset>
 
 								<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="date">

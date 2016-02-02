@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
-import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployDir;
-import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployListener;
-import com.liferay.portal.kernel.deploy.sandbox.SandboxDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -127,35 +124,6 @@ public class GlobalStartupAction extends SimpleAction {
 		return _hotDeployListeners;
 	}
 
-	public static List<SandboxDeployListener> getSandboxDeployListeners() {
-		List<SandboxDeployListener> sandboxDeployListeners = new ArrayList<>();
-
-		String[] sandboxDeployListenerClassNames = PropsUtil.getArray(
-			PropsKeys.SANDBOX_DEPLOY_LISTENERS);
-
-		for (String sandboxDeployListenerClassName :
-				sandboxDeployListenerClassNames) {
-
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Instantiating " + sandboxDeployListenerClassName);
-				}
-
-				SandboxDeployListener sandboxDeployListener =
-					(SandboxDeployListener)InstanceFactory.newInstance(
-						sandboxDeployListenerClassName);
-
-				sandboxDeployListeners.add(sandboxDeployListener);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
-
-		return sandboxDeployListeners;
-	}
-
 	@Override
 	public void run(String[] ids) {
 
@@ -206,44 +174,6 @@ public class GlobalStartupAction extends SimpleAction {
 
 		for (HotDeployListener hotDeployListener : getHotDeployListeners()) {
 			HotDeployUtil.registerListener(hotDeployListener);
-		}
-
-		// Sandobox deploy
-
-		try {
-			if (PrefsPropsUtil.getBoolean(
-					PropsKeys.SANDBOX_DEPLOY_ENABLED,
-					PropsValues.SANDBOX_DEPLOY_ENABLED)) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Registering sandbox deploy directories");
-				}
-
-				File deployDir = new File(
-					PrefsPropsUtil.getString(
-						PropsKeys.SANDBOX_DEPLOY_DIR,
-						PropsValues.SANDBOX_DEPLOY_DIR));
-				long interval = PrefsPropsUtil.getLong(
-					PropsKeys.SANDBOX_DEPLOY_INTERVAL,
-					PropsValues.SANDBOX_DEPLOY_INTERVAL);
-
-				List<SandboxDeployListener> sandboxDeployListeners =
-					getSandboxDeployListeners();
-
-				SandboxDeployDir sandboxDeployDir = new SandboxDeployDir(
-					SandboxDeployDir.DEFAULT_NAME, deployDir, interval,
-					sandboxDeployListeners);
-
-				SandboxDeployUtil.registerDir(sandboxDeployDir);
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info("Not registering sandbox deploy directories");
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e);
 		}
 
 		// Authentication

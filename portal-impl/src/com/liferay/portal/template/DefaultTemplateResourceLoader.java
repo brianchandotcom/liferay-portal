@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.deploy.sandbox.SandboxHandler;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
@@ -285,9 +284,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 				if (templateResource != null) {
 					if ((_modificationCheckInterval != 0) &&
-						(!_name.equals(TemplateConstants.LANG_TYPE_VM) ||
-						 !templateId.contains(
-							 SandboxHandler.SANDBOX_MARKER))) {
+						!_name.equals(TemplateConstants.LANG_TYPE_VM)) {
 
 						templateResource = new CacheTemplateResource(
 							templateResource);
@@ -311,6 +308,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	private void _updateCache(
 		String templateId, TemplateResource templateResource) {
+
+		if (!(templateResource instanceof CacheTemplateResource)) {
+			return;
+		}
 
 		if (templateResource == null) {
 			_singleVMPortalCache.put(

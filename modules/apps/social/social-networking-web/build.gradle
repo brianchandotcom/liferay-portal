@@ -5,6 +5,7 @@ dependencies {
 	compile group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:social:social-networking-service")
+	compile project(":frontend:frontend-taglib")
 }
 
 liferay {

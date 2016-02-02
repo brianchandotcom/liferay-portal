@@ -9,6 +9,7 @@ dependencies {
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "rome", name: "rome", version: "1.0"
+	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion

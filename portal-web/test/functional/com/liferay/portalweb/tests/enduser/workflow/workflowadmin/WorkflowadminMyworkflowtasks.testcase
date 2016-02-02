@@ -78,8 +78,11 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="WorkflowComment#addCP">
+		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 
@@ -87,8 +90,11 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCP">
+		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="WorkflowComment#view">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>
@@ -114,8 +120,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="WorkflowComment#addCP">
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
+
+		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 
@@ -123,8 +134,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCP">
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
+
+		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="WorkflowComment#view">
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>
@@ -170,20 +186,28 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="WorkflowComment#addCP">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="${workflowComment}" />
-			<var name="workflowTaskCompleted" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCP">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<execute macro="Workflow#gotoAssetViaTableTitle">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="WorkflowComment#view">
 			<var name="workflowComment" value="${workflowComment}" />
-			<var name="workflowTaskCompleted" value="true" />
 		</execute>
 	</command>
 

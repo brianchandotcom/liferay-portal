@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.display.context;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.exception.NoSuchLayoutSetBranchException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -32,6 +33,7 @@ import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.util.HashMap;
@@ -258,10 +260,6 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 	public boolean isShowStagingProcessMessage() throws PortalException {
 		Group group = getSelGroup();
 
-		if (group.isStagingGroup()) {
-			return false;
-		}
-
 		if (!GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), group,
 				ActionKeys.PUBLISH_STAGING)) {
@@ -269,13 +267,25 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			return false;
 		}
 
-		// TO DO by Mate
+		Group backgroundTaskExcutorGroup = null;
 
-		/*
-		if (there is a staging process for this site in progress) {
+		if (group.isStagingGroup()) {
+			backgroundTaskExcutorGroup = getLiveGroup();
+		}
+		else {
+			backgroundTaskExcutorGroup = getStagingGroup();
+		}
+
+		int incompleteBackgroundTaskCount =
+			BackgroundTaskManagerUtil.getBackgroundTasksCount(
+				backgroundTaskExcutorGroup.getGroupId(),
+				BackgroundTaskExecutorNames.
+					LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR,
+				false);
+
+		if (incompleteBackgroundTaskCount > 0) {
 			return true;
 		}
-		*/
 
 		return false;
 	}

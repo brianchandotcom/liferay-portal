@@ -43,6 +43,8 @@ public interface PanelApp extends PanelEntry {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 
+	public void setGroupProvider(GroupProvider groupProvider);
+
 	public void setPortlet(Portlet portlet);
 
 }

@@ -14,7 +14,9 @@
 
 package com.liferay.layout.admin.web.display.context;
 
+import com.liferay.application.list.GroupProvider;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -31,13 +33,9 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.site.util.LatentGroupManagerUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Julio Camarero
@@ -54,6 +52,9 @@ public class BaseLayoutDisplayContext {
 
 		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
+			LayoutAdminWebKeys.GROUP_PROVIDER);
 	}
 
 	public PortletURL getAddLayoutURL(long selPlid, Boolean privateLayout) {
@@ -245,17 +246,11 @@ public class BaseLayoutDisplayContext {
 		_selGroup = themeDisplay.getScopeGroup();
 
 		if (_selGroup.isControlPanel()) {
-			_selGroup = LatentGroupManagerUtil.getLatentGroup(getSession());
+			_selGroup = groupProvider.getGroup(
+				PortalUtil.getHttpServletRequest(liferayPortletRequest));
 		}
 
 		return _selGroup;
-	}
-
-	protected HttpSession getSession() {
-		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
-			PortalUtil.getHttpServletRequest(liferayPortletRequest));
-
-		return request.getSession();
 	}
 
 	protected Group getStagingGroup() {
@@ -268,6 +263,7 @@ public class BaseLayoutDisplayContext {
 		return _stagingGroup;
 	}
 
+	protected final GroupProvider groupProvider;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final ThemeDisplay themeDisplay;

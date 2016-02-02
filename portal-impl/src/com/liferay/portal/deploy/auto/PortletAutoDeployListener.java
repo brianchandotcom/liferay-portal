@@ -42,27 +42,34 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
 		AutoDeployer autoDeployer = null;
 
-		if (isMatchingFile(
-				file, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
+		if (pluginAutoDeployListenerHelper.isMatchingFile(
+				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
 
 			autoDeployer = _autoDeployer;
 		}
-		else if (isMatchingFile(file, "index_mvc.jsp")) {
+		else if (pluginAutoDeployListenerHelper.isMatchingFile(
+					"index_mvc.jsp")) {
+
 			autoDeployer = getMvcDeployer();
 		}
-		else if (isMatchingFile(file, "index.php")) {
+		else if (pluginAutoDeployListenerHelper.isMatchingFile("index.php")) {
 			autoDeployer = getPhpDeployer();
 		}
-		else if (!isExtPlugin(file) && !isHookPlugin(file) &&
-				 !isMatchingFile(
-					 file, "WEB-INF/liferay-layout-templates.xml") &&
-				 !isThemePlugin(file) && !isWebPlugin(file) &&
+		else if (!pluginAutoDeployListenerHelper.isExtPlugin() &&
+				 !pluginAutoDeployListenerHelper.isHookPlugin() &&
+				 !pluginAutoDeployListenerHelper.isMatchingFile(
+					 "WEB-INF/liferay-layout-templates.xml") &&
+				 !pluginAutoDeployListenerHelper.isThemePlugin() &&
+				 !pluginAutoDeployListenerHelper.isWebPlugin() &&
 				 file.getName().endsWith(".war")) {
 
 			if (_log.isInfoEnabled()) {

@@ -38,11 +38,14 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 
 		File file = autoDeploymentContext.getFile();
 
+		PluginAutoDeployListenerHelper pluginAutoDeployListenerHelper =
+			new PluginAutoDeployListenerHelper(file);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isWebPlugin(file)) {
+		if (!pluginAutoDeployListenerHelper.isWebPlugin()) {
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 

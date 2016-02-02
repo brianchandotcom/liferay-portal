@@ -42,7 +42,7 @@ public class RecentGroupManager {
 	}
 
 	public void addRecentGroup(HttpServletRequest request, long groupId) {
-		String value = _getRecentGroupsValue(request);
+		String value = getRecentGroupsValue(request);
 
 		List<Long> groupIds = ListUtil.fromArray(
 			ArrayUtil.toLongArray(StringUtil.split(value, 0L)));
@@ -55,9 +55,9 @@ public class RecentGroupManager {
 	}
 
 	public List<Group> getRecentGroups(HttpServletRequest request) {
-		String value = _getRecentGroupsValue(request);
+		String value = getRecentGroupsValue(request);
 
-		return _getRecentGroups(value);
+		return getRecentGroups(value);
 	}
 
 	@Reference(unbind = "-")
@@ -65,7 +65,7 @@ public class RecentGroupManager {
 		_groupLocalService = groupLocalService;
 	}
 
-	private List<Group> _getRecentGroups(String value) {
+	protected List<Group> getRecentGroups(String value) {
 		long[] groupIds = StringUtil.split(value, 0L);
 
 		if (ArrayUtil.isEmpty(groupIds)) {
@@ -87,7 +87,7 @@ public class RecentGroupManager {
 		return groups;
 	}
 
-	private String _getRecentGroupsValue(HttpServletRequest request) {
+	private String getRecentGroupsValue(HttpServletRequest request) {
 		return SessionClicks.get(request, _KEY_RECENT_GROUPS, null);
 	}
 

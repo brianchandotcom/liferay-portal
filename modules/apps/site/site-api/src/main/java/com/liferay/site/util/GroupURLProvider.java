@@ -40,8 +40,6 @@ public class GroupURLProvider {
 	public String getGroupAdministrationURL(
 		Group group, PortletRequest portletRequest) {
 
-		PortletURL groupAdministrationURL = null;
-
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry, _panelCategoryRegistry);
 
@@ -53,9 +51,10 @@ public class GroupURLProvider {
 			themeDisplay.getPermissionChecker(), group);
 
 		if (Validator.isNotNull(portletId)) {
-			groupAdministrationURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, group, portletId, 0, 0,
-				PortletRequest.RENDER_PHASE);
+			PortletURL groupAdministrationURL =
+				PortalUtil.getControlPanelPortletURL(
+					portletRequest, group, portletId, 0, 0,
+					PortletRequest.RENDER_PHASE);
 
 			if (groupAdministrationURL != null) {
 				return groupAdministrationURL.toString();

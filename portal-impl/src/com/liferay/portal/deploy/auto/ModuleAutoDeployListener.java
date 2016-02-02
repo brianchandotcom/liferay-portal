@@ -62,7 +62,7 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copied module for " + file.getPath());
+			_log.info(getPluginPathInfoMessage(file));
 		}
 
 		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
@@ -76,6 +76,11 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected String getPluginPathInfoMessage(File file) {
+		return "Copied module for " + file.getPath();
 	}
 
 	@Override

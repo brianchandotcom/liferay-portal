@@ -50,7 +50,7 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copying layout templates for " + file.getPath());
+			_log.info(getPluginPathInfoMessage(file));
 		}
 
 		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
@@ -65,6 +65,11 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected String getPluginPathInfoMessage(File file) {
+		return "Copying layout templates for " + file.getPath();
 	}
 
 	@Override

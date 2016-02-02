@@ -27,6 +27,8 @@ import java.io.File;
  */
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
+	protected abstract String getPluginPathInfoMessage(File file);
+
 	protected abstract boolean isDeployable(File file)
 		throws AutoDeployException;
 

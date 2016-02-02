@@ -49,7 +49,7 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Extracting Liferay package for " + file.getPath());
+			_log.info(getPluginPathInfoMessage(file));
 		}
 
 		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
@@ -63,6 +63,11 @@ public class LiferayPackageAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected String getPluginPathInfoMessage(File file) {
+		return "Extracting Liferay package for " + file.getPath();
 	}
 
 	@Override

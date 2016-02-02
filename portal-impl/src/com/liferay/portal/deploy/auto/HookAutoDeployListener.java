@@ -48,7 +48,7 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copying hook plugin for " + file.getPath());
+			_log.info(getPluginPathInfoMessage(file));
 		}
 
 		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
@@ -62,6 +62,11 @@ public class HookAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected String getPluginPathInfoMessage(File file) {
+		return "Copying hook plugin for " + file.getPath();
 	}
 
 	@Override

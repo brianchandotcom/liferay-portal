@@ -49,7 +49,7 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Copying themes for " + file.getPath());
+			_log.info(getPluginPathInfoMessage(file));
 		}
 
 		AutoDeployer autoDeployer = wrapAutodeployer(_autoDeployer);
@@ -63,6 +63,11 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 		}
 
 		return code;
+	}
+
+	@Override
+	protected String getPluginPathInfoMessage(File file) {
+		return "Copying themes for " + file.getPath();
 	}
 
 	@Override

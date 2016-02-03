@@ -1996,7 +1996,7 @@
 		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Staging Test Page" />
+			<var name="pageName" value="Test Page Name 1" />
 			<var name="siteName" value="Community Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>

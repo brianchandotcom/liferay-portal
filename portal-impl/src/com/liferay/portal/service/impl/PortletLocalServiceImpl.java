@@ -1088,9 +1088,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	protected void initPortletAddToPagePermissions(Portlet portlet)
 		throws PortalException {
 
-		long companyId = portlet.getCompanyId();
-		String name = portlet.getRootPortletId();
-
 		if (portlet.isSystem()) {
 			return;
 		}
@@ -1101,25 +1098,26 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return;
 		}
 
-		int scope = ResourceConstants.SCOPE_COMPANY;
-		String primKey = String.valueOf(companyId);
-		String actionId = ActionKeys.ADD_TO_PAGE;
-
 		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
-			name);
+			portlet.getRootPortletId());
+
+		String actionId = ActionKeys.ADD_TO_PAGE;
 
 		if (actionIds.contains(actionId)) {
 			for (String roleName : roleNames) {
-				Role role = roleLocalService.getRole(companyId, roleName);
+				Role role = roleLocalService.getRole(
+					portlet.getCompanyId(), roleName);
 
 				resourcePermissionLocalService.addResourcePermission(
-					companyId, name, scope, primKey, role.getRoleId(),
+					portlet.getCompanyId(), portlet.getRootPortletId(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(portlet.getCompanyId()), role.getRoleId(),
 					actionId);
 			}
 		}
 
 		updatePortlet(
-			companyId, portlet.getPortletId(), StringPool.BLANK,
+			portlet.getCompanyId(), portlet.getPortletId(), StringPool.BLANK,
 			portlet.isActive());
 	}
 
@@ -1127,49 +1125,47 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		throws PortalException {
 
 		long companyId = portlet.getCompanyId();
-		String portletName = portlet.getRootPortletId();
+		String rootPortletId = portlet.getRootPortletId();
+		
+		int count = resourcePermissionLocalService.getResourcePermissionsCount(
+			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
+			rootPortletId);
 
-		if (resourcePermissionLocalService.getResourcePermissionsCount(
-				companyId, portletName, ResourceConstants.SCOPE_INDIVIDUAL,
-				portletName) > 0) {
-
+		if (count > 0) {
 			return;
 		}
 
-		List<String> groupActions =
-			ResourceActionsUtil.getPortletResourceGroupDefaultActions(
-				portletName);
-
 		Role siteMemberRole = roleLocalService.getRole(
 			companyId, RoleConstants.SITE_MEMBER);
+		List<String> groupActionIds =
+			ResourceActionsUtil.getPortletResourceGroupDefaultActions(
+				rootPortletId);
 
 		resourcePermissionLocalService.setResourcePermissions(
-			companyId, portletName, ResourceConstants.SCOPE_INDIVIDUAL,
-			portletName, siteMemberRole.getRoleId(),
-			groupActions.toArray(new String[0]));
+			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
+			rootPortletId, siteMemberRole.getRoleId(),
+			groupActionIds.toArray(new String[0]));
 
 		Role guestRole = roleLocalService.getRole(
 			companyId, RoleConstants.GUEST);
-
 		List<String> guestActions =
 			ResourceActionsUtil.getPortletResourceGuestDefaultActions(
-				portletName);
+				rootPortletId);
 
 		resourcePermissionLocalService.setResourcePermissions(
-			companyId, portletName, ResourceConstants.SCOPE_INDIVIDUAL,
-			portletName, guestRole.getRoleId(),
+			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
+			rootPortletId, guestRole.getRoleId(),
 			guestActions.toArray(new String[0]));
 
 		Role ownerRole = roleLocalService.getRole(
 			companyId, RoleConstants.OWNER);
-
-		List<String> ownerActions =
-			ResourceActionsUtil.getPortletResourceActions(portletName);
+		List<String> ownerActionIds =
+			ResourceActionsUtil.getPortletResourceActions(rootPortletId);
 
 		resourcePermissionLocalService.setOwnerResourcePermissions(
-			companyId, portletName, ResourceConstants.SCOPE_INDIVIDUAL,
-			portletName, ownerRole.getRoleId(), 0,
-			ownerActions.toArray(new String[0]));
+			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
+			rootPortletId, ownerRole.getRoleId(), 0,
+			ownerActionIds.toArray(new String[0]));
 	}
 
 	protected void readLiferayDisplay(

@@ -1,10 +1,6 @@
 Bundle-Name: Liferay Configuration Admin Web
 Bundle-SymbolicName: com.liferay.configuration.admin.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.dynamic.data.mapping.form.renderer,\
-	com.liferay.dynamic.data.mapping.form.values.factory,\
-	*
 Include-Resource:\
 	WEB-INF=src/main/resources/WEB-INF,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\

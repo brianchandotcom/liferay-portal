@@ -25,7 +25,7 @@ if (row != null) {
 	folder = (JournalFolder)row.getObject();
 }
 else {
-	folder = (JournalFolder)request.getAttribute("view_entries.jsp-folder");
+	folder = (JournalFolder)request.getAttribute("info_panel.jsp-folder");
 }
 
 boolean folderSelected = GetterUtil.getBoolean(request.getAttribute("view_entries.jsp-folderSelected"));

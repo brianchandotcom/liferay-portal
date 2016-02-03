@@ -65,6 +65,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,6 +77,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -340,6 +342,26 @@ public class ActionUtil {
 		return article;
 	}
 
+	public static List<JournalArticle> getArticles(ResourceRequest request)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(request, "groupId");
+
+		String[] articleIds = ParamUtil.getStringValues(
+			request, "rowIdsJournalArticle");
+
+		List<JournalArticle> articles = new ArrayList<>();
+
+		for (String articleId : articleIds) {
+			JournalArticle article = JournalArticleServiceUtil.getArticle(
+				groupId, articleId);
+
+			articles.add(article);
+		}
+
+		return articles;
+	}
+
 	public static JournalFeed getFeed(HttpServletRequest request)
 		throws Exception {
 
@@ -395,6 +417,23 @@ public class ActionUtil {
 			portletRequest);
 
 		return getFolder(request);
+	}
+
+	public static List<JournalFolder> getFolders(ResourceRequest request)
+		throws Exception {
+
+		long[] folderIds = ParamUtil.getLongValues(
+			request, "rowIdsJournalFolder");
+
+		List<JournalFolder> folders = new ArrayList<>();
+
+		for (long folderId : folderIds) {
+			JournalFolder folder = JournalFolderServiceUtil.getFolder(folderId);
+
+			folders.add(folder);
+		}
+
+		return folders;
 	}
 
 	public static Map<String, byte[]> getImages(String content, Fields fields)

@@ -485,6 +485,8 @@ public interface WebKeys {
 
 	public static final String REQUESTED_LAYOUT = "REQUESTED_LAYOUT";
 
+	public static final String RESOURCE_BUNDLE_LOADER = "RESOURCE_BUNDLE_LOADER";
+
 	public static final String ROLE = "ROLE";
 
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";

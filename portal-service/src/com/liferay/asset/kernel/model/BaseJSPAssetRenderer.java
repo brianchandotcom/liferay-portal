@@ -23,8 +23,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -33,6 +32,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Julio Camarero
@@ -60,7 +62,14 @@ public abstract class BaseJSPAssetRenderer<T>
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(jspPath);
 
+		ResourceBundleLoader resourceBundleLoader =
+			(ResourceBundleLoader)request.getAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER);
+
 		try {
+			request.setAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER, getResourceBundleLoader());
+
 			requestDispatcher.include(request, response);
 
 			return true;
@@ -69,6 +78,10 @@ public abstract class BaseJSPAssetRenderer<T>
 			_log.error("Unable to include JSP " + jspPath, se);
 
 			throw new IOException("Unable to include " + jspPath, se);
+		}
+		finally {
+			request.setAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
 		}
 	}
 

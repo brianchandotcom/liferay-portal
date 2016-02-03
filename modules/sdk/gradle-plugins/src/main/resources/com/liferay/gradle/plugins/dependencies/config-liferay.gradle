@@ -73,8 +73,8 @@ liferay {
 			startExecutable = project.properties["app.server.tomcat.start.executable"] ?: "catalina${->fileSuffixBat}"
 			startExecutableArgs = ["run"]
 			stopExecutable = project.properties["app.server.tomcat.stop.executable"] ?: "shutdown${->fileSuffixBat}"
-			version = project.properties["app.server.tomcat.version"] ?: "7.0.62"
-			zipUrl = project.properties["app.server.tomcat.zip.url"] ?: "http://archive.apache.org/dist/tomcat/tomcat-7/v${->liferay.appServers.tomcat.version}/bin/apache-tomcat-${->liferay.appServers.tomcat.version}.zip"
+			version = project.properties["app.server.tomcat.version"] ?: "8.0.30"
+			zipUrl = project.properties["app.server.tomcat.zip.url"] ?: "http://archive.apache.org/dist/tomcat/tomcat-8/v${->liferay.appServers.tomcat.version}/bin/apache-tomcat-${->liferay.appServers.tomcat.version}.zip"
 		}
 
 		weblogic {

@@ -15,10 +15,14 @@
 package com.liferay.product.navigation.site.administration.application.list;
 
 import com.liferay.application.list.BaseJSPPanelCategory;
+import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.product.navigation.site.administration.constants.SiteAdministrationWebKeys;
+import com.liferay.site.util.GroupURLProvider;
+import com.liferay.site.util.RecentGroupManager;
 
 import java.io.IOException;
 
@@ -80,8 +84,30 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		throws IOException {
 
 		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+		request.setAttribute(
+			SiteAdministrationWebKeys.GROUP_PROVIDER, _groupProvider);
+		request.setAttribute(
+			SiteAdministrationWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
+		request.setAttribute(
+			SiteAdministrationWebKeys.RECENT_GROUP_MANAGER,
+			_recentGroupManager);
 
 		return super.includeHeader(request, response);
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupProvider(GroupProvider groupProvider) {
+		_groupProvider = groupProvider;
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupURLProvider(GroupURLProvider groupURLProvider) {
+		_groupURLProvider = groupURLProvider;
+	}
+
+	@Reference(unbind = "-")
+	public void setRecentGroupManager(RecentGroupManager recentGroupManager) {
+		_recentGroupManager = recentGroupManager;
 	}
 
 	@Override
@@ -92,5 +118,9 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	private GroupProvider _groupProvider;
+	private GroupURLProvider _groupURLProvider;
+	private RecentGroupManager _recentGroupManager;
 
 }

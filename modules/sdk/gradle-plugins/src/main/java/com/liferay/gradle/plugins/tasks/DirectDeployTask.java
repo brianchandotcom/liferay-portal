@@ -61,7 +61,6 @@ public class DirectDeployTask extends BasePortalToolsTask {
 
 		args.add(path + "/util-bridges.jar");
 		args.add(path + "/util-java.jar");
-		args.add(path + "/util-taglib.jar");
 
 		return args;
 	}

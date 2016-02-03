@@ -16,8 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/new_publication/navigation.jsp" servletContext="<%= application %>" />
-
 <div class="container-fluid-1280" id="<portlet:namespace />newPublicationContainer">
 	<liferay-util:include page="/new_publication/publish_layouts.jsp" servletContext="<%= application %>" />
 </div>

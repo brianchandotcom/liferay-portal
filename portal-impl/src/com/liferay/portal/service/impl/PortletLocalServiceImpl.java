@@ -1126,7 +1126,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		long companyId = portlet.getCompanyId();
 		String rootPortletId = portlet.getRootPortletId();
-		
+
 		int count = resourcePermissionLocalService.getResourcePermissionsCount(
 			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
 			rootPortletId);

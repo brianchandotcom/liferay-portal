@@ -7110,6 +7110,9 @@ public class PortalImpl implements Portal {
 		return windowState;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void addDefaultResource(
 			long companyId, Layout layout, Portlet portlet,
@@ -7121,6 +7124,9 @@ public class PortalImpl implements Portal {
 		addRootModelResource(companyId, groupId, portlet);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void addDefaultResource(
 			long companyId, long groupId, Layout layout, Portlet portlet,

@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException" %><%@
 page import="com.liferay.exportimport.util.comparator.ExportImportConfigurationNameComparator" %><%@
+page import="com.liferay.exportimport.web.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
 page import="com.liferay.exportimport.web.portlet.action.ExportImportMVCActionCommand" %><%@
 page import="com.liferay.exportimport.web.search.ExportImportConfigurationDisplayTerms" %><%@
@@ -160,6 +161,7 @@ page import="java.util.ResourceBundle" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

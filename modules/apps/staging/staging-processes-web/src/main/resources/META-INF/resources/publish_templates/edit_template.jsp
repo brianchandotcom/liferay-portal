@@ -181,7 +181,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 				<aui:button-row>
 					<aui:button cssClass="btn-lg" type="submit" value="save" />
 
-					<aui:button cssClass="btn-lg" href="<%= renderURL.toString() %>" type="reset" value="cancel" />
+					<aui:button cssClass="btn-lg" href="<%= renderURL.toString() %>" type="cancel" />
 				</aui:button-row>
 			</div>
 		</aui:form>

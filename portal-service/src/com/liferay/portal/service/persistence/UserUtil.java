@@ -1573,6 +1573,67 @@ public class UserUtil {
 	}
 
 	/**
+	* Returns the user where companyId = &#63; and googleId = &#63; or throws a {@link NoSuchUserException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the matching user
+	* @throws NoSuchUserException if a matching user could not be found
+	*/
+	public static User findByC_GID(long companyId, java.lang.String googleId)
+		throws com.liferay.portal.exception.NoSuchUserException {
+		return getPersistence().findByC_GID(companyId, googleId);
+	}
+
+	/**
+	* Returns the user where companyId = &#63; and googleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the matching user, or <code>null</code> if a matching user could not be found
+	*/
+	public static User fetchByC_GID(long companyId, java.lang.String googleId) {
+		return getPersistence().fetchByC_GID(companyId, googleId);
+	}
+
+	/**
+	* Returns the user where companyId = &#63; and googleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching user, or <code>null</code> if a matching user could not be found
+	*/
+	public static User fetchByC_GID(long companyId, java.lang.String googleId,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_GID(companyId, googleId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the user where companyId = &#63; and googleId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the user that was removed
+	*/
+	public static User removeByC_GID(long companyId, java.lang.String googleId)
+		throws com.liferay.portal.exception.NoSuchUserException {
+		return getPersistence().removeByC_GID(companyId, googleId);
+	}
+
+	/**
+	* Returns the number of users where companyId = &#63; and googleId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param googleId the google ID
+	* @return the number of matching users
+	*/
+	public static int countByC_GID(long companyId, java.lang.String googleId) {
+		return getPersistence().countByC_GID(companyId, googleId);
+	}
+
+	/**
 	* Returns all the users where companyId = &#63; and status = &#63;.
 	*
 	* @param companyId the company ID

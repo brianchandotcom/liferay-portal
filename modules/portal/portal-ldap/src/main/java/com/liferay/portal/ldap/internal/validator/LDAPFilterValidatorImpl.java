@@ -25,7 +25,6 @@ import com.liferay.portal.ldap.validator.LDAPFilterValidator;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,9 +51,9 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 		try {
 			ldapFilterParser.parse();
 		}
-		catch (RecognitionException | RuntimeException e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to parse filter " + filter);
+		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to parse filter " + filter, e);
 			}
 
 			return false;

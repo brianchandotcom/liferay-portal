@@ -51,7 +51,7 @@ public class AuthVerifierPipelineTest {
 			"/foo/hello");
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.COMPANY_ID, Long.valueOf(TestPropsValues.getCompanyId()));
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
 		accessControlContext.setRequest(mockHttpServletRequest);
 

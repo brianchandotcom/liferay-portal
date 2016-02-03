@@ -6,6 +6,7 @@ dependencies {
 	compile project(":apps:map:map-api")
 	compile project(":frontend:frontend-taglib")
 	compile project(":portal:portal-upgrade")
+	compile project(":apps:site:site-api")
 }
 
 liferay {

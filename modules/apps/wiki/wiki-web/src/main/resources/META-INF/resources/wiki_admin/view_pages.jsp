@@ -179,6 +179,11 @@ else {
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<liferay-ui:search-container-column-icon
+							icon="wiki-page"
+							toggleRowChecker="<%= true %>"
+						/>
+
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 							<%

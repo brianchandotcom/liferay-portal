@@ -49,17 +49,6 @@ public class ConfigurationIndexingExtender {
 			new ConfigurationModelsBundleTrackerCustomizer());
 
 		_bundleTracker.open();
-
-		if (!_clusterMasterExecutor.isMaster()) {
-			return;
-		}
-
-		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels();
-
-		_configurationModelIndexer.reindex(configurationModels.values());
-
-		commit(_configurationModelIndexer);
 	}
 
 	protected void commit(Indexer<ConfigurationModel> indexer) {

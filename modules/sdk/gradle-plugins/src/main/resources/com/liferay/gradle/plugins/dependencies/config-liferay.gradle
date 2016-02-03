@@ -51,7 +51,7 @@ liferay {
 			dir = project.properties["app.server.resin.dir"] ?: "${->liferay.appServerParentDir}/resin-${->liferay.appServers.resin.version}"
 			libGlobalDir = project.properties["app.server.resin.lib.global.dir"] ?: "${->liferay.appServers.resin.dir}/ext-lib"
 			portalDir = project.properties["app.server.resin.portal.dir"] ?: "${->liferay.appServers.resin.dir}/webapps/ROOT"
-			version = project.properties["app.server.resin.version"] ?: "4.0.33"
+			version = project.properties["app.server.resin.version"] ?: "4.0.44"
 		}
 
 		tcserver {

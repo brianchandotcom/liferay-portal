@@ -284,12 +284,9 @@
 		<if>
 			<equals arg1="${threadAttachmentRemove}" arg2="true" />
 			<then>
-				<if>
-					<condition function="IsNotVisible" locator1="MessageBoardsEditMessage#ATTACHMENTS_REMOVE_LINK" />
-					<then>
-						<execute function="Click" locator1="MessageBoardsEditMessage#ATTACHMENTS_DROPDOWN" />
-					</then>
-				</if>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Attachments" />
+				</execute>
 
 				<execute function="AssertTextEquals" locator1="MessageBoardsEditMessage#ATTACHMENTS_NAME" value1="${mbAttachmentFile}" />
 				<execute function="AssertClick" locator1="MessageBoardsEditMessage#ATTACHMENTS_REMOVE_LINK" value1="Remove" />
@@ -745,8 +742,12 @@
 		<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoardsRemovedAttachments#ATTACHMENT_TABLE_NAME" value1="${mbAttachmentFile}" />
-		<execute function="Click" locator1="MessageBoardsRemovedAttachments#ATTACHMENT_TABLE_ACTIONS" />
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
+
+		<execute macro="Alert#viewRequestCompletedSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This message does not have file attachments in the Recycle Bin." />
 	</command>
 

@@ -85,16 +85,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN_TABLE_NAME_1</td>
-	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')][1]/td[1]/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECYCLE_BIN_TABLE_NAME_2</td>
-	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')][2]/td[1]/span/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

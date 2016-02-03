@@ -375,7 +375,7 @@
 		<execute macro="RecycleBin#viewCP">
 			<var name="assetName" value="Blogs Entry Title" />
 			<var name="assetType" value="Blogs Entry" />
-			<var name="customMaxAgeMsg" value="Entries that have been in the Recycle Bin for more than 1 minute are automatically deleted. Empty the Recycle Bin" />
+			<var name="customMaxAgeMsg" value="Entries that have been in the Recycle Bin for more than 1 minute are automatically deleted." />
 			<var name="deleteUser" value="Test Test" />
 		</execute>
 
@@ -506,6 +506,8 @@
 	</command>
 
 	<command name="RecycleBinSearchDMEntriesInFolder" priority="3">
+		<property name="custom.properties" value="default.layout.template.id=1_column" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />

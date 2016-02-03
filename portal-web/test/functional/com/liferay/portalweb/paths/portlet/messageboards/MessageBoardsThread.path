@@ -456,7 +456,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_BODY_ATTACHMENT_1</td>
-	<td>//div[@class='thread-body']/div/ul/li[@class='message-attachment']/span/a/span</td>
+	<td>//li[@class='message-attachment']/span/a</td>
 	<td></td>
 </tr>
 <tr>

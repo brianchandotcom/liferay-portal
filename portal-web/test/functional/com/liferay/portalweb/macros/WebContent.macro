@@ -1337,7 +1337,7 @@
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No web content was found" />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No web content was found" />
 		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" />
 	</command>

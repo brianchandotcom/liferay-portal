@@ -14,11 +14,6 @@
 	<td>//tbody[@class='table-data']/tr[contains(.,'${key_mbAttachmentFile}')]/td</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ATTACHMENT_TABLE_ACTIONS</td>
-	<td>//tbody[@class='table-data']/tr[contains(.,'${key_mbAttachmentFile}')]/td[3]/div/a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>ENABLE_RECYCLE_BIN</td>
-	<td>//label[contains(.,'Enable Recycle Bin')]/input[@type='checkbox']</td>
+	<td>//input[contains(@id,'trashEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

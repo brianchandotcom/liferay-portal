@@ -526,6 +526,7 @@ create index IX_BCFDA257 on User_ (companyId, createDate, modifiedDate);
 create index IX_C6EA4F34 on User_ (companyId, defaultUser, status);
 create unique index IX_615E9F7A on User_ (companyId, emailAddress[$COLUMN_LENGTH:75$]);
 create index IX_1D731F03 on User_ (companyId, facebookId);
+create index IX_193594F6 on User_ (companyId, googleId[$COLUMN_LENGTH:75$]);
 create index IX_EE8ABD19 on User_ (companyId, modifiedDate);
 create index IX_89509087 on User_ (companyId, openId[$COLUMN_LENGTH:1024$]);
 create unique index IX_C5806019 on User_ (companyId, screenName[$COLUMN_LENGTH:75$]);

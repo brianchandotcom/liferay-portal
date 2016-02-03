@@ -790,8 +790,7 @@ public interface UserLocalService extends BaseLocalService,
 	Google ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User fetchUserByGoogleId(long companyId,
-		java.lang.String googleId);
+	public User fetchUserByGoogleId(long companyId, java.lang.String googleId);
 
 	/**
 	* Returns the user with the primary key.
@@ -1336,8 +1335,8 @@ public interface UserLocalService extends BaseLocalService,
 	* @return the user with the Google ID
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserByGoogleId(long companyId,
-		java.lang.String googleId) throws PortalException;
+	public User getUserByGoogleId(long companyId, java.lang.String googleId)
+		throws PortalException;
 
 	/**
 	* Returns the user with the primary key from the company.
@@ -2109,14 +2108,14 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the user's OpenID.
+	* Updates the user's GoogleId.
 	*
 	* @param userId the primary key of the user
-	* @param openId the new OpenID
+	* @param googleId the new GoogleId
 	* @return the user
 	*/
-	public com.liferay.portal.model.User updateGoogleId(long userId,
-		java.lang.String googleId) throws PortalException;
+	public User updateGoogleId(long userId, java.lang.String googleId)
+		throws PortalException;
 
 	/**
 	* Sets the groups the user is in, removing and adding groups as necessary.

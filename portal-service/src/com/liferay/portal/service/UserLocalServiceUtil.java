@@ -2600,10 +2600,10 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Updates the user's OpenID.
+	* Updates the user's GoogleId.
 	*
 	* @param userId the primary key of the user
-	* @param openId the new OpenID
+	* @param googleId the new GoogleId
 	* @return the user
 	*/
 	public static com.liferay.portal.model.User updateGoogleId(long userId,

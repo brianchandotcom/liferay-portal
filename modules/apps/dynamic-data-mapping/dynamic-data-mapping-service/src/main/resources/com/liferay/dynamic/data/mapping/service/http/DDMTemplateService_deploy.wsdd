@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_DDM_DDMTemplateService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:cmp-ns="http://model.mapping.data.dynamic.liferay.com" qname="ns:ArrayOf_tns3_DDMTemplateSoap" type="java:com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[]" innerType="cmp-ns:DDMTemplateSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:cmp-ns="http://model.mapping.data.dynamic.liferay.com" qname="ns:ArrayOf_tns16_DDMTemplateSoap" type="java:com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[]" innerType="cmp-ns:DDMTemplateSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
@@ -43,7 +43,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="copyTemplates" qname="operNS:copyTemplates" returnQName="copyTemplatesReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="copyTemplates" qname="operNS:copyTemplates" returnQName="copyTemplatesReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="oldClassPK" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
@@ -73,7 +73,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateKey" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="includeAncestorTemplates" type="tns:boolean"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplatesByClassPK" qname="operNS:getTemplatesByClassPK" returnQName="getTemplatesByClassPKReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplatesByClassPK" qname="operNS:getTemplatesByClassPK" returnQName="getTemplatesByClassPKReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
@@ -85,7 +85,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplatesByStructureClassNameId" qname="operNS:getTemplatesByStructureClassNameId" returnQName="getTemplatesByStructureClassNameIdReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplatesByStructureClassNameId" qname="operNS:getTemplatesByStructureClassNameId" returnQName="getTemplatesByStructureClassNameIdReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
@@ -93,14 +93,14 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="orderByComparator" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
@@ -109,7 +109,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="includeAncestorTemplates" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
@@ -117,7 +117,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="resourceClassNameId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
@@ -126,7 +126,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="getTemplates" qname="operNS:getTemplates" returnQName="getTemplatesReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
@@ -191,7 +191,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="andOperator" type="tns:boolean"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.mapping.data.dynamic.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.mapping.data.dynamic.liferay.com" qname="classNameIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -205,7 +205,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="orderByComparator" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.mapping.data.dynamic.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="urn:http.service.mapping.data.dynamic.liferay.com" qname="classNameIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -222,7 +222,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="orderByComparator" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>
@@ -236,7 +236,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="orderByComparator" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns3_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:rtns="urn:http.service.mapping.data.dynamic.liferay.com" xmlns:tns2="http://model.mapping.data.dynamic.liferay.com" name="search" qname="operNS:search" returnQName="searchReturn" returnType="rtns:ArrayOf_tns16_DDMTemplateSoap" returnItemType="tns2:DDMTemplateSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classNameId" type="tns:long"></parameter>

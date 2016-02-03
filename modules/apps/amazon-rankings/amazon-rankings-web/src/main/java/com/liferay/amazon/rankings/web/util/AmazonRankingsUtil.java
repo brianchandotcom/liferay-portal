@@ -19,7 +19,6 @@ import com.liferay.amazon.rankings.web.model.AmazonRankings;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
@@ -35,9 +34,7 @@ public class AmazonRankingsUtil {
 	public static AmazonRankings getAmazonRankings(
 		AmazonRankingsConfiguration amazonRankingsConfiguration, String isbn) {
 
-		if (!Validator.isDigit(isbn)) {
-			return null;
-		}
+		isbn = isbn.replaceAll(StringPool.DASH, StringPool.BLANK);
 
 		WebCacheItem wci = new AmazonRankingsWebCacheItem(
 			amazonRankingsConfiguration, isbn);

@@ -41,7 +41,8 @@ import org.gradle.api.tasks.util.PatternSet;
 /**
  * @author Andrea Di Giorgi
  */
-public class TranspileJSTask extends ExecuteNodeScriptTask {
+public class TranspileJSTask
+	extends ExecuteNodeScriptTask implements PatternFilterable {
 
 	public TranspileJSTask() {
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
@@ -61,24 +62,30 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 			});
 	}
 
-	public TranspileJSTask exclude(Closure<?> closure) {
-		_patternFilterable.exclude(closure);
+	@Override
+	public TranspileJSTask exclude(
+		@SuppressWarnings("rawtypes") Closure excludeSpec) {
+
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
 
+	@Override
 	public TranspileJSTask exclude(Iterable<String> excludes) {
 		_patternFilterable.exclude(excludes);
 
 		return this;
 	}
 
-	public TranspileJSTask exclude(Spec<FileTreeElement> spec) {
-		_patternFilterable.exclude(spec);
+	@Override
+	public TranspileJSTask exclude(Spec<FileTreeElement> excludeSpec) {
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
 
+	@Override
 	public TranspileJSTask exclude(String ... excludes) {
 		_patternFilterable.exclude(excludes);
 
@@ -92,10 +99,12 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		super.executeNode();
 	}
 
+	@Override
 	public Set<String> getExcludes() {
 		return _patternFilterable.getExcludes();
 	}
 
+	@Override
 	public Set<String> getIncludes() {
 		return _patternFilterable.getIncludes();
 	}
@@ -143,36 +152,44 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		return getSourceDir();
 	}
 
-	public TranspileJSTask include(Closure<?> closure) {
-		_patternFilterable.include(closure);
+	@Override
+	public TranspileJSTask include(
+		@SuppressWarnings("rawtypes") Closure includeSpec) {
+
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
 
+	@Override
 	public TranspileJSTask include(Iterable<String> includes) {
 		_patternFilterable.include(includes);
 
 		return this;
 	}
 
-	public TranspileJSTask include(Spec<FileTreeElement> spec) {
-		_patternFilterable.include(spec);
+	@Override
+	public TranspileJSTask include(Spec<FileTreeElement> includeSpec) {
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
 
+	@Override
 	public TranspileJSTask include(String ... includes) {
 		_patternFilterable.include(includes);
 
 		return this;
 	}
 
+	@Override
 	public TranspileJSTask setExcludes(Iterable<String> excludes) {
 		_patternFilterable.setExcludes(excludes);
 
 		return this;
 	}
 
+	@Override
 	public TranspileJSTask setIncludes(Iterable<String> includes) {
 		_patternFilterable.setIncludes(includes);
 

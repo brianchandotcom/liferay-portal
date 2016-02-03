@@ -46,12 +46,13 @@ import org.gradle.api.tasks.util.PatternSet;
 /**
  * @author Andrea Di Giorgi
  */
-public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
+public class ConfigJSModulesTask
+	extends ExecuteNodeScriptTask implements PatternFilterable {
 
 	public ConfigJSModulesTask() {
 		dependsOn(
 			JSModuleConfigGeneratorPlugin.
-				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
+				DOWNLOAD_LIFERAY_MODULE_CONFIG_GENERATOR_TASK_NAME);
 
 		include("**/*.es.js");
 
@@ -62,31 +63,37 @@ public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 				public File call() throws Exception {
 					return new File(
 						getNodeDir(),
-						"node_modules/lfr-module-config-generator/bin/" +
+						"node_modules/liferay-module-config-generator/bin/" +
 							"index.js");
 				}
 
 			});
 	}
 
-	public ConfigJSModulesTask exclude(Closure<?> closure) {
-		_patternFilterable.exclude(closure);
+	@Override
+	public ConfigJSModulesTask exclude(
+		@SuppressWarnings("rawtypes") Closure excludeSpec) {
+
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
 
+	@Override
 	public ConfigJSModulesTask exclude(Iterable<String> excludes) {
 		_patternFilterable.exclude(excludes);
 
 		return this;
 	}
 
-	public ConfigJSModulesTask exclude(Spec<FileTreeElement> spec) {
-		_patternFilterable.exclude(spec);
+	@Override
+	public ConfigJSModulesTask exclude(Spec<FileTreeElement> excludeSpec) {
+		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
 
+	@Override
 	public ConfigJSModulesTask exclude(String ... excludes) {
 		_patternFilterable.exclude(excludes);
 
@@ -132,10 +139,12 @@ public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toString(_configVariable);
 	}
 
+	@Override
 	public Set<String> getExcludes() {
 		return _patternFilterable.getExcludes();
 	}
 
+	@Override
 	public Set<String> getIncludes() {
 		return _patternFilterable.getIncludes();
 	}
@@ -186,24 +195,30 @@ public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 		return fileTree.matching(_patternFilterable);
 	}
 
-	public ConfigJSModulesTask include(Closure<?> closure) {
-		_patternFilterable.include(closure);
+	@Override
+	public ConfigJSModulesTask include(
+		@SuppressWarnings("rawtypes") Closure includeSpec) {
+
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
 
+	@Override
 	public ConfigJSModulesTask include(Iterable<String> includes) {
 		_patternFilterable.include(includes);
 
 		return this;
 	}
 
-	public ConfigJSModulesTask include(Spec<FileTreeElement> spec) {
-		_patternFilterable.include(spec);
+	@Override
+	public ConfigJSModulesTask include(Spec<FileTreeElement> includeSpec) {
+		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
 
+	@Override
 	public ConfigJSModulesTask include(String ... includes) {
 		_patternFilterable.include(includes);
 
@@ -229,6 +244,7 @@ public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 		_configVariable = configVariable;
 	}
 
+	@Override
 	public ConfigJSModulesTask setExcludes(Iterable<String> excludes) {
 		_patternFilterable.setExcludes(excludes);
 
@@ -239,6 +255,7 @@ public class ConfigJSModulesTask extends ExecuteNodeScriptTask {
 		_ignorePath = ignorePath;
 	}
 
+	@Override
 	public ConfigJSModulesTask setIncludes(Iterable<String> includes) {
 		_patternFilterable.setIncludes(includes);
 

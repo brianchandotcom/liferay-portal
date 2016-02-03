@@ -57,7 +57,9 @@ cache {
 
 configJSModules {
 	dependsOn buildMetalComponents
+
 	include "**/*.js"
+	include "**/*.js.map"
 }
 
 dependencies {

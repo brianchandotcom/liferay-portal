@@ -42,7 +42,8 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 				project, JSModuleConfigGeneratorExtension.class);
 
 		String version = GradleUtil.getProperty(
-			project, "nodejs.lfr.module.config.generator.version", _VERSION);
+			project, "nodejs.liferay.module.config.generator.version",
+			_VERSION);
 
 		jsModuleConfigGeneratorExtension.setVersion(version);
 	}
@@ -64,6 +65,6 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		return JSModuleConfigGeneratorPlugin.class;
 	}
 
-	private static final String _VERSION = "1.1.7";
+	private static final String _VERSION = "1.1.10";
 
 }

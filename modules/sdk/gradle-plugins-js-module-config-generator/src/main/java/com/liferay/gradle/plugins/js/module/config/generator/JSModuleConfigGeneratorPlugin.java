@@ -41,8 +41,9 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 	public static final String CONFIG_JS_MODULES_TASK_NAME = "configJSModules";
 
-	public static final String DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME =
-		"downloadLfrModuleConfigGenerator";
+	public static final String
+		DOWNLOAD_LIFERAY_MODULE_CONFIG_GENERATOR_TASK_NAME =
+			"downloadLiferayModuleConfigGenerator";
 
 	public static final String EXTENSION_NAME = "jsModuleConfigGenerator";
 
@@ -55,7 +56,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 				project, EXTENSION_NAME,
 				JSModuleConfigGeneratorExtension.class);
 
-		addTaskDownloadLfrModuleConfigGenerator(
+		addTaskDownloadLiferayModuleConfigGenerator(
 			project, jsModuleConfigGeneratorExtension);
 		addTaskConfigJSModules(project);
 
@@ -111,20 +112,21 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		return configJSModulesTask;
 	}
 
-	protected DownloadNodeModuleTask addTaskDownloadLfrModuleConfigGenerator(
-		Project project,
-		final JSModuleConfigGeneratorExtension
-			jsModuleConfigGeneratorExtension) {
+	protected DownloadNodeModuleTask
+		addTaskDownloadLiferayModuleConfigGenerator(
+			Project project,
+			final JSModuleConfigGeneratorExtension
+				jsModuleConfigGeneratorExtension) {
 
-		DownloadNodeModuleTask downloadLfrModuleConfigGeneratorTask =
+		DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask =
 			GradleUtil.addTask(
-				project, DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME,
+				project, DOWNLOAD_LIFERAY_MODULE_CONFIG_GENERATOR_TASK_NAME,
 				DownloadNodeModuleTask.class);
 
-		downloadLfrModuleConfigGeneratorTask.setModuleName(
-			"lfr-module-config-generator");
+		downloadLiferayModuleConfigGeneratorTask.setModuleName(
+			"liferay-module-config-generator");
 
-		downloadLfrModuleConfigGeneratorTask.setModuleVersion(
+		downloadLiferayModuleConfigGeneratorTask.setModuleVersion(
 			new Callable<String>() {
 
 				@Override
@@ -134,7 +136,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 			});
 
-		return downloadLfrModuleConfigGeneratorTask;
+		return downloadLiferayModuleConfigGeneratorTask;
 	}
 
 	protected void configureTaskConfigJSModulesEnabled(

@@ -15,8 +15,13 @@
 package com.liferay.portlet.admin.util;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
+ * @deprecated As of 7.0.0, with a replacement. Theme developers must eventually
+ *             switch from using Velocity  templates that leverage this taglib
+ *             wrapper mechanism, to using FreeMarker templates that leverage
+ *             the <code>liferay-control-menu:control-menu</code> tag.
  */
+@Deprecated
 public class PortalControlMenuApplicationType {
 
 	public interface ControlMenu {

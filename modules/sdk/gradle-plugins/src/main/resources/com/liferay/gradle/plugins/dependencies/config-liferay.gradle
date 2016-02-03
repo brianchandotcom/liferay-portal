@@ -90,7 +90,7 @@ liferay {
 			dir = project.properties["app.server.websphere.dir"] ?: "${->liferay.appServerParentDir}/websphere-${->liferay.appServers.websphere.version}"
 			libGlobalDir = project.properties["app.server.websphere.lib.global.dir"] ?: "${->liferay.appServers.websphere.dir}/lib/ext"
 			portalDir = project.properties["app.server.websphere.portal.dir"] ?: "${->liferay.appServers.websphere.dir}/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war"
-			version = project.properties["app.server.websphere.version"] ?: "7.0"
+			version = project.properties["app.server.websphere.version"] ?: "8.5.5.0"
 		}
 
 		wildfly {

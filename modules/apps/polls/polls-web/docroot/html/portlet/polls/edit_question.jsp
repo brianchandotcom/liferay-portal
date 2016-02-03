@@ -131,9 +131,9 @@ portletDisplay.setURLBack(redirect);
 			}
 			%>
 
-			<aui:button-row>
+			<div class="button-holder">
 				<aui:button cssClass="add-choice btn-lg" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
-			</aui:button-row>
+			</div>
 		</aui:field-wrapper>
 
 		<c:if test="<%= question == null %>">

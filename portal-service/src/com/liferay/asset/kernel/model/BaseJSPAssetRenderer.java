@@ -18,7 +18,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.resource.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import java.io.IOException;
 
@@ -68,6 +74,20 @@ public abstract class BaseJSPAssetRenderer<T>
 
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	protected ResourceBundleLoader getResourceBundleLoader() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		if (bundle != null) {
+			return ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					bundle.getSymbolicName());
+		}
+
+		return new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader("content.Language", getClass()),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	protected ServletContext getServletContext() {
